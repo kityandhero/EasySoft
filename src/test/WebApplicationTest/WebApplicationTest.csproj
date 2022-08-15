@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Hangfire" Version="1.7.30"/>
+        <PackageReference Include="Hangfire.Core" Version="1.7.30"/>
+        <PackageReference Include="Hangfire.MemoryStorage" Version="1.7.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.7"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.7"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="log4net">
+            <HintPath>C:\Users\kitya\.nuget\packages\log4net\2.0.13\lib\netstandard2.0\log4net.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\AutoFacTest\AutoFacTest.csproj"/>
+        <ProjectReference Include="..\EntityFrameworkTest\EntityFrameworkTest.csproj"/>
+        <ProjectReference Include="..\Framework\Framework.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Areas\AreaTest"/>
+    </ItemGroup>
+
+</Project>
