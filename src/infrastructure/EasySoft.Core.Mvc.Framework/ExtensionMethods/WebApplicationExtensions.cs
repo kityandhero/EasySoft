@@ -1,6 +1,7 @@
-﻿using Autofac.Extensions.DependencyInjection;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Mvc.Framework.IocAssists;
+using EasySoft.Core.Mvc.Framework.PrepareWorks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.FileProviders;
@@ -16,11 +17,19 @@ public static class WebApplicationExtensions
     {
         if (!HangfireConfigAssist.GetEnable())
         {
+            application.RecordInformation(
+                "hangfire: disable."
+            );
+
             return application;
         }
 
         //启用Hangfire面板 
         application.UseHangfireDashboard();
+
+        application.RecordInformation(
+            "hangfire: enable, access:https://[host]:[port]/hangfire."
+        );
 
         return application;
     }
@@ -29,12 +38,19 @@ public static class WebApplicationExtensions
     {
         if (!SwaggerConfigAssist.GetEnable())
         {
+            application.RecordInformation(
+                "swagger: disable."
+            );
+
             return application;
         }
 
-        //https://localhost:7261/swagger/index.html  
         application.UseSwagger();
         application.UseSwaggerUI();
+
+        application.RecordInformation(
+            "swagger: enable, access https://[host]:[port]/swagger/index.html."
+        );
 
         return application;
     }
@@ -132,46 +148,40 @@ public static class WebApplicationExtensions
 
         application.UseMvc();
 
-        if (SwaggerConfigAssist.GetEnable())
-        {
-            application.RecordInformation(
-                "swagger: enable, access https://[host]:[port]/swagger/index.html."
-            );
-        }
-        else
-        {
-            application.RecordInformation(
-                "swagger: disable."
-            );
-        }
+        return application;
+    }
 
-        if (HangfireConfigAssist.GetEnable())
-        {
-            application.RecordInformation(
-                "hangfire: enable, access:https://[host]:[port]/hangfire."
-            );
-        }
-        else
-        {
-            application.RecordInformation(
-                "hangfire: disable."
-            );
-        }
+    public static WebApplication UsePrepareStartWork(
+        this WebApplication application
+    )
+    {
+        var prepareCovertStartWork = application.UseHostFiltering().ApplicationServices.GetAutofacRoot()
+            .Resolve<IPrepareCovertStartWork>();
+
+        prepareCovertStartWork.DoWork();
 
         application.RecordInformation(
-            "if you use autoFac, you can set the autoFac.json in ./configures/autoFac.json. The document link is https://autofac.readthedocs.io/en/latest/configuration/xml.html."
+            "prepareCovertStartWork do work complete."
         );
+
+        if (!application.UseHostFiltering().ApplicationServices.GetAutofacRoot().IsRegistered<IPrepareStartWork>())
+        {
+            return application;
+        }
+
+        var prepareStartWork = application.UseHostFiltering().ApplicationServices.GetAutofacRoot()
+            .Resolve<IPrepareStartWork>();
+
+        prepareStartWork.DoWork();
 
         application.RecordInformation(
-            "you can get all controller actions by visit https://[host]:[port]/[controller]/getAllActions where controller inherited from CustomControllerBase."
+            "prepareStartWork do work complete."
         );
-
-        AutofacAssist.Instance.Container = application.UseHostFiltering().ApplicationServices.GetAutofacRoot();
 
         return application;
     }
 
-    public static WebApplication RecordInformation(
+    internal static WebApplication RecordInformation(
         this WebApplication application,
         string log
     )

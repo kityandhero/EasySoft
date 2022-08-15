@@ -27,6 +27,10 @@ public static class MongoConfigAssist
 
         Configuration.Bind(MongoConfig.Instance);
     }
+    
+    public static void Init()
+    {
+    }
 
     private static MongoConfig GetConfig()
     {

@@ -21,8 +21,6 @@ public static class WebApplicationBuilderAssist
 {
     public static WebApplicationBuilder CreateBuilder(string[] args)
     {
-        PrepareStartAssist.ToWork();
-
         var builder = WebApplication.CreateBuilder(args);
 
         builder.OpenAutoFac();

@@ -28,6 +28,10 @@ public static class DevelopConfigAssist
 
         Configuration.Bind(DevelopConfig.Instance);
     }
+    
+    public static void Init()
+    {
+    }
 
     private static DevelopConfig GetConfig()
     {

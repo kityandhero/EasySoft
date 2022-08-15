@@ -28,6 +28,10 @@ public static class HangfireConfigAssist
 
         Configuration.Bind(HangfireConfig.Instance);
     }
+    
+    public static void Init()
+    {
+    }
 
     private static HangfireConfig GetConfig()
     {

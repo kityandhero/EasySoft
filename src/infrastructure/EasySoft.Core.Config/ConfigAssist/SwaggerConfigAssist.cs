@@ -29,6 +29,10 @@ public class SwaggerConfigAssist
 
         Configuration.Bind(SwaggerConfig.Instance);
     }
+    
+    public static void Init()
+    {
+    }
 
     private static SwaggerConfig GetConfig()
     {

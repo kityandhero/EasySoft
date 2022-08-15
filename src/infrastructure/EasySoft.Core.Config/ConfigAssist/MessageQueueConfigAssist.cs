@@ -27,6 +27,10 @@ public static class MessageQueueConfigAssist
 
         Configuration.Bind(MessageQueueConfig.Instance);
     }
+    
+    public static void Init()
+    {
+    }
 
     private static MessageQueueConfig GetConfig()
     {

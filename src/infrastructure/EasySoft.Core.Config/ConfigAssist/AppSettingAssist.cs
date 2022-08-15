@@ -1,9 +1,10 @@
 ﻿using EasySoft.Core.Config.Utils;
+using EasySoft.UtilityTools.Assists;
 using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
-public class AppSettingAssist
+public static class AppSettingAssist
 {
     private const string ConfigFile = $"appsettings.json";
 
@@ -11,7 +12,7 @@ public class AppSettingAssist
 
     static AppSettingAssist()
     {
-        var directory = Tools.GetConfigureDirectory();
+        var directory = AppContextAssist.GetBaseDirectory();
 
         var filePath = $"{directory}{ConfigFile}";
 
@@ -22,6 +23,10 @@ public class AppSettingAssist
         );
 
         Configuration = builder.Build();
+    }
+
+    public static void Init()
+    {
     }
 
     public static IConfiguration GetConfiguration()

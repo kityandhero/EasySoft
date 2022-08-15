@@ -28,6 +28,10 @@ public static class ServiceConfigAssist
 
         Configuration.Bind(ServiceConfig.Instance);
     }
+    
+    public static void Init()
+    {
+    }
 
     private static ServiceConfig GetConfig()
     {

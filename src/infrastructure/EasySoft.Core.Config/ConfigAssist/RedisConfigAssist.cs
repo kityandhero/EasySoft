@@ -28,6 +28,10 @@ public static class RedisConfigAssist
 
         Configuration.Bind(RedisConfig.Instance);
     }
+    
+    public static void Init()
+    {
+    }
 
     private static RedisConfig GetConfig()
     {

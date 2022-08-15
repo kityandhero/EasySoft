@@ -28,6 +28,10 @@ public static class ElasticSearchConfigAssist
 
         Configuration.Bind(ElasticSearchConfig.Instance);
     }
+    
+    public static void Init()
+    {
+    }
 
     private static ElasticSearchConfig GetConfig()
     {

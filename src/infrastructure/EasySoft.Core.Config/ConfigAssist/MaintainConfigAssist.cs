@@ -28,6 +28,10 @@ public static class MaintainConfigAssist
 
         Configuration.Bind(MaintainConfig.Instance);
     }
+    
+    public static void Init()
+    {
+    }
 
     private static MaintainConfig GetConfig()
     {

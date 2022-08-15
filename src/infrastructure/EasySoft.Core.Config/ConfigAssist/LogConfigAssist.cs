@@ -28,6 +28,10 @@ public static class LogConfigAssist
 
         Configuration.Bind(LogConfig.Instance);
     }
+    
+    public static void Init()
+    {
+    }
 
     private static LogConfig GetConfig()
     {

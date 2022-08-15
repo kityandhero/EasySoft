@@ -10,6 +10,7 @@ using EntityFrameworkTest.Services;
 using EasySoft.Core.Mvc.Framework.BuilderAssists;
 using EasySoft.Core.Mvc.Framework.ExtensionMethods;
 using Microsoft.EntityFrameworkCore;
+using WebApplicationTest.PrepareStartWorks;
 
 var builder = WebApplicationBuilderAssist.CreateBuilder(args);
 
@@ -22,9 +23,11 @@ builder.Services.AddDbContext<DataContext>(
     }
 );
 
+builder.AddPrepareStartWorkInjection<SimplePrepareStartWork>();
+
 builder.AddExtraNormalInjection(containerBuilder =>
 {
-    containerBuilder.RegisterType<Simple>().As<ISimple>().InstancePerDependency().SingleInstance();
+    containerBuilder.RegisterType<Simple>().As<ISimple>().SingleInstance();
 
     containerBuilder.RegisterType<AuthorRepository>().As<IAuthorRepository>().AsImplementedInterfaces();
 

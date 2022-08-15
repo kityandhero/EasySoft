@@ -28,6 +28,10 @@ public static class PayCallbackConfigAssist
 
         Configuration.Bind(PayCallbackConfig.Instance);
     }
+    
+    public static void Init()
+    {
+    }
 
     private static PayCallbackConfig GetConfig()
     {

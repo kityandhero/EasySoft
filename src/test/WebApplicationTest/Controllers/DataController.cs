@@ -24,11 +24,6 @@ public class DataController : CustomControllerBase
     {
         var result = await _authorService.GetAuthor(0);
 
-        if (!result.Success)
-        {
-            return this.Fail(result.Code);
-        }
-
-        return this.Success(result.Data);
+        return !result.Success ? this.Fail(result.Code) : this.Success(result.Data);
     }
 }

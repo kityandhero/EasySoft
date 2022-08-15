@@ -28,6 +28,10 @@ public class BusinessConfigAssist
 
         Configuration.Bind(BusinessConfig.Instance);
     }
+    
+    public static void Init()
+    {
+    }
 
     private static BusinessConfig GetConfig()
     {

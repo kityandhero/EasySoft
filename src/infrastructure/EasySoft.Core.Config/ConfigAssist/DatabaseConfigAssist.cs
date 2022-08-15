@@ -27,6 +27,10 @@ public static class DatabaseConfigAssist
 
         Configuration.Bind(DatabaseConfig.Instance);
     }
+    
+    public static void Init()
+    {
+    }
 
     private static DatabaseConfig GetConfig()
     {

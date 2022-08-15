@@ -28,6 +28,10 @@ public class JobConfigAssist
 
         Configuration.Bind(JobConfig.Instance);
     }
+    
+    public static void Init()
+    {
+    }
 
     private static JobConfig GetConfig()
     {
