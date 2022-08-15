@@ -148,7 +148,7 @@ public static class WebApplicationBuilderExtensions
 
         if (GeneralConfigAssist.GetCorsEnable())
         {
-            app.UseCors();
+            app.UseCors(ConstCollection.DefaultSpecificOrigins);
 
             app.RecordInformation(
                 $"cors: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}"

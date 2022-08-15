@@ -74,7 +74,7 @@ public static class WebApplicationBuilderAssist
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(
-                    name: "specificOrigins",
+                    name: ConstCollection.DefaultSpecificOrigins,
                     configPolicy => { configPolicy.WithOrigins(GeneralConfigAssist.GetCorsPolicies().ToArray()); }
                 );
             });
