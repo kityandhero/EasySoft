@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Mvc.Framework.ConfigAssist;
+﻿using EasySoft.Core.Config.ConfigAssist;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 

@@ -1,7 +1,8 @@
 ﻿using Autofac;
 using Autofac.Configuration;
 using Autofac.Core;
-using EasySoft.Core.Mvc.Framework.Utils;
+using EasySoft.Core.Mvc.Framework.CommonAssists;
+using EasySoft.UtilityTools.Assists;
 using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.Mvc.Framework.IocAssists;
@@ -10,7 +11,7 @@ public class AutofacAssist
 {
     private const string MerchantAutoFacConfigFile = "autoFac.json";
 
-    public static AutofacAssist Instance = new();
+    public static readonly AutofacAssist Instance = new();
     public ILifetimeScope Container { get; set; } = null!;
 
     private static readonly ConfigurationModule ConfigurationModule;
@@ -19,7 +20,7 @@ public class AutofacAssist
     {
         var config = new ConfigurationBuilder();
 
-        var directory = Tools.GetConfigureDirectory();
+        var directory = $"{AppContextAssist.GetBaseDirectory()}/configures/";
 
         var filePath = $"{directory}{MerchantAutoFacConfigFile}";
 

@@ -1,5 +1,4 @@
-﻿using EntityFrameworkTest.Bases;
-using EntityFrameworkTest.Entities;
+﻿using EntityFrameworkTest.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkTest.Contexts;
@@ -18,7 +17,7 @@ public class DataContext : DbContext
     // {
     // }
 
-    public DbSet<Author> Authors { get; set; }
+    public DbSet<Author> Authors { get; set; } = null!;
 
-    public DbSet<Blog> Blogs { get; set; }
+    public DbSet<Blog> Blogs { get; set; } = null!;
 }

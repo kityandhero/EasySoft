@@ -17,6 +17,7 @@
     <ItemGroup>
         <Folder Include="Enums" />
         <Folder Include="Modules" />
+        <Folder Include="Pretreatments" />
     </ItemGroup>
 
     <ItemGroup>
@@ -46,6 +47,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
         <ProjectReference Include="..\EasySoft.IntegrationConfig\EasySoft.IntegrationConfig.csproj" />
         <ProjectReference Include="..\EasySoft.UtilityTools\EasySoft.UtilityTools.csproj" />
     </ItemGroup>

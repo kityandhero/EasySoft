@@ -1,6 +1,6 @@
+using EasySoft.Core.Config.ConfigAssist;
 using EntityFrameworkTest.Contexts;
 using EasySoft.Core.Mvc.Framework.BuilderAssists;
-using EasySoft.Core.Mvc.Framework.ConfigAssist;
 using EasySoft.Core.Mvc.Framework.ExtensionMethods;
 using Microsoft.EntityFrameworkCore;
 

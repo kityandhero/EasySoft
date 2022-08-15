@@ -1,24 +1,42 @@
 ﻿using Autofac.Extensions.DependencyInjection;
-using EasySoft.Core.Mvc.Framework.ConfigAssist;
+using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Mvc.Framework.IocAssists;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using EasySoft.UtilityTools.ExtensionMethods;
+using Hangfire;
 
 namespace EasySoft.Core.Mvc.Framework.ExtensionMethods;
 
 public static class WebApplicationExtensions
 {
-    public static WebApplication UseAdvanceSwagger(this WebApplication application)
-    {
-        return SwaggerConfigAssist.SetSwagger(application);
-    }
-
     public static WebApplication UseAdvanceHangfire(this WebApplication application)
     {
-        return HangfireConfigAssist.SetHangfire(application);
+        if (!HangfireConfigAssist.GetEnable())
+        {
+            return application;
+        }
+
+        //启用Hangfire面板 
+        application.UseHangfireDashboard();
+
+        return application;
+    }
+
+    public static WebApplication UseAdvanceSwagger(this WebApplication application)
+    {
+        if (!SwaggerConfigAssist.GetEnable())
+        {
+            return application;
+        }
+
+        //https://localhost:7261/swagger/index.html  
+        application.UseSwagger();
+        application.UseSwaggerUI();
+
+        return application;
     }
 
     public static WebApplication UseAdvanceStaticFiles(

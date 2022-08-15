@@ -26,6 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
       <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Mvc.Framework\EasySoft.Core.Mvc.Framework.csproj" />
     </ItemGroup>
 

@@ -1,13 +1,13 @@
 using Autofac;
 using AutoFacTest.Implementations;
 using AutoFacTest.Interfaces;
+using EasySoft.Core.Config.ConfigAssist;
 using EntityFrameworkTest.Contexts;
 using EntityFrameworkTest.IRepositories;
 using EntityFrameworkTest.IServices;
 using EntityFrameworkTest.Repositories;
 using EntityFrameworkTest.Services;
 using EasySoft.Core.Mvc.Framework.BuilderAssists;
-using EasySoft.Core.Mvc.Framework.ConfigAssist;
 using EasySoft.Core.Mvc.Framework.ExtensionMethods;
 using Microsoft.EntityFrameworkCore;
 

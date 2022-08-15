@@ -10,9 +10,9 @@ namespace WebApplicationTest.Controllers;
 public class JobController : CustomControllerBase
 {
     [Autowired]
-    public ISimple SimpleAutowired { get; set; }
+    public ISimple? SimpleAutowired { get; set; }
 
-    // GET
+    // GET  
     public IActionResult Index()
     {
         return Content("Success");
