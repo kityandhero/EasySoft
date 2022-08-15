@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>10</LangVersion>
+        <Title>EasySoft.IdGenerator</Title>
+        <Description>EasySoft.IdGenerator</Description>
+        <PackageProjectUrl>https://github.com/kityandhero/EasySoft</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/kityandhero/EasySoft</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Snowflake.Core" Version="2.0.0" />
+    </ItemGroup>
+
+</Project>

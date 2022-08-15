@@ -1,16 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilityTools", "infrastructure\UtilityTools\UtilityTools.csproj", "{366A9FAC-B61E-44E3-B566-63F1D8E585BF}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasySoft.UtilityTools", "infrastructure\EasySoft.UtilityTools\EasySoft.UtilityTools.csproj", "{366A9FAC-B61E-44E3-B566-63F1D8E585BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdGenerator", "infrastructure\IdGenerator\IdGenerator.csproj", "{12413755-B52D-4D6A-B1FB-3641C762F884}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasySoft.IdGenerator", "infrastructure\EasySoft.IdGenerator\EasySoft.IdGenerator.csproj", "{12413755-B52D-4D6A-B1FB-3641C762F884}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationConfig", "infrastructure\IntegrationConfig\IntegrationConfig.csproj", "{D7FA5548-C432-438A-A2FB-8ADA588A7E0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasySoft.IntegrationConfig", "infrastructure\EasySoft.IntegrationConfig\EasySoft.IntegrationConfig.csproj", "{D7FA5548-C432-438A-A2FB-8ADA588A7E0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPOIEx", "infrastructure\NPOIEx\NPOIEx.csproj", "{6E54B5A8-96B5-4739-AC78-57D1BD0F312F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasySoft.NPOIEx", "infrastructure\EasySoft.NPOIEx\EasySoft.NPOIEx.csproj", "{6E54B5A8-96B5-4739-AC78-57D1BD0F312F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SenparcEx", "infrastructure\SenparcEx\SenparcEx.csproj", "{013FCC47-0160-4B97-8256-B8B1BD2A130C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasySoft.SenparcEx", "infrastructure\EasySoft.SenparcEx\EasySoft.SenparcEx.csproj", "{013FCC47-0160-4B97-8256-B8B1BD2A130C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "infrastructure\Framework\Framework.csproj", "{CBE1BB6A-5020-4BCD-B962-2F97E0B6EE52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasySoft.Core.Mvc.Framework", "infrastructure\EasySoft.Core.Mvc.Framework\EasySoft.Core.Mvc.Framework.csproj", "{CBE1BB6A-5020-4BCD-B962-2F97E0B6EE52}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{65AFCFE2-59A9-4704-A9BE-A5B83F944E88}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit-test", "unit-test", "{8D7FB3F6-1038-4974-A787-044646C716C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3A5000A7-B37E-4A5D-8668-82E7E2681993}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasySoft.UtilityToolsTest", "unit-test\EasySoft.UtilityToolsTest\EasySoft.UtilityToolsTest.csproj", "{FBEC59EB-4317-4334-92A8-9641B2BEC619}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,5 +53,24 @@ Global
 		{CBE1BB6A-5020-4BCD-B962-2F97E0B6EE52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBE1BB6A-5020-4BCD-B962-2F97E0B6EE52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBE1BB6A-5020-4BCD-B962-2F97E0B6EE52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBEC59EB-4317-4334-92A8-9641B2BEC619}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBEC59EB-4317-4334-92A8-9641B2BEC619}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBEC59EB-4317-4334-92A8-9641B2BEC619}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBEC59EB-4317-4334-92A8-9641B2BEC619}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{366A9FAC-B61E-44E3-B566-63F1D8E585BF} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{12413755-B52D-4D6A-B1FB-3641C762F884} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{D7FA5548-C432-438A-A2FB-8ADA588A7E0A} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{6E54B5A8-96B5-4739-AC78-57D1BD0F312F} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{013FCC47-0160-4B97-8256-B8B1BD2A130C} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{CBE1BB6A-5020-4BCD-B962-2F97E0B6EE52} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{FBEC59EB-4317-4334-92A8-9641B2BEC619} = {8D7FB3F6-1038-4974-A787-044646C716C1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>10</LangVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>EasySoft.NPOIEx</Title>
+        <PackageProjectUrl>https://github.com/kityandhero/EasySoft</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/kityandhero/EasySoft</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="NPOI" Version="2.5.6" />
+    </ItemGroup>
+
+</Project>
