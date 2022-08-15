@@ -1,8 +1,8 @@
 using Autofac;
 using EntityFrameworkTest.Contexts;
-using Framework.BuilderAssists;
-using Framework.ConfigAssist;
-using Framework.ExtensionMethods;
+using EasySoft.Core.Mvc.Framework.BuilderAssists;
+using EasySoft.Core.Mvc.Framework.ConfigAssist;
+using EasySoft.Core.Mvc.Framework.ExtensionMethods;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplicationBuilderAssist.CreateBuilder(

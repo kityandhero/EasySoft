@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using AutoFacTest.Interfaces;
-using Framework.Attributes;
-using Framework.Controllers;
-using Framework.IocAssists;
+using EasySoft.Core.Mvc.Framework.Attributes;
+using EasySoft.Core.Mvc.Framework.Controllers;
+using EasySoft.Core.Mvc.Framework.IocAssists;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Controllers;

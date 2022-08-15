@@ -1,5 +1,5 @@
-using Framework.ExtensionMethods;
-using Framework.Results;
+using EasySoft.Core.Mvc.Framework.ExtensionMethods;
+using EasySoft.Core.Mvc.Framework.Results;
 using Microsoft.AspNetCore.Mvc;
 using EasySoft.UtilityTools.Enums;
 using EasySoft.UtilityTools.ExtensionMethods;

@@ -1,4 +1,4 @@
-﻿using Framework.ExtensionMethods;
+﻿using EasySoft.Core.Mvc.Framework.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Areas.AreaTest.Controllers;

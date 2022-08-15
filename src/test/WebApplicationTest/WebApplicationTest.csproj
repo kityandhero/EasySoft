@@ -7,16 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Hangfire" Version="1.7.30"/>
-        <PackageReference Include="Hangfire.Core" Version="1.7.30"/>
-        <PackageReference Include="Hangfire.MemoryStorage" Version="1.7.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.7"/>
+        <PackageReference Include="Hangfire" Version="1.7.30" />
+        <PackageReference Include="Hangfire.Core" Version="1.7.30" />
+        <PackageReference Include="Hangfire.MemoryStorage" Version="1.7.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.7" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.7"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.7" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -26,13 +26,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\AutoFacTest\AutoFacTest.csproj"/>
-        <ProjectReference Include="..\EntityFrameworkTest\EntityFrameworkTest.csproj"/>
-        <ProjectReference Include="..\Framework\Framework.csproj"/>
+        <ProjectReference Include="..\AutoFacTest\AutoFacTest.csproj" />
+        <ProjectReference Include="..\EntityFrameworkTest\EntityFrameworkTest.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Areas\AreaTest"/>
+        <Folder Include="Areas\AreaTest" />
     </ItemGroup>
 
 </Project>

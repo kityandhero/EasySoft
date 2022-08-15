@@ -1,21 +1,13 @@
-﻿using AutoFacTest.Interfaces;
-using EntityFrameworkTest.Contexts;
-using EntityFrameworkTest.IServices;
-using Framework.Controllers;
-using Framework.DatabaseAssists;
-using Framework.ExtensionMethods;
-using Framework.IocAssists;
+﻿using EntityFrameworkTest.IServices;
+using EasySoft.Core.Mvc.Framework.Controllers;
+using EasySoft.Core.Mvc.Framework.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using EasySoft.UtilityTools.Enums;
 
 namespace WebApplicationTest.Controllers;
 
 public class DataController : CustomControllerBase
 {
-    private DbContext _context;
-
-    private IAuthorService _authorService;
+    private readonly IAuthorService _authorService;
 
     public DataController(IAuthorService authorService)
     {
@@ -27,13 +19,6 @@ public class DataController : CustomControllerBase
     //     context = context;
     //     _authorService = authorService;
     // }
-
-    public async Task<IActionResult> Initialize()
-    {
-        DatabaseAssist.Initialize(_context);
-
-        return this.Success(ReturnCode.Ok);
-    }
 
     public async Task<IActionResult> GetAuthor()
     {
