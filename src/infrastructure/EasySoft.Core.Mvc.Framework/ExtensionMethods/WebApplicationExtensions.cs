@@ -96,6 +96,8 @@ public static class WebApplicationExtensions
         List<string> areas
     )
     {
+        application.UseMvc();
+
         if (areas.Any())
         {
             var areaAdjust = areas.Where(o => !string.IsNullOrWhiteSpace(o.Remove(" "))).ToList();
@@ -145,8 +147,6 @@ public static class WebApplicationExtensions
                 );
             });
         }
-
-        application.UseMvc();
 
         return application;
     }

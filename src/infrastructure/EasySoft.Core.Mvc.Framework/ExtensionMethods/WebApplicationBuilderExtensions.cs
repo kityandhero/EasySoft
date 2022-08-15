@@ -112,7 +112,13 @@ public static class WebApplicationBuilderExtensions
     {
         var app = builder.Build();
 
+        AutofacAssist.Instance.Container = app.UseHostFiltering().ApplicationServices.GetAutofacRoot();
+
         ServiceAssist.ServiceProvider = app.Services;
+
+        // 中间件调用顺序请参阅: https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/middleware/?view=aspnetcore-6.0#middleware-order
+
+        app.UsePrepareStartWork();
 
         if (!app.Environment.IsDevelopment())
         {
@@ -125,26 +131,6 @@ public static class WebApplicationBuilderExtensions
         app.UseAdvanceStaticFiles();
 
         app.UseRouting();
-
-        app.UseAuthorization();
-
-        app.UseAdvanceMapControllers(areas);
-
-        app.UseAdvanceSwagger();
-
-        app.UseAdvanceHangfire();
-
-        app.RecordInformation(
-            "you can set your autoFac config with autoFac.json in ./configures/autoFac.json. The document link is https://autofac.readthedocs.io/en/latest/configuration/xml.html."
-        );
-
-        app.RecordInformation(
-            "you can get all controller actions by visit https://[host]:[port]/[controller]/getAllActions where controller inherited from CustomControllerBase."
-        );
-
-        AutofacAssist.Instance.Container = app.UseHostFiltering().ApplicationServices.GetAutofacRoot();
-
-        app.UsePrepareStartWork();
 
         if (GeneralConfigAssist.GetCorsEnable())
         {
@@ -160,6 +146,24 @@ public static class WebApplicationBuilderExtensions
                 "cors: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
             );
         }
+
+        app.UseAuthentication();
+
+        app.UseAuthorization();
+
+        app.UseAdvanceSwagger();
+
+        app.UseAdvanceHangfire();
+
+        app.RecordInformation(
+            "you can set your autoFac config with autoFac.json in ./configures/autoFac.json. The document link is https://autofac.readthedocs.io/en/latest/configuration/xml.html."
+        );
+
+        app.RecordInformation(
+            "you can get all controller actions by visit https://[host]:[port]/[controller]/getAllActions where controller inherited from CustomControllerBase."
+        );
+
+        app.UseAdvanceMapControllers(areas);
 
         return app;
     }
