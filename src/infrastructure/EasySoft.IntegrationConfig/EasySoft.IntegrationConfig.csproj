@@ -11,6 +11,7 @@
         <PackageProjectUrl>https://github.com/kityandhero/EasySoft</PackageProjectUrl>
         <RepositoryUrl>https://github.com/kityandhero/EasySoft</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
+        <PackageVersion>1.0.1</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -66,6 +67,9 @@
         </None>
         <None Update="configures\autofac.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="configures\generalConfig.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
 

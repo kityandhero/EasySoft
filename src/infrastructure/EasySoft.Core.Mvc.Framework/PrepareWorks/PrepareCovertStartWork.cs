@@ -18,6 +18,7 @@ internal class PrepareCovertStartWork : IPrepareCovertStartWork
         DatabaseConfigAssist.Init();
         DevelopConfigAssist.Init();
         ElasticSearchConfigAssist.Init();
+        GeneralConfigAssist.Init();
         HangfireConfigAssist.Init();
         JobConfigAssist.Init();
         LogConfigAssist.Init();

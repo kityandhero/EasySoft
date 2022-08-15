@@ -69,6 +69,17 @@ public static class WebApplicationBuilderAssist
         builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
+        if (GeneralConfigAssist.GetCorsEnable())
+        {
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    name: "specificOrigins",
+                    configPolicy => { configPolicy.WithOrigins(GeneralConfigAssist.GetCorsPolicies().ToArray()); }
+                );
+            });
+        }
+
         if (SwaggerConfigAssist.GetEnable())
         {
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -1,10 +1,12 @@
 ﻿using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Mvc.Framework.CommonAssists;
 using EasySoft.Core.Mvc.Framework.IocAssists;
 using EasySoft.Core.Mvc.Framework.PrepareWorks;
 using EasySoft.Core.Mvc.Framework.Selectors;
+using EasySoft.UtilityTools.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
@@ -144,7 +146,20 @@ public static class WebApplicationBuilderExtensions
 
         app.UsePrepareStartWork();
 
-        app.UseCors();
+        if (GeneralConfigAssist.GetCorsEnable())
+        {
+            app.UseCors();
+
+            app.RecordInformation(
+                $"cors: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}"
+            );
+        }
+        else
+        {
+            app.RecordInformation(
+                "cors: disable"
+            );
+        }
 
         return app;
     }

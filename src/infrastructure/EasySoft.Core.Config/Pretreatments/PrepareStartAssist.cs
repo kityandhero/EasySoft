@@ -30,6 +30,7 @@ public static class PrepareStartAssist
         var configureFileNameList = new List<Type>
         {
             typeof(SwaggerConfig),
+            typeof(GeneralConfig),
             typeof(HangfireConfig),
             typeof(BusinessConfig),
             typeof(DatabaseConfig),
