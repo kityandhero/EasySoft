@@ -21,7 +21,12 @@ public static class WebApplicationBuilderAssist
 {
     public static WebApplicationBuilder CreateBuilder(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
+        var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+        {
+            Args = args,
+            // Look for static files in webroot
+            WebRootPath = "webroot"
+        });
 
         builder.OpenAutoFac();
 

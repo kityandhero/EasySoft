@@ -114,7 +114,7 @@ public static class WebApplicationBuilderExtensions
 
         if (!app.Environment.IsDevelopment())
         {
-            app.UseExceptionHandler("/Error");
+            // app.UseExceptionHandler("/Error");
             app.UseHsts();
         }
 
@@ -143,6 +143,8 @@ public static class WebApplicationBuilderExtensions
         AutofacAssist.Instance.Container = app.UseHostFiltering().ApplicationServices.GetAutofacRoot();
 
         app.UsePrepareStartWork();
+
+        app.UseCors();
 
         return app;
     }
