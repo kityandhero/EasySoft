@@ -1,0 +1,12 @@
+# folder
+**/.vs
+**/.vscode
+**/.idea
+**/bin
+**/obj
+
+# file
+*.DotSettings.user
+*.csproj.user
+**/Debug
+**/net6.0
