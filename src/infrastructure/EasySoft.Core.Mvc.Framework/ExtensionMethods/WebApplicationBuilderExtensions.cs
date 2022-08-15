@@ -157,7 +157,7 @@ public static class WebApplicationBuilderExtensions
         else
         {
             app.RecordInformation(
-                "cors: disable"
+                "cors: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
             );
         }
 
