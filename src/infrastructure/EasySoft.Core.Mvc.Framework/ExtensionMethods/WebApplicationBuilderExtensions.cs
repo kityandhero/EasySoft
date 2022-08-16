@@ -147,9 +147,35 @@ public static class WebApplicationBuilderExtensions
             );
         }
 
-        app.UseAuthentication();
+        if (GeneralConfigAssist.GetUseAuthentication())
+        {
+            app.UseAuthentication();
 
-        app.UseAuthorization();
+            app.RecordInformation(
+                $"UseAuthentication: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}"
+            );
+        }
+        else
+        {
+            app.RecordInformation(
+                "UseAuthentication: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            );
+        }
+
+        if (GeneralConfigAssist.GetUseAuthorization())
+        {
+            app.UseAuthorization();
+
+            app.RecordInformation(
+                $"UseAuthorization: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}"
+            );
+        }
+        else
+        {
+            app.RecordInformation(
+                "UseAuthorization: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            );
+        }
 
         app.UseAdvanceSwagger();
 

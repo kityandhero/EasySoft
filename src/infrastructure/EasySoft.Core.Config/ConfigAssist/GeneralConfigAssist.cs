@@ -37,6 +37,38 @@ public static class GeneralConfigAssist
         return GeneralConfig.Instance;
     }
 
+    public static bool GetUseAuthentication()
+    {
+        var v = GetConfig().UseAuthentication;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt())
+        {
+            throw new Exception(
+                $"请配置 UseAuthentication: {ConfigFile} -> UseAuthentication,请设置 0/1"
+            );
+        }
+
+        return v.ToInt() == 1;
+    }
+
+    public static bool GetUseAuthorization()
+    {
+        var v = GetConfig().UseAuthorization;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt())
+        {
+            throw new Exception(
+                $"请配置 UseAuthorization: {ConfigFile} -> UseAuthorization,请设置 0/1"
+            );
+        }
+
+        return v.ToInt() == 1;
+    }
+
     public static bool GetCorsEnable()
     {
         var v = GetConfig().CorsEnable;
