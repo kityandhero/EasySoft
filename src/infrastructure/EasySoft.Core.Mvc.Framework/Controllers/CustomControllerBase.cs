@@ -9,7 +9,7 @@ using EasySoft.UtilityTools.Result;
 
 namespace EasySoft.Core.Mvc.Framework.Controllers;
 
-public class CustomControllerBase : ControllerBase
+public class CustomControllerBase : Controller
 {
     public IActionResult GetAllActions()
     {

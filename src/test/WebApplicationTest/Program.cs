@@ -53,6 +53,7 @@ if (app.Environment.IsDevelopment())
 //     var services = scope.ServiceProvider;
 //
 //     var context = services.GetRequiredService<DataContext>();
+//
 //     context.Database.EnsureCreated();
 // }
 
