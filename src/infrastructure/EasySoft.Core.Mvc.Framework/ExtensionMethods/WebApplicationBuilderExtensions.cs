@@ -28,8 +28,6 @@ public static class WebApplicationBuilderExtensions
 
         builder.UseControllerPropertiesAutowired(Assembly.GetEntryAssembly());
 
-        builder.UseTokenSecret();
-
         return builder;
     }
 
@@ -104,9 +102,35 @@ public static class WebApplicationBuilderExtensions
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
             containerBuilder.RegisterType<T>().As<ITokenSecretOptions>().SingleInstance();
-
-            FlagAssist.TokenSecretOptionInjectionComplete = true;
         });
+
+        FlagAssist.TokenSecretOptionInjectionComplete = true;
+        FlagAssist.TokenSecretOptionIsDefault = false;
+
+        return builder;
+    }
+
+    /// <summary>
+    /// 注入Token加解密工具
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static WebApplicationBuilder UseTokenSecretInjection<T>(
+        this WebApplicationBuilder builder
+    ) where T : ITokenSecretOptions
+    {
+        if (FlagAssist.TokenSecretInjectionComplete)
+        {
+            throw new Exception("UseTokenSecretInjection<T> disallow inject more than once");
+        }
+
+        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+        {
+            containerBuilder.RegisterType<T>().As<ITokenSecret>().SingleInstance();
+        });
+
+        FlagAssist.TokenSecretInjectionComplete = true;
 
         return builder;
     }
@@ -129,24 +153,28 @@ public static class WebApplicationBuilderExtensions
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
             containerBuilder.RegisterType<DefaultTokenSecretOptions>().As<ITokenSecretOptions>().SingleInstance();
-
-            FlagAssist.TokenSecretOptionInjectionComplete = true;
-            FlagAssist.TokenSecretOptionIsDefault = true;
         });
+
+        FlagAssist.TokenSecretOptionInjectionComplete = true;
+        FlagAssist.TokenSecretOptionIsDefault = true;
 
         return builder;
     }
 
     /// <summary>
-    /// 注入Token密钥配置
+    /// 注入默认Token密钥配置
     /// </summary>
     /// <param name="builder"></param>
-    /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    private static WebApplicationBuilder UseTokenSecret(
+    private static WebApplicationBuilder UseDefaultTokenSecret(
         this WebApplicationBuilder builder
     )
     {
+        if (FlagAssist.TokenSecretInjectionComplete)
+        {
+            throw new Exception("UseDefaultTokenSecret<T> disallow inject more than once");
+        }
+
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
             containerBuilder.RegisterType<TokenSecret>().As<ITokenSecret>().SingleInstance();
@@ -203,6 +231,11 @@ public static class WebApplicationBuilderExtensions
         if (!FlagAssist.TokenSecretOptionInjectionComplete)
         {
             builder.UseDefaultTokenSecretOptionsInjection();
+        }
+
+        if (!FlagAssist.TokenSecretInjectionComplete)
+        {
+            builder.UseDefaultTokenSecret();
         }
 
         var app = builder.Build();

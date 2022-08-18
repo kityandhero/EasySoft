@@ -47,17 +47,24 @@ namespace EasySoft.UtilityTools.Encryption
         /// <returns></returns>
         public static byte[] Encrypt(byte[] buffer, byte[] key)
         {
-            using var memoryStream = new MemoryStream();
-            using var cryptoStream = new CryptoStream(
-                memoryStream,
-                Aes.Create().CreateEncryptor(key, _iv),
-                CryptoStreamMode.Write
-            );
+            try
+            {
+                using var memoryStream = new MemoryStream();
+                using var cryptoStream = new CryptoStream(
+                    memoryStream,
+                    Aes.Create().CreateEncryptor(key, _iv),
+                    CryptoStreamMode.Write
+                );
 
-            cryptoStream.Write(buffer, 0, buffer.Length);
-            cryptoStream.FlushFinalBlock();
+                cryptoStream.Write(buffer, 0, buffer.Length);
+                cryptoStream.FlushFinalBlock();
 
-            return memoryStream.ToArray();
+                return memoryStream.ToArray();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Encrypt data fail");
+            }
         }
 
         /// <summary>
@@ -93,18 +100,25 @@ namespace EasySoft.UtilityTools.Encryption
         /// <returns></returns>
         public static byte[] Decrypt(byte[] buffer, byte[] key)
         {
-            using var memoryStream = new MemoryStream();
+            try
+            {
+                using var memoryStream = new MemoryStream();
 
-            using var cryptoStream = new CryptoStream(
-                memoryStream,
-                Aes.Create().CreateDecryptor(key, _iv),
-                CryptoStreamMode.Write
-            );
+                using var cryptoStream = new CryptoStream(
+                    memoryStream,
+                    Aes.Create().CreateDecryptor(key, _iv),
+                    CryptoStreamMode.Write
+                );
 
-            cryptoStream.Write(buffer, 0, buffer.Length);
-            cryptoStream.FlushFinalBlock();
+                cryptoStream.Write(buffer, 0, buffer.Length);
+                cryptoStream.FlushFinalBlock();
 
-            return memoryStream.ToArray();
+                return memoryStream.ToArray();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Decrypt data fail");
+            }
         }
     }
 }
