@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using EasySoft.UtilityTools.Assists;
-using SkiaSharp;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Drawing.Processing;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
 namespace EasySoft.UtilityTools.Media.Image
 {
@@ -105,51 +108,58 @@ namespace EasySoft.UtilityTools.Media.Image
         /// <returns></returns>
         public byte[] GetCaptcha(int width, int height, int lineNum = 1, int lineStrokeWidth = 1)
         {
+            // https://www.cnblogs.com/catcher1994/p/12897736.html
+
             var captchaText = GetRandomNumberString();
 
-            //创建bitmap位图
-            using var image2d = new SKBitmap(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
+            var code = GenCode(num);
+            var r = new Random();
 
-            //创建画笔
-            using var canvas = new SKCanvas(image2d);
+            using var image = new Image<Rgba32>(Width, Height);
 
-            //填充背景颜色为白色
-            canvas.DrawColor(SKColors.White);
+            // 字体
+            var font = SystemFonts.CreateFont(SystemFonts.Families.First().Name, 25, FontStyle.Bold);
 
-            //将文字写到画布上
-            using (var drawStyle = CreatePaint(SKColors.Black, height))
+            image.Mutate(ctx =>
             {
-                canvas.DrawText(captchaText, 1, height - 1, drawStyle);
-            }
+                // 白底背景
+                ctx.Fill(Color.White);
 
-            //画随机干扰线
-            using (var drawStyle = new SKPaint())
-            {
-                var random = new Random();
-
-                for (var i = 0; i < lineNum; i++)
+                // 画验证码
+                for (int i = 0; i < code.Length; i++)
                 {
-                    drawStyle.Color = ColorAssist.GetRandomColor();
-                    drawStyle.StrokeWidth = lineStrokeWidth;
-
-                    canvas.DrawLine(
-                        random.Next(0, width),
-                        random.Next(0, height),
-                        random.Next(0, width),
-                        random.Next(0, height),
-                        drawStyle
-                    );
+                    ctx.DrawText(code[i].ToString()
+                        , font
+                        , Colors[r.Next(Colors.Length)]
+                        , new PointF(20 * i + 10, r.Next(2, 12)));
                 }
-            }
 
-            //返回图片byte
-            using (var img = SKImage.FromBitmap(image2d))
-            {
-                using (var p = img.Encode(SKEncodedImageFormat.Png, 100))
+                // 画干扰线
+                for (int i = 0; i < 10; i++)
                 {
-                    return p.ToArray();
+                    var pen = new Pen(Colors[r.Next(Colors.Length)], 1);
+                    var p1 = new PointF(r.Next(Width), r.Next(Height));
+                    var p2 = new PointF(r.Next(Width), r.Next(Height));
+
+                    ctx.DrawLines(pen, p1, p2);
                 }
-            }
+
+                // 画噪点
+                for (int i = 0; i < 80; i++)
+                {
+                    var pen = new Pen(Colors[r.Next(Colors.Length)], 1);
+                    var p1 = new PointF(r.Next(Width), r.Next(Height));
+                    var p2 = new PointF(p1.X + 1f, p1.Y + 1f);
+
+                    ctx.DrawLines(pen, p1, p2);
+                }
+            });
+
+            using var ms = new System.IO.MemoryStream();
+
+            // gif 格式
+            image.SaveAsGif(ms);
+            return (code, ms.ToArray());
         }
 
         /// <summary>
@@ -171,5 +181,18 @@ namespace EasySoft.UtilityTools.Media.Image
         }
 
         #endregion
+
+        private static string GenCode(int num)
+        {
+            var code = string.Empty;
+            var r = new Random();
+
+            for (int i = 0; i < num; i++)
+            {
+                code += Chars[r.Next(Chars.Length)].ToString();
+            }
+
+            return code;
+        }
     }
 }
