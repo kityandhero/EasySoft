@@ -1,5 +1,5 @@
 ﻿using System.Text.Encodings.Web;
-using EasySoft.Core.Mvc.Framework.Controllers;
+using EasySoft.Core.Web.Framework.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using WebApplicationTest.Models;
 

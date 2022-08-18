@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationTest", "test\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Config", "infrastructure\EasySoft.Core.Config\EasySoft.Core.Config.csproj", "{3BA2690C-5395-4B9C-83A3-E6CA11FBFCE5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Web.Framework", "infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj", "{E7040D87-0900-424F-987E-8150135362E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{3BA2690C-5395-4B9C-83A3-E6CA11FBFCE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BA2690C-5395-4B9C-83A3-E6CA11FBFCE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BA2690C-5395-4B9C-83A3-E6CA11FBFCE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7040D87-0900-424F-987E-8150135362E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7040D87-0900-424F-987E-8150135362E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7040D87-0900-424F-987E-8150135362E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7040D87-0900-424F-987E-8150135362E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +117,7 @@ Global
 		{B40C1E55-6D91-4DE8-B06F-70DBF20B3837} = {3A5000A7-B37E-4A5D-8668-82E7E2681993}
 		{1690D828-90C4-43A3-9C0D-A3047558B51B} = {3A5000A7-B37E-4A5D-8668-82E7E2681993}
 		{3BA2690C-5395-4B9C-83A3-E6CA11FBFCE5} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{E7040D87-0900-424F-987E-8150135362E9} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

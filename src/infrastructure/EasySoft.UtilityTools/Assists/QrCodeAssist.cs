@@ -1,7 +1,8 @@
 ﻿using QRCoder;
 using System;
-using System.Drawing;
 using System.IO;
+using SixLabors.ImageSharp;
+using SkiaSharp;
 
 namespace EasySoft.UtilityTools.Assists
 {
@@ -20,7 +21,9 @@ namespace EasySoft.UtilityTools.Assists
 
             using (var ms = new MemoryStream(bytesQrCode))
             {
-                var image = Image.FromStream(ms);
+   
+         
+                using var image = SKImage.(ms);
 
                 // var g = Graphics.FromImage(image);
                 //
@@ -29,7 +32,7 @@ namespace EasySoft.UtilityTools.Assists
                 // var bitmap = new Bitmap(520, 520, g);
 
                 //保存为PNG到内存流
-                image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                image.SaveAsPng(ms);
 
                 //输出二维码图片
                 var bytes = ms.ToArray();

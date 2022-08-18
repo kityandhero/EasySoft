@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Drawing;
+using System.Collections.Generic;
 using System.Globalization;
 using EasySoft.UtilityTools.Assists;
+using SkiaSharp;
 
 namespace EasySoft.UtilityTools.Media.Image
 {
@@ -10,6 +11,8 @@ namespace EasySoft.UtilityTools.Media.Image
     /// </summary>
     public class Captcha
     {
+        public List<SKColor> Colors { get; set; }
+
         #region 验证码
 
         /// <summary>
@@ -33,18 +36,7 @@ namespace EasySoft.UtilityTools.Media.Image
         public bool Bending { get; set; }
 
         private readonly char[] _chars = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm".ToCharArray();
-        private readonly char[] _numberchars = "0123456789".ToCharArray();
-
-        private readonly string[] _fonts =
-        {
-            "Arial", "Georgia"
-        };
-
-        /// <summary>  
-        /// 产生波形滤镜效果  
-        /// </summary>  
-        //private const double Pi = 3.1415926535897932384626433832795;
-        private const double Pi2 = 6.283185307179586476925286766559;
+        private readonly char[] _numberChars = "0123456789".ToCharArray();
 
         /// <summary>
         /// 
@@ -55,6 +47,10 @@ namespace EasySoft.UtilityTools.Media.Image
             LetterWidth = 15;
             LetterHeight = 27;
             Bending = false;
+
+            Colors = new List<SKColor>
+            {
+            };
         }
 
         /// <summary>
@@ -75,114 +71,85 @@ namespace EasySoft.UtilityTools.Media.Image
         }
 
         /// <summary>
-        /// 获取验证码图片
+        /// 创建画笔
         /// </summary>
-        /// <param name="checkCode">验证码文本</param>
+        /// <param name="color"></param>
+        /// <param name="fontSize"></param>
         /// <returns></returns>
-        public Bitmap GetImage(out string checkCode)
+        private SKPaint CreatePaint(SKColor color, float fontSize)
         {
-            checkCode = GetRandomNumberString();
-            var intImageWidth = checkCode.Length * LetterWidth + 5;
-            var newRandom = new Random();
-            var image = new Bitmap(intImageWidth, LetterHeight);
-            var g = Graphics.FromImage(image);
+            var font = SKTypeface.FromFamilyName(
+                null,
+                SKFontStyleWeight.SemiBold,
+                SKFontStyleWidth.ExtraCondensed,
+                SKFontStyleSlant.Upright
+            );
 
-            //生成随机生成器  
-            var random = new Random();
+            var paint = new SKPaint();
 
-            //白色背景  
-            g.Clear(Color.White);
+            paint.IsAntialias = true;
+            paint.Color = color;
+            paint.Typeface = font;
+            paint.TextSize = fontSize;
 
-            //画图片的背景噪音线  
-            for (var i = 0; i < 10; i++)
-            {
-                var x1 = random.Next(image.Width);
-                var x2 = random.Next(image.Width);
-                var y1 = random.Next(image.Height);
-                var y2 = random.Next(image.Height);
-
-                g.DrawLine(new Pen(Color.Silver), x1, y1, x2, y2);
-            }
-
-            //画图片的前景噪音点  
-            for (var i = 0; i < 10; i++)
-            {
-                var x = random.Next(image.Width);
-                var y = random.Next(image.Height);
-
-                image.SetPixel(x, y, Color.FromArgb(random.Next()));
-            }
-
-            //随机字体和颜色的验证码字符  
-            for (var intIndex = 0; intIndex < checkCode.Length; intIndex++)
-            {
-                var fontIndex = newRandom.Next(_fonts.Length - 1);
-                var strChar = checkCode.Substring(intIndex, 1);
-                var newBrush = new SolidBrush(ColorAssist.GetRandomColor());
-                var thePos = new Point(
-                    intIndex * LetterWidth + 1 + newRandom.Next(3),
-                    1 + newRandom.Next(3)
-                ); //5+1+a+s+p+x
-
-                g.DrawString(strChar, new Font(_fonts[fontIndex], 14, FontStyle.Bold), newBrush, thePos);
-            }
-
-            //灰色边框  
-            g.DrawRectangle(new Pen(Color.LightGray, 1), 0, 0, intImageWidth - 1, (LetterHeight - 1));
-
-            //图片扭曲  
-            if (Bending)
-            {
-                image = TwistImage(image, true, 3, 4);
-            }
-
-            return image;
+            return paint;
         }
 
-        /// <summary>  
-        /// 正弦曲线Wave扭曲图片  
-        /// </summary>  
-        /// <param name="srcBmp">图片路径</param>  
-        /// <param name="bXDir">如果扭曲则选择为True</param>  
-        /// <param name="dMultValue">波形的幅度倍数，越大扭曲的程度越高，一般为3</param>
-        /// <param name="dPhase">波形的起始相位，取值区间[0-2*PI)</param>  
-        /// <returns></returns>  
-        public Bitmap TwistImage(Bitmap srcBmp, bool bXDir, double dMultValue, double dPhase)
+        /// <summary>
+        /// 获取验证码
+        /// </summary>
+        /// <param name="width">图片宽度</param>
+        /// <param name="height">图片高度</param>
+        /// <param name="lineNum">干扰线数量</param>
+        /// <param name="lineStrokeWidth">干扰线宽度</param>
+        /// <returns></returns>
+        public byte[] GetCaptcha(int width, int height, int lineNum = 1, int lineStrokeWidth = 1)
         {
-            var destBmp = new Bitmap(srcBmp.Width, srcBmp.Height);
+            var captchaText = GetRandomNumberString();
 
-            // 将位图背景填充为白色  
-            var graph = Graphics.FromImage(destBmp);
+            //创建bitmap位图
+            using var image2d = new SKBitmap(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
 
-            graph.FillRectangle(new SolidBrush(Color.White), 0, 0, destBmp.Width, destBmp.Height);
+            //创建画笔
+            using var canvas = new SKCanvas(image2d);
 
-            graph.Dispose();
+            //填充背景颜色为白色
+            canvas.DrawColor(SKColors.White);
 
-            var dBaseAxisLen = bXDir ? destBmp.Height : (double)destBmp.Width;
-
-            for (var i = 0; i < destBmp.Width; i++)
+            //将文字写到画布上
+            using (var drawStyle = CreatePaint(SKColors.Black, height))
             {
-                for (var j = 0; j < destBmp.Height; j++)
+                canvas.DrawText(captchaText, 1, height - 1, drawStyle);
+            }
+
+            //画随机干扰线
+            using (var drawStyle = new SKPaint())
+            {
+                var random = new Random();
+
+                for (var i = 0; i < lineNum; i++)
                 {
-                    var dx = bXDir ? (Pi2 * j) / dBaseAxisLen : (Pi2 * i) / dBaseAxisLen;
+                    drawStyle.Color = ColorAssist.GetRandomColor();
+                    drawStyle.StrokeWidth = lineStrokeWidth;
 
-                    dx += dPhase;
-
-                    var dy = Math.Sin(dx);
-
-                    // 取得当前点的颜色  
-                    var nOldX = bXDir ? i + (int)(dy * dMultValue) : i;
-                    var nOldY = bXDir ? j : j + (int)(dy * dMultValue);
-
-                    var color = srcBmp.GetPixel(i, j);
-                    if (nOldX >= 0 && nOldX < destBmp.Width && nOldY >= 0 && nOldY < destBmp.Height)
-                    {
-                        destBmp.SetPixel(nOldX, nOldY, color);
-                    }
+                    canvas.DrawLine(
+                        random.Next(0, width),
+                        random.Next(0, height),
+                        random.Next(0, width),
+                        random.Next(0, height),
+                        drawStyle
+                    );
                 }
             }
 
-            return destBmp;
+            //返回图片byte
+            using (var img = SKImage.FromBitmap(image2d))
+            {
+                using (var p = img.Encode(SKEncodedImageFormat.Png, 100))
+                {
+                    return p.ToArray();
+                }
+            }
         }
 
         /// <summary>
@@ -196,7 +163,7 @@ namespace EasySoft.UtilityTools.Media.Image
 
             for (var i = 0; i < LetterCount; i++)
             {
-                validateCode += _numberchars[random.Next(0, _numberchars.Length)]
+                validateCode += _numberChars[random.Next(0, _numberChars.Length)]
                     .ToString(CultureInfo.InvariantCulture);
             }
 

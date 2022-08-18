@@ -1,5 +1,5 @@
-﻿using EntityFrameworkTest.Entities;
-using EasySoft.Core.Mvc.Framework.Services;
+﻿using EasySoft.Core.Web.Framework.Services;
+using EntityFrameworkTest.Entities;
 using EasySoft.UtilityTools.Result;
 
 namespace EntityFrameworkTest.IServices;

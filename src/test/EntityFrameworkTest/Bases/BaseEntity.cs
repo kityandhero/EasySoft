@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Mvc.Framework.Entities;
+﻿using EasySoft.Core.Web.Framework.Entities;
 
 namespace EntityFrameworkTest.Bases;
 

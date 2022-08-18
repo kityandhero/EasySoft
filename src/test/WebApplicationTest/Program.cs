@@ -2,13 +2,13 @@ using Autofac;
 using AutoFacTest.Implementations;
 using AutoFacTest.Interfaces;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.Web.Framework.BuilderAssists;
+using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EntityFrameworkTest.Contexts;
 using EntityFrameworkTest.IRepositories;
 using EntityFrameworkTest.IServices;
 using EntityFrameworkTest.Repositories;
 using EntityFrameworkTest.Services;
-using EasySoft.Core.Mvc.Framework.BuilderAssists;
-using EasySoft.Core.Mvc.Framework.ExtensionMethods;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using WebApplicationTest.Configures;
@@ -27,14 +27,16 @@ builder.Services.AddDbContext<DataContext>(
     }
 );
 
-builder.UsePrepareStartWorkInjection<SimplePrepareStartWork>();
+WebApplicationBuilderExtensions.UsePrepareStartWorkInjection<SimplePrepareStartWork>(builder);
 
 //自定义静态文件配置 如有特殊需求，可以进行配置，不配置将采用内置选项，此处仅作为有需要时的样例
 // builder.UseStaticFileOptionsInjection<CustomStaticFileOptions>();
 
-builder.UseTokenSecretOptionsInjection<CustomTokenSecretOptions>();
+WebApplicationBuilderExtensions.UseTokenSecretOptionsInjection<CustomTokenSecretOptions>(builder);
 
-builder.UseExtraNormalInjection(containerBuilder =>
+// builder.UseTokenSecretInjection<CustomTokenSecret>();
+
+WebApplicationBuilderExtensions.UseExtraNormalInjection(builder, containerBuilder =>
 {
     containerBuilder.RegisterType<Simple>().As<ISimple>().SingleInstance();
 
@@ -51,7 +53,7 @@ builder.UseExtraNormalInjection(containerBuilder =>
 // SignalR
 builder.Services.AddSignalR();
 
-var app = builder.EasyBuild(new List<string> { "AreaTest" });
+var app = WebApplicationBuilderExtensions.EasyBuild(builder, new List<string> { "AreaTest" });
 
 if (app.Environment.IsDevelopment())
 {

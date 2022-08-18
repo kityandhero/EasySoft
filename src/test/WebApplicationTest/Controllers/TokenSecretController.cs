@@ -1,6 +1,6 @@
-﻿using EasySoft.Core.Mvc.Framework.AccessControl;
-using EasySoft.Core.Mvc.Framework.Controllers;
-using EasySoft.Core.Mvc.Framework.ExtensionMethods;
+﻿using EasySoft.Core.Web.Framework.AccessControl;
+using EasySoft.Core.Web.Framework.Controllers;
+using EasySoft.Core.Web.Framework.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Controllers;
@@ -18,21 +18,21 @@ public class TokenSecretController : CustomControllerBase
     {
         var v = _tokenSecret.Encrypt(value);
 
-        return this.Success(v);
+        return ControllerExtensions.Success(this, v);
     }
 
     public IActionResult EncryptWithExpirationTime(string value)
     {
         var v = _tokenSecret.EncryptWithExpirationTime(value, TimeSpan.FromHours(8));
 
-        return this.Success(v);
+        return ControllerExtensions.Success(this, v);
     }
 
     public IActionResult Decrypt(string value)
     {
         var v = _tokenSecret.Decrypt(value);
 
-        return this.Success(new
+        return ControllerExtensions.Success(this, new
         {
             value = v
         });
@@ -42,7 +42,7 @@ public class TokenSecretController : CustomControllerBase
     {
         var v = _tokenSecret.DecryptWithExpirationTime(value, out var expired);
 
-        return this.Success(new
+        return ControllerExtensions.Success(this, new
         {
             value = v,
             expired

@@ -1,6 +1,6 @@
-﻿using EntityFrameworkTest.Contexts;
-using EasySoft.Core.Mvc.Framework.Controllers;
-using EasySoft.Core.Mvc.Framework.Results;
+﻿using EasySoft.Core.Web.Framework.Controllers;
+using EasySoft.Core.Web.Framework.Results;
+using EntityFrameworkTest.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using EasySoft.UtilityTools.Enums;

@@ -1,7 +1,7 @@
-﻿using EntityFrameworkTest.Contexts;
+﻿using EasySoft.Core.Web.Framework.Repositories.EF;
+using EntityFrameworkTest.Contexts;
 using EntityFrameworkTest.Entities;
 using EntityFrameworkTest.IRepositories;
-using EasySoft.Core.Mvc.Framework.Repositories.EF;
 using Microsoft.EntityFrameworkCore;
 using EasySoft.UtilityTools.Enums;
 using EasySoft.UtilityTools.Result;

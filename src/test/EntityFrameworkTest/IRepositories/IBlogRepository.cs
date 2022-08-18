@@ -1,5 +1,5 @@
-﻿using EntityFrameworkTest.Entities;
-using EasySoft.Core.Mvc.Framework.Repositories;
+﻿using EasySoft.Core.Web.Framework.Repositories;
+using EntityFrameworkTest.Entities;
 using EasySoft.UtilityTools.Result;
 
 namespace EntityFrameworkTest.IRepositories;

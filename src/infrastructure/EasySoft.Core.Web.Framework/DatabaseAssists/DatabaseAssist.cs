@@ -1,0 +1,11 @@
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace EasySoft.Core.Web.Framework.DatabaseAssists;
+
+public static class DatabaseAssist
+{
+    public static void Initialize(DbContext context)
+    {
+        context.Database.EnsureCreated();
+    }
+}

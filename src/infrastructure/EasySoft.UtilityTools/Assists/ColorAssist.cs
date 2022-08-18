@@ -1,28 +1,165 @@
 ﻿using System;
-using System.Drawing;
+using System.Collections.Generic;
+using SkiaSharp;
 
 namespace EasySoft.UtilityTools.Assists
 {
     public static class ColorAssist
     {
+        public static List<SKColor> Colors = new()
+        {
+            SKColors.AliceBlue,
+            SKColors.PaleGreen,
+            SKColors.PaleGoldenrod,
+            SKColors.Orchid,
+            SKColors.OrangeRed,
+            SKColors.Orange,
+            SKColors.OliveDrab,
+            SKColors.Olive,
+            SKColors.OldLace,
+            SKColors.Navy,
+            SKColors.NavajoWhite,
+            SKColors.Moccasin,
+            SKColors.MistyRose,
+            SKColors.MintCream,
+            SKColors.MidnightBlue,
+            SKColors.MediumVioletRed,
+            SKColors.MediumTurquoise,
+            SKColors.MediumSpringGreen,
+            SKColors.LightSlateGray,
+            SKColors.LightSteelBlue,
+            SKColors.LightYellow,
+            SKColors.Lime,
+            SKColors.LimeGreen,
+            SKColors.Linen,
+            SKColors.PaleTurquoise,
+            SKColors.Magenta,
+            SKColors.MediumAquamarine,
+            SKColors.MediumBlue,
+            SKColors.MediumOrchid,
+            SKColors.MediumPurple,
+            SKColors.MediumSeaGreen,
+            SKColors.MediumSlateBlue,
+            SKColors.Maroon,
+            SKColors.PaleVioletRed,
+            SKColors.PapayaWhip,
+            SKColors.PeachPuff,
+            SKColors.Snow,
+            SKColors.SpringGreen,
+            SKColors.SteelBlue,
+            SKColors.Tan,
+            SKColors.Teal,
+            SKColors.Thistle,
+            SKColors.SlateGray,
+            SKColors.Tomato,
+            SKColors.Violet,
+            SKColors.Wheat,
+            SKColors.White,
+            SKColors.WhiteSmoke,
+            SKColors.Yellow,
+            SKColors.YellowGreen,
+            SKColors.Turquoise,
+            SKColors.LightSkyBlue,
+            SKColors.SlateBlue,
+            SKColors.Silver,
+            SKColors.Peru,
+            SKColors.Pink,
+            SKColors.Plum,
+            SKColors.PowderBlue,
+            SKColors.Purple,
+            SKColors.Red,
+            SKColors.SkyBlue,
+            SKColors.RosyBrown,
+            SKColors.SaddleBrown,
+            SKColors.Salmon,
+            SKColors.SandyBrown,
+            SKColors.SeaGreen,
+            SKColors.SeaShell,
+            SKColors.Sienna,
+            SKColors.RoyalBlue,
+            SKColors.LightSeaGreen,
+            SKColors.LightSalmon,
+            SKColors.LightPink,
+            SKColors.Crimson,
+            SKColors.Cyan,
+            SKColors.DarkBlue,
+            SKColors.DarkCyan,
+            SKColors.DarkGoldenrod,
+            SKColors.DarkGray,
+            SKColors.Cornsilk,
+            SKColors.DarkGreen,
+            SKColors.DarkMagenta,
+            SKColors.DarkOliveGreen,
+            SKColors.DarkOrange,
+            SKColors.DarkOrchid,
+            SKColors.DarkRed,
+            SKColors.DarkSalmon,
+            SKColors.DarkKhaki,
+            SKColors.DarkSeaGreen,
+            SKColors.CornflowerBlue,
+            SKColors.Chocolate,
+            SKColors.AntiqueWhite,
+            SKColors.Aqua,
+            SKColors.Aquamarine,
+            SKColors.Azure,
+            SKColors.Beige,
+            SKColors.Bisque,
+            SKColors.Coral,
+            SKColors.Black,
+            SKColors.Blue,
+            SKColors.BlueViolet,
+            SKColors.Brown,
+            SKColors.BurlyWood,
+            SKColors.CadetBlue,
+            SKColors.Chartreuse,
+            SKColors.BlanchedAlmond,
+            SKColors.Transparent,
+            SKColors.DarkSlateBlue,
+            SKColors.DarkTurquoise,
+            SKColors.IndianRed,
+            SKColors.Indigo,
+            SKColors.Ivory,
+            SKColors.Khaki,
+            SKColors.Lavender,
+            SKColors.LavenderBlush,
+            SKColors.HotPink,
+            SKColors.LawnGreen,
+            SKColors.LightBlue,
+            SKColors.LightCoral,
+            SKColors.LightCyan,
+            SKColors.LightGoldenrodYellow,
+            SKColors.LightGray,
+            SKColors.LightGreen,
+            SKColors.LemonChiffon,
+            SKColors.DarkSlateGray,
+            SKColors.Honeydew,
+            SKColors.Green,
+            SKColors.DarkViolet,
+            SKColors.DeepPink,
+            SKColors.DeepSkyBlue,
+            SKColors.DimGray,
+            SKColors.DodgerBlue,
+            SKColors.Firebrick,
+            SKColors.GreenYellow,
+            SKColors.FloralWhite,
+            SKColors.Fuchsia,
+            SKColors.Gainsboro,
+            SKColors.GhostWhite,
+            SKColors.Gold,
+            SKColors.Goldenrod,
+            SKColors.Gray,
+            SKColors.ForestGreen
+        };
+
         /// <summary>
         /// 获取随机颜色
         /// </summary>
         /// <returns></returns>
-        public static Color GetRandomColor()
+        public static SKColor GetRandomColor()
         {
-            var randomNumFirst = new Random((int)DateTime.Now.Ticks);
+            var random = new Random();
 
-            System.Threading.Thread.Sleep(randomNumFirst.Next(50));
-
-            var randomNumSecond = new Random((int)DateTime.Now.Ticks);
-            var intRed = randomNumFirst.Next(210);
-            var intGreen = randomNumSecond.Next(180);
-            var intBlue = (intRed + intGreen > 300) ? 0 : 400 - intRed - intGreen;
-
-            intBlue = (intBlue > 255) ? 255 : intBlue;
-
-            return Color.FromArgb(intRed, intGreen, intBlue);
+            return Colors[random.Next(Colors.Count)];
         }
     }
 }
