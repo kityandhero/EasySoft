@@ -10,6 +10,7 @@ using EntityFrameworkTest.Services;
 using EasySoft.Core.Mvc.Framework.BuilderAssists;
 using EasySoft.Core.Mvc.Framework.ExtensionMethods;
 using Microsoft.EntityFrameworkCore;
+using WebApplicationTest.Hubs;
 using WebApplicationTest.PrepareStartWorks;
 
 var builder = WebApplicationBuilderAssist.CreateBuilder(args);
@@ -39,6 +40,9 @@ builder.AddExtraNormalInjection(containerBuilder =>
     containerBuilder.RegisterType<BlogService>().As<IBlogService>().InstancePerDependency().AsImplementedInterfaces();
 });
 
+// SignalR
+builder.Services.AddSignalR();
+
 var app = builder.EasyBuild(new List<string> { "AreaTest" });
 
 if (app.Environment.IsDevelopment())
@@ -58,5 +62,8 @@ if (app.Environment.IsDevelopment())
 // }
 
 app.MapGet("/", () => "Hello World!");
+
+// SignalR
+app.MapHub<ChatHub>("/chatHub");
 
 app.Run();
