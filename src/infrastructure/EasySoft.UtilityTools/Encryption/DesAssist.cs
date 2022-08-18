@@ -36,6 +36,7 @@ namespace EasySoft.UtilityTools.Encryption
         {
             var buffer = Encoding.UTF8.GetBytes(plainText);
             var cipher = Encrypt(buffer, key);
+
             return Convert.ToBase64String(cipher);
         }
 
