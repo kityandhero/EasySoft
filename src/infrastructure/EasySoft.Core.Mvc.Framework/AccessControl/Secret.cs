@@ -4,13 +4,13 @@ using EasySoft.UtilityTools.Media.Image;
 
 namespace EasySoft.Core.Mvc.Framework.AccessControl
 {
-    public class Secret
+    public class Secret : ISecret
     {
-        private string Key { get; }
+        private ISecretOptions SecretOptions { get; }
 
-        public Secret(string key)
+        public Secret(ISecretOptions secretOptions)
         {
-            Key = key;
+            SecretOptions = secretOptions;
         }
 
         public string Encrypt(string source)
@@ -24,7 +24,7 @@ namespace EasySoft.Core.Mvc.Framework.AccessControl
 
             source = c.GetRandomString() + source + RandomEx.CreateRandomCode(4);
 
-            var result = DesAssist.Encrypt(source, Key);
+            var result = DesAssist.Encrypt(source, SecretOptions.GetKey());
 
             result = result.Replace("=", "")
                 .Replace("+", "-")
@@ -52,7 +52,7 @@ namespace EasySoft.Core.Mvc.Framework.AccessControl
             source = c.GetRandomString() + expirationTime.ToString("yyyy-MM-dd HH:mm:ss") + source +
                      RandomEx.CreateRandomCode(4);
 
-            var result = DesAssist.Encrypt(source, Key);
+            var result = DesAssist.Encrypt(source, SecretOptions.GetKey());
 
             result = result.Replace("=", "")
                 .Replace("+", "-")
@@ -85,7 +85,7 @@ namespace EasySoft.Core.Mvc.Framework.AccessControl
                 }
             }
 
-            result = DesAssist.Decrypt(target, Key);
+            result = DesAssist.Decrypt(target, SecretOptions.GetKey());
             result = result.Substring(0, result.Length - 4);
             result = result.Substring(4);
 
@@ -123,7 +123,7 @@ namespace EasySoft.Core.Mvc.Framework.AccessControl
                 }
             }
 
-            result = DesAssist.Decrypt(target, Key);
+            result = DesAssist.Decrypt(target, SecretOptions.GetKey());
             result = result.Substring(0, result.Length - 4);
             result = result.Substring(4);
 

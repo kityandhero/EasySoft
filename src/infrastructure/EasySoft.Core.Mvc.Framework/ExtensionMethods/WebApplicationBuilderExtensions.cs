@@ -2,6 +2,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.Mvc.Framework.AccessControl;
 using EasySoft.Core.Mvc.Framework.CommonAssists;
 using EasySoft.Core.Mvc.Framework.IocAssists;
 using EasySoft.Core.Mvc.Framework.PrepareWorks;
@@ -15,7 +16,7 @@ namespace EasySoft.Core.Mvc.Framework.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
-    public static WebApplicationBuilder OpenAutoFac(
+    public static WebApplicationBuilder UseAdvanceAutoFac(
         this WebApplicationBuilder builder
     )
     {
@@ -23,9 +24,11 @@ public static class WebApplicationBuilderExtensions
 
         builder.Host.ConfigureContainer<ContainerBuilder>(AutofacAssist.Init);
 
-        builder.AddCovertInjection();
+        builder.UseCovertInjection();
 
-        builder.AddControllerPropertiesAutowired(Assembly.GetEntryAssembly());
+        builder.UseControllerPropertiesAutowired(Assembly.GetEntryAssembly());
+
+        builder.UseTokenSecret();
 
         return builder;
     }
@@ -35,7 +38,7 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    private static WebApplicationBuilder AddCovertInjection(
+    private static WebApplicationBuilder UseCovertInjection(
         this WebApplicationBuilder builder
     )
     {
@@ -53,7 +56,7 @@ public static class WebApplicationBuilderExtensions
     /// <param name="builder"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static WebApplicationBuilder AddPrepareStartWorkInjection<T>(
+    public static WebApplicationBuilder UsePrepareStartWorkInjection<T>(
         this WebApplicationBuilder builder
     ) where T : IPrepareStartWork
     {
@@ -71,7 +74,7 @@ public static class WebApplicationBuilderExtensions
     /// <param name="builder"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static WebApplicationBuilder AddStaticFileOptionsInjection<T>(
+    public static WebApplicationBuilder UseStaticFileOptionsInjection<T>(
         this WebApplicationBuilder builder
     ) where T : StaticFileOptions
     {
@@ -83,7 +86,76 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
-    public static WebApplicationBuilder AddExtraNormalInjection(
+    /// <summary>
+    /// 注入Token密钥配置
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static WebApplicationBuilder UseTokenSecretOptionsInjection<T>(
+        this WebApplicationBuilder builder
+    ) where T : ITokenSecretOptions
+    {
+        if (FlagAssist.TokenSecretOptionInjectionComplete)
+        {
+            throw new Exception("UseTokenSecretOptionsInjection<T> disallow inject more than once");
+        }
+
+        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+        {
+            containerBuilder.RegisterType<T>().As<ITokenSecretOptions>().SingleInstance();
+
+            FlagAssist.TokenSecretOptionInjectionComplete = true;
+        });
+
+        return builder;
+    }
+
+    /// <summary>
+    /// 注入Token密钥配置
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    private static WebApplicationBuilder UseDefaultTokenSecretOptionsInjection(
+        this WebApplicationBuilder builder
+    )
+    {
+        if (FlagAssist.TokenSecretOptionInjectionComplete)
+        {
+            throw new Exception("UseTokenSecretOptionsInjection<T> disallow inject more than once");
+        }
+
+        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+        {
+            containerBuilder.RegisterType<DefaultTokenSecretOptions>().As<ITokenSecretOptions>().SingleInstance();
+
+            FlagAssist.TokenSecretOptionInjectionComplete = true;
+            FlagAssist.TokenSecretOptionIsDefault = true;
+        });
+
+        return builder;
+    }
+
+    /// <summary>
+    /// 注入Token密钥配置
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    private static WebApplicationBuilder UseTokenSecret(
+        this WebApplicationBuilder builder
+    )
+    {
+        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+        {
+            containerBuilder.RegisterType<TokenSecret>().As<ITokenSecret>().SingleInstance();
+        });
+
+        return builder;
+    }
+
+    public static WebApplicationBuilder UseExtraNormalInjection(
         this WebApplicationBuilder builder,
         Action<ContainerBuilder> action
     )
@@ -98,7 +170,7 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
-    public static WebApplicationBuilder AddControllerPropertiesAutowired(
+    public static WebApplicationBuilder UseControllerPropertiesAutowired(
         this WebApplicationBuilder builder,
         Assembly? assembly
     )
@@ -128,6 +200,11 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplication EasyBuild(this WebApplicationBuilder builder, List<string> areas)
     {
+        if (!FlagAssist.TokenSecretOptionInjectionComplete)
+        {
+            builder.UseDefaultTokenSecretOptionsInjection();
+        }
+
         var app = builder.Build();
 
         AutofacAssist.Instance.Container = app.UseHostFiltering().ApplicationServices.GetAutofacRoot();
@@ -142,6 +219,13 @@ public static class WebApplicationBuilderExtensions
         {
             // app.UseExceptionHandler("/Error");
             app.UseHsts();
+        }
+
+        if (FlagAssist.TokenSecretOptionIsDefault)
+        {
+            app.RecordWarning(
+                "TokenSecretOption use DefaultTokenSecretOption, it is not safe, suggest using builder.UseTokenSecretOptionsInjection<T>()."
+            );
         }
 
         app.UseHttpsRedirection();

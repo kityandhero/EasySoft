@@ -28,7 +28,7 @@ public static class WebApplicationBuilderAssist
             WebRootPath = "webroot"
         });
 
-        builder.OpenAutoFac();
+        builder.UseAdvanceAutoFac();
 
         return BuildOther(builder);
     }

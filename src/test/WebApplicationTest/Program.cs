@@ -26,12 +26,12 @@ builder.Services.AddDbContext<DataContext>(
     }
 );
 
-builder.AddPrepareStartWorkInjection<SimplePrepareStartWork>();
+builder.UsePrepareStartWorkInjection<SimplePrepareStartWork>();
 
 //自定义静态文件配置 如有特殊需求，可以进行配置，不配置将采用内置选项，此处仅作为有需要时的样例
-// builder.AddStaticFileOptionsInjection<CustomStaticFileOptions>();
+// builder.UseStaticFileOptionsInjection<CustomStaticFileOptions>();
 
-builder.AddExtraNormalInjection(containerBuilder =>
+builder.UseExtraNormalInjection(containerBuilder =>
 {
     containerBuilder.RegisterType<Simple>().As<ISimple>().SingleInstance();
 

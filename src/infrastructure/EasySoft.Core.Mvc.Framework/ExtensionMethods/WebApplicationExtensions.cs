@@ -183,4 +183,20 @@ public static class WebApplicationExtensions
 
         return application;
     }
+
+    internal static WebApplication RecordWarning(
+        this WebApplication application,
+        string log
+    )
+    {
+        application.Logger.Log(
+            LogLevel.Warning,
+            0,
+            log,
+            null,
+            (info, _) => info
+        );
+
+        return application;
+    }
 }

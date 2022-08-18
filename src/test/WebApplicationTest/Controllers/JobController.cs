@@ -27,6 +27,6 @@ public class JobController : CustomControllerBase
 
     public IActionResult TestAutowired()
     {
-        return Content(SimpleAutowired.GetValue().ToString());
+        return Content(SimpleAutowired!.GetValue().ToString());
     }
 }
