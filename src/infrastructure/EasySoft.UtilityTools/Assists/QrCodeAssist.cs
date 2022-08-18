@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 using SixLabors.ImageSharp;
-using SkiaSharp;
 
 namespace EasySoft.UtilityTools.Assists
 {
@@ -21,9 +20,7 @@ namespace EasySoft.UtilityTools.Assists
 
             using (var ms = new MemoryStream(bytesQrCode))
             {
-   
-         
-                using var image = SKImage.(ms);
+                using var image = Image.Load(ms);
 
                 // var g = Graphics.FromImage(image);
                 //
