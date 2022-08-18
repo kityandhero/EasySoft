@@ -224,7 +224,7 @@ public static class WebApplicationBuilderExtensions
         if (FlagAssist.TokenSecretOptionIsDefault)
         {
             app.RecordWarning(
-                "TokenSecretOption use DefaultTokenSecretOption, it is not safe, suggest using builder.UseTokenSecretOptionsInjection<T>()."
+                "TokenSecretOption use DefaultTokenSecretOption, it is not safe, suggest using builder.UseTokenSecretOptionsInjection<T>() with your TokenSecretOption."
             );
         }
 
