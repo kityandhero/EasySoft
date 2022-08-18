@@ -1,4 +1,4 @@
-﻿@* @model dynamic *@
+﻿@model dynamic
 
 @{
     ViewBag.Title = "title";
@@ -40,6 +40,6 @@
 </div>
 
 @section Scripts{
-    <script src="~/js/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/chat.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js" asp-append-version="true"></script>
+    <script src="~/lib/chat.js" asp-append-version="true"></script>
 }

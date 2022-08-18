@@ -12,7 +12,7 @@
         <PackageLicenseUrl></PackageLicenseUrl>
         <RepositoryUrl>https://github.com/kityandhero/EasySoft</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageVersion>1.0.6</PackageVersion>
+        <PackageVersion>1.0.7</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>

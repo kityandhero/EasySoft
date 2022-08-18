@@ -5,7 +5,7 @@ using WebApplicationTest.Models;
 
 namespace WebApplicationTest.Controllers;
 
-public class MvcTest : CustomControllerBase
+public class MvcTestController : CustomControllerBase
 {
     public IActionResult Index(string name)
     {

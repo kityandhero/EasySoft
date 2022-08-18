@@ -9,7 +9,9 @@ using EntityFrameworkTest.Repositories;
 using EntityFrameworkTest.Services;
 using EasySoft.Core.Mvc.Framework.BuilderAssists;
 using EasySoft.Core.Mvc.Framework.ExtensionMethods;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
+using WebApplicationTest.Configures;
 using WebApplicationTest.Hubs;
 using WebApplicationTest.PrepareStartWorks;
 
@@ -25,6 +27,9 @@ builder.Services.AddDbContext<DataContext>(
 );
 
 builder.AddPrepareStartWorkInjection<SimplePrepareStartWork>();
+
+//自定义静态文件配置 如有特殊需求，可以进行配置，不配置将采用内置选项，此处仅作为有需要时的样例
+// builder.AddStaticFileOptionsInjection<CustomStaticFileOptions>();
 
 builder.AddExtraNormalInjection(containerBuilder =>
 {

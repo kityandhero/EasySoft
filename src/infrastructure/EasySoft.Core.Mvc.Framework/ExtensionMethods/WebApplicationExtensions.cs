@@ -3,8 +3,6 @@ using Autofac.Extensions.DependencyInjection;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Mvc.Framework.PrepareWorks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.StaticFiles;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using EasySoft.UtilityTools.ExtensionMethods;
 using Hangfire;
@@ -56,31 +54,20 @@ public static class WebApplicationExtensions
     }
 
     public static WebApplication UseAdvanceStaticFiles(
-        this WebApplication application,
-        string root = "wwwroot",
-        string path = "/"
+        this WebApplication application
     )
     {
-        var provider = new FileExtensionContentTypeProvider
+        if (!application.UseHostFiltering().ApplicationServices.GetAutofacRoot().IsRegistered<StaticFileOptions>())
         {
-            Mappings =
-            {
-                [".properties"] = "application/octet-stream"
-            }
-        };
+            application.UseStaticFiles();
+        }
+        else
+        {
+            var staticFileOptions = application.UseHostFiltering().ApplicationServices.GetAutofacRoot()
+                .Resolve<StaticFileOptions>();
 
-        application.UseStaticFiles(new StaticFileOptions
-        {
-            FileProvider = new PhysicalFileProvider(
-                Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    root,
-                    path
-                )
-            ),
-            RequestPath = "/Content",
-            ContentTypeProvider = provider
-        });
+            application.UseStaticFiles(staticFileOptions);
+        }
 
         return application;
     }

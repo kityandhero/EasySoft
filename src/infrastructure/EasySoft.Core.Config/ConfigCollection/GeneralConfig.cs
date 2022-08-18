@@ -6,6 +6,8 @@ public class GeneralConfig : IConfig
 {
     public static readonly GeneralConfig Instance = new();
 
+    public string UseStaticFiles { get; set; }
+
     public string UseAuthentication { get; set; }
 
     public string UseAuthorization { get; set; }
@@ -16,6 +18,7 @@ public class GeneralConfig : IConfig
 
     public GeneralConfig()
     {
+        UseStaticFiles = "1";
         UseAuthentication = "0";
         UseAuthorization = "0";
         CorsEnable = "0";

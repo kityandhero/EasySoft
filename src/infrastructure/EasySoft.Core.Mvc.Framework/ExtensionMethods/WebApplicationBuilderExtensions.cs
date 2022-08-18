@@ -65,6 +65,24 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// 注入定制的静态文件配置，诸如任务将在应用启动时自动执行
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static WebApplicationBuilder AddStaticFileOptionsInjection<T>(
+        this WebApplicationBuilder builder
+    ) where T : StaticFileOptions
+    {
+        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+        {
+            containerBuilder.RegisterType<T>().As<StaticFileOptions>().SingleInstance();
+        });
+
+        return builder;
+    }
+
     public static WebApplicationBuilder AddExtraNormalInjection(
         this WebApplicationBuilder builder,
         Action<ContainerBuilder> action
@@ -128,7 +146,20 @@ public static class WebApplicationBuilderExtensions
 
         app.UseHttpsRedirection();
 
-        app.UseAdvanceStaticFiles();
+        if (GeneralConfigAssist.GetUseStaticFiles())
+        {
+            app.UseAdvanceStaticFiles();
+
+            app.RecordInformation(
+                $"useStaticFiles: enable"
+            );
+        }
+        else
+        {
+            app.RecordInformation(
+                "useStaticFiles: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            );
+        }
 
         app.UseRouting();
 
