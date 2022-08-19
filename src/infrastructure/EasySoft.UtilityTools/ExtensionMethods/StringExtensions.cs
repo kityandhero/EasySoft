@@ -267,7 +267,7 @@ namespace EasySoft.UtilityTools.ExtensionMethods
         /// <returns></returns>
         public static string UrlEncode(this string? url)
         {
-            return WebUtility.UrlEncode(url);
+            return WebUtility.UrlEncode(url) ?? "";
         }
 
         /// <summary>
@@ -312,12 +312,15 @@ namespace EasySoft.UtilityTools.ExtensionMethods
 
                 foreach (string alreadyKey in nv.Keys)
                 {
-                    if (alreadyKey == key)
+                    if (alreadyKey != key)
                     {
-                        nv[alreadyKey] = urlParams[key];
-                        existKey = true;
-                        break;
+                        continue;
                     }
+
+                    nv[alreadyKey] = urlParams[key];
+                    existKey = true;
+
+                    break;
                 }
 
                 if (!existKey)
