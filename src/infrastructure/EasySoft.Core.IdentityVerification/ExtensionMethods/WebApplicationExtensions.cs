@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using EasySoft.Core.IdentityVerification.AccessControl;
-using EasySoft.Core.Infrastructure.CommonAssists;
+using EasySoft.Core.Infrastructure.Assists;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 

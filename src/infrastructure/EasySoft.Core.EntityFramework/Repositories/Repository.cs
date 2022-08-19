@@ -1,19 +1,25 @@
 ﻿using System.Linq.Expressions;
+using EasySoft.Core.EntityFramework.InterFaces;
 using EasySoft.UtilityTools.Enums;
 using EasySoft.UtilityTools.Result;
 using Microsoft.EntityFrameworkCore;
 
-namespace EasySoft.Core.Web.Framework.Repositories.EF;
+namespace EasySoft.Core.EntityFramework.Repositories;
 
 public abstract class Repository<T> : IRepository<T> where T : class, new()
 {
-    protected readonly DbContext Context;
-    protected readonly DbSet<T> DBSet;
+    private readonly DbContext _context;
+    private readonly DbSet<T> _dbSet;
 
     protected Repository(DbContext context)
     {
-        Context = context;
-        DBSet = context.Set<T>();
+        _context = context;
+        _dbSet = context.Set<T>();
+    }
+
+    public DbSet<T> GetDbSet()
+    {
+        return _dbSet;
     }
 
     #region PageList
@@ -27,12 +33,12 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
         bool descending = false
     )
     {
-        total = Context.Set<T>().Where(where).Count();
+        total = Queryable.Where(_context.Set<T>(), where).Count();
 
         if (!descending)
         {
             return
-                Context.Set<T>().Where(where)
+                Queryable.Where(_context.Set<T>(), where)
                     .OrderBy(orderBy)
                     .Skip(pageSize * (pageIndex - 1))
                     .Take(pageSize)
@@ -40,7 +46,7 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
         }
 
         return
-            Context.Set<T>().Where(where)
+            Queryable.Where(_context.Set<T>(), where)
                 .OrderByDescending(orderBy)
                 .Skip(pageSize * (pageIndex - 1))
                 .Take(pageSize)
@@ -55,7 +61,7 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
         Expression<Func<T, bool>> filter
     )
     {
-        return Context.Set<T>().Where(filter).ToList();
+        return Queryable.Where(_context.Set<T>(), filter).ToList();
     }
 
     public virtual IEnumerable<T> SingleList<TKey>(
@@ -65,8 +71,8 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
     )
     {
         return descending
-            ? Context.Set<T>().Where(filter).AsEnumerable().OrderByDescending(keySelector).ToList()
-            : Context.Set<T>().Where(filter).AsEnumerable().OrderBy(keySelector).ToList();
+            ? Queryable.Where(_context.Set<T>(), filter).AsEnumerable().OrderByDescending(keySelector).ToList()
+            : Queryable.Where(_context.Set<T>(), filter).AsEnumerable().OrderBy(keySelector).ToList();
     }
 
     public virtual IEnumerable<T> SingleList<TKey>(
@@ -77,8 +83,9 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
     )
     {
         return descending
-            ? Context.Set<T>().Where(filter).AsEnumerable().OrderByDescending(keySelector, comparer).ToList()
-            : Context.Set<T>().Where(filter).AsEnumerable().OrderBy(keySelector, comparer).ToList();
+            ? Queryable.Where(_context.Set<T>(), filter).AsEnumerable().OrderByDescending(keySelector, comparer)
+                .ToList()
+            : Queryable.Where(_context.Set<T>(), filter).AsEnumerable().OrderBy(keySelector, comparer).ToList();
     }
 
     #endregion
@@ -96,7 +103,7 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
 
     public virtual T? Get(object id)
     {
-        return DBSet.Find(id);
+        return _dbSet.Find(id);
     }
 
     #region Get
@@ -133,9 +140,9 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
 
     public virtual ExecutiveResult<T> Add(T entity)
     {
-        Context.Add(entity);
+        _context.Add(entity);
 
-        var success = Context.SaveChanges() > 0;
+        var success = _context.SaveChanges() > 0;
 
         if (!success)
         {
@@ -153,9 +160,9 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
 
     public virtual ExecutiveResult AddRange(IEnumerable<T> entities)
     {
-        Context.AddRange(entities);
+        _context.AddRange(entities);
 
-        var success = Context.SaveChanges() > 0;
+        var success = _context.SaveChanges() > 0;
 
         return !success ? new ExecutiveResult(ReturnCode.NoChange) : new ExecutiveResult(ReturnCode.Ok);
     }
@@ -166,9 +173,9 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
 
     public virtual ExecutiveResult<T> Update(T entity)
     {
-        Context.Entry(entity).State = EntityState.Modified;
+        _context.Entry(entity).State = EntityState.Modified;
 
-        var success = Context.SaveChanges() > 0;
+        var success = _context.SaveChanges() > 0;
 
         if (!success)
         {
@@ -190,25 +197,25 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
 
     public virtual ExecutiveResult Delete(object id)
     {
-        var entityToDelete = DBSet.Find(id);
+        var entityToDelete = _dbSet.Find(id);
 
         return entityToDelete != null
-            ? Delete((T)entityToDelete).ToExecutiveResult()
+            ? Delete(entityToDelete).ToExecutiveResult()
             : new ExecutiveResult(ReturnCode.NoData);
     }
 
     public virtual ExecutiveResult<T> Delete(T entity)
     {
-        if (Context.Entry(entity).State == EntityState.Detached)
+        if (_context.Entry(entity).State == EntityState.Detached)
         {
-            DBSet.Attach(entity);
+            _dbSet.Attach(entity);
         }
 
-        DBSet.Remove(entity);
+        _dbSet.Remove(entity);
 
-        Context.Entry(entity).State = EntityState.Deleted;
+        _context.Entry(entity).State = EntityState.Deleted;
 
-        var success = Context.SaveChanges() > 0;
+        var success = _context.SaveChanges() > 0;
 
         if (!success)
         {
@@ -228,21 +235,21 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
     {
         foreach (var item in ids)
         {
-            var entity = Context.Set<T>().Find(item); //如果实体已经在内存中，那么就直接从内存拿，如果内存中跟踪实体没有，那么才查询数据库。
+            var entity = _context.Set<T>().Find(item); //如果实体已经在内存中，那么就直接从内存拿，如果内存中跟踪实体没有，那么才查询数据库。
 
-            if (entity != null) Context.Set<T>().Remove(entity);
+            if (entity != null) _context.Set<T>().Remove(entity);
         }
 
-        var success = Context.SaveChanges() > 0;
+        var success = _context.SaveChanges() > 0;
 
         return !success ? new ExecutiveResult(ReturnCode.NoChange) : new ExecutiveResult(ReturnCode.Ok);
     }
 
     public virtual ExecutiveResult BatchDelete(IEnumerable<T> entities)
     {
-        Context.Set<T>().RemoveRange(entities);
+        _context.Set<T>().RemoveRange(entities);
 
-        var success = Context.SaveChanges() > 0;
+        var success = _context.SaveChanges() > 0;
 
         return !success ? new ExecutiveResult(ReturnCode.NoChange) : new ExecutiveResult(ReturnCode.Ok);
     }
@@ -251,6 +258,6 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
 
     public void Save()
     {
-        Context.SaveChanges();
+        _context.SaveChanges();
     }
 }

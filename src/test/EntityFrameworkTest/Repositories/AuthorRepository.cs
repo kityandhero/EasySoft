@@ -1,8 +1,7 @@
-﻿using EasySoft.Core.Web.Framework.Repositories.EF;
+﻿using EasySoft.Core.EntityFramework.Repositories;
 using EntityFrameworkTest.Contexts;
 using EntityFrameworkTest.Entities;
 using EntityFrameworkTest.IRepositories;
-using Microsoft.EntityFrameworkCore;
 using EasySoft.UtilityTools.Enums;
 using EasySoft.UtilityTools.Result;
 
@@ -16,7 +15,7 @@ public class AuthorRepository : Repository<Author>, IAuthorRepository
 
     public async Task<ExecutiveResult<Author>> GetAuthor(int authorId)
     {
-        var author = await DBSet.FindAsync(authorId);
+        var author = await GetDbSet().FindAsync(authorId);
 
         if (author == null)
         {

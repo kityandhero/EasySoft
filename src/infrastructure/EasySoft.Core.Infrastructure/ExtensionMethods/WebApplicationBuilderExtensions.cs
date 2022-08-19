@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Channels;
-using EasySoft.Core.Infrastructure.CommonAssists;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 

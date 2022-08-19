@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
+using EasySoft.Core.Infrastructure.Exceptions;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
-using EasySoft.Core.Web.Framework.Exceptions;
-using EasySoft.Core.Web.Framework.Results;
+using EasySoft.Core.Infrastructure.Results;
 using EasySoft.UtilityTools.Entity;
 using EasySoft.UtilityTools.Enums;
 using EasySoft.UtilityTools.ExtensionMethods;

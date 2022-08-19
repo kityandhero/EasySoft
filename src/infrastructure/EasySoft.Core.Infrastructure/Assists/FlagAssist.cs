@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Infrastructure.CommonAssists;
+﻿namespace EasySoft.Core.Infrastructure.Assists;
 
 public static class FlagAssist
 {

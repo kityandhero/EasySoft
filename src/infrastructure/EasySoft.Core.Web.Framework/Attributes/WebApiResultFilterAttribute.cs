@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Dynamic;
-using EasySoft.Core.Web.Framework.Results;
+using EasySoft.Core.Infrastructure.Results;
 using EasySoft.UtilityTools.Assists;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace EasySoft.Core.Web.Framework.Attributes;
 
-public class WebApiResultAttribute : ActionFilterAttribute
+public class WebApiResultFilterAttribute : ActionFilterAttribute
 {
     public override void OnResultExecuting(ResultExecutingContext context)
     {

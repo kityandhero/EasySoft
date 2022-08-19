@@ -2,7 +2,7 @@
 using EasySoft.UtilityTools.Mime;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EasySoft.Core.Web.Framework.Results
+namespace EasySoft.Core.Infrastructure.Results
 {
     /// <summary>
     /// CustomDataResult

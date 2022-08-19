@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using EasySoft.Core.Infrastructure.CommonAssists;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.PrepareStartWork.PrepareWorks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace EasySoft.Core.Web.Framework.Filters;
+namespace EasySoft.Core.IdentityVerification.Filters;
 
 /// <summary>
 /// 身份认证类继承IAuthorizationFilter接口

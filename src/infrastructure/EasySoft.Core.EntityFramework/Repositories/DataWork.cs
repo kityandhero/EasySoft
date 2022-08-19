@@ -1,8 +1,9 @@
 ﻿using System.Data.Common;
+using EasySoft.Core.EntityFramework.InterFaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace EasySoft.Core.Web.Framework.Repositories.EF;
+namespace EasySoft.Core.EntityFramework.Repositories;
 
 public class DataWork : IDataWork
 {

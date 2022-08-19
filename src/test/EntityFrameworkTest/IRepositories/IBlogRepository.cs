@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Web.Framework.Repositories;
+﻿using EasySoft.Core.EntityFramework.InterFaces;
 using EntityFrameworkTest.Entities;
 using EasySoft.UtilityTools.Result;
 

@@ -2,8 +2,8 @@
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.ErrorLogTransmitter.Producers;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
+using EasySoft.Core.Infrastructure.Results;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
-using EasySoft.Core.Web.Framework.Results;
 using EasySoft.UtilityTools.Assists;
 using EasySoft.UtilityTools.Entity;
 using EasySoft.UtilityTools.Enums;

@@ -1,7 +1,7 @@
 ﻿using System.Dynamic;
 using System.Reflection;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Mvc.Framework.ExtensionMethods;
-using EasySoft.Core.Web.Framework.CommonAssists;
 using EasySoft.UtilityTools.ExtensionMethods;
 using EasySoft.UtilityTools.Result;
 using Microsoft.AspNetCore.Mvc;

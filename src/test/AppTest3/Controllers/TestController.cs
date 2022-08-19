@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Web.Framework.Results;
+﻿using EasySoft.Core.Infrastructure.Results;
 using EntityFrameworkTest.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using EasySoft.UtilityTools.Enums;

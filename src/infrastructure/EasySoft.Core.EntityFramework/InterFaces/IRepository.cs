@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using EasySoft.UtilityTools.Result;
 
-namespace EasySoft.Core.Web.Framework.Repositories;
+namespace EasySoft.Core.EntityFramework.InterFaces;
 
 public interface IRepository
 {

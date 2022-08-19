@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Web.Framework.Exceptions
+﻿namespace EasySoft.Core.Infrastructure.Exceptions
 {
     /// <summary>
     /// 传入参数异常

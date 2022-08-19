@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationParts;
 
-namespace EasySoft.Core.Web.Framework.CommonAssists;
+namespace EasySoft.Core.Infrastructure.Assists;
 
 public static class ApplicationPartManagerAssist
 {

@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Web.Framework.Repositories.EF;
+﻿using EasySoft.Core.EntityFramework.Repositories;
 using EntityFrameworkTest.Entities;
 using EntityFrameworkTest.IRepositories;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +15,7 @@ public class BlogRepository : Repository<Blog>, IBlogRepository
 
     public async Task<ExecutiveResult<Blog>> GetBlog(int blogId)
     {
-        var author = await DBSet.FindAsync(blogId);
+        var author = await GetDbSet().FindAsync(blogId);
 
         if (author == null)
         {
