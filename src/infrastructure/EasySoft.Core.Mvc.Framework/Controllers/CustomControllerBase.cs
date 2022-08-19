@@ -1,13 +1,14 @@
 ﻿using System.Dynamic;
 using System.Reflection;
+using EasySoft.Core.Mvc.Framework.ExtensionMethods;
 using EasySoft.Core.Web.Framework.CommonAssists;
-using EasySoft.Core.Web.Framework.ExtensionMethods;
+using EasySoft.UtilityTools.ExtensionMethods;
 using EasySoft.UtilityTools.Result;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using EasySoft.UtilityTools.ExtensionMethods;
+using Controller = Microsoft.AspNetCore.Mvc.Controller;
 
-namespace EasySoft.Core.Web.Framework.Controllers;
+namespace EasySoft.Core.Mvc.Framework.Controllers;
 
 public class CustomControllerBase : Controller
 {
@@ -24,8 +25,7 @@ public class CustomControllerBase : Controller
             Namespace = x.Namespace,
             Controller = x.FullName,
             ModuleName = x.Module.Name,
-            Actions = Enumerable.Where<MethodInfo>(x.DeclaredMethods,
-                    m => m.IsPublic && !CustomAttributeExtensions.IsDefined((MemberInfo)m, typeof(NonActionAttribute)))
+            Actions = x.DeclaredMethods.Where(m => m.IsPublic && !m.IsDefined(typeof(NonActionAttribute)))
                 .Select(y =>
                     new
                     {

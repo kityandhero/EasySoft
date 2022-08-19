@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using EasySoft.Core.Web.Framework.AccessControl;
 using EasySoft.Core.Web.Framework.Exceptions;
+using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.Core.Web.Framework.Results;
 using EasySoft.UtilityTools.Entity;
 using EasySoft.UtilityTools.Enums;
@@ -10,12 +11,13 @@ using EasySoft.UtilityTools.Result;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EasySoft.Core.Web.Framework.ExtensionMethods
+namespace EasySoft.Core.Mvc.Framework.ExtensionMethods
 {
     /// <summary>
     /// 控制器动作结果扩展方法
     /// </summary>
-    public static class ControllerExtensions
+    public static class Controller
+
     {
         /// <summary>
         /// Data

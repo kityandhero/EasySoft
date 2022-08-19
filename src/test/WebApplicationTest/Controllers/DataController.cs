@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Web.Framework.Controllers;
+﻿using EasySoft.Core.Mvc.Framework.Controllers;
+using EasySoft.Core.Mvc.Framework.ExtensionMethods;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EntityFrameworkTest.IServices;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,6 @@ public class DataController : CustomControllerBase
     {
         var result = await _authorService.GetAuthor(0);
 
-        return !result.Success ? this.Fail(result.Code) : ControllerExtensions.Success(this, result.Data);
+        return !result.Success ? this.Fail(result.Code) : this.Success(result.Data);
     }
 }

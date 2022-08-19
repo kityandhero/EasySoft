@@ -1,3 +1,4 @@
+using EasySoft.Core.Mvc.Framework.ExtensionMethods;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.Core.Web.Framework.Results;
 using Microsoft.AspNetCore.Mvc;
