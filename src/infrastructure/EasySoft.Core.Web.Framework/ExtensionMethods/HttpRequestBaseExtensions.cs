@@ -17,6 +17,16 @@ namespace EasySoft.Core.Web.Framework.ExtensionMethods
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        public static NameValueCollection GetHeaders(this HttpRequest request)
+        {
+            return ConvertAssist.DictionaryToNameValueCollection(request.Headers);
+        }
+
+        /// <summary>
+        /// 获取Url参数并转换为NameValueCollection
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public static NameValueCollection GetUrlParams(this HttpRequest request)
         {
             var result = new NameValueCollection();
@@ -112,6 +122,12 @@ namespace EasySoft.Core.Web.Framework.ExtensionMethods
         public static string GetHost(this HttpRequest request)
         {
             return request.Host.Value;
+        }
+
+        public static string GetUrl(this HttpRequest request)
+        {
+            return
+                $"{request.Scheme}://{request.Host}{request.PathBase}{request.Path}{request.QueryString}";
         }
     }
 }

@@ -11,7 +11,6 @@ using EntityFrameworkTest.Repositories;
 using EntityFrameworkTest.Services;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
-using WebApplicationTest.Configures;
 using WebApplicationTest.Enums;
 using WebApplicationTest.Hubs;
 using WebApplicationTest.PrepareStartWorks;

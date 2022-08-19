@@ -87,6 +87,7 @@ public static class WebApplicationBuilderAssist
         }
 
         builder.UseGeneralLogTransmitter();
+        builder.UseErrorLogTransmitter();
 
         if (HangfireConfigAssist.GetEnable())
         {

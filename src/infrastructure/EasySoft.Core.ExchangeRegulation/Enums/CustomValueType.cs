@@ -2,7 +2,7 @@
 
 namespace EasySoft.Core.ExchangeRegulation.Enums;
 
-public enum ValueType
+public enum CustomValueType
 {
     /// <summary>
     /// Unknown

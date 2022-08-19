@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.FileProviders;
 
-namespace WebApplicationTest.Configures;
+namespace WebApplicationTest.Options;
 
 public class CustomStaticFileOptions : StaticFileOptions
 {

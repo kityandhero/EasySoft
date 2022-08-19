@@ -2,8 +2,8 @@
 using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 using EasySoft.Core.ErrorLogTransmitter.Interfaces;
 using EasySoft.Core.ExchangeRegulation.Entities;
+using EasySoft.Core.ExchangeRegulation.Enums;
 using EasySoft.Core.ExchangeRegulation.ExtensionMethods;
-using ValueType = EasySoft.Core.ExchangeRegulation.Enums.ValueType;
 
 namespace EasySoft.Core.ErrorLogTransmitter.Entities;
 
@@ -122,7 +122,7 @@ public class ErrorLogExchange : BaseExchange, IErrorLogExchange
         PayloadParams = "";
         CustomLog = "";
         CustomData = "";
-        CustomDataType = ValueType.PlainValue.ToInt();
+        CustomDataType = CustomValueType.PlainValue.ToInt();
         ExceptionTypeName = "";
         ExceptionTypeFullName = "";
     }

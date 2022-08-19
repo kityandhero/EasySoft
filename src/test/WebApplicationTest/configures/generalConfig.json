@@ -1,0 +1,6 @@
+{
+  "CorsEnable": "1",
+  "CorsPolicies": "*",
+  "RemoteGeneralLogEnable": "1",
+  "RemoteErrorLogEnable": "1"
+}

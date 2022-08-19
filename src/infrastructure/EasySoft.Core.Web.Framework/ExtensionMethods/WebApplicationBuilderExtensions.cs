@@ -97,8 +97,6 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
-            containerBuilder.RegisterType<GeneralLogExchange>().As<IGeneralLogExchange>().InstancePerDependency();
-
             containerBuilder.RegisterType<GeneralLogProducer>().As<IGeneralLogProducer>().SingleInstance();
         });
 
@@ -111,8 +109,6 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
-            containerBuilder.RegisterType<ErrorLogExchange>().As<IErrorLogExchange>().InstancePerDependency();
-
             containerBuilder.RegisterType<ErrorLogProducer>().As<IErrorLogProducer>().SingleInstance();
         });
 

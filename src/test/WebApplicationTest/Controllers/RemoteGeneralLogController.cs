@@ -1,9 +1,10 @@
-﻿using EasySoft.Core.AutoFac.IocAssists;
+﻿using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.ExchangeRegulation.ExtensionMethods;
-using EasySoft.Core.GeneralLogTransmitter.Interfaces;
 using EasySoft.Core.GeneralLogTransmitter.Producers;
 using EasySoft.Core.Mvc.Framework.Controllers;
 using EasySoft.Core.Mvc.Framework.ExtensionMethods;
+using EasySoft.UtilityTools.Enums;
+using EasySoft.UtilityTools.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Controllers;
@@ -25,9 +26,12 @@ public class RemoteGeneralLogController : CustomControllerBase
 
     public IActionResult Test()
     {
-        var log = AutofacAssist.Instance.Resolve<IGeneralLogExchange>();
+        if (!GeneralConfigAssist.GetRemoteGeneralLogEnable())
+        {
+            return this.Fail(ReturnCode.NoChange.ToMessage("RemoteGeneralLogEnable switch is not open"));
+        }
 
-        _generalLogProducer.Send(log);
+        var log = _generalLogProducer.Send("Test");
 
         return this.Success(log.ToObject());
     }

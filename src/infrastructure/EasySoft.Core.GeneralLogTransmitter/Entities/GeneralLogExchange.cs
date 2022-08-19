@@ -1,9 +1,9 @@
 ﻿using EasySoft.Core.ExchangeRegulation.Entities;
+using EasySoft.Core.ExchangeRegulation.Enums;
 using EasySoft.Core.ExchangeRegulation.ExtensionMethods;
 using EasySoft.Core.GeneralLogTransmitter.Enums;
 using EasySoft.Core.GeneralLogTransmitter.ExtensionMethods;
 using EasySoft.Core.GeneralLogTransmitter.Interfaces;
-using ValueType = EasySoft.Core.ExchangeRegulation.Enums.ValueType;
 
 namespace EasySoft.Core.GeneralLogTransmitter.Entities;
 
@@ -37,9 +37,9 @@ public class GeneralLogExchange : BaseExchange, IGeneralLogExchange
     public GeneralLogExchange()
     {
         Message = "";
-        MessageType = ValueType.PlainValue.ToInt();
+        MessageType = CustomValueType.PlainValue.ToInt();
         Content = "";
-        ContentType = ValueType.PlainValue.ToInt();
-        Type = GeneralLogExchangeType.Unknown.ToInt();
+        ContentType = CustomValueType.PlainValue.ToInt();
+        Type = GeneralLogExchangeType.Common.ToInt();
     }
 }
