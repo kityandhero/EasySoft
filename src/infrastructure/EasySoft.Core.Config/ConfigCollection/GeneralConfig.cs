@@ -8,6 +8,8 @@ public class GeneralConfig : IConfig
 
     public string RemoteGeneralLogEnable { get; set; }
 
+    public string RemoteErrorLogEnable { get; set; }
+
     public string UseStaticFiles { get; set; }
 
     public string UseAuthentication { get; set; }
@@ -21,6 +23,7 @@ public class GeneralConfig : IConfig
     public GeneralConfig()
     {
         RemoteGeneralLogEnable = "0";
+        RemoteErrorLogEnable = "0";
         UseStaticFiles = "1";
         UseAuthentication = "0";
         UseAuthorization = "0";

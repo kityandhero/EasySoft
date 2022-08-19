@@ -20,7 +20,7 @@ public class CustomControllerBase : Controller
 
         applicationPartManager?.PopulateFeature(controllerFeature);
 
-        var data = Enumerable.Select(controllerFeature.Controllers, x => new
+        var data = controllerFeature.Controllers.Select(x => new
         {
             Namespace = x.Namespace,
             Controller = x.FullName,

@@ -40,7 +40,7 @@ public static class MaintainConfigAssist
 
     public static List<string> GetUrlPollingRequests()
     {
-        var list = Enumerable.Where<string>(GetConfig().UrlPollingRequests.Remove(" ").Trim().Split(','), o => !string.IsNullOrWhiteSpace(o))
+        var list = GetConfig().UrlPollingRequests.Remove(" ").Trim().Split(',').Where<string>(o => !string.IsNullOrWhiteSpace(o))
             .ToList();
 
         return list;

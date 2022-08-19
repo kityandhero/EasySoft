@@ -11,7 +11,7 @@ var builder = WebApplicationBuilderAssist.CreateBuilder(
 
 builder.Services.AddDbContext<DataContext>(opt => { opt.UseSqlServer(DatabaseConfigAssist.GetMainConnection()); });
 
-var app = WebApplicationBuilderExtensions.EasyBuild(builder);
+var app = builder.EasyBuild();
 
 app.MapGet("/", () => "Hello World!");
 

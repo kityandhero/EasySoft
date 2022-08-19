@@ -247,7 +247,7 @@ namespace EasySoft.Core.Mvc.Framework.ExtensionMethods
         {
             var request = c.Request;
 
-            return HttpRequestExtensions.GetIntegratedParams(request);
+            return request.GetIntegratedParams();
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace EasySoft.Core.Mvc.Framework.ExtensionMethods
         {
             var request = c.Request;
 
-            var nv = HttpRequestExtensions.GetIntegratedParams(request);
+            var nv = request.GetIntegratedParams();
 
             var result = "";
 
@@ -602,7 +602,7 @@ namespace EasySoft.Core.Mvc.Framework.ExtensionMethods
                 UrlParams = c.Request.QueryString.ToString(),
                 Header = c.Request.Headers.ToString() ?? "",
                 FormParam = !c.Request.HasFormContentType ? "" : c.Request.Form.ToString() ?? "",
-                PayloadParam = HttpRequestExtensions.GetPayloadParams(c.Request).ToString() ?? ""
+                PayloadParam = c.Request.GetPayloadParams().ToString() ?? ""
             };
 
             return requestInfo;
@@ -610,7 +610,7 @@ namespace EasySoft.Core.Mvc.Framework.ExtensionMethods
 
         public static string GetHost(this ControllerBase c)
         {
-            return HttpRequestExtensions.GetHost(c.Request);
+            return c.Request.GetHost();
         }
     }
 }

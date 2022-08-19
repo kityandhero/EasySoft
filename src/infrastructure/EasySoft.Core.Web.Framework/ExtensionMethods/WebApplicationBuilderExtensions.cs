@@ -2,7 +2,11 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using EasySoft.Core.AutoFac.IocAssists;
+using EasySoft.Core.Config.Channels;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.ErrorLogTransmitter.Entities;
+using EasySoft.Core.ErrorLogTransmitter.Interfaces;
+using EasySoft.Core.ErrorLogTransmitter.Producers;
 using EasySoft.Core.GeneralLogTransmitter.Entities;
 using EasySoft.Core.GeneralLogTransmitter.Interfaces;
 using EasySoft.Core.GeneralLogTransmitter.Producers;
@@ -97,6 +101,64 @@ public static class WebApplicationBuilderExtensions
 
             containerBuilder.RegisterType<GeneralLogProducer>().As<IGeneralLogProducer>().SingleInstance();
         });
+
+        return builder;
+    }
+
+    public static WebApplicationBuilder UseErrorLogTransmitter(
+        this WebApplicationBuilder builder
+    )
+    {
+        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+        {
+            containerBuilder.RegisterType<ErrorLogExchange>().As<IErrorLogExchange>().InstancePerDependency();
+
+            containerBuilder.RegisterType<ErrorLogProducer>().As<IErrorLogProducer>().SingleInstance();
+        });
+
+        return builder;
+    }
+
+    /// <summary>
+    /// 标记当前应用通道值, 用于远程日志等数据中, 便于数据辨认, 不使用此方法标记, 框架将采用内置值 0 代替
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="channel"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static WebApplicationBuilder UseAdvanceApplicationChannel(
+        this WebApplicationBuilder builder,
+        int channel
+    )
+    {
+        if (FlagAssist.ApplicationChannelInjectionComplete)
+        {
+            throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
+        }
+
+        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+        {
+            containerBuilder.RegisterInstance(new ApplicationChannel().SetChannel(channel))
+                .As<IApplicationChannel>().SingleInstance();
+        });
+
+        FlagAssist.ApplicationChannelInjectionComplete = true;
+        FlagAssist.ApplicationChannelIsDefault = false;
+
+        return builder;
+    }
+
+    private static WebApplicationBuilder UseAdvanceDefaultApplicationChannel(
+        this WebApplicationBuilder builder
+    )
+    {
+        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+        {
+            containerBuilder.RegisterType<ApplicationChannel>().As<IApplicationChannel>().SingleInstance();
+        });
+
+        FlagAssist.ApplicationChannelInjectionComplete = true;
+        FlagAssist.ApplicationChannelIsDefault = true;
 
         return builder;
     }
@@ -246,12 +308,17 @@ public static class WebApplicationBuilderExtensions
     {
         if (!FlagAssist.TokenSecretOptionInjectionComplete)
         {
-            UseDefaultTokenSecretOptionsInjection(builder);
+            builder.UseDefaultTokenSecretOptionsInjection();
         }
 
         if (!FlagAssist.TokenSecretInjectionComplete)
         {
-            UseDefaultTokenSecret(builder);
+            builder.UseDefaultTokenSecret();
+        }
+
+        if (!FlagAssist.ApplicationChannelInjectionComplete)
+        {
+            builder.UseAdvanceDefaultApplicationChannel();
         }
 
         var app = builder.Build();
@@ -275,6 +342,24 @@ public static class WebApplicationBuilderExtensions
             app.RecordWarning(
                 "TokenSecretOption use DefaultTokenSecretOption, it is not safe, suggest using builder.UseTokenSecretOptionsInjection<T>() with your TokenSecretOption."
             );
+        }
+
+        if (FlagAssist.GetRemoteLogSwitch())
+        {
+            if (FlagAssist.ApplicationChannelIsDefault)
+            {
+                app.RecordInformation(
+                    "ApplicationChannel use 0, suggest using builder.UseAdvanceApplicationChannel(int channel) with your Application, it make the data source easy to identify in the remote log."
+                );
+            }
+            else
+            {
+                var applicationChannel = AutofacAssist.Instance.Container.Resolve<IApplicationChannel>();
+
+                app.RecordInformation(
+                    $"ApplicationChannel use {applicationChannel.GetChannel()}."
+                );
+            }
         }
 
         app.UseHttpsRedirection();

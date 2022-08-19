@@ -53,6 +53,22 @@ public static class GeneralConfigAssist
         return v.ToInt() == 1;
     }
 
+    public static bool GetRemoteErrorLogEnable()
+    {
+        var v = GetConfig().RemoteErrorLogEnable;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt())
+        {
+            throw new Exception(
+                $"请配置 RemoteErrorLogEnable: {ConfigFile} -> RemoteErrorLogEnable,请设置 0/1"
+            );
+        }
+
+        return v.ToInt() == 1;
+    }
+
     public static bool GetUseStaticFiles()
     {
         var v = GetConfig().UseStaticFiles;

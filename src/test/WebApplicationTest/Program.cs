@@ -12,6 +12,7 @@ using EntityFrameworkTest.Services;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using WebApplicationTest.Configures;
+using WebApplicationTest.Enums;
 using WebApplicationTest.Hubs;
 using WebApplicationTest.PrepareStartWorks;
 using WebApplicationTest.Secrets;
@@ -27,16 +28,18 @@ builder.Services.AddDbContext<DataContext>(
     }
 );
 
-WebApplicationBuilderExtensions.UsePrepareStartWorkInjection<SimplePrepareStartWork>(builder);
+builder.UseAdvanceApplicationChannel(ApplicationChannelCollection.TestApplication.ToInt());
+
+builder.UsePrepareStartWorkInjection<SimplePrepareStartWork>();
 
 //自定义静态文件配置 如有特殊需求，可以进行配置，不配置将采用内置选项，此处仅作为有需要时的样例
 // builder.UseStaticFileOptionsInjection<CustomStaticFileOptions>();
 
-WebApplicationBuilderExtensions.UseTokenSecretOptionsInjection<CustomTokenSecretOptions>(builder);
+builder.UseTokenSecretOptionsInjection<CustomTokenSecretOptions>();
 
 // builder.UseTokenSecretInjection<CustomTokenSecret>();
 
-WebApplicationBuilderExtensions.UseExtraNormalInjection(builder, containerBuilder =>
+builder.UseExtraNormalInjection(containerBuilder =>
 {
     containerBuilder.RegisterType<Simple>().As<ISimple>().SingleInstance();
 
@@ -53,7 +56,7 @@ WebApplicationBuilderExtensions.UseExtraNormalInjection(builder, containerBuilde
 // SignalR
 builder.Services.AddSignalR();
 
-var app = WebApplicationBuilderExtensions.EasyBuild(builder, new List<string> { "AreaTest" });
+var app = builder.EasyBuild(new List<string> { "AreaTest" });
 
 if (app.Environment.IsDevelopment())
 {
