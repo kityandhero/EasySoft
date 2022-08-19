@@ -77,7 +77,7 @@ namespace EasySoft.UtilityTools.Competence
 
             var jObject = JsonConvert.DeserializeObject<JObject>(json);
 
-            return jObject.ToExpandoObject();
+            return jObject?.ToExpandoObject() ?? new ExpandoObject();
         }
 
         public List<object> GetExpansionSetCollection()

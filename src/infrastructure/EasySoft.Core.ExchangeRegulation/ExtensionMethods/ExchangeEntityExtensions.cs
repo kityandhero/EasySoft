@@ -56,7 +56,7 @@ public static class ExchangeEntityExtensions
 
         var jObject = JsonConvert.DeserializeObject<JObject>(json);
 
-        return jObject.ToExpandoObject();
+        return jObject?.ToExpandoObject() ?? new ExpandoObject();
     }
 
     /// <summary>
@@ -105,7 +105,7 @@ public static class ExchangeEntityExtensions
 
         var jObject = JsonConvert.DeserializeObject<JObject>(json);
 
-        return jObject.ToExpandoObject();
+        return jObject?.ToExpandoObject() ?? new ExpandoObject();
     }
 
     /// <summary>
@@ -152,7 +152,7 @@ public static class ExchangeEntityExtensions
 
         var jObject = JsonConvert.DeserializeObject<JObject>(JsonConvertAssist.SerializeAndKeyToLower(result));
 
-        return jObject.ToExpandoObject();
+        return jObject?.ToExpandoObject() ?? new ExpandoObject();
     }
 
     /// <summary>  
