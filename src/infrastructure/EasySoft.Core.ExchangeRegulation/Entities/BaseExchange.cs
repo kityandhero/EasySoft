@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.ExchangeRegulation.Interfaces;
 using EasySoft.UtilityTools.Assists;
+using EasySoft.UtilityTools.ExtensionMethods;
 
 namespace EasySoft.Core.ExchangeRegulation.Entities;
 
@@ -36,6 +37,7 @@ public abstract class BaseExchange : IExchangeEntity
     {
         Id = Guid.NewGuid().ToString();
         Ip = "";
+        CreateUnixTime = DateTime.Now.ToUnixTime();
     }
 
     public string GetId()

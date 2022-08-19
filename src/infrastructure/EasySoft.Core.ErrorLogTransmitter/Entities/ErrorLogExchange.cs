@@ -4,6 +4,7 @@ using EasySoft.Core.ErrorLogTransmitter.Interfaces;
 using EasySoft.Core.ExchangeRegulation.Entities;
 using EasySoft.Core.ExchangeRegulation.Enums;
 using EasySoft.Core.ExchangeRegulation.ExtensionMethods;
+using EasySoft.UtilityTools.ExtensionMethods;
 
 namespace EasySoft.Core.ErrorLogTransmitter.Entities;
 
@@ -125,5 +126,6 @@ public class ErrorLogExchange : BaseExchange, IErrorLogExchange
         CustomDataType = CustomValueType.PlainValue.ToInt();
         ExceptionTypeName = "";
         ExceptionTypeFullName = "";
+        CreateUnixTime = DateTime.Now.ToUnixTime();
     }
 }
