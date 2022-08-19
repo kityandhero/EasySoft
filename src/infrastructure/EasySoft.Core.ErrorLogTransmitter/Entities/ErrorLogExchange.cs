@@ -126,6 +126,5 @@ public class ErrorLogExchange : BaseExchange, IErrorLogExchange
         CustomDataType = CustomValueType.PlainValue.ToInt();
         ExceptionTypeName = "";
         ExceptionTypeFullName = "";
-        CreateUnixTime = DateTime.Now.ToUnixTime();
     }
 }
