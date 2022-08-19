@@ -19,8 +19,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.*/
 
+using System;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Text;
 using EasySoft.UtilityTools.Assists;
 
 namespace EasySoft.UtilityTools.ExtensionMethods
@@ -66,6 +68,39 @@ namespace EasySoft.UtilityTools.ExtensionMethods
             }
 
             return nv;
+        }
+
+        /// <summary>
+        /// Converts the NameValueCollection to a query string
+        /// </summary>
+        /// <param name="source">Input</param>
+        /// <returns>The NameValueCollection expressed as a string</returns>
+        public static string ToQueryString(this NameValueCollection source)
+        {
+            if (source.IsNull())
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            if (source.Count <= 0)
+            {
+                return "";
+            }
+
+            var builder = new StringBuilder();
+
+            builder.Append('?');
+
+            var splitter = "";
+
+            foreach (string key in source.Keys)
+            {
+                builder.Append(splitter).Append($"{key.UrlEncode()}={source[key].UrlEncode()}");
+
+                splitter = "&";
+            }
+
+            return builder.ToString();
         }
     }
 }

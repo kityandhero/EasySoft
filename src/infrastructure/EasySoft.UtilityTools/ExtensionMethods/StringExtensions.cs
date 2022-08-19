@@ -265,7 +265,7 @@ namespace EasySoft.UtilityTools.ExtensionMethods
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static string UrlEncode(this string url)
+        public static string UrlEncode(this string? url)
         {
             return WebUtility.UrlEncode(url);
         }

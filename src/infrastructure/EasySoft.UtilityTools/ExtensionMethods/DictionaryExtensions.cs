@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Text;
 using EasySoft.UtilityTools.Comparison;
 using EasySoft.UtilityTools.Assists;
 
@@ -217,6 +218,42 @@ namespace EasySoft.UtilityTools.ExtensionMethods
 
             return dictionary.OrderBy(orderBy, comparer.Check(() => new GenericComparer<T3>()))
                 .ToDictionary(x => x.Key, x => x.Value);
+        }
+
+        #endregion
+
+        #region ToQueryString
+
+        /// <summary>
+        /// Converts the IDictionary to a query string
+        /// </summary>
+        /// <param name="source">Input</param>
+        /// <returns>The IDictionary expressed as a string</returns>
+        public static string ToQueryString(this IDictionary<string, string> source)
+        {
+            if (source.IsNull())
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            if (source.Count <= 0)
+            {
+                return "";
+            }
+
+            var builder = new StringBuilder();
+
+            builder.Append('?');
+
+            var splitter = "";
+
+            foreach (var key in source.Keys)
+            {
+                builder.Append(splitter).Append($"{key.UrlEncode()}={source[key].UrlEncode()}");
+                splitter = "&";
+            }
+
+            return builder.ToString();
         }
 
         #endregion
