@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Microsoft.VisualBasic;
 using SixLabors.ImageSharp;
 
@@ -152,6 +153,69 @@ namespace EasySoft.UtilityTools.Assists
             Color.ForestGreen
         };
 
+        public static readonly List<Color> FontColors = new()
+        {
+            Color.Aqua,
+            Color.Black,
+            Color.Blue,
+            Color.BlueViolet,
+            Color.Brown,
+            Color.Chartreuse,
+            Color.Chocolate,
+            Color.Crimson,
+            Color.Cyan,
+            Color.DarkBlue,
+            Color.DarkCyan,
+            Color.DarkGreen,
+            Color.DarkMagenta,
+            Color.DarkSlateBlue,
+            Color.DarkGoldenrod,
+            Color.DarkViolet,
+            Color.DeepPink,
+            Color.DeepSkyBlue,
+            Color.DodgerBlue,
+            Color.Firebrick,
+            Color.ForestGreen,
+            Color.Fuchsia,
+            Color.Green,
+            Color.Gold,
+            Color.GreenYellow,
+            Color.HotPink,
+            Color.IndianRed,
+            Color.LawnGreen,
+            Color.LightCoral,
+            Color.LightSeaGreen,
+            Color.Lime,
+            Color.LimeGreen,
+            Color.Magenta,
+            Color.Maroon,
+            Color.MediumAquamarine,
+            Color.MediumBlue,
+            Color.MediumPurple,
+            Color.OrangeRed,
+            Color.Orange,
+            Color.Orchid,
+            Color.PaleGoldenrod,
+            Color.Peru,
+            Color.PowderBlue,
+            Color.Purple,
+            Color.Red,
+            Color.RosyBrown,
+            Color.RoyalBlue,
+            Color.SandyBrown,
+            Color.Salmon,
+            Color.Sienna,
+            Color.SeaGreen,
+            Color.SlateBlue,
+            Color.SpringGreen,
+            Color.Teal,
+            Color.SteelBlue,
+            Color.Tomato,
+            Color.Turquoise,
+            Color.Violet,
+            Color.YellowGreen,
+        };
+
         /// <summary>
         /// 获取随机颜色
         /// </summary>
@@ -161,6 +225,17 @@ namespace EasySoft.UtilityTools.Assists
             var random = new Random();
 
             return Colors[random.Next(Colors.Count)];
+        }
+
+        /// <summary>
+        /// 获取随机颜色
+        /// </summary>
+        /// <returns></returns>
+        public static Color GetFontRandomColor()
+        {
+            var random = new Random();
+
+            return FontColors[random.Next(FontColors.Count)];
         }
 
         /// <summary>
@@ -181,6 +256,40 @@ namespace EasySoft.UtilityTools.Assists
                 Convert.ToByte(green),
                 Convert.ToByte(blue),
                 Convert.ToByte(alpha)
+            );
+        }
+
+        public static Color HexToColor(string hexColor)
+        {
+            //Remove # if present
+            if (hexColor.IndexOf('#') != -1)
+            {
+                hexColor = hexColor.Replace("#", "");
+            }
+
+            var red = 0;
+            var green = 0;
+            var blue = 0;
+
+            if (hexColor.Length == 6)
+            {
+                //#RRGGBB
+                red = int.Parse(hexColor.Substring(0, 2), NumberStyles.AllowHexSpecifier);
+                green = int.Parse(hexColor.Substring(2, 2), NumberStyles.AllowHexSpecifier);
+                blue = int.Parse(hexColor.Substring(4, 2), NumberStyles.AllowHexSpecifier);
+            }
+            else if (hexColor.Length == 3)
+            {
+                //#RGB
+                red = int.Parse(hexColor[0].ToString() + hexColor[0].ToString(), NumberStyles.AllowHexSpecifier);
+                green = int.Parse(hexColor[1].ToString() + hexColor[1].ToString(), NumberStyles.AllowHexSpecifier);
+                blue = int.Parse(hexColor[2].ToString() + hexColor[2].ToString(), NumberStyles.AllowHexSpecifier);
+            }
+
+            return Color.FromRgb(
+                Convert.ToByte(red),
+                Convert.ToByte(green),
+                Convert.ToByte(blue)
             );
         }
     }

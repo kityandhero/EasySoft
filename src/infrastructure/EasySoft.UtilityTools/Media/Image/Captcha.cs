@@ -85,7 +85,7 @@ namespace EasySoft.UtilityTools.Media.Image
             using var image = new Image<Rgba32>(imageWidth, imageHeight);
 
             // 字体
-            var font = SystemFonts.CreateFont(SystemFonts.Families.First().Name, 18, FontStyle.Bold);
+            var font = SystemFonts.CreateFont(SystemFonts.Families.First().Name, 20, FontStyle.Bold);
 
             image.Mutate(ctx =>
             {
@@ -98,8 +98,8 @@ namespace EasySoft.UtilityTools.Media.Image
                     ctx.DrawText(
                         code[i].ToString(),
                         font,
-                        ColorAssist.GetRandomColor(),
-                        new PointF(20 * i + 10, r.Next(2, 12))
+                        ColorAssist.GetFontRandomColor(),
+                        new PointF(20 * i + 10, r.Next(2, 6))
                     );
                 }
 
