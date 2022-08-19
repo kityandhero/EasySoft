@@ -33,11 +33,6 @@ namespace EasySoft.UtilityTools.Media.Image
         /// </summary>
         public int LetterCount { get; set; }
 
-        /// <summary>
-        /// 图片弯曲配置
-        /// </summary>
-        public bool Bending { get; set; }
-
         private readonly char[] _chars = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm".ToCharArray();
         private readonly char[] _numberChars = "0123456789".ToCharArray();
 
@@ -49,7 +44,6 @@ namespace EasySoft.UtilityTools.Media.Image
             LetterCount = 5;
             LetterWidth = 15;
             LetterHeight = 27;
-            Bending = false;
         }
 
         /// <summary>

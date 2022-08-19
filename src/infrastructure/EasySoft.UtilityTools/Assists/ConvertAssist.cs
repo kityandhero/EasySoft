@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
@@ -13,6 +12,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using EasySoft.UtilityTools.ExtensionMethods;
+using SixLabors.ImageSharp;
 
 namespace EasySoft.UtilityTools.Assists
 {
@@ -175,8 +175,9 @@ namespace EasySoft.UtilityTools.Assists
         {
             using (var memoryStream = new MemoryStream())
             {
-                file.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
+                file.SaveAsPng(memoryStream);
                 var imageBytes = memoryStream.ToArray();
+
                 return Convert.ToBase64String(imageBytes);
             }
         }
