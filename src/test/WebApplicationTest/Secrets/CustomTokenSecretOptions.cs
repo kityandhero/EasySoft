@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Web.Framework.AccessControl;
+﻿using EasySoft.Core.IdentityVerification.AccessControl;
 
 namespace WebApplicationTest.Secrets;
 

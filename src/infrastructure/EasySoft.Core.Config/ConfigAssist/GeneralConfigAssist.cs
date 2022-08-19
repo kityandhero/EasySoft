@@ -32,6 +32,11 @@ public static class GeneralConfigAssist
     {
     }
 
+    public static bool GetRemoteLogSwitch()
+    {
+        return GetRemoteErrorLogEnable() || GetRemoteGeneralLogEnable();
+    }
+
     private static GeneralConfig GetConfig()
     {
         return GeneralConfig.Instance;

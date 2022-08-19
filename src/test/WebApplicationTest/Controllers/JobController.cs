@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using AutoFacTest.Interfaces;
+using EasySoft.Core.AutoFac.Attributes;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Mvc.Framework.Controllers;
 using EasySoft.Core.Web.Framework.Attributes;

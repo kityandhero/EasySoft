@@ -8,12 +8,12 @@
 
     <ItemGroup>
       <PackageReference Include="Autofac" Version="6.4.0" />
-      <PackageReference Include="Autofac.Configuration" Version="6.0.0" />
       <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EasySoft.UtilityTools\EasySoft.UtilityTools.csproj" />
+      <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
+      <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

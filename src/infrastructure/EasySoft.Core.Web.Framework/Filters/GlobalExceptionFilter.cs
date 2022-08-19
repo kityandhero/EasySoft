@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.ErrorLogTransmitter.Producers;
+using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.Core.Web.Framework.Results;
 using EasySoft.UtilityTools.Assists;

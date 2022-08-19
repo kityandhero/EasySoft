@@ -1,10 +1,10 @@
-﻿using EasySoft.Core.Config.Channels;
-using EasySoft.Core.ExchangeRegulation.Enums;
+﻿using EasySoft.Core.ExchangeRegulation.Enums;
 using EasySoft.Core.ExchangeRegulation.ExtensionMethods;
 using EasySoft.Core.ExchangeRegulation.Query;
 using EasySoft.Core.GeneralLogTransmitter.Entities;
 using EasySoft.Core.GeneralLogTransmitter.Interfaces;
 using EasySoft.Core.GeneralLogTransmitter.MessageQuery;
+using EasySoft.Core.Infrastructure.Channels;
 using Newtonsoft.Json;
 
 namespace EasySoft.Core.GeneralLogTransmitter.Producers;

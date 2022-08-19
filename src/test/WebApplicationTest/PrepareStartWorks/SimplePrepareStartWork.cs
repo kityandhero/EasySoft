@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Web.Framework.PrepareWorks;
+﻿using EasySoft.Core.PrepareStartWork.PrepareWorks;
 
 namespace WebApplicationTest.PrepareStartWorks;
 

@@ -1,6 +1,6 @@
-﻿using EasySoft.Core.Mvc.Framework.Controllers;
+﻿using EasySoft.Core.IdentityVerification.AccessControl;
+using EasySoft.Core.Mvc.Framework.Controllers;
 using EasySoft.Core.Mvc.Framework.ExtensionMethods;
-using EasySoft.Core.Web.Framework.AccessControl;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Controllers;

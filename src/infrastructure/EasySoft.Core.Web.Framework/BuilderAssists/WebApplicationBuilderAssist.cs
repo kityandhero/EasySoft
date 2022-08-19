@@ -1,7 +1,10 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
+﻿using EasySoft.Core.AutoFac.ExtensionMethods;
+using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
+using EasySoft.Core.GeneralLogTransmitter.ExtensionMethods;
+using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.Attributes;
 using EasySoft.Core.Web.Framework.CommonAssists;
-using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.Core.Web.Framework.Filters;
 using Hangfire;
 using Hangfire.MemoryStorage;
@@ -28,6 +31,8 @@ public static class WebApplicationBuilderAssist
         });
 
         builder.UseAdvanceAutoFac();
+
+        builder.UseCovertInjection();
 
         return BuildOther(builder);
     }

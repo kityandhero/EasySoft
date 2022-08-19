@@ -1,9 +1,9 @@
-﻿using EasySoft.Core.Config.Channels;
-using EasySoft.Core.ErrorLogTransmitter.Entities;
+﻿using EasySoft.Core.ErrorLogTransmitter.Entities;
 using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 using EasySoft.Core.ErrorLogTransmitter.Interfaces;
 using EasySoft.Core.ErrorLogTransmitter.MessageQuery;
 using EasySoft.Core.ExchangeRegulation.Query;
+using EasySoft.Core.Infrastructure.Channels;
 using EasySoft.UtilityTools.Entity;
 
 namespace EasySoft.Core.ErrorLogTransmitter.Producers;

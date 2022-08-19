@@ -33,6 +33,11 @@
       <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
       <ProjectReference Include="..\EasySoft.Core.ErrorLogTransmitter\EasySoft.Core.ErrorLogTransmitter.csproj" />
       <ProjectReference Include="..\EasySoft.Core.GeneralLogTransmitter\EasySoft.Core.GeneralLogTransmitter.csproj" />
+      <ProjectReference Include="..\EasySoft.Core.Hangfire\EasySoft.Core.Hangfire.csproj" />
+      <ProjectReference Include="..\EasySoft.Core.IdentityVerification\EasySoft.Core.IdentityVerification.csproj" />
+      <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
+      <ProjectReference Include="..\EasySoft.Core.PrepareStartWork\EasySoft.Core.PrepareStartWork.csproj" />
+      <ProjectReference Include="..\EasySoft.Core.Swagger\EasySoft.Core.Swagger.csproj" />
       <ProjectReference Include="..\EasySoft.UtilityTools\EasySoft.UtilityTools.csproj" />
     </ItemGroup>
 
@@ -48,6 +53,11 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.8" />
       <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0" />
       <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="PrepareWorks" />
+      <Folder Include="Selectors" />
     </ItemGroup>
 
 </Project>

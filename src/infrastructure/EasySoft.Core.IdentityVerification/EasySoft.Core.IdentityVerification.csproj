@@ -7,9 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EasySoft.Core.ExchangeRegulation\EasySoft.Core.ExchangeRegulation.csproj" />
+      <Reference Include="Microsoft.AspNetCore">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.8\Microsoft.AspNetCore.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
-      <ProjectReference Include="..\EasySoft.Core.RabbitMQ\EasySoft.Core.RabbitMQ.csproj" />
+      <ProjectReference Include="..\EasySoft.UtilityTools\EasySoft.UtilityTools.csproj" />
     </ItemGroup>
 
     <ItemGroup>
