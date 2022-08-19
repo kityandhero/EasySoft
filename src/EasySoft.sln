@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.ExchangeRegul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.RabbitMQ", "infrastructure\EasySoft.Core.RabbitMQ\EasySoft.Core.RabbitMQ.csproj", "{A02A6E33-F1F5-43A8-ACA8-F04F3D3952E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.AutoFac", "infrastructure\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj", "{DEB4B7BB-B9FC-4ECC-91E6-9F3A58E24FA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{A02A6E33-F1F5-43A8-ACA8-F04F3D3952E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A02A6E33-F1F5-43A8-ACA8-F04F3D3952E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A02A6E33-F1F5-43A8-ACA8-F04F3D3952E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEB4B7BB-B9FC-4ECC-91E6-9F3A58E24FA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEB4B7BB-B9FC-4ECC-91E6-9F3A58E24FA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEB4B7BB-B9FC-4ECC-91E6-9F3A58E24FA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEB4B7BB-B9FC-4ECC-91E6-9F3A58E24FA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -139,6 +145,7 @@ Global
 		{5D383514-6D98-4638-8D9B-99C98ED46E24} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
 		{89744B4F-C6C4-4870-A96D-795859DBDF7D} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
 		{A02A6E33-F1F5-43A8-ACA8-F04F3D3952E5} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{DEB4B7BB-B9FC-4ECC-91E6-9F3A58E24FA6} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

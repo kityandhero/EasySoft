@@ -27,7 +27,7 @@ public static class WebApplicationBuilderAssist
             WebRootPath = "webroot"
         });
 
-        WebApplicationBuilderExtensions.UseAdvanceAutoFac(builder);
+        builder.UseAdvanceAutoFac();
 
         return BuildOther(builder);
     }
@@ -85,6 +85,8 @@ public static class WebApplicationBuilderAssist
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
         }
+
+        builder.UseGeneralLogTransmitter();
 
         if (HangfireConfigAssist.GetEnable())
         {

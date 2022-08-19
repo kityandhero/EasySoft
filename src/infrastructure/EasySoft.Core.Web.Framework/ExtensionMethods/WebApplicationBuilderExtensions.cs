@@ -1,10 +1,13 @@
 ﻿using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.GeneralLogTransmitter.Entities;
+using EasySoft.Core.GeneralLogTransmitter.Interfaces;
+using EasySoft.Core.GeneralLogTransmitter.Producers;
 using EasySoft.Core.Web.Framework.AccessControl;
 using EasySoft.Core.Web.Framework.CommonAssists;
-using EasySoft.Core.Web.Framework.IocAssists;
 using EasySoft.Core.Web.Framework.PrepareWorks;
 using EasySoft.Core.Web.Framework.Selectors;
 using EasySoft.UtilityTools.ExtensionMethods;
@@ -79,6 +82,20 @@ public static class WebApplicationBuilderExtensions
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
             containerBuilder.RegisterType<T>().As<StaticFileOptions>().SingleInstance();
+        });
+
+        return builder;
+    }
+
+    public static WebApplicationBuilder UseGeneralLogTransmitter(
+        this WebApplicationBuilder builder
+    )
+    {
+        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+        {
+            containerBuilder.RegisterType<GeneralLogExchange>().As<IGeneralLogExchange>().InstancePerDependency();
+
+            containerBuilder.RegisterType<GeneralLogProducer>().As<IGeneralLogProducer>().SingleInstance();
         });
 
         return builder;
@@ -245,7 +262,7 @@ public static class WebApplicationBuilderExtensions
 
         // 中间件调用顺序请参阅: https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/middleware/?view=aspnetcore-6.0#middleware-order
 
-        WebApplicationExtensions.UsePrepareStartWork(app);
+        app.UsePrepareStartWork();
 
         if (!app.Environment.IsDevelopment())
         {
@@ -255,7 +272,8 @@ public static class WebApplicationBuilderExtensions
 
         if (FlagAssist.TokenSecretOptionIsDefault)
         {
-            WebApplicationExtensions.RecordWarning(app, "TokenSecretOption use DefaultTokenSecretOption, it is not safe, suggest using builder.UseTokenSecretOptionsInjection<T>() with your TokenSecretOption."
+            app.RecordWarning(
+                "TokenSecretOption use DefaultTokenSecretOption, it is not safe, suggest using builder.UseTokenSecretOptionsInjection<T>() with your TokenSecretOption."
             );
         }
 
@@ -263,14 +281,15 @@ public static class WebApplicationBuilderExtensions
 
         if (GeneralConfigAssist.GetUseStaticFiles())
         {
-            WebApplicationExtensions.UseAdvanceStaticFiles(app);
+            app.UseAdvanceStaticFiles();
 
-            WebApplicationExtensions.RecordInformation(app, $"useStaticFiles: enable"
+            app.RecordInformation("useStaticFiles: enable"
             );
         }
         else
         {
-            WebApplicationExtensions.RecordInformation(app, "useStaticFiles: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            app.RecordInformation(
+                "useStaticFiles: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
             );
         }
 
@@ -280,12 +299,13 @@ public static class WebApplicationBuilderExtensions
         {
             app.UseCors(ConstCollection.DefaultSpecificOrigins);
 
-            WebApplicationExtensions.RecordInformation(app, $"cors: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}"
+            app.RecordInformation($"cors: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}"
             );
         }
         else
         {
-            WebApplicationExtensions.RecordInformation(app, "cors: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            app.RecordInformation(
+                "cors: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
             );
         }
 
@@ -293,12 +313,14 @@ public static class WebApplicationBuilderExtensions
         {
             app.UseAuthentication();
 
-            WebApplicationExtensions.RecordInformation(app, $"UseAuthentication: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}"
+            app.RecordInformation(
+                $"UseAuthentication: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}"
             );
         }
         else
         {
-            WebApplicationExtensions.RecordInformation(app, "UseAuthentication: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            app.RecordInformation(
+                "UseAuthentication: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
             );
         }
 
@@ -306,26 +328,43 @@ public static class WebApplicationBuilderExtensions
         {
             app.UseAuthorization();
 
-            WebApplicationExtensions.RecordInformation(app, $"UseAuthorization: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}"
+            app.RecordInformation(
+                $"UseAuthorization: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}"
             );
         }
         else
         {
-            WebApplicationExtensions.RecordInformation(app, "UseAuthorization: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            app.RecordInformation(
+                "UseAuthorization: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
             );
         }
 
-        WebApplicationExtensions.UseAdvanceSwagger(app);
+        if (GeneralConfigAssist.GetRemoteGeneralLogEnable())
+        {
+            app.RecordInformation(
+                "RemoteGeneralLogEnable: enable"
+            );
+        }
+        else
+        {
+            app.RecordInformation(
+                "RemoteGeneralLogEnable: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            );
+        }
 
-        WebApplicationExtensions.UseAdvanceHangfire(app);
+        app.UseAdvanceSwagger();
 
-        WebApplicationExtensions.RecordInformation(app, "you can set your autoFac config with autoFac.json in ./configures/autoFac.json. The document link is https://autofac.readthedocs.io/en/latest/configuration/xml.html."
+        app.UseAdvanceHangfire();
+
+        app.RecordInformation(
+            "you can set your autoFac config with autoFac.json in ./configures/autoFac.json. The document link is https://autofac.readthedocs.io/en/latest/configuration/xml.html."
         );
 
-        WebApplicationExtensions.RecordInformation(app, "you can get all controller actions by visit https://[host]:[port]/[controller]/getAllActions where controller inherited from CustomControllerBase."
+        app.RecordInformation(
+            "you can get all controller actions by visit https://[host]:[port]/[controller]/getAllActions where controller inherited from CustomControllerBase."
         );
 
-        WebApplicationExtensions.UseAdvanceMapControllers(app, areas);
+        app.UseAdvanceMapControllers(areas);
 
         return app;
     }

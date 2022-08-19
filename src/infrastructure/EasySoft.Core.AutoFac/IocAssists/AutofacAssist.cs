@@ -5,7 +5,7 @@ using EasySoft.UtilityTools.Assists;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
-namespace EasySoft.Core.Web.Framework.IocAssists;
+namespace EasySoft.Core.AutoFac.IocAssists;
 
 public class AutofacAssist
 {
@@ -33,53 +33,63 @@ public class AutofacAssist
         ConfigurationModule = new ConfigurationModule(config.Build());
     }
 
-    internal static void Init(HostBuilderContext hostBuilderContext, ContainerBuilder containerBuilder)
+    public static void Init(HostBuilderContext hostBuilderContext, ContainerBuilder containerBuilder)
     {
         containerBuilder.RegisterModule(ConfigurationModule);
     }
 
+    private ILifetimeScope GetContainer()
+    {
+        if (Container == null)
+        {
+            throw new Exception("Container is null, please assign a value before use it.");
+        }
+
+        return Container;
+    }
+
     public T Resolve<T>() where T : notnull
     {
-        return Container.Resolve<T>();
+        return GetContainer().Resolve<T>();
     }
 
     public T ResolveKeyed<T>(string serviceKey) where T : notnull
     {
-        return Container.ResolveKeyed<T>(serviceKey);
+        return GetContainer().ResolveKeyed<T>(serviceKey);
     }
 
     public T ResolveKeyed<T>(string serviceKey, params Parameter[] parameters) where T : notnull
     {
-        return Container.ResolveKeyed<T>(serviceKey, parameters);
+        return GetContainer().ResolveKeyed<T>(serviceKey, parameters);
     }
 
     public object Resolve(Type serviceType)
     {
-        return Container.Resolve(serviceType);
+        return GetContainer().Resolve(serviceType);
     }
 
     public object ResolveKeyed(string serviceKey, Type serviceType)
     {
-        return Container.ResolveKeyed(serviceKey, serviceType);
+        return GetContainer().ResolveKeyed(serviceKey, serviceType);
     }
 
     public bool IsRegistered<T>() where T : notnull
     {
-        return Container.IsRegistered<T>();
+        return GetContainer().IsRegistered<T>();
     }
 
     public bool IsRegisteredWithKey<T>(string serviceKey) where T : notnull
     {
-        return Container.IsRegisteredWithKey<T>(serviceKey);
+        return GetContainer().IsRegisteredWithKey<T>(serviceKey);
     }
 
     public bool IsRegistered(Type serviceType)
     {
-        return Container.IsRegistered(serviceType);
+        return GetContainer().IsRegistered(serviceType);
     }
 
     public bool IsRegisteredWithKey(string serviceKey, Type serviceType)
     {
-        return Container.IsRegisteredWithKey(serviceKey, serviceType);
+        return GetContainer().IsRegisteredWithKey(serviceKey, serviceType);
     }
 }

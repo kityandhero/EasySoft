@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.ExchangeRegulation.Interfaces;
+using EasySoft.UtilityTools.Assists;
 
 namespace EasySoft.Core.ExchangeRegulation.Entities;
 
@@ -31,9 +32,19 @@ public abstract class BaseExchange : IExchangeEntity
     /// </summary>
     public long CreateOperatorId { get; set; }
 
-    public BaseExchange()
+    protected BaseExchange()
     {
         Id = Guid.NewGuid().ToString();
         Ip = "";
+    }
+
+    public string GetId()
+    {
+        return Id;
+    }
+
+    public string GetIdentificationName()
+    {
+        return ReflectionAssist.GetPropertyName(() => Id);
     }
 }

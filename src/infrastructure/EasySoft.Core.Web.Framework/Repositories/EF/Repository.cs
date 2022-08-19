@@ -27,12 +27,12 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
         bool descending = false
     )
     {
-        total = Queryable.Where(Context.Set<T>(), where).Count();
+        total = Context.Set<T>().Where(where).Count();
 
         if (!descending)
         {
             return
-                Queryable.Where(Context.Set<T>(), where)
+                Context.Set<T>().Where(where)
                     .OrderBy(orderBy)
                     .Skip(pageSize * (pageIndex - 1))
                     .Take(pageSize)
@@ -40,7 +40,7 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
         }
 
         return
-            Queryable.Where(Context.Set<T>(), where)
+            Context.Set<T>().Where(where)
                 .OrderByDescending(orderBy)
                 .Skip(pageSize * (pageIndex - 1))
                 .Take(pageSize)
@@ -55,7 +55,7 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
         Expression<Func<T, bool>> filter
     )
     {
-        return Queryable.Where(Context.Set<T>(), filter).ToList();
+        return Context.Set<T>().Where(filter).ToList();
     }
 
     public virtual IEnumerable<T> SingleList<TKey>(
@@ -65,8 +65,8 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
     )
     {
         return descending
-            ? Queryable.Where(Context.Set<T>(), filter).AsEnumerable().OrderByDescending(keySelector).ToList()
-            : Queryable.Where(Context.Set<T>(), filter).AsEnumerable().OrderBy(keySelector).ToList();
+            ? Context.Set<T>().Where(filter).AsEnumerable().OrderByDescending(keySelector).ToList()
+            : Context.Set<T>().Where(filter).AsEnumerable().OrderBy(keySelector).ToList();
     }
 
     public virtual IEnumerable<T> SingleList<TKey>(
@@ -77,8 +77,8 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
     )
     {
         return descending
-            ? Queryable.Where(Context.Set<T>(), filter).AsEnumerable().OrderByDescending(keySelector, comparer).ToList()
-            : Queryable.Where(Context.Set<T>(), filter).AsEnumerable().OrderBy(keySelector, comparer).ToList();
+            ? Context.Set<T>().Where(filter).AsEnumerable().OrderByDescending(keySelector, comparer).ToList()
+            : Context.Set<T>().Where(filter).AsEnumerable().OrderBy(keySelector, comparer).ToList();
     }
 
     #endregion

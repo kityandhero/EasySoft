@@ -46,29 +46,28 @@ namespace EasySoft.Core.RabbitMQ
         /// </summary>
         public void Send(T entity)
         {
-            using (var conn = MessageStorage.CreateConnection())
+            var conn = MessageStorage.CreateConnection();
+
+            using (var im = conn.CreateModel())
             {
-                using (var im = conn.CreateModel())
-                {
-                    //定义路由
-                    im.ExchangeDeclare(GetQueueRouteName(), ExchangeType.Direct, true);
-                    //定义队列
-                    im.QueueDeclare(GetQueueName(), true, false, false, null);
-                    //绑定队列到路由
-                    im.QueueBind(GetQueueName(), GetQueueRouteName(), ExchangeType.Direct, null);
+                //定义路由
+                im.ExchangeDeclare(GetQueueRouteName(), ExchangeType.Direct, true);
+                //定义队列
+                im.QueueDeclare(GetQueueName(), true, false, false, null);
+                //绑定队列到路由
+                im.QueueBind(GetQueueName(), GetQueueRouteName(), ExchangeType.Direct, null);
 
-                    var properties = im.CreateBasicProperties();
+                var properties = im.CreateBasicProperties();
 
-                    //队列持久化
-                    properties.Persistent = true;
+                //队列持久化
+                properties.Persistent = true;
 
-                    var json = JsonConvert.SerializeObject(entity);
+                var json = JsonConvert.SerializeObject(entity);
 
-                    var message = Encoding.UTF8.GetBytes(json);
+                var message = Encoding.UTF8.GetBytes(json);
 
-                    //发送消息到队列
-                    im.BasicPublish(GetQueueRouteName(), ExchangeType.Direct, properties, message);
-                }
+                //发送消息到队列
+                im.BasicPublish(GetQueueRouteName(), ExchangeType.Direct, properties, message);
             }
         }
     }

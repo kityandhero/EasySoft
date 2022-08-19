@@ -2,4 +2,7 @@
 
 public interface IExchangeEntity
 {
+    public string GetId();
+
+    public string GetIdentificationName();
 }

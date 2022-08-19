@@ -214,7 +214,8 @@ namespace EasySoft.UtilityTools.Assists
             if (me == null)
             {
                 throw new ArgumentException(
-                    "You must pass a lambda of the form: ' Class=> Class.Property' or 'object => object.Property'");
+                    "You must pass a lambda of the form: ' Class=> Class.Property' or 'object => object.Property'"
+                );
             }
 
             var classLam = me.Expression;
