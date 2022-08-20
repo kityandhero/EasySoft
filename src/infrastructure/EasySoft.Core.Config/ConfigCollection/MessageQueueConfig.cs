@@ -25,6 +25,6 @@ public class MessageQueueConfig : IConfig
         Password = "";
         VirtualHost = "/";
         ConnectionTimeout = "30";
-        Prefix = "PandoraMulti";
+        Prefix = "";
     }
 }

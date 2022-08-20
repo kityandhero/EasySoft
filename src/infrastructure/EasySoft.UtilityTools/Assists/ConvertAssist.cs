@@ -9,10 +9,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using EasySoft.UtilityTools.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using EasySoft.UtilityTools.ExtensionMethods;
+using EasySoft.UtilityTools.Result;
 using SixLabors.ImageSharp;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace EasySoft.UtilityTools.Assists
 {
@@ -219,6 +222,136 @@ namespace EasySoft.UtilityTools.Assists
         }
 
         #endregion 将时间转换成UNIX时间戳
+
+        public static ExecutiveResult<T> StringTo<T>(string? value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return new ExecutiveResult<T>(ReturnCode.NoData);
+            }
+
+            var typeCode = Type.GetTypeCode(typeof(T));
+
+            switch (typeCode)
+            {
+                case TypeCode.Boolean:
+                    return new(ReturnCode.Ok)
+                    {
+                        Data = (T)Convert.ChangeType(
+                            value.Equals("true", StringComparison.InvariantCultureIgnoreCase),
+                            typeof(T)
+                        )
+                    };
+
+                case TypeCode.Int64:
+                    return new(ReturnCode.Ok)
+                    {
+                        Data = (T)Convert.ChangeType(
+                            Convert.ToInt64(value),
+                            typeof(T)
+                        )
+                    };
+
+                case TypeCode.UInt64:
+                    return new(ReturnCode.Ok)
+                    {
+                        Data = (T)Convert.ChangeType(
+                            Convert.ToUInt64(value),
+                            typeof(T)
+                        )
+                    };
+
+                case TypeCode.DateTime:
+                    return new(ReturnCode.Ok)
+                    {
+                        Data = (T)Convert.ChangeType(
+                            Convert.ToDateTime(value),
+                            typeof(T)
+                        )
+                    };
+
+                case TypeCode.Decimal:
+                    return new(ReturnCode.Ok)
+                    {
+                        Data = (T)Convert.ChangeType(
+                            Convert.ToDecimal(value),
+                            typeof(T)
+                        )
+                    };
+
+                case TypeCode.Double:
+                    return new(ReturnCode.Ok)
+                    {
+                        Data = (T)Convert.ChangeType(
+                            Convert.ToDouble(value),
+                            typeof(T)
+                        )
+                    };
+
+                case TypeCode.Int16:
+                    return new(ReturnCode.Ok)
+                    {
+                        Data = (T)Convert.ChangeType(
+                            Convert.ToInt16(value),
+                            typeof(T)
+                        )
+                    };
+
+                case TypeCode.Int32:
+                    return new ExecutiveResult<T>(ReturnCode.Ok)
+                    {
+                        Data = (T)Convert.ChangeType(
+                            Convert.ToInt32(value),
+                            typeof(T)
+                        )
+                    };
+
+                case TypeCode.Single:
+                    return new ExecutiveResult<T>(ReturnCode.Ok)
+                    {
+                        Data = (T)Convert.ChangeType(
+                            Convert.ToSingle(value),
+                            typeof(T)
+                        )
+                    };
+
+                case TypeCode.String:
+                    return new(ReturnCode.Ok)
+                    {
+                        Data = (T)Convert.ChangeType(
+                            Convert.ToString(value),
+                            typeof(T)
+                        )
+                    };
+
+                case TypeCode.UInt16:
+                    return new(ReturnCode.Ok)
+                    {
+                        Data = (T)Convert.ChangeType(
+                            Convert.ToUInt16(value),
+                            typeof(T)
+                        )
+                    };
+
+                case TypeCode.UInt32:
+                    return new(ReturnCode.Ok)
+                    {
+                        Data = (T)Convert.ChangeType(
+                            Convert.ToUInt32(value),
+                            typeof(T)
+                        )
+                    };
+
+                case TypeCode.Object:
+                    return new(ReturnCode.Ok)
+                    {
+                        Data = JsonSerializer.Deserialize<T>(value)
+                    };
+
+                default:
+                    throw new Exception("type has not yet supported");
+            }
+        }
 
         public static T? ObjectTo<T>(object? value, object? defaultValue = null)
         {

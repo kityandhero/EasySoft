@@ -42,6 +42,22 @@ public static class GeneralConfigAssist
         return GeneralConfig.Instance;
     }
 
+    public static string GetCacheMode()
+    {
+        var v = GetConfig().CacheMode;
+
+        v = string.IsNullOrWhiteSpace(v) ? "InMemory" : v;
+
+        if (!v.In("InMemory", "Redis"))
+        {
+            throw new Exception(
+                $"请配置 CacheMode: {ConfigFile} -> CacheMode,请设置 InMemory/Redis"
+            );
+        }
+
+        return v;
+    }
+
     public static bool GetRemoteGeneralLogEnable()
     {
         var v = GetConfig().RemoteGeneralLogEnable;

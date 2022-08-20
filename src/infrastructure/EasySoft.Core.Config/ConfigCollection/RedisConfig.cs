@@ -9,14 +9,14 @@ public class RedisConfig : IConfig
 
     public string KeyPrefix { get; set; }
 
-    public string Connection { get; set; }
+    public string Connections { get; set; }
 
-    public string ActivateMode { get; set; }
+    public string Sentinels { get; set; }
 
     public RedisConfig()
     {
-        Connection = "";
-        KeyPrefix = "PandoraMulti";
-        ActivateMode = ((int)IPAssist.Mode.Intranet).ToString();
+        Connections = "";
+        Sentinels = "";
+        KeyPrefix = "";
     }
 }

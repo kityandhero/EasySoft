@@ -129,5 +129,10 @@ namespace EasySoft.Core.Infrastructure.ExtensionMethods
             return
                 $"{request.Scheme}://{request.Host}{request.PathBase}{request.Path}{request.QueryString}";
         }
+
+        public static string GetAbsolutePath(this HttpRequest request)
+        {
+            return $"{request.PathBase}{request.Path}";
+        }
     }
 }

@@ -6,6 +6,8 @@ public class GeneralConfig : IConfig
 {
     public static readonly GeneralConfig Instance = new();
 
+    public string CacheMode { get; set; }
+
     public string RemoteGeneralLogEnable { get; set; }
 
     public string RemoteErrorLogEnable { get; set; }
@@ -22,6 +24,7 @@ public class GeneralConfig : IConfig
 
     public GeneralConfig()
     {
+        CacheMode = "InMemory";
         RemoteGeneralLogEnable = "0";
         RemoteErrorLogEnable = "0";
         UseStaticFiles = "1";

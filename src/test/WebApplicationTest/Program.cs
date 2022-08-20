@@ -30,7 +30,10 @@ builder.Services.AddDbContext<DataContext>(
     }
 );
 
-builder.UseAdvanceApplicationChannel(ApplicationChannelCollection.TestApplication.ToInt());
+builder.UseAdvanceApplicationChannel(
+    ApplicationChannelCollection.TestApplication.ToInt(),
+    ApplicationChannelCollection.TestApplication.GetDescription()
+);
 
 builder.UsePrepareStartWorkInjection<SimplePrepareStartWork>();
 

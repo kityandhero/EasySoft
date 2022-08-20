@@ -28,7 +28,7 @@ public static class RedisConfigAssist
 
         Configuration.Bind(RedisConfig.Instance);
     }
-    
+
     public static void Init()
     {
     }
@@ -38,33 +38,32 @@ public static class RedisConfigAssist
         return RedisConfig.Instance;
     }
 
-    public static int GetActivateMode()
-    {
-        var v = GetConfig().ActivateMode;
-
-        if (!v.IsInt() || !v.ToInt().CheckInEnum<IPAssist.Mode>())
-        {
-            throw new Exception(
-                $"请配置Redis ActivateMode: {ConfigFile} -> ActivateMode"
-            );
-        }
-
-        return v.ToInt();
-    }
-
     /// <summary>
     /// 获取服务配应用安装前缀配置
     /// </summary>
-    public static string GetConnection()
+    public static List<string> GetConnectionCollection()
     {
-        var v = GetConfig().Connection;
+        var v = GetConfig().Connections.Trim()
+            .Split(",")
+            .Where(o => !string.IsNullOrWhiteSpace(o))
+            .ToList();
 
-        if (string.IsNullOrWhiteSpace(v))
+        if (!v.Any())
         {
             throw new Exception(
-                $"请配置Redis Connection: {ConfigFile} -> Connection"
+                $"请配置Redis Connections: {ConfigFile} -> Connections,配置示例: 127.0.0.1:6388,defaultDatabase=13,poolsize=10|127.0.0.1:6389,defaultDatabase=13,poolsize=10"
             );
         }
+
+        return v;
+    }
+
+    public static List<string> GetSentinelCollection()
+    {
+        var v = GetConfig().Sentinels.Trim()
+            .Split(",")
+            .Where(o => !string.IsNullOrWhiteSpace(o))
+            .ToList();
 
         return v;
     }
@@ -75,6 +74,6 @@ public static class RedisConfigAssist
 
         v = v.Remove(" ").Trim();
 
-        return string.IsNullOrWhiteSpace(v) ? "PandoraMulti" : v;
+        return string.IsNullOrWhiteSpace(v) ? "" : v;
     }
 }

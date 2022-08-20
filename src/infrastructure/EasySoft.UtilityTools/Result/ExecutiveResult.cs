@@ -24,16 +24,16 @@ namespace EasySoft.UtilityTools.Result
     /// <summary>
     /// 执行结果，用于返回方法等的执行结果判断
     /// </summary>
-    public class ExecutiveResult<T> : BaseExecutiveResult where T : new()
+    public class ExecutiveResult<T> : BaseExecutiveResult
     {
         /// <summary>
         /// 数据  
         /// </summary>
-        public T Data { get; set; }
+        public T? Data { get; set; }
 
         public ExecutiveResult(ReturnMessage returnMessage) : base(returnMessage)
         {
-            Data = new T();
+            Data = default;
         }
 
         public ExecutiveResult(ReturnCode returnCode) : this(new ReturnMessage(returnCode))
@@ -46,13 +46,13 @@ namespace EasySoft.UtilityTools.Result
         }
     }
 
-    public class ExistResult<T> : ExecutiveResult<T> where T : new()
+    public class ExistResult<T> : ExecutiveResult<T>
     {
         public bool Exist { get; set; }
 
         public ExistResult(ReturnMessage returnMessage) : base(returnMessage)
         {
-            Data = new T();
+            Data = default;
             Exist = false;
         }
 

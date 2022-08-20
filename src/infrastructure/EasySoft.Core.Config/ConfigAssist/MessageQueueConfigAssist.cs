@@ -114,6 +114,6 @@ public static class MessageQueueConfigAssist
     {
         var v = GetConfig().Prefix.Remove(" ").Trim();
 
-        return string.IsNullOrWhiteSpace(v) ? "PandoraMulti" : v;
+        return string.IsNullOrWhiteSpace(v) ? "" : v;
     }
 }

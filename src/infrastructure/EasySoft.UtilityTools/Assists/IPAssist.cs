@@ -19,24 +19,6 @@ namespace EasySoft.UtilityTools.Assists
     public static class IPAssist
     {
         /// <summary>
-        /// 模式
-        /// </summary>
-        public enum Mode
-        {
-            /// <summary>
-            /// 内网
-            /// </summary>
-            [Description("内网")]
-            Intranet = 1,
-
-            /// <summary>
-            /// 公网
-            /// </summary>
-            [Description("公网")]
-            Internet = 2
-        }
-
-        /// <summary>
         /// 判断IP地址是否为内网IP地址
         /// </summary>
         /// <param name="address">IP地址字符串</param>

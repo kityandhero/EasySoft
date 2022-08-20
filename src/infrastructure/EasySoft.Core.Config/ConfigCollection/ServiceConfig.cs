@@ -10,6 +10,6 @@ public class ServiceConfig : IConfig
 
     public ServiceConfig()
     {
-        Prefix = "PandoraMulti";
+        Prefix = "";
     }
 }

@@ -7,6 +7,11 @@ namespace EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
+    /// <summary>
+    /// 配置远程异常日志传输
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
     public static WebApplicationBuilder UseErrorLogTransmitter(
         this WebApplicationBuilder builder
     )

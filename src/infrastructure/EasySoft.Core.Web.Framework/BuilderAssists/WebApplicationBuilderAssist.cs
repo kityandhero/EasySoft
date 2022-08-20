@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.EasyCaching.ExtensionMethods;
 using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 using EasySoft.Core.GeneralLogTransmitter.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Assists;
@@ -91,7 +92,10 @@ public static class WebApplicationBuilderAssist
             builder.Services.AddSwaggerGen();
         }
 
+        builder.UseAdvanceEasyCaching();
+
         builder.UseGeneralLogTransmitter();
+
         builder.UseErrorLogTransmitter();
 
         if (HangfireConfigAssist.GetEnable())

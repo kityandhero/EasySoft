@@ -47,6 +47,6 @@ public static class ServiceConfigAssist
 
         v = v.Remove(" ").Trim();
 
-        return string.IsNullOrWhiteSpace(v) ? "PandoraMulti" : v;
+        return string.IsNullOrWhiteSpace(v) ? "" : v;
     }
 }

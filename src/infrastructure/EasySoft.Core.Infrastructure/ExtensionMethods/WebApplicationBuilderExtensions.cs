@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Channels;
 using Microsoft.AspNetCore.Builder;
@@ -27,35 +26,18 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
-    public static WebApplication UseAdvanceStaticFiles(
-        this WebApplication application
-    )
-    {
-        if (!application.UseHostFiltering().ApplicationServices.GetAutofacRoot().IsRegistered<StaticFileOptions>())
-        {
-            application.UseStaticFiles();
-        }
-        else
-        {
-            var staticFileOptions = application.UseHostFiltering().ApplicationServices.GetAutofacRoot()
-                .Resolve<StaticFileOptions>();
-
-            application.UseStaticFiles(staticFileOptions);
-        }
-
-        return application;
-    }
-
     /// <summary>
     /// 标记当前应用通道值, 用于远程日志等数据中, 便于数据辨认, 不使用此方法标记, 框架将采用内置值 0 代替
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="channel"></param>
+    /// <param name="name"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     public static WebApplicationBuilder UseAdvanceApplicationChannel(
         this WebApplicationBuilder builder,
-        int channel
+        int channel,
+        string name
     )
     {
         if (FlagAssist.ApplicationChannelInjectionComplete)
@@ -65,7 +47,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
-            containerBuilder.RegisterInstance(new ApplicationChannel().SetChannel(channel))
+            containerBuilder.RegisterInstance(new ApplicationChannel().SetChannel(channel).SetName(name))
                 .As<IApplicationChannel>().SingleInstance();
         });
 
