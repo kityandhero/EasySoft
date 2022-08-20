@@ -17,8 +17,6 @@ public class JobController : CustomControllerBase
     // GET  
     public IActionResult Index()
     {
-        var s = AutofacAssist.Instance.Container.Resolve<IEasyCachingProvider>();
-        
         return Content("Success");
     }
 
