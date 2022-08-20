@@ -8,9 +8,13 @@ public class GeneralConfig : IConfig
 
     public string CacheMode { get; set; }
 
-    public string RemoteGeneralLogEnable { get; set; }
+    public string IdentityVerificationSwitch { get; set; }
 
-    public string RemoteErrorLogEnable { get; set; }
+    public string AccessWayDetectSwitch { get; set; }
+
+    public string RemoteGeneralLogSwitch { get; set; }
+
+    public string RemoteErrorLogSwitch { get; set; }
 
     public string UseStaticFiles { get; set; }
 
@@ -18,19 +22,21 @@ public class GeneralConfig : IConfig
 
     public string UseAuthorization { get; set; }
 
-    public string CorsEnable { get; set; }
+    public string CorsSwitch { get; set; }
 
     public string CorsPolicies { get; set; }
 
     public GeneralConfig()
     {
         CacheMode = "InMemory";
-        RemoteGeneralLogEnable = "0";
-        RemoteErrorLogEnable = "0";
+        IdentityVerificationSwitch = "0";
+        AccessWayDetectSwitch = "0";
+        RemoteGeneralLogSwitch = "0";
+        RemoteErrorLogSwitch = "0";
         UseStaticFiles = "1";
         UseAuthentication = "0";
         UseAuthorization = "0";
-        CorsEnable = "0";
+        CorsSwitch = "0";
         CorsPolicies = "*";
     }
 }

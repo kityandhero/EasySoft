@@ -44,7 +44,7 @@ public static class RedisConfigAssist
     public static List<string> GetConnectionCollection()
     {
         var v = GetConfig().Connections.Trim()
-            .Split(",")
+            .Split("|")
             .Where(o => !string.IsNullOrWhiteSpace(o))
             .ToList();
 
@@ -61,7 +61,7 @@ public static class RedisConfigAssist
     public static List<string> GetSentinelCollection()
     {
         var v = GetConfig().Sentinels.Trim()
-            .Split(",")
+            .Split("|")
             .Where(o => !string.IsNullOrWhiteSpace(o))
             .ToList();
 

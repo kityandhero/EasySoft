@@ -1,6 +1,7 @@
 {
   "CorsEnable": "1",
   "CorsPolicies": "*",
+  "CacheMode": "Redis",
   "RemoteGeneralLogEnable": "1",
   "RemoteErrorLogEnable": "1"
 }

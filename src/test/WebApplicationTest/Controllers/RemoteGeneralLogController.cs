@@ -26,7 +26,7 @@ public class RemoteGeneralLogController : CustomControllerBase
 
     public IActionResult Test()
     {
-        if (!GeneralConfigAssist.GetRemoteGeneralLogEnable())
+        if (!GeneralConfigAssist.GetRemoteGeneralLogSwitch())
         {
             return this.Fail(ReturnCode.NoChange.ToMessage("RemoteGeneralLogEnable switch is not open"));
         }

@@ -43,7 +43,7 @@ public class GlobalExceptionFilter : IExceptionFilter
 
         _logger.Error(result);
 
-        if (GeneralConfigAssist.GetRemoteErrorLogEnable())
+        if (GeneralConfigAssist.GetRemoteErrorLogSwitch())
         {
             var errorLogProducer = AutofacAssist.Instance.Resolve<IErrorLogProducer>();
 

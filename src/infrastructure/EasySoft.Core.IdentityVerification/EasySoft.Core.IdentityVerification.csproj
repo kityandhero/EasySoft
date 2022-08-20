@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\EasySoft.Core.AccessWayTransmitter\EasySoft.Core.AccessWayTransmitter.csproj" />
       <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj" />
       <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
       <ProjectReference Include="..\EasySoft.UtilityTools\EasySoft.UtilityTools.csproj" />
@@ -20,6 +21,10 @@
 
     <ItemGroup>
       <PackageReference Include="Autofac" Version="6.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Operators" />
     </ItemGroup>
 
 </Project>

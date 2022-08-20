@@ -62,6 +62,10 @@ public static class WebApplicationBuilderExtensions
             );
         }
 
+        app.RecordInformation(
+            $"CacheMode : {GeneralConfigAssist.GetCacheMode()}{(GeneralConfigAssist.GetCacheMode().Equals("redis", StringComparison.CurrentCultureIgnoreCase) ? $", Connections: {RedisConfigAssist.GetConnectionCollection().Join("|")}" : "")}, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json.."
+        );
+
         if (GeneralConfigAssist.GetRemoteLogSwitch())
         {
             if (FlagAssist.ApplicationChannelIsDefault)
@@ -98,7 +102,7 @@ public static class WebApplicationBuilderExtensions
 
         app.UseRouting();
 
-        if (GeneralConfigAssist.GetCorsEnable())
+        if (GeneralConfigAssist.GetCorsSwitch())
         {
             app.UseCors(ConstCollection.DefaultSpecificOrigins);
 
@@ -127,6 +131,32 @@ public static class WebApplicationBuilderExtensions
             );
         }
 
+        if (GeneralConfigAssist.GetIdentityVerificationSwitch())
+        {
+            app.RecordInformation(
+                $"IdentityVerificationSwitch: enable"
+            );
+        }
+        else
+        {
+            app.RecordInformation(
+                "IdentityVerificationSwitch: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            );
+        }
+
+        if (GeneralConfigAssist.GetAccessWayDetectSwitch())
+        {
+            app.RecordInformation(
+                $"AccessWayDetectSwitch: enable"
+            );
+        }
+        else
+        {
+            app.RecordInformation(
+                "AccessWayDetectSwitch: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            );
+        }
+
         if (GeneralConfigAssist.GetUseAuthorization())
         {
             app.UseAuthorization();
@@ -142,7 +172,7 @@ public static class WebApplicationBuilderExtensions
             );
         }
 
-        if (GeneralConfigAssist.GetRemoteGeneralLogEnable())
+        if (GeneralConfigAssist.GetRemoteGeneralLogSwitch())
         {
             app.RecordInformation(
                 "RemoteGeneralLogEnable: enable"

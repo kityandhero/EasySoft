@@ -1,12 +1,21 @@
-﻿using Autofac;
+﻿using System.Reflection;
+using AspectCore.Configuration;
+using AspectCore.Extensions.Autofac;
+using Autofac;
+using EasyCaching.Core;
+using EasyCaching.Core.Configurations;
+using EasyCaching.Core.Interceptor;
 using EasyCaching.CSRedis;
 using EasyCaching.InMemory;
+using EasyCaching.Interceptor.AspectCore;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyCaching.Enums;
+using EasySoft.Core.EasyCaching.interfaces;
 using EasySoft.Core.EasyCaching.Operators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace EasySoft.Core.EasyCaching.ExtensionMethods;
 
@@ -40,14 +49,67 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// Add the AspectCore interceptor.
+    /// </summary>
+    public static WebApplicationBuilder AddEasyCachingInterceptor(
+        this WebApplicationBuilder builder,
+        Action<EasyCachingInterceptorOptions> action
+    )
+    {
+        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+        {
+            containerBuilder.RegisterType<DefaultEasyCachingKeyGenerator>().As<IEasyCachingKeyGenerator>();
+
+            containerBuilder.RegisterType<EasyCachingInterceptor>();
+
+            var config = new EasyCachingInterceptorOptions();
+
+            action(config);
+
+            var options = Options.Create(config);
+
+            containerBuilder.Register(x => options);
+
+            containerBuilder.RegisterDynamicProxy(configure =>
+            {
+                bool All(MethodInfo x) => x.CustomAttributes.Any(data =>
+                    typeof(EasyCachingInterceptorAttribute).GetTypeInfo().IsAssignableFrom(data.AttributeType)
+                );
+
+                configure.Interceptors.AddTyped<EasyCachingInterceptor>(All);
+            });
+        });
+
+        return builder;
+    }
+
     private static WebApplicationBuilder UseAdvanceEasyCachingInMemory(
         this WebApplicationBuilder builder
     )
     {
+        builder.UseEasyCachingInMemoryCaching()
+            .AddEasyCachingInterceptor(x =>
+                x.CacheProviderName = EasyCachingConstValue.DefaultInMemoryName
+            )
+            .UseMemoryCacheOperatorInjection();
+
+        return builder;
+    }
+
+    /// <summary>
+    /// 注入内存缓存
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder UseEasyCachingInMemoryCaching(
+        this WebApplicationBuilder builder
+    )
+    {
+        //Important step for In-Memory Caching
         builder.Services.AddEasyCaching(options =>
         {
-            options.UseInMemory("default");
-
+            // use memory cache with your own configuration
             options.UseInMemory(config =>
             {
                 config.DBConfig = new InMemoryCachingOptions
@@ -71,10 +133,8 @@ public static class WebApplicationBuilderExtensions
                 config.LockMs = 5000;
                 // when mutex key alive, it will sleep some time, default is 300
                 config.SleepMs = 300;
-            }, "defaultOne");
+            });
         });
-
-        builder.UseMemoryCacheOperatorInjection();
 
         return builder;
     }
@@ -101,28 +161,39 @@ public static class WebApplicationBuilderExtensions
     )
     {
         //Important step for Redis Caching
-        builder.Services.AddEasyCaching(option =>
+        builder.UseEasyCachingRedisCaching()
+            .AddEasyCachingInterceptor(x =>
+                x.CacheProviderName = EasyCachingConstValue.DefaultRedisName
+            )
+            .UseRedisCacheOperatorInjection();
+
+        return builder;
+    }
+
+    /// <summary>
+    /// 注入Redis缓存
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    private static WebApplicationBuilder UseEasyCachingRedisCaching(
+        this WebApplicationBuilder builder
+    )
+    {
+        //Important step for In-Memory Caching
+        builder.Services.AddEasyCaching(options =>
         {
-            option.UseCSRedis(config =>
+            options.UseCSRedis(config =>
             {
-                var o = config.DBConfig = new CSRedisDBOptions
+                config.DBConfig = new CSRedisDBOptions
                 {
                     ConnectionStrings = RedisConfigAssist.GetConnectionCollection(),
+                    // the sentinels settings
+                    Sentinels = RedisConfigAssist.GetSentinelCollection(),
                     // the read write setting for sentinel mode
                     ReadOnly = false
                 };
-
-                if (RedisConfigAssist.GetSentinelCollection().Any())
-                {
-                    // the sentinels settings
-                    o.Sentinels = RedisConfigAssist.GetSentinelCollection();
-                }
-
-                config.DBConfig = o;
             });
         });
-
-        builder.UseRedisCacheOperatorInjection();
 
         return builder;
     }

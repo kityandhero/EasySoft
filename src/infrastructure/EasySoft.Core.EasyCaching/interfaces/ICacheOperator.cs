@@ -1,6 +1,6 @@
 ﻿using EasySoft.UtilityTools.Result;
 
-namespace EasySoft.Core.EasyCaching.Operators;
+namespace EasySoft.Core.EasyCaching.interfaces;
 
 public interface ICacheOperator
 {

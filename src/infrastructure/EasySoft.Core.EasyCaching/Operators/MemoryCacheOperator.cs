@@ -1,4 +1,5 @@
 ﻿using EasyCaching.Core;
+using EasySoft.Core.EasyCaching.interfaces;
 using EasySoft.UtilityTools.Enums;
 using EasySoft.UtilityTools.Result;
 
@@ -8,7 +9,7 @@ public class MemoryCacheOperator : BaseCacheOperator
 {
     private readonly IEasyCachingProvider _provider;
 
-    protected MemoryCacheOperator(IEasyCachingProvider provider)
+    public MemoryCacheOperator(IEasyCachingProvider provider)
     {
         _provider = provider;
     }

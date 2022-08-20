@@ -1,12 +1,14 @@
 ﻿using System.ComponentModel;
 using Autofac;
+using EasySoft.Core.AccessWayTransmitter.Producers;
 using EasySoft.Core.AutoFac.IocAssists;
+using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.IdentityVerification.Attributes;
+using EasySoft.Core.IdentityVerification.Detectors;
 using EasySoft.Core.Infrastructure.Channels;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.UtilityTools.Competence;
 using EasySoft.UtilityTools.ExtensionMethods;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace EasySoft.Core.IdentityVerification.Filters;
@@ -58,6 +60,11 @@ public abstract class AccessWayFilter : IAdvanceAuthorizationFilter
 
     protected void CheckAccessWay(AuthorizationFilterContext filterContext)
     {
+        if (!GeneralConfigAssist.GetAccessWayDetectSwitch())
+        {
+            return;
+        }
+
         var name = GetDescription(filterContext);
         var competence = GetCompetence(filterContext);
         var guidTag = GetGuidTag(filterContext);
@@ -76,20 +83,18 @@ public abstract class AccessWayFilter : IAdvanceAuthorizationFilter
             competence
         );
 
-        var accessWay = AccessWayAssist.GetByGuidTag(guidTag);
+        var accessWayDetector = AutofacAssist.Instance.Container.Resolve<IAccessWayDetector>();
+
+        var accessWay = accessWayDetector.Find(guidTag);
 
         if (accessWay == null)
         {
-            var accessWayMessage = new AccessWayMessage
-            {
-                GuidTag = guidTag,
-                Name = name,
-                RelativePath = path,
-                Expand = competence,
-                Channel = channel,
-            };
-
-            Monitor.GetInstance().Add(accessWayMessage);
+            AutofacAssist.Instance.Container.Resolve<IAccessWayProducer>().Send(
+                guidTag,
+                name,
+                path,
+                competence
+            );
         }
         else
         {
@@ -99,16 +104,12 @@ public abstract class AccessWayFilter : IAdvanceAuthorizationFilter
                 return;
             }
 
-            var accessWayMessage = new AccessWayMessage
-            {
-                GuidTag = guidTag,
-                Name = name,
-                RelativePath = path,
-                Expand = competence,
-                Channel = channel,
-            };
-
-            Monitor.GetInstance().Add(accessWayMessage);
+            AutofacAssist.Instance.Container.Resolve<IAccessWayProducer>().Send(
+                guidTag,
+                name,
+                path,
+                competence
+            );
         }
     }
 

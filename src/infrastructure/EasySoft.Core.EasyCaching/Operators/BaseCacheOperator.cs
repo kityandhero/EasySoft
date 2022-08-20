@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.EasyCaching.interfaces;
 using EasySoft.UtilityTools;
 using EasySoft.UtilityTools.ExtensionMethods;
 using EasySoft.UtilityTools.Result;

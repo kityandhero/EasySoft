@@ -3,6 +3,7 @@ using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyCaching.ExtensionMethods;
 using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 using EasySoft.Core.GeneralLogTransmitter.ExtensionMethods;
+using EasySoft.Core.IdentityVerification.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.Attributes;
@@ -74,7 +75,7 @@ public static class WebApplicationBuilderAssist
         builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
-        if (GeneralConfigAssist.GetCorsEnable())
+        if (GeneralConfigAssist.GetCorsSwitch())
         {
             builder.Services.AddCors(options =>
             {
@@ -97,6 +98,11 @@ public static class WebApplicationBuilderAssist
         builder.UseGeneralLogTransmitter();
 
         builder.UseErrorLogTransmitter();
+
+        if (GeneralConfigAssist.GetIdentityVerificationSwitch())
+        {
+            builder.UseAdvanceIdentityVerification();
+        }
 
         if (HangfireConfigAssist.GetEnable())
         {

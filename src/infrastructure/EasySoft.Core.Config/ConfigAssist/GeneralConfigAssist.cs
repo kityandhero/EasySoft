@@ -34,7 +34,7 @@ public static class GeneralConfigAssist
 
     public static bool GetRemoteLogSwitch()
     {
-        return GetRemoteErrorLogEnable() || GetRemoteGeneralLogEnable();
+        return GetRemoteErrorLogSwitch() || GetRemoteGeneralLogSwitch();
     }
 
     private static GeneralConfig GetConfig()
@@ -58,32 +58,72 @@ public static class GeneralConfigAssist
         return v;
     }
 
-    public static bool GetRemoteGeneralLogEnable()
+    public static bool GetIdentityVerificationSwitch()
     {
-        var v = GetConfig().RemoteGeneralLogEnable;
+        var v = GetConfig().IdentityVerificationSwitch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt())
         {
             throw new Exception(
-                $"请配置 RemoteGeneralLogEnable: {ConfigFile} -> RemoteGeneralLogEnable,请设置 0/1"
+                $"请配置 IdentityVerificationSwitch: {ConfigFile} -> IdentityVerificationSwitch,请设置 0/1,开启后将使用 token 校验身份以及权限"
             );
         }
 
         return v.ToInt() == 1;
     }
 
-    public static bool GetRemoteErrorLogEnable()
+    public static bool GetAccessWayDetectSwitch()
     {
-        var v = GetConfig().RemoteErrorLogEnable;
+        var v = GetConfig().AccessWayDetectSwitch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt())
         {
             throw new Exception(
-                $"请配置 RemoteErrorLogEnable: {ConfigFile} -> RemoteErrorLogEnable,请设置 0/1"
+                $"请配置 AccessWayDetectSwitch: {ConfigFile} -> AccessWayDetectSwitch,请设置 0/1,开启后将在请求进入时校验持久数据存在性"
+            );
+        }
+
+        if (v.ToInt() == 1)
+        {
+            if (!GetIdentityVerificationSwitch())
+            {
+                throw new Exception("AccessWayDetectSwitch enable need set IdentityVerificationSwitch enable");
+            }
+        }
+
+        return v.ToInt() == 1;
+    }
+
+    public static bool GetRemoteGeneralLogSwitch()
+    {
+        var v = GetConfig().RemoteGeneralLogSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt())
+        {
+            throw new Exception(
+                $"请配置 RemoteGeneralLogSwitch: {ConfigFile} -> RemoteGeneralLogSwitch,请设置 0/1"
+            );
+        }
+
+        return v.ToInt() == 1;
+    }
+
+    public static bool GetRemoteErrorLogSwitch()
+    {
+        var v = GetConfig().RemoteErrorLogSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt())
+        {
+            throw new Exception(
+                $"请配置 RemoteErrorLogSwitch: {ConfigFile} -> RemoteErrorLogSwitch,请设置 0/1"
             );
         }
 
@@ -138,16 +178,16 @@ public static class GeneralConfigAssist
         return v.ToInt() == 1;
     }
 
-    public static bool GetCorsEnable()
+    public static bool GetCorsSwitch()
     {
-        var v = GetConfig().CorsEnable;
+        var v = GetConfig().CorsSwitch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt())
         {
             throw new Exception(
-                $"请配置 CorsEnable: {ConfigFile} -> CorsEnable,请设置 0/1"
+                $"请配置 CorsSwitch: {ConfigFile} -> CorsSwitch,请设置 0/1"
             );
         }
 

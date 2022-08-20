@@ -69,6 +69,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.EasyCaching",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configures", "configures", "{5CFBCD84-655E-4724-A0FF-03C2390C471E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.AccessWayTransmitter", "infrastructure\EasySoft.Core.AccessWayTransmitter\EasySoft.Core.AccessWayTransmitter.csproj", "{B716B52E-EFF6-4D72-AC26-4D2DE89DC18C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -179,6 +181,10 @@ Global
 		{38C8DFFF-B515-4853-8DE3-E97B90440C08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38C8DFFF-B515-4853-8DE3-E97B90440C08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38C8DFFF-B515-4853-8DE3-E97B90440C08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B716B52E-EFF6-4D72-AC26-4D2DE89DC18C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B716B52E-EFF6-4D72-AC26-4D2DE89DC18C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B716B52E-EFF6-4D72-AC26-4D2DE89DC18C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B716B52E-EFF6-4D72-AC26-4D2DE89DC18C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -214,6 +220,7 @@ Global
 		{38C8DFFF-B515-4853-8DE3-E97B90440C08} = {E1BDAC69-A565-4A26-866B-10845357EA3D}
 		{5CFBCD84-655E-4724-A0FF-03C2390C471E} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
 		{D7FA5548-C432-438A-A2FB-8ADA588A7E0A} = {5CFBCD84-655E-4724-A0FF-03C2390C471E}
+		{B716B52E-EFF6-4D72-AC26-4D2DE89DC18C} = {A4A52E96-6D09-4234-BD3F-FF1EEFBBAEC2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}
