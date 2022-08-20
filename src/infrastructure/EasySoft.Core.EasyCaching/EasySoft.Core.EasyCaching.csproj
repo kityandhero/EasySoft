@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+	
+	<ItemGroup>
+		<Reference Include="Microsoft.AspNetCore">
+			<HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.8\Microsoft.AspNetCore.dll</HintPath>
+		</Reference>
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <PackageReference Include="AspectCore.Extensions.Autofac" Version="2.2.0" />
+      <PackageReference Include="Autofac" Version="6.4.0" />
+      <PackageReference Include="EasyCaching.Core" Version="1.6.0" />
+      <PackageReference Include="EasyCaching.CSRedis" Version="1.6.0" />
+      <PackageReference Include="EasyCaching.InMemory" Version="1.6.0" />
+      <PackageReference Include="EasyCaching.Interceptor.AspectCore" Version="1.6.0" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
+    </ItemGroup>
+
+</Project>
