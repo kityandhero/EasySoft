@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using AutoFacTest.Interfaces;
+using EasyCaching.Core;
 using EasySoft.Core.AutoFac.Attributes;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Mvc.Framework.Controllers;
@@ -16,6 +17,8 @@ public class JobController : CustomControllerBase
     // GET  
     public IActionResult Index()
     {
+        var s = AutofacAssist.Instance.Container.Resolve<IEasyCachingProvider>();
+        
         return Content("Success");
     }
 

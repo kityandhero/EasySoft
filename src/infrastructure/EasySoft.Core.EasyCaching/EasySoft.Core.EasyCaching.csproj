@@ -20,6 +20,7 @@
       <PackageReference Include="EasyCaching.CSRedis" Version="1.6.0" />
       <PackageReference Include="EasyCaching.InMemory" Version="1.6.0" />
       <PackageReference Include="EasyCaching.Interceptor.AspectCore" Version="1.6.0" />
+      <PackageReference Include="EasyCaching.Serialization.Json" Version="1.6.0" />
     </ItemGroup>
 
 

@@ -8,14 +8,14 @@ using WebApplicationTest.Models;
 
 namespace WebApplicationTest.Controllers;
 
-public class CachingController : CustomControllerBase
+public class RedisFeatureCachingController : CustomControllerBase
 {
     private const string TestKey = "testKey";
     private const string TestObjectKey = "testObjectKey";
 
-    private readonly ICacheOperator _cacheOperator;
+    private readonly IRedisFeatureCacheOperator _cacheOperator;
 
-    public CachingController(ICacheOperator cacheOperator)
+    public RedisFeatureCachingController(IRedisFeatureCacheOperator cacheOperator)
     {
         _cacheOperator = cacheOperator;
     }
