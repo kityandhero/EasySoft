@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace EasySoft.Core.Web.Framework.Attributes;
 
-public class WebApiResultFilterAttribute : ActionFilterAttribute
+public sealed class WebApiResultFilterAttribute : ActionFilterAttribute
 {
     public override void OnResultExecuting(ResultExecutingContext context)
     {

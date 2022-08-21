@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.Mvc.Framework.Controllers;
-using EasySoft.Core.Mvc.Framework.ExtensionMethods;
+﻿using EasySoft.Core.Web.Framework.Controllers;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EntityFrameworkTest.IServices;
 using Microsoft.AspNetCore.Mvc;

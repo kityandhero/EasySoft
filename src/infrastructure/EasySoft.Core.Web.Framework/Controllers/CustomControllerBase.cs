@@ -1,14 +1,14 @@
 ﻿using System.Dynamic;
 using System.Reflection;
 using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Mvc.Framework.ExtensionMethods;
+using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.ExtensionMethods;
 using EasySoft.UtilityTools.Result;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Controller = Microsoft.AspNetCore.Mvc.Controller;
 
-namespace EasySoft.Core.Mvc.Framework.Controllers;
+namespace EasySoft.Core.Web.Framework.Controllers;
 
 public class CustomControllerBase : Controller
 {

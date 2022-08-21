@@ -3,8 +3,8 @@ using AutoFacTest.Interfaces;
 using EasyCaching.Core;
 using EasySoft.Core.AutoFac.Attributes;
 using EasySoft.Core.AutoFac.IocAssists;
-using EasySoft.Core.Mvc.Framework.Controllers;
 using EasySoft.Core.Web.Framework.Attributes;
+using EasySoft.Core.Web.Framework.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Controllers;

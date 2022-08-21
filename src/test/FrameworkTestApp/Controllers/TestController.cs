@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.Infrastructure.Results;
-using EasySoft.Core.Mvc.Framework.Controllers;
+using EasySoft.Core.Web.Framework.Controllers;
 using EntityFrameworkTest.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;

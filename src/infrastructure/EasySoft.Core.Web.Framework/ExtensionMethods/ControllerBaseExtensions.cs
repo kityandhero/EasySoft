@@ -9,7 +9,7 @@ using EasySoft.UtilityTools.Result;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EasySoft.Core.Mvc.Framework.ExtensionMethods
+namespace EasySoft.Core.Web.Framework.ExtensionMethods
 {
     /// <summary>
     /// 控制器动作结果扩展方法

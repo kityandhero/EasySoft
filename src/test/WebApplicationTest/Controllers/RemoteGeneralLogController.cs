@@ -1,8 +1,8 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.ExchangeRegulation.ExtensionMethods;
 using EasySoft.Core.GeneralLogTransmitter.Producers;
-using EasySoft.Core.Mvc.Framework.Controllers;
-using EasySoft.Core.Mvc.Framework.ExtensionMethods;
+using EasySoft.Core.Web.Framework.Controllers;
+using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Enums;
 using EasySoft.UtilityTools.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
