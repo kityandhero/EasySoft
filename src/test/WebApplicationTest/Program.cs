@@ -42,6 +42,9 @@ builder.UsePrepareStartWorkInjection<SimplePrepareStartWork>();
 
 builder.UseAdvanceIdentityVerification<CustomTokenSecretOptions, ApplicationOperator, ApplicationPermissionObserver>();
 
+// 自定义token密钥解析类
+// builder.UseAdvanceIdentityVerification<CustomTokenSecretOptions,CustomTokenSecret, ApplicationOperator, ApplicationPermissionObserver>();
+
 // builder.UseTokenSecretInjection<CustomTokenSecret>();
 
 builder.UseExtraNormalInjection(containerBuilder =>
