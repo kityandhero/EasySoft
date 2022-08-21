@@ -40,7 +40,7 @@ namespace EasySoft.UtilityTools.ExtensionMethods
         {
             var field = source.GetType().GetField(source.ToString());
 
-            return field != null && field.ContainAttribute<T>(false, MemberTypes.Field);
+            return field != null && field.ContainAttribute<T>("", false, MemberTypes.Field);
         }
 
         /// <summary>
@@ -101,12 +101,21 @@ namespace EasySoft.UtilityTools.ExtensionMethods
         /// <returns></returns>
         public static bool ContainAttribute<T>(
             this object source,
+            string nameFilter = "",
             bool inherit = false,
             MemberTypes memberTypes = MemberTypes.All
         ) where T : new()
         {
-            var attr = source.GetAttribute<T>();
-            return !attr.IsNull();
+            var check = new T();
+            var result = default(T);
+            var list = source.GetAttribute(nameFilter, inherit, memberTypes);
+
+            foreach (var attr in list.Where(attr => attr.GetType().FullName == check.GetType().FullName))
+            {
+                result = (T)attr;
+            }
+
+            return result != null;
         }
 
         /// <summary>

@@ -1,12 +1,14 @@
-﻿using EasySoft.Core.IdentityVerification.Tokens;
+﻿namespace EasySoft.Core.IdentityVerification.Operators;
 
-namespace EasySoft.Core.IdentityVerification.Operators;
-
-public interface IActualOperator : IOperator
+public interface IActualOperator
 {
     public void SetIdentity(object identity);
 
-    public void SetToken(IToken token);
+    public void SetToken(string token);
 
-  
+    public object? GetIdentity();
+
+    public string GetToken();
+
+    public bool IsAnonymous();
 }

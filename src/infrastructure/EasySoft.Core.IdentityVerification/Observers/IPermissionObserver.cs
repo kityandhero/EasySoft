@@ -1,12 +1,11 @@
 ﻿using EasySoft.Core.IdentityVerification.Operators;
-using EasySoft.Core.IdentityVerification.Tokens;
 using EasySoft.UtilityTools.Competence;
 
 namespace EasySoft.Core.IdentityVerification.Observers;
 
 public interface IPermissionObserver
 {
-    public IOperator GetOperator();
+    public IActualOperator GetActualOperator();
 
     public bool OnJudging();
 

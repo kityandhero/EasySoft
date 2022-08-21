@@ -8,11 +8,10 @@ namespace EasySoft.Core.IdentityVerification.Filters;
 // Result        – Implements  IResultFilter Attribute.
 // Exception     – Implements  IExceptionFilter Attribute.
 
-
 /// <summary>
 /// 身份认证类继承IAuthorizationFilter接口
 /// </summary>
-public abstract class BaseAuthorizationFilters : IAdvanceAuthorizationFilter
+public abstract class BaseAuthorizationFilter : IAdvanceAuthorizationFilter
 {
     /// <summary>
     ///  请求验证，当前验证部分不要抛出异常，ExceptionFilter不会处理

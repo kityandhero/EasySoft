@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.IdentityVerification.Tokens;
-
-namespace EasySoft.Core.IdentityVerification.Operators;
+﻿namespace EasySoft.Core.IdentityVerification.Operators;
 
 /// <summary>
 /// 实际有意义的 操作者
@@ -9,7 +7,7 @@ public abstract class ActualOperator : IActualOperator
 {
     private object? _identity;
 
-    private IToken? _token;
+    private string _token = "";
 
     /// <summary>
     /// 设置身份标识，仅能设置一次
@@ -18,11 +16,6 @@ public abstract class ActualOperator : IActualOperator
     /// <exception cref="Exception"></exception>
     public void SetIdentity(object identity)
     {
-        if (_token != null)
-        {
-            throw new Exception("token already set complete, it only can set once.");
-        }
-
         _identity = identity;
     }
 
@@ -31,13 +24,8 @@ public abstract class ActualOperator : IActualOperator
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public object GetIdentity()
+    public object? GetIdentity()
     {
-        if (_identity == null)
-        {
-            throw new Exception("identity is null, before you get it, make sure it has been set completed.");
-        }
-
         return _identity;
     }
 
@@ -46,13 +34,8 @@ public abstract class ActualOperator : IActualOperator
     /// </summary>
     /// <param name="token"></param>
     /// <exception cref="Exception"></exception>
-    public void SetToken(IToken token)
+    public void SetToken(string token)
     {
-        if (_token != null)
-        {
-            throw new Exception("token already set complete, it only can set once.");
-        }
-
         _token = token;
     }
 
@@ -61,13 +44,8 @@ public abstract class ActualOperator : IActualOperator
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public IToken GetToken()
+    public string GetToken()
     {
-        if (_token == null)
-        {
-            throw new Exception("token is null, before you get it, make sure it has been set completed.");
-        }
-
         return _token;
     }
 

@@ -6,7 +6,7 @@ namespace WebApplicationTest.IdentityVerifications;
 
 public class ApplicationPermissionObserver : PermissionObserverCore
 {
-    public ApplicationPermissionObserver(IOperator applicationOperator) : base(applicationOperator)
+    public ApplicationPermissionObserver(IActualOperator applicationActualOperator) : base(applicationActualOperator)
     {
     }
 

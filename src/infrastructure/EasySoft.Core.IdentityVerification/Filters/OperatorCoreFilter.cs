@@ -1,15 +1,17 @@
 ﻿using System.ComponentModel;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.IdentityVerification.AccessControl;
+using EasySoft.Core.IdentityVerification.Attributes;
 using EasySoft.Core.IdentityVerification.ExtensionMethods;
 using EasySoft.Core.IdentityVerification.Observers;
 using EasySoft.Core.IdentityVerification.Operators;
-using EasySoft.Core.IdentityVerification.Tokens;
 using EasySoft.Core.Infrastructure.Results;
 using EasySoft.UtilityTools.Assists;
 using EasySoft.UtilityTools.Enums;
 using EasySoft.UtilityTools.Exceptions;
+using EasySoft.UtilityTools.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace EasySoft.Core.IdentityVerification.Filters;
@@ -20,9 +22,9 @@ public abstract class OperatorCoreFilter : AccessWayFilter
 
     private IPermissionObserver? _permissionObserver;
 
-    protected IOperator GetOperator()
+    private IActualOperator GetOperator()
     {
-        if (AutofacAssist.Instance.IsRegistered<IOperator>())
+        if (!AutofacAssist.Instance.IsRegistered<IActualOperator>())
         {
             throw new Exception("IOperator is not injected");
         }
@@ -37,7 +39,7 @@ public abstract class OperatorCoreFilter : AccessWayFilter
 
     protected IPermissionObserver GetPermissionObserver()
     {
-        if (AutofacAssist.Instance.IsRegistered<IPermissionObserver>())
+        if (!AutofacAssist.Instance.IsRegistered<IPermissionObserver>())
         {
             throw new Exception("IPermissionObserver is not injected");
         }
@@ -50,7 +52,7 @@ public abstract class OperatorCoreFilter : AccessWayFilter
         return _permissionObserver;
     }
 
-    protected bool HasOperator()
+    private bool HasOperator()
     {
         var applicationOperator = GetOperator();
 
@@ -86,9 +88,18 @@ public abstract class OperatorCoreFilter : AccessWayFilter
         return _permissionObserver.CheckAccessPermission(guidTag);
     }
 
-    [Description("验证")]
+    [Description("验证登录凭证以及操作权限")]
     public override void OnAuthorization(AuthorizationFilterContext filterContext)
     {
+        var hasOperatorAttribute =
+            filterContext.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor &&
+            controllerActionDescriptor.MethodInfo.ContainAttribute<OperatorAttribute>();
+
+        if (!hasOperatorAttribute)
+        {
+            return;
+        }
+
         AutofacAssist.Instance.Resolve<ITokenSecretOptions>();
         var tokenSecret = AutofacAssist.Instance.Resolve<ITokenSecret>();
 
@@ -103,7 +114,7 @@ public abstract class OperatorCoreFilter : AccessWayFilter
 
         _actualOperator = AutofacAssist.Instance.Resolve<IActualOperator>();
 
-        _actualOperator.SetToken(new Token(token));
+        _actualOperator.SetToken(token);
 
         _actualOperator.SetIdentity(identity);
 

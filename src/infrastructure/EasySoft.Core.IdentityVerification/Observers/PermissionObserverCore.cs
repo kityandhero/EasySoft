@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.IdentityVerification.Operators;
-using EasySoft.Core.IdentityVerification.Tokens;
 using EasySoft.UtilityTools.Competence;
 using EasySoft.UtilityTools.ExtensionMethods;
 
@@ -7,16 +6,16 @@ namespace EasySoft.Core.IdentityVerification.Observers;
 
 public abstract class PermissionObserverCore : IPermissionObserver
 {
-    private readonly IOperator _operator;
+    private readonly IActualOperator _actualOperator;
 
-    protected PermissionObserverCore(IOperator applicationOperator)
+    protected PermissionObserverCore(IActualOperator applicationActualOperator)
     {
-        _operator = applicationOperator;
+        _actualOperator = applicationActualOperator;
     }
 
-    public IOperator GetOperator()
+    public IActualOperator GetActualOperator()
     {
-        return _operator;
+        return _actualOperator;
     }
 
     public abstract bool OnJudging();

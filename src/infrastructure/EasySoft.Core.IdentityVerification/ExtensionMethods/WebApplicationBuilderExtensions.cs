@@ -79,7 +79,8 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
-            containerBuilder.RegisterType<T>().As<IActualOperator>().InstancePerRequest();
+            // https://docs.autofac.org/en/latest/faq/per-request-scope.html
+            containerBuilder.RegisterType<T>().As<IActualOperator>().InstancePerLifetimeScope();
         });
 
         return builder;
@@ -96,7 +97,8 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
-            containerBuilder.RegisterType<T>().As<IPermissionObserver>().InstancePerRequest();
+            // https://docs.autofac.org/en/latest/faq/per-request-scope.html
+            containerBuilder.RegisterType<T>().As<IPermissionObserver>().InstancePerLifetimeScope();
         });
 
         return builder;

@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace EasySoft.Core.IdentityVerification.Filters;
 
-public abstract class AccessWayFilter : BaseAuthorizationFilters
+public abstract class AccessWayFilter : BaseAuthorizationFilter
 {
     private IApplicationChannel Channel { get; }
 
