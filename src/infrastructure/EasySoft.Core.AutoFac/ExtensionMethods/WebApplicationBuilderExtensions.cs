@@ -4,6 +4,7 @@ using Autofac.Extensions.DependencyInjection;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.AutoFac.Selectors;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 

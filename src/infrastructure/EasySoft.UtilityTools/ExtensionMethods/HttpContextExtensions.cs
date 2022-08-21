@@ -1,6 +1,11 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace EasySoft.UtilityTools.ExtensionMethods;
 
@@ -51,5 +56,13 @@ public static class HttpContextExtensions
 
             fs.Flush();
         }
+    }
+
+    public static T? TryGetAttribute<T>(this HttpContext context) where T : class
+    {
+        var endpoint = context.GetEndpoint();
+
+        // Endpoint will be null if the URL didn't match an action, e.g. a 404 response
+        return endpoint?.Metadata.GetMetadata<T>();
     }
 }

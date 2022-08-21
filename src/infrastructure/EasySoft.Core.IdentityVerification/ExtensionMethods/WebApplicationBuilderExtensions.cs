@@ -1,10 +1,13 @@
 ﻿using Autofac;
 using EasySoft.Core.AccessWayTransmitter.ExtensionMethods;
 using EasySoft.Core.IdentityVerification.AccessControl;
+using EasySoft.Core.IdentityVerification.Middlewares;
 using EasySoft.Core.IdentityVerification.Observers;
+using EasySoft.Core.IdentityVerification.Officers;
 using EasySoft.Core.IdentityVerification.Operators;
 using EasySoft.Core.Infrastructure.Assists;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.IdentityVerification.ExtensionMethods;
@@ -15,10 +18,12 @@ public static class WebApplicationBuilderExtensions
     /// 配置操作者验证以及操作权限验证    
     /// </summary> 
     /// <param name="builder"></param>
+    /// <param name="middlewareMode">使用中间件模式</param>
     /// <returns></returns>
     public static WebApplicationBuilder UseAdvanceIdentityVerification<TTokenSecretOptions, TOperator,
         TPermissionObserver>(
-        this WebApplicationBuilder builder
+        this WebApplicationBuilder builder,
+        bool middlewareMode = true
     ) where TOperator : ActualOperator
         where TPermissionObserver : IPermissionObserver
         where TTokenSecretOptions : ITokenSecretOptions
@@ -34,6 +39,19 @@ public static class WebApplicationBuilderExtensions
             .UsePermissionObserverInjection<TPermissionObserver>()
             .UseAccessWayTransmitter();
 
+        if (middlewareMode)
+        {
+            builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+            {
+                // https://docs.autofac.org/en/latest/faq/per-request-scope.html
+                containerBuilder.RegisterType<OperateOfficer>().As<IOperateOfficer>().InstancePerLifetimeScope();
+            });
+
+            builder.Services.AddTransient<IdentityVerificationMiddleware>();
+
+            FlagAssist.IdentityVerificationMiddlewareModeSwitch = true;
+        }
+
         FlagAssist.IdentityVerificationSwitch = true;
 
         return builder;
@@ -43,10 +61,12 @@ public static class WebApplicationBuilderExtensions
     /// 配置操作者验证以及操作权限验证    
     /// </summary> 
     /// <param name="builder"></param>
+    /// <param name="middlewareMode"></param>
     /// <returns></returns>
     public static WebApplicationBuilder UseAdvanceIdentityVerification<TTokenSecretOptions, TTokenSecret, TOperator,
         TPermissionObserver>(
-        this WebApplicationBuilder builder
+        this WebApplicationBuilder builder,
+        bool middlewareMode = true
     ) where TOperator : ActualOperator
         where TPermissionObserver : IPermissionObserver
         where TTokenSecretOptions : ITokenSecretOptions
@@ -62,6 +82,19 @@ public static class WebApplicationBuilderExtensions
             .UseOperatorInjection<TOperator>()
             .UsePermissionObserverInjection<TPermissionObserver>()
             .UseAccessWayTransmitter();
+
+        if (middlewareMode)
+        {
+            builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+            {
+                // https://docs.autofac.org/en/latest/faq/per-request-scope.html
+                containerBuilder.RegisterType<OperateOfficer>().As<IOperateOfficer>().InstancePerLifetimeScope();
+            });
+
+            builder.Services.AddTransient<IdentityVerificationMiddleware>();
+
+            FlagAssist.IdentityVerificationMiddlewareModeSwitch = true;
+        }
 
         FlagAssist.IdentityVerificationSwitch = true;
 

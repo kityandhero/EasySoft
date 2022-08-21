@@ -127,6 +127,34 @@ namespace EasySoft.UtilityTools.ExtensionMethods
         /// <param name="inherit">继承</param>
         /// <param name="memberTypes">成员类型</param>
         /// <returns></returns>
+        public static T? TryGetAttribute<T>(
+            this object source,
+            string nameFilter = "",
+            bool inherit = false,
+            MemberTypes memberTypes = MemberTypes.All
+        ) where T : new()
+        {
+            var check = new T();
+            var result = default(T);
+            var list = source.GetAttribute(nameFilter, inherit, memberTypes);
+
+            foreach (var attr in list.Where(attr => attr.GetType().FullName == check.GetType().FullName))
+            {
+                result = (T)attr;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 获取特性
+        /// </summary>
+        /// <typeparam name="T">目标类型</typeparam>
+        /// <param name="source">调用源</param>
+        /// <param name="nameFilter">筛选名称</param>
+        /// <param name="inherit">继承</param>
+        /// <param name="memberTypes">成员类型</param>
+        /// <returns></returns>
         public static T GetAttribute<T>(
             this object source,
             string nameFilter = "",

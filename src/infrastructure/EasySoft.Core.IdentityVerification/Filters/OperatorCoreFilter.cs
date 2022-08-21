@@ -1,95 +1,55 @@
 ﻿using System.ComponentModel;
-using EasySoft.Core.AutoFac.IocAssists;
-using EasySoft.Core.IdentityVerification.AccessControl;
 using EasySoft.Core.IdentityVerification.Attributes;
 using EasySoft.Core.IdentityVerification.ExtensionMethods;
-using EasySoft.Core.IdentityVerification.Observers;
-using EasySoft.Core.IdentityVerification.Operators;
-using EasySoft.Core.Infrastructure.Results;
-using EasySoft.UtilityTools.Assists;
-using EasySoft.UtilityTools.Enums;
-using EasySoft.UtilityTools.Exceptions;
+using EasySoft.Core.IdentityVerification.Officers;
+using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.UtilityTools.ExtensionMethods;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace EasySoft.Core.IdentityVerification.Filters;
 
-public abstract class OperatorCoreFilter : AccessWayFilter
+public abstract class OperatorCoreFilter : OperateOfficerCore, IOperatorAuthorizationFilter
 {
-    private IActualOperator? _actualOperator;
-
-    private IPermissionObserver? _permissionObserver;
-
-    private IActualOperator GetOperator()
+    public void AdjustAccessPermission(AuthorizationFilterContext filterContext)
     {
-        if (!AutofacAssist.Instance.IsRegistered<IActualOperator>())
+        if (filterContext.ActionDescriptor is not ControllerActionDescriptor actionDescriptor)
         {
-            throw new Exception("IOperator is not injected");
+            return;
         }
 
-        if (_actualOperator == null)
+        var hasOperatorAttribute = actionDescriptor.MethodInfo.ContainAttribute<OperatorAttribute>();
+
+        if (!hasOperatorAttribute)
         {
-            throw new Exception("Operator has not set");
+            return;
         }
 
-        return _actualOperator;
-    }
+        var guidTagAttribute = actionDescriptor.MethodInfo.TryGetAttribute<GuidTagAttribute>();
 
-    protected IPermissionObserver GetPermissionObserver()
-    {
-        if (!AutofacAssist.Instance.IsRegistered<IPermissionObserver>())
+        if (guidTagAttribute == null)
         {
-            throw new Exception("IPermissionObserver is not injected");
+            return;
         }
 
-        if (_permissionObserver == null)
+        if (string.IsNullOrWhiteSpace(guidTagAttribute.GuidTag))
         {
-            throw new Exception("PermissionObserver has not set");
+            return;
         }
 
-        return _permissionObserver;
-    }
+        AccessPermission.Url = filterContext.HttpContext.Request.GetUrl();
+        AccessPermission.Path = filterContext.HttpContext.Request.GetAbsolutePath();
 
-    private bool HasOperator()
-    {
-        var applicationOperator = GetOperator();
+        var descriptionAttribute = filterContext.ActionDescriptor.TryGetAttribute<DescriptionAttribute>();
+        var competenceConfig = filterContext.ActionDescriptor.TryGetAttribute<CompetenceConfigAttribute>();
 
-        return applicationOperator.IsAnonymous();
-    }
-
-    /// <summary>
-    /// 检测访问权限
-    /// </summary>
-    /// <param name="filterContext">上下文</param>
-    /// <returns></returns>
-    private bool CheckAccessPermission(AuthorizationFilterContext filterContext)
-    {
-        var applicationOperator = GetOperator();
-
-        if (applicationOperator.IsAnonymous())
-        {
-            return false;
-        }
-
-        var guidTag = GetGuidTag(filterContext);
-
-        if (string.IsNullOrWhiteSpace(guidTag))
-        {
-            return true;
-        }
-
-        if (_permissionObserver == null)
-        {
-            throw new Exception("PermissionObserver has not set");
-        }
-
-        return _permissionObserver.CheckAccessPermission(guidTag);
+        AccessPermission.Name = descriptionAttribute?.Description ?? AccessPermission.Path;
+        AccessPermission.Competence = competenceConfig?.ToString() ?? "";
+        AccessPermission.GuidTag = guidTagAttribute.GuidTag;
     }
 
     [Description("验证登录凭证以及操作权限")]
-    public override void OnAuthorization(AuthorizationFilterContext filterContext)
+    public void OnAuthorization(AuthorizationFilterContext filterContext)
     {
         var hasOperatorAttribute =
             filterContext.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor &&
@@ -100,62 +60,15 @@ public abstract class OperatorCoreFilter : AccessWayFilter
             return;
         }
 
-        AutofacAssist.Instance.Resolve<ITokenSecretOptions>();
-        var tokenSecret = AutofacAssist.Instance.Resolve<ITokenSecret>();
+        AdjustAccessPermission(filterContext);
 
         var token = filterContext.HttpContext.GetToken();
 
-        var identity = tokenSecret.DecryptWithExpirationTime(token, out var expired);
+        var result = TryAuthorization(token);
 
-        if (expired)
+        if (!result.Success)
         {
-            throw new TokenException("登陆凭证已过期");
+            filterContext.Result = result.Data;
         }
-
-        _actualOperator = AutofacAssist.Instance.Resolve<IActualOperator>();
-
-        _actualOperator.SetToken(token);
-
-        _actualOperator.SetIdentity(identity);
-
-        _permissionObserver = AutofacAssist.Instance.Resolve<IPermissionObserver>();
-
-        CheckAccessWay(filterContext);
-
-        var hasOperator = HasOperator();
-
-        if (!hasOperator)
-        {
-            var result = new ApiResult(
-                ReturnCode.TokenExpired.ToInt(),
-                false,
-                "无操作凭证或凭证已过期"
-            );
-
-            filterContext.Result = new JsonResult(
-                result,
-                JsonConvertAssist.CreateJsonSerializerSettings()
-            );
-
-            return;
-        }
-
-        var checkAccessPermission = CheckAccessPermission(filterContext);
-
-        if (checkAccessPermission)
-        {
-            return;
-        }
-
-        var apiResultNoAccessPermission = new ApiResult(
-            ReturnCode.NoAccessPermission.ToInt(),
-            false,
-            "无访问权限"
-        );
-
-        filterContext.Result = new JsonResult(
-            apiResultNoAccessPermission,
-            JsonConvertAssist.CreateJsonSerializerSettings()
-        );
     }
 }

@@ -6,7 +6,9 @@ using EasySoft.Core.EasyCaching.ExtensionMethods;
 using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 using EasySoft.Core.GeneralLogTransmitter.ExtensionMethods;
 using EasySoft.Core.Hangfire.ExtensionMethods;
+using EasySoft.Core.IdentityVerification.ExtensionMethods;
 using EasySoft.Core.IdentityVerification.Filters;
+using EasySoft.Core.IdentityVerification.Middlewares;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Channels;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
@@ -43,7 +45,7 @@ public static class WebApplicationBuilderExtensions
                 {
                     option.EnableEndpointRouting = false;
 
-                    if (FlagAssist.IdentityVerificationSwitch)
+                    if (FlagAssist.IdentityVerificationSwitch && !FlagAssist.IdentityVerificationMiddlewareModeSwitch)
                     {
                         // 设置及接口数据返回格式
                         option.Filters.Add<OperatorFilter>();
@@ -214,6 +216,12 @@ public static class WebApplicationBuilderExtensions
             app.RecordInformation(
                 "UseAuthentication: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
             );
+        }
+
+        if (FlagAssist.IdentityVerificationSwitch && FlagAssist.IdentityVerificationMiddlewareModeSwitch)
+        {
+            // 设置及接口数据返回格式
+            app.UseIdentityVerificationMiddleware();
         }
 
         if (FlagAssist.IdentityVerificationSwitch)
