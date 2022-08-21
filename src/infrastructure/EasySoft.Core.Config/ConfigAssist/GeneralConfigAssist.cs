@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.Config.ConfigCollection;
 using EasySoft.Core.Config.Utils;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.ExtensionMethods;
 using Microsoft.Extensions.Configuration;
 
@@ -58,22 +59,6 @@ public static class GeneralConfigAssist
         return v;
     }
 
-    public static bool GetIdentityVerificationSwitch()
-    {
-        var v = GetConfig().IdentityVerificationSwitch;
-
-        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
-
-        if (!v.IsInt())
-        {
-            throw new Exception(
-                $"请配置 IdentityVerificationSwitch: {ConfigFile} -> IdentityVerificationSwitch,请设置 0/1,开启后将使用 token 校验身份以及权限"
-            );
-        }
-
-        return v.ToInt() == 1;
-    }
-
     public static bool GetAccessWayDetectSwitch()
     {
         var v = GetConfig().AccessWayDetectSwitch;
@@ -89,9 +74,11 @@ public static class GeneralConfigAssist
 
         if (v.ToInt() == 1)
         {
-            if (!GetIdentityVerificationSwitch())
+            if (!FlagAssist.IdentityVerificationSwitch)
             {
-                throw new Exception("AccessWayDetectSwitch enable need set IdentityVerificationSwitch enable");
+                throw new Exception(
+                    "AccessWayDetectSwitch work with UseAdvanceIdentityVerification, if you do not use UseAdvanceIdentityVerification, do not set it to enable"
+                );
             }
         }
 

@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.IdentityVerification.AccessControl;
 
-namespace WebApplicationTest.Secrets;
+namespace WebApplicationTest.IdentityVerifications;
 
 public class CustomTokenSecretOptions : ITokenSecretOptions
 {

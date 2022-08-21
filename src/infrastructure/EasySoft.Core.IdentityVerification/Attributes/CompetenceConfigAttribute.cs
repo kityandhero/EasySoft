@@ -21,7 +21,7 @@ namespace EasySoft.Core.IdentityVerification.Attributes
             Config = new List<string>();
             foreach (var c in jsonConfig)
             {
-                if (c.Contains("|"))
+                if (c.Contains('|'))
                 {
                     throw new Exception("扩展权限中不能含有|");
                 }

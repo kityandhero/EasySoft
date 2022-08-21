@@ -3,10 +3,10 @@ using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.ErrorLogTransmitter.Producers;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Results;
-using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Assists;
 using EasySoft.UtilityTools.Entity;
 using EasySoft.UtilityTools.Enums;
+using EasySoft.UtilityTools.Exceptions;
 using log4net;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +30,24 @@ public class GlobalExceptionFilter : IExceptionFilter
     {
         if (context.ExceptionHandled)
         {
+            return;
+        }
+
+        if (context.Exception is TokenException)
+        {
+            var resultTokenExpired = new ApiResult(
+                ReturnCode.TokenExpired.ToInt(),
+                false,
+                context.Exception.Message
+            );
+
+            context.Result = new JsonResult(
+                resultTokenExpired,
+                JsonConvertAssist.CreateJsonSerializerSettings()
+            );
+
+            context.ExceptionHandled = true;
+
             return;
         }
 
@@ -65,6 +83,6 @@ public class GlobalExceptionFilter : IExceptionFilter
             JsonConvertAssist.CreateJsonSerializerSettings()
         );
 
-        context.ExceptionHandled = true; //异常已处理
+        context.ExceptionHandled = true;
     }
 }

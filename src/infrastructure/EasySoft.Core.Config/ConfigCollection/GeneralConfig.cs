@@ -8,8 +8,6 @@ public class GeneralConfig : IConfig
 
     public string CacheMode { get; set; }
 
-    public string IdentityVerificationSwitch { get; set; }
-
     public string AccessWayDetectSwitch { get; set; }
 
     public string RemoteGeneralLogSwitch { get; set; }
@@ -29,7 +27,6 @@ public class GeneralConfig : IConfig
     public GeneralConfig()
     {
         CacheMode = "InMemory";
-        IdentityVerificationSwitch = "0";
         AccessWayDetectSwitch = "0";
         RemoteGeneralLogSwitch = "0";
         RemoteErrorLogSwitch = "0";

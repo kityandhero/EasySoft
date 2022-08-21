@@ -21,10 +21,7 @@
 
     <ItemGroup>
       <PackageReference Include="Autofac" Version="6.4.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Operators" />
+      <PackageReference Include="Autofac.Web" Version="6.1.0" />
     </ItemGroup>
 
 </Project>

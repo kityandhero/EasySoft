@@ -16,8 +16,8 @@ using EntityFrameworkTest.Services;
 using Microsoft.EntityFrameworkCore;
 using WebApplicationTest.Enums;
 using WebApplicationTest.Hubs;
+using WebApplicationTest.IdentityVerifications;
 using WebApplicationTest.PrepareStartWorks;
-using WebApplicationTest.Secrets;
 
 var builder = WebApplicationBuilderAssist.CreateBuilder(args);
 
@@ -40,7 +40,7 @@ builder.UsePrepareStartWorkInjection<SimplePrepareStartWork>();
 //自定义静态文件配置 如有特殊需求，可以进行配置，不配置将采用内置选项，此处仅作为有需要时的样例
 // builder.UseStaticFileOptionsInjection<CustomStaticFileOptions>();
 
-builder.UseTokenSecretOptionsInjection<CustomTokenSecretOptions>();
+builder.UseAdvanceIdentityVerification<CustomTokenSecretOptions, ApplicationOperator, ApplicationPermissionObserver>();
 
 // builder.UseTokenSecretInjection<CustomTokenSecret>();
 

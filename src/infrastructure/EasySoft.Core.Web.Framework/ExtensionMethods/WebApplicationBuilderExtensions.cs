@@ -24,16 +24,6 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplication EasyBuild(this WebApplicationBuilder builder, List<string> areas)
     {
-        if (!FlagAssist.TokenSecretOptionInjectionComplete)
-        {
-            builder.UseDefaultTokenSecretOptionsInjection();
-        }
-
-        if (!FlagAssist.TokenSecretInjectionComplete)
-        {
-            builder.UseDefaultTokenSecret();
-        }
-
         if (!FlagAssist.ApplicationChannelInjectionComplete)
         {
             builder.UseAdvanceDefaultApplicationChannel();
@@ -53,13 +43,6 @@ public static class WebApplicationBuilderExtensions
         {
             // app.UseExceptionHandler("/Error");
             app.UseHsts();
-        }
-
-        if (FlagAssist.TokenSecretOptionIsDefault)
-        {
-            app.RecordWarning(
-                "TokenSecretOption use DefaultTokenSecretOption, it is not safe, suggest using builder.UseTokenSecretOptionsInjection<T>() with your TokenSecretOption."
-            );
         }
 
         app.RecordInformation(
@@ -131,16 +114,10 @@ public static class WebApplicationBuilderExtensions
             );
         }
 
-        if (GeneralConfigAssist.GetIdentityVerificationSwitch())
+        if (FlagAssist.IdentityVerificationSwitch)
         {
             app.RecordInformation(
                 $"IdentityVerificationSwitch: enable"
-            );
-        }
-        else
-        {
-            app.RecordInformation(
-                "IdentityVerificationSwitch: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
             );
         }
 

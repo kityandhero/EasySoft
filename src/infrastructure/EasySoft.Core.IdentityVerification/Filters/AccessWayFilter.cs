@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace EasySoft.Core.IdentityVerification.Filters;
 
-public abstract class AccessWayFilter : IAdvanceAuthorizationFilter
+public abstract class AccessWayFilter : BaseAuthorizationFilters
 {
     private IApplicationChannel Channel { get; }
 
@@ -33,7 +33,7 @@ public abstract class AccessWayFilter : IAdvanceAuthorizationFilter
     }
 
     [Description("获取Description(ActionResult的Description特性)")]
-    private static string GetDescription(AuthorizationFilterContext filterContext)
+    protected string GetDescription(AuthorizationFilterContext filterContext)
     {
         //检测描述属性
         var actionDescription = filterContext.ActionDescriptor.GetAttribute<DescriptionAttribute>();
@@ -42,7 +42,7 @@ public abstract class AccessWayFilter : IAdvanceAuthorizationFilter
     }
 
     [Description("获取自定义扩展权限")]
-    private static string GetCompetence(AuthorizationFilterContext filterContext)
+    protected string GetCompetence(AuthorizationFilterContext filterContext)
     {
         var competenceConfig = filterContext.ActionDescriptor.GetAttribute<CompetenceConfigAttribute>();
 
@@ -50,12 +50,25 @@ public abstract class AccessWayFilter : IAdvanceAuthorizationFilter
     }
 
     [Description("GuidTag(ActionResult的GuidTag特性)")]
-    private static string GetGuidTag(AuthorizationFilterContext filterContext)
+    protected GuidTagAttribute? GetGuidTagAttribute(AuthorizationFilterContext filterContext)
+    {
+        if (!filterContext.ActionDescriptor.ContainAttribute<GuidTagAttribute>())
+        {
+            return null;
+        }
+
+        //检测GuidTag属性
+        var guidTagAttribute = filterContext.ActionDescriptor.GetAttribute<GuidTagAttribute>();
+
+        return guidTagAttribute;
+    }
+
+    protected string GetGuidTag(AuthorizationFilterContext filterContext)
     {
         //检测GuidTag属性
-        var actionDescription = filterContext.ActionDescriptor.GetAttribute<GuidTagAttribute>();
+        var guidTagAttribute = GetGuidTagAttribute(filterContext);
 
-        return actionDescription.GuidTag;
+        return guidTagAttribute?.GuidTag ?? "";
     }
 
     protected void CheckAccessWay(AuthorizationFilterContext filterContext)
@@ -112,6 +125,4 @@ public abstract class AccessWayFilter : IAdvanceAuthorizationFilter
             );
         }
     }
-
-    public abstract void OnAuthorization(AuthorizationFilterContext context);
 }

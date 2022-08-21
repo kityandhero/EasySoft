@@ -25,7 +25,6 @@ public static class WebApplicationBuilderExtensions
     /// 配置缓存模式
     /// </summary>
     /// <param name="builder"></param>
-    /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static WebApplicationBuilder UseAdvanceEasyCaching(
         this WebApplicationBuilder builder
