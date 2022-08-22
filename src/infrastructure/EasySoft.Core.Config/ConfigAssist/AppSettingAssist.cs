@@ -5,7 +5,7 @@ namespace EasySoft.Core.Config.ConfigAssist;
 
 public static class AppSettingAssist
 {
-    private const string ConfigFile = $"appsettings.json";
+    private const string ConfigFile = "appsettings.json";
 
     private static IConfiguration Configuration { get; set; }
 
