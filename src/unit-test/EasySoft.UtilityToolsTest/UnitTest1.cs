@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using EasySoft.UtilityTools.Assists;
-using EasySoft.UtilityTools.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.Assists;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.UtilityToolsTest;
 

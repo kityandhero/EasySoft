@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.ExchangeRegulation.Query;
-using EasySoft.Core.GeneralLogTransmitter.Interfaces;
+﻿using EasySoft.Core.GeneralLogTransmitter.Interfaces;
 using EasySoft.Core.RabbitMQ;
 
 namespace EasySoft.Core.GeneralLogTransmitter.MessageQuery

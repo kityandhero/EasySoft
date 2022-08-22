@@ -3,9 +3,9 @@ using EasySoft.Core.IdentityVerification.AccessControl;
 using EasySoft.Core.IdentityVerification.Observers;
 using EasySoft.Core.IdentityVerification.Operators;
 using EasySoft.Core.Infrastructure.Results;
-using EasySoft.UtilityTools.Enums;
-using EasySoft.UtilityTools.Exceptions;
-using EasySoft.UtilityTools.Result;
+using EasySoft.UtilityTools.Standard.Enums;
+using EasySoft.UtilityTools.Standard.Exceptions;
+using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.Core.IdentityVerification.Officers;
 

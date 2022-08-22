@@ -2,8 +2,8 @@
 using System.Reflection;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
-using EasySoft.UtilityTools.ExtensionMethods;
-using EasySoft.UtilityTools.Result;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.Result;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Controller = Microsoft.AspNetCore.Mvc.Controller;

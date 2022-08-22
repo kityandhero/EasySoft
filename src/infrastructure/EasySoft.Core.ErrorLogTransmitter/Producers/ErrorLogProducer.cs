@@ -4,7 +4,7 @@ using EasySoft.Core.ErrorLogTransmitter.Interfaces;
 using EasySoft.Core.ErrorLogTransmitter.MessageQuery;
 using EasySoft.Core.ExchangeRegulation.Query;
 using EasySoft.Core.Infrastructure.Channels;
-using EasySoft.UtilityTools.Entity;
+using EasySoft.UtilityTools.Standard.Entity;
 
 namespace EasySoft.Core.ErrorLogTransmitter.Producers;
 

@@ -1,4 +1,4 @@
-﻿using EasySoft.UtilityTools.Result;
+﻿using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.Core.EasyCaching.interfaces;
 

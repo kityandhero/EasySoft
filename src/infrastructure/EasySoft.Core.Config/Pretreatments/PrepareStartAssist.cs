@@ -1,8 +1,6 @@
 ﻿using EasySoft.Core.Config.ConfigCollection;
-using EasySoft.UtilityTools.Assists;
-using IOExtensions = EasySoft.UtilityTools.ExtensionMethods.IOExtensions;
-using ReflectionExtensions = EasySoft.UtilityTools.ExtensionMethods.ReflectionExtensions;
-using StringExtensions = EasySoft.UtilityTools.ExtensionMethods.StringExtensions;
+using EasySoft.UtilityTools.Standard.Assists;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.Config.Pretreatments;
 
@@ -19,13 +17,13 @@ public static class PrepareStartAssist
 
         var configureFolderPath = $"{directory}/configures/";
 
-        IOExtensions.CreateDirectory(configureFolderPath);
+        configureFolderPath.CreateDirectory();
 
         var configureSimpleFolderPath = $"{directory}/configures/simples/";
 
-        IOExtensions.DeleteDirectory(configureSimpleFolderPath);
+        configureSimpleFolderPath.DeleteDirectory();
 
-        IOExtensions.CreateDirectory(configureSimpleFolderPath);
+        configureSimpleFolderPath.CreateDirectory();
 
         var configureFileNameList = new List<Type>
         {
@@ -48,17 +46,17 @@ public static class PrepareStartAssist
 
         configureFileNameList.ForEach(item =>
         {
-            var itemPath = $"{directory}\\configures\\{StringExtensions.ToLowerFirst(item.Name)}.json";
+            var itemPath = $"{directory}\\configures\\{item.Name.ToLowerFirst()}.json";
 
-            IOExtensions.CreateFile(itemPath, JsonConvertAssist.SerializeAndKeyToLower(new { }));
+            itemPath.CreateFile(JsonConvertAssist.SerializeAndKeyToLower(new { }));
         });
 
         configureFileNameList.ForEach(item =>
         {
-            var itemPath = $"{directory}\\configures\\simples\\{StringExtensions.ToLowerFirst(item.Name)}.json";
+            var itemPath = $"{directory}\\configures\\simples\\{item.Name.ToLowerFirst()}.json";
 
-            IOExtensions.CreateFile(itemPath,
-                JsonConvertAssist.SerializeWithFormat(ReflectionExtensions.Create(item) ?? new { }));
+            itemPath.CreateFile(JsonConvertAssist.SerializeWithFormat(item.Create() ?? new { })
+            );
         });
     }
 }

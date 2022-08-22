@@ -1,8 +1,8 @@
 using EasySoft.Core.Infrastructure.Results;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
-using EasySoft.UtilityTools.Enums;
-using EasySoft.UtilityTools.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.Enums;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace WebApplicationTest.Controllers
 {
@@ -65,7 +65,7 @@ namespace WebApplicationTest.Controllers
         [HttpGet("get4", Name = "GetWeatherForecast4")]
         public ActionResult Get4()
         {
-            var a = this.Param<int>("a", 0);
+            var a = this.Param("a", 0);
 
             return this.Success(new
             {

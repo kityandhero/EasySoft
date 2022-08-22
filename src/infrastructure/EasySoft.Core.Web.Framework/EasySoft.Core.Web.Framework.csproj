@@ -23,7 +23,7 @@
         <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
         <ProjectReference Include="..\EasySoft.Core.PrepareStartWork\EasySoft.Core.PrepareStartWork.csproj" />
         <ProjectReference Include="..\EasySoft.Core.Swagger\EasySoft.Core.Swagger.csproj" />
-        <ProjectReference Include="..\EasySoft.UtilityTools\EasySoft.UtilityTools.csproj" />
+        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -42,6 +42,12 @@
 
     <ItemGroup>
         <Folder Include="Assists" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="EasySoft.Core.Mvc.Framework">
+        <HintPath>..\EasySoft.Core.Mvc.Framework\bin\Debug\net6.0\EasySoft.Core.Mvc.Framework.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

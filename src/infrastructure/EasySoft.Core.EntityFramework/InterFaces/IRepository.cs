@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using EasySoft.UtilityTools.Result;
+using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.Core.EntityFramework.InterFaces;
 

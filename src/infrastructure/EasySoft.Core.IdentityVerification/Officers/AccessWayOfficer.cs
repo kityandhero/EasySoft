@@ -5,7 +5,7 @@ using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.IdentityVerification.Detectors;
 using EasySoft.Core.IdentityVerification.Entities;
 using EasySoft.Core.Infrastructure.Channels;
-using EasySoft.UtilityTools.Competence;
+using EasySoft.UtilityTools.Standard.Competence;
 
 namespace EasySoft.Core.IdentityVerification.Officers;
 

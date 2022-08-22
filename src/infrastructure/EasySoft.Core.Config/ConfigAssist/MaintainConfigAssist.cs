@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.Config.ConfigCollection;
 using EasySoft.Core.Config.Utils;
-using EasySoft.UtilityTools.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.Config.ConfigAssist;
@@ -40,7 +40,7 @@ public static class MaintainConfigAssist
 
     public static List<string> GetUrlPollingRequests()
     {
-        var list = GetConfig().UrlPollingRequests.Remove(" ").Trim().Split(',').Where<string>(o => !string.IsNullOrWhiteSpace(o))
+        var list = GetConfig().UrlPollingRequests.Remove(" ").Trim().Split(',').Where(o => !string.IsNullOrWhiteSpace(o))
             .ToList();
 
         return list;

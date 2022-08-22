@@ -1,8 +1,8 @@
 ﻿using System.Collections.Specialized;
 using System.Text;
-using EasySoft.UtilityTools.Assists;
-using EasySoft.UtilityTools.ExtensionMethods;
-using EasySoft.UtilityTools.Mime;
+using EasySoft.UtilityTools.Standard.Assists;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.Mime;
 using Microsoft.AspNetCore.Http;
 
 namespace EasySoft.Core.Infrastructure.ExtensionMethods

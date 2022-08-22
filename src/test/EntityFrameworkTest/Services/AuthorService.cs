@@ -1,7 +1,7 @@
-﻿using EntityFrameworkTest.Entities;
+﻿using EasySoft.UtilityTools.Standard.Result;
+using EntityFrameworkTest.Entities;
 using EntityFrameworkTest.IRepositories;
 using EntityFrameworkTest.IServices;
-using EasySoft.UtilityTools.Result;
 
 namespace EntityFrameworkTest.Services;
 

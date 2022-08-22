@@ -1,5 +1,5 @@
 ﻿using System.Collections.Specialized;
-using EasySoft.UtilityTools.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Core.Infrastructure.ExtensionMethods;

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Dynamic;
 using EasySoft.Core.Infrastructure.Results;
-using EasySoft.UtilityTools.Assists;
+using EasySoft.UtilityTools.Standard.Assists;
 using Newtonsoft.Json.Linq;
 
 namespace EasySoft.Core.Infrastructure.ExtensionMethods;

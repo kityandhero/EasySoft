@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.IdentityVerification.Operators;
-using EasySoft.UtilityTools.Competence;
-using EasySoft.UtilityTools.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.Competence;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.IdentityVerification.Observers;
 

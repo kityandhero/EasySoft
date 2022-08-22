@@ -3,9 +3,9 @@ using EasySoft.Core.IdentityVerification.Attributes;
 using EasySoft.Core.IdentityVerification.ExtensionMethods;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Results;
-using EasySoft.UtilityTools.Enums;
-using EasySoft.UtilityTools.ExtensionMethods;
-using EasySoft.UtilityTools.Result;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.Enums;
+using EasySoft.UtilityTools.Standard.Result;
 using Microsoft.AspNetCore.Http;
 
 namespace EasySoft.Core.IdentityVerification.Officers;

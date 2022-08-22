@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\infrastructure\EasySoft.UtilityTools\EasySoft.UtilityTools.csproj" />
+      <ProjectReference Include="..\..\infrastructure\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj" />
     </ItemGroup>
 
 </Project>

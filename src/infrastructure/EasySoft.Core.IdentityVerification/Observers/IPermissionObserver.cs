@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.IdentityVerification.Operators;
-using EasySoft.UtilityTools.Competence;
+using EasySoft.UtilityTools.Standard.Competence;
 
 namespace EasySoft.Core.IdentityVerification.Observers;
 

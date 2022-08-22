@@ -1,6 +1,6 @@
-﻿using EasySoft.UtilityTools;
-using EasySoft.UtilityTools.Encryption;
-using EasySoft.UtilityTools.Media.Image;
+﻿using EasySoft.UtilityTools.Standard.Encryption;
+using EasySoft.UtilityTools.Standard.Media.Image;
+using EasySoft.UtilityTools.Standard.Standard;
 
 namespace EasySoft.Core.IdentityVerification.AccessControl
 {

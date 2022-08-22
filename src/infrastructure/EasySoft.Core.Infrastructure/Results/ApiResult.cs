@@ -1,5 +1,5 @@
-﻿using EasySoft.UtilityTools.Enums;
-using EasySoft.UtilityTools.Mime;
+﻿using EasySoft.UtilityTools.Standard.Enums;
+using EasySoft.UtilityTools.Standard.Mime;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Core.Infrastructure.Results

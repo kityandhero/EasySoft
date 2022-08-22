@@ -1,7 +1,7 @@
 ﻿using EasySoft.Core.ErrorLogTransmitter.Entities;
 using EasySoft.Core.ErrorLogTransmitter.Enums;
 using EasySoft.Core.ExchangeRegulation.Enums;
-using EasySoft.UtilityTools.Entity;
+using EasySoft.UtilityTools.Standard.Entity;
 using Newtonsoft.Json;
 
 namespace EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;

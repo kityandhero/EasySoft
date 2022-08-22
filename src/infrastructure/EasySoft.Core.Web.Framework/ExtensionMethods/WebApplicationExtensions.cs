@@ -1,10 +1,5 @@
-﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
-using Hangfire;
+﻿using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
-using EasySoft.UtilityTools.ExtensionMethods;
 
 namespace EasySoft.Core.Web.Framework.ExtensionMethods;
 

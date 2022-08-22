@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.Config.Utils;
-using EasySoft.UtilityTools.Assists;
+﻿using EasySoft.UtilityTools.Standard.Assists;
 using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.Config.ConfigAssist;

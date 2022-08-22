@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using EasySoft.Core.EntityFramework.InterFaces;
-using EasySoft.UtilityTools.Enums;
-using EasySoft.UtilityTools.Result;
+using EasySoft.UtilityTools.Standard.Enums;
+using EasySoft.UtilityTools.Standard.Result;
 using Microsoft.EntityFrameworkCore;
 
 namespace EasySoft.Core.EntityFramework.Repositories;
@@ -33,12 +33,12 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
         bool descending = false
     )
     {
-        total = Queryable.Where(_context.Set<T>(), where).Count();
+        total = _context.Set<T>().Where(where).Count();
 
         if (!descending)
         {
             return
-                Queryable.Where(_context.Set<T>(), where)
+                _context.Set<T>().Where(where)
                     .OrderBy(orderBy)
                     .Skip(pageSize * (pageIndex - 1))
                     .Take(pageSize)
@@ -46,7 +46,7 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
         }
 
         return
-            Queryable.Where(_context.Set<T>(), where)
+            _context.Set<T>().Where(where)
                 .OrderByDescending(orderBy)
                 .Skip(pageSize * (pageIndex - 1))
                 .Take(pageSize)
@@ -61,7 +61,7 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
         Expression<Func<T, bool>> filter
     )
     {
-        return Queryable.Where(_context.Set<T>(), filter).ToList();
+        return _context.Set<T>().Where(filter).ToList();
     }
 
     public virtual IEnumerable<T> SingleList<TKey>(
@@ -71,8 +71,8 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
     )
     {
         return descending
-            ? Queryable.Where(_context.Set<T>(), filter).AsEnumerable().OrderByDescending(keySelector).ToList()
-            : Queryable.Where(_context.Set<T>(), filter).AsEnumerable().OrderBy(keySelector).ToList();
+            ? _context.Set<T>().Where(filter).AsEnumerable().OrderByDescending(keySelector).ToList()
+            : _context.Set<T>().Where(filter).AsEnumerable().OrderBy(keySelector).ToList();
     }
 
     public virtual IEnumerable<T> SingleList<TKey>(
@@ -83,9 +83,9 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
     )
     {
         return descending
-            ? Queryable.Where(_context.Set<T>(), filter).AsEnumerable().OrderByDescending(keySelector, comparer)
+            ? _context.Set<T>().Where(filter).AsEnumerable().OrderByDescending(keySelector, comparer)
                 .ToList()
-            : Queryable.Where(_context.Set<T>(), filter).AsEnumerable().OrderBy(keySelector, comparer).ToList();
+            : _context.Set<T>().Where(filter).AsEnumerable().OrderBy(keySelector, comparer).ToList();
     }
 
     #endregion

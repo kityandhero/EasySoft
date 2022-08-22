@@ -3,8 +3,8 @@ using EasySoft.Core.ExchangeRegulation.ExtensionMethods;
 using EasySoft.Core.GeneralLogTransmitter.Producers;
 using EasySoft.Core.Web.Framework.Controllers;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
-using EasySoft.UtilityTools.Enums;
-using EasySoft.UtilityTools.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.Enums;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Controllers;

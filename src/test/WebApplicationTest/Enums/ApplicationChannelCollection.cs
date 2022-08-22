@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using EasySoft.UtilityTools.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace WebApplicationTest.Enums;
 

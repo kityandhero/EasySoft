@@ -1,8 +1,8 @@
 ﻿using EasyCaching.Core;
 using EasySoft.Core.EasyCaching.interfaces;
-using EasySoft.UtilityTools.Assists;
-using EasySoft.UtilityTools.Enums;
-using EasySoft.UtilityTools.Result;
+using EasySoft.UtilityTools.Standard.Assists;
+using EasySoft.UtilityTools.Standard.Enums;
+using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.Core.EasyCaching.Operators;
 

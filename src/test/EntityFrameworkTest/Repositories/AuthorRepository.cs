@@ -1,9 +1,9 @@
 ﻿using EasySoft.Core.EntityFramework.Repositories;
+using EasySoft.UtilityTools.Standard.Enums;
+using EasySoft.UtilityTools.Standard.Result;
 using EntityFrameworkTest.Contexts;
 using EntityFrameworkTest.Entities;
 using EntityFrameworkTest.IRepositories;
-using EasySoft.UtilityTools.Enums;
-using EasySoft.UtilityTools.Result;
 
 namespace EntityFrameworkTest.Repositories;
 

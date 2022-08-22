@@ -1,8 +1,8 @@
 ﻿using EasySoft.Core.Infrastructure.Results;
 using EntityFrameworkTest.Contexts;
 using Microsoft.AspNetCore.Mvc;
-using EasySoft.UtilityTools.Enums;
-using EasySoft.UtilityTools.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.Enums;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace AppTest3.Controllers;
 

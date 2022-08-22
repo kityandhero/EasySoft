@@ -2,7 +2,7 @@
 using EasySoft.Core.EasyCaching.interfaces;
 using EasySoft.Core.Web.Framework.Controllers;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
-using EasySoft.UtilityTools.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 using WebApplicationTest.Models;
 

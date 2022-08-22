@@ -1,4 +1,4 @@
-﻿using EasySoft.UtilityTools.Assists;
+﻿using EasySoft.UtilityTools.Standard.Assists;
 
 namespace EasySoft.Core.Config.Utils;
 

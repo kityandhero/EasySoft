@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.IdentityVerification.Officers;
-using EasySoft.UtilityTools.ExtensionMethods;
+using EasySoft.Core.Infrastructure.ExtensionMethods;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.AspNetCore.Http;
 
 namespace EasySoft.Core.IdentityVerification.Middlewares;
@@ -19,7 +20,10 @@ public class IdentityVerificationMiddleware : IMiddleware
         }
         else
         {
-            await context.Response.WriteObjectAsJsonAsync(result.Data.ToExpandoObject());
+            if (result.Data != null)
+            {
+                await context.Response.WriteObjectAsJsonAsync(result.Data.ToExpandoObject());
+            }
         }
     }
 }

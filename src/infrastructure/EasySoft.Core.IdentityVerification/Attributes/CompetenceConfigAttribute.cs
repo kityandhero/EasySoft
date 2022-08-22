@@ -1,4 +1,4 @@
-﻿using EasySoft.UtilityTools.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.IdentityVerification.Attributes
 {

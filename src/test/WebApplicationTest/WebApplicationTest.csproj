@@ -37,4 +37,10 @@
         <Folder Include="wwwroot\lib" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="configures\redisConfig.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

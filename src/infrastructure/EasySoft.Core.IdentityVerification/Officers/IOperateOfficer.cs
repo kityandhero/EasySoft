@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.Infrastructure.Results;
-using EasySoft.UtilityTools.Result;
+using EasySoft.UtilityTools.Standard.Result;
 using Microsoft.AspNetCore.Http;
 
 namespace EasySoft.Core.IdentityVerification.Officers;

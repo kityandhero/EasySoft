@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.IdentityVerification.Observers;
 using EasySoft.Core.IdentityVerification.Operators;
-using EasySoft.UtilityTools.Competence;
+using EasySoft.UtilityTools.Standard.Competence;
 
 namespace WebApplicationTest.IdentityVerifications;
 

@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Autofac.Configuration;
 using Autofac.Core;
-using EasySoft.UtilityTools.Assists;
+using EasySoft.UtilityTools.Standard.Assists;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 

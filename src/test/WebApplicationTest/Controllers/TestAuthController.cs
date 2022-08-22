@@ -1,7 +1,7 @@
 ﻿using EasySoft.Core.IdentityVerification.Attributes;
-using EasySoft.Core.Mvc.Framework.Controllers;
-using EasySoft.Core.Mvc.Framework.ExtensionMethods;
-using EasySoft.UtilityTools.ExtensionMethods;
+using EasySoft.Core.Web.Framework.Controllers;
+using EasySoft.Core.Web.Framework.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Controllers;
