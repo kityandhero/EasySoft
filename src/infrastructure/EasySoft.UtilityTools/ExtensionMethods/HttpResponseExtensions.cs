@@ -1,13 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using EasySoft.UtilityTools.Assists;
 using EasySoft.UtilityTools.Mime;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json.Serialization;
-using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace EasySoft.UtilityTools.ExtensionMethods;
 
@@ -21,7 +17,7 @@ public static class HttpResponseExtensions
     /// <param name="response">The response to write JSON to.</param>
     /// <param name="value">The value to write as JSON.</param>
     /// <returns>The task object representing the asynchronous operation.</returns>
-    public static Task WriteAsNewtonsoftJsonAsync<TValue>(
+    public static async Task WriteTypeAsJsonAsync<TValue>(
         this HttpResponse response,
         TValue value
     )
@@ -35,13 +31,26 @@ public static class HttpResponseExtensions
 
         if (value != null)
         {
-            using var streamWriter = new StreamWriter(response.Body);
+            await using var streamWriter = new StreamWriter(response.Body);
 
-            return streamWriter.WriteAsync(JsonConvertAssist.Serialize(value));
+            await streamWriter.WriteAsync(JsonConvertAssist.Serialize(value));
         }
-        else
+    }
+
+    public static async Task WriteObjectAsJsonAsync(
+        this HttpResponse response,
+        object value
+    )
+    {
+        if (response == null)
         {
-            return Task.CompletedTask;
+            throw new ArgumentNullException(nameof(response));
         }
+
+        response.ContentType = MimeCollection.Json.ContentType;
+
+        await using var streamWriter = new StreamWriter(response.Body);
+
+        await streamWriter.WriteAsync(JsonConvertAssist.SerializeAndKeyToLower(value));
     }
 }

@@ -1,14 +1,11 @@
 ﻿using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.IdentityVerification.AccessControl;
-using EasySoft.Core.IdentityVerification.Entities;
 using EasySoft.Core.IdentityVerification.Observers;
 using EasySoft.Core.IdentityVerification.Operators;
 using EasySoft.Core.Infrastructure.Results;
-using EasySoft.UtilityTools.Assists;
 using EasySoft.UtilityTools.Enums;
 using EasySoft.UtilityTools.Exceptions;
 using EasySoft.UtilityTools.Result;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Core.IdentityVerification.Officers;
 
@@ -103,7 +100,7 @@ public class OperateOfficerCore : AccessWayOfficer
         return PermissionObserver.CheckAccessPermission(AccessPermission.GuidTag);
     }
 
-    protected ExecutiveResult<JsonResult> TryAuthorization(string token)
+    protected ExecutiveResult<ApiResult> TryAuthorization(string token)
     {
         CollectAccessWay();
 
@@ -119,12 +116,9 @@ public class OperateOfficerCore : AccessWayOfficer
                 "无操作凭证或凭证已过期"
             );
 
-            return new ExecutiveResult<JsonResult>(ReturnCode.AuthenticationFail)
+            return new ExecutiveResult<ApiResult>(ReturnCode.AuthenticationFail)
             {
-                Data = new JsonResult(
-                    result,
-                    JsonConvertAssist.CreateJsonSerializerSettings()
-                )
+                Data = result
             };
         }
 
@@ -132,7 +126,7 @@ public class OperateOfficerCore : AccessWayOfficer
 
         if (checkAccessPermission)
         {
-            return new ExecutiveResult<JsonResult>(ReturnCode.Ok);
+            return new ExecutiveResult<ApiResult>(ReturnCode.Ok);
         }
 
         var apiResultNoAccessPermission = new ApiResult(
@@ -141,12 +135,9 @@ public class OperateOfficerCore : AccessWayOfficer
             "无访问权限"
         );
 
-        return new ExecutiveResult<JsonResult>(ReturnCode.AuthenticationFail)
+        return new ExecutiveResult<ApiResult>(ReturnCode.AuthenticationFail)
         {
-            Data = new JsonResult(
-                apiResultNoAccessPermission,
-                JsonConvertAssist.CreateJsonSerializerSettings()
-            )
+            Data = apiResultNoAccessPermission
         };
     }
 }

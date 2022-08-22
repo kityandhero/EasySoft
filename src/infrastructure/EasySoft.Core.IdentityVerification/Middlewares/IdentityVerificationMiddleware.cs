@@ -1,8 +1,5 @@
-﻿using System.Text.Json;
-using EasySoft.Core.AutoFac.IocAssists;
+﻿using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.IdentityVerification.Officers;
-using EasySoft.UtilityTools.Assists;
-using EasySoft.UtilityTools.Exceptions;
 using EasySoft.UtilityTools.ExtensionMethods;
 using Microsoft.AspNetCore.Http;
 
@@ -22,7 +19,7 @@ public class IdentityVerificationMiddleware : IMiddleware
         }
         else
         {
-            await context.Response.WriteAsNewtonsoftJsonAsync(result.Data);
+            await context.Response.WriteObjectAsJsonAsync(result.Data.ToExpandoObject());
         }
     }
 }

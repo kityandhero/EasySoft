@@ -1,5 +1,6 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System;
+using Newtonsoft.Json;
+using System.Linq;
 using EasySoft.UtilityTools.JsonConverters;
 
 namespace EasySoft.UtilityTools.Assists
@@ -8,18 +9,30 @@ namespace EasySoft.UtilityTools.Assists
     {
         public static JsonSerializerSettings CreateJsonSerializerSettings()
         {
+            return CreateJsonSerializerSettings(Array.Empty<JsonConverter>());
+        }
+
+        public static JsonSerializerSettings CreateJsonSerializerSettings(params JsonConverter[] converters)
+        {
+            var converterAdjust = converters.ToList();
+
+            converterAdjust.Add(new LongConverter());
+
             return new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Include,
                 Formatting = Formatting.Indented,
+                DateTimeZoneHandling = DateTimeZoneHandling.Local,
                 DateFormatHandling = DateFormatHandling.MicrosoftDateFormat,
                 DateFormatString = "yyyy-MM-dd HH:mm:ss",
                 ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
-                Converters = new List<JsonConverter>
-                {
-                    new LongConverter()
-                }
+                Converters = converterAdjust
             };
+        }
+
+        public static T? DeserializeObject<T>(string data)
+        {
+            return JsonConvert.DeserializeObject<T>(data);
         }
 
         public static string Serialize(object data)
@@ -40,9 +53,7 @@ namespace EasySoft.UtilityTools.Assists
         /// <returns></returns>
         public static string SerializeAndKeyToLower(object data)
         {
-            var setting = CreateJsonSerializerSettings();
-
-            return JsonConvert.SerializeObject(data, setting);
+            return JsonConvert.SerializeObject(data, CreateJsonSerializerSettings());
         }
 
         /// <summary>
@@ -54,17 +65,7 @@ namespace EasySoft.UtilityTools.Assists
         /// <returns></returns>
         public static string SerializeAndKeyToLower(object data, params JsonConverter[] converters)
         {
-            var setting = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Include,
-                Formatting = Formatting.Indented,
-                DateFormatHandling = DateFormatHandling.MicrosoftDateFormat,
-                DateFormatString = "yyyy-MM-dd HH:mm:ss",
-                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
-                Converters = converters
-            };
-
-            return JsonConvert.SerializeObject(data, setting);
+            return JsonConvert.SerializeObject(data, CreateJsonSerializerSettings(converters));
         }
     }
 }

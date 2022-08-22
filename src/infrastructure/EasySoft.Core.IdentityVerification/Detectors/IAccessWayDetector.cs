@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.IdentityVerification.Entities;
-using EasySoft.Core.IdentityVerification.Filters;
 
 namespace EasySoft.Core.IdentityVerification.Detectors;
 

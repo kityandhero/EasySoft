@@ -2,11 +2,11 @@
 using EasySoft.Core.IdentityVerification.Attributes;
 using EasySoft.Core.IdentityVerification.ExtensionMethods;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
+using EasySoft.Core.Infrastructure.Results;
 using EasySoft.UtilityTools.Enums;
 using EasySoft.UtilityTools.ExtensionMethods;
 using EasySoft.UtilityTools.Result;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Core.IdentityVerification.Officers;
 
@@ -45,13 +45,13 @@ public class OperateOfficer : OperateOfficerCore, IOperateOfficer
     }
 
     [Description("验证登录凭证以及操作权限")]
-    public ExecutiveResult<JsonResult> DoAuthorization(HttpContext httpContext)
+    public ExecutiveResult<ApiResult> DoAuthorization(HttpContext httpContext)
     {
         var hasOperatorAttribute = httpContext.TryGetAttribute<OperatorAttribute>();
 
         if (hasOperatorAttribute == null)
         {
-            return new ExecutiveResult<JsonResult>(ReturnCode.Ok);
+            return new ExecutiveResult<ApiResult>(ReturnCode.Ok);
         }
 
         AdjustAccessPermission(httpContext);
