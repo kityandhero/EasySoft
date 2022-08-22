@@ -11,7 +11,7 @@
         <PackageProjectUrl>https://github.com/kityandhero/EasySoft</PackageProjectUrl>
         <RepositoryUrl>https://github.com/kityandhero/EasySoft</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageVersion>1.0.1</PackageVersion>
+        <PackageVersion>1.0.2</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>

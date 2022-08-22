@@ -4,11 +4,11 @@
         <LangVersion>10</LangVersion>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Title>EasySoft.UtilityTools</Title>
-        <Description>EasySoft.UtilityTools</Description>
+        <Title>EasySoft.UtilityTools.Core</Title>
+        <Description>EasySoft.UtilityTools.Core</Description>
         <PackageProjectUrl>https://github.com/kityandhero/EasySoft</PackageProjectUrl>
         <RepositoryUrl>https://github.com/kityandhero/EasySoft</RepositoryUrl>
-        <PackageVersion>1.0.1</PackageVersion>
+        <PackageVersion>1.0.2</PackageVersion>
     </PropertyGroup>
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
