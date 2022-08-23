@@ -1,4 +1,4 @@
-﻿namespace EasySoft.UtilityTools.Standard.Standard
+﻿namespace EasySoft.UtilityTools.Standard
 {
     /// <summary>
     /// 常用正则表达式

@@ -4,7 +4,7 @@ public static class FlagAssist
 {
     public static bool CovertInjectionComplete { get; set; }
 
-    public static bool EasyTokenSwitch { get; set; }
+    public static string TokenMode { get; set; }
 
     public static bool EasyTokenMiddlewareModeSwitch { get; set; }
 
@@ -12,7 +12,9 @@ public static class FlagAssist
 
     public static bool EasyTokenSecretInjectionComplete { get; set; }
 
-    public static bool JsonWebTokenSwitch { get; set; }
+    public static bool EasyTokenConfigComplete { get; set; }
+
+    public static bool JsonWebTokenConfigComplete { get; set; }
 
     public static bool JsonWebTokenMiddlewareModeSwitch { get; set; }
 
@@ -27,11 +29,12 @@ public static class FlagAssist
     static FlagAssist()
     {
         CovertInjectionComplete = false;
-        EasyTokenSwitch = false;
+        TokenMode = "";
         EasyTokenMiddlewareModeSwitch = false;
         EasyTokenSecretOptionInjectionComplete = false;
         EasyTokenSecretInjectionComplete = false;
-        JsonWebTokenSwitch = false;
+        EasyTokenConfigComplete = false;
+        JsonWebTokenConfigComplete = false;
         JsonWebTokenMiddlewareModeSwitch = false;
         PermissionVerificationSwitch = false;
         PermissionVerificationMiddlewareModeSwitch = false;

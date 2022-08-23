@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace EasySoft.UtilityTools.Standard.Standard
+namespace EasySoft.UtilityTools.Standard
 {
     public class RandomEx : Random
     {

@@ -5,18 +5,18 @@
 /// </summary>
 public abstract class ActualOperator : IActualOperator
 {
-    private object? _identity;
+    private object? _identification;
 
     private string _token = "";
 
     /// <summary>
     /// 设置身份标识，仅能设置一次
     /// </summary>
-    /// <param name="identity"></param>
+    /// <param name="identification"></param>
     /// <exception cref="Exception"></exception>
-    public void SetIdentity(object identity)
+    public void SetIdentification(object identification)
     {
-        _identity = identity;
+        this._identification = identification;
     }
 
     /// <summary>
@@ -24,9 +24,9 @@ public abstract class ActualOperator : IActualOperator
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public object? GetIdentity()
+    public object? GetIdentification()
     {
-        return _identity;
+        return _identification;
     }
 
     /// <summary>
@@ -51,6 +51,6 @@ public abstract class ActualOperator : IActualOperator
 
     public bool IsAnonymous()
     {
-        return _identity == null;
+        return _identification == null;
     }
 }

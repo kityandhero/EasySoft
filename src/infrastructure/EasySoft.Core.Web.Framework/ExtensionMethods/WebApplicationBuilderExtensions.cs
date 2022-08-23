@@ -12,6 +12,7 @@ using EasySoft.Core.PermissionVerification.Filters;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Channels;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
+using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Swagger.ExtensionMethods;
 using EasySoft.Core.Web.Framework.Attributes;
@@ -45,7 +46,22 @@ public static class WebApplicationBuilderExtensions
                 {
                     option.EnableEndpointRouting = false;
 
-                    if (FlagAssist.EasyTokenSwitch && !FlagAssist.EasyTokenMiddlewareModeSwitch)
+                    if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.EasyToken &&
+                        !FlagAssist.EasyTokenMiddlewareModeSwitch)
+                    {
+                        // 设置及接口数据返回格式
+                        option.Filters.Add<EasyToken.Filters.OperatorFilter>();
+                    }
+
+                    if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.JsonWebToken &&
+                        !FlagAssist.JsonWebTokenMiddlewareModeSwitch)
+                    {
+                        // 设置及接口数据返回格式
+                        option.Filters.Add<JsonWebToken.Filters.OperatorFilter>();
+                    }
+
+                    if (FlagAssist.PermissionVerificationSwitch &&
+                        !FlagAssist.PermissionVerificationMiddlewareModeSwitch)
                     {
                         // 设置及接口数据返回格式
                         option.Filters.Add<PermissionFilter>();
@@ -218,37 +234,47 @@ public static class WebApplicationBuilderExtensions
             );
         }
 
-        if (FlagAssist.EasyTokenSwitch && FlagAssist.EasyTokenMiddlewareModeSwitch)
+        if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.EasyToken &&
+            FlagAssist.EasyTokenMiddlewareModeSwitch)
         {
             // 设置及接口数据返回格式
             app.UseEasyTokenMiddleware();
         }
 
-        if (FlagAssist.EasyTokenSwitch)
+        if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.JsonWebToken &&
+            FlagAssist.JsonWebTokenMiddlewareModeSwitch)
         {
-            if (FlagAssist.EasyTokenMiddlewareModeSwitch)
+            app.UseJsonWebTokenMiddleware();
+        }
+
+        if (!string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
+        {
+            if (FlagAssist.EasyTokenMiddlewareModeSwitch || FlagAssist.JsonWebTokenMiddlewareModeSwitch)
             {
                 app.RecordInformation(
-                    "EasyTokenSwitch: enable, use middleware mode."
+                    $"TokenMode: {FlagAssist.TokenMode}, use middleware mode."
                 );
             }
             else
             {
                 app.RecordInformation(
-                    "EasyTokenSwitch: enable, use filter mode."
+                    $"TokenMode: {FlagAssist.TokenMode}, use filter mode."
                 );
             }
         }
 
-        if ((FlagAssist.EasyTokenSwitch && FlagAssist.EasyTokenMiddlewareModeSwitch) ||
-            (FlagAssist.JsonWebTokenSwitch && FlagAssist.JsonWebTokenMiddlewareModeSwitch))
-        {
-            // 设置及接口数据返回格式
-            app.UsePermissionVerificationMiddleware();
-        }
-
         if (FlagAssist.PermissionVerificationSwitch)
         {
+            if (string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
+            {
+                throw new Exception("use PermissionVerification need config one of token mode");
+            }
+
+            if (FlagAssist.PermissionVerificationMiddlewareModeSwitch)
+            {
+                app.UsePermissionVerificationMiddleware();
+            }
+
             if (FlagAssist.PermissionVerificationMiddlewareModeSwitch)
             {
                 app.RecordInformation(

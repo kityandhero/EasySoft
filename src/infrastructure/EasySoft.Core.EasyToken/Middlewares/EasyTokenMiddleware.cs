@@ -1,8 +1,9 @@
-﻿using EasySoft.Core.AuthenticationCore.Operators;
+﻿using EasySoft.Core.AuthenticationCore.Attributes;
+using EasySoft.Core.AuthenticationCore.ExtensionMethods;
+using EasySoft.Core.AuthenticationCore.Operators;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyToken.AccessControl;
-using EasySoft.Core.EasyToken.Attributes;
 using EasySoft.Core.EasyToken.ExtensionMethods;
 using EasySoft.Core.ErrorLogTransmitter.Producers;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
@@ -26,7 +27,7 @@ public class EasyTokenMiddleware : IMiddleware
             return;
         }
 
-        var token = context.GetEasyToken(GeneralConfigAssist.GetEasyTokenName());
+        var token = context.GetToken(GeneralConfigAssist.GetTokenName());
 
         if (string.IsNullOrWhiteSpace(token))
         {
@@ -66,7 +67,7 @@ public class EasyTokenMiddleware : IMiddleware
 
             actualOperator.SetToken(token);
 
-            actualOperator.SetIdentity(identity);
+            actualOperator.SetIdentification(identity);
 
             if (!actualOperator.IsAnonymous())
             {

@@ -1,6 +1,6 @@
-﻿using EasySoft.UtilityTools.Standard.Encryption;
+﻿using EasySoft.UtilityTools.Standard;
+using EasySoft.UtilityTools.Standard.Encryption;
 using EasySoft.UtilityTools.Standard.Media.Image;
-using EasySoft.UtilityTools.Standard.Standard;
 
 namespace EasySoft.Core.EasyToken.AccessControl
 {

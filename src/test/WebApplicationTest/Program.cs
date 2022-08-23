@@ -5,6 +5,7 @@ using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyToken.ExtensionMethods;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
+using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.BuilderAssists;
@@ -41,11 +42,14 @@ builder.UsePrepareStartWorkInjection<SimplePrepareStartWork>();
 //自定义静态文件配置 如有特殊需求，可以进行配置，不配置将采用内置选项，此处仅作为有需要时的样例
 // builder.UseStaticFileOptionsInjection<CustomStaticFileOptions>();
 
-builder.UseEasyToken<CustomTokenSecretOptions, ApplicationOperator>()
-    .UsePermissionVerification<ApplicationPermissionObserver>();
+builder.UseAdvanceJsonWebToken<ApplicationOperator>();
+
+// builder.UseEasyToken<CustomTokenSecretOptions, ApplicationOperator>();
 
 // 自定义token密钥解析类
-// builder.UseAdvanceIdentityVerification<CustomTokenSecretOptions,CustomTokenSecret, ApplicationOperator, ApplicationPermissionObserver>();
+// builder.UseAdvanceIdentityVerification<CustomTokenSecretOptions,CustomTokenSecret, ApplicationOperator>();
+
+builder.UsePermissionVerification<ApplicationPermissionObserver>();
 
 // builder.UseTokenSecretInjection<CustomTokenSecret>();
 

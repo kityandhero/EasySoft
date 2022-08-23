@@ -1,13 +1,17 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace EasySoft.UtilityTools.Standard.Standard
+namespace EasySoft.UtilityTools.Standard
 {
     /// <summary>
     /// 常量集合
     /// </summary>
     public static class ConstCollection
     {
+        public const string JsonWebToken = "JsonWebToken";
+
+        public const string EasyToken = "EasyToken";
+
         public const string SuperRoleName = "超级管理员";
         public const string SuperRoleGuidTag = "super";
 

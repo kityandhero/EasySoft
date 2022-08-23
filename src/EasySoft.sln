@@ -77,6 +77,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.EasyToken", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.AuthenticationCore", "infrastructure\EasySoft.Core.AuthenticationCore\EasySoft.Core.AuthenticationCore.csproj", "{97E98F31-941D-483D-AD77-2D7123099E53}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.JsonWebToken", "infrastructure\EasySoft.Core.JsonWebToken\EasySoft.Core.JsonWebToken.csproj", "{D6C37C08-D12B-4E8A-B0EA-4D7529AFB5A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -203,6 +205,10 @@ Global
 		{97E98F31-941D-483D-AD77-2D7123099E53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97E98F31-941D-483D-AD77-2D7123099E53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97E98F31-941D-483D-AD77-2D7123099E53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6C37C08-D12B-4E8A-B0EA-4D7529AFB5A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6C37C08-D12B-4E8A-B0EA-4D7529AFB5A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6C37C08-D12B-4E8A-B0EA-4D7529AFB5A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6C37C08-D12B-4E8A-B0EA-4D7529AFB5A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -242,6 +248,7 @@ Global
 		{654190D6-2418-428A-BB8B-B52D7C2C81C2} = {E1BDAC69-A565-4A26-866B-10845357EA3D}
 		{54446A01-ABB4-47F2-BD3C-5141C78A68F7} = {E1BDAC69-A565-4A26-866B-10845357EA3D}
 		{97E98F31-941D-483D-AD77-2D7123099E53} = {E1BDAC69-A565-4A26-866B-10845357EA3D}
+		{D6C37C08-D12B-4E8A-B0EA-4D7529AFB5A2} = {E1BDAC69-A565-4A26-866B-10845357EA3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

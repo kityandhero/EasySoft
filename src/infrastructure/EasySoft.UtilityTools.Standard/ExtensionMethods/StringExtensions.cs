@@ -199,12 +199,12 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
         /// <returns></returns>
         public static int ToInt(this string source)
         {
-            if (source.IsInt())
+            if (source.IsInt(out var value))
             {
-                return Convert.ToInt32(source);
+                return value;
             }
 
-            throw new Exception("该字符串不能转换为Int类型");
+            throw new Exception("该字符串不能转换为int类型");
         }
 
         /// <summary>
@@ -213,30 +213,40 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
         /// <returns></returns>
         public static long ToInt32(this string source)
         {
-            if (source.IsInt())
+            if (source.IsInt(out var value))
             {
-                return Convert.ToInt32(source);
+                return value;
             }
 
-            throw new Exception("该字符串不能转换为Int类型");
+            throw new Exception("该字符串不能转换为Int32类型");
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="v"></param>
+        /// <param name="source"></param>
         /// <returns></returns>
-        public static long ToLong(this string? v)
+        public static long ToLong(this string source)
         {
-            return v.IsInt64() ? Convert.ToInt64(v) : 0L;
+            if (source.IsLong(out var value))
+            {
+                return value;
+            }
+
+            throw new Exception("该字符串不能转换为long类型");
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="v"></param>
+        /// <param name="source"></param>
         /// <returns></returns>
-        public static long ToInt64(this string v)
+        public static long ToInt64(this string source)
         {
-            return v.IsInt64() ? Convert.ToInt64(v) : 0L;
+            if (source.IsLong(out var value))
+            {
+                return value;
+            }
+
+            throw new Exception("该字符串不能转换为Int64类型");
         }
 
         #region ToDateTime()
@@ -817,13 +827,24 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
         }
 
         /// <summary>
-        /// 验证是否是整形
+        /// 是否为 int 类型
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="source"></param>
         /// <returns></returns>
-        public static bool IsInt(this string input)
+        public static bool IsInt(this string source)
         {
-            return VerifyAssist.IsInt(input);
+            return VerifyAssist.IsInt(source);
+        }
+
+        /// <summary>
+        /// 是否为 int 类型
+        /// </summary>
+        /// <param name="source">要检验的变量</param>
+        /// <param name="value">转换后的值</param>
+        /// <returns></returns>
+        public static bool IsInt(this string source, out int value)
+        {
+            return VerifyAssist.IsInt(source, out value);
         }
 
         /// <summary>

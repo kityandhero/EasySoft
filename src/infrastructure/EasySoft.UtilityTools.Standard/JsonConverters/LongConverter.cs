@@ -52,16 +52,19 @@ namespace EasySoft.UtilityTools.Standard.JsonConverters
         /// <param name="existingValue"></param>
         /// <param name="serializer"></param>
         /// <returns></returns>
-        public override object ReadJson(
+        public override object? ReadJson(
             JsonReader reader,
             Type objectType,
             object? existingValue,
             JsonSerializer serializer
         )
         {
-            var v = (reader.Value as string).ToLong();
+            if (reader.Value is string v)
+            {
+                return v.ToLong();
+            }
 
-            return v;
+            return reader.Value;
         }
 
         /// <summary>

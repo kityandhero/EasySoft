@@ -2,7 +2,7 @@
 using EasySoft.UtilityTools.Standard.Encryption;
 using EasySoft.UtilityTools.Standard.Media.Image;
 
-namespace EasySoft.UtilityTools.Standard.Standard
+namespace EasySoft.UtilityTools.Standard
 {
     public class Secret
     {

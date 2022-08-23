@@ -60,20 +60,65 @@ namespace EasySoft.UtilityTools.Standard.Assists
         }
 
         /// <summary>
+        /// 是否为 int 类型
+        /// </summary>
+        /// <param name="source">要检验的变量</param>
+        /// <param name="value">转换后的值</param>
+        /// <returns></returns>
+        public static bool IsInt(this object source, out int value)
+        {
+            return source.IsInt32(out value);
+        }
+
+        /// <summary>
         /// 是否为 Int32 类型
         /// </summary>
         /// <param name="source">要检验的变量</param>
         /// <returns></returns>
         public static bool IsInt32(this object source)
         {
+            return IsInt32(source, out _);
+        }
+
+        /// <summary>
+        /// 是否为 Int32 类型
+        /// </summary>
+        /// <param name="source">要检验的变量</param>
+        /// <param name="value">转换后的值</param>
+        /// <returns></returns>
+        public static bool IsInt32(this object source, out int value)
+        {
+            value = 0;
+
             if (source.IsNull())
             {
                 return false;
             }
 
-            var result = int.TryParse(source.ToString(), out var _);
+            var result = int.TryParse(source.ToString(), out value);
 
             return result;
+        }
+
+        /// <summary>
+        /// 是否为 Int32 类型
+        /// </summary>
+        /// <param name="source">要检验的变量</param>
+        /// <returns></returns>
+        public static bool IsLong(this object source)
+        {
+            return source.IsInt64();
+        }
+
+        /// <summary>
+        /// 是否为 int 类型
+        /// </summary>
+        /// <param name="source">要检验的变量</param>
+        /// <param name="value">转换后的值</param>
+        /// <returns></returns>
+        public static bool IsLong(this object source, out long value)
+        {
+            return source.IsInt64(out value);
         }
 
         /// <summary>
@@ -83,12 +128,25 @@ namespace EasySoft.UtilityTools.Standard.Assists
         /// <returns></returns>
         public static bool IsInt64(this object? source)
         {
+            return IsInt64(source, out _);
+        }
+
+        /// <summary>
+        /// 是否为 Int64 类型
+        /// </summary>
+        /// <param name="source">要检验的变量</param>
+        /// <param name="value">转换后的值</param>
+        /// <returns></returns>
+        public static bool IsInt64(this object? source, out long value)
+        {
+            value = 0;
+
             if (source == null)
             {
                 return false;
             }
 
-            var result = long.TryParse(source.ToString(), out _);
+            var result = long.TryParse(source.ToString(), out value);
 
             return result;
         }
@@ -122,13 +180,7 @@ namespace EasySoft.UtilityTools.Standard.Assists
             var result = true;
             foreach (var one in p)
             {
-                if (one == null)
-                {
-                    result = false;
-                    break;
-                }
-
-                if (!double.TryParse(one, out var _))
+                if (!double.TryParse(one, out _))
                 {
                     result = false;
                     break;

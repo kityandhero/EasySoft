@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel;
+using System.IdentityModel.Tokens.Jwt;
 using EasySoft.Core.AuthenticationCore.Attributes;
 using EasySoft.Core.AuthenticationCore.ExtensionMethods;
 using EasySoft.Core.AuthenticationCore.Filters;
 using EasySoft.Core.AuthenticationCore.Operators;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.EasyToken.AccessControl;
-using EasySoft.Core.ErrorLogTransmitter.Producers;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Results;
 using EasySoft.UtilityTools.Standard.Enums;
@@ -14,7 +13,7 @@ using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace EasySoft.Core.EasyToken.Filters;
+namespace EasySoft.Core.JsonWebToken.Filters;
 
 public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
 {
@@ -43,57 +42,34 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
             return;
         }
 
-        AutofacAssist.Instance.Resolve<ITokenSecretOptions>();
+        var first = filterContext.HttpContext.User.Claims
+            .FirstOrDefault(o => o.Type == JwtRegisteredClaimNames.Sub);
 
-        var tokenSecret = AutofacAssist.Instance.Resolve<ITokenSecret>();
-
-        try
+        if (first == null)
         {
-            var identity = tokenSecret.DecryptWithExpirationTime(token, out var expired);
-
-            if (expired)
-            {
-                filterContext.Result = new ApiResult(
-                    ReturnCode.TokenExpired.ToInt(),
-                    false,
-                    "凭证无效或凭证已过期"
-                );
-
-                return;
-            }
-
-            var actualOperator = AutofacAssist.Instance.Resolve<IActualOperator>();
-
-            actualOperator.SetToken(token);
-
-            actualOperator.SetIdentification(identity);
-
-            if (actualOperator.IsAnonymous())
-            {
-                filterContext.Result = new ApiResult(
-                    ReturnCode.TokenExpired.ToInt(),
-                    false,
-                    "凭证无效或凭证已过期"
-                );
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-
-            if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
-            {
-                AutofacAssist.Instance.Resolve<IErrorLogProducer>().Send(
-                    e,
-                    0,
-                    filterContext.HttpContext.BuildRequestInfo()
-                );
-            }
-
             filterContext.Result = new ApiResult(
                 ReturnCode.TokenExpired.ToInt(),
                 false,
-                "凭证不适配解析规则"
+                "凭证无效或凭证已过期"
+            );
+
+            return;
+        }
+
+        var identification = first.Value;
+
+        var actualOperator = AutofacAssist.Instance.Resolve<IActualOperator>();
+
+        actualOperator.SetToken(token);
+
+        actualOperator.SetIdentification(identification);
+
+        if (actualOperator.IsAnonymous())
+        {
+            filterContext.Result = new ApiResult(
+                ReturnCode.TokenExpired.ToInt(),
+                false,
+                "凭证无效或凭证已过期"
             );
         }
     }

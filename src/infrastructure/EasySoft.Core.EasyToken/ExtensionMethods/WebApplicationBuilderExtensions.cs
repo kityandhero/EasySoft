@@ -1,8 +1,10 @@
 ﻿using Autofac;
+using EasySoft.Core.AuthenticationCore.ExtensionMethods;
 using EasySoft.Core.AuthenticationCore.Operators;
 using EasySoft.Core.EasyToken.AccessControl;
 using EasySoft.Core.EasyToken.Middlewares;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Standard;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,7 +24,12 @@ public static class WebApplicationBuilderExtensions
         bool middlewareMode = true
     ) where TOperator : ActualOperator where TTokenSecretOptions : ITokenSecretOptions
     {
-        if (FlagAssist.EasyTokenSwitch)
+        if (!string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
+        {
+            throw new Exception("token mode disallow use more than one");
+        }
+
+        if (FlagAssist.EasyTokenConfigComplete)
         {
             throw new Exception("UseEasyToken<TTokenSecretOptions, TOperator> disallow inject more than once");
         }
@@ -38,7 +45,9 @@ public static class WebApplicationBuilderExtensions
             FlagAssist.EasyTokenMiddlewareModeSwitch = true;
         }
 
-        FlagAssist.EasyTokenSwitch = true;
+        FlagAssist.EasyTokenConfigComplete = true;
+
+        FlagAssist.TokenMode = ConstCollection.EasyToken;
 
         return builder;
     }
@@ -56,7 +65,7 @@ public static class WebApplicationBuilderExtensions
         where TTokenSecretOptions : ITokenSecretOptions
         where TTokenSecret : ITokenSecret
     {
-        if (FlagAssist.EasyTokenSwitch)
+        if (FlagAssist.EasyTokenConfigComplete)
         {
             throw new Exception("UseEasyToken<TTokenSecretOptions, TOperator> disallow inject more than once");
         }
@@ -72,25 +81,7 @@ public static class WebApplicationBuilderExtensions
             FlagAssist.EasyTokenMiddlewareModeSwitch = true;
         }
 
-        FlagAssist.EasyTokenSwitch = true;
-
-        return builder;
-    }
-
-    /// <summary>
-    /// 注入操作员
-    /// </summary>
-    /// <param name="builder"></param>
-    /// <returns></returns>
-    private static WebApplicationBuilder UseOperatorInjection<T>(
-        this WebApplicationBuilder builder
-    ) where T : ActualOperator
-    {
-        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-        {
-            // https://docs.autofac.org/en/latest/faq/per-request-scope.html
-            containerBuilder.RegisterType<T>().As<IActualOperator>().InstancePerLifetimeScope();
-        });
+        FlagAssist.EasyTokenConfigComplete = true;
 
         return builder;
     }

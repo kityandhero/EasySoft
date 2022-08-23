@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.Config.ConfigCollection;
 using EasySoft.Core.Config.Utils;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Standard;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Configuration;
 
@@ -43,15 +44,6 @@ public static class GeneralConfigAssist
         return GeneralConfig.Instance;
     }
 
-    public static string GetEasyTokenName()
-    {
-        var v = GetConfig().EasyTokenName.Remove(" ").Trim();
-
-        v = string.IsNullOrWhiteSpace(v) ? "token" : v;
-
-        return v;
-    }
-
     public static string GetCacheMode()
     {
         var v = GetConfig().CacheMode;
@@ -74,24 +66,26 @@ public static class GeneralConfigAssist
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
-        if (!v.IsInt())
+        if (!v.IsInt(out var value))
         {
             throw new Exception(
                 $"请配置 AccessWayDetectSwitch: {ConfigFile} -> AccessWayDetectSwitch,请设置 0/1,开启后将在请求进入时校验持久数据存在性"
             );
         }
 
-        if (v.ToInt() == 1)
+        if (value != 1)
         {
-            if (!FlagAssist.EasyTokenSwitch)
-            {
-                throw new Exception(
-                    "AccessWayDetectSwitch work with UseEasyToken, if you do not use UseAdvanceIdentityVerification, do not set it to enable"
-                );
-            }
+            return false;
         }
 
-        return v.ToInt() == 1;
+        if (!FlagAssist.PermissionVerificationSwitch)
+        {
+            throw new Exception(
+                "AccessWayDetectSwitch work with UsePermissionVerification, if you do not use UsePermissionVerification, do not set it to enable"
+            );
+        }
+
+        return true;
     }
 
     public static bool GetRemoteGeneralLogSwitch()
@@ -100,14 +94,14 @@ public static class GeneralConfigAssist
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
-        if (!v.IsInt())
+        if (!v.IsInt(out var value))
         {
             throw new Exception(
                 $"请配置 RemoteGeneralLogSwitch: {ConfigFile} -> RemoteGeneralLogSwitch,请设置 0/1"
             );
         }
 
-        return v.ToInt() == 1;
+        return value == 1;
     }
 
     public static bool GetRemoteErrorLogSwitch()
@@ -116,14 +110,14 @@ public static class GeneralConfigAssist
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
-        if (!v.IsInt())
+        if (!v.IsInt(out var value))
         {
             throw new Exception(
                 $"请配置 RemoteErrorLogSwitch: {ConfigFile} -> RemoteErrorLogSwitch,请设置 0/1"
             );
         }
 
-        return v.ToInt() == 1;
+        return value == 1;
     }
 
     public static bool GetUseStaticFiles()
@@ -132,14 +126,14 @@ public static class GeneralConfigAssist
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
-        if (!v.IsInt())
+        if (!v.IsInt(out var value))
         {
             throw new Exception(
                 $"请配置 UseStaticFiles: {ConfigFile} -> UseStaticFiles,请设置 0/1"
             );
         }
 
-        return v.ToInt() == 1;
+        return value == 1;
     }
 
     public static bool GetUseAuthentication()
@@ -148,14 +142,14 @@ public static class GeneralConfigAssist
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
-        if (!v.IsInt())
+        if (!v.IsInt(out var value))
         {
             throw new Exception(
                 $"请配置 UseAuthentication: {ConfigFile} -> UseAuthentication,请设置 0/1"
             );
         }
 
-        return v.ToInt() == 1;
+        return value == 1;
     }
 
     public static bool GetUseAuthorization()
@@ -164,14 +158,14 @@ public static class GeneralConfigAssist
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
-        if (!v.IsInt())
+        if (!v.IsInt(out var value))
         {
             throw new Exception(
                 $"请配置 UseAuthorization: {ConfigFile} -> UseAuthorization,请设置 0/1"
             );
         }
 
-        return v.ToInt() == 1;
+        return value == 1;
     }
 
     public static bool GetCorsSwitch()
@@ -180,14 +174,14 @@ public static class GeneralConfigAssist
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
-        if (!v.IsInt())
+        if (!v.IsInt(out var value))
         {
             throw new Exception(
                 $"请配置 CorsSwitch: {ConfigFile} -> CorsSwitch,请设置 0/1"
             );
         }
 
-        return v.ToInt() == 1;
+        return value == 1;
     }
 
     public static List<string> GetCorsPolicies()
@@ -199,4 +193,171 @@ public static class GeneralConfigAssist
 
         return v;
     }
+
+    /// <summary>
+    /// 过期时间 (秒), 默认7200
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static int GetTokenExpires()
+    {
+        var v = GetConfig().TokenExpires;
+
+        v = string.IsNullOrWhiteSpace(v) ? "7200" : v;
+
+        if (!v.IsInt(out var value) || value < 0)
+        {
+            throw new Exception(
+                $"请配置 JsonWebTokenExpires: {ConfigFile} -> JsonWebTokenExpires,请设置数字 value > 0"
+            );
+        }
+
+        return value;
+    }
+
+    public static string GetTokenName()
+    {
+        var v = GetConfig().TokenName.Remove(" ").Trim();
+
+        v = string.IsNullOrWhiteSpace(v) ? "token" : v;
+
+        return v;
+    }
+
+    #region JsonWebToken
+
+    /// <summary>
+    /// Token的时间偏移量 (秒)
+    /// </summary>
+    /// <returns></returns>
+    public static int GetJsonWebTokenClockSkew()
+    {
+        var v = GetConfig().JsonWebTokenClockSkew;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value) || value < 0)
+        {
+            throw new Exception(
+                $"请配置 JsonWebTokenClockSkew: {ConfigFile} -> JsonWebTokenClockSkew,请设置数字 value >= 0"
+            );
+        }
+
+        return value;
+    }
+
+    /// <summary>
+    /// 颁发者
+    /// </summary>
+    /// <returns></returns>
+    public static string GetJsonWebTokenValidIssuer()
+    {
+        var v = GetConfig().JsonWebTokenValidIssuer.Remove(" ").Trim();
+
+        return v;
+    }
+
+    /// <summary>
+    /// 是否验证颁发者, 默认开启
+    /// </summary>
+    /// <returns></returns>
+    public static bool GetJsonWebTokenValidateIssuer()
+    {
+        var v = GetConfig().JsonWebTokenValidateIssuer;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 JsonWebTokenValidateIssuer: {ConfigFile} -> JsonWebTokenValidateIssuer,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
+
+    /// <summary>
+    /// 访问群体
+    /// </summary>
+    /// <returns></returns>
+    public static string GetJsonWebTokenValidAudience()
+    {
+        var v = GetConfig().JsonWebTokenValidAudience.Remove(" ").Trim();
+
+        return v;
+    }
+
+    /// <summary>
+    /// 是否验证访问群体, 默认开启
+    /// </summary>
+    /// <returns></returns>
+    public static bool GetJsonWebTokenValidateAudience()
+    {
+        var v = GetConfig().JsonWebTokenValidateAudience;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 JsonWebTokenValidateAudience: {ConfigFile} -> JsonWebTokenValidateAudience,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
+
+    /// <summary>
+    /// 安全密钥
+    /// </summary>
+    /// <returns></returns>
+    public static string GetJsonWebTokenIssuerSigningKey()
+    {
+        var v = GetConfig().JsonWebTokenIssuerSigningKey.Remove(" ").Trim();
+
+        return v;
+    }
+
+    /// <summary>
+    /// 是否验证安全密钥, 默认开启
+    /// </summary>
+    /// <returns></returns>
+    public static bool GetJsonWebTokenValidateIssuerSigningKey()
+    {
+        var v = GetConfig().JsonWebTokenValidateIssuerSigningKey;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 JsonWebTokenValidateIssuerSigningKey: {ConfigFile} -> JsonWebTokenValidateIssuerSigningKey,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
+
+    /// <summary>
+    /// 是否验证生存期, 默认开启
+    /// </summary>
+    /// <returns></returns>
+    public static bool GetJsonWebTokenValidateLifetime()
+    {
+        var v = GetConfig().JsonWebTokenValidateLifetime;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 JsonWebTokenValidateLifetime: {ConfigFile} -> JsonWebTokenValidateLifetime,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
+
+    #endregion
 }

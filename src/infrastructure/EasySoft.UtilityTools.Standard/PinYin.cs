@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
-namespace EasySoft.UtilityTools.Standard.Standard
+namespace EasySoft.UtilityTools.Standard
 {
     /// <summary>
     /// 拼音操作类

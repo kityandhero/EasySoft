@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace EasySoft.Core.EasyToken.ExtensionMethods;
+namespace EasySoft.Core.AuthenticationCore.ExtensionMethods;
 
 public static class HttpContextExtensions
 {
-    public static string GetEasyToken(this HttpContext c, string key = "token")
+    public static string GetToken(this HttpContext c, string key = "token")
     {
         return c.Request.Headers.ContainsKey(key) ? c.Request.Headers[key] : "";
     }
