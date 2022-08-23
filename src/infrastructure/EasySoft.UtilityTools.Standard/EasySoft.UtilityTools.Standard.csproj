@@ -9,6 +9,7 @@
     <PackageProjectUrl>https://github.com/kityandhero/EasySoft</PackageProjectUrl>
     <RepositoryUrl>https://github.com/kityandhero/EasySoft</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageVersion>1.0.1</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
