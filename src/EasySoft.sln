@@ -73,8 +73,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.UtilityTools.Stand
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.CacheCore", "infrastructure\EasySoft.Core.CacheCore\EasySoft.Core.CacheCore.csproj", "{654190D6-2418-428A-BB8B-B52D7C2C81C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.MemoryCache", "infrastructure\EasySoft.Core.MemoryCache\EasySoft.Core.MemoryCache.csproj", "{C1B125CD-45A4-4947-BAF0-A120B30CBB33}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -193,10 +191,6 @@ Global
 		{654190D6-2418-428A-BB8B-B52D7C2C81C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{654190D6-2418-428A-BB8B-B52D7C2C81C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{654190D6-2418-428A-BB8B-B52D7C2C81C2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C1B125CD-45A4-4947-BAF0-A120B30CBB33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1B125CD-45A4-4947-BAF0-A120B30CBB33}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1B125CD-45A4-4947-BAF0-A120B30CBB33}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1B125CD-45A4-4947-BAF0-A120B30CBB33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -234,7 +228,6 @@ Global
 		{B716B52E-EFF6-4D72-AC26-4D2DE89DC18C} = {A4A52E96-6D09-4234-BD3F-FF1EEFBBAEC2}
 		{944A05EB-EF3A-4D14-8E0A-97C2A69DDCCB} = {E1BDAC69-A565-4A26-866B-10845357EA3D}
 		{654190D6-2418-428A-BB8B-B52D7C2C81C2} = {E1BDAC69-A565-4A26-866B-10845357EA3D}
-		{C1B125CD-45A4-4947-BAF0-A120B30CBB33} = {E1BDAC69-A565-4A26-866B-10845357EA3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}
