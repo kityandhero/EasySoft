@@ -11,11 +11,35 @@ namespace EasySoft.Core.JsonWebToken.Assists;
 
 public static class TokenAssist
 {
+    public static ClaimsPrincipal ValidateToken(string token)
+    {
+        return new JwtSecurityTokenHandler().ValidateToken(
+            token,
+            TokenAssist.GenerateTokenValidationParameters(),
+            out _
+        );
+    }
+
+    public static TokenValidationParameters GenerateTokenValidationParameters()
+    {
+        return new TokenValidationParameters
+        {
+            ValidateIssuer = GeneralConfigAssist.GetJsonWebTokenValidateIssuer(),
+            ValidIssuer = GeneralConfigAssist.GetJsonWebTokenValidIssuer(),
+            ValidateAudience = GeneralConfigAssist.GetJsonWebTokenValidateAudience(),
+            ValidAudience = GeneralConfigAssist.GetJsonWebTokenValidAudience(),
+            ValidateLifetime = GeneralConfigAssist.GetJsonWebTokenValidateLifetime(),
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(GeneralConfigAssist.GetJsonWebTokenIssuerSigningKey())
+            )
+        };
+    }
+
     public static string GenerateJsonWebToken(string identification, params Claim[] claims)
     {
         var claimsAdjust = new List<Claim>
         {
-            new(JwtRegisteredClaimNames.Sub, identification),
+            new(JwtRegisteredClaimNames.NameId, identification),
         };
 
         claimsAdjust.AddRange(claims);

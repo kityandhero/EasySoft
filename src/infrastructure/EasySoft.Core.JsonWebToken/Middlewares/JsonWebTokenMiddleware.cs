@@ -1,14 +1,19 @@
-﻿using EasySoft.Core.AuthenticationCore.Attributes;
+﻿using System.Security.Claims;
+using EasySoft.Core.AuthenticationCore.Attributes;
 using EasySoft.Core.AuthenticationCore.ExtensionMethods;
 using EasySoft.Core.AuthenticationCore.Operators;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.ErrorLogTransmitter.Producers;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Results;
+using EasySoft.Core.JsonWebToken.Assists;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.Enums;
 using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.Extensions.Hosting;
+using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace EasySoft.Core.JsonWebToken.Middlewares;
 
@@ -40,7 +45,43 @@ public class JsonWebTokenMiddleware : IMiddleware
             return;
         }
 
-        var first = context.User.Claims.FirstOrDefault(o => o.Type == JwtRegisteredClaimNames.Sub);
+        ClaimsPrincipal claimsPrincipal;
+
+        try
+        {
+            claimsPrincipal = TokenAssist.ValidateToken(token);
+        }
+        catch (Exception e)
+        {
+            if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
+            {
+                AutofacAssist.Instance.Resolve<IErrorLogProducer>().Send(
+                    e,
+                    0,
+                    context.BuildRequestInfo()
+                );
+            }
+
+            await context.Response.WriteObjectAsJsonAsync(
+                new ApiResult(
+                    ReturnCode.TokenExpired.ToInt(),
+                    false,
+                    EnvironmentAssist.GetEnvironment().IsDevelopment() ? e.Message : "校验凭证时发生错误",
+                    EnvironmentAssist.GetEnvironment().IsDevelopment()
+                        ? new
+                        {
+                            stackTrace = e.StackTrace
+                        }
+                        : null
+                ).ToExpandoObject()
+            );
+
+            return;
+        }
+
+        var first = claimsPrincipal.Claims.FirstOrDefault(o =>
+            o.Properties.FirstOrDefault().Value == JwtRegisteredClaimNames.NameId
+        );
 
         if (first == null)
         {

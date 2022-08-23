@@ -4,13 +4,14 @@ using EasySoft.Core.AuthenticationCore.Operators;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyToken.AccessControl;
-using EasySoft.Core.EasyToken.ExtensionMethods;
 using EasySoft.Core.ErrorLogTransmitter.Producers;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Results;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.Enums;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.EasyToken.Middlewares;
 
@@ -27,7 +28,7 @@ public class EasyTokenMiddleware : IMiddleware
             return;
         }
 
-        var token = context.GetToken(GeneralConfigAssist.GetTokenName());
+        var token = await context.GetTokenAsync(GeneralConfigAssist.GetTokenName());
 
         if (string.IsNullOrWhiteSpace(token))
         {
@@ -48,7 +49,34 @@ public class EasyTokenMiddleware : IMiddleware
 
         try
         {
-            var identity = tokenSecret.DecryptWithExpirationTime(token, out var expired);
+            string identity;
+            bool expired;
+
+            try
+            {
+                identity = tokenSecret.DecryptWithExpirationTime(token, out expired);
+            }
+            catch (Exception e)
+            {
+                if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
+                {
+                    AutofacAssist.Instance.Resolve<IErrorLogProducer>().Send(
+                        e,
+                        0,
+                        context.BuildRequestInfo()
+                    );
+                }
+
+                await context.Response.WriteObjectAsJsonAsync(
+                    new ApiResult(
+                        ReturnCode.TokenExpired.ToInt(),
+                        false,
+                        "凭证不适配解析规则"
+                    ).ToExpandoObject()
+                );
+
+                return;
+            }
 
             if (expired)
             {
@@ -86,8 +114,6 @@ public class EasyTokenMiddleware : IMiddleware
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-
             if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
             {
                 AutofacAssist.Instance.Resolve<IErrorLogProducer>().Send(
@@ -101,7 +127,13 @@ public class EasyTokenMiddleware : IMiddleware
                 new ApiResult(
                     ReturnCode.TokenExpired.ToInt(),
                     false,
-                    "凭证不适配解析规则"
+                    EnvironmentAssist.GetEnvironment().IsDevelopment() ? e.Message : "校验凭证时发生错误",
+                    EnvironmentAssist.GetEnvironment().IsDevelopment()
+                        ? new
+                        {
+                            stackTrace = e.StackTrace
+                        }
+                        : null
                 ).ToExpandoObject()
             );
         }

@@ -1,13 +1,11 @@
-﻿using System.Text;
-using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Infrastructure.Assists;
+﻿using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.JsonWebToken.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using EasySoft.Core.AuthenticationCore.ExtensionMethods;
 using EasySoft.Core.AuthenticationCore.Operators;
+using EasySoft.Core.JsonWebToken.Assists;
 using EasySoft.UtilityTools.Standard;
 
 namespace EasySoft.Core.JsonWebToken.ExtensionMethods;
@@ -39,17 +37,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
         {
-            options.TokenValidationParameters = new TokenValidationParameters()
-            {
-                ValidateIssuer = GeneralConfigAssist.GetJsonWebTokenValidateIssuer(),
-                ValidIssuer = GeneralConfigAssist.GetJsonWebTokenValidIssuer(),
-                ValidateAudience = GeneralConfigAssist.GetJsonWebTokenValidateAudience(),
-                ValidAudience = GeneralConfigAssist.GetJsonWebTokenValidAudience(),
-                ValidateLifetime = GeneralConfigAssist.GetJsonWebTokenValidateLifetime(),
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(GeneralConfigAssist.GetJsonWebTokenIssuerSigningKey())
-                )
-            };
+            options.TokenValidationParameters = TokenAssist.GenerateTokenValidationParameters();
         });
 
         if (middlewareMode)

@@ -314,6 +314,13 @@ public static class GeneralConfigAssist
     {
         var v = GetConfig().JsonWebTokenValidIssuer.Remove(" ").Trim();
 
+        if (string.IsNullOrEmpty(v))
+        {
+            throw new Exception(
+                $"请配置 JsonWebTokenValidIssuer: {ConfigFile} -> JsonWebTokenValidIssuer,请设置颁发者"
+            );
+        }
+
         return v;
     }
 
@@ -344,6 +351,13 @@ public static class GeneralConfigAssist
     public static string GetJsonWebTokenValidAudience()
     {
         var v = GetConfig().JsonWebTokenValidAudience.Remove(" ").Trim();
+
+        if (string.IsNullOrEmpty(v))
+        {
+            throw new Exception(
+                $"请配置 JsonWebTokenValidAudience: {ConfigFile} -> JsonWebTokenValidAudience,请设置访问群体"
+            );
+        }
 
         return v;
     }
