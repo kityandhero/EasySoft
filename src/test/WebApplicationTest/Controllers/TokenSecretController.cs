@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.IdentityVerification.AccessControl;
+﻿using EasySoft.Core.EasyToken.AccessControl;
 using EasySoft.Core.Web.Framework.Controllers;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;

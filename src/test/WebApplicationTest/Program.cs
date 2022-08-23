@@ -3,8 +3,9 @@ using AutoFacTest.Implementations;
 using AutoFacTest.Interfaces;
 using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.IdentityVerification.ExtensionMethods;
+using EasySoft.Core.EasyToken.ExtensionMethods;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
+using EasySoft.Core.PermissionVerification.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.BuilderAssists;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
@@ -14,9 +15,9 @@ using EntityFrameworkTest.IServices;
 using EntityFrameworkTest.Repositories;
 using EntityFrameworkTest.Services;
 using Microsoft.EntityFrameworkCore;
+using WebApplicationTest.EasyTokens;
 using WebApplicationTest.Enums;
 using WebApplicationTest.Hubs;
-using WebApplicationTest.IdentityVerifications;
 using WebApplicationTest.PrepareStartWorks;
 
 var builder = WebApplicationBuilderAssist.CreateBuilder(args);
@@ -40,7 +41,8 @@ builder.UsePrepareStartWorkInjection<SimplePrepareStartWork>();
 //自定义静态文件配置 如有特殊需求，可以进行配置，不配置将采用内置选项，此处仅作为有需要时的样例
 // builder.UseStaticFileOptionsInjection<CustomStaticFileOptions>();
 
-builder.UseAdvanceIdentityVerification<CustomTokenSecretOptions, ApplicationOperator, ApplicationPermissionObserver>();
+builder.UseEasyToken<CustomTokenSecretOptions, ApplicationOperator>()
+    .UsePermissionVerification<ApplicationPermissionObserver>();
 
 // 自定义token密钥解析类
 // builder.UseAdvanceIdentityVerification<CustomTokenSecretOptions,CustomTokenSecret, ApplicationOperator, ApplicationPermissionObserver>();

@@ -45,7 +45,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.AutoFac", "in
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.ErrorLogTransmitter", "infrastructure\EasySoft.Core.ErrorLogTransmitter\EasySoft.Core.ErrorLogTransmitter.csproj", "{54311193-8614-471F-96AA-3F9CDC97EB8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.IdentityVerification", "infrastructure\EasySoft.Core.IdentityVerification\EasySoft.Core.IdentityVerification.csproj", "{99E229A1-0413-4C88-BCD2-D9FCF02B1FE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.PermissionVerification", "infrastructure\EasySoft.Core.PermissionVerification\EasySoft.Core.PermissionVerification.csproj", "{99E229A1-0413-4C88-BCD2-D9FCF02B1FE5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.PrepareStartWork", "infrastructure\EasySoft.Core.PrepareStartWork\EasySoft.Core.PrepareStartWork.csproj", "{BBE150E2-A39E-4740-8ECE-CE1D85F6F2A2}"
 EndProject
@@ -72,6 +72,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.UtilityTools.Standard", "infrastructure\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj", "{944A05EB-EF3A-4D14-8E0A-97C2A69DDCCB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.CacheCore", "infrastructure\EasySoft.Core.CacheCore\EasySoft.Core.CacheCore.csproj", "{654190D6-2418-428A-BB8B-B52D7C2C81C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.EasyToken", "infrastructure\EasySoft.Core.EasyToken\EasySoft.Core.EasyToken.csproj", "{54446A01-ABB4-47F2-BD3C-5141C78A68F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.AuthenticationCore", "infrastructure\EasySoft.Core.AuthenticationCore\EasySoft.Core.AuthenticationCore.csproj", "{97E98F31-941D-483D-AD77-2D7123099E53}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -191,6 +195,14 @@ Global
 		{654190D6-2418-428A-BB8B-B52D7C2C81C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{654190D6-2418-428A-BB8B-B52D7C2C81C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{654190D6-2418-428A-BB8B-B52D7C2C81C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54446A01-ABB4-47F2-BD3C-5141C78A68F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54446A01-ABB4-47F2-BD3C-5141C78A68F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54446A01-ABB4-47F2-BD3C-5141C78A68F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54446A01-ABB4-47F2-BD3C-5141C78A68F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97E98F31-941D-483D-AD77-2D7123099E53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97E98F31-941D-483D-AD77-2D7123099E53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97E98F31-941D-483D-AD77-2D7123099E53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97E98F31-941D-483D-AD77-2D7123099E53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -228,6 +240,8 @@ Global
 		{B716B52E-EFF6-4D72-AC26-4D2DE89DC18C} = {A4A52E96-6D09-4234-BD3F-FF1EEFBBAEC2}
 		{944A05EB-EF3A-4D14-8E0A-97C2A69DDCCB} = {E1BDAC69-A565-4A26-866B-10845357EA3D}
 		{654190D6-2418-428A-BB8B-B52D7C2C81C2} = {E1BDAC69-A565-4A26-866B-10845357EA3D}
+		{54446A01-ABB4-47F2-BD3C-5141C78A68F7} = {E1BDAC69-A565-4A26-866B-10845357EA3D}
+		{97E98F31-941D-483D-AD77-2D7123099E53} = {E1BDAC69-A565-4A26-866B-10845357EA3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

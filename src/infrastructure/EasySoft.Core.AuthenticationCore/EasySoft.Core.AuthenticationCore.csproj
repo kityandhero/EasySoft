@@ -5,14 +5,10 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Title>EasySoft.Core.CacheCore</Title>
-        <Description>EasySoft.Core.CacheCore</Description>
+        <Title>EasySoft.Core.AuthenticationCore</Title>
+        <Description>EasySoft.Core.AuthenticationCore</Description>
         <PackageProjectUrl>https://github.com/kityandhero/EasySoft</PackageProjectUrl>
         <RepositoryUrl>https://github.com/kityandhero/EasySoft</RepositoryUrl>
     </PropertyGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
-    </ItemGroup>
 
 </Project>

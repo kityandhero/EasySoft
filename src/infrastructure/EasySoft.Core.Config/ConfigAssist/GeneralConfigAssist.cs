@@ -43,6 +43,15 @@ public static class GeneralConfigAssist
         return GeneralConfig.Instance;
     }
 
+    public static string GetEasyTokenName()
+    {
+        var v = GetConfig().EasyTokenName.Remove(" ").Trim();
+
+        v = string.IsNullOrWhiteSpace(v) ? "token" : v;
+
+        return v;
+    }
+
     public static string GetCacheMode()
     {
         var v = GetConfig().CacheMode;
@@ -74,10 +83,10 @@ public static class GeneralConfigAssist
 
         if (v.ToInt() == 1)
         {
-            if (!FlagAssist.IdentityVerificationSwitch)
+            if (!FlagAssist.EasyTokenSwitch)
             {
                 throw new Exception(
-                    "AccessWayDetectSwitch work with UseAdvanceIdentityVerification, if you do not use UseAdvanceIdentityVerification, do not set it to enable"
+                    "AccessWayDetectSwitch work with UseEasyToken, if you do not use UseAdvanceIdentityVerification, do not set it to enable"
                 );
             }
         }

@@ -105,7 +105,7 @@ namespace EasySoft.UtilityTools.Standard.Enums
         /// </summary>
         [Description("无访问权限")]
         [ReturnCodeSuccess(false)]
-        NoAccessPermission = 3001,
+        NoPermission = 3001,
 
         /// <summary>
         /// 程序异常

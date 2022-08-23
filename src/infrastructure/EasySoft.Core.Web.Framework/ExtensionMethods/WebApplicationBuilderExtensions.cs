@@ -3,11 +3,12 @@ using Autofac.Extensions.DependencyInjection;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyCaching.ExtensionMethods;
+using EasySoft.Core.EasyToken.ExtensionMethods;
 using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 using EasySoft.Core.GeneralLogTransmitter.ExtensionMethods;
 using EasySoft.Core.Hangfire.ExtensionMethods;
-using EasySoft.Core.IdentityVerification.ExtensionMethods;
-using EasySoft.Core.IdentityVerification.Filters;
+using EasySoft.Core.PermissionVerification.ExtensionMethods;
+using EasySoft.Core.PermissionVerification.Filters;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Channels;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
@@ -44,10 +45,10 @@ public static class WebApplicationBuilderExtensions
                 {
                     option.EnableEndpointRouting = false;
 
-                    if (FlagAssist.IdentityVerificationSwitch && !FlagAssist.IdentityVerificationMiddlewareModeSwitch)
+                    if (FlagAssist.EasyTokenSwitch && !FlagAssist.EasyTokenMiddlewareModeSwitch)
                     {
                         // 设置及接口数据返回格式
-                        option.Filters.Add<OperatorFilter>();
+                        option.Filters.Add<PermissionFilter>();
                     }
 
                     // 设置及接口数据返回格式
@@ -217,17 +218,49 @@ public static class WebApplicationBuilderExtensions
             );
         }
 
-        if (FlagAssist.IdentityVerificationSwitch && FlagAssist.IdentityVerificationMiddlewareModeSwitch)
+        if (FlagAssist.EasyTokenSwitch && FlagAssist.EasyTokenMiddlewareModeSwitch)
         {
             // 设置及接口数据返回格式
-            app.UseIdentityVerificationMiddleware();
+            app.UseEasyTokenMiddleware();
         }
 
-        if (FlagAssist.IdentityVerificationSwitch)
+        if (FlagAssist.EasyTokenSwitch)
         {
-            app.RecordInformation(
-                $"IdentityVerificationSwitch: enable"
-            );
+            if (FlagAssist.EasyTokenMiddlewareModeSwitch)
+            {
+                app.RecordInformation(
+                    "EasyTokenSwitch: enable, use middleware mode."
+                );
+            }
+            else
+            {
+                app.RecordInformation(
+                    "EasyTokenSwitch: enable, use filter mode."
+                );
+            }
+        }
+
+        if ((FlagAssist.EasyTokenSwitch && FlagAssist.EasyTokenMiddlewareModeSwitch) ||
+            (FlagAssist.JsonWebTokenSwitch && FlagAssist.JsonWebTokenMiddlewareModeSwitch))
+        {
+            // 设置及接口数据返回格式
+            app.UsePermissionVerificationMiddleware();
+        }
+
+        if (FlagAssist.PermissionVerificationSwitch)
+        {
+            if (FlagAssist.PermissionVerificationMiddlewareModeSwitch)
+            {
+                app.RecordInformation(
+                    "PermissionVerificationSwitch: enable, use middleware mode."
+                );
+            }
+            else
+            {
+                app.RecordInformation(
+                    "PermissionVerificationSwitch: enable, use filter mode."
+                );
+            }
         }
 
         if (GeneralConfigAssist.GetAccessWayDetectSwitch())

@@ -473,21 +473,6 @@ namespace EasySoft.Core.Web.Framework.ExtensionMethods
             }
         }
 
-        public static RequestInfo BuildRequestInfo(this ControllerBase c)
-        {
-            var requestInfo = new RequestInfo
-            {
-                Host = c.Request.Host.Host,
-                Url = c.Request.GetDisplayUrl(),
-                UrlParams = c.Request.QueryString.ToString(),
-                Header = c.Request.Headers.ToString() ?? "",
-                FormParam = !c.Request.HasFormContentType ? "" : c.Request.Form.ToString() ?? "",
-                PayloadParam = c.Request.GetPayloadParams().ToString() ?? ""
-            };
-
-            return requestInfo;
-        }
-
         public static string GetHost(this ControllerBase c)
         {
             return c.Request.GetHost();

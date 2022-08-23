@@ -4,12 +4,21 @@ public static class FlagAssist
 {
     public static bool CovertInjectionComplete { get; set; }
 
-    public static bool IdentityVerificationSwitch { get; set; }
+    public static bool EasyTokenSwitch { get; set; }
 
-    public static bool IdentityVerificationMiddlewareModeSwitch { get; set; }
-    public static bool TokenSecretOptionInjectionComplete { get; set; }
+    public static bool EasyTokenMiddlewareModeSwitch { get; set; }
 
-    public static bool TokenSecretInjectionComplete { get; set; }
+    public static bool EasyTokenSecretOptionInjectionComplete { get; set; }
+
+    public static bool EasyTokenSecretInjectionComplete { get; set; }
+
+    public static bool JsonWebTokenSwitch { get; set; }
+
+    public static bool JsonWebTokenMiddlewareModeSwitch { get; set; }
+
+    public static bool PermissionVerificationSwitch { get; set; }
+
+    public static bool PermissionVerificationMiddlewareModeSwitch { get; set; }
 
     public static bool ApplicationChannelInjectionComplete { get; set; }
 
@@ -18,10 +27,14 @@ public static class FlagAssist
     static FlagAssist()
     {
         CovertInjectionComplete = false;
-        IdentityVerificationSwitch = false;
-        IdentityVerificationMiddlewareModeSwitch = false;
-        TokenSecretOptionInjectionComplete = false;
-        TokenSecretInjectionComplete = false;
+        EasyTokenSwitch = false;
+        EasyTokenMiddlewareModeSwitch = false;
+        EasyTokenSecretOptionInjectionComplete = false;
+        EasyTokenSecretInjectionComplete = false;
+        JsonWebTokenSwitch = false;
+        JsonWebTokenMiddlewareModeSwitch = false;
+        PermissionVerificationSwitch = false;
+        PermissionVerificationMiddlewareModeSwitch = false;
         ApplicationChannelInjectionComplete = false;
         ApplicationChannelIsDefault = false;
     }

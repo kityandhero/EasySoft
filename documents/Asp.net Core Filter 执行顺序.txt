@@ -1,0 +1,14 @@
+1.Authorization Filter
+授权过滤器 在过滤器管道中第一个执行，通常用于验证当前请求的合法性，不合法后面的管道会直接跳过。它们只有一个Before方法，不像其它大多数过滤器支持前置阶段方法和后置阶段方法。注意，您不要在授权过滤器中抛出异常，因为没有任何代码来处理异常（异常过滤器不处理它们）。
+
+2.Resource Filter
+资源过滤器是第二个运行，在 Authorization Filter 之后，Model Binding 之前执行。在性能方面，资源过滤器在实现缓存或截断过滤器管道尤为重要。
+
+3.Action Filter
+使用率最高的过滤器，在调用 Acioin 方法之前和之后执行代码。跟 Resource Filter 很类似，但 Model Binding 在之后执行。
+
+4.Exception Filter
+用于为应用程序执行异常处理策略。
+
+5.Result Filter
+当 Action 执行完成后，最后会执行过滤器。用于处理ActionResult结果输出策略。

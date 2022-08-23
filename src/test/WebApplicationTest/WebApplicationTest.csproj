@@ -28,6 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.EasyToken\EasySoft.Core.EasyToken.csproj" />
         <ProjectReference Include="..\AutoFacTest\AutoFacTest.csproj" />
         <ProjectReference Include="..\EntityFrameworkTest\EntityFrameworkTest.csproj" />
     </ItemGroup>

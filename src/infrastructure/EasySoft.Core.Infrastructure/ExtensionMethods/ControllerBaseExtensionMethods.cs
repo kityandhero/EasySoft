@@ -1,5 +1,7 @@
 ﻿using System.Collections.Specialized;
+using EasySoft.UtilityTools.Standard.Entity;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Core.Infrastructure.ExtensionMethods;
@@ -57,5 +59,10 @@ public static class ControllerBaseExtensionMethods
         }
 
         return result ?? "";
+    }
+
+    public static RequestInfo BuildRequestInfo(this ControllerBase c)
+    {
+        return c.HttpContext.BuildRequestInfo();
     }
 }

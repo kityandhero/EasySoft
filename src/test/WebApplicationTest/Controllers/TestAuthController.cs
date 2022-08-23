@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.IdentityVerification.Attributes;
+﻿using EasySoft.Core.EasyToken.Attributes;
 using EasySoft.Core.Web.Framework.Controllers;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;

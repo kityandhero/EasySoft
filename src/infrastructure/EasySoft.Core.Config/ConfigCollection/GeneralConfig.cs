@@ -8,6 +8,8 @@ public class GeneralConfig : IConfig
 
     public string CacheMode { get; set; }
 
+    public string EasyTokenName { get; set; }
+
     public string AccessWayDetectSwitch { get; set; }
 
     public string RemoteGeneralLogSwitch { get; set; }
@@ -26,6 +28,7 @@ public class GeneralConfig : IConfig
 
     public GeneralConfig()
     {
+        EasyTokenName = "token";
         CacheMode = "InMemory";
         AccessWayDetectSwitch = "0";
         RemoteGeneralLogSwitch = "0";
