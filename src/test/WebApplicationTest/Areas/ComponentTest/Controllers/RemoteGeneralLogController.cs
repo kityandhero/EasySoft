@@ -1,15 +1,14 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.ExchangeRegulation.ExtensionMethods;
 using EasySoft.Core.GeneralLogTransmitter.Producers;
-using EasySoft.Core.Web.Framework.Controllers;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplicationTest.Controllers;
+namespace WebApplicationTest.Areas.ComponentTest.Controllers;
 
-public class RemoteGeneralLogController : CustomControllerBase
+public class RemoteGeneralLogController : AreaControllerCore
 {
     private readonly IGeneralLogProducer _generalLogProducer;
 

@@ -151,6 +151,8 @@ public static class WebApplicationBuilderExtensions
 
         var app = builder.Build();
 
+        EnvironmentAssist.SetEnvironment(app.Environment);
+
         AutofacAssist.Instance.Container = app.UseHostFiltering().ApplicationServices.GetAutofacRoot();
 
         ServiceAssist.ServiceProvider = app.Services;

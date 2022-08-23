@@ -7,12 +7,14 @@ using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyToken.AccessControl;
 using EasySoft.Core.ErrorLogTransmitter.Producers;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Results;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.EasyToken.Filters;
 
@@ -49,7 +51,32 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
 
         try
         {
-            var identity = tokenSecret.DecryptWithExpirationTime(token, out var expired);
+            string identity;
+            bool expired;
+
+            try
+            {
+                identity = tokenSecret.DecryptWithExpirationTime(token, out expired);
+            }
+            catch (Exception e)
+            {
+                if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
+                {
+                    AutofacAssist.Instance.Resolve<IErrorLogProducer>().Send(
+                        e,
+                        0,
+                        filterContext.HttpContext.BuildRequestInfo()
+                    );
+                }
+
+                filterContext.Result = new ApiResult(
+                    ReturnCode.TokenExpired.ToInt(),
+                    false,
+                    "凭证不适配解析规则"
+                );
+
+                return;
+            }
 
             if (expired)
             {
@@ -79,8 +106,6 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-
             if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
             {
                 AutofacAssist.Instance.Resolve<IErrorLogProducer>().Send(
@@ -93,7 +118,13 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
             filterContext.Result = new ApiResult(
                 ReturnCode.TokenExpired.ToInt(),
                 false,
-                "凭证不适配解析规则"
+                EnvironmentAssist.GetEnvironment().IsDevelopment() ? e.Message : "校验凭证时发生错误",
+                EnvironmentAssist.GetEnvironment().IsDevelopment()
+                    ? new
+                    {
+                        stackTrace = e.StackTrace
+                    }
+                    : null
             );
         }
     }

@@ -5,7 +5,6 @@ using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyToken.ExtensionMethods;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
-using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.BuilderAssists;
@@ -70,7 +69,7 @@ builder.UseExtraNormalInjection(containerBuilder =>
 // SignalR
 builder.Services.AddSignalR();
 
-var app = builder.EasyBuild(new List<string> { "AreaTest" });
+var app = builder.EasyBuild(new List<string> { "AreaTest", "AuthTest", "DataTest", "ComponentTest" });
 
 if (app.Environment.IsDevelopment())
 {

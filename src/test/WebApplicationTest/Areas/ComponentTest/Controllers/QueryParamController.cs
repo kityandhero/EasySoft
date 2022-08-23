@@ -1,11 +1,10 @@
 ﻿using System.Text.Encodings.Web;
-using EasySoft.Core.Web.Framework.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using WebApplicationTest.Models;
 
-namespace WebApplicationTest.Controllers;
+namespace WebApplicationTest.Areas.ComponentTest.Controllers;
 
-public class MvcTestController : CustomControllerBase
+public class QueryParamController : AreaControllerCore
 {
     public IActionResult Index(string name)
     {

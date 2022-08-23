@@ -1,11 +1,10 @@
 ﻿using EasySoft.Core.EasyToken.AccessControl;
-using EasySoft.Core.Web.Framework.Controllers;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplicationTest.Controllers;
+namespace WebApplicationTest.Areas.AuthTest.Controllers;
 
-public class TokenSecretController : CustomControllerBase
+public class TokenSecretController : AreaControllerCore
 {
     private readonly ITokenSecret _tokenSecret;
 

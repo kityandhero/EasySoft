@@ -1,14 +1,13 @@
 ﻿using EasySoft.Core.CacheCore.interfaces;
 using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Web.Framework.Controllers;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 using WebApplicationTest.Models;
 
-namespace WebApplicationTest.Controllers;
+namespace WebApplicationTest.Areas.ComponentTest.Controllers;
 
-public class CachingController : CustomControllerBase
+public class CachingController : AreaControllerCore
 {
     private const string TestKey = "testKey";
     private const string TestSlidingKey = "testSlidingKey";

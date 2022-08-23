@@ -25,7 +25,7 @@ public class JsonWebTokenMiddleware : IMiddleware
             return;
         }
 
-        var token = context.GetToken(GeneralConfigAssist.GetTokenName());
+        var token = await context.GetTokenAsync(GeneralConfigAssist.GetTokenName());
 
         if (string.IsNullOrWhiteSpace(token))
         {

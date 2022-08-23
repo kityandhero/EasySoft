@@ -3,12 +3,13 @@ using EasySoft.Core.Web.Framework.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
+using WebApplicationTest.Common;
 
 namespace WebApplicationTest.Controllers
 {
     [ApiController]
     [Route("Weather")]
-    public class WeatherForecastController : ControllerBase
+    public class WeatherForecastController : ControllerCore
     {
         private static readonly string[] Summaries = new[]
         {

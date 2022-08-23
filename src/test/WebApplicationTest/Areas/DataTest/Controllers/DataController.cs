@@ -1,11 +1,10 @@
-﻿using EasySoft.Core.Web.Framework.Controllers;
-using EasySoft.Core.Web.Framework.ExtensionMethods;
+﻿using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EntityFrameworkTest.IServices;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplicationTest.Controllers;
+namespace WebApplicationTest.Areas.DataTest.Controllers;
 
-public class DataController : CustomControllerBase
+public class DataController : AreaControllerCore
 {
     private readonly IAuthorService _authorService;
 

@@ -151,5 +151,10 @@ namespace EasySoft.Core.Infrastructure.ExtensionMethods
 
             return requestInfo;
         }
+
+        public static string GetCookie(this HttpRequest request, string key)
+        {
+            return request.Cookies[key] ?? "";
+        }
     }
 }

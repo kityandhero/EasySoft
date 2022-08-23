@@ -3,14 +3,13 @@ using EasySoft.Core.AuthenticationCore.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.PermissionVerification.Attributes;
-using EasySoft.Core.Web.Framework.Controllers;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplicationTest.Controllers;
+namespace WebApplicationTest.Areas.AuthTest.Controllers;
 
-public class TokenAuthController : CustomControllerBase
+public class TokenAuthController : AreaControllerCore
 {
     public IActionResult GenerateToken()
     {

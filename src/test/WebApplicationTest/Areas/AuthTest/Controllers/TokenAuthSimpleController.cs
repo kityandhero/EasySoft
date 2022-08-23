@@ -1,14 +1,13 @@
 ﻿using EasySoft.Core.AuthenticationCore.Attributes;
 using EasySoft.Core.PermissionVerification.Attributes;
-using EasySoft.Core.Web.Framework.Controllers;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplicationTest.Controllers;
+namespace WebApplicationTest.Areas.AuthTest.Controllers;
 
 [Operator]
-public class TokenAuthSimpleController : CustomControllerBase
+public class TokenAuthSimpleController : AreaControllerCore
 {
     public IActionResult NeedAuth()
     {

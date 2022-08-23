@@ -1,14 +1,13 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyCaching.interfaces;
-using EasySoft.Core.Web.Framework.Controllers;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 using WebApplicationTest.Models;
 
-namespace WebApplicationTest.Controllers;
+namespace WebApplicationTest.Areas.ComponentTest.Controllers;
 
-public class RedisFeatureCachingController : CustomControllerBase
+public class RedisFeatureCachingController : AreaControllerCore
 {
     private const string TestKey = "testKey";
     private const string TestObjectKey = "testObjectKey";

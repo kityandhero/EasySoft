@@ -2,13 +2,12 @@
 using AutoFacTest.Interfaces;
 using EasySoft.Core.AutoFac.Attributes;
 using EasySoft.Core.AutoFac.IocAssists;
-using EasySoft.Core.Web.Framework.Controllers;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplicationTest.Controllers;
+namespace WebApplicationTest.Areas.ComponentTest.Controllers;
 
-public class AutoFacController : CustomControllerBase
+public class AutoFacController : AreaControllerCore
 {
     [Autowired]
     public ISimple? SimpleAutowired { get; set; }
