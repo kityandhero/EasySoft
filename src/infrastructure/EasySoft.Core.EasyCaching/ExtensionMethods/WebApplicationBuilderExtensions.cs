@@ -8,6 +8,7 @@ using EasyCaching.Core.Interceptor;
 using EasyCaching.CSRedis;
 using EasyCaching.InMemory;
 using EasyCaching.Interceptor.AspectCore;
+using EasySoft.Core.CacheCore.interfaces;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyCaching.Enums;
 using EasySoft.Core.EasyCaching.interfaces;
@@ -151,7 +152,7 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
-            containerBuilder.RegisterType<MemoryCacheOperator>().As<ICacheOperator>().SingleInstance();
+            containerBuilder.RegisterType<MemoryCacheOperator>().As<IAsyncCacheOperator>().SingleInstance();
         });
 
         return builder;
@@ -216,7 +217,7 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
-            containerBuilder.RegisterType<RedisCacheOperator>().As<ICacheOperator>().SingleInstance();
+            containerBuilder.RegisterType<RedisCacheOperator>().As<IAsyncCacheOperator>().SingleInstance();
 
             containerBuilder.RegisterType<RedisFeatureCacheOperator>().As<IRedisFeatureCacheOperator>()
                 .SingleInstance();

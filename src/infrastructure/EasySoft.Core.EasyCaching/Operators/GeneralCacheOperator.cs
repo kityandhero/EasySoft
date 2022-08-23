@@ -13,7 +13,7 @@ public abstract class GeneralCacheOperator : BaseCacheOperator
         _provider = provider;
     }
 
-    public override ExecutiveResult<T> Get<T>(string key)
+    protected override ExecutiveResult<T> GetCore<T>(string key)
     {
         var cacheValue = _provider.Get<T>(key);
 
@@ -50,7 +50,7 @@ public abstract class GeneralCacheOperator : BaseCacheOperator
 
     #region async
 
-    public override async Task<ExecutiveResult<T>> GetAsync<T>(string key)
+    protected override async Task<ExecutiveResult<T>> GetCoreAsync<T>(string key)
     {
         var cacheValue = await _provider.GetAsync<T>(key);
 

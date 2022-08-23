@@ -15,7 +15,7 @@ public class RedisFeatureCacheOperator : BaseCacheOperator, IRedisFeatureCacheOp
         _provider = provider;
     }
 
-    public override ExecutiveResult<T> Get<T>(string key)
+    protected override ExecutiveResult<T> GetCore<T>(string key)
     {
         var value = _provider.StringGet(key);
 
@@ -76,7 +76,7 @@ public class RedisFeatureCacheOperator : BaseCacheOperator, IRedisFeatureCacheOp
 
     #region async
 
-    public override async Task<ExecutiveResult<T>> GetAsync<T>(string key)
+    protected override async Task<ExecutiveResult<T>> GetCoreAsync<T>(string key)
     {
         var value = await _provider.StringGetAsync(key);
 

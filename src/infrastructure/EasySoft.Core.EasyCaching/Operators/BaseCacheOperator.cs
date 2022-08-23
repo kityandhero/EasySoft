@@ -1,12 +1,14 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.EasyCaching.interfaces;
+﻿using EasySoft.Core.CacheCore.interfaces;
+using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.EasyCaching.Entities;
+using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.Result;
 using EasySoft.UtilityTools.Standard.Standard;
 
 namespace EasySoft.Core.EasyCaching.Operators;
 
-public abstract class BaseCacheOperator : ICacheOperator
+public abstract class BaseCacheOperator : IAsyncCacheOperator
 {
     public string BuildKey(params string[] nameArray)
     {
@@ -38,7 +40,86 @@ public abstract class BaseCacheOperator : ICacheOperator
         return result;
     }
 
-    public abstract ExecutiveResult<T> Get<T>(string key);
+    protected abstract ExecutiveResult<T> GetCore<T>(string key);
+
+    public ExecutiveResult<T> Get<T>(string key)
+    {
+        var result = GetCore<object>(key);
+
+        if (!result.Success)
+        {
+            return new ExecutiveResult<T>(ReturnCode.NoData);
+        }
+
+        if (result.Data == null)
+        {
+            return new ExecutiveResult<T>(ReturnCode.NoData);
+        }
+
+        var valueType = result.Data.GetType();
+
+        if (valueType.IsGenericType &&
+            valueType.GetGenericTypeDefinition() == typeof(SlidingWrapper<>))
+        {
+            if (result.Data is not SlidingWrapper<T> slidingWrapper)
+            {
+                return new ExecutiveResult<T>(ReturnCode.NoData);
+            }
+
+            var innerValue = slidingWrapper.Value;
+
+            if (innerValue == null)
+            {
+                return new ExecutiveResult<T>(ReturnCode.NoData);
+            }
+
+            if (slidingWrapper.SlidingTime > TimeSpan.Zero)
+            {
+                Set(
+                    key,
+                    innerValue,
+                    slidingWrapper.SlidingTime,
+                    slidingWrapper.SlidingTime
+                );
+            }
+
+            return new ExecutiveResult<T>(ReturnCode.Ok)
+            {
+                Data = slidingWrapper.Value
+            };
+        }
+
+        if (result.Data is T transferData)
+        {
+            return new ExecutiveResult<T>(ReturnCode.Ok)
+            {
+                Data = transferData
+            };
+        }
+
+        return new ExecutiveResult<T>(ReturnCode.NoData);
+    }
+
+    public void Set<T>(string key, T value, TimeSpan initialTime, TimeSpan slidingTime)
+    {
+        if (initialTime <= TimeSpan.Zero)
+        {
+            throw new Exception("初始过期时间值无效");
+        }
+
+        if (slidingTime <= TimeSpan.Zero)
+        {
+            throw new Exception("初始化滑动时间值无效");
+        }
+
+        var wrapper = new SlidingWrapper<T>()
+        {
+            Value = value,
+            SlidingTime = slidingTime
+        };
+
+        Set(key, wrapper, initialTime);
+    }
 
     public abstract void Set<T>(string key, T value, TimeSpan expiration);
 
@@ -194,9 +275,88 @@ public abstract class BaseCacheOperator : ICacheOperator
 
     public abstract void RemoveByPrefix(string prefix);
 
-    public abstract Task<ExecutiveResult<T>> GetAsync<T>(string key);
+    protected abstract Task<ExecutiveResult<T>> GetCoreAsync<T>(string key);
+
+    public async Task<ExecutiveResult<T>> GetAsync<T>(string key)
+    {
+        var result = await GetCoreAsync<object>(key);
+
+        if (!result.Success)
+        {
+            return new ExecutiveResult<T>(ReturnCode.NoData);
+        }
+
+        if (result.Data == null)
+        {
+            return new ExecutiveResult<T>(ReturnCode.NoData);
+        }
+
+        var valueType = result.Data.GetType();
+
+        if (valueType.IsGenericType &&
+            valueType.GetGenericTypeDefinition() == typeof(SlidingWrapper<>))
+        {
+            if (result.Data is not SlidingWrapper<T> slidingWrapper)
+            {
+                return new ExecutiveResult<T>(ReturnCode.NoData);
+            }
+
+            var innerValue = slidingWrapper.Value;
+
+            if (innerValue == null)
+            {
+                return new ExecutiveResult<T>(ReturnCode.NoData);
+            }
+
+            if (slidingWrapper.SlidingTime > TimeSpan.Zero)
+            {
+                await SetAsync(
+                    key,
+                    innerValue,
+                    slidingWrapper.SlidingTime,
+                    slidingWrapper.SlidingTime
+                );
+            }
+
+            return new ExecutiveResult<T>(ReturnCode.Ok)
+            {
+                Data = slidingWrapper.Value
+            };
+        }
+
+        if (result.Data is T transferData)
+        {
+            return new ExecutiveResult<T>(ReturnCode.Ok)
+            {
+                Data = transferData
+            };
+        }
+
+        return new ExecutiveResult<T>(ReturnCode.NoData);
+    }
 
     public abstract Task SetAsync<T>(string key, T value, TimeSpan expiration);
+
+    public async Task SetAsync<T>(string key, T value, TimeSpan initialTime, TimeSpan slidingTime)
+    {
+        if (initialTime <= TimeSpan.Zero)
+        {
+            throw new Exception("初始过期时间值无效");
+        }
+
+        if (slidingTime <= TimeSpan.Zero)
+        {
+            throw new Exception("初始化滑动时间值无效");
+        }
+
+        var wrapper = new SlidingWrapper<T>()
+        {
+            Value = value,
+            SlidingTime = slidingTime
+        };
+
+        await SetAsync(key, wrapper, initialTime);
+    }
 
     public async Task SetAsync<T>(string key, T value, DateTime dateTime)
     {

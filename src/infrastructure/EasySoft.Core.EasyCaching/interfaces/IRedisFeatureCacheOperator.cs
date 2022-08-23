@@ -1,5 +1,7 @@
-﻿namespace EasySoft.Core.EasyCaching.interfaces;
+﻿using EasySoft.Core.CacheCore.interfaces;
 
-public interface IRedisFeatureCacheOperator : ICacheOperator
+namespace EasySoft.Core.EasyCaching.interfaces;
+
+public interface IRedisFeatureCacheOperator : IAsyncCacheOperator
 {
 }
