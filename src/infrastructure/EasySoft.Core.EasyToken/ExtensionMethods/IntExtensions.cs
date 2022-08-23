@@ -2,7 +2,7 @@
 
 public static class IntExtensions
 {
-    public static string ToEasyToken(int identification)
+    public static string ToEasyToken(this int identification)
     {
         return identification.ToString().ToEasyToken();
     }

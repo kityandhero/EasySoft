@@ -9,7 +9,22 @@ public class GeneralConfig : IConfig
 
     public string CacheMode { get; set; }
 
+    /// <summary>
+    /// 服务端使用缓存存储键值 token, 仅返回前端键名
+    /// </summary>
+    public string TokenServerDumpSwitch { get; set; }
+
     public string TokenName { get; set; }
+
+    /// <summary>
+    /// 支持从Url解析Token, 特定场景下无法使用 Http Header 时候可开启, 有安全隐患
+    /// </summary>
+    public string TokenParseFromUrlSwitch { get; set; }
+
+    /// <summary>
+    /// 支持从Cookie解析Token, 使用场景为传统MVC开发等场景, 适用于单体部署
+    /// </summary>
+    public string TokenParseFromCookieSwitch { get; set; }
 
     public string AccessWayDetectSwitch { get; set; }
 
@@ -83,7 +98,10 @@ public class GeneralConfig : IConfig
         UseAuthorization = "0";
         CorsSwitch = "0";
         CorsPolicies = "*";
+        TokenServerDumpSwitch = "1";
         TokenExpires = "7200";
+        TokenParseFromUrlSwitch = "0";
+        TokenParseFromCookieSwitch = "0";
         TokenName = "token";
         JsonWebTokenClockSkew = "30";
         JsonWebTokenValidateAudience = "1";

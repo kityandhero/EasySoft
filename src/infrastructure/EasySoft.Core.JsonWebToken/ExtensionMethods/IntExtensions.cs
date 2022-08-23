@@ -2,7 +2,7 @@
 
 public static class IntExtensions
 {
-    public static string ToJsonWebToken(int identification)
+    public static string ToJsonWebToken(this int identification)
     {
         return identification.ToString().ToJsonWebToken();
     }

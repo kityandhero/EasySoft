@@ -1,7 +1,10 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using EasySoft.Core.AutoFac.IocAssists;
+using EasySoft.Core.CacheCore.interfaces;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.IdentityModel.Tokens;
 
 namespace EasySoft.Core.JsonWebToken.Assists;
@@ -33,6 +36,23 @@ public static class TokenAssist
             signingCredentials: credentials
         );
 
-        return new JwtSecurityTokenHandler().WriteToken(securityToken);
+        var token = new JwtSecurityTokenHandler().WriteToken(securityToken);
+
+        if (!GeneralConfigAssist.GetTokenServerDumpSwitch())
+        {
+            return token;
+        }
+
+        var asyncCacheOperator = AutofacAssist.Instance.Resolve<IAsyncCacheOperator>();
+
+        var cacheKey = Guid.NewGuid().ToString().Remove("-").ToLower();
+
+        asyncCacheOperator.SetAsync(
+            cacheKey,
+            token,
+            new TimeSpan(TimeSpan.TicksPerSecond * GeneralConfigAssist.GetTokenExpires())
+        );
+
+        return cacheKey;
     }
 }

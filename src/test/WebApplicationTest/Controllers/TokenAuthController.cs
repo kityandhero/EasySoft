@@ -1,4 +1,7 @@
 ﻿using EasySoft.Core.AuthenticationCore.Attributes;
+using EasySoft.Core.AuthenticationCore.ExtensionMethods;
+using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.PermissionVerification.Attributes;
 using EasySoft.Core.Web.Framework.Controllers;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
@@ -9,6 +12,36 @@ namespace WebApplicationTest.Controllers;
 
 public class TokenAuthController : CustomControllerBase
 {
+    public IActionResult GenerateToken()
+    {
+        var token = 123456.ToToken();
+
+        return this.Success(new
+        {
+            tokenMode = FlagAssist.TokenMode,
+            token,
+            expires = GeneralConfigAssist.GetTokenExpires(),
+            tokenServerDump = GeneralConfigAssist.GetTokenServerDumpSwitch(),
+            tokenParseFromUrlSwitch = GeneralConfigAssist.GetTokenParseFromUrlSwitch(),
+            tokenParseFromCookieSwitch = GeneralConfigAssist.GetTokenParseFromCookieSwitch(),
+        });
+    }
+
+    public IActionResult GetToken()
+    {
+        var token = HttpContext.GetToken();
+
+        return this.Success(new
+        {
+            tokenMode = FlagAssist.TokenMode,
+            token,
+            expires = GeneralConfigAssist.GetTokenExpires(),
+            tokenServerDump = GeneralConfigAssist.GetTokenServerDumpSwitch(),
+            tokenParseFromUrlSwitch = GeneralConfigAssist.GetTokenParseFromUrlSwitch(),
+            tokenParseFromCookieSwitch = GeneralConfigAssist.GetTokenParseFromCookieSwitch(),
+        });
+    }
+
     [Operator]
     public IActionResult NeedAuth()
     {

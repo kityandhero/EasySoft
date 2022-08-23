@@ -195,6 +195,66 @@ public static class GeneralConfigAssist
     }
 
     /// <summary>
+    /// 服务端使用缓存存储键值 token, 仅返回前端键名
+    /// </summary>
+    /// <returns></returns>
+    public static bool GetTokenServerDumpSwitch()
+    {
+        var v = GetConfig().TokenServerDumpSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 TokenServerDumpSwitch: {ConfigFile} -> TokenServerDumpSwitch,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
+
+    /// <summary>
+    /// 支持从Url解析Token, 特定场景下无法使用 Http Header 时候可开启, 有安全隐患
+    /// </summary>
+    /// <returns></returns>
+    public static bool GetTokenParseFromUrlSwitch()
+    {
+        var v = GetConfig().TokenParseFromUrlSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 TokenParseFromUrlSwitch: {ConfigFile} -> TokenParseFromUrlSwitch,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
+
+    /// <summary>
+    /// 支持从Cookie解析Token, 使用场景为传统MVC开发等场景, 适用于单体部署
+    /// </summary>
+    /// <returns></returns>
+    public static bool GetTokenParseFromCookieSwitch()
+    {
+        var v = GetConfig().TokenParseFromCookieSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 TokenParseFromCookieSwitch: {ConfigFile} -> TokenParseFromCookieSwitch,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
+
+    /// <summary>
     /// 过期时间 (秒), 默认7200
     /// </summary>
     /// <returns></returns>
@@ -301,7 +361,7 @@ public static class GeneralConfigAssist
         if (!v.IsInt(out var value))
         {
             throw new Exception(
-                $"请配置 JsonWebTokenValidateAudience: {ConfigFile} -> JsonWebTokenValidateAudience,请设置 0/1"
+                $"请配置 JsonWebTokenValidateAudience: {ConfigFile} -> JsonWebTokenValidateAudience, 请设置 0/1"
             );
         }
 
@@ -315,6 +375,13 @@ public static class GeneralConfigAssist
     public static string GetJsonWebTokenIssuerSigningKey()
     {
         var v = GetConfig().JsonWebTokenIssuerSigningKey.Remove(" ").Trim();
+
+        if (string.IsNullOrWhiteSpace(v))
+        {
+            throw new Exception(
+                $"请配置 JsonWebTokenIssuerSigningKey: {ConfigFile} -> JsonWebTokenIssuerSigningKey"
+            );
+        }
 
         return v;
     }

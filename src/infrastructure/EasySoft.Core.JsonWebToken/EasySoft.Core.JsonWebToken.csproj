@@ -20,6 +20,7 @@
     <ItemGroup>
       <ProjectReference Include="..\EasySoft.Core.AuthenticationCore\EasySoft.Core.AuthenticationCore.csproj" />
       <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj" />
+      <ProjectReference Include="..\EasySoft.Core.CacheCore\EasySoft.Core.CacheCore.csproj" />
       <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
     </ItemGroup>
 

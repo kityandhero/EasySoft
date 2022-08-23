@@ -42,12 +42,12 @@ builder.UsePrepareStartWorkInjection<SimplePrepareStartWork>();
 //自定义静态文件配置 如有特殊需求，可以进行配置，不配置将采用内置选项，此处仅作为有需要时的样例
 // builder.UseStaticFileOptionsInjection<CustomStaticFileOptions>();
 
-builder.UseAdvanceJsonWebToken<ApplicationOperator>();
+// builder.UseAdvanceJsonWebToken<ApplicationOperator>();
 
-// builder.UseEasyToken<CustomTokenSecretOptions, ApplicationOperator>();
+builder.UseEasyToken<CustomTokenSecretOptions, ApplicationOperator>();
 
 // 自定义token密钥解析类
-// builder.UseAdvanceIdentityVerification<CustomTokenSecretOptions,CustomTokenSecret, ApplicationOperator>();
+// builder.UseEasyToken<CustomTokenSecretOptions,CustomTokenSecret, ApplicationOperator>();
 
 builder.UsePermissionVerification<ApplicationPermissionObserver>();
 

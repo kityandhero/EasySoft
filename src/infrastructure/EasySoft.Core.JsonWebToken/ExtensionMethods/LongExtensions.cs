@@ -2,7 +2,7 @@
 
 public static class LongExtensions
 {
-    public static string ToJsonWebToken(long identification)
+    public static string ToJsonWebToken(this long identification)
     {
         return identification.ToString().ToJsonWebToken();
     }
