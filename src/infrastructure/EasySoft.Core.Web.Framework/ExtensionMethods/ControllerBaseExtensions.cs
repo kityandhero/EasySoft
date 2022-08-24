@@ -2,11 +2,9 @@
 using EasySoft.Core.Infrastructure.Exceptions;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Results;
-using EasySoft.UtilityTools.Standard.Entity;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.Result;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Core.Web.Framework.ExtensionMethods

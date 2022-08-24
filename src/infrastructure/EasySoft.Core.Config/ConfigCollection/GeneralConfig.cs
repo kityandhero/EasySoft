@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.Config.ConfigInterface;
-using EasySoft.UtilityTools.Standard;
 
 namespace EasySoft.Core.Config.ConfigCollection;
 

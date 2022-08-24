@@ -1,7 +1,4 @@
-﻿using EasySoft.Core.AutoFac.IocAssists;
-using EasySoft.Core.CacheCore.interfaces;
-using EasySoft.Core.Config.ConfigAssist;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace EasySoft.Core.AuthenticationCore.ExtensionMethods;
 
