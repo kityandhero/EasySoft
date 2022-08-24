@@ -8,6 +8,8 @@ public class GeneralConfig : IConfig
 
     public string CacheMode { get; set; }
 
+    #region Token
+
     /// <summary>
     /// 服务端使用缓存存储键值 token, 仅返回前端键名
     /// </summary>
@@ -25,21 +27,12 @@ public class GeneralConfig : IConfig
     /// </summary>
     public string TokenParseFromCookieSwitch { get; set; }
 
-    public string AccessWayDetectSwitch { get; set; }
+    /// <summary>
+    /// 过期时间 (秒)
+    /// </summary>
+    public string TokenExpires { get; set; }
 
-    public string RemoteGeneralLogSwitch { get; set; }
-
-    public string RemoteErrorLogSwitch { get; set; }
-
-    public string UseStaticFiles { get; set; }
-
-    public string UseAuthentication { get; set; }
-
-    public string UseAuthorization { get; set; }
-
-    public string CorsSwitch { get; set; }
-
-    public string CorsPolicies { get; set; }
+    #region JsonWebToken
 
     /// <summary>
     /// Token的时间偏移量 (秒)
@@ -81,10 +74,79 @@ public class GeneralConfig : IConfig
     /// </summary>
     public string JsonWebTokenValidateIssuerSigningKey { get; set; }
 
+    #endregion
+
+    #endregion
+
+    public string AccessWayDetectSwitch { get; set; }
+
+    public string RemoteGeneralLogSwitch { get; set; }
+
+    public string RemoteErrorLogSwitch { get; set; }
+
+    public string UseStaticFiles { get; set; }
+
+    public string UseAuthentication { get; set; }
+
+    public string UseAuthorization { get; set; }
+
+    public string CorsSwitch { get; set; }
+
+    public string CorsPolicies { get; set; }
+
+    #region AgileConfig
+
     /// <summary>
-    /// 过期时间 (秒)
+    /// 开关: 是否链接 AgileConfig
     /// </summary>
-    public string TokenExpires { get; set; }
+    public string AgileConfigSwitch { get; set; }
+
+    /// <summary>
+    /// 必填: 后台管理中应用的应用ID
+    /// </summary>
+    public string AgileConfigAppId { get; set; }
+
+    /// <summary>
+    /// 必填: 后台管理中应用的密钥
+    /// </summary>
+    public string AgileConfigSecret { get; set; }
+
+    /// <summary>
+    /// 必填: 存在多个节点则使用逗号,分隔
+    /// </summary>
+    public string AgileConfigNodes { get; set; }
+
+    /// <summary>
+    /// 可选: 方便在agile配置中心后台对当前客户端进行查阅与管理
+    /// </summary>
+    public string AgileConfigName { get; set; }
+
+    /// <summary>
+    /// 可选: 	方便在agile配置中心后台对当前客户端进行查阅与管理
+    /// </summary>
+    public string AgileConfigTag { get; set; }
+
+    /// <summary>
+    /// 可选: 通过此配置决定拉取哪个环境的配置信息；如果不配置，服务端会默认返回第一个环境的配置
+    /// </summary>
+    public string AgileConfigEnv { get; set; }
+
+    /// <summary>
+    /// 可选: 如设置了此目录则将拉取到的配置项cache文件存储到该目录，否则直接存储到站点根目录
+    /// </summary>
+    public string AgileConfigCacheDirectory { get; set; }
+
+    /// <summary>
+    /// 可选: 配置 client 发送 http 请求的时候的超时时间，默认100s
+    /// </summary>
+    public string AgileConfigHttpTimeout { get; set; }
+
+    #endregion
+
+    /// <summary>
+    /// 开关 反代代理场景下的转发 Http Header
+    /// </summary>
+    public string ForwardedHeadersSwitch { get; set; }
 
     public GeneralConfig()
     {
@@ -110,5 +172,15 @@ public class GeneralConfig : IConfig
         JsonWebTokenValidAudience = "";
         JsonWebTokenValidIssuer = "";
         JsonWebTokenIssuerSigningKey = "";
+        ForwardedHeadersSwitch = "0";
+        AgileConfigSwitch = "1";
+        AgileConfigAppId = "";
+        AgileConfigSecret = "";
+        AgileConfigNodes = "";
+        AgileConfigName = "";
+        AgileConfigTag = "";
+        AgileConfigEnv = "";
+        AgileConfigCacheDirectory = "";
+        AgileConfigHttpTimeout = "100";
     }
 }

@@ -20,7 +20,7 @@ using WebApplicationTest.Enums;
 using WebApplicationTest.Hubs;
 using WebApplicationTest.PrepareStartWorks;
 
-var builder = WebApplicationBuilderAssist.CreateBuilder(args);
+var builder = WebApplicationBuilderAssist.CreateBuilder(args.ToArray());
 
 builder.Services.AddDbContext<DataContext>(
     opt =>
@@ -38,7 +38,7 @@ builder.UseAdvanceApplicationChannel(
 
 builder.UsePrepareStartWorkInjection<SimplePrepareStartWork>();
 
-//自定义静态文件配置 如有特殊需求，可以进行配置，不配置将采用内置选项，此处仅作为有需要时的样例
+// 自定义静态文件配置 如有特殊需求，可以进行配置，不配置将采用内置选项，此处仅作为有需要时的样例
 // builder.UseStaticFileOptionsInjection<CustomStaticFileOptions>();
 
 builder.UseAdvanceJsonWebToken<ApplicationOperator>();
@@ -46,7 +46,7 @@ builder.UseAdvanceJsonWebToken<ApplicationOperator>();
 // builder.UseEasyToken<CustomTokenSecretOptions, ApplicationOperator>();
 
 // 自定义token密钥解析类
-// builder.UseEasyToken<CustomTokenSecretOptions,CustomTokenSecret, ApplicationOperator>();
+// builder.UseEasyToken<CustomTokenSecretOptions, CustomTokenSecret, ApplicationOperator>();
 
 builder.UsePermissionVerification<ApplicationPermissionObserver>();
 
@@ -63,7 +63,8 @@ builder.UseExtraNormalInjection(containerBuilder =>
     containerBuilder.RegisterType<AuthorService>().As<IAuthorService>().InstancePerDependency()
         .AsImplementedInterfaces();
 
-    containerBuilder.RegisterType<BlogService>().As<IBlogService>().InstancePerDependency().AsImplementedInterfaces();
+    containerBuilder.RegisterType<BlogService>().As<IBlogService>().InstancePerDependency()
+        .AsImplementedInterfaces();
 });
 
 // SignalR
@@ -77,7 +78,7 @@ if (app.Environment.IsDevelopment())
     app.UseMigrationsEndPoint();
 }
 
-// // 可使用下列代码创建数据（删除数据库，更改数据模型，创建具有新架构的数据库），真实项目应当使用 Migrations 来做创建工作, Migrations 无法使用迁移更新 EnsureCreated 创建的数据库
+// 可使用下列代码创建数据（删除数据库，更改数据模型，创建具有新架构的数据库），真实项目应当使用 Migrations 来做创建工作, Migrations 无法使用迁移更新 EnsureCreated 创建的数据库
 // using (var scope = app.Services.CreateScope())
 // {
 //     var services = scope.ServiceProvider;

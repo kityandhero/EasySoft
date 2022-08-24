@@ -1,0 +1,21 @@
+version: '3'
+
+#sqlserver 链接可能出错 暂未解决
+
+services:
+  agile_config_admin:
+    image: "kklldog/agile_config"
+    ports:
+      - "15000:5000"
+    networks:
+      - net0
+    volumes:
+      - /etc/localtime:/etc/localtime
+    environment:
+      - TZ=Asia/Shanghai
+      - adminConsole=true
+      - cluster=true
+      - db__provider=SqlServer
+      - db__conn=server=192.168.1.17;User ID=sa;Password=sa;database=configCenter;TrustServerCertificate=True;
+networks:
+  net0:

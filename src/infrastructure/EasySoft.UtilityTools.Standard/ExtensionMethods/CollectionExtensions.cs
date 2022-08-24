@@ -29,6 +29,26 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
             return result;
         }
 
+        /// <summary>
+        /// 过滤null/empty，返回集合
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static List<string> ToListFilterNullOrWhiteSpace(this IEnumerable<string?> source)
+        {
+            var result = new List<string>();
+
+            source.ForEach(o =>
+            {
+                if (!string.IsNullOrWhiteSpace(o))
+                {
+                    result.Add(o);
+                }
+            });
+
+            return result;
+        }
+
         #region Set 集合
 
         /// <summary>
@@ -135,7 +155,7 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
         /// <example>
         /// </example>
         /// <returns></returns>
-        public static IList<TP> GetPropertyValueCollection<T, TP>(
+        public static IList<TOther> GetPropertyValueCollection<T, TOther>(
             this IEnumerable<T> source,
             string propertyName,
             bool distinct = true
@@ -143,7 +163,7 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
         {
             var sourceArray = source.ToArray();
 
-            return sourceArray.GetPropertyValueCollection<T, TP>(propertyName, distinct);
+            return sourceArray.GetPropertyValueCollection<T, TOther>(propertyName, distinct);
         }
 
         #endregion

@@ -22,6 +22,7 @@ using Hangfire;
 using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -159,6 +160,28 @@ public static class WebApplicationBuilderExtensions
 
         // 中间件调用顺序请参阅: https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/middleware/?view=aspnetcore-6.0#middleware-order
 
+        var messageInfoList = new List<string>();
+
+        if (GeneralConfigAssist.GetForwardedHeadersSwitch())
+        {
+            // 配置反向代理服务器, 需要在调用其他中间件之前 
+            // https://docs.microsoft.com/zh-cn/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-6.0
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
+            messageInfoList.Add(
+                "ForwardedHeadersSwitch: enable."
+            );
+        }
+        else
+        {
+            messageInfoList.Add(
+                "ForwardedHeadersSwitch: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            );
+        }
+
         app.UsePrepareStartWork();
 
         if (!app.Environment.IsDevelopment())
@@ -167,15 +190,15 @@ public static class WebApplicationBuilderExtensions
             app.UseHsts();
         }
 
-        app.RecordInformation(
-            $"CacheMode : {GeneralConfigAssist.GetCacheMode()}{(GeneralConfigAssist.GetCacheMode().Equals("redis", StringComparison.CurrentCultureIgnoreCase) ? $", Connections: {RedisConfigAssist.GetConnectionCollection().Join("|")}" : "")}, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json.."
+        messageInfoList.Add(
+            $"CacheMode : {GeneralConfigAssist.GetCacheMode()}{(GeneralConfigAssist.GetCacheMode().Equals("redis", StringComparison.CurrentCultureIgnoreCase) ? $", Connections: {RedisConfigAssist.GetConnectionCollection().Join("|")}" : "")}, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
         );
 
         if (GeneralConfigAssist.GetRemoteLogSwitch())
         {
             if (FlagAssist.ApplicationChannelIsDefault)
             {
-                app.RecordInformation(
+                messageInfoList.Add(
                     "ApplicationChannel use 0, suggest using builder.UseAdvanceApplicationChannel(int channel) with your Application, it make the data source easy to identify in the remote log."
                 );
             }
@@ -183,7 +206,7 @@ public static class WebApplicationBuilderExtensions
             {
                 var applicationChannel = AutofacAssist.Instance.Container.Resolve<IApplicationChannel>();
 
-                app.RecordInformation(
+                messageInfoList.Add(
                     $"ApplicationChannel use {applicationChannel.GetChannel()}."
                 );
             }
@@ -195,12 +218,11 @@ public static class WebApplicationBuilderExtensions
         {
             app.UseAdvanceStaticFiles();
 
-            app.RecordInformation("useStaticFiles: enable"
-            );
+            messageInfoList.Add("useStaticFiles: enable");
         }
         else
         {
-            app.RecordInformation(
+            messageInfoList.Add(
                 "useStaticFiles: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
             );
         }
@@ -211,12 +233,12 @@ public static class WebApplicationBuilderExtensions
         {
             app.UseCors(ConstCollection.DefaultSpecificOrigins);
 
-            app.RecordInformation($"cors: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}"
+            messageInfoList.Add($"cors: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}"
             );
         }
         else
         {
-            app.RecordInformation(
+            messageInfoList.Add(
                 "cors: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
             );
         }
@@ -225,13 +247,13 @@ public static class WebApplicationBuilderExtensions
         {
             app.UseAuthentication();
 
-            app.RecordInformation(
+            messageInfoList.Add(
                 $"UseAuthentication: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}"
             );
         }
         else
         {
-            app.RecordInformation(
+            messageInfoList.Add(
                 "UseAuthentication: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
             );
         }
@@ -253,13 +275,13 @@ public static class WebApplicationBuilderExtensions
         {
             if (FlagAssist.EasyTokenMiddlewareModeSwitch || FlagAssist.JsonWebTokenMiddlewareModeSwitch)
             {
-                app.RecordInformation(
+                messageInfoList.Add(
                     $"TokenMode: {FlagAssist.TokenMode}, use middleware mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}."
                 );
             }
             else
             {
-                app.RecordInformation(
+                messageInfoList.Add(
                     $"TokenMode: {FlagAssist.TokenMode}, use filter mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}."
                 );
             }
@@ -277,74 +299,68 @@ public static class WebApplicationBuilderExtensions
                 app.UsePermissionVerificationMiddleware();
             }
 
-            if (FlagAssist.PermissionVerificationMiddlewareModeSwitch)
-            {
-                app.RecordInformation(
-                    "PermissionVerificationSwitch: enable, use middleware mode."
-                );
-            }
-            else
-            {
-                app.RecordInformation(
-                    "PermissionVerificationSwitch: enable, use filter mode."
-                );
-            }
+            messageInfoList.Add(
+                FlagAssist.PermissionVerificationMiddlewareModeSwitch
+                    ? "PermissionVerificationSwitch: enable, use middleware mode."
+                    : "PermissionVerificationSwitch: enable, use filter mode."
+            );
         }
 
-        if (GeneralConfigAssist.GetAccessWayDetectSwitch())
-        {
-            app.RecordInformation(
-                $"AccessWayDetectSwitch: enable"
-            );
-        }
-        else
-        {
-            app.RecordInformation(
-                "AccessWayDetectSwitch: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
-            );
-        }
+        messageInfoList.Add(
+            GeneralConfigAssist.GetAccessWayDetectSwitch()
+                ? $"AccessWayDetectSwitch: enable"
+                : "AccessWayDetectSwitch: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+        );
 
         if (GeneralConfigAssist.GetUseAuthorization())
         {
             app.UseAuthorization();
 
-            app.RecordInformation(
+            messageInfoList.Add(
                 $"UseAuthorization: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}"
             );
         }
         else
         {
-            app.RecordInformation(
+            messageInfoList.Add(
                 "UseAuthorization: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
             );
         }
 
-        if (GeneralConfigAssist.GetRemoteGeneralLogSwitch())
-        {
-            app.RecordInformation(
-                "RemoteGeneralLogEnable: enable"
-            );
-        }
-        else
-        {
-            app.RecordInformation(
-                "RemoteGeneralLogEnable: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
-            );
-        }
+        messageInfoList.Add(
+            GeneralConfigAssist.GetRemoteGeneralLogSwitch()
+                ? "RemoteGeneralLogEnable: enable"
+                : "RemoteGeneralLogEnable: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+        );
 
         app.UseAdvanceSwagger();
 
         app.UseAdvanceHangfire();
 
-        app.RecordInformation(
+        messageInfoList.Add(
             "you can set your autoFac config with autoFac.json in ./configures/autoFac.json. The document link is https://autofac.readthedocs.io/en/latest/configuration/xml.html."
         );
 
-        app.RecordInformation(
+        messageInfoList.Add(
             "you can get all controller actions by visit https://[host]:[port]/[controller]/getAllActions where controller inherited from CustomControllerBase."
         );
 
         app.UseAdvanceMapControllers(areas);
+
+        messageInfoList.Add(
+            GeneralConfigAssist.GetAgileConfigSwitch()
+                ? "AgileConfigSwitch: enable"
+                : "AgileConfigSwitch: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+        );
+
+        if (GeneralConfigAssist.GetAgileConfigSwitch())
+        {
+            messageInfoList.Add(
+                $"dynamic config key: {Config.ConstCollection.GetDynamicConfigKeyCollection().Join(",")}, they can set in AgileConfig"
+            );
+        }
+
+        app.RecordInformation(messageInfoList);
 
         return app;
     }

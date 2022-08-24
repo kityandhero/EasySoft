@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Logging;
 
@@ -38,6 +39,30 @@ public static class WebApplicationExtensions
             null,
             (info, _) => info
         );
+
+        return application;
+    }
+
+    public static WebApplication RecordInformation(
+        this WebApplication application,
+        ICollection<string> logs
+    )
+    {
+        if (!logs.Any())
+        {
+            return application;
+        }
+
+        logs.ForEach(o =>
+        {
+            application.Logger.Log(
+                LogLevel.Information,
+                0,
+                o,
+                null,
+                (info, _) => info
+            );
+        });
 
         return application;
     }

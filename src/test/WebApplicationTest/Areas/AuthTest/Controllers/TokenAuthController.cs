@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.AuthenticationCore.Attributes;
 using EasySoft.Core.AuthenticationCore.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.DynamicConfig.Assists;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.PermissionVerification.Attributes;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
@@ -19,7 +20,7 @@ public class TokenAuthController : AreaControllerCore
         {
             tokenMode = FlagAssist.TokenMode,
             token,
-            expires = GeneralConfigAssist.GetTokenExpires(),
+            expires = DynamicConfigAssist.GetTokenExpires(),
             tokenServerDump = GeneralConfigAssist.GetTokenServerDumpSwitch(),
             tokenParseFromUrlSwitch = GeneralConfigAssist.GetTokenParseFromUrlSwitch(),
             tokenParseFromCookieSwitch = GeneralConfigAssist.GetTokenParseFromCookieSwitch(),
@@ -34,7 +35,7 @@ public class TokenAuthController : AreaControllerCore
         {
             tokenMode = FlagAssist.TokenMode,
             token,
-            expires = GeneralConfigAssist.GetTokenExpires(),
+            expires = DynamicConfigAssist.GetTokenExpires(),
             tokenServerDump = GeneralConfigAssist.GetTokenServerDumpSwitch(),
             tokenParseFromUrlSwitch = GeneralConfigAssist.GetTokenParseFromUrlSwitch(),
             tokenParseFromCookieSwitch = GeneralConfigAssist.GetTokenParseFromCookieSwitch(),

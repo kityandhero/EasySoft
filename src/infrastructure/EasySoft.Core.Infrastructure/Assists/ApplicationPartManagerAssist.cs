@@ -11,8 +11,13 @@ public static class ApplicationPartManagerAssist
         _manager = applicationPartManager;
     }
 
-    public static ApplicationPartManager? GetApplicationPartManager()
+    public static ApplicationPartManager GetApplicationPartManager()
     {
+        if (_manager == null)
+        {
+            throw new Exception("applicationPartManager has not set yet");
+        }
+
         return _manager;
     }
 }

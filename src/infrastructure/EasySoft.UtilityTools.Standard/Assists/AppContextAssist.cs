@@ -12,4 +12,13 @@ public static class AppContextAssist
 
         return directory;
     }
+
+    public static string GetServerDirectory(string path)
+    {
+        var directory = $"${AppContext.BaseDirectory}\\{path}";
+
+        directory = directory.Replace("\\", "/");
+
+        return directory;
+    }
 }

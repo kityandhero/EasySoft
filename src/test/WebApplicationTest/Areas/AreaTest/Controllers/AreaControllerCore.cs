@@ -3,7 +3,7 @@ using WebApplicationTest.Common;
 
 namespace WebApplicationTest.Areas.AreaTest.Controllers;
 
-[Area("AuthTest")]
+[Area("AreaTest")]
 public abstract class AreaControllerCore : ControllerCore
 {
 }

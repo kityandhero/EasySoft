@@ -1,4 +1,6 @@
-﻿using EasySoft.Core.AutoFac.ExtensionMethods;
+﻿using EasySoft.Core.AgileConfigClient.ExtensionMethods;
+using EasySoft.Core.AutoFac.ExtensionMethods;
+using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 
@@ -16,6 +18,11 @@ public static class WebApplicationBuilderAssist
         builder.UseAdvanceAutoFac();
 
         builder.UseCovertInjection();
+
+        if (GeneralConfigAssist.GetAgileConfigSwitch())
+        {
+            builder.UseAgileConfigClient();
+        }
 
         return builder;
     }

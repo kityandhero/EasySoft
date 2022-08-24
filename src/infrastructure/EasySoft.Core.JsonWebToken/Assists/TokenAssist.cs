@@ -4,6 +4,7 @@ using System.Text;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.CacheCore.interfaces;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.DynamicConfig.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.IdentityModel.Tokens;
 
@@ -56,7 +57,7 @@ public static class TokenAssist
             issuer: GeneralConfigAssist.GetJsonWebTokenValidIssuer(),
             audience: GeneralConfigAssist.GetJsonWebTokenValidAudience(),
             claims: claimsAdjust,
-            expires: DateTime.Now.AddSeconds(GeneralConfigAssist.GetTokenExpires()),
+            expires: DateTime.Now.AddSeconds(DynamicConfigAssist.GetTokenExpires()),
             signingCredentials: credentials
         );
 
@@ -74,7 +75,7 @@ public static class TokenAssist
         asyncCacheOperator.SetAsync(
             cacheKey,
             token,
-            new TimeSpan(TimeSpan.TicksPerSecond * GeneralConfigAssist.GetTokenExpires())
+            new TimeSpan(TimeSpan.TicksPerSecond * DynamicConfigAssist.GetTokenExpires())
         );
 
         return cacheKey;

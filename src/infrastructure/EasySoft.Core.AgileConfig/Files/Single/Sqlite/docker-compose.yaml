@@ -1,0 +1,18 @@
+version: '3'
+services:
+  agile_config_admin:
+    image: "kklldog/agile_config"
+    ports:
+      - "15000:5000"
+    networks:
+      - net0
+    volumes:
+      - /etc/localtime:/etc/localtime
+    environment:
+      - TZ=Asia/Shanghai
+      - adminConsole=true
+      - cluster=true
+      - db__provider=Sqlite
+      - db__conn= Data Source=agile_config.db;
+networks:
+  net0:

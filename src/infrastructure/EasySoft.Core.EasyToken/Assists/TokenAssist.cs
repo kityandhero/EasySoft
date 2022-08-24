@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.CacheCore.interfaces;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.DynamicConfig.Assists;
 using EasySoft.Core.EasyToken.AccessControl;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
@@ -14,7 +15,7 @@ public static class TokenAssist
 
         var token = tokenSecret.EncryptWithExpirationTime(
             identification,
-            new TimeSpan(TimeSpan.TicksPerSecond * GeneralConfigAssist.GetTokenExpires())
+            new TimeSpan(TimeSpan.TicksPerSecond * DynamicConfigAssist.GetTokenExpires())
         );
 
         if (!GeneralConfigAssist.GetTokenServerDumpSwitch())
@@ -29,7 +30,7 @@ public static class TokenAssist
         asyncCacheOperator.SetAsync(
             key,
             token,
-            new TimeSpan(TimeSpan.TicksPerSecond * GeneralConfigAssist.GetTokenExpires())
+            new TimeSpan(TimeSpan.TicksPerSecond * DynamicConfigAssist.GetTokenExpires())
         );
 
         return key;
