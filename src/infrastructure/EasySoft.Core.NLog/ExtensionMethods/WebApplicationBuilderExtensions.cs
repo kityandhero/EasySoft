@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using NLog.Extensions.Hosting;
@@ -21,5 +22,12 @@ public static class WebApplicationBuilderExtensions
         builder.Host.UseNLog(new NLogProviderOptions().Configure(AppSettingAssist.GetSection("NLog")));
 
         return builder;
+    }
+
+    void loadNlogConfig()
+    {
+        IConfiguration config = builder.Configuration;
+        LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
+        LogManager.Configuration.Reload();
     }
 }
