@@ -24,10 +24,10 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
-    void loadNlogConfig()
-    {
-        IConfiguration config = builder.Configuration;
-        LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
-        LogManager.Configuration.Reload();
-    }
+    // void loadNlogConfig()
+    // {
+    //     IConfiguration config = builder.Configuration;
+    //     LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
+    //     LogManager.Configuration.Reload();
+    // }
 }
