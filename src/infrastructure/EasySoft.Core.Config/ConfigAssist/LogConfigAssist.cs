@@ -2,6 +2,7 @@
 using EasySoft.Core.Config.Utils;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders.Embedded;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
@@ -28,22 +29,28 @@ public static class LogConfigAssist
 
         Configuration.Bind(LogConfig.Instance);
     }
-    
+
     public static void Init()
     {
+    }
+
+    public static IConfiguration GetConfiguration()
+    {
+        return Configuration;
+    }
+
+    public static IConfigurationSection GetSection(string key)
+    {
+        return Configuration.GetSection(key);
+    }
+
+    public static string GetValue(string key)
+    {
+        return Configuration.GetSection(key).Value;
     }
 
     private static LogConfig GetConfig()
     {
         return LogConfig.Instance;
-    }
-
-    public static bool GetElasticSearchDataVersion()
-    {
-        var v = GetConfig().LogWeChatSessionToRemote;
-
-        v = v.Remove(" ").Trim();
-
-        return v == "1";
     }
 }

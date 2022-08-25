@@ -14,7 +14,7 @@ public static class WebApplicationBuilderExtensions
     {
         // NLog: Setup NLog for Dependency injection
         builder.Logging.ClearProviders();
-        builder.Host.UseNLog(new NLogProviderOptions().Configure(AppSettingAssist.GetSection("NLog")));
+        builder.Host.UseNLog(new NLogProviderOptions().Configure(LogConfigAssist.GetSection("NLog")));
 
         return builder;
     }

@@ -13,12 +13,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
-      <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
+        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Entities" />
+        <Folder Include="Entities" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="nlog.simple.config.json" />
+      <EmbeddedResource Include="nlog.simple.config.json" />
+    </ItemGroup>
+    
 </Project>

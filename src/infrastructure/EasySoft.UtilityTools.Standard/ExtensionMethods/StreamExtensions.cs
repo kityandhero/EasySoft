@@ -447,16 +447,16 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
         /// <summary>
         /// Takes all of the data in the stream and returns it as an array of bytes
         /// </summary>
-        /// <param name="input">Input stream</param>
+        /// <param name="source">Input stream</param>
         /// <returns>A byte array</returns>
-        public static byte[] ReadAllBinary(this Stream input)
+        public static byte[] ReadAllBinary(this Stream source)
         {
-            if (input.IsNull())
+            if (source.IsNull())
             {
-                throw new ArgumentNullException("input");
+                throw new ArgumentNullException(nameof(source));
             }
 
-            if (input is MemoryStream tempInput)
+            if (source is MemoryStream tempInput)
             {
                 return tempInput.ToArray();
             }
@@ -468,7 +468,7 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
             {
                 while (true)
                 {
-                    var count = input.Read(buffer, 0, buffer.Length);
+                    var count = source.Read(buffer, 0, buffer.Length);
                     if (count <= 0)
                     {
                         returnValue = temp.ToArray();
@@ -489,22 +489,22 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
         /// <summary>
         /// Takes all of the data in the stream and returns it as a string
         /// </summary>
-        /// <param name="input">Input stream</param>
+        /// <param name="source">Input stream</param>
         /// <returns>A string containing the content of the stream</returns>
-        public static string ReadAll(this Stream input)
+        public static string ReadAll(this Stream source)
         {
-            return input.ReadAllBinary().ToString() ?? "";
+            return source.ReadAllBinary().ToString(new UTF8Encoding());
         }
 
         /// <summary>
         /// Takes all of the data in the stream and returns it as a string
         /// </summary>
-        /// <param name="input">Input stream</param>
+        /// <param name="source">Input stream</param>
         /// <param name="encodingUsing">Encoding that the string should be in (defaults to UTF8)</param>
         /// <returns>A string containing the content of the stream</returns>
-        public static string ReadAll(this Stream input, Encoding encodingUsing)
+        public static string ReadAll(this Stream source, Encoding encodingUsing)
         {
-            return input.ReadAllBinary().ToString(encodingUsing);
+            return source.ReadAllBinary().ToString(encodingUsing);
         }
 
         #endregion

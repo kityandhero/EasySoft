@@ -94,6 +94,4 @@ app.MapGet("/", () => "Hello World!");
 // SignalR
 app.MapHub<ChatHub>("/chatHub");
 
-
-
 app.Run();

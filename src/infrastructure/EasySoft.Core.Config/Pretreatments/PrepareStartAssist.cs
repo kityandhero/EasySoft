@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Config.ConfigCollection;
+using EasySoft.Core.Config.Utils;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
@@ -55,8 +56,18 @@ public static class PrepareStartAssist
         {
             var itemPath = $"{directory}\\configures\\simples\\{item.Name.ToLowerFirst()}.json";
 
-            itemPath.CreateFile(JsonConvertAssist.SerializeWithFormat(item.Create() ?? new { })
-            );
+            if (item.FullName != typeof(LogConfig).FullName)
+            {
+                itemPath.CreateFile(
+                    JsonConvertAssist.SerializeWithFormat(item.Create() ?? new { })
+                );
+            }
+            else
+            {
+                itemPath.CreateFile(
+                    Tools.GetEmbeddedResourceFileContent("/nlog.simple.config.json")
+                );
+            }
         });
     }
 }
