@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.Config.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
@@ -14,7 +15,13 @@ public static class WebApplicationBuilderExtensions
     {
         // NLog: Setup NLog for Dependency injection
         builder.Logging.ClearProviders();
-        builder.Host.UseNLog(new NLogProviderOptions().Configure(LogConfigAssist.GetSection("NLog")));
+        // builder.Host.UseNLog(new NLogProviderOptions().Configure(LogConfigAssist.GetSection("NLog")));
+        builder.Host.UseNLog(
+            new NLogProviderOptions().Configure(
+                Tools.GetNlogDefaultConfig(),
+                "NLog"
+            )
+        );
 
         return builder;
     }

@@ -2,7 +2,6 @@
 using EasySoft.Core.Config.Utils;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.FileProviders.Embedded;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 

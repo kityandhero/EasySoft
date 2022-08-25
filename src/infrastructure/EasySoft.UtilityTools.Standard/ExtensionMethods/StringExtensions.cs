@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -875,6 +876,11 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
         public static string FilterSql(this string source)
         {
             return source.Replace("'", "''");
+        }
+
+        public static Stream ToJsonStream(this string jsonString)
+        {
+            return new MemoryStream(Encoding.UTF8.GetBytes(jsonString));
         }
 
         #region Remove

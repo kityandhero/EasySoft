@@ -64,9 +64,7 @@ public static class PrepareStartAssist
             }
             else
             {
-                itemPath.CreateFile(
-                    Tools.GetEmbeddedResourceFileContent("/nlog.simple.config.json")
-                );
+                itemPath.CreateFile(Tools.GetNlogDefaultConfig());
             }
         });
     }

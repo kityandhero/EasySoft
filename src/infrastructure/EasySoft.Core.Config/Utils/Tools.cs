@@ -1,9 +1,6 @@
-﻿using System.Resources;
-using EasySoft.Core.Config.ConfigCollection;
-using EasySoft.UtilityTools.Standard.Assists;
+﻿using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.FileProviders.Embedded;
 
 namespace EasySoft.Core.Config.Utils;
 
@@ -16,7 +13,12 @@ public static class Tools
         return configureFolderPath;
     }
 
-    internal static string GetEmbeddedResourceFileContent(string path)
+    public static string GetNlogDefaultConfig()
+    {
+        return GetEmbeddedResourceFileContent("/nlog.simple.config.json");
+    }
+
+    private static string GetEmbeddedResourceFileContent(string path)
     {
         var personEmbeddedFileProvider = new EmbeddedFileProvider(
             typeof(Tools).Assembly,
