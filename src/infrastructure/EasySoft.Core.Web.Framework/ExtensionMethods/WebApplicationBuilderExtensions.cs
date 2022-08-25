@@ -154,6 +154,8 @@ public static class WebApplicationBuilderExtensions
 
         EnvironmentAssist.SetEnvironment(app.Environment);
 
+        LogAssist.SetLogger(app.Logger);
+
         AutofacAssist.Instance.Container = app.UseHostFiltering().ApplicationServices.GetAutofacRoot();
 
         ServiceAssist.ServiceProvider = app.Services;
@@ -360,7 +362,7 @@ public static class WebApplicationBuilderExtensions
             );
         }
 
-        app.RecordInformation(messageInfoList);
+        LogAssist.Info(messageInfoList);
 
         return app;
     }

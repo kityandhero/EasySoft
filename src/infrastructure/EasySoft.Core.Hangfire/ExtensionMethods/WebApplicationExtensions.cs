@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
+using EasySoft.Core.Infrastructure.Assists;
 using Hangfire;
 using Microsoft.AspNetCore.Builder;
 
@@ -11,8 +11,7 @@ public static class WebApplicationExtensions
     {
         if (!HangfireConfigAssist.GetEnable())
         {
-            application.RecordInformation("hangfire: disable."
-            );
+            LogAssist.Info("hangfire: disable.");
 
             return application;
         }
@@ -20,7 +19,7 @@ public static class WebApplicationExtensions
         //启用Hangfire面板 
         application.UseHangfireDashboard();
 
-        application.RecordInformation("hangfire: enable, access:https://[host]:[port]/hangfire.");
+        LogAssist.Info("hangfire: enable, access:https://[host]:[port]/hangfire.");
 
         return application;
     }

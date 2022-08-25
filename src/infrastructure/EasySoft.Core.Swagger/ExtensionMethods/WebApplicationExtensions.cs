@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 
@@ -10,7 +11,7 @@ public static class WebApplicationExtensions
     {
         if (!SwaggerConfigAssist.GetEnable())
         {
-            application.RecordInformation("swagger: disable.");
+            LogAssist.Info("swagger: disable.");
 
             return application;
         }
@@ -18,7 +19,7 @@ public static class WebApplicationExtensions
         application.UseSwagger();
         application.UseSwaggerUI();
 
-        application.RecordInformation("swagger: enable, access https://[host]:[port]/swagger/index.html.");
+        LogAssist.Info("swagger: enable, access https://[host]:[port]/swagger/index.html.");
 
         return application;
     }

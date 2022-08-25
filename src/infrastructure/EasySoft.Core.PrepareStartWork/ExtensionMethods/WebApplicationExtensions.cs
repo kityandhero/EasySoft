@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.PrepareStartWork.PrepareWorks;
 using Microsoft.AspNetCore.Builder;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
@@ -17,7 +18,7 @@ public static class WebApplicationExtensions
 
         prepareCovertStartWork.DoWork();
 
-        application.RecordInformation("prepareCovertStartWork do work complete.");
+        LogAssist.Info("prepareCovertStartWork do work complete.");
 
         if (!application.UseHostFiltering().ApplicationServices.GetAutofacRoot().IsRegistered<IPrepareStartWork>())
         {
@@ -29,7 +30,7 @@ public static class WebApplicationExtensions
 
         prepareStartWork.DoWork();
 
-        application.RecordInformation("prepareStartWork do work complete.");
+        LogAssist.Info("prepareStartWork do work complete.");
 
         return application;
     }

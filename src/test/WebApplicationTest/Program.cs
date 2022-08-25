@@ -3,6 +3,7 @@ using AutoFacTest.Implementations;
 using AutoFacTest.Interfaces;
 using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.ExtensionMethods;
@@ -92,5 +93,7 @@ app.MapGet("/", () => "Hello World!");
 
 // SignalR
 app.MapHub<ChatHub>("/chatHub");
+
+
 
 app.Run();
