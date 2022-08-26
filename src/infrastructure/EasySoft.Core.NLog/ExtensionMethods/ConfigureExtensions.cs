@@ -1,4 +1,4 @@
-﻿using EasySoft.UtilityTools.Core.ExtensionMethods;
+﻿using EasySoft.Configuration.ExtensionMethods;
 using Microsoft.Extensions.Configuration;
 using NLog.Extensions.Logging;
 

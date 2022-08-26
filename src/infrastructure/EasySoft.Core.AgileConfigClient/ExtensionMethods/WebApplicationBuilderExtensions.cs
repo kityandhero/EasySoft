@@ -1,5 +1,4 @@
 ﻿using AgileConfig.Client;
-using AgileConfig.Protocol;
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -35,7 +34,7 @@ public static class WebApplicationBuilderExtensions
                 };
 
                 //注册配置项修改事件  
-                configClient.ConfigChanged += ConfigClient_ConfigChanged;
+                configClient.ConfigChanged += ActionAssist.ActionAgileConfigChanged;
 
                 //使用AddAgileConfig配置一个新的IConfigurationSource
                 config.AddAgileConfig(configClient);
@@ -50,28 +49,5 @@ public static class WebApplicationBuilderExtensions
         });
 
         return builder;
-    }
-
-    /// <summary>
-    /// 此事件会在配置项目发生新增、修改、删除的时候触发
-    /// </summary>
-    private static void ConfigClient_ConfigChanged(ConfigChangedArg obj)
-    {
-        Console.WriteLine($"action:{obj.Action} key:{obj.Key}");
-
-        switch (obj.Action)
-        {
-            case ActionConst.Add:
-                break;
-
-            case ActionConst.Update:
-                break;
-
-            case ActionConst.Remove:
-                break;
-
-            default:
-                break;
-        }
     }
 }

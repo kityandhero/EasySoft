@@ -18,12 +18,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AgileConfig.Client" Version="1.6.2.2"/>
+        <PackageReference Include="AgileConfig.Client" Version="1.6.2.2" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
     </ItemGroup>
 
 </Project>

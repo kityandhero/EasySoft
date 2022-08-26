@@ -15,13 +15,24 @@ public static class WebApplicationBuilderExtensions
     {
         // NLog: Setup NLog for Dependency injection
         builder.Logging.ClearProviders();
-        builder.Host.UseNLog(new NLogProviderOptions().Configure(LogConfigAssist.GetSection("NLog")));
-        builder.Host.UseNLog(
-            new NLogProviderOptions().Configure(
-                Tools.GetNlogDefaultConfig(),
-                "NLog"
-            )
-        );
+
+        var configurationSection = LogConfigAssist.GetSection("NLog");
+
+        if (configurationSection.GetChildren().Any())
+        {
+            builder.Host.UseNLog(new NLogProviderOptions().Configure(configurationSection));
+        }
+        else
+        {
+            builder.Host.UseNLog(
+                new NLogProviderOptions().Configure(
+                    Tools.GetNlogDefaultConfig(),
+                    "NLog"
+                )
+            );
+        }
+
+        // LogManager.Configuration.Reload();
 
         return builder;
     }

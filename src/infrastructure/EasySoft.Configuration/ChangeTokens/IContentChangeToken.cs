@@ -1,7 +1,6 @@
-﻿using System.Threading;
-using Microsoft.Extensions.Primitives;
+﻿using Microsoft.Extensions.Primitives;
 
-namespace EasySoft.UtilityTools.Core.ChangeTokens;
+namespace EasySoft.Configuration.ChangeTokens;
 
 internal interface IContentChangeToken : IChangeToken
 {

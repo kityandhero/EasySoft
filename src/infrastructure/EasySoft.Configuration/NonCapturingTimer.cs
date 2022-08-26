@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-
-namespace EasySoft.UtilityTools.Core;
+﻿namespace EasySoft.Configuration;
 
 internal static class NonCapturingTimer
 {

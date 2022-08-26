@@ -1,4 +1,4 @@
-﻿namespace EasySoft.UtilityTools.Core.Providers;
+﻿namespace EasySoft.Configuration.Providers;
 
 public class JsonContentProvider : ContentProvider
 {

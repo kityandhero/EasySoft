@@ -1,9 +1,9 @@
 using Autofac;
 using AutoFacTest.Implementations;
 using AutoFacTest.Interfaces;
+using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.ExtensionMethods;
@@ -20,6 +20,8 @@ using WebApplicationTest.EasyTokens;
 using WebApplicationTest.Enums;
 using WebApplicationTest.Hubs;
 using WebApplicationTest.PrepareStartWorks;
+
+ActionAssist.ActionAgileConfigChanged = e => { Console.Write("config changed"); };
 
 var builder = WebApplicationBuilderAssist.CreateBuilder(args.ToArray());
 

@@ -1,10 +1,8 @@
-﻿using System.IO;
-using EasySoft.UtilityTools.Core.ConfigurationProviders;
-using EasySoft.UtilityTools.Core.Providers;
+﻿using EasySoft.Configuration.ConfigurationProviders;
+using EasySoft.Configuration.Providers;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
 
-namespace EasySoft.UtilityTools.Core.ConfigurationSources;
+namespace EasySoft.Configuration.ConfigurationSources;
 
 public class JsonContentConfigurationSource : JsonContentConfigurationSourceCore
 {
