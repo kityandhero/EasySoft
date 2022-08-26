@@ -56,9 +56,6 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
       <None Remove="configures\logConfig.json" />
-      <Content Include="configures\logConfig.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="configures\maintainConfig.json" />
       <Content Include="configures\maintainConfig.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
