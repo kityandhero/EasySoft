@@ -1,22 +1,29 @@
-﻿using EasySoft.UtilityTools.Core.ConfigurationProviders;
+﻿using System.IO;
+using EasySoft.UtilityTools.Core.ConfigurationProviders;
+using EasySoft.UtilityTools.Core.Providers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 
 namespace EasySoft.UtilityTools.Core.ConfigurationSources;
 
-public class JsonContentConfigurationSource : JsonConfigurationSource
+public class JsonContentConfigurationSource : JsonContentConfigurationSourceCore
 {
-    public string Content { get; set; }
+    public string JsonContent { get; set; }
 
     public JsonContentConfigurationSource()
     {
-        Content = "";
+        JsonContent = "";
     }
 
     public override IConfigurationProvider Build(IConfigurationBuilder builder)
     {
-        EnsureDefaults(builder);
-
         return new JsonContentConfigurationProvider(this);
+    }
+
+    public IContentProvider ResolveFileProvider()
+    {
+        ContentProvider ??= new ContentProvider("");
+
+        return ContentProvider;
     }
 }

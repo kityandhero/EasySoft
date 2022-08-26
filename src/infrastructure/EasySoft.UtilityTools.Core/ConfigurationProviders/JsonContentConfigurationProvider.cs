@@ -1,34 +1,38 @@
 ﻿using System;
-using System.IO;
 using System.Threading;
 using EasySoft.UtilityTools.Core.ConfigurationFileParsers;
 using EasySoft.UtilityTools.Core.ConfigurationSources;
-using Microsoft.Extensions.Configuration.Json;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 
 namespace EasySoft.UtilityTools.Core.ConfigurationProviders;
 
-public class JsonContentConfigurationProvider : JsonConfigurationProvider
+public class JsonContentConfigurationProvider : ConfigurationProvider
 {
     private readonly string _content;
-    
+
+    public JsonContentConfigurationSource Source { get; }
+
     /// <summary>
     /// Initializes a new instance with the specified source.
     /// </summary>
     /// <param name="source">The source settings.</param>
-    public JsonContentConfigurationProvider(JsonContentConfigurationSource source) : base(source)
+    public JsonContentConfigurationProvider(JsonContentConfigurationSource source)
     {
-        _content = source.Content;
-        
-        
-        if (Source.ReloadOnChange && Source.FileProvider != null)
+        Source = source ?? throw new ArgumentNullException(nameof(source));
+
+        _content = source.JsonContent;
+
+        if (Source.ReloadOnChange)
         {
             ChangeToken.OnChange(
-                () => Source.FileProvider.Watch(Source.Path),
-                () => {
+                () => Source.ResolveFileProvider().Watch(Source.JsonContent),
+                () =>
+                {
                     Thread.Sleep(Source.ReloadDelay);
-                    Load(reload: true);
+
+                    OnReload();
                 });
         }
     }
@@ -36,12 +40,12 @@ public class JsonContentConfigurationProvider : JsonConfigurationProvider
     /// <summary>
     /// Loads the JSON data from a stream.
     /// </summary>
-    /// <param name="stream">The stream to read.</param>
-    public override void Load(Stream stream)
+    /// <param name="content">The stream to read.</param>
+    public void Load(string content)
     {
         try
         {
-            Data = JsonContentConfigurationFileParser.Parse(_content);
+            Data = JsonContentConfigurationFileParser.Parse(content);
         }
         catch (JsonReaderException)
         {

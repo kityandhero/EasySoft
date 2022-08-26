@@ -26,10 +26,9 @@ public static class JsonConfigurationExtensions
 
         return builder.AddJsonContent(s =>
         {
-            s.Content = jsonContent;
-            s.Path = "";
-            s.Optional = true;
-            s.ReloadOnChange = false;
+            s.JsonContent = jsonContent;
+            s.ReloadOnChange = true;
+            s.ResolveFileProvider();
         });
     }
 
