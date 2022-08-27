@@ -187,13 +187,13 @@ public static class WebApplicationBuilderExtensions
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
-            Message = UtilityTools.Standard.ConstCollection.Divider,
+            Message = UtilityTools.Standard.ConstCollection.ApplicationStartBeginDivider,
         });
 
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
-            Message = "application prepare to start, please wait a moment...."
+            Message = "Application prepare to start, please wait a moment...."
         });
 
         var messageInfoList = new List<string>();
@@ -235,7 +235,7 @@ public static class WebApplicationBuilderExtensions
         {
             LogLevel = LogLevel.Information,
             Message =
-                $"CacheMode : {GeneralConfigAssist.GetCacheMode()}{(GeneralConfigAssist.GetCacheMode().Equals("redis", StringComparison.CurrentCultureIgnoreCase) ? $", Connections: {RedisConfigAssist.GetConnectionCollection().Join("|")}" : "")}, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+                $"CacheMode : {GeneralConfigAssist.GetCacheMode()}{(GeneralConfigAssist.GetCacheMode().Equals("redis", StringComparison.CurrentCultureIgnoreCase) ? $", Connections: {RedisConfigAssist.GetConnectionCollection().Join("|")}" : "")}, if you need, you can set it in redisConfig.json, path is ./configures/redisConfig.json."
         });
 
         if (GeneralConfigAssist.GetRemoteLogSwitch())
@@ -279,7 +279,7 @@ public static class WebApplicationBuilderExtensions
             {
                 LogLevel = LogLevel.Information,
                 Message =
-                    "useStaticFiles: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+                    "UseStaticFiles: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
             });
         }
 
@@ -301,7 +301,7 @@ public static class WebApplicationBuilderExtensions
             {
                 LogLevel = LogLevel.Information,
                 Message =
-                    "cors: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+                    "Cors: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
             });
         }
 
@@ -429,14 +429,14 @@ public static class WebApplicationBuilderExtensions
         {
             LogLevel = LogLevel.Information,
             Message =
-                "you can set your autoFac config with autoFac.json in ./configures/autoFac.json. The document link is https://autofac.readthedocs.io/en/latest/configuration/xml.html."
+                "You can set your autoFac config with autoFac.json in ./configures/autoFac.json. The document link is https://autofac.readthedocs.io/en/latest/configuration/xml.html."
         });
 
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message =
-                "you can get all controller actions by visit https://[host]:[port]/[controller]/getAllActions where controller inherited from CustomControllerBase."
+                "You can get all controller actions by visit https://[host]:[port]/[controller]/getAllActions where controller inherited from CustomControllerBase."
         });
 
         app.UseAdvanceMapControllers(areas, endpointAction);
@@ -455,7 +455,7 @@ public static class WebApplicationBuilderExtensions
             {
                 LogLevel = LogLevel.Information,
                 Message =
-                    $"dynamic config key: {Config.ConstCollection.GetDynamicConfigKeyCollection().Join(",")}, they can set in AgileConfig."
+                    $"Dynamic config key: {Config.ConstCollection.GetDynamicConfigKeyCollection().Join(",")}, they can set in AgileConfig."
             });
         }
 
@@ -464,20 +464,22 @@ public static class WebApplicationBuilderExtensions
             StartupMessage.StartupMessageCollection.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
-                Message = $"HealthChecks: enable{(string.IsNullOrWhiteSpace(FlagAssist.StartupUrls)?".":$", you can access {FlagAssist.StartupUrls}")}/healthchecks-ui to visit it.",
+                Message =
+                    $"HealthChecks: enable{(string.IsNullOrWhiteSpace(FlagAssist.StartupUrls) ? "." : $", you can access {FlagAssist.StartupUrls}")}/healthchecks-ui to visit it.",
             });
         }
 
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
-            Message = $"application start completed, please access {app.Urls.Join(",")}",
+            Message =
+                $"Application start completed{(string.IsNullOrWhiteSpace(FlagAssist.StartupUrls) ? "." : $" at {FlagAssist.StartupUrls}")}.",
         });
 
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
-            Message = UtilityTools.Standard.ConstCollection.Divider
+            Message = UtilityTools.Standard.ConstCollection.ApplicationStartEndDivider
         });
 
         StartupMessage.Print();

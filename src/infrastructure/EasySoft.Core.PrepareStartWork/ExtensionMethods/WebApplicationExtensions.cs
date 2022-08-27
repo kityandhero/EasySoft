@@ -23,7 +23,7 @@ public static class WebApplicationExtensions
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
-            Message = "prepareCovertStartWork do work complete."
+            Message = "PrepareCovertStartWork do work complete."
         });
 
         if (!application.UseHostFiltering().ApplicationServices.GetAutofacRoot().IsRegistered<IPrepareStartWork>())
@@ -39,7 +39,7 @@ public static class WebApplicationExtensions
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
-            Message = "prepareStartWork do work complete."
+            Message = "PrepareStartWork do work complete."
         });
 
         return application;
