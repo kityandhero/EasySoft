@@ -18,7 +18,7 @@ public static class LogAssist
 
     #region string
 
-    private static ILogger GetLogger()
+    public static ILogger GetLogger()
     {
         if (_logger == null)
         {
@@ -38,7 +38,7 @@ public static class LogAssist
             return;
         }
 
-        GetLogger().LogInformation(" {Log}", log);
+        GetLogger().LogInformation(" {Log}", log.Trim());
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public static class LogAssist
             return;
         }
 
-        GetLogger().LogDebug("{Log}", log);
+        GetLogger().LogDebug("{Log}", log.Trim());
     }
 
     /// <summary>
@@ -80,7 +80,7 @@ public static class LogAssist
             return;
         }
 
-        GetLogger().LogCritical("{Log}", log);
+        GetLogger().LogCritical("{Log}", log.Trim());
     }
 
     /// <summary>
@@ -101,7 +101,7 @@ public static class LogAssist
             return;
         }
 
-        GetLogger().LogWarning(" {Log}", log);
+        GetLogger().LogWarning(" {Log}", log.Trim());
     }
 
     /// <summary>
@@ -122,7 +122,7 @@ public static class LogAssist
             return;
         }
 
-        GetLogger().LogTrace("{Log}", log);
+        GetLogger().LogTrace("{Log}", log.Trim());
     }
 
     /// <summary>
@@ -143,7 +143,7 @@ public static class LogAssist
             return;
         }
 
-        GetLogger().LogError("{Log}", log);
+        GetLogger().LogError("{Log}", log.Trim());
     }
 
     /// <summary>

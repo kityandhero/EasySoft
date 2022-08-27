@@ -170,13 +170,15 @@ public static class WebApplicationBuilderExtensions
 
         var app = builder.Build();
 
-        EnvironmentAssist.SetEnvironment(app.Environment);
-
         LogAssist.SetLogger(app.Logger);
+
+        EnvironmentAssist.SetEnvironment(app.Environment);
 
         AutofacAssist.Instance.Container = app.UseHostFiltering().ApplicationServices.GetAutofacRoot();
 
         ServiceAssist.ServiceProvider = app.Services;
+
+        FlagAssist.SetApplicationRunPerformed();
 
         // 中间件调用顺序请参阅: https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/middleware/?view=aspnetcore-6.0#middleware-order
 

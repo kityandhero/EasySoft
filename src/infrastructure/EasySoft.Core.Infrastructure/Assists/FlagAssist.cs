@@ -2,6 +2,8 @@
 
 public static class FlagAssist
 {
+    private static bool _applicationRunPerformed;
+
     public static bool CovertInjectionComplete { get; set; }
 
     public static string TokenMode { get; set; }
@@ -32,6 +34,8 @@ public static class FlagAssist
 
     static FlagAssist()
     {
+        _applicationRunPerformed = false;
+
         CovertInjectionComplete = false;
         TokenMode = "";
         EasyTokenMiddlewareModeSwitch = false;
@@ -46,5 +50,19 @@ public static class FlagAssist
         ApplicationChannelIsDefault = false;
         HealthChecksSwitch = false;
         HealthChecksSwitch = false;
+    }
+
+    public static void SetApplicationRunPerformed()
+    {
+        _applicationRunPerformed = true;
+    }
+
+    /// <summary>
+    /// 获取应用是否已经 running
+    /// </summary>
+    /// <returns></returns>
+    public static bool GetApplicationRunWhetherPerformed()
+    {
+        return _applicationRunPerformed;
     }
 }

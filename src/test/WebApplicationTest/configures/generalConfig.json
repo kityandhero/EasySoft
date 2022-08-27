@@ -10,10 +10,10 @@
   "JsonWebTokenValidIssuer": "www.b.com",
   "JsonWebTokenValidAudience": "user",
   "JsonWebTokenIssuerSigningKey": "fcebbeb8c5ce4b108aa6e241d57cf6d8",
-  "AgileConfigSwitch": "0",
+  "AgileConfigSwitch": "1",
   "AgileConfigAppId": "WebTest",
   "AgileConfigSecret": "123456",
-  "AgileConfigNodes": "http://192.168.1.17:15000",
+  "AgileConfigNodes": "http://192.168.2.8:15000",
   "AgileConfigEnv": "DEV",
   "AgileConfigCacheDirectory": "configures\\agileConfig"
 }

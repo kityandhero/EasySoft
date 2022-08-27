@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog;
+using NLog.Config;
 using NLog.Extensions.Logging;
 using NLog.Web;
 
@@ -42,6 +43,30 @@ public static class WebApplicationBuilderExtensions
                     ).Build().GetSection("NLog")
                 );
             }
+
+            b.AddNLogWeb();
+        });
+
+        return builder;
+    }
+
+    public static WebApplicationBuilder UseAdvanceNLog(
+        this WebApplicationBuilder builder,
+        Func<LoggingConfiguration> action
+    )
+    {
+        // NLog: Setup NLog for Dependency injection
+        builder.Logging.ClearProviders();
+
+        // 使用如下库实现，更换可能不会读取自定义配置
+        // NLog.Extensions.Hosting
+        // NLog.Web.AspNetCore
+
+        builder.Services.AddLogging(b =>
+        {
+            b.ClearProviders();
+
+            LogManager.Configuration = action();
 
             b.AddNLogWeb();
         });
