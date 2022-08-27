@@ -8,6 +8,8 @@ public class GeneralConfig : IConfig
 
     public string CacheMode { get; set; }
 
+    public string Urls { get; set; }
+
     #region Token
 
     /// <summary>
@@ -151,6 +153,7 @@ public class GeneralConfig : IConfig
     public GeneralConfig()
     {
         CacheMode = "InMemory";
+        Urls = "";
         AccessWayDetectSwitch = "0";
         RemoteGeneralLogSwitch = "0";
         RemoteErrorLogSwitch = "0";

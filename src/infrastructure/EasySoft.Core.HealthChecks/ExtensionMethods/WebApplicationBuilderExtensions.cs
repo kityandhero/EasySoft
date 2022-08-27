@@ -35,7 +35,10 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddHealthChecksUI(settings =>
         {
             settings.AddHealthCheckEndpoint("internal", ConstCollection.HealthChecksEndpoint);
-        });
+
+            settings.SetEvaluationTimeInSeconds(10);
+            settings.SetMinimumSecondsBetweenFailureNotifications(60);
+        }).AddInMemoryStorage();
 
         return builder;
     }

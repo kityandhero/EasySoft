@@ -4,7 +4,8 @@ using AutoFacTest.Interfaces;
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.HealthChecks.Entities;
+using EasySoft.Core.HealthChecks.ExtensionMethods;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.ExtensionMethods;
@@ -16,9 +17,12 @@ using EntityFrameworkTest.IRepositories;
 using EntityFrameworkTest.IServices;
 using EntityFrameworkTest.Repositories;
 using EntityFrameworkTest.Services;
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.EntityFrameworkCore;
 using WebApplicationTest.EasyTokens;
 using WebApplicationTest.Enums;
+using WebApplicationTest.HealthChecks;
 using WebApplicationTest.Hubs;
 using WebApplicationTest.PrepareStartWorks;
 
@@ -74,10 +78,17 @@ builder.UseExtraNormalInjection(containerBuilder =>
         .AsImplementedInterfaces();
 });
 
+// 配置健康检测
+builder.AddAdvanceHealthChecks(new List<IAdvanceHealthCheck> { new HelloHealthCheck().ToIAdvanceHealthCheck() });
+
 // SignalR
 builder.Services.AddSignalR();
 
-var app = builder.EasyBuild(new List<string> { "AreaTest", "AuthTest", "DataTest", "ComponentTest" });
+// 配置健康检测
+var app = builder.EasyBuild(
+    new List<string> { "AreaTest", "AuthTest", "DataTest", "ComponentTest" },
+    endpointRouteBuilder => { endpointRouteBuilder.UseAdvanceHealthChecks(); }
+);
 
 if (app.Environment.IsDevelopment())
 {
@@ -100,4 +111,11 @@ app.MapGet("/", () => "Hello World!");
 // SignalR
 app.MapHub<ChatHub>("/chatHub");
 
+// var server = app.Services.GetService(typeof(IServer)) as IServer;
+//
+// var first = server?.Features.Get<IServerAddressesFeature>()?.Addresses.First();
+
+// var s = AutofacAssist.Instance.Resolve<IServerAddressesFeature>();
+
 app.Run();
+

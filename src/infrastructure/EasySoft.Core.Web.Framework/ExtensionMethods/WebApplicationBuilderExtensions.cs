@@ -11,6 +11,7 @@ using EasySoft.Core.PermissionVerification.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.Filters;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Channels;
+using EasySoft.Core.Infrastructure.Entities;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
@@ -28,6 +29,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -182,9 +184,17 @@ public static class WebApplicationBuilderExtensions
 
         // 中间件调用顺序请参阅: https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/middleware/?view=aspnetcore-6.0#middleware-order
 
-        LogAssist.Info(
-            "application prepare to start, please wait a moment...."
-        );
+        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        {
+            LogLevel = LogLevel.Information,
+            Message = UtilityTools.Standard.ConstCollection.Divider,
+        });
+
+        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        {
+            LogLevel = LogLevel.Information,
+            Message = "application prepare to start, please wait a moment...."
+        });
 
         var messageInfoList = new List<string>();
 
@@ -197,15 +207,20 @@ public static class WebApplicationBuilderExtensions
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            messageInfoList.Add(
-                "ForwardedHeadersSwitch: enable."
-            );
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = LogLevel.Information,
+                Message = "ForwardedHeadersSwitch: enable."
+            });
         }
         else
         {
-            messageInfoList.Add(
-                "ForwardedHeadersSwitch: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
-            );
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = LogLevel.Information,
+                Message =
+                    "ForwardedHeadersSwitch: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            });
         }
 
         app.UsePrepareStartWork();
@@ -216,25 +231,33 @@ public static class WebApplicationBuilderExtensions
             app.UseHsts();
         }
 
-        messageInfoList.Add(
-            $"CacheMode : {GeneralConfigAssist.GetCacheMode()}{(GeneralConfigAssist.GetCacheMode().Equals("redis", StringComparison.CurrentCultureIgnoreCase) ? $", Connections: {RedisConfigAssist.GetConnectionCollection().Join("|")}" : "")}, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
-        );
+        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        {
+            LogLevel = LogLevel.Information,
+            Message =
+                $"CacheMode : {GeneralConfigAssist.GetCacheMode()}{(GeneralConfigAssist.GetCacheMode().Equals("redis", StringComparison.CurrentCultureIgnoreCase) ? $", Connections: {RedisConfigAssist.GetConnectionCollection().Join("|")}" : "")}, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+        });
 
         if (GeneralConfigAssist.GetRemoteLogSwitch())
         {
             if (FlagAssist.ApplicationChannelIsDefault)
             {
-                messageInfoList.Add(
-                    "ApplicationChannel use 0, suggest using builder.UseAdvanceApplicationChannel(int channel) with your Application, it make the data source easy to identify in the remote log."
-                );
+                StartupMessage.StartupMessageCollection.Add(new StartupMessage
+                {
+                    LogLevel = LogLevel.Information,
+                    Message =
+                        "ApplicationChannel use 0, suggest using builder.UseAdvanceApplicationChannel(int channel) with your Application, it make the data source easy to identify in the remote log."
+                });
             }
             else
             {
                 var applicationChannel = AutofacAssist.Instance.Container.Resolve<IApplicationChannel>();
 
-                messageInfoList.Add(
-                    $"ApplicationChannel use {applicationChannel.GetChannel()}."
-                );
+                StartupMessage.StartupMessageCollection.Add(new StartupMessage
+                {
+                    LogLevel = LogLevel.Information,
+                    Message = $"ApplicationChannel use {applicationChannel.GetChannel()}."
+                });
             }
         }
 
@@ -244,13 +267,20 @@ public static class WebApplicationBuilderExtensions
         {
             app.UseAdvanceStaticFiles();
 
-            messageInfoList.Add("useStaticFiles: enable");
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = LogLevel.Information,
+                Message = "useStaticFiles: enable."
+            });
         }
         else
         {
-            messageInfoList.Add(
-                "useStaticFiles: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
-            );
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = LogLevel.Information,
+                Message =
+                    "useStaticFiles: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            });
         }
 
         app.UseRouting();
@@ -259,29 +289,41 @@ public static class WebApplicationBuilderExtensions
         {
             app.UseCors(ConstCollection.DefaultSpecificOrigins);
 
-            messageInfoList.Add($"cors: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}"
-            );
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = LogLevel.Information,
+                Message = $"cors: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}."
+            });
         }
         else
         {
-            messageInfoList.Add(
-                "cors: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
-            );
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = LogLevel.Information,
+                Message =
+                    "cors: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            });
         }
 
         if (GeneralConfigAssist.GetUseAuthentication())
         {
             app.UseAuthentication();
 
-            messageInfoList.Add(
-                $"UseAuthentication: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}"
-            );
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = LogLevel.Information,
+                Message =
+                    $"UseAuthentication: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}."
+            });
         }
         else
         {
-            messageInfoList.Add(
-                "UseAuthentication: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
-            );
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = LogLevel.Information,
+                Message =
+                    "UseAuthentication: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            });
         }
 
         if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.EasyToken &&
@@ -301,15 +343,21 @@ public static class WebApplicationBuilderExtensions
         {
             if (FlagAssist.EasyTokenMiddlewareModeSwitch || FlagAssist.JsonWebTokenMiddlewareModeSwitch)
             {
-                messageInfoList.Add(
-                    $"TokenMode: {FlagAssist.TokenMode}, use middleware mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}."
-                );
+                StartupMessage.StartupMessageCollection.Add(new StartupMessage
+                {
+                    LogLevel = LogLevel.Information,
+                    Message =
+                        $"TokenMode: {FlagAssist.TokenMode}, use middleware mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}."
+                });
             }
             else
             {
-                messageInfoList.Add(
-                    $"TokenMode: {FlagAssist.TokenMode}, use filter mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}."
-                );
+                StartupMessage.StartupMessageCollection.Add(new StartupMessage
+                {
+                    LogLevel = LogLevel.Information,
+                    Message =
+                        $"TokenMode: {FlagAssist.TokenMode}, use filter mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}."
+                });
             }
         }
 
@@ -325,72 +373,114 @@ public static class WebApplicationBuilderExtensions
                 app.UsePermissionVerificationMiddleware();
             }
 
-            messageInfoList.Add(
-                FlagAssist.PermissionVerificationMiddlewareModeSwitch
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = LogLevel.Information,
+                Message = FlagAssist.PermissionVerificationMiddlewareModeSwitch
                     ? "PermissionVerificationSwitch: enable, use middleware mode."
                     : "PermissionVerificationSwitch: enable, use filter mode."
-            );
+            });
         }
 
-        messageInfoList.Add(
-            GeneralConfigAssist.GetAccessWayDetectSwitch()
-                ? $"AccessWayDetectSwitch: enable"
+        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        {
+            LogLevel = LogLevel.Information,
+            Message = GeneralConfigAssist.GetAccessWayDetectSwitch()
+                ? $"AccessWayDetectSwitch: enable."
                 : "AccessWayDetectSwitch: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
-        );
+        });
 
         if (GeneralConfigAssist.GetUseAuthorization())
         {
             app.UseAuthorization();
 
-            messageInfoList.Add(
-                $"UseAuthorization: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}"
-            );
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = LogLevel.Information,
+                Message = $"UseAuthorization: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}."
+            });
         }
         else
         {
-            messageInfoList.Add(
-                "UseAuthorization: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
-            );
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = LogLevel.Information,
+                Message =
+                    "UseAuthorization: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            });
         }
 
-        messageInfoList.Add(
-            GeneralConfigAssist.GetRemoteGeneralLogSwitch()
-                ? "RemoteGeneralLogEnable: enable"
+        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        {
+            LogLevel = LogLevel.Information,
+            Message = GeneralConfigAssist.GetRemoteGeneralLogSwitch()
+                ? "RemoteGeneralLogEnable: enable."
                 : "RemoteGeneralLogEnable: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
-        );
+        });
 
         app.UseAdvanceSwagger();
 
         app.UseAdvanceHangfire();
 
         messageInfoList.Add(
-            "you can set your autoFac config with autoFac.json in ./configures/autoFac.json. The document link is https://autofac.readthedocs.io/en/latest/configuration/xml.html."
         );
 
-        messageInfoList.Add(
-            "you can get all controller actions by visit https://[host]:[port]/[controller]/getAllActions where controller inherited from CustomControllerBase."
-        );
+        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        {
+            LogLevel = LogLevel.Information,
+            Message =
+                "you can set your autoFac config with autoFac.json in ./configures/autoFac.json. The document link is https://autofac.readthedocs.io/en/latest/configuration/xml.html."
+        });
+
+        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        {
+            LogLevel = LogLevel.Information,
+            Message =
+                "you can get all controller actions by visit https://[host]:[port]/[controller]/getAllActions where controller inherited from CustomControllerBase."
+        });
 
         app.UseAdvanceMapControllers(areas, endpointAction);
 
-        messageInfoList.Add(
-            GeneralConfigAssist.GetAgileConfigSwitch()
-                ? "AgileConfigSwitch: enable"
+        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        {
+            LogLevel = LogLevel.Information,
+            Message = GeneralConfigAssist.GetAgileConfigSwitch()
+                ? "AgileConfigSwitch: enable."
                 : "AgileConfigSwitch: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
-        );
+        });
 
         if (GeneralConfigAssist.GetAgileConfigSwitch())
         {
-            messageInfoList.Add(
-                $"dynamic config key: {Config.ConstCollection.GetDynamicConfigKeyCollection().Join(",")}, they can set in AgileConfig"
-            );
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = LogLevel.Information,
+                Message =
+                    $"dynamic config key: {Config.ConstCollection.GetDynamicConfigKeyCollection().Join(",")}, they can set in AgileConfig."
+            });
         }
 
-        LogAssist.Info(messageInfoList);
+        if (FlagAssist.HealthChecksSwitch)
+        {
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = LogLevel.Information,
+                Message = $"HealthChecks: enable{(string.IsNullOrWhiteSpace(FlagAssist.StartupUrls)?".":$", you can access {FlagAssist.StartupUrls}")}/healthchecks-ui to visit it.",
+            });
+        }
 
-        LogAssist.Info(
-            $"application start completed, please access {app.Urls.Join(",")}"
-        );
+        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        {
+            LogLevel = LogLevel.Information,
+            Message = $"application start completed, please access {app.Urls.Join(",")}",
+        });
+
+        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        {
+            LogLevel = LogLevel.Information,
+            Message = UtilityTools.Standard.ConstCollection.Divider
+        });
+
+        StartupMessage.Print();
 
         return app;
     }

@@ -43,6 +43,15 @@ public static class GeneralConfigAssist
         return GeneralConfig.Instance;
     }
 
+    public static string GetUrls()
+    {
+        var v = GetConfig().Urls;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        return v;
+    }
+
     public static string GetCacheMode()
     {
         var v = GetConfig().CacheMode;

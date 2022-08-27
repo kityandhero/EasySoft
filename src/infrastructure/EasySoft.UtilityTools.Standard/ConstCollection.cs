@@ -8,6 +8,8 @@ namespace EasySoft.UtilityTools.Standard
     /// </summary>
     public static class ConstCollection
     {
+        public const string Divider = "-----------------------------------------------------------";
+
         public const string JsonWebToken = "JsonWebToken";
 
         public const string EasyToken = "EasyToken";

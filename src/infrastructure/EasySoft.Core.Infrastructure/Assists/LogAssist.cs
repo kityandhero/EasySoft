@@ -6,6 +6,8 @@ namespace EasySoft.Core.Infrastructure.Assists;
 
 public static class LogAssist
 {
+    
+    
     private static ILogger? _logger;
 
     public static void SetLogger(ILogger logger)
@@ -44,7 +46,15 @@ public static class LogAssist
     /// <summary>
     /// 记录一般信息集合 【输出多条】
     /// </summary>
-    public static void Info(IEnumerable<string> logs)
+    public static void Info(params string?[] logs)
+    {
+        Info(logs.ToList());
+    }
+
+    /// <summary>
+    /// 记录一般信息集合 【输出多条】
+    /// </summary>
+    public static void Info(IEnumerable<string?> logs)
     {
         logs.ToListFilterNullOrWhiteSpace().ForEach(Info);
     }
@@ -65,7 +75,15 @@ public static class LogAssist
     /// <summary>
     /// 记录一般信息集合 【输出多条】
     /// </summary>
-    public static void Debug(IEnumerable<string> logs)
+    public static void Debug(params string?[] logs)
+    {
+        Debug(logs.ToList());
+    }
+
+    /// <summary>
+    /// 记录一般信息集合 【输出多条】
+    /// </summary>
+    public static void Debug(IEnumerable<string?> logs)
     {
         logs.ToListFilterNullOrWhiteSpace().ForEach(Debug);
     }
@@ -86,7 +104,15 @@ public static class LogAssist
     /// <summary>
     /// 记录重要信息集合 【输出多条】
     /// </summary>
-    public static void Critical(IEnumerable<string> logs)
+    public static void Critical(params string?[] logs)
+    {
+        Critical(logs.ToList());
+    }
+
+    /// <summary>
+    /// 记录重要信息集合 【输出多条】
+    /// </summary>
+    public static void Critical(IEnumerable<string?> logs)
     {
         logs.ToListFilterNullOrWhiteSpace().ForEach(Critical);
     }
@@ -107,7 +133,15 @@ public static class LogAssist
     /// <summary>
     /// 记录警告信息集合 【输出多条】
     /// </summary>
-    public static void Warning(IEnumerable<string> logs)
+    public static void Warning(params string?[] logs)
+    {
+        Warning(logs.ToList());
+    }
+
+    /// <summary>
+    /// 记录警告信息集合 【输出多条】
+    /// </summary>
+    public static void Warning(IEnumerable<string?> logs)
     {
         logs.ToListFilterNullOrWhiteSpace().ForEach(Warning);
     }
@@ -128,7 +162,15 @@ public static class LogAssist
     /// <summary>
     /// 记录跟踪信息集合 【输出多条】
     /// </summary>
-    public static void Trace(IEnumerable<string> logs)
+    public static void Trace(params string?[] logs)
+    {
+        Trace(logs.ToList());
+    }
+
+    /// <summary>
+    /// 记录跟踪信息集合 【输出多条】
+    /// </summary>
+    public static void Trace(IEnumerable<string?> logs)
     {
         logs.ToListFilterNullOrWhiteSpace().ForEach(Trace);
     }
@@ -149,7 +191,15 @@ public static class LogAssist
     /// <summary>
     /// 记录错误信息集合 【输出多条】
     /// </summary>
-    public static void Error(IEnumerable<string> logs)
+    public static void Error(params string?[] logs)
+    {
+        Error(logs.ToList());
+    }
+
+    /// <summary>
+    /// 记录错误信息集合 【输出多条】
+    /// </summary>
+    public static void Error(IEnumerable<string?> logs)
     {
         logs.ToListFilterNullOrWhiteSpace().ForEach(Error);
     }

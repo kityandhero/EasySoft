@@ -44,4 +44,9 @@ public abstract class AdvanceHealthCheck : IAdvanceHealthCheck
     {
         return _checkAction;
     }
+
+    public IAdvanceHealthCheck ToIAdvanceHealthCheck()
+    {
+        return this;
+    }
 }

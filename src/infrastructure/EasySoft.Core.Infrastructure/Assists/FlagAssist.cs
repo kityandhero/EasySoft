@@ -32,6 +32,8 @@ public static class FlagAssist
 
     public static bool HealthChecksComplete { get; set; }
 
+    public static string StartupUrls { get; set; }
+
     static FlagAssist()
     {
         _applicationRunPerformed = false;
@@ -50,6 +52,7 @@ public static class FlagAssist
         ApplicationChannelIsDefault = false;
         HealthChecksSwitch = false;
         HealthChecksSwitch = false;
+        StartupUrls = "";
     }
 
     public static void SetApplicationRunPerformed()
