@@ -26,6 +26,10 @@ public static class FlagAssist
 
     public static bool ApplicationChannelIsDefault { get; set; }
 
+    public static bool HealthChecksSwitch { get; set; }
+
+    public static bool HealthChecksComplete { get; set; }
+
     static FlagAssist()
     {
         CovertInjectionComplete = false;
@@ -40,5 +44,7 @@ public static class FlagAssist
         PermissionVerificationMiddlewareModeSwitch = false;
         ApplicationChannelInjectionComplete = false;
         ApplicationChannelIsDefault = false;
+        HealthChecksSwitch = false;
+        HealthChecksSwitch = false;
     }
 }

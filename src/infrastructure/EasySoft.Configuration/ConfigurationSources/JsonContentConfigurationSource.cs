@@ -18,9 +18,9 @@ public class JsonContentConfigurationSource : JsonContentConfigurationSourceCore
         return new JsonContentConfigurationProvider(this);
     }
 
-    public IContentProvider ResolveFileProvider()
+    public IContentProvider ResolveContentProvider()
     {
-        ContentProvider ??= new ContentProvider("");
+        ContentProvider ??= new ContentProvider(JsonContent);
 
         return ContentProvider;
     }

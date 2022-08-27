@@ -99,6 +99,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Configuration", "i
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.MiniProfiler", "infrastructure\EasySoft.Core.MiniProfiler\EasySoft.Core.MiniProfiler.csproj", "{3BCEA092-D7FB-483B-A8C9-370865B99C9B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "maintenance", "maintenance", "{F588C52F-F0DA-4B91-80A1-342BED14F51B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.HealthChecks", "infrastructure\EasySoft.Core.HealthChecks\EasySoft.Core.HealthChecks.csproj", "{B3257152-FFA2-4054-8CDC-368902816A0F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -265,6 +269,10 @@ Global
 		{3BCEA092-D7FB-483B-A8C9-370865B99C9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BCEA092-D7FB-483B-A8C9-370865B99C9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BCEA092-D7FB-483B-A8C9-370865B99C9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3257152-FFA2-4054-8CDC-368902816A0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3257152-FFA2-4054-8CDC-368902816A0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3257152-FFA2-4054-8CDC-368902816A0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3257152-FFA2-4054-8CDC-368902816A0F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -315,6 +323,8 @@ Global
 		{0CDE1C8C-E9AD-4279-B630-8F14D8EB9252} = {E1BDAC69-A565-4A26-866B-10845357EA3D}
 		{AB90E06C-7972-45B6-AE0D-D5E0CBCF196F} = {E1BDAC69-A565-4A26-866B-10845357EA3D}
 		{3BCEA092-D7FB-483B-A8C9-370865B99C9B} = {197B7656-8BFE-49AA-AA1E-C511B75B26B6}
+		{F588C52F-F0DA-4B91-80A1-342BED14F51B} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{B3257152-FFA2-4054-8CDC-368902816A0F} = {F588C52F-F0DA-4B91-80A1-342BED14F51B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

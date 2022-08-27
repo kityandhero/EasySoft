@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using EasySoft.Configuration.Watchers;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Primitives;
 
 namespace EasySoft.Configuration.Providers;
@@ -94,6 +95,11 @@ public class ContentProvider : IContentProvider, IDisposable
 
     public IChangeToken Watch(string content)
     {
+        if (Content == content)
+        {
+            return NullChangeToken.Singleton;
+        }
+        
         var changeToken = ContentWatcher.CreateContentChangeToken(ContentWatcher.GetOriginalContent(), content);
 
         ContentWatcher.SetOriginalContent(content);

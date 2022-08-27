@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
@@ -40,6 +41,23 @@ public static class WebApplicationBuilderExtensions
     }
 
     public static WebApplication EasyBuild(this WebApplicationBuilder builder, List<string> areas)
+    {
+        return EasyBuild(builder, areas, null);
+    }
+
+    public static WebApplication EasyBuild(
+        this WebApplicationBuilder builder,
+        Action<IEndpointRouteBuilder> endpointAction
+    )
+    {
+        return EasyBuild(builder, new List<string>(), endpointAction);
+    }
+
+    public static WebApplication EasyBuild(
+        this WebApplicationBuilder builder,
+        List<string> areas,
+        Action<IEndpointRouteBuilder>? endpointAction
+    )
     {
         // AddMvc 最为全面， 涵盖 AddControllers 等的全部功能
         builder.Services.AddMvc(
@@ -161,6 +179,10 @@ public static class WebApplicationBuilderExtensions
         ServiceAssist.ServiceProvider = app.Services;
 
         // 中间件调用顺序请参阅: https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/middleware/?view=aspnetcore-6.0#middleware-order
+
+        LogAssist.Info(
+            "application prepare to start, please wait a moment...."
+        );
 
         var messageInfoList = new List<string>();
 
@@ -347,7 +369,7 @@ public static class WebApplicationBuilderExtensions
             "you can get all controller actions by visit https://[host]:[port]/[controller]/getAllActions where controller inherited from CustomControllerBase."
         );
 
-        app.UseAdvanceMapControllers(areas);
+        app.UseAdvanceMapControllers(areas, endpointAction);
 
         messageInfoList.Add(
             GeneralConfigAssist.GetAgileConfigSwitch()
@@ -363,6 +385,10 @@ public static class WebApplicationBuilderExtensions
         }
 
         LogAssist.Info(messageInfoList);
+
+        LogAssist.Info(
+            $"application start completed, please access {app.Urls.Join(",")}"
+        );
 
         return app;
     }

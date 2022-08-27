@@ -7,9 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="NLog.Config" Version="4.7.15" />
       <PackageReference Include="NLog.Extensions.Hosting" Version="5.0.2" />
-      <PackageReference Include="NLog.Extensions.Logging" Version="5.0.2" />
       <PackageReference Include="NLog.Web.AspNetCore" Version="5.1.1" />
     </ItemGroup>
 
@@ -17,10 +15,6 @@
       <ProjectReference Include="..\EasySoft.Configuration\EasySoft.Configuration.csproj" />
       <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj" />
       <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Assists" />
     </ItemGroup>
 
 </Project>

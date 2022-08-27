@@ -1,9 +1,13 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
+﻿using EasySoft.Configuration.ExtensionMethods;
+using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Config.Utils;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NLog;
 using NLog.Extensions.Logging;
-using NLog.Extensions.Hosting;
+using NLog.Web;
 
 namespace EasySoft.Core.NLog.ExtensionMethods;
 
@@ -16,23 +20,31 @@ public static class WebApplicationBuilderExtensions
         // NLog: Setup NLog for Dependency injection
         builder.Logging.ClearProviders();
 
-        var configurationSection = LogConfigAssist.GetSection("NLog");
+        // 使用如下库实现，更换可能不会读取自定义配置
+        // NLog.Extensions.Hosting
+        // NLog.Web.AspNetCore
 
-        if (configurationSection.GetChildren().Any())
+        builder.Services.AddLogging(b =>
         {
-            builder.Host.UseNLog(new NLogProviderOptions().Configure(configurationSection));
-        }
-        else
-        {
-            builder.Host.UseNLog(
-                new NLogProviderOptions().Configure(
-                    Tools.GetNlogDefaultConfig(),
-                    "NLog"
-                )
-            );
-        }
+            b.ClearProviders();
 
-        // LogManager.Configuration.Reload();
+            var configurationSection = LogConfigAssist.GetSection("NLog");
+
+            if (configurationSection.GetChildren().Any())
+            {
+                LogManager.Configuration = new NLogLoggingConfiguration(configurationSection);
+            }
+            else
+            {
+                LogManager.Configuration = new NLogLoggingConfiguration(
+                    new ConfigurationBuilder().AddJsonContent(
+                        Tools.GetNlogDefaultConfig()
+                    ).Build().GetSection("NLog")
+                );
+            }
+
+            b.AddNLogWeb();
+        });
 
         return builder;
     }

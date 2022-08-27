@@ -27,7 +27,7 @@ public static class JsonConfigurationExtensions
         {
             s.JsonContent = jsonContent;
             s.ReloadOnChange = true;
-            s.ResolveFileProvider();
+            s.ResolveContentProvider();
         });
     }
 

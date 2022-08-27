@@ -1,5 +1,6 @@
 ﻿using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 
 namespace EasySoft.Core.Web.Framework.ExtensionMethods;
 
@@ -7,13 +8,15 @@ public static class WebApplicationExtensions
 {
     /// <summary>
     /// build route areas
-    /// </summary>
+    /// </summary>  
     /// <param name="application"></param>
     /// <param name="areas"></param>
+    /// <param name="action"></param>
     /// <returns></returns>
     public static WebApplication UseAdvanceMapControllers(
         this WebApplication application,
-        List<string> areas
+        List<string> areas,
+        Action<IEndpointRouteBuilder>? action = null
     )
     {
         application.UseMvc();
@@ -26,6 +29,8 @@ public static class WebApplicationExtensions
             {
                 application.UseEndpoints(endpoints =>
                 {
+                    action?.Invoke(endpoints);
+
                     areaAdjust.ForEach(o =>
                     {
                         endpoints.MapAreaControllerRoute(
@@ -50,6 +55,8 @@ public static class WebApplicationExtensions
             {
                 application.UseEndpoints(endpoints =>
                 {
+                    action?.Invoke(endpoints);
+
                     endpoints.MapControllerRoute(
                         name: "default",
                         pattern: "{controller=Home}/{action=Index}/{id?}"
@@ -61,6 +68,8 @@ public static class WebApplicationExtensions
         {
             application.UseEndpoints(endpoints =>
             {
+                action?.Invoke(endpoints);
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}"

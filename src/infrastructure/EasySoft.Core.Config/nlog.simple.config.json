@@ -1,4 +1,4 @@
-﻿{
+{
   "NLog": {
     "autoReload": true,
     "throwConfigExceptions": true,
