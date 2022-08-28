@@ -6,4 +6,18 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="2.0.123" />
+      <PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.4" />
+      <PackageReference Include="MiniProfiler.Shared" Version="4.2.22" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj" />
+      <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
+      <ProjectReference Include="..\EasySoft.Core.SqlExecutionRecordTransmitter\EasySoft.Core.SqlExecutionRecordTransmitter.csproj" />
+      <ProjectReference Include="..\EasySoft.IdGenerator\EasySoft.IdGenerator.csproj" />
+      <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -105,6 +105,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.HealthChecks"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationTest", "test\ConfigurationTest\ConfigurationTest.csproj", "{159CECE3-508F-4127-9D4A-ACB42B392DA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.SqlExecutionRecordTransmitter", "infrastructure\EasySoft.Core.SqlExecutionRecordTransmitter\EasySoft.Core.SqlExecutionRecordTransmitter.csproj", "{1A93F2C3-8A08-4416-85A0-8DBBFC986AEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -279,6 +281,10 @@ Global
 		{159CECE3-508F-4127-9D4A-ACB42B392DA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{159CECE3-508F-4127-9D4A-ACB42B392DA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{159CECE3-508F-4127-9D4A-ACB42B392DA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A93F2C3-8A08-4416-85A0-8DBBFC986AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A93F2C3-8A08-4416-85A0-8DBBFC986AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A93F2C3-8A08-4416-85A0-8DBBFC986AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A93F2C3-8A08-4416-85A0-8DBBFC986AEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -332,6 +338,7 @@ Global
 		{F588C52F-F0DA-4B91-80A1-342BED14F51B} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
 		{B3257152-FFA2-4054-8CDC-368902816A0F} = {F588C52F-F0DA-4B91-80A1-342BED14F51B}
 		{159CECE3-508F-4127-9D4A-ACB42B392DA4} = {3A5000A7-B37E-4A5D-8668-82E7E2681993}
+		{1A93F2C3-8A08-4416-85A0-8DBBFC986AEB} = {A4A52E96-6D09-4234-BD3F-FF1EEFBBAEC2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

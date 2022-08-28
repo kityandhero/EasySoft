@@ -85,6 +85,8 @@ public class GeneralConfig : IConfig
     public string RemoteGeneralLogSwitch { get; set; }
 
     public string RemoteErrorLogSwitch { get; set; }
+    
+    public string RemoteSqlExecutionRecordSwitch { get; set; }
 
     public string UseStaticFiles { get; set; }
 
@@ -157,6 +159,7 @@ public class GeneralConfig : IConfig
         AccessWayDetectSwitch = "0";
         RemoteGeneralLogSwitch = "0";
         RemoteErrorLogSwitch = "0";
+        RemoteSqlExecutionRecordSwitch = "0";
         UseStaticFiles = "1";
         UseAuthentication = "0";
         UseAuthorization = "0";

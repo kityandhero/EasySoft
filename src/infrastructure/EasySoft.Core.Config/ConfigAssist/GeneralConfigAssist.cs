@@ -128,6 +128,22 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    public static bool GetRemoteSqlExecutionRecordSwitch()
+    {
+        var v = GetConfig().RemoteSqlExecutionRecordSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 RemoteSqlExecutionRecordSwitch: {ConfigFile} -> RemoteSqlExecutionRecordSwitch,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
+
     public static bool GetUseStaticFiles()
     {
         var v = GetConfig().UseStaticFiles;
