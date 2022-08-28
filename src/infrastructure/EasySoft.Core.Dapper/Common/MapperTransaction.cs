@@ -19,14 +19,16 @@ namespace EasySoft.Core.Dapper.Common
             _mapperChannel = new MapperChannel(
                 mapperChannel.GetChannel(),
                 mapperChannel.GetConnectionString(),
-                mapperChannel.GetRelationDatabaseType());
+                mapperChannel.GetRelationDatabaseType()
+            );
 
             switch (_mapperChannel.GetRelationDatabaseType())
             {
                 case RelationDatabaseType.SqlServer:
                     _dbConnection = new ProfiledDbConnection(
                         new SqlConnection(_mapperChannel.GetConnectionString()),
-                        StackExchange.Profiling.MiniProfiler.Current);
+                        StackExchange.Profiling.MiniProfiler.Current
+                    );
                     break;
 
                 default:
