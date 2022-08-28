@@ -78,17 +78,21 @@ builder.UseExtraNormalInjection(containerBuilder =>
         .AsImplementedInterfaces();
 });
 
-// 配置健康检测
-builder.AddAdvanceHealthChecks(new List<IAdvanceHealthCheck> { new HelloHealthCheck().ToIAdvanceHealthCheck() });
+// // 配置健康检测
+// builder.AddAdvanceHealthChecks(new List<IAdvanceHealthCheck> { new HelloHealthCheck().ToIAdvanceHealthCheck() });
 
 // SignalR
 builder.Services.AddSignalR();
 
-// 配置健康检测
 var app = builder.EasyBuild(
-    new List<string> { "AreaTest", "AuthTest", "DataTest", "ComponentTest" },
-    endpointRouteBuilder => { endpointRouteBuilder.UseAdvanceHealthChecks(); }
+    new List<string> { "AreaTest", "AuthTest", "DataTest", "ComponentTest" }
 );
+
+// //启用置健康检测
+// var app = builder.EasyBuild(
+//     new List<string> { "AreaTest", "AuthTest", "DataTest", "ComponentTest" },
+//     endpointRouteBuilder => { endpointRouteBuilder.UseAdvanceHealthChecks(); }
+// );
 
 if (app.Environment.IsDevelopment())
 {
@@ -118,4 +122,3 @@ app.MapHub<ChatHub>("/chatHub");
 // var s = AutofacAssist.Instance.Resolve<IServerAddressesFeature>();
 
 app.Run();
-
