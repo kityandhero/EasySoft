@@ -2,16 +2,19 @@
 
 public class ContentChangeToken : IContentChangeToken
 {
-    public readonly CancellationTokenSource Cts = new();
+    private readonly CancellationTokenSource _cancellationTokenSource = new();
 
     public bool ActiveChangeCallbacks => true;
 
-    public bool HasChanged => Cts.IsCancellationRequested;
+    public bool HasChanged => _cancellationTokenSource.IsCancellationRequested;
 
     public IDisposable RegisterChangeCallback(Action<object> callback, object state)
     {
-        return Cts.Token.Register(callback!, state);
+        return _cancellationTokenSource.Token.Register(callback!, state);
     }
 
-    public CancellationTokenSource CancellationTokenSource => Cts;
+    public void PrepareRefresh()
+    {
+        _cancellationTokenSource.Cancel();
+    }
 }

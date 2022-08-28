@@ -1,16 +1,48 @@
-﻿using EasySoft.Configuration.ConfigurationProviders;
-using EasySoft.Configuration.Providers;
+﻿using EasySoft.Configuration.ChangeTokens;
+using EasySoft.Configuration.ConfigurationProviders;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Primitives;
 
 namespace EasySoft.Configuration.ConfigurationSources;
 
+public delegate void JsonContentEventHandler();
+
 public class JsonContentConfigurationSource : JsonContentConfigurationSourceCore
 {
-    public string JsonContent { get; set; }
+    private IContentChangeToken? _changeToken;
+
+    private string _jsonContentPrev;
+
+    private string _jsonContent;
+
+    public event JsonContentEventHandler? OnJsonContentChanged;
 
     public JsonContentConfigurationSource()
     {
-        JsonContent = "";
+        _jsonContentPrev = "";
+        _jsonContent = "";
+    }
+
+    public string GetJsonContent()
+    {
+        return _jsonContent;
+    }
+
+    public void SetJsonContent(string jsonContent)
+    {
+        _jsonContent = jsonContent;
+
+        if (OnJsonContentChanged != null && _jsonContentPrev != jsonContent)
+        {
+            ExecJsonContentChanged();
+        }
+
+        _jsonContentPrev = jsonContent;
+    }
+
+    private void ExecJsonContentChanged()
+    {
+        OnJsonContentChanged?.Invoke();
     }
 
     public override IConfigurationProvider Build(IConfigurationBuilder builder)
@@ -18,10 +50,15 @@ public class JsonContentConfigurationSource : JsonContentConfigurationSourceCore
         return new JsonContentConfigurationProvider(this);
     }
 
-    public IContentProvider ResolveContentProvider()
+    public IChangeToken Watch()
     {
-        ContentProvider ??= new ContentProvider(JsonContent);
+        _changeToken = new ContentChangeToken();
 
-        return ContentProvider;
+        return _changeToken;
+    }
+
+    public void PrepareRefresh()
+    {
+        _changeToken?.PrepareRefresh();
     }
 }

@@ -1,16 +1,14 @@
-﻿using System.Diagnostics;
-using System.Text.Json;
+﻿using System.Text.Json;
+using EasySoft.Configuration.ConfigurationFileParsers;
 using EasySoft.Configuration.ConfigurationSources;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 
 namespace EasySoft.Configuration.ConfigurationProviders;
 
-public class JsonContentConfigurationProvider : ConfigurationProvider
+public class JsonContentConfigurationProvider : ConfigurationProvider, IDisposable
 {
-    private readonly Dictionary<string, string> _data = new(StringComparer.OrdinalIgnoreCase);
-
-    private readonly Stack<string> _paths = new();
+    private readonly IDisposable? _changeTokenRegistration;
 
     public JsonContentConfigurationSource Source { get; }
 
@@ -18,114 +16,47 @@ public class JsonContentConfigurationProvider : ConfigurationProvider
     {
         Source = source ?? throw new ArgumentNullException(nameof(source));
 
+        Source.OnJsonContentChanged += TriggerWhenJsonContentChanged;
+
         if (Source.ReloadOnChange)
         {
-            ChangeToken.OnChange(
-                () => Source.ResolveContentProvider().Watch(Source.JsonContent),
+            _changeTokenRegistration = ChangeToken.OnChange(
+                () =>
+                {
+                    var token = Source.Watch();
+
+                    return token;
+                },
                 () =>
                 {
                     Thread.Sleep(Source.ReloadDelay);
+
+                    Console.WriteLine("configure changed" + new Random().Next());
 
                     OnReload();
                 });
         }
     }
 
+    private void TriggerWhenJsonContentChanged()
+    {
+        Source.PrepareRefresh();
+    }
+
     public override void Load()
     {
         try
         {
-            Data = ParseStream(Source.JsonContent);
+            Data = JsonContentConfigurationFileParser.Parse(Source.GetJsonContent());
         }
         catch (JsonException e)
         {
-            throw new FormatException("JSONParseError");
+            throw new FormatException($"JSONParseError: {e.Message}");
         }
     }
 
-    private IDictionary<string, string> ParseStream(string jsonContent)
+    public void Dispose()
     {
-        var jsonDocumentOptions = new JsonDocumentOptions
-        {
-            CommentHandling = JsonCommentHandling.Skip,
-            AllowTrailingCommas = true,
-        };
-
-        using (var doc = JsonDocument.Parse(jsonContent, jsonDocumentOptions))
-        {
-            if (doc.RootElement.ValueKind != JsonValueKind.Object)
-            {
-                throw new FormatException($"Error_InvalidTopLevelJSONElement, {doc.RootElement.ValueKind}");
-            }
-
-            VisitElement(doc.RootElement);
-        }
-
-        return _data;
+        _changeTokenRegistration?.Dispose();
     }
-
-    private void VisitElement(JsonElement element)
-    {
-        var isEmpty = true;
-
-        foreach (var property in element.EnumerateObject())
-        {
-            isEmpty = false;
-            EnterContext(property.Name);
-            VisitValue(property.Value);
-            ExitContext();
-        }
-
-        if (isEmpty && _paths.Count > 0)
-        {
-            _data[_paths.Peek()] = "";
-        }
-    }
-
-    private void VisitValue(JsonElement value)
-    {
-        Debug.Assert(_paths.Count > 0);
-
-        switch (value.ValueKind)
-        {
-            case JsonValueKind.Object:
-                VisitElement(value);
-                break;
-
-            case JsonValueKind.Array:
-                var index = 0;
-                foreach (var arrayElement in value.EnumerateArray())
-                {
-                    EnterContext(index.ToString());
-                    VisitValue(arrayElement);
-                    ExitContext();
-                    index++;
-                }
-
-                break;
-
-            case JsonValueKind.Number:
-            case JsonValueKind.String:
-            case JsonValueKind.True:
-            case JsonValueKind.False:
-            case JsonValueKind.Null:
-                var key = _paths.Peek();
-                if (_data.ContainsKey(key))
-                {
-                    throw new FormatException($"KeyIsDuplicated, {key}");
-                }
-
-                _data[key] = value.ToString();
-                break;
-
-            default:
-                throw new FormatException($"UnsupportedJSONToken, {value.ValueKind}");
-        }
-    }
-
-    private void EnterContext(string context) => _paths.Push(
-        _paths.Count > 0 ? _paths.Peek() + ConfigurationPath.KeyDelimiter + context : context
-    );
-
-    private void ExitContext() => _paths.Pop();
 }

@@ -5,9 +5,34 @@ namespace EasySoft.Configuration.ExtensionMethods;
 
 public static class JsonConfigurationExtensions
 {
+    public static IConfigurationBuilder AddJsonContent(
+        this IConfigurationBuilder builder,
+        string jsonContent,
+        out JsonContentConfigurationSource jsonSource
+    )
+    {
+        builder.AddJsonContent(s =>
+        {
+            s.ReloadOnChange = true;
+
+            s.SetJsonContent(jsonContent);
+        });
+
+        var source = builder.Sources[0] as JsonContentConfigurationSource;
+
+        jsonSource = source ?? throw new Exception("jsonSource is null");
+
+        return builder;
+    }
+
     /// <summary>
-    /// Adds a JSON content configuration source to <paramref name="builder"/>.
+    /// 使用Json字符串作为配置源，该方法不会监听配置变化
     /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="jsonContent"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="Exception"></exception>
     public static IConfigurationBuilder AddJsonContent(
         this IConfigurationBuilder builder,
         string jsonContent
@@ -25,9 +50,9 @@ public static class JsonConfigurationExtensions
 
         return builder.AddJsonContent(s =>
         {
-            s.JsonContent = jsonContent;
             s.ReloadOnChange = true;
-            s.ResolveContentProvider();
+
+            s.SetJsonContent(jsonContent);
         });
     }
 

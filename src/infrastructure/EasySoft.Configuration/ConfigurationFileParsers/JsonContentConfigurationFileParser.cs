@@ -15,9 +15,9 @@ internal class JsonContentConfigurationFileParser
     private readonly Stack<string> _paths = new();
 
     public static IDictionary<string, string> Parse(string input) =>
-        new JsonContentConfigurationFileParser().ParseStream(input);
+        new JsonContentConfigurationFileParser().ParseString(input);
 
-    private IDictionary<string, string> ParseStream(string input)
+    private IDictionary<string, string> ParseString(string input)
     {
         var jsonDocumentOptions = new JsonDocumentOptions
         {

@@ -103,6 +103,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "maintenance", "maintenance"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.HealthChecks", "infrastructure\EasySoft.Core.HealthChecks\EasySoft.Core.HealthChecks.csproj", "{B3257152-FFA2-4054-8CDC-368902816A0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationTest", "test\ConfigurationTest\ConfigurationTest.csproj", "{159CECE3-508F-4127-9D4A-ACB42B392DA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -273,6 +275,10 @@ Global
 		{B3257152-FFA2-4054-8CDC-368902816A0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3257152-FFA2-4054-8CDC-368902816A0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3257152-FFA2-4054-8CDC-368902816A0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{159CECE3-508F-4127-9D4A-ACB42B392DA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{159CECE3-508F-4127-9D4A-ACB42B392DA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{159CECE3-508F-4127-9D4A-ACB42B392DA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{159CECE3-508F-4127-9D4A-ACB42B392DA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -325,6 +331,7 @@ Global
 		{3BCEA092-D7FB-483B-A8C9-370865B99C9B} = {197B7656-8BFE-49AA-AA1E-C511B75B26B6}
 		{F588C52F-F0DA-4B91-80A1-342BED14F51B} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
 		{B3257152-FFA2-4054-8CDC-368902816A0F} = {F588C52F-F0DA-4B91-80A1-342BED14F51B}
+		{159CECE3-508F-4127-9D4A-ACB42B392DA4} = {3A5000A7-B37E-4A5D-8668-82E7E2681993}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

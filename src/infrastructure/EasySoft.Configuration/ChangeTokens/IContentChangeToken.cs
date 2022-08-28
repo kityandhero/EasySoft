@@ -4,5 +4,5 @@ namespace EasySoft.Configuration.ChangeTokens;
 
 internal interface IContentChangeToken : IChangeToken
 {
-    CancellationTokenSource CancellationTokenSource { get; }
+    public void PrepareRefresh();
 }
