@@ -1,7 +1,7 @@
-﻿using EasySoft.Core.Dapper.Assist;
+﻿using System.Data;
+using EasySoft.Core.Dapper.Assist;
 using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.Interfaces;
-using StackExchange.Profiling.Data;
 
 namespace EasySoft.Core.Dapper.Common
 {
@@ -49,7 +49,7 @@ namespace EasySoft.Core.Dapper.Common
             return _relationDatabaseType;
         }
 
-        public ProfiledDbConnection OpenConnection()
+        public IDbConnection OpenConnection()
         {
             return SqlAssist.CreateConnection(_connectionString, _relationDatabaseType);
         }

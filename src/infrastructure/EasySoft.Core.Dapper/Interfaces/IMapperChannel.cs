@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Dapper.Enums;
+﻿using System.Data;
+using EasySoft.Core.Dapper.Enums;
 using StackExchange.Profiling.Data;
 
 namespace EasySoft.Core.Dapper.Interfaces
@@ -11,7 +12,7 @@ namespace EasySoft.Core.Dapper.Interfaces
 
         RelationDatabaseType GetRelationDatabaseType();
 
-        ProfiledDbConnection OpenConnection();
+       IDbConnection OpenConnection();
 
         IMapperTransaction CreateMapperTransaction();
     }

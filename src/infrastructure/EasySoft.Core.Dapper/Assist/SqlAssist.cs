@@ -1,4 +1,5 @@
-﻿using System.Data.Common;
+﻿using System.Data;
+using System.Data.Common;
 using System.Linq.Expressions;
 using System.Text;
 using EasySoft.Core.Dapper.Common;
@@ -18,8 +19,10 @@ namespace EasySoft.Core.Dapper.Assist
     {
         #region Select
 
-        public static ProfiledDbConnection CreateConnection(string connectionString,
-            RelationDatabaseType relationDatabaseType)
+        public static IDbConnection CreateConnection(
+            string connectionString,
+            RelationDatabaseType relationDatabaseType
+        )
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -42,7 +45,8 @@ namespace EasySoft.Core.Dapper.Assist
 
             var profiledDbConnection = new ProfiledDbConnection(
                 dbConnection,
-                MiniProfiler.Current);
+                MiniProfiler.Current
+            );
 
             return profiledDbConnection;
         }
