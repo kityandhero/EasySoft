@@ -65,5 +65,13 @@ public static class JsonConfigurationExtensions
     public static IConfigurationBuilder AddJsonContent(
         this IConfigurationBuilder builder,
         Action<JsonContentConfigurationSource> configureSource
-    ) => builder.Add(configureSource);
+    )
+    {
+        if (builder.Sources.Count > 1)
+        {
+            throw new Exception("AddJsonContent disallow more than one configure source");
+        }
+
+        return builder.Add(configureSource);
+    }
 }
