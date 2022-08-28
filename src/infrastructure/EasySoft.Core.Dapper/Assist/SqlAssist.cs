@@ -1644,7 +1644,7 @@ namespace EasySoft.Core.Dapper.Assist
                 where = ConditionAssist.Build(listCondition);
             }
 
-            var sort = listSort.Count > 0
+            var sort = listSort is { Count: > 0 }
                 ? SortAssist.Build(listSort)
                 : $" ORDER BY {model.GetPrimaryKeyValue()} DESC ";
 
