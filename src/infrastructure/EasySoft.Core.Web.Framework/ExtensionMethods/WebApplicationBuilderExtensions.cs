@@ -24,6 +24,7 @@ using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,12 +40,12 @@ public static class WebApplicationBuilderExtensions
 {
     public static WebApplication EasyBuild(this WebApplicationBuilder builder)
     {
-        return EasyBuild(builder, new List<string>());
+        return EasyBuild(builder, null, new List<string>(), null);
     }
 
     public static WebApplication EasyBuild(this WebApplicationBuilder builder, List<string> areas)
     {
-        return EasyBuild(builder, areas, null);
+        return EasyBuild(builder, null, areas, null);
     }
 
     public static WebApplication EasyBuild(
@@ -52,11 +53,20 @@ public static class WebApplicationBuilderExtensions
         Action<IEndpointRouteBuilder> endpointAction
     )
     {
-        return EasyBuild(builder, new List<string>(), endpointAction);
+        return EasyBuild(builder, null, new List<string>(), endpointAction);
     }
 
     public static WebApplication EasyBuild(
         this WebApplicationBuilder builder,
+        Action<MvcOptions>? actionMvcOptions
+    )
+    {
+        return EasyBuild(builder, actionMvcOptions, new List<string>(), null);
+    }
+
+    public static WebApplication EasyBuild(
+        this WebApplicationBuilder builder,
+        Action<MvcOptions>? actionMvcOptions,
         List<string> areas,
         Action<IEndpointRouteBuilder>? endpointAction
     )
@@ -93,6 +103,8 @@ public static class WebApplicationBuilderExtensions
 
                     // 设置全局异常过滤器
                     option.Filters.Add<GlobalExceptionFilter>();
+
+                    actionMvcOptions?.Invoke(option);
                 }
             )
             // 爆露ApplicationPartManager 实例给外部工具，用以实现某些特定功能
@@ -102,11 +114,14 @@ public static class WebApplicationBuilderExtensions
             .AddNewtonsoftJson(
                 options =>
                 {
-                    options.SerializerSettings.ContractResolver =
-                        new CamelCasePropertyNamesContractResolver(); //序列化时key为驼峰样式
+                    //序列化时key为驼峰样式
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
                     options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
                     options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; //忽略循环引用
+
+                    //忽略循环引用
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 }
             );
 

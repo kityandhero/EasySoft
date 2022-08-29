@@ -1,4 +1,7 @@
-﻿namespace EasySoft.Core.Infrastructure.Assists;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace EasySoft.Core.Infrastructure.Assists;
 
 public static class ServiceAssist
 {
@@ -14,7 +17,7 @@ public static class ServiceAssist
         _serviceProvider = serviceProvider;
     }
 
-    public static IServiceProvider? GetServiceProvider()
+    public static IServiceProvider GetServiceProvider()
     {
         if (_serviceProvider == null)
         {
@@ -22,5 +25,10 @@ public static class ServiceAssist
         }
 
         return _serviceProvider;
+    }
+
+    public static string GetServerPath(string path)
+    {
+        return (GetServiceProvider()).GetRequiredService<IWebHostEnvironment>().WebRootPath + path;
     }
 }
