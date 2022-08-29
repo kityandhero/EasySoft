@@ -878,9 +878,15 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
             return source.Replace("'", "''");
         }
 
-        public static Stream ToJsonStream(this string jsonString)
+        /// <summary>
+        /// 拼接路径, 兼容Linux
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static string Combine(this string path, string target)
         {
-            return new MemoryStream(Encoding.UTF8.GetBytes(jsonString));
+            return PathAssist.Combine(path, target);
         }
 
         #region Remove

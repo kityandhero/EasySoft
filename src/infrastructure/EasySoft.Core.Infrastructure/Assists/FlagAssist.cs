@@ -3,6 +3,7 @@
 public static class FlagAssist
 {
     private static bool _applicationRunPerformed;
+    private static bool _autoMapperSwitch;
 
     public static bool CovertInjectionComplete { get; set; }
 
@@ -37,6 +38,7 @@ public static class FlagAssist
     static FlagAssist()
     {
         _applicationRunPerformed = false;
+        _autoMapperSwitch = false;
 
         CovertInjectionComplete = false;
         TokenMode = "";
@@ -67,5 +69,19 @@ public static class FlagAssist
     public static bool GetApplicationRunWhetherPerformed()
     {
         return _applicationRunPerformed;
+    }
+
+    public static void SetAutoMapperSwitchOpen()
+    {
+        _autoMapperSwitch = true;
+    }
+
+    /// <summary>
+    /// 获取应用是否已经 running
+    /// </summary>
+    /// <returns></returns>
+    public static bool GetAutoMapperSwitch()
+    {
+        return _autoMapperSwitch;
     }
 }

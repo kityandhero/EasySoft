@@ -27,7 +27,7 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    public static WebApplicationBuilder UseAdvanceEasyCaching(
+    public static WebApplicationBuilder AddAdvanceEasyCaching(
         this WebApplicationBuilder builder
     )
     {
@@ -35,11 +35,11 @@ public static class WebApplicationBuilderExtensions
 
         if (cacheMode == CacheModeCollection.InMemory.ToString())
         {
-            builder.UseAdvanceEasyCachingInMemory();
+            builder.AddAdvanceEasyCachingInMemory();
         }
         else if (cacheMode == CacheModeCollection.Redis.ToString())
         {
-            builder.UseAdvanceEasyCachingCsRedis();
+            builder.AddAdvanceEasyCachingCsRedis();
         }
         else
         {
@@ -84,15 +84,15 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
-    private static WebApplicationBuilder UseAdvanceEasyCachingInMemory(
+    private static WebApplicationBuilder AddAdvanceEasyCachingInMemory(
         this WebApplicationBuilder builder
     )
     {
-        builder.UseEasyCachingInMemoryCaching()
+        builder.AddEasyCachingInMemoryCaching()
             .AddEasyCachingInterceptor(x =>
                 x.CacheProviderName = EasyCachingConstValue.DefaultInMemoryName
             )
-            .UseMemoryCacheOperatorInjection();
+            .AddMemoryCacheOperatorInjection();
 
         return builder;
     }
@@ -102,7 +102,7 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    private static WebApplicationBuilder UseEasyCachingInMemoryCaching(
+    private static WebApplicationBuilder AddEasyCachingInMemoryCaching(
         this WebApplicationBuilder builder
     )
     {
@@ -146,7 +146,7 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    private static WebApplicationBuilder UseMemoryCacheOperatorInjection(
+    private static WebApplicationBuilder AddMemoryCacheOperatorInjection(
         this WebApplicationBuilder builder
     )
     {
@@ -158,16 +158,16 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
-    private static WebApplicationBuilder UseAdvanceEasyCachingCsRedis(
+    private static WebApplicationBuilder AddAdvanceEasyCachingCsRedis(
         this WebApplicationBuilder builder
     )
     {
         //Important step for Redis Caching
-        builder.UseEasyCachingRedisCaching()
+        builder.AddEasyCachingRedisCaching()
             .AddEasyCachingInterceptor(x =>
                 x.CacheProviderName = EasyCachingConstValue.DefaultRedisName
             )
-            .UseRedisCacheOperatorInjection();
+            .AddRedisCacheOperatorInjection();
 
         return builder;
     }
@@ -177,7 +177,7 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    private static WebApplicationBuilder UseEasyCachingRedisCaching(
+    private static WebApplicationBuilder AddEasyCachingRedisCaching(
         this WebApplicationBuilder builder
     )
     {
@@ -211,7 +211,7 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    private static WebApplicationBuilder UseRedisCacheOperatorInjection(
+    private static WebApplicationBuilder AddRedisCacheOperatorInjection(
         this WebApplicationBuilder builder
     )
     {

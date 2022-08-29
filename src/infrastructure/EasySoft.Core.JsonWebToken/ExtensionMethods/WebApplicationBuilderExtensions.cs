@@ -18,7 +18,7 @@ public static class WebApplicationBuilderExtensions
     /// <param name="builder"></param>
     /// <param name="middlewareMode"></param>
     /// <returns></returns>
-    public static WebApplicationBuilder UseAdvanceJsonWebToken<TOperator>(
+    public static WebApplicationBuilder AddAdvanceJsonWebToken<TOperator>(
         this WebApplicationBuilder builder,
         bool middlewareMode = true
     ) where TOperator : ActualOperator

@@ -11,7 +11,7 @@ namespace EasySoft.Core.AutoFac.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
-    public static WebApplicationBuilder UseAdvanceAutoFac(
+    public static WebApplicationBuilder AddAdvanceAutoFac(
         this WebApplicationBuilder builder
     )
     {
@@ -19,12 +19,12 @@ public static class WebApplicationBuilderExtensions
 
         builder.Host.ConfigureContainer<ContainerBuilder>(AutofacAssist.Init);
 
-        builder.UseControllerPropertiesAutowired(Assembly.GetEntryAssembly());
+        builder.AddControllerPropertiesAutowired(Assembly.GetEntryAssembly());
 
         return builder;
     }
 
-    public static WebApplicationBuilder UseExtraNormalInjection(
+    public static WebApplicationBuilder AddExtraNormalInjection(
         this WebApplicationBuilder builder,
         Action<ContainerBuilder> action
     )
@@ -39,7 +39,7 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
-    public static WebApplicationBuilder UseControllerPropertiesAutowired(
+    public static WebApplicationBuilder AddControllerPropertiesAutowired(
         this WebApplicationBuilder builder,
         Assembly? assembly
     )

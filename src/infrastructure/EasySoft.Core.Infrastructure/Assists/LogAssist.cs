@@ -211,14 +211,18 @@ public static class LogAssist
     /// <summary>
     /// 记录一般数据 【序列化输出】
     /// </summary>
-    public static void InfoData(object? log)
+    public static void InfoData(object? log, string prefix = "")
     {
         if (log == null)
         {
             return;
         }
 
-        GetLogger().LogInformation(" {Log}", JsonConvertAssist.Serialize(log));
+        GetLogger().LogInformation(
+            "{Prefix}{Log}",
+            prefix,
+            JsonConvertAssist.Serialize(log)
+        );
     }
 
     /// <summary>
@@ -226,20 +230,24 @@ public static class LogAssist
     /// </summary>
     public static void InfoData(IEnumerable<object> logs)
     {
-        logs.ToListFilterNullable().ForEach(InfoData);
+        logs.ToListFilterNullable().ForEach(log => { InfoData(log); });
     }
 
     /// <summary>
     /// 记录调试数据 【序列化输出】
     /// </summary>
-    public static void DebugData(object? log)
+    public static void DebugData(object? log, string prefix = "")
     {
         if (log == null)
         {
             return;
         }
 
-        GetLogger().LogDebug("{Log}", JsonConvertAssist.Serialize(log));
+        GetLogger().LogDebug(
+            "{Prefix}{Log}",
+            prefix,
+            JsonConvertAssist.Serialize(log)
+        );
     }
 
     /// <summary>
@@ -247,20 +255,24 @@ public static class LogAssist
     /// </summary>
     public static void DebugData(IEnumerable<object> logs)
     {
-        logs.ToListFilterNullable().ForEach(DebugData);
+        logs.ToListFilterNullable().ForEach(log => { DebugData(log); });
     }
 
     /// <summary>
     /// 记录重要数据 【序列化输出】
     /// </summary>
-    public static void CriticalData(object? log)
+    public static void CriticalData(object? log, string prefix = "")
     {
         if (log == null)
         {
             return;
         }
 
-        GetLogger().LogCritical("{Log}", JsonConvertAssist.Serialize(log));
+        GetLogger().LogCritical(
+            "{Prefix}{Log}",
+            prefix,
+            JsonConvertAssist.Serialize(log)
+        );
     }
 
     /// <summary>
@@ -268,20 +280,24 @@ public static class LogAssist
     /// </summary>
     public static void CriticalData(IEnumerable<object> logs)
     {
-        logs.ToListFilterNullable().ForEach(CriticalData);
+        logs.ToListFilterNullable().ForEach(log => { CriticalData(log); });
     }
 
     /// <summary>
     /// 记录警告数据 【序列化输出】
     /// </summary>
-    public static void WarningData(object? log)
+    public static void WarningData(object? log, string prefix = "")
     {
         if (log == null)
         {
             return;
         }
 
-        GetLogger().LogWarning(" {Log}", JsonConvertAssist.Serialize(log));
+        GetLogger().LogWarning(
+            "{Prefix}{Log}",
+            prefix,
+            JsonConvertAssist.Serialize(log)
+        );
     }
 
     /// <summary>
@@ -289,20 +305,24 @@ public static class LogAssist
     /// </summary>
     public static void WarningData(IEnumerable<object> logs)
     {
-        logs.ToListFilterNullable().ForEach(WarningData);
+        logs.ToListFilterNullable().ForEach(log => { WarningData(log); });
     }
 
     /// <summary>
     /// 记录跟踪数据
     /// </summary>
-    public static void TraceData(object? log)
+    public static void TraceData(object? log, string prefix = "")
     {
         if (log == null)
         {
             return;
         }
 
-        GetLogger().LogTrace("{Log}", JsonConvertAssist.Serialize(log));
+        GetLogger().LogTrace(
+            "{Prefix}{Log}",
+            prefix,
+            JsonConvertAssist.Serialize(log)
+        );
     }
 
     /// <summary>
@@ -310,20 +330,24 @@ public static class LogAssist
     /// </summary>
     public static void TraceData(IEnumerable<object> logs)
     {
-        logs.ToListFilterNullable().ForEach(TraceData);
+        logs.ToListFilterNullable().ForEach(log => { TraceData(log); });
     }
 
     /// <summary>
     /// 记录错误数据
     /// </summary>
-    public static void ErrorData(object? log)
+    public static void ErrorData(object? log, string prefix = "")
     {
         if (log == null)
         {
             return;
         }
 
-        GetLogger().LogError("{Log}", JsonConvertAssist.Serialize(log));
+        GetLogger().LogError(
+            "{Prefix}{Log}",
+            prefix,
+            JsonConvertAssist.Serialize(log)
+        );
     }
 
     /// <summary>
@@ -331,7 +355,7 @@ public static class LogAssist
     /// </summary>
     public static void ErrorData(IEnumerable<object> logs)
     {
-        logs.ToListFilterNullable().ForEach(ErrorData);
+        logs.ToListFilterNullable().ForEach(log => { ErrorData(log); });
     }
 
     #endregion

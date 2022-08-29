@@ -12,7 +12,7 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    public static WebApplicationBuilder UseGeneralLogTransmitter(
+    public static WebApplicationBuilder AddGeneralLogTransmitter(
         this WebApplicationBuilder builder
     )
     {

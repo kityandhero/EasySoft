@@ -49,7 +49,7 @@ public class AutofacAssist
         _container = container;
     }
 
-    private ILifetimeScope GetContainer()
+    public ILifetimeScope GetContainer()
     {
         if (_container == null)
         {

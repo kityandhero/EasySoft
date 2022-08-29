@@ -14,7 +14,7 @@ public static class WebApplicationBuilderExtensions
     /// <param name="builder"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static WebApplicationBuilder UseStaticFileOptionsInjection<T>(
+    public static WebApplicationBuilder AddStaticFileOptionsInjection<T>(
         this WebApplicationBuilder builder
     ) where T : StaticFileOptions
     {
@@ -34,7 +34,7 @@ public static class WebApplicationBuilderExtensions
     /// <param name="name"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static WebApplicationBuilder UseAdvanceApplicationChannel(
+    public static WebApplicationBuilder AddAdvanceApplicationChannel(
         this WebApplicationBuilder builder,
         int channel,
         string name
@@ -57,7 +57,7 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
-    public static WebApplicationBuilder UseAdvanceDefaultApplicationChannel(
+    public static WebApplicationBuilder AddAdvanceDefaultApplicationChannel(
         this WebApplicationBuilder builder
     )
     {

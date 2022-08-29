@@ -14,19 +14,19 @@ namespace EasySoft.Core.PrepareStartWork.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
-    public static WebApplicationBuilder UseServerAddressesFeature(
-        this WebApplicationBuilder builder
-    )
-    {
-        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-        {
-            containerBuilder.RegisterType<ServerAddressesFeature>().As<IServerAddressesFeature>().SingleInstance();
-        });
+    // public static WebApplicationBuilder AddServerAddressesFeature(
+    //     this WebApplicationBuilder builder
+    // )
+    // {
+    //     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+    //     {
+    //         containerBuilder.RegisterType<ServerAddressesFeature>().As<IServerAddressesFeature>().SingleInstance();
+    //     });
+    //
+    //     return builder;
+    // }
 
-        return builder;
-    }
-
-    public static WebApplicationBuilder UseAdvanceUrls(
+    public static WebApplicationBuilder AddAdvanceUrls(
         this WebApplicationBuilder builder
     )
     {
@@ -64,7 +64,7 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    public static WebApplicationBuilder UseCovertInjection(
+    public static WebApplicationBuilder AddCovertInjection(
         this WebApplicationBuilder builder
     )
     {
@@ -89,7 +89,7 @@ public static class WebApplicationBuilderExtensions
     /// <param name="builder"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static WebApplicationBuilder UsePrepareStartWorkInjection<T>(
+    public static WebApplicationBuilder AddPrepareStartWorkInjection<T>(
         this WebApplicationBuilder builder
     ) where T : IPrepareStartWork
     {

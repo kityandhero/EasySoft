@@ -25,17 +25,17 @@ public static class WebApplicationBuilderAssist
             Args = args
         });
 
-        builder.UseAdvanceAutoFac();
+        builder.AddAdvanceAutoFac();
 
-        builder.UseServerAddressesFeature();
+        // builder.AddServerAddressesFeature();
 
-        builder.UseCovertInjection();
+        builder.AddCovertInjection();
 
-        builder.UseAdvanceUrls();
+        builder.AddAdvanceUrls();
 
         if (GeneralConfigAssist.GetAgileConfigSwitch())
         {
-            builder.UseAgileConfigClient(_ =>
+            builder.AddAgileConfigClient(_ =>
             {
                 var result = DynamicConfigAssist.GetNLogJsonConfig();
 
@@ -86,11 +86,11 @@ public static class WebApplicationBuilderAssist
                 }
             });
 
-            builder.UseAdvanceNLog(BuildDefaultConfig);
+            builder.AddAdvanceNLog(BuildDefaultConfig);
         }
         else
         {
-            builder.UseAdvanceNLog();
+            builder.AddAdvanceNLog();
         }
 
         return builder;

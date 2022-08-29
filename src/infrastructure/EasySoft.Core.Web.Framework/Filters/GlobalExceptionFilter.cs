@@ -1,7 +1,7 @@
 ﻿using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.ErrorLogTransmitter.Producers;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Core.Results;
 using EasySoft.UtilityTools.Standard.Assists;
@@ -33,6 +33,15 @@ public class GlobalExceptionFilter : IExceptionFilter
         {
             return;
         }
+
+        LogAssist.Error($"Error message: {context.Exception.Message}");
+
+        if (context.Exception.InnerException != null)
+        {
+            LogAssist.Error($"Inner error message: {context.Exception.InnerException.Message}");
+        }
+
+        LogAssist.DebugData(context.Exception.InnerException ?? context.Exception, "More information: ");
 
         if (context.Exception is TokenException)
         {

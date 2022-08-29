@@ -3,6 +3,7 @@ using AutoFacTest.Implementations;
 using AutoFacTest.Interfaces;
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.ExtensionMethods;
+using EasySoft.Core.AutoMapper.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.HealthChecks.Entities;
 using EasySoft.Core.HealthChecks.ExtensionMethods;
@@ -20,6 +21,7 @@ using EntityFrameworkTest.Services;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.EntityFrameworkCore;
+using WebApplicationTest.AutoMappers;
 using WebApplicationTest.EasyTokens;
 using WebApplicationTest.Enums;
 using WebApplicationTest.HealthChecks;
@@ -42,28 +44,31 @@ builder.Services.AddDbContext<DataContext>(
     }
 );
 
-builder.UseAdvanceApplicationChannel(
+// AutoMapper Config
+builder.AddAdvanceAutoMapper(typeof(UserEntity).Assembly,true);
+
+builder.AddAdvanceApplicationChannel(
     ApplicationChannelCollection.TestApplication.ToInt(),
     ApplicationChannelCollection.TestApplication.GetDescription()
 );
 
-builder.UsePrepareStartWorkInjection<SimplePrepareStartWork>();
+builder.AddPrepareStartWorkInjection<SimplePrepareStartWork>();
 
 // 自定义静态文件配置 如有特殊需求，可以进行配置，不配置将采用内置选项，此处仅作为有需要时的样例
 // builder.UseStaticFileOptionsInjection<CustomStaticFileOptions>();
 
-builder.UseAdvanceJsonWebToken<ApplicationOperator>();
+builder.AddAdvanceJsonWebToken<ApplicationOperator>();
 
 // builder.UseEasyToken<CustomTokenSecretOptions, ApplicationOperator>();
 
 // 自定义token密钥解析类
 // builder.UseEasyToken<CustomTokenSecretOptions, CustomTokenSecret, ApplicationOperator>();
 
-builder.UsePermissionVerification<ApplicationPermissionObserver>();
+builder.AddPermissionVerification<ApplicationPermissionObserver>();
 
 // builder.UseTokenSecretInjection<CustomTokenSecret>();
 
-builder.UseExtraNormalInjection(containerBuilder =>
+builder.AddExtraNormalInjection(containerBuilder =>
 {
     containerBuilder.RegisterType<Simple>().As<ISimple>().SingleInstance();
 

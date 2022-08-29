@@ -12,7 +12,7 @@ namespace EasySoft.Core.AgileConfigClient.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
-    public static WebApplicationBuilder UseAgileConfigClient(
+    public static WebApplicationBuilder AddAgileConfigClient(
         this WebApplicationBuilder builder,
         Action<ConfigChangedArg>? action = null
     )

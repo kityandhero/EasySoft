@@ -18,7 +18,7 @@ public static class WebApplicationBuilderExtensions
     /// <param name="builder"></param>
     /// <param name="middlewareMode">使用中间件模式</param>
     /// <returns></returns>
-    public static WebApplicationBuilder UsePermissionVerification<TPermissionObserver>(
+    public static WebApplicationBuilder AddPermissionVerification<TPermissionObserver>(
         this WebApplicationBuilder builder,
         bool middlewareMode = true
     ) where TPermissionObserver : IPermissionObserver
@@ -28,7 +28,7 @@ public static class WebApplicationBuilderExtensions
             throw new Exception("UsePermissionVerification<TPermissionObserver> disallow inject more than once");
         }
 
-        builder.UsePermissionObserverInjection<TPermissionObserver>()
+        builder.AddPermissionObserverInjection<TPermissionObserver>()
             .UseAccessWayTransmitter();
 
         if (middlewareMode)
@@ -54,7 +54,7 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    private static WebApplicationBuilder UsePermissionObserverInjection<T>(
+    private static WebApplicationBuilder AddPermissionObserverInjection<T>(
         this WebApplicationBuilder builder
     ) where T : IPermissionObserver
     {

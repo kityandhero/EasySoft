@@ -14,7 +14,7 @@ namespace EasySoft.Core.NLog.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
-    public static WebApplicationBuilder UseAdvanceNLog(
+    public static WebApplicationBuilder AddAdvanceNLog(
         this WebApplicationBuilder builder
     )
     {
@@ -50,7 +50,7 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
-    public static WebApplicationBuilder UseAdvanceNLog(
+    public static WebApplicationBuilder AddAdvanceNLog(
         this WebApplicationBuilder builder,
         Func<LoggingConfiguration> action
     )

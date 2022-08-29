@@ -156,11 +156,11 @@ public static class WebApplicationBuilderExtensions
             builder.Services.AddSwaggerGen();
         }
 
-        builder.UseAdvanceEasyCaching();
+        builder.AddAdvanceEasyCaching();
 
-        builder.UseGeneralLogTransmitter();
+        builder.AddGeneralLogTransmitter();
 
-        builder.UseErrorLogTransmitter();
+        builder.AddErrorLogTransmitter();
 
         if (HangfireConfigAssist.GetEnable())
         {
@@ -182,7 +182,7 @@ public static class WebApplicationBuilderExtensions
 
         if (!FlagAssist.ApplicationChannelInjectionComplete)
         {
-            builder.UseAdvanceDefaultApplicationChannel();
+            builder.AddAdvanceDefaultApplicationChannel();
         }
 
         var app = builder.Build();
