@@ -7,23 +7,23 @@ namespace EasySoft.Core.AutoMapper.Modules;
 
 internal class AutoMapperModule : Module
 {
-    private readonly Assembly[] assembliesToScan;
-    private readonly Action<IMapperConfigurationExpression> mappingConfigurationAction;
-    private readonly bool propertiesAutowired;
+    private readonly Assembly[] _assembliesToScan;
+    private readonly Action<IMapperConfigurationExpression> _mappingConfigurationAction;
+    private readonly bool _propertiesAutowired;
 
     public AutoMapperModule(Assembly[] assembliesToScan,
         Action<IMapperConfigurationExpression> mappingConfigurationAction,
         bool propertiesAutowired)
     {
-        this.assembliesToScan = assembliesToScan ?? throw new ArgumentNullException(nameof(assembliesToScan));
-        this.mappingConfigurationAction = mappingConfigurationAction ??
+        _assembliesToScan = assembliesToScan ?? throw new ArgumentNullException(nameof(assembliesToScan));
+        _mappingConfigurationAction = mappingConfigurationAction ??
                                           throw new ArgumentNullException(nameof(mappingConfigurationAction));
-        this.propertiesAutowired = propertiesAutowired;
+        _propertiesAutowired = propertiesAutowired;
     }
 
     protected override void Load(ContainerBuilder builder)
     {
-        var distinctAssemblies = this.assembliesToScan
+        var distinctAssemblies = _assembliesToScan
             .Where(a => !a.IsDynamic && a.GetName().Name != nameof(AutoMapper))
             .Distinct()
             .ToArray();
@@ -33,7 +33,7 @@ internal class AutoMapperModule : Module
             .As<Profile>()
             .SingleInstance();
 
-        if (propertiesAutowired)
+        if (_propertiesAutowired)
         {
             profiles.PropertiesAutowired();
         }
@@ -70,7 +70,7 @@ internal class AutoMapperModule : Module
                 .AsImplementedInterfaces()
                 .InstancePerDependency();
 
-            if (propertiesAutowired)
+            if (_propertiesAutowired)
                 openTypeBuilder.PropertiesAutowired();
         }
 
@@ -91,7 +91,7 @@ internal class AutoMapperModule : Module
 
     private void ConfigurationAction(IMapperConfigurationExpression cfg, IComponentContext componentContext)
     {
-        this.mappingConfigurationAction.Invoke(cfg);
+        _mappingConfigurationAction.Invoke(cfg);
 
         var profiles = componentContext.Resolve<IEnumerable<Profile>>();
 
