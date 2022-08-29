@@ -1,7 +1,7 @@
 ﻿using EasySoft.Core.AuthenticationCore.Operators;
 using EasySoft.Core.AutoFac.IocAssists;
-using EasySoft.Core.Infrastructure.Results;
 using EasySoft.Core.PermissionVerification.Observers;
+using EasySoft.UtilityTools.Core.Results;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.Result;

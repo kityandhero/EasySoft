@@ -12,7 +12,8 @@ public class AutofacAssist
     private const string MerchantAutoFacConfigFile = "autoFac.json";
 
     public static readonly AutofacAssist Instance = new();
-    public ILifetimeScope Container { get; set; } = null!;
+
+    private ILifetimeScope? _container;
 
     private static readonly ConfigurationModule ConfigurationModule;
 
@@ -38,14 +39,24 @@ public class AutofacAssist
         containerBuilder.RegisterModule(ConfigurationModule);
     }
 
+    public void SetContainer(ILifetimeScope container)
+    {
+        if (_container != null)
+        {
+            throw new Exception("container has been set, it disallow set more than once.");
+        }
+
+        _container = container;
+    }
+
     private ILifetimeScope GetContainer()
     {
-        if (Container == null)
+        if (_container == null)
         {
             throw new Exception("Container is null, please assign a value before use it.");
         }
 
-        return Container;
+        return _container;
     }
 
     public T Resolve<T>() where T : notnull

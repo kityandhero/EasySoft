@@ -2714,7 +2714,7 @@ namespace EasySoft.Core.Dapper.Base
                 return;
             }
 
-            AutofacAssist.Instance.Container.Resolve<ISqlExecutionRecordProducer>().Send(
+            AutofacAssist.Instance.Resolve<ISqlExecutionRecordProducer>().Send(
                 sqlExecutionMessage.SqlExecutionMessageId,
                 sqlExecutionMessage.CommandString,
                 sqlExecutionMessage.ExecuteType,

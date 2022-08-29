@@ -176,9 +176,9 @@ public static class WebApplicationBuilderExtensions
 
         EnvironmentAssist.SetEnvironment(app.Environment);
 
-        AutofacAssist.Instance.Container = app.UseHostFiltering().ApplicationServices.GetAutofacRoot();
+        AutofacAssist.Instance.SetContainer(app.UseHostFiltering().ApplicationServices.GetAutofacRoot());
 
-        ServiceAssist.ServiceProvider = app.Services;
+        ServiceAssist.SetServiceProvider(app.Services);
 
         FlagAssist.SetApplicationRunPerformed();
 
@@ -251,7 +251,7 @@ public static class WebApplicationBuilderExtensions
             }
             else
             {
-                var applicationChannel = AutofacAssist.Instance.Container.Resolve<IApplicationChannel>();
+                var applicationChannel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
 
                 StartupMessage.StartupMessageCollection.Add(new StartupMessage
                 {

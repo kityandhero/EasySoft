@@ -6,7 +6,7 @@ using EasySoft.Core.AuthenticationCore.Filters;
 using EasySoft.Core.AuthenticationCore.Operators;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Infrastructure.Results;
+using EasySoft.UtilityTools.Core.Results;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc.Controllers;

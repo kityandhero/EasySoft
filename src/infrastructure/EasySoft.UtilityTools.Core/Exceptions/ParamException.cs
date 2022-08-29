@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.Infrastructure.Exceptions
+﻿using System;
+
+namespace EasySoft.UtilityTools.Core.Exceptions
 {
     /// <summary>
     /// 传入参数异常

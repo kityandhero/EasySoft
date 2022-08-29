@@ -1,10 +1,11 @@
-﻿using System.Collections.Specialized;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using EasySoft.UtilityTools.Standard.Entity;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EasySoft.Core.Infrastructure.ExtensionMethods;
+namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 
 public static class ControllerBaseExtensionMethods
 {
@@ -53,7 +54,7 @@ public static class ControllerBaseExtensionMethods
 
         var result = "";
 
-        if ((nv.AllKeys.Contains(param)))
+        if ((nv.AllKeys.ToList().Contains(param)))
         {
             result = nv[param];
         }

@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Dynamic;
-using EasySoft.Core.Infrastructure.Results;
+using EasySoft.UtilityTools.Core.Results;
 using EasySoft.UtilityTools.Standard.Assists;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

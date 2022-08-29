@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Dynamic;
-using EasySoft.Core.Infrastructure.Results;
+using EasySoft.UtilityTools.Core.Results;
 using EasySoft.UtilityTools.Standard.Assists;
 using Newtonsoft.Json.Linq;
 
-namespace EasySoft.Core.Infrastructure.ExtensionMethods;
+namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 
 public static class ApiResultExtensions
 {

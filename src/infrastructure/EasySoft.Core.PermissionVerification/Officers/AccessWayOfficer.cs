@@ -18,7 +18,7 @@ public abstract class AccessWayOfficer : OfficerCore
     protected AccessWayOfficer()
     {
         AccessPermission = new AccessPermission();
-        Channel = AutofacAssist.Instance.Container.Resolve<IApplicationChannel>();
+        Channel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
     }
 
     private int GetChannel()
@@ -50,13 +50,13 @@ public abstract class AccessWayOfficer : OfficerCore
             AccessPermission.Competence
         );
 
-        var accessWayDetector = AutofacAssist.Instance.Container.Resolve<IAccessWayDetector>();
+        var accessWayDetector = AutofacAssist.Instance.Resolve<IAccessWayDetector>();
 
         var accessWay = accessWayDetector.Find(AccessPermission.GuidTag);
 
         if (accessWay == null)
         {
-            AutofacAssist.Instance.Container.Resolve<IAccessWayProducer>().Send(
+            AutofacAssist.Instance.Resolve<IAccessWayProducer>().Send(
                 AccessPermission.GuidTag,
                 AccessPermission.Name,
                 AccessPermission.Path,
@@ -72,7 +72,7 @@ public abstract class AccessWayOfficer : OfficerCore
                 return;
             }
 
-            AutofacAssist.Instance.Container.Resolve<IAccessWayProducer>().Send(
+            AutofacAssist.Instance.Resolve<IAccessWayProducer>().Send(
                 AccessPermission.GuidTag,
                 AccessPermission.Name,
                 AccessPermission.Path,

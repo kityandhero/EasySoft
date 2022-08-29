@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Results;
+﻿using EasySoft.UtilityTools.Core.Results;
 using EasySoft.UtilityTools.Standard.Result;
 using Microsoft.AspNetCore.Http;
 

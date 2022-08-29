@@ -6,16 +6,16 @@ namespace EasySoft.Core.Infrastructure.Assists;
 
 public static class LogAssist
 {
-    
-    
     private static ILogger? _logger;
 
     public static void SetLogger(ILogger logger)
     {
-        if (_logger == null)
+        if (_logger != null)
         {
-            _logger = logger;
+            throw new Exception("logger has been set, it disallow set more than once.");
         }
+
+        _logger = logger;
     }
 
     #region string

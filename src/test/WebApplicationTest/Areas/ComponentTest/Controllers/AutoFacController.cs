@@ -31,7 +31,7 @@ public class AutoFacController : AreaControllerCore
 
     public IActionResult TestCustom()
     {
-        var simple = AutofacAssist.Instance.Container.Resolve<ISimple>();
+        var simple = AutofacAssist.Instance.Resolve<ISimple>();
 
         return this.Success(new
         {

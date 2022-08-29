@@ -53,4 +53,14 @@ public static class HttpResponseExtensions
 
         await streamWriter.WriteAsync(JsonConvertAssist.SerializeAndKeyToLower(value));
     }
+
+    public static void SetCookie(this HttpResponse response, string key, string value)
+    {
+        response.SetCookie(key, value, new CookieOptions());
+    }
+
+    public static void SetCookie(this HttpResponse response, string key, string value, CookieOptions options)
+    {
+        response.Cookies.Append(key, value, options);
+    }
 }

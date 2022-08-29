@@ -1,5 +1,5 @@
-﻿using EasySoft.Core.Infrastructure.Results;
-using EasySoft.Core.Web.Framework.Controllers;
+﻿using EasySoft.Core.Web.Framework.Controllers;
+using EasySoft.UtilityTools.Core.Results;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using EntityFrameworkTest.Contexts;
