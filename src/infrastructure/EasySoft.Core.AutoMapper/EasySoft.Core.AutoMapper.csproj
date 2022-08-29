@@ -18,7 +18,16 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="AutoMapper" Version="11.0.1" />
+      <Folder Include="Modules" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Modules\AutoMapperModule.cs" />
+      <Compile Remove="ExtensionMethods\ContainerBuilderExtensions.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper.Contrib.Autofac.DependencyInjection" Version="6.1.0" />
     </ItemGroup>
 
 </Project>

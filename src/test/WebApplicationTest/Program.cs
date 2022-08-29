@@ -45,7 +45,7 @@ builder.Services.AddDbContext<DataContext>(
 );
 
 // AutoMapper Config
-builder.AddAdvanceAutoMapper(typeof(UserEntity).Assembly,true);
+builder.AddAdvanceAutoMapper(typeof(UserEntity).Assembly, true);
 
 builder.AddAdvanceApplicationChannel(
     ApplicationChannelCollection.TestApplication.ToInt(),

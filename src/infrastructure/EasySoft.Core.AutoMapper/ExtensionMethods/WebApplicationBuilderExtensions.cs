@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Autofac;
+using AutoMapper.Contrib.Autofac.DependencyInjection;
 using EasySoft.Core.Infrastructure.Assists;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;

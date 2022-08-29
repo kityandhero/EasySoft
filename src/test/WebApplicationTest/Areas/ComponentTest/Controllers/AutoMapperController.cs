@@ -18,10 +18,10 @@ public class AutoMapperController : AreaControllerCore
         Address = "NewYork"
     };
 
-    // public AutoMapperController(IMapper mapper)
-    // {
-    //     _mapper = mapper;
-    // }
+    public AutoMapperController(IMapper mapper)
+    {
+        _mapper = mapper;
+    }
 
     public IActionResult Index()
     {
@@ -34,7 +34,7 @@ public class AutoMapperController : AreaControllerCore
         
         var ss = AutofacAssist.Instance.Resolve<MapperConfiguration>();
         
-        var userOut = AutofacAssist.Instance.Resolve<IMapper>().Map<UserOut>(_userEntity);
+        var userOut = _mapper.Map<UserOut>(_userEntity);
 
         return this.Success(userOut);
     }
