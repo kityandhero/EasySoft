@@ -42,6 +42,11 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
+        ApplicationConfigActionAssist.GetWebApplicationBuilderActionCollection().ForEach(action =>
+        {
+            action(builder);
+        });
+
         // AddMvc 最为全面， 涵盖 AddControllers 等的全部功能
         builder.Services.AddMvc(
                 option =>
@@ -169,18 +174,6 @@ public static class WebApplicationBuilderExtensions
         FlagAssist.SetApplicationRunPerformed();
 
         // 中间件调用顺序请参阅: https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/middleware/?view=aspnetcore-6.0#middleware-order
-
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
-        {
-            LogLevel = LogLevel.Information,
-            Message = UtilityTools.Standard.ConstCollection.ApplicationStartBeginDivider,
-        });
-
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
-        {
-            LogLevel = LogLevel.Information,
-            Message = "Application prepare to start, please wait a moment...."
-        });
 
         if (GeneralConfigAssist.GetForwardedHeadersSwitch())
         {
@@ -432,14 +425,12 @@ public static class WebApplicationBuilderExtensions
 
         app.UseAdvanceHangfire();
 
-        ApplicationConfigActionAssist.GetWebApplicationActionCollection().ForEach(action => { action(app); });
-
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        if (app.Environment.IsDevelopment())
         {
-            LogLevel = LogLevel.Information,
-            Message =
-                "You can set your autoFac config with autoFac.json in ./configures/autoFac.json. The document link is https://autofac.readthedocs.io/en/latest/configuration/xml.html."
-        });
+            app.UseDeveloperExceptionPage();
+        }
+
+        ApplicationConfigActionAssist.GetWebApplicationActionCollection().ForEach(action => { action(app); });
 
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
         {
@@ -465,16 +456,6 @@ public static class WebApplicationBuilderExtensions
                 LogLevel = LogLevel.Information,
                 Message =
                     $"Dynamic config key: {Config.ConstCollection.GetDynamicConfigKeyCollection().Join(",")}, they can set in AgileConfig."
-            });
-        }
-
-        if (FlagAssist.HealthChecksSwitch)
-        {
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
-            {
-                LogLevel = LogLevel.Information,
-                Message =
-                    $"HealthChecks: enable{(!FlagAssist.StartupUrls.Any() ? "." : $", you can access {FlagAssist.StartupUrls}")}/healthchecks-ui to visit it.",
             });
         }
 

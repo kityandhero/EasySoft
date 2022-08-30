@@ -5,6 +5,8 @@ public static class FlagAssist
     private static bool _applicationRunPerformed;
     private static bool _advanceStaticFileOptionsSwitch;
     private static bool _logDashboardSwitch;
+    private static bool _entityFrameworkSwitch;
+    private static bool _healthChecksSwitch;
 
     public static bool CovertInjectionComplete { get; set; }
 
@@ -30,10 +32,6 @@ public static class FlagAssist
 
     public static bool ApplicationChannelIsDefault { get; set; }
 
-    public static bool HealthChecksSwitch { get; set; }
-
-    public static bool HealthChecksComplete { get; set; }
-
     public static IEnumerable<string> StartupUrls { get; set; }
 
     static FlagAssist()
@@ -41,6 +39,8 @@ public static class FlagAssist
         _applicationRunPerformed = false;
         _advanceStaticFileOptionsSwitch = false;
         _logDashboardSwitch = false;
+        _entityFrameworkSwitch = false;
+        _healthChecksSwitch = false;
 
         CovertInjectionComplete = false;
         TokenMode = "";
@@ -54,8 +54,6 @@ public static class FlagAssist
         PermissionVerificationMiddlewareModeSwitch = false;
         ApplicationChannelInjectionComplete = false;
         ApplicationChannelIsDefault = false;
-        HealthChecksSwitch = false;
-        HealthChecksSwitch = false;
         StartupUrls = new List<string>();
     }
 
@@ -95,5 +93,25 @@ public static class FlagAssist
     public static bool GetLogDashboardSwitch()
     {
         return _logDashboardSwitch;
+    }
+
+    public static void SetEntityFrameworkSwitchOpen()
+    {
+        _entityFrameworkSwitch = true;
+    }
+
+    public static bool GetEntityFrameworkSwitch()
+    {
+        return _entityFrameworkSwitch;
+    }
+
+    public static void SetHealthChecksSwitchOpen()
+    {
+        _healthChecksSwitch = true;
+    }
+
+    public static bool GetHealthChecksSwitch()
+    {
+        return _healthChecksSwitch;
     }
 }

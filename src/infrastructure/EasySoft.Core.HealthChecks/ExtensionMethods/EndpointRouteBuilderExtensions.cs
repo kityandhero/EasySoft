@@ -12,7 +12,7 @@ public static class EndpointRouteBuilderExtensions
         this IEndpointRouteBuilder endpointRouteBuilder
     )
     {
-        if (!FlagAssist.HealthChecksSwitch)
+        if (!FlagAssist.GetHealthChecksSwitch())
         {
             return;
         }

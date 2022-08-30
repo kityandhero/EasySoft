@@ -19,7 +19,19 @@ public class StartupMessage
 
     static StartupMessage()
     {
-        StartupMessageCollection = new List<StartupMessage>();
+        StartupMessageCollection = new List<StartupMessage>
+        {
+            new()
+            {
+                LogLevel = LogLevel.Information,
+                Message = UtilityTools.Standard.ConstCollection.ApplicationStartBeginDivider,
+            },
+            new()
+            {
+                LogLevel = LogLevel.Information,
+                Message = "Application prepare to start, please wait a moment...."
+            }
+        };
     }
 
     public static void Print()

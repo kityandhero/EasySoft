@@ -3,9 +3,11 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.AutoFac.Selectors;
+using EasySoft.Core.Infrastructure.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.AutoFac.ExtensionMethods;
 
@@ -20,6 +22,13 @@ public static class WebApplicationBuilderExtensions
         builder.Host.ConfigureContainer<ContainerBuilder>(AutofacAssist.Init);
 
         builder.AddControllerPropertiesAutowired(Assembly.GetEntryAssembly());
+
+        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        {
+            LogLevel = LogLevel.Information,
+            Message =
+                "You can set your autoFac config with autoFac.json in ./configures/autoFac.json. The document link is https://autofac.readthedocs.io/en/latest/configuration/xml.html."
+        });
 
         return builder;
     }

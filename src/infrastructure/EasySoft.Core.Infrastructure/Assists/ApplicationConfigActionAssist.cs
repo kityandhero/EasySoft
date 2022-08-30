@@ -10,6 +10,7 @@ public static class ApplicationConfigActionAssist
     private static List<string> _areas = new();
     private static readonly List<Action<MvcOptions>> MvcOptionActions = new();
     private static readonly List<Action<IEndpointRouteBuilder>> EndpointRouteBuilderActions = new();
+    private static readonly List<Action<WebApplicationBuilder>> WebApplicationBuilderActions = new();
     private static readonly List<Action<WebApplication>> WebApplicationActions = new();
 
     public static void AddArea(string area)
@@ -49,6 +50,21 @@ public static class ApplicationConfigActionAssist
     public static IEnumerable<Action<IEndpointRouteBuilder>> GetEndpointRouteBuilderActionCollection()
     {
         return EndpointRouteBuilderActions;
+    }
+
+    public static void AddWebApplicationBuilderAction(Action<WebApplicationBuilder> action)
+    {
+        WebApplicationBuilderActions.Add(action);
+    }
+
+    public static void AddWebApplicationBuilderActions(params Action<WebApplicationBuilder>[] actions)
+    {
+        WebApplicationBuilderActions.AddRange(actions);
+    }
+
+    public static IEnumerable<Action<WebApplicationBuilder>> GetWebApplicationBuilderActionCollection()
+    {
+        return WebApplicationBuilderActions;
     }
 
     public static void AddWebApplicationAction(Action<WebApplication> action)

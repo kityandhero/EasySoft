@@ -26,9 +26,9 @@ public static class WebApplicationBuilderAssist
             Args = args
         });
 
-        builder.AddAdvanceAutoFac()
+        builder.AddAdvanceUrls()
+            .AddAdvanceAutoFac()
             .AddCovertInjection()
-            .AddAdvanceUrls()
             .AddAdvanceMapster();
 
         if (GeneralConfigAssist.GetAgileConfigSwitch())
