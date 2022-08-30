@@ -4,12 +4,12 @@ using AutoFacTest.Interfaces;
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.Mapster.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
+using EasySoft.Core.Web.Framework.Assists;
 using EasySoft.Core.Web.Framework.BuilderAssists;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EntityFrameworkTest.Contexts;
@@ -21,8 +21,9 @@ using Microsoft.EntityFrameworkCore;
 using WebApplicationTest.EasyTokens;
 using WebApplicationTest.Enums;
 using WebApplicationTest.Hubs;
-using WebApplicationTest.Options;
 using WebApplicationTest.PrepareStartWorks;
+
+ApplicationConfigActionAssist.AddAreas("AreaTest", "AuthTest", "DataTest", "ComponentTest");
 
 AgileConfigClientActionAssist.ActionAgileConfigChanged = e =>
 {
@@ -85,9 +86,7 @@ builder.AddExtraNormalInjection(containerBuilder =>
 // SignalR
 builder.Services.AddSignalR();
 
-var app = builder.EasyBuild(
-    new List<string> { "AreaTest", "AuthTest", "DataTest", "ComponentTest" }
-);
+var app = builder.EasyBuild();
 
 // //启用置健康检测
 // var app = builder.EasyBuild(

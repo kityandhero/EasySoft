@@ -18,6 +18,7 @@ using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Swagger.ExtensionMethods;
+using EasySoft.Core.Web.Framework.Assists;
 using EasySoft.Core.Web.Framework.Attributes;
 using EasySoft.Core.Web.Framework.Filters;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -26,9 +27,7 @@ using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
@@ -40,37 +39,8 @@ namespace EasySoft.Core.Web.Framework.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
-    public static WebApplication EasyBuild(this WebApplicationBuilder builder)
-    {
-        return EasyBuild(builder, null, new List<string>(), null);
-    }
-
-    public static WebApplication EasyBuild(this WebApplicationBuilder builder, List<string> areas)
-    {
-        return EasyBuild(builder, null, areas, null);
-    }
-
     public static WebApplication EasyBuild(
-        this WebApplicationBuilder builder,
-        Action<IEndpointRouteBuilder> endpointAction
-    )
-    {
-        return EasyBuild(builder, null, new List<string>(), endpointAction);
-    }
-
-    public static WebApplication EasyBuild(
-        this WebApplicationBuilder builder,
-        Action<MvcOptions>? actionMvcOptions
-    )
-    {
-        return EasyBuild(builder, actionMvcOptions, new List<string>(), null);
-    }
-
-    public static WebApplication EasyBuild(
-        this WebApplicationBuilder builder,
-        Action<MvcOptions>? actionMvcOptions,
-        List<string> areas,
-        Action<IEndpointRouteBuilder>? endpointAction
+        this WebApplicationBuilder builder
     )
     {
         // AddMvc 最为全面， 涵盖 AddControllers 等的全部功能
@@ -106,7 +76,7 @@ public static class WebApplicationBuilderExtensions
                     // 设置全局异常过滤器
                     option.Filters.Add<GlobalExceptionFilter>();
 
-                    actionMvcOptions?.Invoke(option);
+                    ApplicationConfigActionAssist.GetMvcOptionActionCollection().ForEach(action => { action(option); });
                 }
             )
             // 爆露ApplicationPartManager 实例给外部工具，用以实现某些特定功能
@@ -482,7 +452,7 @@ public static class WebApplicationBuilderExtensions
                 "You can get all controller actions by visit https://[host]:[port]/[controller]/getAllActions where controller inherited from CustomControllerBase."
         });
 
-        app.UseAdvanceMapControllers(areas, endpointAction);
+        app.UseAdvanceMapControllers();
 
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
         {

@@ -1,6 +1,8 @@
-﻿using EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿using EasySoft.Core.Infrastructure.Entities;
+using EasySoft.Core.Web.Framework.Assists;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.Web.Framework.ExtensionMethods;
 
@@ -10,26 +12,31 @@ public static class WebApplicationExtensions
     /// build route areas
     /// </summary>  
     /// <param name="application"></param>
-    /// <param name="areas"></param>
-    /// <param name="action"></param>
     /// <returns></returns>
     public static WebApplication UseAdvanceMapControllers(
-        this WebApplication application,
-        List<string> areas,
-        Action<IEndpointRouteBuilder>? action = null
+        this WebApplication application
     )
     {
         application.UseMvc();
 
-        if (areas.Any())
+        if (ApplicationConfigActionAssist.GetAreaCollection().Any())
         {
-            var areaAdjust = areas.Where(o => !string.IsNullOrWhiteSpace(o.Remove(" "))).ToList();
+            var areaAdjust = ApplicationConfigActionAssist.GetAreaCollection()
+                .Where(o => !string.IsNullOrWhiteSpace(o.Remove(" ")))
+                .ToList();
 
             if (areaAdjust.Any())
             {
+                StartupMessage.StartupMessageCollection.Add(new StartupMessage
+                {
+                    LogLevel = LogLevel.Information,
+                    Message = $"Areas: {ApplicationConfigActionAssist.GetAreaCollection().Join(",")}"
+                });
+
                 application.UseEndpoints(endpoints =>
                 {
-                    action?.Invoke(endpoints);
+                    ApplicationConfigActionAssist.GetEndpointRouteBuilderActionCollection()
+                        .ForEach(action => { action(endpoints); });
 
                     areaAdjust.ForEach(o =>
                     {
@@ -55,7 +62,8 @@ public static class WebApplicationExtensions
             {
                 application.UseEndpoints(endpoints =>
                 {
-                    action?.Invoke(endpoints);
+                    ApplicationConfigActionAssist.GetEndpointRouteBuilderActionCollection()
+                        .ForEach(action => { action(endpoints); });
 
                     endpoints.MapControllerRoute(
                         name: "default",
@@ -68,7 +76,8 @@ public static class WebApplicationExtensions
         {
             application.UseEndpoints(endpoints =>
             {
-                action?.Invoke(endpoints);
+                ApplicationConfigActionAssist.GetEndpointRouteBuilderActionCollection()
+                    .ForEach(action => { action(endpoints); });
 
                 endpoints.MapControllerRoute(
                     name: "default",
