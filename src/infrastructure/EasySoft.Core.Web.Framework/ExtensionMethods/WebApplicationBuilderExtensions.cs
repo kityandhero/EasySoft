@@ -462,19 +462,19 @@ public static class WebApplicationBuilderExtensions
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
-            Message = $"Current Environment: {EnvironmentAssist.GetEnvironment().EnvironmentName}.",
+            Message = $"Environment: {EnvironmentAssist.GetEnvironment().EnvironmentName}.",
         });
 
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
-            Message = $"Current ContentRootPath: \"{EnvironmentAssist.GetEnvironment().ContentRootPath}\".",
+            Message = $"ContentRootPath: \"{EnvironmentAssist.GetEnvironment().ContentRootPath}\".",
         });
 
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
-            Message = $"Current WebRootPath: \"{GetWebRootPath()}\".",
+            Message = $"WebRootPath: \"{GetWebRootPath()}\".",
         });
 
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
