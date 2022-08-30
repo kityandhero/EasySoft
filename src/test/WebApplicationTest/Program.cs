@@ -3,12 +3,10 @@ using AutoFacTest.Implementations;
 using AutoFacTest.Interfaces;
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.ExtensionMethods;
-using EasySoft.Core.AutoMapper.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.HealthChecks.Entities;
-using EasySoft.Core.HealthChecks.ExtensionMethods;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
+using EasySoft.Core.Mapster.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.BuilderAssists;
@@ -18,17 +16,13 @@ using EntityFrameworkTest.IRepositories;
 using EntityFrameworkTest.IServices;
 using EntityFrameworkTest.Repositories;
 using EntityFrameworkTest.Services;
-using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.EntityFrameworkCore;
-using WebApplicationTest.AutoMappers;
 using WebApplicationTest.EasyTokens;
 using WebApplicationTest.Enums;
-using WebApplicationTest.HealthChecks;
 using WebApplicationTest.Hubs;
 using WebApplicationTest.PrepareStartWorks;
 
-ActionAssist.ActionAgileConfigChanged = e =>
+AgileConfigClientActionAssist.ActionAgileConfigChanged = e =>
 {
     // LogAssist.Info("config changed");
 };
@@ -45,7 +39,7 @@ builder.Services.AddDbContext<DataContext>(
 );
 
 // AutoMapper Config
-builder.AddAdvanceAutoMapper(typeof(UserEntity).Assembly, true);
+builder.AddAdvanceMapster();
 
 builder.AddAdvanceApplicationChannel(
     ApplicationChannelCollection.TestApplication.ToInt(),

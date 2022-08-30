@@ -85,7 +85,7 @@ public class GeneralConfig : IConfig
     public string RemoteGeneralLogSwitch { get; set; }
 
     public string RemoteErrorLogSwitch { get; set; }
-    
+
     public string RemoteSqlExecutionRecordSwitch { get; set; }
 
     public string UseStaticFiles { get; set; }
@@ -97,6 +97,8 @@ public class GeneralConfig : IConfig
     public string CorsSwitch { get; set; }
 
     public string CorsPolicies { get; set; }
+
+    public string HttpRedirectionHttpsSwitch { get; set; }
 
     #region AgileConfig
 
@@ -148,28 +150,35 @@ public class GeneralConfig : IConfig
     #endregion
 
     /// <summary>
-    /// 开关 反代代理场景下的转发 Http Header
+    /// 开关 反向代理场景下的转发 Http Header
     /// </summary>
     public string ForwardedHeadersSwitch { get; set; }
 
     public GeneralConfig()
     {
         CacheMode = "InMemory";
+
         Urls = "";
+
         AccessWayDetectSwitch = "0";
         RemoteGeneralLogSwitch = "0";
         RemoteErrorLogSwitch = "0";
         RemoteSqlExecutionRecordSwitch = "0";
+
         UseStaticFiles = "1";
+
         UseAuthentication = "0";
         UseAuthorization = "0";
+
         CorsSwitch = "0";
         CorsPolicies = "*";
+
         TokenServerDumpSwitch = "1";
         TokenExpires = "7200";
         TokenParseFromUrlSwitch = "0";
         TokenParseFromCookieSwitch = "0";
         TokenName = "token";
+
         JsonWebTokenClockSkew = "30";
         JsonWebTokenValidateAudience = "1";
         JsonWebTokenValidateIssuer = "1";
@@ -178,7 +187,9 @@ public class GeneralConfig : IConfig
         JsonWebTokenValidAudience = "";
         JsonWebTokenValidIssuer = "";
         JsonWebTokenIssuerSigningKey = "";
+
         ForwardedHeadersSwitch = "0";
+
         AgileConfigSwitch = "1";
         AgileConfigAppId = "";
         AgileConfigSecret = "";
@@ -188,5 +199,7 @@ public class GeneralConfig : IConfig
         AgileConfigEnv = "";
         AgileConfigCacheDirectory = "";
         AgileConfigHttpTimeout = "100";
+
+        HttpRedirectionHttpsSwitch = "0";
     }
 }

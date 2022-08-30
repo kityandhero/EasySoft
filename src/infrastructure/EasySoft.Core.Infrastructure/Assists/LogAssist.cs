@@ -40,7 +40,7 @@ public static class LogAssist
             return;
         }
 
-        GetLogger().LogInformation(" {Log}", log.Trim());
+        GetLogger().LogInformation("{Log}", log.Trim());
     }
 
     /// <summary>
@@ -127,7 +127,7 @@ public static class LogAssist
             return;
         }
 
-        GetLogger().LogWarning(" {Log}", log.Trim());
+        GetLogger().LogWarning("{Log}", log.Trim());
     }
 
     /// <summary>

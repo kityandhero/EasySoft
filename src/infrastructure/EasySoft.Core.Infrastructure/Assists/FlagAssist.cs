@@ -3,7 +3,6 @@
 public static class FlagAssist
 {
     private static bool _applicationRunPerformed;
-    private static bool _autoMapperSwitch;
 
     public static bool CovertInjectionComplete { get; set; }
 
@@ -33,12 +32,11 @@ public static class FlagAssist
 
     public static bool HealthChecksComplete { get; set; }
 
-    public static string StartupUrls { get; set; }
+    public static IEnumerable<string> StartupUrls { get; set; }
 
     static FlagAssist()
     {
         _applicationRunPerformed = false;
-        _autoMapperSwitch = false;
 
         CovertInjectionComplete = false;
         TokenMode = "";
@@ -54,7 +52,7 @@ public static class FlagAssist
         ApplicationChannelIsDefault = false;
         HealthChecksSwitch = false;
         HealthChecksSwitch = false;
-        StartupUrls = "";
+        StartupUrls = new List<string>();
     }
 
     public static void SetApplicationRunPerformed()
@@ -69,19 +67,5 @@ public static class FlagAssist
     public static bool GetApplicationRunWhetherPerformed()
     {
         return _applicationRunPerformed;
-    }
-
-    public static void SetAutoMapperSwitchOpen()
-    {
-        _autoMapperSwitch = true;
-    }
-
-    /// <summary>
-    /// 获取应用是否已经 running
-    /// </summary>
-    /// <returns></returns>
-    public static bool GetAutoMapperSwitch()
-    {
-        return _autoMapperSwitch;
     }
 }

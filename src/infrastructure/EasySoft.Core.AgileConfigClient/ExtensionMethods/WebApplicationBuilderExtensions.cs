@@ -59,7 +59,7 @@ public static class WebApplicationBuilderExtensions
                     }
 
                     //注册配置项修改事件    
-                    configClient.ConfigChanged += ActionAssist.ActionAgileConfigChanged;
+                    configClient.ConfigChanged += AgileConfigClientActionAssist.ActionAgileConfigChanged;
 
                     //使用AddAgileConfig配置一个新的IConfigurationSource
                     config.AddAgileConfig(configClient);

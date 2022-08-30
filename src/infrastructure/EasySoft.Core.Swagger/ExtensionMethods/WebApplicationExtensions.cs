@@ -29,7 +29,7 @@ public static class WebApplicationExtensions
         {
             LogLevel = LogLevel.Information,
             Message =
-                $"swagger: enable, access {(string.IsNullOrWhiteSpace(FlagAssist.StartupUrls) ? "https://[host]:[port]" : FlagAssist.StartupUrls)}/swagger/index.html."
+                $"swagger: enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]" : FlagAssist.StartupUrls)}/swagger/index.html."
         });
 
         return application;

@@ -29,7 +29,7 @@ public static class WebApplicationExtensions
         {
             LogLevel = LogLevel.Information,
             Message =
-                $"Hangfire: enable, access {(string.IsNullOrWhiteSpace(FlagAssist.StartupUrls) ? "https://[host]:[port]" : FlagAssist.StartupUrls)}/hangfire."
+                $"Hangfire: enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]" : FlagAssist.StartupUrls)}/hangfire."
         });
 
         return application;

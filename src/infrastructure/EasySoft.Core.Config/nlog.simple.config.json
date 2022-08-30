@@ -3,7 +3,7 @@
     "autoReload": true,
     "throwConfigExceptions": true,
     "internalLogLevel": "Info",
-    "internalLogFile": "${basedir}/logs/nlog-internal-${shortDate}.log",
+    "internalLogFile": "${basedir}/logs/nlog-internal.log",
     "extensions": [
       {
         "assembly": "NLog.Extensions.Logging"
@@ -24,9 +24,19 @@
     },
     "targets": {
       "async": true,
-      "all-file": {
+      "trace-file": {
         "type": "File",
-        "fileName": "${basedir}/logs/nlog-all-${shortDate}.log",
+        "createDirs": true,
+        "concurrentWrites": true,
+        "keepFileOpen": true,
+        "openFileCacheTimeout": 20,
+        "autoFlush": false,
+        "openFileFlushTimeout": 10,
+        "encoding": "utf-8",
+        "fileName": "${basedir}/logs/nlog-trace-${shortDate}.log",
+        "archiveFileName": "${basedir}/logs/nlog-trace-${shortDate}-{#####}.log",
+        "archiveAboveSize": "1048576",
+        "archiveNumbering": "Sequence",
         "layout": {
           "type": "JsonLayout",
           "Attributes": [
@@ -44,7 +54,93 @@
             },
             {
               "name": "message",
-              "layout": "${message:raw=true}"
+              "layout": "${message}"
+            },
+            {
+              "name": "properties",
+              "encode": false,
+              "layout": {
+                "type": "JsonLayout",
+                "includeAllProperties": "true"
+              }
+            }
+          ]
+        }
+      },
+      "debug-file": {
+        "type": "File",
+        "createDirs": true,
+        "concurrentWrites": true,
+        "keepFileOpen": true,
+        "openFileCacheTimeout": 20,
+        "autoFlush": false,
+        "openFileFlushTimeout": 10,
+        "encoding": "utf-8",
+        "fileName": "${basedir}/logs/nlog-debug-${shortDate}.log",
+        "archiveFileName": "${basedir}/logs/nlog-debug-${shortDate}-{#####}.log",
+        "archiveAboveSize": "1048576",
+        "archiveNumbering": "Sequence",
+        "layout": {
+          "type": "JsonLayout",
+          "Attributes": [
+            {
+              "name": "timestamp",
+              "layout": "${date:format=o}"
+            },
+            {
+              "name": "level",
+              "layout": "${level}"
+            },
+            {
+              "name": "logger",
+              "layout": "${logger}"
+            },
+            {
+              "name": "message",
+              "layout": "${message}"
+            },
+            {
+              "name": "properties",
+              "encode": false,
+              "layout": {
+                "type": "JsonLayout",
+                "includeAllProperties": "true"
+              }
+            }
+          ]
+        }
+      },
+      "production-file": {
+        "type": "File",
+        "createDirs": true,
+        "concurrentWrites": true,
+        "keepFileOpen": true,
+        "openFileCacheTimeout": 20,
+        "autoFlush": false,
+        "openFileFlushTimeout": 10,
+        "encoding": "utf-8",
+        "fileName": "${basedir}/logs/nlog-production-${shortDate}.log",
+        "archiveFileName": "${basedir}/logs/nlog-production-${shortDate}-{#####}.log",
+        "archiveAboveSize": "1048576",
+        "archiveNumbering": "Sequence",
+        "layout": {
+          "type": "JsonLayout",
+          "Attributes": [
+            {
+              "name": "timestamp",
+              "layout": "${date:format=o}"
+            },
+            {
+              "name": "level",
+              "layout": "${level}"
+            },
+            {
+              "name": "logger",
+              "layout": "${logger}"
+            },
+            {
+              "name": "message",
+              "layout": "${message}"
             },
             {
               "name": "properties",
@@ -63,7 +159,7 @@
         "messageLimit": 100,
         "target": {
           "type": "ColoredConsole",
-          "layout": "[${longDate}] ${uppercase:${level}} ${message} ${exception:format=toString}",
+          "layout": "[${longDate}] ${uppercase:${level}:padding=-5:padCharacter= } ${message} ${exception:format=toString}",
           "rowHighlightingRules": [
             {
               "condition": "level == LogLevel.Info",
@@ -100,16 +196,23 @@
       {
         "logger": "*",
         "minLevel": "Trace",
-        "writeTo": "all-file"
-      },
-      {
-        "logger": "Microsoft.*",
-        "maxLevel": "Info",
-        "final": true
+        "maxLevel": "Trace",
+        "writeTo": "trace-file"
       },
       {
         "logger": "*",
         "minLevel": "Debug",
+        "maxLevel": "Debug",
+        "writeTo": "debug-file"
+      },
+      {
+        "logger": "*",
+        "minLevel": "Info",
+        "writeTo": "production-file"
+      },
+      {
+        "logger": "*",
+        "minLevel": "Trace",
         "writeTo": "own-console",
         "filterDefaultAction": "Log",
         "filters": {

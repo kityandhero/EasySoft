@@ -46,14 +46,16 @@ public static class WebApplicationBuilderExtensions
 
         var urlsAdjust = urls.IsInt() ? $"http://localhost:{urls}" : urls;
 
-        FlagAssist.StartupUrls = urlsAdjust;
+        FlagAssist.StartupUrls = urlsAdjust.Split(",").ToListFilterNullOrWhiteSpace()
+            .ForEach(o => o.IsInt() ? $"http://localhost:{o}" : o)
+            .ToListFilterNullOrWhiteSpace();
 
-        builder.WebHost.UseUrls(urlsAdjust);
+        builder.WebHost.UseUrls(FlagAssist.StartupUrls.ToArray());
 
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
-            Message = $"Startup urls is {urlsAdjust}."
+            Message = $"Startup urls is {FlagAssist.StartupUrls.Join(" ")}."
         });
 
         return builder;

@@ -1,4 +1,4 @@
-﻿namespace WebApplicationTest.AutoMappers;
+﻿namespace WebApplicationTest.Mapsters;
 
 public class UserReverse
 {
@@ -7,4 +7,11 @@ public class UserReverse
     public string Gender { get; set; }
 
     public string Address { get; set; }
+
+    public UserReverse()
+    {
+        Name = "";
+        Gender = "";
+        Address = "";
+    }
 }

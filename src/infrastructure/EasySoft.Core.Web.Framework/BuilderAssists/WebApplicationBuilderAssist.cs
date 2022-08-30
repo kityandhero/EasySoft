@@ -5,11 +5,11 @@ using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Config.Utils;
 using EasySoft.Core.DynamicConfig.Assists;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Mapster.ExtensionMethods;
 using EasySoft.Core.NLog.Assists;
 using EasySoft.Core.NLog.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using NLog;
 using NLog.Extensions.Logging;
@@ -32,6 +32,8 @@ public static class WebApplicationBuilderAssist
         builder.AddCovertInjection();
 
         builder.AddAdvanceUrls();
+
+        builder.AddAdvanceMapster();
 
         if (GeneralConfigAssist.GetAgileConfigSwitch())
         {

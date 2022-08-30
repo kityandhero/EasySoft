@@ -276,7 +276,25 @@ public static class WebApplicationBuilderExtensions
             }
         }
 
-        app.UseHttpsRedirection();
+        if (GeneralConfigAssist.GetHttpRedirectionHttpsSwitch())
+        {
+            // 当前项目启动后，监听的是否是多个端口，其中如果有协议是Https—我们在访问Http的默认会转发到Https中
+            app.UseHttpsRedirection();
+            
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = LogLevel.Information,
+                Message = "HttpRedirectionHttpsSwitch: enable."
+            });
+        }
+        else
+        {
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = LogLevel.Information,
+                Message = "HttpRedirectionHttpsSwitch: disabled."
+            });
+        }
 
         if (GeneralConfigAssist.GetUseStaticFiles())
         {
@@ -285,7 +303,7 @@ public static class WebApplicationBuilderExtensions
             StartupMessage.StartupMessageCollection.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
-                Message = "useStaticFiles: enable."
+                Message = "UseStaticFiles: enable."
             });
         }
         else
@@ -480,7 +498,7 @@ public static class WebApplicationBuilderExtensions
             {
                 LogLevel = LogLevel.Information,
                 Message =
-                    $"HealthChecks: enable{(string.IsNullOrWhiteSpace(FlagAssist.StartupUrls) ? "." : $", you can access {FlagAssist.StartupUrls}")}/healthchecks-ui to visit it.",
+                    $"HealthChecks: enable{(!FlagAssist.StartupUrls.Any() ? "." : $", you can access {FlagAssist.StartupUrls}")}/healthchecks-ui to visit it.",
             });
         }
 
@@ -488,7 +506,7 @@ public static class WebApplicationBuilderExtensions
         {
             LogLevel = LogLevel.Information,
             Message =
-                $"Application start completed{(string.IsNullOrWhiteSpace(FlagAssist.StartupUrls) ? "." : $" at {FlagAssist.StartupUrls}")}.",
+                $"Application start completed{(!FlagAssist.StartupUrls.Any() ? "." : $" at {FlagAssist.StartupUrls}")}.",
         });
 
         StartupMessage.StartupMessageCollection.Add(new StartupMessage

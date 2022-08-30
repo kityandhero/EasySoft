@@ -641,4 +641,25 @@ public static class GeneralConfigAssist
     }
 
     #endregion
+
+    /// <summary>
+    /// 开关: 是否将Http请求重定向为Https, 即是否使用 UseHttpsRedirection, 默认关闭
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static bool GetHttpRedirectionHttpsSwitch()
+    {
+        var v = GetConfig().HttpRedirectionHttpsSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 HttpRedirectionHttpsSwitch: {ConfigFile} -> HttpRedirectionHttpsSwitch,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
 }

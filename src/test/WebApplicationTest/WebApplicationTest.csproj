@@ -28,9 +28,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.AutoMapper\EasySoft.Core.AutoMapper.csproj" />
         <ProjectReference Include="..\..\infrastructure\EasySoft.Core.EasyToken\EasySoft.Core.EasyToken.csproj" />
         <ProjectReference Include="..\..\infrastructure\EasySoft.Core.HealthChecks\EasySoft.Core.HealthChecks.csproj" />
+        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Mapster\EasySoft.Core.Mapster.csproj" />
         <ProjectReference Include="..\AutoFacTest\AutoFacTest.csproj" />
         <ProjectReference Include="..\EntityFrameworkTest\EntityFrameworkTest.csproj" />
     </ItemGroup>
