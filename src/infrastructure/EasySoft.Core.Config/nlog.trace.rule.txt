@@ -1,0 +1,6 @@
+{
+  "logger": "*",
+  "minLevel": "Trace",
+  "maxLevel": "Trace",
+  "writeTo": "trace-file"
+}

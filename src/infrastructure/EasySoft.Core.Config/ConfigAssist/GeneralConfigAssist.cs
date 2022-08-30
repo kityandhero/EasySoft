@@ -662,4 +662,46 @@ public static class GeneralConfigAssist
 
         return value == 1;
     }
+    
+    /// <summary>
+    /// 开关: 默认Nlog配置中是否启用Trace日志记录, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static bool GetNlogDefaultConfigTraceSwitch()
+    {
+        var v = GetConfig().NlogDefaultConfigTraceSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 NlogDefaultConfigTraceSwitch: {ConfigFile} -> NlogDefaultConfigTraceSwitch,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
+    
+    /// <summary>
+    /// 开关: 默认Nlog配置中是否启用Debug日志记录, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static bool GetNlogDefaultConfigDebugSwitch()
+    {
+        var v = GetConfig().NlogDefaultConfigDebugSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 NlogDefaultConfigDebugSwitch: {ConfigFile} -> NlogDefaultConfigDebugSwitch,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
 }

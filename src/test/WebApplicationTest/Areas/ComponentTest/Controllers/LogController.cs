@@ -8,7 +8,7 @@ public class LogController : AreaControllerCore
 {
     public IActionResult Test()
     {
-        LogAssist.Debug("info");
+        LogAssist.Info("info");
         LogAssist.Debug("debug");
         LogAssist.Warning("warning");
         LogAssist.Error("error");

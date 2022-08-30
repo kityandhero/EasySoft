@@ -23,11 +23,23 @@
 
     <ItemGroup>
       <None Remove="nlog.simple.config.json" />
-      <EmbeddedResource Include="nlog.simple.config.json" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.Configuration.NewtonsoftJson" Version="5.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="nlog.trace.target.txt" />
+      <EmbeddedResource Include="nlog.trace.target.txt" />
+      <None Remove="nlog.trace.rule.txt" />
+      <EmbeddedResource Include="nlog.trace.rule.txt" />
+      <None Remove="nlog.debug.target.txt" />
+      <EmbeddedResource Include="nlog.debug.target.txt" />
+      <None Remove="nlog.debug.rule.txt" />
+      <EmbeddedResource Include="nlog.debug.rule.txt" />
+      <None Remove="nlog.main.config.txt" />
+      <EmbeddedResource Include="nlog.main.config.txt" />
     </ItemGroup>
     
 </Project>

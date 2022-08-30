@@ -24,92 +24,8 @@
     },
     "targets": {
       "async": true,
-      "trace-file": {
-        "type": "File",
-        "createDirs": true,
-        "concurrentWrites": true,
-        "keepFileOpen": true,
-        "openFileCacheTimeout": 20,
-        "autoFlush": false,
-        "openFileFlushTimeout": 10,
-        "encoding": "utf-8",
-        "fileName": "${basedir}/logs/nlog-trace-${shortDate}.log",
-        "archiveFileName": "${basedir}/logs/nlog-trace-${shortDate}-{#####}.log",
-        "archiveAboveSize": "1048576",
-        "archiveNumbering": "Sequence",
-        "layout": {
-          "type": "JsonLayout",
-          "Attributes": [
-            {
-              "name": "timestamp",
-              "layout": "${date:format=o}"
-            },
-            {
-              "name": "level",
-              "layout": "${level}"
-            },
-            {
-              "name": "logger",
-              "layout": "${logger}"
-            },
-            {
-              "name": "message",
-              "layout": "${message}"
-            },
-            {
-              "name": "properties",
-              "encode": false,
-              "layout": {
-                "type": "JsonLayout",
-                "includeAllProperties": "true"
-              }
-            }
-          ]
-        }
-      },
-      "debug-file": {
-        "type": "File",
-        "createDirs": true,
-        "concurrentWrites": true,
-        "keepFileOpen": true,
-        "openFileCacheTimeout": 20,
-        "autoFlush": false,
-        "openFileFlushTimeout": 10,
-        "encoding": "utf-8",
-        "fileName": "${basedir}/logs/nlog-debug-${shortDate}.log",
-        "archiveFileName": "${basedir}/logs/nlog-debug-${shortDate}-{#####}.log",
-        "archiveAboveSize": "1048576",
-        "archiveNumbering": "Sequence",
-        "layout": {
-          "type": "JsonLayout",
-          "Attributes": [
-            {
-              "name": "timestamp",
-              "layout": "${date:format=o}"
-            },
-            {
-              "name": "level",
-              "layout": "${level}"
-            },
-            {
-              "name": "logger",
-              "layout": "${logger}"
-            },
-            {
-              "name": "message",
-              "layout": "${message}"
-            },
-            {
-              "name": "properties",
-              "encode": false,
-              "layout": {
-                "type": "JsonLayout",
-                "includeAllProperties": "true"
-              }
-            }
-          ]
-        }
-      },
+      ###trace-target###
+      ###debug-target###
       "production-file": {
         "type": "File",
         "createDirs": true,
@@ -162,12 +78,20 @@
           "layout": "[${longDate}] ${uppercase:${level}:padding=-5:padCharacter= } ${message} ${exception:format=toString}",
           "rowHighlightingRules": [
             {
-              "condition": "level == LogLevel.Info",
-              "foregroundColor": "Gray"
+              "condition": "level == LogLevel.Trace",
+              "foregroundColor": "DarkGray"
             },
             {
               "condition": "level == LogLevel.Debug",
-              "foregroundColor": "Blue"
+              "foregroundColor": "DarkCyan"
+            },
+            {
+              "condition": "level == LogLevel.Info",
+              "foregroundColor": "White"
+            },
+            {
+              "condition": "level == LogLevel.WARN",
+              "foregroundColor": "DarkMagenta"
             },
             {
               "condition": "level == LogLevel.Error",
@@ -193,18 +117,8 @@
       }
     },
     "rules": [
-      {
-        "logger": "*",
-        "minLevel": "Trace",
-        "maxLevel": "Trace",
-        "writeTo": "trace-file"
-      },
-      {
-        "logger": "*",
-        "minLevel": "Debug",
-        "maxLevel": "Debug",
-        "writeTo": "debug-file"
-      },
+      ###trace-rule###
+      ###debug-rule###
       {
         "logger": "*",
         "minLevel": "Info",
@@ -212,7 +126,7 @@
       },
       {
         "logger": "*",
-        "minLevel": "Trace",
+        "minLevel": "###console-minLevel###",
         "writeTo": "own-console",
         "filterDefaultAction": "Log",
         "filters": {

@@ -1,0 +1,6 @@
+{
+  "logger": "*",
+  "minLevel": "Debug",
+  "maxLevel": "Debug",
+  "writeTo": "debug-file"
+}

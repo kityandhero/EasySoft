@@ -154,6 +154,16 @@ public class GeneralConfig : IConfig
     /// </summary>
     public string ForwardedHeadersSwitch { get; set; }
 
+    /// <summary>
+    /// 开关 默认Nlog配置中是否启用Trace日志记录, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// </summary>
+    public string NlogDefaultConfigTraceSwitch { get; set; }
+
+    /// <summary>
+    /// 开关 默认Nlog配置中是否启用Debug日志记录, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// </summary>
+    public string NlogDefaultConfigDebugSwitch { get; set; }
+
     public GeneralConfig()
     {
         CacheMode = "InMemory";
@@ -201,5 +211,8 @@ public class GeneralConfig : IConfig
         AgileConfigHttpTimeout = "100";
 
         HttpRedirectionHttpsSwitch = "0";
+        
+        NlogDefaultConfigTraceSwitch = "0";
+        NlogDefaultConfigDebugSwitch = "0";
     }
 }
