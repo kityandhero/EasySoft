@@ -2,6 +2,7 @@
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Entities;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Logging;
 
@@ -29,7 +30,7 @@ public static class WebApplicationExtensions
         {
             LogLevel = LogLevel.Information,
             Message =
-                $"swagger: enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]" : FlagAssist.StartupUrls)}/swagger/index.html."
+                $"swagger: enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/swagger/index.html" : FlagAssist.StartupUrls.Select(o => $"{o}/swagger/index.html").Join(" "))}."
         });
 
         return application;

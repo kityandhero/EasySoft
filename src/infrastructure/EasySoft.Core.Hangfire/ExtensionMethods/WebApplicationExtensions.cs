@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Entities;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Logging;
@@ -29,7 +30,7 @@ public static class WebApplicationExtensions
         {
             LogLevel = LogLevel.Information,
             Message =
-                $"Hangfire: enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]" : FlagAssist.StartupUrls)}/hangfire."
+                $"Hangfire: enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/hangfire" : FlagAssist.StartupUrls.Select(o => $"{o}/hangfire").Join(" "))}."
         });
 
         return application;

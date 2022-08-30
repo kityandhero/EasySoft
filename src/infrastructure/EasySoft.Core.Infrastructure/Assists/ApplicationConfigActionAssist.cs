@@ -1,14 +1,16 @@
 ﻿using EasySoft.UtilityTools.Standard.ExtensionMethods;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
-namespace EasySoft.Core.Web.Framework.Assists;
+namespace EasySoft.Core.Infrastructure.Assists;
 
 public static class ApplicationConfigActionAssist
 {
     private static List<string> _areas = new();
     private static readonly List<Action<MvcOptions>> MvcOptionActions = new();
     private static readonly List<Action<IEndpointRouteBuilder>> EndpointRouteBuilderActions = new();
+    private static readonly List<Action<WebApplication>> WebApplicationActions = new();
 
     public static void AddArea(string area)
     {
@@ -47,5 +49,15 @@ public static class ApplicationConfigActionAssist
     public static IEnumerable<Action<IEndpointRouteBuilder>> GetEndpointRouteBuilderActionCollection()
     {
         return EndpointRouteBuilderActions;
+    }
+
+    public static void AddWebApplicationAction(Action<WebApplication> action)
+    {
+        WebApplicationActions.Add(action);
+    }
+
+    public static IEnumerable<Action<WebApplication>> GetWebApplicationActionCollection()
+    {
+        return WebApplicationActions;
     }
 }

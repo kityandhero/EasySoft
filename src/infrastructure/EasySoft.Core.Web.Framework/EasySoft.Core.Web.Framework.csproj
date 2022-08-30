@@ -45,4 +45,8 @@
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0" />
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Assists" />
+    </ItemGroup>
 </Project>

@@ -4,12 +4,13 @@ using AutoFacTest.Interfaces;
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
+using EasySoft.Core.LogDashboard.ExtensionMethods;
 using EasySoft.Core.Mapster.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
-using EasySoft.Core.Web.Framework.Assists;
 using EasySoft.Core.Web.Framework.BuilderAssists;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EntityFrameworkTest.Contexts;
@@ -79,6 +80,9 @@ builder.AddExtraNormalInjection(containerBuilder =>
     containerBuilder.RegisterType<BlogService>().As<IBlogService>().InstancePerDependency()
         .AsImplementedInterfaces();
 });
+
+// 启用日志面板
+builder.AddAdvanceLogDashboard();
 
 // // 配置健康检测
 // builder.AddAdvanceHealthChecks(new List<IAdvanceHealthCheck> { new HelloHealthCheck().ToIAdvanceHealthCheck() });

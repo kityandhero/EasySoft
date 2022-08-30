@@ -1,5 +1,5 @@
-﻿using EasySoft.Core.Infrastructure.Entities;
-using EasySoft.Core.Web.Framework.Assists;
+﻿using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Infrastructure.Entities;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Logging;

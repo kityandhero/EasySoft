@@ -12,13 +12,20 @@ public static class WebApplicationBuilderExtensions
     /// <param name="builder"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static WebApplicationBuilder AddStaticFileOptionsInjection(
+    public static WebApplicationBuilder AddAdvanceLogDashboard(
         this WebApplicationBuilder builder
     )
     {
+        if (FlagAssist.GetLogDashboardSwitch())
+        {
+            return builder;
+        }
+
         builder.Services.AddLogDashboard();
 
         FlagAssist.SetLogDashboardSwitchOpen();
+
+        ApplicationConfigActionAssist.AddWebApplicationAction(application => { application.UseAdvanceLogDashboard(); });
 
         return builder;
     }

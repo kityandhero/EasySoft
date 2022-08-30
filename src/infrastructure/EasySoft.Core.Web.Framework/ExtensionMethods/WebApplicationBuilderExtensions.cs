@@ -18,7 +18,6 @@ using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Swagger.ExtensionMethods;
-using EasySoft.Core.Web.Framework.Assists;
 using EasySoft.Core.Web.Framework.Attributes;
 using EasySoft.Core.Web.Framework.Filters;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -182,8 +181,6 @@ public static class WebApplicationBuilderExtensions
             LogLevel = LogLevel.Information,
             Message = "Application prepare to start, please wait a moment...."
         });
-
-        var messageInfoList = new List<string>();
 
         if (GeneralConfigAssist.GetForwardedHeadersSwitch())
         {
@@ -435,8 +432,7 @@ public static class WebApplicationBuilderExtensions
 
         app.UseAdvanceHangfire();
 
-        messageInfoList.Add(
-        );
+        ApplicationConfigActionAssist.GetWebApplicationActionCollection().ForEach(action => { action(app); });
 
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
         {
