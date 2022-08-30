@@ -9,24 +9,6 @@ namespace EasySoft.Core.Infrastructure.ExtensionMethods;
 public static class WebApplicationBuilderExtensions
 {
     /// <summary>
-    /// 注入定制的静态文件配置，诸如任务将在应用启动时自动执行
-    /// </summary>
-    /// <param name="builder"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static WebApplicationBuilder AddStaticFileOptionsInjection<T>(
-        this WebApplicationBuilder builder
-    ) where T : StaticFileOptions
-    {
-        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-        {
-            containerBuilder.RegisterType<T>().As<StaticFileOptions>().SingleInstance();
-        });
-
-        return builder;
-    }
-
-    /// <summary>
     /// 标记当前应用通道值, 用于远程日志等数据中, 便于数据辨认, 不使用此方法标记, 框架将采用内置值 0 代替
     /// </summary>
     /// <param name="builder"></param>

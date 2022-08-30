@@ -37,6 +37,7 @@
 
     <ItemGroup>
         <Folder Include="Areas\AreaTest" />
+        <Folder Include="wwwroot1" />
         <Folder Include="wwwroot\lib" />
     </ItemGroup>
 

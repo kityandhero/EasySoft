@@ -29,6 +29,6 @@ public static class ServiceAssist
 
     public static string GetServerPath(string path)
     {
-        return (GetServiceProvider()).GetRequiredService<IWebHostEnvironment>().WebRootPath + path;
+        return (GetServiceProvider()).GetRequiredService<IWebHostEnvironment>().ContentRootPath + path;
     }
 }

@@ -19,7 +19,7 @@ public static class AppSettingAssist
             filePath,
             false,
             true
-        );
+        ).AddEnvironmentVariables();
 
         Configuration = builder.Build();
     }

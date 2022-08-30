@@ -9,6 +9,7 @@ using EasySoft.Core.Mapster.ExtensionMethods;
 using EasySoft.Core.NLog.Assists;
 using EasySoft.Core.NLog.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
+using EasySoft.Core.Web.Framework.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using NLog;
@@ -25,15 +26,10 @@ public static class WebApplicationBuilderAssist
             Args = args
         });
 
-        builder.AddAdvanceAutoFac();
-
-        // builder.AddServerAddressesFeature();
-
-        builder.AddCovertInjection();
-
-        builder.AddAdvanceUrls();
-
-        builder.AddAdvanceMapster();
+        builder.AddAdvanceAutoFac()
+            .AddCovertInjection()
+            .AddAdvanceUrls()
+            .AddAdvanceMapster();
 
         if (GeneralConfigAssist.GetAgileConfigSwitch())
         {

@@ -4,6 +4,7 @@ using AutoFacTest.Interfaces;
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.Mapster.ExtensionMethods;
@@ -20,6 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApplicationTest.EasyTokens;
 using WebApplicationTest.Enums;
 using WebApplicationTest.Hubs;
+using WebApplicationTest.Options;
 using WebApplicationTest.PrepareStartWorks;
 
 AgileConfigClientActionAssist.ActionAgileConfigChanged = e =>
@@ -49,7 +51,7 @@ builder.AddAdvanceApplicationChannel(
 builder.AddPrepareStartWorkInjection<SimplePrepareStartWork>();
 
 // 自定义静态文件配置 如有特殊需求，可以进行配置，不配置将采用内置选项，此处仅作为有需要时的样例
-// builder.UseStaticFileOptionsInjection<CustomStaticFileOptions>();
+// builder.AddStaticFileOptionsInjection<CustomStaticFileOptions>();
 
 builder.AddAdvanceJsonWebToken<ApplicationOperator>();
 

@@ -20,7 +20,7 @@ public static class GeneralConfigAssist
 
         var builder = new ConfigurationBuilder().AddJsonFile(
             filePath,
-            false,
+            true,
             true
         );
 
@@ -144,9 +144,9 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
-    public static bool GetUseStaticFiles()
+    public static bool GetUseStaticFilesSwitch()
     {
-        var v = GetConfig().UseStaticFiles;
+        var v = GetConfig().UseStaticFilesSwitch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
@@ -662,7 +662,7 @@ public static class GeneralConfigAssist
 
         return value == 1;
     }
-    
+
     /// <summary>
     /// 开关: 默认Nlog配置中是否启用Trace日志记录, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
     /// </summary>
@@ -683,7 +683,7 @@ public static class GeneralConfigAssist
 
         return value == 1;
     }
-    
+
     /// <summary>
     /// 开关: 默认Nlog配置中是否启用Debug日志记录, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
     /// </summary>
@@ -703,5 +703,19 @@ public static class GeneralConfigAssist
         }
 
         return value == 1;
+    }
+
+    /// <summary>
+    /// 开关: 默认Nlog配置中是否启用Debug日志记录, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static string GetWebRootPath()
+    {
+        var v = GetConfig().WebRootPath;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        return v;
     }
 }

@@ -2,6 +2,8 @@
 using Autofac.Extensions.DependencyInjection;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.Config.ExtensionMethods;
+using EasySoft.Core.Config.Options;
 using EasySoft.Core.EasyCaching.ExtensionMethods;
 using EasySoft.Core.EasyToken.ExtensionMethods;
 using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
@@ -280,7 +282,7 @@ public static class WebApplicationBuilderExtensions
         {
             // 当前项目启动后，监听的是否是多个端口，其中如果有协议是Https—我们在访问Http的默认会转发到Https中
             app.UseHttpsRedirection();
-            
+
             StartupMessage.StartupMessageCollection.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
@@ -296,14 +298,22 @@ public static class WebApplicationBuilderExtensions
             });
         }
 
-        if (GeneralConfigAssist.GetUseStaticFiles())
+        if (GeneralConfigAssist.GetUseStaticFilesSwitch())
         {
             app.UseAdvanceStaticFiles();
+
+            var staticFileOptionsTypeName = "";
+
+            if (FlagAssist.GetAdvanceStaticFileOptionsSwitch())
+            {
+                staticFileOptionsTypeName = AutofacAssist.Instance.Resolve<AdvanceStaticFileOptions>().GetType().Name;
+            }
 
             StartupMessage.StartupMessageCollection.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
-                Message = "UseStaticFiles: enable."
+                Message =
+                    $"UseStaticFilesSwitch: enable, mode: {(FlagAssist.GetAdvanceStaticFileOptionsSwitch() ? $"custom, config class is \"{staticFileOptionsTypeName}\"" : "default")}."
             });
         }
         else
@@ -506,7 +516,14 @@ public static class WebApplicationBuilderExtensions
         {
             LogLevel = LogLevel.Information,
             Message =
-                $"Application start completed{(!FlagAssist.StartupUrls.Any() ? "." : $" at {FlagAssist.StartupUrls}")}.",
+                $"Current Environment: {EnvironmentAssist.GetEnvironment().EnvironmentName}, WebRootPath: \"{GetWebRootPath()}\", ContentRootPath: \"{EnvironmentAssist.GetEnvironment().ContentRootPath}\".",
+        });
+
+        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        {
+            LogLevel = LogLevel.Information,
+            Message =
+                $"Application start completed{(!FlagAssist.StartupUrls.Any() ? "." : $" at {FlagAssist.StartupUrls.Join(" ")}.")}",
         });
 
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
@@ -518,5 +535,24 @@ public static class WebApplicationBuilderExtensions
         StartupMessage.Print();
 
         return app;
+    }
+
+    private static string GetWebRootPath()
+    {
+        var result = EnvironmentAssist.GetEnvironment().WebRootPath;
+
+        if (!FlagAssist.GetAdvanceStaticFileOptionsSwitch())
+        {
+            return result;
+        }
+
+        if (!FlagAssist.GetAdvanceStaticFileOptionsSwitch())
+        {
+            return result;
+        }
+
+        return string.IsNullOrWhiteSpace(GeneralConfigAssist.GetWebRootPath())
+            ? result
+            : EnvironmentAssist.GetEnvironment().ContentRootPath.Combine(GeneralConfigAssist.GetWebRootPath());
     }
 }

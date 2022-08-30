@@ -16,7 +16,7 @@ public static class EnvironmentAssist
         _environment = environment;
     }
 
-    public static IWebHostEnvironment? GetEnvironment()
+    public static IWebHostEnvironment GetEnvironment()
     {
         if (_environment == null)
         {

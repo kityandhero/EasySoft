@@ -88,7 +88,7 @@ public class GeneralConfig : IConfig
 
     public string RemoteSqlExecutionRecordSwitch { get; set; }
 
-    public string UseStaticFiles { get; set; }
+    public string UseStaticFilesSwitch { get; set; }
 
     public string UseAuthentication { get; set; }
 
@@ -164,6 +164,8 @@ public class GeneralConfig : IConfig
     /// </summary>
     public string NlogDefaultConfigDebugSwitch { get; set; }
 
+    public string WebRootPath { get; set; }
+
     public GeneralConfig()
     {
         CacheMode = "InMemory";
@@ -175,7 +177,7 @@ public class GeneralConfig : IConfig
         RemoteErrorLogSwitch = "0";
         RemoteSqlExecutionRecordSwitch = "0";
 
-        UseStaticFiles = "1";
+        UseStaticFilesSwitch = "1";
 
         UseAuthentication = "0";
         UseAuthorization = "0";
@@ -200,7 +202,7 @@ public class GeneralConfig : IConfig
 
         ForwardedHeadersSwitch = "0";
 
-        AgileConfigSwitch = "1";
+        AgileConfigSwitch = "0";
         AgileConfigAppId = "";
         AgileConfigSecret = "";
         AgileConfigNodes = "";
@@ -211,8 +213,10 @@ public class GeneralConfig : IConfig
         AgileConfigHttpTimeout = "100";
 
         HttpRedirectionHttpsSwitch = "0";
-        
+
         NlogDefaultConfigTraceSwitch = "0";
         NlogDefaultConfigDebugSwitch = "0";
+
+        WebRootPath = "";
     }
 }

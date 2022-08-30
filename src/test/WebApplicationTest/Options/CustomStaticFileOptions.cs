@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.StaticFiles;
+﻿using EasySoft.Core.Config.Options;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.FileProviders;
 
 namespace WebApplicationTest.Options;
 
-public class CustomStaticFileOptions : StaticFileOptions
+public class CustomStaticFileOptions : AdvanceStaticFileOptions
 {
     public CustomStaticFileOptions()
     {
@@ -15,13 +17,6 @@ public class CustomStaticFileOptions : StaticFileOptions
             }
         };
 
-        FileProvider = new PhysicalFileProvider(
-            Path.Combine(
-                Directory.GetCurrentDirectory(),
-                "wwwroot",
-                "/"
-            )
-        );
         RequestPath = "";
         ContentTypeProvider = provider;
     }
