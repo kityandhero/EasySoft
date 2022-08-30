@@ -157,12 +157,22 @@ public class GeneralConfig : IConfig
     /// <summary>
     /// 开关 默认Nlog配置中是否启用Trace日志记录, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
     /// </summary>
-    public string NlogDefaultConfigTraceSwitch { get; set; }
+    public string NlogDefaultConfigTraceToFileSwitch { get; set; }
 
     /// <summary>
     /// 开关 默认Nlog配置中是否启用Debug日志记录, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
     /// </summary>
-    public string NlogDefaultConfigDebugSwitch { get; set; }
+    public string NlogDefaultConfigDebugToFileSwitch { get; set; }
+
+    /// <summary>
+    /// 开关 默认Nlog配置中是否启用Trace日志控制台显示, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// </summary>
+    public string NlogDefaultConfigTraceToConsoleSwitch { get; set; }
+
+    /// <summary>
+    /// 开关 默认Nlog配置中是否启用Debug日志控制台显示, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// </summary>
+    public string NlogDefaultConfigDebugToConsoleSwitch { get; set; }
 
     public string WebRootPath { get; set; }
 
@@ -214,8 +224,11 @@ public class GeneralConfig : IConfig
 
         HttpRedirectionHttpsSwitch = "0";
 
-        NlogDefaultConfigTraceSwitch = "0";
-        NlogDefaultConfigDebugSwitch = "0";
+        NlogDefaultConfigTraceToFileSwitch = "0";
+        NlogDefaultConfigDebugToFileSwitch = "0";
+        
+        NlogDefaultConfigTraceToConsoleSwitch = "1";
+        NlogDefaultConfigDebugToConsoleSwitch = "1";
 
         WebRootPath = "";
     }

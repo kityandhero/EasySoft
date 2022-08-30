@@ -664,20 +664,20 @@ public static class GeneralConfigAssist
     }
 
     /// <summary>
-    /// 开关: 默认Nlog配置中是否启用Trace日志记录, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// 开关: 默认Nlog配置中是否启用Trace日志写入, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static bool GetNlogDefaultConfigTraceSwitch()
+    public static bool GetNlogDefaultConfigTraceToFileSwitch()
     {
-        var v = GetConfig().NlogDefaultConfigTraceSwitch;
+        var v = GetConfig().NlogDefaultConfigTraceToFileSwitch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
         {
             throw new Exception(
-                $"请配置 NlogDefaultConfigTraceSwitch: {ConfigFile} -> NlogDefaultConfigTraceSwitch,请设置 0/1"
+                $"请配置 NlogDefaultConfigTraceToFileSwitch: {ConfigFile} -> NlogDefaultConfigTraceToFileSwitch,请设置 0/1"
             );
         }
 
@@ -685,20 +685,68 @@ public static class GeneralConfigAssist
     }
 
     /// <summary>
-    /// 开关: 默认Nlog配置中是否启用Debug日志记录, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// 开关: 默认Nlog配置中是否启用Trace日志控制台显示, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static bool GetNlogDefaultConfigDebugSwitch()
+    public static bool GetNlogDefaultConfigTraceToConsoleSwitch()
     {
-        var v = GetConfig().NlogDefaultConfigDebugSwitch;
+        var v = GetConfig().NlogDefaultConfigTraceToConsoleSwitch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
         {
             throw new Exception(
-                $"请配置 NlogDefaultConfigDebugSwitch: {ConfigFile} -> NlogDefaultConfigDebugSwitch,请设置 0/1"
+                $"请配置 NlogDefaultConfigTraceToConsoleSwitch: {ConfigFile} -> NlogDefaultConfigTraceToConsoleSwitch,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
+
+    /// <summary>
+    /// 开关: 默认Nlog配置中是否启用Debug日志写入, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static bool GetNlogDefaultConfigDebugToFileSwitch()
+    {
+        var v = GetConfig().NlogDefaultConfigDebugToFileSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 NlogDefaultConfigDebugToFileSwitch: {ConfigFile} -> NlogDefaultConfigDebugToFileSwitch,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
+
+    /// <summary>
+    /// 开关: 默认Nlog配置中是否启用Debug日志控制台显示, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// NlogDefaultConfigTraceToConsoleSwitch 启用的情况下, 该开关将强制启用
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static bool GetNlogDefaultConfigDebugToConsoleSwitch()
+    {
+        if (GetNlogDefaultConfigTraceToConsoleSwitch())
+        {
+            return true;
+        }
+
+        var v = GetConfig().NlogDefaultConfigDebugToConsoleSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 NlogDefaultConfigDebugToConsoleSwitch: {ConfigFile} -> NlogDefaultConfigDebugToConsoleSwitch,请设置 0/1"
             );
         }
 

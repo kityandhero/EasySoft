@@ -20,22 +20,25 @@ public static class Tools
     {
         var mainConfig = GetNlogDefaultMainConfig();
 
-        var debugSwitch = GeneralConfigAssist.GetNlogDefaultConfigDebugSwitch();
-        var traceSwitch = GeneralConfigAssist.GetNlogDefaultConfigTraceSwitch();
+        var nlogDefaultConfigDebugToFileSwitch = GeneralConfigAssist.GetNlogDefaultConfigDebugToFileSwitch();
+        var nlogDefaultConfigTraceToFileSwitch = GeneralConfigAssist.GetNlogDefaultConfigTraceToFileSwitch();
+        var nlogDefaultConfigDebugToConsoleSwitch = GeneralConfigAssist.GetNlogDefaultConfigDebugToConsoleSwitch();
+        var nlogDefaultConfigTraceToConsoleSwitch = GeneralConfigAssist.GetNlogDefaultConfigTraceToConsoleSwitch();
 
-        var debugRule = debugSwitch ? GetNlogDefaultDebugRuleConfig() : "";
-        var debugTarget = debugSwitch ? GetNlogDefaultDebugTargetConfig() : "";
+        var debugRule = nlogDefaultConfigDebugToFileSwitch ? GetNlogDefaultDebugRuleConfig() : "";
+        var debugTarget = nlogDefaultConfigDebugToFileSwitch ? GetNlogDefaultDebugTargetConfig() : "";
 
         debugRule = string.IsNullOrWhiteSpace(debugRule) ? "" : $"{debugRule},";
         debugTarget = string.IsNullOrWhiteSpace(debugTarget) ? "" : $"{debugTarget},";
 
-        var traceRule = traceSwitch ? GetNlogDefaultTraceRuleConfig() : "";
-        var traceTarget = traceSwitch ? GetNlogDefaultTraceTargetConfig() : "";
+        var traceRule = nlogDefaultConfigTraceToFileSwitch ? GetNlogDefaultTraceRuleConfig() : "";
+        var traceTarget = nlogDefaultConfigTraceToFileSwitch ? GetNlogDefaultTraceTargetConfig() : "";
 
         traceRule = string.IsNullOrWhiteSpace(traceRule) ? "" : $"{traceRule},";
         traceTarget = string.IsNullOrWhiteSpace(traceTarget) ? "" : $"{traceTarget},";
 
-        var consoleMinLevel = traceSwitch ? "Trace" : debugSwitch ? "Debug" : "Info";
+        var consoleMinLevel = nlogDefaultConfigTraceToConsoleSwitch ? "Trace" :
+            nlogDefaultConfigDebugToConsoleSwitch ? "Debug" : "Info";
 
         mainConfig = mainConfig.Replace("###trace-target###", traceTarget)
             .Replace("###debug-target###", debugTarget)
