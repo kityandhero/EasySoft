@@ -77,13 +77,13 @@ ApplicationConfigActionAssist.AddWebApplicationBuilderActions(
     // 启用日志面板
     applicationBuilder => { applicationBuilder.AddAdvanceLogDashboard(); },
     // 配置健康检测
-    applicationBuilder =>
-    {
-        applicationBuilder.AddAdvanceHealthChecks(new List<IAdvanceHealthCheck>
-        {
-            new HelloHealthCheck().ToIAdvanceHealthCheck()
-        });
-    },
+    // applicationBuilder =>
+    // {
+    //     applicationBuilder.AddAdvanceHealthChecks(new List<IAdvanceHealthCheck>
+    //     {
+    //         new HelloHealthCheck().ToIAdvanceHealthCheck()
+    //     });
+    // },
     // SignalR
     applicationBuilder => { applicationBuilder.Services.AddSignalR(); }
 );
