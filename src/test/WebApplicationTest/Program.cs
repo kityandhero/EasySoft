@@ -1,6 +1,7 @@
 using Autofac;
 using AutoFacTest.Implementations;
 using AutoFacTest.Interfaces;
+using EasySoft.Core.ActionMap.ExtensionMethods;
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
@@ -17,8 +18,6 @@ using WebApplicationTest.Enums;
 using WebApplicationTest.Hubs;
 using WebApplicationTest.PrepareStartWorks;
 using EasySoft.Core.EntityFramework.ExtensionMethods;
-using EasySoft.Core.HealthChecks.Entities;
-using EasySoft.Core.HealthChecks.ExtensionMethods;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.LogDashboard.ExtensionMethods;
@@ -26,7 +25,6 @@ using EasySoft.Core.Mapster.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
-using WebApplicationTest.HealthChecks;
 
 // 配置额外的构建项目
 ApplicationConfigActionAssist.AddWebApplicationBuilderActions(
@@ -89,6 +87,8 @@ ApplicationConfigActionAssist.AddWebApplicationBuilderActions(
 );
 
 ApplicationConfigActionAssist.AddAreas("AreaTest", "AuthTest", "DataTest", "ComponentTest");
+
+ApplicationConfigActionAssist.AddWebApplicationAction(application => application.UseActionMap());
 
 AgileConfigClientActionAssist.ActionAgileConfigChanged = e =>
 {

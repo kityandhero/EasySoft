@@ -6,7 +6,6 @@ using EasySoft.Core.PrepareStartWork.PrepareWorks;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -34,7 +33,7 @@ public static class WebApplicationBuilderExtensions
 
         if (string.IsNullOrWhiteSpace(urls))
         {
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Warning,
                 Message =
@@ -52,7 +51,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.WebHost.UseUrls(FlagAssist.StartupUrls.ToArray());
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message = $"Startup urls is {FlagAssist.StartupUrls.Join(" ")}."

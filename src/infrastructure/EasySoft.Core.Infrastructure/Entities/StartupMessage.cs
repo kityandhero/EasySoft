@@ -19,7 +19,7 @@ public class StartupMessage
         Extra = "";
     }
 
-    public static readonly List<StartupMessage> StartupMessageCollection;
+    private static readonly List<StartupMessage> StartupMessageCollection;
 
     static StartupMessage()
     {
@@ -36,6 +36,11 @@ public class StartupMessage
                 Message = "Application prepare to start, please wait a moment...."
             }
         };
+    }
+
+    public static void Add(StartupMessage startupMessage)
+    {
+        StartupMessageCollection.Add(startupMessage);
     }
 
     private static string BuildAllMessage(StartupMessage o)

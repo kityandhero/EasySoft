@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Mapster.Assists;
+﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
+using EasySoft.Core.Mapster.Assists;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using Mapster;
 using MapsterMapper;

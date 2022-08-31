@@ -47,7 +47,7 @@ public static class WebApplicationBuilderExtensions
             endpointRouteBuilder.UseAdvanceHealthChecks();
         });
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message =

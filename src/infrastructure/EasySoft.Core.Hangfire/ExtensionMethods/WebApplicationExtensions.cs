@@ -14,7 +14,7 @@ public static class WebApplicationExtensions
     {
         if (!HangfireConfigAssist.GetEnable())
         {
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
                 Message = "Hangfire: disable."
@@ -28,7 +28,7 @@ public static class WebApplicationExtensions
 
         
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message =

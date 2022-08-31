@@ -24,7 +24,7 @@ public static class WebApplicationExtensions
 
         application.UseLogDashboard();
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message =

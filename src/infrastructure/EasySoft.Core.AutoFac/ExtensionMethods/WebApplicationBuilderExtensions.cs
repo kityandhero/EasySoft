@@ -23,7 +23,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.AddControllerPropertiesAutowired(Assembly.GetEntryAssembly());
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message =

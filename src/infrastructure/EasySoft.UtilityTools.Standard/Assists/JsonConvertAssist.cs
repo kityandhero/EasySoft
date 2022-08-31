@@ -20,6 +20,7 @@ namespace EasySoft.UtilityTools.Standard.Assists
 
             return new JsonSerializerSettings
             {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 NullValueHandling = NullValueHandling.Include,
                 Formatting = Formatting.Indented,
                 DateTimeZoneHandling = DateTimeZoneHandling.Local,

@@ -27,7 +27,7 @@ public static class WebApplicationExtensions
 
             if (areaAdjust.Any())
             {
-                StartupMessage.StartupMessageCollection.Add(new StartupMessage
+                StartupMessage.Add(new StartupMessage
                 {
                     LogLevel = LogLevel.Information,
                     Message = $"Areas: {ApplicationConfigActionAssist.GetAreaCollection().Join(",")}"
@@ -86,7 +86,7 @@ public static class WebApplicationExtensions
             });
         }
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message =

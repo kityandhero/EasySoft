@@ -88,13 +88,13 @@ public static class WebApplicationBuilderAssist
 
             builder.AddAdvanceNLog(BuildDefaultConfig);
 
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = Microsoft.Extensions.Logging.LogLevel.Information,
                 Message = "AgileConfigSwitch: enable."
             });
 
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = Microsoft.Extensions.Logging.LogLevel.Information,
                 Message =
@@ -105,7 +105,7 @@ public static class WebApplicationBuilderAssist
         {
             builder.AddAdvanceNLog();
 
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = Microsoft.Extensions.Logging.LogLevel.Information,
                 Message =

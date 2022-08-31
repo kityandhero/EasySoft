@@ -20,7 +20,7 @@ public static class WebApplicationExtensions
 
         prepareCovertStartWork.DoWork();
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message = "PrepareCovertStartWork do work complete."
@@ -36,7 +36,7 @@ public static class WebApplicationExtensions
 
         prepareStartWork.DoWork();
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message = "PrepareStartWork do work complete."

@@ -119,6 +119,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualization", "visualizat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.LogDashboard", "infrastructure\EasySoft.Core.LogDashboard\EasySoft.Core.LogDashboard.csproj", "{D6443E6E-A86A-4A3E-8980-591E62A0576C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "auxiliary", "auxiliary", "{3C2BF92B-CDEF-4ED2-AC2A-D5AED27710E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.ActionMap", "infrastructure\EasySoft.Core.ActionMap\EasySoft.Core.ActionMap.csproj", "{2851A520-E033-4ECB-BC2A-D93B84707E0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -305,6 +309,10 @@ Global
 		{D6443E6E-A86A-4A3E-8980-591E62A0576C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6443E6E-A86A-4A3E-8980-591E62A0576C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6443E6E-A86A-4A3E-8980-591E62A0576C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2851A520-E033-4ECB-BC2A-D93B84707E0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2851A520-E033-4ECB-BC2A-D93B84707E0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2851A520-E033-4ECB-BC2A-D93B84707E0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2851A520-E033-4ECB-BC2A-D93B84707E0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -365,6 +373,8 @@ Global
 		{2D32321E-AA5B-47DB-B1EE-13AF3731E6FC} = {E1BDAC69-A565-4A26-866B-10845357EA3D}
 		{49B4F92D-C3EB-48E5-84F0-0485F5865D1C} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
 		{D6443E6E-A86A-4A3E-8980-591E62A0576C} = {49B4F92D-C3EB-48E5-84F0-0485F5865D1C}
+		{3C2BF92B-CDEF-4ED2-AC2A-D5AED27710E2} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{2851A520-E033-4ECB-BC2A-D93B84707E0C} = {3C2BF92B-CDEF-4ED2-AC2A-D5AED27710E2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

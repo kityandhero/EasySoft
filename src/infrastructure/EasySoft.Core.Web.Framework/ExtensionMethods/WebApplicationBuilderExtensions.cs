@@ -184,7 +184,7 @@ public static class WebApplicationBuilderExtensions
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
                 Message = "ForwardedHeadersSwitch: enable.",
@@ -193,7 +193,7 @@ public static class WebApplicationBuilderExtensions
         }
         else
         {
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
                 Message = "ForwardedHeadersSwitch: disable.",
@@ -209,7 +209,7 @@ public static class WebApplicationBuilderExtensions
             app.UseHsts();
         }
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message =
@@ -221,7 +221,7 @@ public static class WebApplicationBuilderExtensions
         {
             if (FlagAssist.ApplicationChannelIsDefault)
             {
-                StartupMessage.StartupMessageCollection.Add(new StartupMessage
+                StartupMessage.Add(new StartupMessage
                 {
                     LogLevel = LogLevel.Information,
                     Message =
@@ -232,7 +232,7 @@ public static class WebApplicationBuilderExtensions
             {
                 var applicationChannel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
 
-                StartupMessage.StartupMessageCollection.Add(new StartupMessage
+                StartupMessage.Add(new StartupMessage
                 {
                     LogLevel = LogLevel.Information,
                     Message = $"ApplicationChannel use {applicationChannel.GetChannel()}."
@@ -245,7 +245,7 @@ public static class WebApplicationBuilderExtensions
             // 当前项目启动后，监听的是否是多个端口，其中如果有协议是Https—我们在访问Http的默认会转发到Https中
             app.UseHttpsRedirection();
 
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
                 Message = "HttpRedirectionHttpsSwitch: enable."
@@ -253,7 +253,7 @@ public static class WebApplicationBuilderExtensions
         }
         else
         {
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
                 Message = "HttpRedirectionHttpsSwitch: disabled."
@@ -271,7 +271,7 @@ public static class WebApplicationBuilderExtensions
                 staticFileOptionsTypeName = AutofacAssist.Instance.Resolve<AdvanceStaticFileOptions>().GetType().Name;
             }
 
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
                 Message =
@@ -280,7 +280,7 @@ public static class WebApplicationBuilderExtensions
         }
         else
         {
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
                 Message =
@@ -294,7 +294,7 @@ public static class WebApplicationBuilderExtensions
         {
             app.UseCors(ConstCollection.DefaultSpecificOrigins);
 
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
                 Message = $"cors: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}."
@@ -302,7 +302,7 @@ public static class WebApplicationBuilderExtensions
         }
         else
         {
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
                 Message = "Cors: disable.",
@@ -314,7 +314,7 @@ public static class WebApplicationBuilderExtensions
         {
             app.UseAuthentication();
 
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
                 Message =
@@ -323,7 +323,7 @@ public static class WebApplicationBuilderExtensions
         }
         else
         {
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
                 Message = "UseAuthentication: disable.",
@@ -348,7 +348,7 @@ public static class WebApplicationBuilderExtensions
         {
             if (FlagAssist.EasyTokenMiddlewareModeSwitch || FlagAssist.JsonWebTokenMiddlewareModeSwitch)
             {
-                StartupMessage.StartupMessageCollection.Add(new StartupMessage
+                StartupMessage.Add(new StartupMessage
                 {
                     LogLevel = LogLevel.Information,
                     Message =
@@ -357,7 +357,7 @@ public static class WebApplicationBuilderExtensions
             }
             else
             {
-                StartupMessage.StartupMessageCollection.Add(new StartupMessage
+                StartupMessage.Add(new StartupMessage
                 {
                     LogLevel = LogLevel.Information,
                     Message =
@@ -378,7 +378,7 @@ public static class WebApplicationBuilderExtensions
                 app.UsePermissionVerificationMiddleware();
             }
 
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
                 Message = FlagAssist.PermissionVerificationMiddlewareModeSwitch
@@ -387,7 +387,7 @@ public static class WebApplicationBuilderExtensions
             });
         }
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message = GeneralConfigAssist.GetAccessWayDetectSwitch()
@@ -400,7 +400,7 @@ public static class WebApplicationBuilderExtensions
         {
             app.UseAuthorization();
 
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
                 Message = $"UseAuthorization: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}."
@@ -408,7 +408,7 @@ public static class WebApplicationBuilderExtensions
         }
         else
         {
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
                 Message = "UseAuthorization: disable.",
@@ -416,7 +416,7 @@ public static class WebApplicationBuilderExtensions
             });
         }
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message = GeneralConfigAssist.GetRemoteErrorLogSwitch()
@@ -425,7 +425,7 @@ public static class WebApplicationBuilderExtensions
             Extra = GeneralConfigAssist.GetConfigFileInfo()
         });
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message = GeneralConfigAssist.GetRemoteGeneralLogSwitch()
@@ -447,32 +447,32 @@ public static class WebApplicationBuilderExtensions
 
         app.UseAdvanceMapControllers();
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message = $"Environment: {EnvironmentAssist.GetEnvironment().EnvironmentName}.",
         });
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message = $"ContentRootPath: \"{EnvironmentAssist.GetEnvironment().ContentRootPath}\".",
         });
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message = $"WebRootPath: \"{GetWebRootPath()}\".",
         });
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message =
                 $"Application start completed{(!FlagAssist.StartupUrls.Any() ? "." : $" at {FlagAssist.StartupUrls.Join(" ")}.")}",
         });
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message = UtilityTools.Standard.ConstCollection.ApplicationStartEndDivider

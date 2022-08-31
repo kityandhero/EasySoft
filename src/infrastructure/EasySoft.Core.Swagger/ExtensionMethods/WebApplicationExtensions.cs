@@ -14,7 +14,7 @@ public static class WebApplicationExtensions
     {
         if (!SwaggerConfigAssist.GetEnable())
         {
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            StartupMessage.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
                 Message = "Swagger: disable."
@@ -26,7 +26,7 @@ public static class WebApplicationExtensions
         application.UseSwagger();
         application.UseSwaggerUI();
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        StartupMessage.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
             Message =

@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.AuthenticationCore.Attributes;
+using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.Attributes;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;

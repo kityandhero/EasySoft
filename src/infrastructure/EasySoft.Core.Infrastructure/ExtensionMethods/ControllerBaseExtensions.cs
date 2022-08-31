@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
+﻿using System.Dynamic;
+using System.Text.RegularExpressions;
 using EasySoft.UtilityTools.Core.Exceptions;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Core.Results;
@@ -8,13 +8,45 @@ using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.Result;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EasySoft.Core.Web.Framework.ExtensionMethods
+namespace EasySoft.Core.Infrastructure.ExtensionMethods
 {
     /// <summary>
     /// 控制器动作结果扩展方法
     /// </summary>
     public static class ControllerBaseExtensions
     {
+        public static ActionResult WrapperExecutiveResult(
+            this ControllerBase controller,
+            ExecutiveResult result
+        )
+        {
+            if (!result.Success)
+            {
+                return controller.Fail(result.Code);
+            }
+
+            return controller.Success(new
+            {
+                time = DateTime.Now.ToUnixTime()
+            });
+        }
+
+        public static ActionResult WrapperExecutiveResult(
+            this ControllerBase controller,
+            ExecutiveResult<object> result
+        )
+        {
+            return !result.Success ? controller.Fail(result.Code) : controller.Success(result.Data);
+        }
+
+        public static ActionResult WrapperExecutiveResult(
+            this ControllerBase controller,
+            ExecutiveResult<ExpandoObject> result
+        )
+        {
+            return !result.Success ? controller.Fail(result.Code) : controller.Success(result.Data);
+        }
+
         /// <summary>
         /// Data
         /// </summary>
