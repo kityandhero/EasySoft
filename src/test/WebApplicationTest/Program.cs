@@ -95,15 +95,9 @@ AgileConfigClientActionAssist.ActionAgileConfigChanged = e =>
     // LogAssist.Info("config changed");
 };
 
-var builder = WebApplicationBuilderAssist.CreateBuilder(args.ToArray());
-
-var app = builder.EasyBuild();
-
-// //启用置健康检测
-// var app = builder.EasyBuild(
-//     new List<string> { "AreaTest", "AuthTest", "DataTest", "ComponentTest" },
-//     endpointRouteBuilder => { endpointRouteBuilder.UseAdvanceHealthChecks(); }
-// );
+var app = WebApplicationBuilderAssist
+    .CreateBuilder(args.ToArray())
+    .EasyBuild();
 
 // 可使用下列代码创建数据（删除数据库，更改数据模型，创建具有新架构的数据库），真实项目应当使用 Migrations 来做创建工作, Migrations 无法使用迁移更新 EnsureCreated 创建的数据库
 // using (var scope = app.Services.CreateScope())

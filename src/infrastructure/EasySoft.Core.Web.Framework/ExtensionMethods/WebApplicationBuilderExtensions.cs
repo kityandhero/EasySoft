@@ -187,7 +187,8 @@ public static class WebApplicationBuilderExtensions
             StartupMessage.StartupMessageCollection.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
-                Message = "ForwardedHeadersSwitch: enable."
+                Message = "ForwardedHeadersSwitch: enable.",
+                Extra = RedisConfigAssist.GetConfigFileInfo()
             });
         }
         else
@@ -195,8 +196,8 @@ public static class WebApplicationBuilderExtensions
             StartupMessage.StartupMessageCollection.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
-                Message =
-                    "ForwardedHeadersSwitch: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+                Message = "ForwardedHeadersSwitch: disable.",
+                Extra = RedisConfigAssist.GetConfigFileInfo()
             });
         }
 
@@ -212,7 +213,8 @@ public static class WebApplicationBuilderExtensions
         {
             LogLevel = LogLevel.Information,
             Message =
-                $"CacheMode : {GeneralConfigAssist.GetCacheMode()}{(GeneralConfigAssist.GetCacheMode().Equals("redis", StringComparison.CurrentCultureIgnoreCase) ? $", Connections: {RedisConfigAssist.GetConnectionCollection().Join("|")}" : "")}, if you need, you can set it in redisConfig.json, path is ./configures/redisConfig.json."
+                $"CacheMode : {GeneralConfigAssist.GetCacheMode()}{(GeneralConfigAssist.GetCacheMode().Equals("redis", StringComparison.CurrentCultureIgnoreCase) ? $", Connections: {RedisConfigAssist.GetConnectionCollection().Join("|")}" : "")}.",
+            Extra = GeneralConfigAssist.GetConfigFileInfo()
         });
 
         if (GeneralConfigAssist.GetRemoteLogSwitch())
@@ -303,8 +305,8 @@ public static class WebApplicationBuilderExtensions
             StartupMessage.StartupMessageCollection.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
-                Message =
-                    "Cors: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+                Message = "Cors: disable.",
+                Extra = GeneralConfigAssist.GetConfigFileInfo()
             });
         }
 
@@ -324,8 +326,8 @@ public static class WebApplicationBuilderExtensions
             StartupMessage.StartupMessageCollection.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
-                Message =
-                    "UseAuthentication: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+                Message = "UseAuthentication: disable.",
+                Extra = GeneralConfigAssist.GetConfigFileInfo()
             });
         }
 
@@ -389,8 +391,9 @@ public static class WebApplicationBuilderExtensions
         {
             LogLevel = LogLevel.Information,
             Message = GeneralConfigAssist.GetAccessWayDetectSwitch()
-                ? $"AccessWayDetectSwitch: enable."
-                : "AccessWayDetectSwitch: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+                ? "AccessWayDetectSwitch: enable."
+                : "AccessWayDetectSwitch: disable.",
+            Extra = GeneralConfigAssist.GetConfigFileInfo()
         });
 
         if (GeneralConfigAssist.GetUseAuthorization())
@@ -408,22 +411,28 @@ public static class WebApplicationBuilderExtensions
             StartupMessage.StartupMessageCollection.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
-                Message =
-                    "UseAuthorization: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+                Message = "UseAuthorization: disable.",
+                Extra = GeneralConfigAssist.GetConfigFileInfo()
             });
         }
 
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
         {
             LogLevel = LogLevel.Information,
-            Message = GeneralConfigAssist.GetRemoteGeneralLogSwitch()
-                ? "RemoteGeneralLogEnable: enable."
-                : "RemoteGeneralLogEnable: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            Message = GeneralConfigAssist.GetRemoteErrorLogSwitch()
+                ? "RemoteErrorLogEnable: enable."
+                : "RemoteErrorLogEnable: disable.",
+            Extra = GeneralConfigAssist.GetConfigFileInfo()
         });
 
-        app.UseAdvanceSwagger();
-
-        app.UseAdvanceHangfire();
+        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        {
+            LogLevel = LogLevel.Information,
+            Message = GeneralConfigAssist.GetRemoteGeneralLogSwitch()
+                ? "RemoteGeneralLogEnable: enable."
+                : "RemoteGeneralLogEnable: disable.",
+            Extra = GeneralConfigAssist.GetConfigFileInfo()
+        });
 
         if (app.Environment.IsDevelopment())
         {
@@ -432,32 +441,11 @@ public static class WebApplicationBuilderExtensions
 
         ApplicationConfigActionAssist.GetWebApplicationActionCollection().ForEach(action => { action(app); });
 
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
-        {
-            LogLevel = LogLevel.Information,
-            Message =
-                "You can get all controller actions by visit https://[host]:[port]/[controller]/getAllActions where controller inherited from CustomControllerBase."
-        });
+        app.UseAdvanceSwagger();
+
+        app.UseAdvanceHangfire();
 
         app.UseAdvanceMapControllers();
-
-        StartupMessage.StartupMessageCollection.Add(new StartupMessage
-        {
-            LogLevel = LogLevel.Information,
-            Message = GeneralConfigAssist.GetAgileConfigSwitch()
-                ? "AgileConfigSwitch: enable."
-                : "AgileConfigSwitch: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
-        });
-
-        if (GeneralConfigAssist.GetAgileConfigSwitch())
-        {
-            StartupMessage.StartupMessageCollection.Add(new StartupMessage
-            {
-                LogLevel = LogLevel.Information,
-                Message =
-                    $"Dynamic config key: {Config.ConstCollection.GetDynamicConfigKeyCollection().Join(",")}, they can set in AgileConfig."
-            });
-        }
 
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
         {

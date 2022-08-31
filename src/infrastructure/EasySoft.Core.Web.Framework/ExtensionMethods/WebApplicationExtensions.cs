@@ -86,6 +86,13 @@ public static class WebApplicationExtensions
             });
         }
 
+        StartupMessage.StartupMessageCollection.Add(new StartupMessage
+        {
+            LogLevel = LogLevel.Information,
+            Message =
+                "You can get all controller actions by visit https://[host]:[port]/[controller]/getAllActions where controller inherited from CustomControllerBase."
+        });
+
         return application;
     }
 }

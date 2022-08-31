@@ -5,11 +5,13 @@ using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Config.Utils;
 using EasySoft.Core.DynamicConfig.Assists;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Infrastructure.Entities;
 using EasySoft.Core.Mapster.ExtensionMethods;
 using EasySoft.Core.NLog.Assists;
 using EasySoft.Core.NLog.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using NLog;
@@ -85,10 +87,30 @@ public static class WebApplicationBuilderAssist
             });
 
             builder.AddAdvanceNLog(BuildDefaultConfig);
+
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = Microsoft.Extensions.Logging.LogLevel.Information,
+                Message = "AgileConfigSwitch: enable."
+            });
+
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = Microsoft.Extensions.Logging.LogLevel.Information,
+                Message =
+                    $"Dynamic config key: {Config.ConstCollection.GetDynamicConfigKeyCollection().Join(",")}, they can set in AgileConfig."
+            });
         }
         else
         {
             builder.AddAdvanceNLog();
+
+            StartupMessage.StartupMessageCollection.Add(new StartupMessage
+            {
+                LogLevel = Microsoft.Extensions.Logging.LogLevel.Information,
+                Message =
+                    "AgileConfigSwitch: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
+            });
         }
 
         return builder;

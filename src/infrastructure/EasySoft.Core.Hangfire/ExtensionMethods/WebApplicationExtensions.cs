@@ -17,7 +17,7 @@ public static class WebApplicationExtensions
             StartupMessage.StartupMessageCollection.Add(new StartupMessage
             {
                 LogLevel = LogLevel.Information,
-                Message = $"Hangfire: disable."
+                Message = "Hangfire: disable."
             });
 
             return application;
@@ -25,6 +25,8 @@ public static class WebApplicationExtensions
 
         //启用Hangfire面板 
         application.UseHangfireDashboard();
+
+        
 
         StartupMessage.StartupMessageCollection.Add(new StartupMessage
         {

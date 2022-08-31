@@ -33,6 +33,11 @@ public static class GeneralConfigAssist
     {
     }
 
+    public static string GetConfigFileInfo()
+    {
+        return "[generalConfig.json](./configures/generalConfig.json)";
+    }
+
     public static bool GetRemoteLogSwitch()
     {
         return GetRemoteErrorLogSwitch() || GetRemoteGeneralLogSwitch();

@@ -32,6 +32,11 @@ public static class RedisConfigAssist
     {
     }
 
+    public static string GetConfigFileInfo()
+    {
+        return "[redisConfig.json](./configures/redisConfig.json)";
+    }
+
     private static RedisConfig GetConfig()
     {
         return RedisConfig.Instance;
