@@ -15,16 +15,16 @@ namespace EasySoft.UtilityTools.Standard
             "===========================================================";
 
         public const string ApplicationStartExtraBuilderMessageDivider =
-            "==== Extra Builder Info ====";
+            "==== Extra Builder Action Info ====";
 
         public const string ApplicationStartExtraApplicationMessageStartDivider =
-            "==== Extra Applicaiton Info ====";
+            "==== Extra Applicaiton Action Info ====";
 
         public const string ApplicationStartExtraEndpointMessageStartDivider =
-            "==== Extra Endpoint Info =====";
+            "==== Extra Endpoint Action Info =====";
 
         public const string ApplicationStartExtraMvcOptionMessageStartDivider =
-            "==== Extra Mvc Option Info =====";
+            "==== Extra Mvc Option Action Info =====";
 
         public const string JsonWebToken = "JsonWebToken";
 
