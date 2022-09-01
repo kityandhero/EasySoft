@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Infrastructure.Startup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,10 +22,11 @@ public static class WebApplicationBuilderExtensions
 
         FlagAssist.SetEntityFrameworkSwitchOpen();
 
-        ApplicationConfigActionAssist.AddWebApplicationAction(application =>
-        {
-            application.UseAdvanceMigrationsEndPoint();
-        });
+        ApplicationConfigActionAssist.AddWebApplicationExtraAction(
+            new ExtraAction<WebApplication>()
+                .SetName("")
+                .SetAction(application => { application.UseAdvanceMigrationsEndPoint(); })
+        );
 
         return builder;
     }

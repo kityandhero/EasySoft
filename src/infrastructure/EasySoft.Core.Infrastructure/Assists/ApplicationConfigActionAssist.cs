@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿using EasySoft.Core.Infrastructure.Startup;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -7,73 +8,74 @@ namespace EasySoft.Core.Infrastructure.Assists;
 
 public static class ApplicationConfigActionAssist
 {
-    private static List<string> _areas = new();
-    private static readonly List<Action<MvcOptions>> MvcOptionActions = new();
-    private static readonly List<Action<IEndpointRouteBuilder>> EndpointRouteBuilderActions = new();
-    private static readonly List<Action<WebApplicationBuilder>> WebApplicationBuilderActions = new();
-    private static readonly List<Action<WebApplication>> WebApplicationActions = new();
+    private static readonly HashSet<string> Areas = new(StringComparer.OrdinalIgnoreCase);
+    private static readonly List<IExtraAction<MvcOptions>> MvcOptionExtraActions = new();
+    private static readonly List<IExtraAction<IEndpointRouteBuilder>> EndpointRouteBuilderExtraActions = new();
+    private static readonly List<IExtraAction<WebApplicationBuilder>> WebApplicationBuilderExtraActions = new();
+    private static readonly List<IExtraAction<WebApplication>> WebApplicationExtraActions = new();
 
     public static void AddArea(string area)
     {
-        _areas.Add(area);
+        if (string.IsNullOrWhiteSpace(area))
+        {
+            return;
+        }
 
-        _areas = _areas.Distinct().ToListFilterNullOrWhiteSpace();
+        Areas.Add(area);
     }
 
     public static void AddAreas(params string[] areas)
     {
-        _areas.AddRange(areas);
-
-        _areas = _areas.Distinct().ToListFilterNullOrWhiteSpace();
+        areas.ForEach(AddArea);
     }
 
-    public static IEnumerable<string> GetAreaCollection()
+    public static IEnumerable<string> GetAllAreas()
     {
-        return _areas;
+        return Areas;
     }
 
-    public static void AddMvcOptionAction(Action<MvcOptions> action)
+    public static void AddMvcOptionExtraAction(IExtraAction<MvcOptions> action)
     {
-        MvcOptionActions.Add(action);
+        MvcOptionExtraActions.Add(action);
     }
 
-    public static IEnumerable<Action<MvcOptions>> GetMvcOptionActionCollection()
+    public static IEnumerable<IExtraAction<MvcOptions>> GetAllMvcOptionExtraActions()
     {
-        return MvcOptionActions;
+        return MvcOptionExtraActions;
     }
 
-    public static void AddEndpointRouteBuilderAction(Action<IEndpointRouteBuilder> action)
+    public static void AddEndpointRouteBuilderExtraAction(IExtraAction<IEndpointRouteBuilder> action)
     {
-        EndpointRouteBuilderActions.Add(action);
+        EndpointRouteBuilderExtraActions.Add(action);
     }
 
-    public static IEnumerable<Action<IEndpointRouteBuilder>> GetEndpointRouteBuilderActionCollection()
+    public static IEnumerable<IExtraAction<IEndpointRouteBuilder>> GetAllEndpointRouteBuilderExtraActions()
     {
-        return EndpointRouteBuilderActions;
+        return EndpointRouteBuilderExtraActions;
     }
 
-    public static void AddWebApplicationBuilderAction(Action<WebApplicationBuilder> action)
+    public static void AddWebApplicationBuilderExtraAction(IExtraAction<WebApplicationBuilder> action)
     {
-        WebApplicationBuilderActions.Add(action);
+        WebApplicationBuilderExtraActions.Add(action);
     }
 
-    public static void AddWebApplicationBuilderActions(params Action<WebApplicationBuilder>[] actions)
+    public static void AddWebApplicationBuilderExtraActions(params IExtraAction<WebApplicationBuilder>[] actions)
     {
-        WebApplicationBuilderActions.AddRange(actions);
+        WebApplicationBuilderExtraActions.AddRange(actions);
     }
 
-    public static IEnumerable<Action<WebApplicationBuilder>> GetWebApplicationBuilderActionCollection()
+    public static IEnumerable<IExtraAction<WebApplicationBuilder>> GetAllWebApplicationBuilderExtraActions()
     {
-        return WebApplicationBuilderActions;
+        return WebApplicationBuilderExtraActions;
     }
 
-    public static void AddWebApplicationAction(Action<WebApplication> action)
+    public static void AddWebApplicationExtraAction(IExtraAction<WebApplication> action)
     {
-        WebApplicationActions.Add(action);
+        WebApplicationExtraActions.Add(action);
     }
 
-    public static IEnumerable<Action<WebApplication>> GetWebApplicationActionCollection()
+    public static IEnumerable<IExtraAction<WebApplication>> GetAllWebApplicationExtraActions()
     {
-        return WebApplicationActions;
+        return WebApplicationExtraActions;
     }
 }

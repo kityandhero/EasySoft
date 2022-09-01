@@ -1,7 +1,7 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Entities;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
+using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Logging;
@@ -14,11 +14,11 @@ public static class WebApplicationExtensions
     {
         if (!SwaggerConfigAssist.GetEnable())
         {
-            StartupMessage.Add(new StartupMessage
-            {
-                LogLevel = LogLevel.Information,
-                Message = "Swagger: disable."
-            });
+            StartupNormalMessageAssist.Add(
+                new StartupMessage().SetLevel(LogLevel.Information).SetMessage(
+                    "Swagger: disable."
+                )
+            );
 
             return application;
         }
@@ -26,12 +26,11 @@ public static class WebApplicationExtensions
         application.UseSwagger();
         application.UseSwaggerUI();
 
-        StartupMessage.Add(new StartupMessage
-        {
-            LogLevel = LogLevel.Information,
-            Message =
+        StartupNormalMessageAssist.Add(
+            new StartupMessage().SetLevel(LogLevel.Information).SetMessage(
                 $"swagger: enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/swagger/index.html" : FlagAssist.StartupUrls.Select(o => $"{o}/swagger/index.html").Join(" "))}."
-        });
+            )
+        );
 
         return application;
     }

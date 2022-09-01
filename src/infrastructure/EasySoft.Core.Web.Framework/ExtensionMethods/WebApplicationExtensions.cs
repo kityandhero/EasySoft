@@ -1,7 +1,8 @@
 ﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Entities;
+using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.Web.Framework.ExtensionMethods;
@@ -19,24 +20,37 @@ public static class WebApplicationExtensions
     {
         application.UseMvc();
 
-        if (ApplicationConfigActionAssist.GetAreaCollection().Any())
+        var startMessage = new StartupMessage()
+            .SetLevel(LogLevel.Information)
+            .SetMessage(
+                UtilityTools.Standard.ConstCollection.ApplicationStartExtraEndpointMessageStartDivider
+            );
+
+        var endMessage = new StartupMessage()
+            .SetLevel(LogLevel.Information)
+            .SetMessage(
+                UtilityTools.Standard.ConstCollection.ApplicationStartExtraEndpointMessageEndDivider
+            );
+
+        if (ApplicationConfigActionAssist.GetAllAreas().Any())
         {
-            var areaAdjust = ApplicationConfigActionAssist.GetAreaCollection()
+            var areaAdjust = ApplicationConfigActionAssist.GetAllAreas()
                 .Where(o => !string.IsNullOrWhiteSpace(o.Remove(" ")))
                 .ToList();
 
             if (areaAdjust.Any())
             {
-                StartupMessage.Add(new StartupMessage
-                {
-                    LogLevel = LogLevel.Information,
-                    Message = $"Areas: {ApplicationConfigActionAssist.GetAreaCollection().Join(",")}"
-                });
+                StartupNormalMessageAssist.Add(
+                    new StartupMessage()
+                        .SetLevel(LogLevel.Information)
+                        .SetMessage(
+                            $"Areas: {ApplicationConfigActionAssist.GetAllAreas().Join(",")}"
+                        )
+                );
 
                 application.UseEndpoints(endpoints =>
                 {
-                    ApplicationConfigActionAssist.GetEndpointRouteBuilderActionCollection()
-                        .ForEach(action => { action(endpoints); });
+                    WeaveExtraAction(endpoints, startMessage, endMessage);
 
                     areaAdjust.ForEach(o =>
                     {
@@ -62,8 +76,7 @@ public static class WebApplicationExtensions
             {
                 application.UseEndpoints(endpoints =>
                 {
-                    ApplicationConfigActionAssist.GetEndpointRouteBuilderActionCollection()
-                        .ForEach(action => { action(endpoints); });
+                    WeaveExtraAction(endpoints, startMessage, endMessage);
 
                     endpoints.MapControllerRoute(
                         name: "default",
@@ -76,8 +89,7 @@ public static class WebApplicationExtensions
         {
             application.UseEndpoints(endpoints =>
             {
-                ApplicationConfigActionAssist.GetEndpointRouteBuilderActionCollection()
-                    .ForEach(action => { action(endpoints); });
+                WeaveExtraAction(endpoints, startMessage, endMessage);
 
                 endpoints.MapControllerRoute(
                     name: "default",
@@ -86,13 +98,52 @@ public static class WebApplicationExtensions
             });
         }
 
-        StartupMessage.Add(new StartupMessage
-        {
-            LogLevel = LogLevel.Information,
-            Message =
-                "You can get all controller actions by visit https://[host]:[port]/[controller]/getAllActions where controller inherited from CustomControllerBase."
-        });
-
         return application;
+    }
+
+    /// <summary>
+    /// 织入扩展的 IEndpointRouteBuilder Action
+    /// </summary>
+    private static void WeaveExtraAction(
+        IEndpointRouteBuilder endpoint,
+        IStartupMessage startNormalMessageAssist,
+        IStartupMessage endNormalMessageAssist
+    )
+    {
+        var extraActions = ApplicationConfigActionAssist.GetAllEndpointRouteBuilderExtraActions().ToList();
+
+        if (extraActions.Count <= 0)
+        {
+            return;
+        }
+
+        StartupEndPointExtraActionMessageAssist.Add(startNormalMessageAssist);
+
+        for (var i = 0; i < extraActions.Count; i++)
+        {
+            var extraAction = extraActions[i];
+
+            var action = extraAction.GetAction();
+
+            if (action == null)
+            {
+                continue;
+            }
+
+            StartupEndPointExtraActionMessageAssist.Add(
+                new StartupMessage()
+                    .SetLevel(LogLevel.Information)
+                    .SetMessage(
+                        $"{i + 1}: {extraAction.GetName()}"
+                    )
+            );
+
+            action(endpoint);
+        }
+
+        if (extraActions.Count > 0)
+        {
+            StartupEndPointExtraActionMessageAssist.Add(endNormalMessageAssist);
+        }
     }
 }

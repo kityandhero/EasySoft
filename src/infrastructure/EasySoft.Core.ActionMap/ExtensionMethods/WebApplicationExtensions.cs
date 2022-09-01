@@ -1,7 +1,8 @@
 ﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Entities;
+using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.ActionMap.ExtensionMethods;
@@ -17,16 +18,21 @@ public static class WebApplicationExtensions
             return application;
         }
 
-        ApplicationConfigActionAssist.AddEndpointRouteBuilderAction(endpoints => { endpoints.MapActionMap(); });
+        ApplicationConfigActionAssist.AddEndpointRouteBuilderExtraAction(
+            new ExtraAction<IEndpointRouteBuilder>()
+                .SetName("MapActionMap")
+                .SetAction(endpoints => { endpoints.MapActionMap(); })
+        );
 
         FlagAssist.SetActionMapSwitchOpen();
 
-        StartupMessage.Add(new StartupMessage
-        {
-            LogLevel = LogLevel.Information,
-            Message =
-                $"UseActionMap: enabled{(!FlagAssist.StartupUrls.Any() ? "." : $", you can access {FlagAssist.StartupUrls.Select(o => $"{o}/ActionMap").Join(" ")}")} to visit it."
-        });
+        StartupNormalMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Information)
+                .SetMessage(
+                    $"UseActionMap: enabled{(!FlagAssist.StartupUrls.Any() ? "." : $", you can access {FlagAssist.StartupUrls.Select(o => $"{o}/ActionMap").Join(" ")}")} to visit it."
+                )
+        );
 
         return application;
     }

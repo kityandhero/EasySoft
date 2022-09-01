@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Entities;
+using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Hangfire;
 using Microsoft.AspNetCore.Builder;
@@ -14,11 +14,13 @@ public static class WebApplicationExtensions
     {
         if (!HangfireConfigAssist.GetEnable())
         {
-            StartupMessage.Add(new StartupMessage
-            {
-                LogLevel = LogLevel.Information,
-                Message = "Hangfire: disable."
-            });
+            StartupNormalMessageAssist.Add(
+                new StartupMessage()
+                    .SetLevel(LogLevel.Information)
+                    .SetMessage(
+                        "Hangfire: disable."
+                    )
+            );
 
             return application;
         }
@@ -26,14 +28,13 @@ public static class WebApplicationExtensions
         //启用Hangfire面板 
         application.UseHangfireDashboard();
 
-        
-
-        StartupMessage.Add(new StartupMessage
-        {
-            LogLevel = LogLevel.Information,
-            Message =
-                $"Hangfire: enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/hangfire" : FlagAssist.StartupUrls.Select(o => $"{o}/hangfire").Join(" "))}."
-        });
+        StartupNormalMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Information)
+                .SetMessage(
+                    $"Hangfire: enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/hangfire" : FlagAssist.StartupUrls.Select(o => $"{o}/hangfire").Join(" "))}."
+                )
+        );
 
         return application;
     }

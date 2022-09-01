@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Entities;
+using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using LogDashboard;
 using Microsoft.AspNetCore.Builder;
@@ -24,12 +24,13 @@ public static class WebApplicationExtensions
 
         application.UseLogDashboard();
 
-        StartupMessage.Add(new StartupMessage
-        {
-            LogLevel = LogLevel.Information,
-            Message =
-                $"LogDashboard enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/LogDashboard" : FlagAssist.StartupUrls.Select(o => $"{o}/LogDashboard").Join(" "))}."
-        });
+        StartupNormalMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Information)
+                .SetMessage(
+                    $"LogDashboard enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/LogDashboard" : FlagAssist.StartupUrls.Select(o => $"{o}/LogDashboard").Join(" "))}."
+                )
+        );
 
         return application;
     }

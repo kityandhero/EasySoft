@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Config.ConfigInterface;
+using EasySoft.UtilityTools.Standard.Enums;
 
 namespace EasySoft.Core.Config.ConfigCollection;
 
@@ -178,7 +179,7 @@ public class GeneralConfig : IConfig
 
     public GeneralConfig()
     {
-        CacheMode = "InMemory";
+        CacheMode = CacheModeCollection.InMemory.ToString();
 
         Urls = "";
 
@@ -226,7 +227,7 @@ public class GeneralConfig : IConfig
 
         NlogDefaultConfigTraceToFileSwitch = "0";
         NlogDefaultConfigDebugToFileSwitch = "0";
-        
+
         NlogDefaultConfigTraceToConsoleSwitch = "1";
         NlogDefaultConfigDebugToConsoleSwitch = "1";
 

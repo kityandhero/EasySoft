@@ -11,7 +11,7 @@ using System.Threading;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.AspNetCore.Http;
 
-namespace EasySoft.UtilityTools.Core.Standard.Assists
+namespace EasySoft.UtilityTools.Core.Assists
 {
     /// <summary>
     /// IP辅助类

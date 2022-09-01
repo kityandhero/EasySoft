@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Entities;
+using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.PrepareStartWork.PrepareWorks;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
@@ -33,12 +33,11 @@ public static class WebApplicationBuilderExtensions
 
         if (string.IsNullOrWhiteSpace(urls))
         {
-            StartupMessage.Add(new StartupMessage
-            {
-                LogLevel = LogLevel.Warning,
-                Message =
+            StartupNormalMessageAssist.Add(
+                new StartupMessage().SetLevel(LogLevel.Information).SetMessage(
                     "Urls in generalConfig.json has not setting, suggest setting it with number or url, there will be better development experience."
-            });
+                )
+            );
 
             return builder;
         }
@@ -51,11 +50,11 @@ public static class WebApplicationBuilderExtensions
 
         builder.WebHost.UseUrls(FlagAssist.StartupUrls.ToArray());
 
-        StartupMessage.Add(new StartupMessage
-        {
-            LogLevel = LogLevel.Information,
-            Message = $"Startup urls is {FlagAssist.StartupUrls.Join(" ")}."
-        });
+        StartupNormalMessageAssist.Add(
+            new StartupMessage().SetLevel(LogLevel.Information).SetMessage(
+                $"Startup urls is {FlagAssist.StartupUrls.Join(" ")}."
+            )
+        );
 
         return builder;
     }

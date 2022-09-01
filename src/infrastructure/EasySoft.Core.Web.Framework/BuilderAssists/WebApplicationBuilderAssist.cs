@@ -5,12 +5,11 @@ using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Config.Utils;
 using EasySoft.Core.DynamicConfig.Assists;
 using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Entities;
+using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.Mapster.ExtensionMethods;
 using EasySoft.Core.NLog.Assists;
 using EasySoft.Core.NLog.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
-using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -88,29 +87,34 @@ public static class WebApplicationBuilderAssist
 
             builder.AddAdvanceNLog(BuildDefaultConfig);
 
-            StartupMessage.Add(new StartupMessage
-            {
-                LogLevel = Microsoft.Extensions.Logging.LogLevel.Information,
-                Message = "AgileConfigSwitch: enable."
-            });
+            StartupNormalMessageAssist.Add(
+                new StartupMessage()
+                    .SetLevel(Microsoft.Extensions.Logging.LogLevel.Warning)
+                    .SetMessage(
+                        "AgileConfigSwitch: enable."
+                    )
+            );
 
-            StartupMessage.Add(new StartupMessage
-            {
-                LogLevel = Microsoft.Extensions.Logging.LogLevel.Information,
-                Message =
-                    $"Dynamic config key: {Config.ConstCollection.GetDynamicConfigKeyCollection().Join(",")}, they can set in AgileConfig."
-            });
+            StartupNormalMessageAssist.Add(
+                new StartupMessage()
+                    .SetLevel(Microsoft.Extensions.Logging.LogLevel.Warning)
+                    .SetMessage(
+                        $"Dynamic config key: {Config.ConstCollection.GetDynamicConfigKeyCollection().Join(",")}, they can set in AgileConfig."
+                    )
+            );
         }
         else
         {
             builder.AddAdvanceNLog();
 
-            StartupMessage.Add(new StartupMessage
-            {
-                LogLevel = Microsoft.Extensions.Logging.LogLevel.Information,
-                Message =
-                    "AgileConfigSwitch: disable, if you need, you can set it in generalConfig.json, config file path is ./configures/generalConfig.json."
-            });
+            StartupNormalMessageAssist.Add(
+                new StartupMessage()
+                    .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
+                    .SetMessage(
+                        "AgileConfigSwitch: disable."
+                    )
+                    .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+            );
         }
 
         return builder;

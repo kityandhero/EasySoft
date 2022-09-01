@@ -19,6 +19,7 @@ using WebApplicationTest.Hubs;
 using WebApplicationTest.PrepareStartWorks;
 using EasySoft.Core.EntityFramework.ExtensionMethods;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
+using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.LogDashboard.ExtensionMethods;
 using EasySoft.Core.Mapster.ExtensionMethods;
@@ -27,53 +28,72 @@ using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 
 // 配置额外的构建项目
-ApplicationConfigActionAssist.AddWebApplicationBuilderActions(
-    applicationBuilder =>
-    {
-        applicationBuilder.AddAdvanceDbContext<DataContext>(
-            opt =>
-            {
-                opt.UseSqlServer(
-                    DatabaseConfigAssist.GetMainConnection()
-                );
-            }
-        );
-    },
-    applicationBuilder => { applicationBuilder.AddAdvanceMapster(); },
-    applicationBuilder =>
-    {
-        applicationBuilder.AddAdvanceApplicationChannel(
-            ApplicationChannelCollection.TestApplication.ToInt(),
-            ApplicationChannelCollection.TestApplication.GetDescription()
-        );
-    },
-    applicationBuilder => { applicationBuilder.AddPrepareStartWorkInjection<SimplePrepareStartWork>(); },
+ApplicationConfigActionAssist.AddWebApplicationBuilderExtraActions(
+    new ExtraAction<WebApplicationBuilder>()
+        .SetName("AddAdvanceDbContext<DataContext>")
+        .SetAction(applicationBuilder =>
+        {
+            applicationBuilder.AddAdvanceDbContext<DataContext>(
+                opt =>
+                {
+                    opt.UseSqlServer(
+                        DatabaseConfigAssist.GetMainConnection()
+                    );
+                }
+            );
+        }),
+    new ExtraAction<WebApplicationBuilder>()
+        .SetName("AddAdvanceApplicationChannel")
+        .SetAction(applicationBuilder =>
+        {
+            applicationBuilder.AddAdvanceApplicationChannel(
+                ApplicationChannelCollection.TestApplication.ToInt(),
+                ApplicationChannelCollection.TestApplication.GetDescription()
+            );
+        }),
+    new ExtraAction<WebApplicationBuilder>()
+        .SetName("AddPrepareStartWorkInjection")
+        .SetAction(applicationBuilder =>
+        {
+            applicationBuilder.AddPrepareStartWorkInjection<SimplePrepareStartWork>();
+        }),
     // 自定义静态文件配置 如有特殊需求，可以进行配置，不配置将采用内置选项，此处仅作为有需要时的样例
     // applicationBuilder => { applicationBuilder.AddStaticFileOptionsInjection<CustomStaticFileOptions>(); },
-    applicationBuilder => { applicationBuilder.AddAdvanceJsonWebToken<ApplicationOperator>(); },
+    new ExtraAction<WebApplicationBuilder>()
+        .SetName("AddAdvanceJsonWebToken")
+        .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceJsonWebToken<ApplicationOperator>(); }),
     // applicationBuilder => { applicationBuilder.UseEasyToken<CustomTokenSecretOptions, ApplicationOperator>(); },
     // 自定义token密钥解析类
     // applicationBuilder => { applicationBuilder.UseEasyToken<CustomTokenSecretOptions, CustomTokenSecret, ApplicationOperator>(); },
-    applicationBuilder => { applicationBuilder.AddPermissionVerification<ApplicationPermissionObserver>(); },
-    applicationBuilder =>
-    {
-        applicationBuilder.AddExtraNormalInjection(containerBuilder =>
+    new ExtraAction<WebApplicationBuilder>()
+        .SetName("AddPermissionVerification")
+        .SetAction(applicationBuilder =>
         {
-            containerBuilder.RegisterType<Simple>().As<ISimple>().SingleInstance();
+            applicationBuilder.AddPermissionVerification<ApplicationPermissionObserver>();
+        }),
+    new ExtraAction<WebApplicationBuilder>()
+        .SetName("AddExtraNormalInjection")
+        .SetAction(applicationBuilder =>
+        {
+            applicationBuilder.AddExtraNormalInjection(containerBuilder =>
+            {
+                containerBuilder.RegisterType<Simple>().As<ISimple>().SingleInstance();
 
-            containerBuilder.RegisterType<AuthorRepository>().As<IAuthorRepository>().AsImplementedInterfaces();
+                containerBuilder.RegisterType<AuthorRepository>().As<IAuthorRepository>().AsImplementedInterfaces();
 
-            containerBuilder.RegisterType<BlogRepository>().As<IBlogRepository>().AsImplementedInterfaces();
+                containerBuilder.RegisterType<BlogRepository>().As<IBlogRepository>().AsImplementedInterfaces();
 
-            containerBuilder.RegisterType<AuthorService>().As<IAuthorService>().InstancePerDependency()
-                .AsImplementedInterfaces();
+                containerBuilder.RegisterType<AuthorService>().As<IAuthorService>().InstancePerDependency()
+                    .AsImplementedInterfaces();
 
-            containerBuilder.RegisterType<BlogService>().As<IBlogService>().InstancePerDependency()
-                .AsImplementedInterfaces();
-        });
-    },
+                containerBuilder.RegisterType<BlogService>().As<IBlogService>().InstancePerDependency()
+                    .AsImplementedInterfaces();
+            });
+        }),
     // 启用日志面板
-    applicationBuilder => { applicationBuilder.AddAdvanceLogDashboard(); },
+    new ExtraAction<WebApplicationBuilder>()
+        .SetName("AddAdvanceLogDashboard")
+        .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceLogDashboard(); }),
     // 配置健康检测
     // applicationBuilder =>
     // {
@@ -83,12 +103,18 @@ ApplicationConfigActionAssist.AddWebApplicationBuilderActions(
     //     });
     // },
     // SignalR
-    applicationBuilder => { applicationBuilder.Services.AddSignalR(); }
+    new ExtraAction<WebApplicationBuilder>().SetName("AddSignalR").SetAction(applicationBuilder =>
+    {
+        applicationBuilder.Services.AddSignalR();
+    })
 );
 
 ApplicationConfigActionAssist.AddAreas("AreaTest", "AuthTest", "DataTest", "ComponentTest");
 
-ApplicationConfigActionAssist.AddWebApplicationAction(application => application.UseActionMap());
+ApplicationConfigActionAssist.AddWebApplicationExtraAction(
+    new ExtraAction<WebApplication>().SetName("UseActionMap")
+        .SetAction(application => application.UseActionMap())
+);
 
 AgileConfigClientActionAssist.ActionAgileConfigChanged = e =>
 {

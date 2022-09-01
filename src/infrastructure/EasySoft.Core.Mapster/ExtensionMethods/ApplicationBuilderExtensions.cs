@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.Mapster.Assists;
 using Mapster;
 using MapsterMapper;
@@ -26,6 +28,13 @@ public static class ApplicationBuilderExtensions
         {
             containerBuilder.RegisterType<Mapper>().As<IMapper>().SingleInstance();
         });
+
+        StartupNormalMessageAssist.Add(
+            new StartupMessage()
+                .SetMessage(
+                    "IMapper provide by Mapster inject complete, you can config it with ConfigActionAssist, the easy way to use is MapperAssist."
+                )
+        );
 
         return builder;
     }

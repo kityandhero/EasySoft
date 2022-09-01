@@ -1,8 +1,9 @@
 ﻿using EasySoft.Core.HealthChecks.Entities;
 using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Entities;
+using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -42,17 +43,19 @@ public static class WebApplicationBuilderExtensions
             settings.SetMinimumSecondsBetweenFailureNotifications(60);
         }).AddInMemoryStorage();
 
-        ApplicationConfigActionAssist.AddEndpointRouteBuilderAction(endpointRouteBuilder =>
-        {
-            endpointRouteBuilder.UseAdvanceHealthChecks();
-        });
+        ApplicationConfigActionAssist.AddEndpointRouteBuilderExtraAction(
+            new ExtraAction<IEndpointRouteBuilder>()
+                .SetName("")
+                .SetAction(endpointRouteBuilder => { endpointRouteBuilder.UseAdvanceHealthChecks(); })
+        );
 
-        StartupMessage.Add(new StartupMessage
-        {
-            LogLevel = LogLevel.Information,
-            Message =
-                $"HealthChecks: enable{(!FlagAssist.StartupUrls.Any() ? "." : $", you can access {FlagAssist.StartupUrls.Select(o => $"{o}/HealthChecks-ui").Join(" ")}")} to visit it.",
-        });
+        StartupNormalMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Information)
+                .SetMessage(
+                    $"HealthChecks: enable{(!FlagAssist.StartupUrls.Any() ? "." : $", you can access {FlagAssist.StartupUrls.Select(o => $"{o}/HealthChecks-ui").Join(" ")}")} to visit it."
+                )
+        );
 
         return builder;
     }

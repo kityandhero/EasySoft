@@ -2,7 +2,7 @@
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Entities;
+using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,12 +28,11 @@ public static class WebApplicationBuilderExtensions
 
                 try
                 {
-                    StartupMessage.Add(new StartupMessage
-                    {
-                        LogLevel = LogLevel.Information,
-                        Message =
+                    StartupNormalMessageAssist.Add(
+                        new StartupMessage().SetLevel(LogLevel.Information).SetMessage(
                             $"AgileConfig env: {GeneralConfigAssist.GetAgileConfigEnv()}, node: {GeneralConfigAssist.GetAgileConfigNodeCollection().Join(",")}."
-                    });
+                        )
+                    );
 
                     var configClient = new ConfigClient(
                         GeneralConfigAssist.GetAgileConfigAppId(),

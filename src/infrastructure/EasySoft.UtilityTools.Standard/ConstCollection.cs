@@ -8,8 +8,35 @@ namespace EasySoft.UtilityTools.Standard
     /// </summary>
     public static class ConstCollection
     {
-        public const string ApplicationStartBeginDivider = "-----------------------------------------------------------";
-        public const string ApplicationStartEndDivider = "===========================================================";
+        public const string ApplicationStartMainMessageBeginDivider =
+            "-----------------------------------------------------------";
+
+        public const string ApplicationStartMainMessageEndDivider =
+            "===========================================================";
+
+        public const string ApplicationStartExtraBuilderMessageStartDivider =
+            "==== Extra Builder Info ====";
+
+        public const string ApplicationStartExtraBuilderMessageEndDivider =
+            "";
+
+        public const string ApplicationStartExtraApplicationMessageStartDivider =
+            "==== Extra Applicaiton Info ====";
+
+        public const string ApplicationStartExtraApplicationMessageEndDivider =
+            "";
+
+        public const string ApplicationStartExtraEndpointMessageStartDivider =
+            "==== Extra Endpoint Info =====";
+
+        public const string ApplicationStartExtraEndpointMessageEndDivider =
+            "";
+
+        public const string ApplicationStartExtraMvcOptionMessageStartDivider =
+            "==== Extra Mvc Option Info =====";
+
+        public const string ApplicationStartExtraMvcOptionMessageEndDivider =
+            "";
 
         public const string JsonWebToken = "JsonWebToken";
 
