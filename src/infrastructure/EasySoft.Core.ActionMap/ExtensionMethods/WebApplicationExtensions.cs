@@ -18,7 +18,7 @@ public static class WebApplicationExtensions
             return application;
         }
 
-        ApplicationConfigActionAssist.AddEndpointRouteBuilderExtraAction(
+        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("MapActionMap")
                 .SetAction(endpoints => { endpoints.MapActionMap(); })

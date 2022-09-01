@@ -3,6 +3,7 @@
   "HttpRedirectionHttpsSwitch": "0",
   "CorsEnable": "1",
   "CorsPolicies": "*",
+  "MiniProFileSwitch": "1",
   "CacheMode": "Redis",
   "RemoteGeneralLogEnable": "1",
   "RemoteErrorLogEnable": "1",

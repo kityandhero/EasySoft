@@ -24,6 +24,7 @@
         <ProjectReference Include="..\EasySoft.Core.Hangfire\EasySoft.Core.Hangfire.csproj" />
         <ProjectReference Include="..\EasySoft.Core.JsonWebToken\EasySoft.Core.JsonWebToken.csproj" />
         <ProjectReference Include="..\EasySoft.Core.Mapster\EasySoft.Core.Mapster.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.MiniProfiler\EasySoft.Core.MiniProfiler.csproj" />
         <ProjectReference Include="..\EasySoft.Core.NLog\EasySoft.Core.NLog.csproj" />
         <ProjectReference Include="..\EasySoft.Core.PermissionVerification\EasySoft.Core.PermissionVerification.csproj" />
         <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />

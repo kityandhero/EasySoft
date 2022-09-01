@@ -175,6 +175,8 @@ public class GeneralConfig : IConfig
     /// </summary>
     public string NlogDefaultConfigDebugToConsoleSwitch { get; set; }
 
+    public string MiniProFileSwitch { get; set; }
+
     public string WebRootPath { get; set; }
 
     public GeneralConfig()
@@ -230,6 +232,8 @@ public class GeneralConfig : IConfig
 
         NlogDefaultConfigTraceToConsoleSwitch = "1";
         NlogDefaultConfigDebugToConsoleSwitch = "1";
+
+        MiniProFileSwitch = "0";
 
         WebRootPath = "";
     }

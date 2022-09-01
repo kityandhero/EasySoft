@@ -3,16 +3,29 @@ using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using StackExchange.Profiling;
 
 namespace EasySoft.Core.Infrastructure.Assists;
 
-public static class ApplicationConfigActionAssist
+public static class ApplicationConfigurator
 {
     private static readonly HashSet<string> Areas = new(StringComparer.OrdinalIgnoreCase);
     private static readonly List<IExtraAction<MvcOptions>> MvcOptionExtraActions = new();
     private static readonly List<IExtraAction<IEndpointRouteBuilder>> EndpointRouteBuilderExtraActions = new();
     private static readonly List<IExtraAction<WebApplicationBuilder>> WebApplicationBuilderExtraActions = new();
     private static readonly List<IExtraAction<WebApplication>> WebApplicationExtraActions = new();
+
+    private static Action<MiniProfilerOptions>? _miniProfileOptionAction;
+
+    public static void SetMiniProfilerOptionsAction(Action<MiniProfilerOptions> action)
+    {
+        _miniProfileOptionAction = action;
+    }
+
+    public static Action<MiniProfilerOptions>? GetMiniProfilerOptionsAction()
+    {
+        return _miniProfileOptionAction;
+    }
 
     public static void AddArea(string area)
     {

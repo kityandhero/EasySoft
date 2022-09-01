@@ -15,13 +15,13 @@ namespace EasySoft.UtilityTools.Standard
             "===========================================================";
 
         public const string ApplicationStartExtraBuilderMessageDivider =
-            "==== Extra Builder Action Info ====";
+            "==== Extra Builder Action Info ========";
 
         public const string ApplicationStartExtraApplicationMessageStartDivider =
             "==== Extra Applicaiton Action Info ====";
 
         public const string ApplicationStartExtraEndpointMessageStartDivider =
-            "==== Extra Endpoint Action Info =====";
+            "==== Extra Endpoint Action Info =======";
 
         public const string ApplicationStartExtraMvcOptionMessageStartDivider =
             "==== Extra Mvc Option Action Info =====";

@@ -43,7 +43,7 @@ public static class WebApplicationBuilderExtensions
             settings.SetMinimumSecondsBetweenFailureNotifications(60);
         }).AddInMemoryStorage();
 
-        ApplicationConfigActionAssist.AddEndpointRouteBuilderExtraAction(
+        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpointRouteBuilder => { endpointRouteBuilder.UseAdvanceHealthChecks(); })

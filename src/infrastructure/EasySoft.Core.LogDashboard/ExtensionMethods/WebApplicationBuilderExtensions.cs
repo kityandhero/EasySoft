@@ -25,7 +25,7 @@ public static class WebApplicationBuilderExtensions
 
         FlagAssist.SetLogDashboardSwitchOpen();
 
-        ApplicationConfigActionAssist.AddWebApplicationExtraAction(
+        ApplicationConfigurator.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("UseAdvanceLogDashboard")
                 .SetAction(application => { application.UseAdvanceLogDashboard(); })

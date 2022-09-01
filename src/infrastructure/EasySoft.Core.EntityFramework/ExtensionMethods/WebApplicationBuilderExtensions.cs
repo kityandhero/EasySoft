@@ -22,7 +22,7 @@ public static class WebApplicationBuilderExtensions
 
         FlagAssist.SetEntityFrameworkSwitchOpen();
 
-        ApplicationConfigActionAssist.AddWebApplicationExtraAction(
+        ApplicationConfigurator.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(application => { application.UseAdvanceMigrationsEndPoint(); })

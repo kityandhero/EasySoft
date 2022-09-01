@@ -16,6 +16,7 @@ using EasySoft.Core.Infrastructure.Channels;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
+using EasySoft.Core.MiniProfiler.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Swagger.ExtensionMethods;
 using EasySoft.Core.Web.Framework.Attributes;
@@ -132,6 +133,8 @@ public static class WebApplicationBuilderExtensions
         }
 
         builder.AddAdvanceEasyCaching();
+
+        builder.AddAdvanceMiniProfile();
 
         builder.AddGeneralLogTransmitter();
 
@@ -574,7 +577,7 @@ public static class WebApplicationBuilderExtensions
         WebApplicationBuilder builder
     )
     {
-        var extraActions = ApplicationConfigActionAssist.GetAllWebApplicationBuilderExtraActions().ToList();
+        var extraActions = ApplicationConfigurator.GetAllWebApplicationBuilderExtraActions().ToList();
 
         if (extraActions.Count <= 0)
         {
@@ -626,7 +629,7 @@ public static class WebApplicationBuilderExtensions
         WebApplication application
     )
     {
-        var extraActions = ApplicationConfigActionAssist.GetAllWebApplicationExtraActions().ToList();
+        var extraActions = ApplicationConfigurator.GetAllWebApplicationExtraActions().ToList();
 
         if (extraActions.Count <= 0)
         {
@@ -678,7 +681,7 @@ public static class WebApplicationBuilderExtensions
         MvcOptions option
     )
     {
-        var extraActions = ApplicationConfigActionAssist.GetAllMvcOptionExtraActions().ToList();
+        var extraActions = ApplicationConfigurator.GetAllMvcOptionExtraActions().ToList();
 
         if (extraActions.Count <= 0)
         {

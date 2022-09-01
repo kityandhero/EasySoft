@@ -109,6 +109,10 @@
               "foregroundColor": "DarkGreen"
             },
             {
+               "regex": "\\[[0-9a-zA-Z_]+\\.json\\]\\(\\.\\/configures\\/[0-9a-zA-Z_]+\\.json\\)",
+               "foregroundColor": "DarkGray"
+            },           
+            {
               "regex": "\\[\\d{4}\\-\\d{2}\\-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{4}\\]",
               "foregroundColor": "DarkGray"
             }

@@ -26,9 +26,9 @@ public static class WebApplicationExtensions
                 UtilityTools.Standard.ConstCollection.ApplicationStartExtraEndpointMessageStartDivider
             );
 
-        if (ApplicationConfigActionAssist.GetAllAreas().Any())
+        if (ApplicationConfigurator.GetAllAreas().Any())
         {
-            var areaAdjust = ApplicationConfigActionAssist.GetAllAreas()
+            var areaAdjust = ApplicationConfigurator.GetAllAreas()
                 .Where(o => !string.IsNullOrWhiteSpace(o.Remove(" ")))
                 .ToList();
 
@@ -38,7 +38,7 @@ public static class WebApplicationExtensions
                     new StartupMessage()
                         .SetLevel(LogLevel.Information)
                         .SetMessage(
-                            $"Areas: {ApplicationConfigActionAssist.GetAllAreas().Join(",")}"
+                            $"Areas: {ApplicationConfigurator.GetAllAreas().Join(",")}"
                         )
                 );
 
@@ -103,7 +103,7 @@ public static class WebApplicationExtensions
         IStartupMessage startNormalMessageAssist
     )
     {
-        var extraActions = ApplicationConfigActionAssist.GetAllEndpointRouteBuilderExtraActions().ToList();
+        var extraActions = ApplicationConfigurator.GetAllEndpointRouteBuilderExtraActions().ToList();
 
         if (extraActions.Count <= 0)
         {

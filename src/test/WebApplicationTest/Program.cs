@@ -28,7 +28,7 @@ using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 
 // 配置额外的构建项目
-ApplicationConfigActionAssist.AddWebApplicationBuilderExtraActions(
+ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddAdvanceDbContext<DataContext>")
         .SetAction(applicationBuilder =>
@@ -109,9 +109,9 @@ ApplicationConfigActionAssist.AddWebApplicationBuilderExtraActions(
     })
 );
 
-ApplicationConfigActionAssist.AddAreas("AreaTest", "AuthTest", "DataTest", "ComponentTest");
+ApplicationConfigurator.AddAreas("AreaTest", "AuthTest", "DataTest", "ComponentTest");
 
-ApplicationConfigActionAssist.AddWebApplicationExtraAction(
+ApplicationConfigurator.AddWebApplicationExtraAction(
     new ExtraAction<WebApplication>().SetName("UseActionMap")
         .SetAction(application => application.UseActionMap())
 );

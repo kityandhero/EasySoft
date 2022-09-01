@@ -758,6 +758,22 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    public static bool GetMiniProFileSwitch()
+    {
+        var v = GetConfig().MiniProFileSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 MiniProFileSwitch: {ConfigFile} -> MiniProFileSwitch,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
+
     /// <summary>
     /// 开关: 默认Nlog配置中是否启用Debug日志记录, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
     /// </summary>
