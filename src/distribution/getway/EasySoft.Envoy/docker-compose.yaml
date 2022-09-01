@@ -1,0 +1,15 @@
+﻿version: "3"
+
+services:
+  easy_soft_envoy:
+    image: envoyproxy/envoy:v1.14.2
+    #    build:
+    #      context: ./
+    #      dockerfile: Dockerfile
+    container_name: easy_soft_envoy
+    restart: always
+    network_mode: bridge
+    ports:
+      - "10000:10000"
+#    volumes:
+#      - ./envoy.yaml:/etc/envoy/envoy.yaml
