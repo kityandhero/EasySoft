@@ -29,7 +29,7 @@ public static class ApplicationBuilderExtensions
             containerBuilder.RegisterType<Mapper>().As<IMapper>().SingleInstance();
         });
 
-        StartupNormalMessageAssist.Add(
+        StartupDescriptionMessageAssist.Add(
             new StartupMessage()
                 .SetMessage(
                     "IMapper provide by Mapster inject complete, you can config it with ConfigActionAssist, the easy way to use is MapperAssist."

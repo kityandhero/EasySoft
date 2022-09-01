@@ -49,7 +49,7 @@ public static class WebApplicationBuilderExtensions
                 .SetAction(endpointRouteBuilder => { endpointRouteBuilder.UseAdvanceHealthChecks(); })
         );
 
-        StartupNormalMessageAssist.Add(
+        StartupConfigMessageAssist.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(

@@ -28,7 +28,7 @@ public static class WebApplicationBuilderExtensions
 
                 try
                 {
-                    StartupNormalMessageAssist.Add(
+                    StartupConfigMessageAssist.Add(
                         new StartupMessage().SetLevel(LogLevel.Information).SetMessage(
                             $"AgileConfig env: {GeneralConfigAssist.GetAgileConfigEnv()}, node: {GeneralConfigAssist.GetAgileConfigNodeCollection().Join(",")}."
                         )

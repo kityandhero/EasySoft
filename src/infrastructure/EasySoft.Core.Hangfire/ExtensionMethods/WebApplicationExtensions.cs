@@ -14,7 +14,7 @@ public static class WebApplicationExtensions
     {
         if (!HangfireConfigAssist.GetEnable())
         {
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
@@ -28,7 +28,7 @@ public static class WebApplicationExtensions
         //启用Hangfire面板 
         application.UseHangfireDashboard();
 
-        StartupNormalMessageAssist.Add(
+        StartupConfigMessageAssist.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(

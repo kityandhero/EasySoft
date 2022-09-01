@@ -87,7 +87,7 @@ public static class WebApplicationBuilderAssist
 
             builder.AddAdvanceNLog(BuildDefaultConfig);
 
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(Microsoft.Extensions.Logging.LogLevel.Warning)
                     .SetMessage(
@@ -95,7 +95,7 @@ public static class WebApplicationBuilderAssist
                     )
             );
 
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(Microsoft.Extensions.Logging.LogLevel.Warning)
                     .SetMessage(
@@ -107,7 +107,7 @@ public static class WebApplicationBuilderAssist
         {
             builder.AddAdvanceNLog();
 
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
                     .SetMessage(

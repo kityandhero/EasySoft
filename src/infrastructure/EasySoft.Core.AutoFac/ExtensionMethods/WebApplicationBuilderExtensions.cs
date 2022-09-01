@@ -24,11 +24,11 @@ public static class WebApplicationBuilderExtensions
 
         builder.AddControllerPropertiesAutowired(Assembly.GetEntryAssembly());
 
-        StartupNormalMessageAssist.Add(
+        StartupDescriptionMessageAssist.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
-                    "You can set your autoFac config with autoFac.json in ./configures/autoFac.json. The document link is https://autofac.readthedocs.io/en/latest/configuration/xml.html."
+                    "You can set autoFac config with autoFac.json in ./configures/autoFac.json. The document link is https://autofac.readthedocs.io/en/latest/configuration/xml.html."
                 )
         );
 

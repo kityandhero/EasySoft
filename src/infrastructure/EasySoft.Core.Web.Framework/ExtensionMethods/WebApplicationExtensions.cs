@@ -26,12 +26,6 @@ public static class WebApplicationExtensions
                 UtilityTools.Standard.ConstCollection.ApplicationStartExtraEndpointMessageStartDivider
             );
 
-        var endMessage = new StartupMessage()
-            .SetLevel(LogLevel.Information)
-            .SetMessage(
-                UtilityTools.Standard.ConstCollection.ApplicationStartExtraEndpointMessageEndDivider
-            );
-
         if (ApplicationConfigActionAssist.GetAllAreas().Any())
         {
             var areaAdjust = ApplicationConfigActionAssist.GetAllAreas()
@@ -40,7 +34,7 @@ public static class WebApplicationExtensions
 
             if (areaAdjust.Any())
             {
-                StartupNormalMessageAssist.Add(
+                StartupConfigMessageAssist.Add(
                     new StartupMessage()
                         .SetLevel(LogLevel.Information)
                         .SetMessage(
@@ -50,7 +44,7 @@ public static class WebApplicationExtensions
 
                 application.UseEndpoints(endpoints =>
                 {
-                    WeaveExtraAction(endpoints, startMessage, endMessage);
+                    WeaveExtraAction(endpoints, startMessage);
 
                     areaAdjust.ForEach(o =>
                     {
@@ -76,7 +70,7 @@ public static class WebApplicationExtensions
             {
                 application.UseEndpoints(endpoints =>
                 {
-                    WeaveExtraAction(endpoints, startMessage, endMessage);
+                    WeaveExtraAction(endpoints, startMessage);
 
                     endpoints.MapControllerRoute(
                         name: "default",
@@ -89,7 +83,7 @@ public static class WebApplicationExtensions
         {
             application.UseEndpoints(endpoints =>
             {
-                WeaveExtraAction(endpoints, startMessage, endMessage);
+                WeaveExtraAction(endpoints, startMessage);
 
                 endpoints.MapControllerRoute(
                     name: "default",
@@ -106,8 +100,7 @@ public static class WebApplicationExtensions
     /// </summary>
     private static void WeaveExtraAction(
         IEndpointRouteBuilder endpoint,
-        IStartupMessage startNormalMessageAssist,
-        IStartupMessage endNormalMessageAssist
+        IStartupMessage startNormalMessageAssist
     )
     {
         var extraActions = ApplicationConfigActionAssist.GetAllEndpointRouteBuilderExtraActions().ToList();
@@ -139,11 +132,6 @@ public static class WebApplicationExtensions
             );
 
             action(endpoint);
-        }
-
-        if (extraActions.Count > 0)
-        {
-            StartupEndPointExtraActionMessageAssist.Add(endNormalMessageAssist);
         }
     }
 }

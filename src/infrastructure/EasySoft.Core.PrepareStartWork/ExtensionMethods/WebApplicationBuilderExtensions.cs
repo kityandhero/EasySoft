@@ -33,7 +33,7 @@ public static class WebApplicationBuilderExtensions
 
         if (string.IsNullOrWhiteSpace(urls))
         {
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage().SetLevel(LogLevel.Information).SetMessage(
                     "Urls in generalConfig.json has not setting, suggest setting it with number or url, there will be better development experience."
                 )
@@ -50,9 +50,9 @@ public static class WebApplicationBuilderExtensions
 
         builder.WebHost.UseUrls(FlagAssist.StartupUrls.ToArray());
 
-        StartupNormalMessageAssist.Add(
+        StartupConfigMessageAssist.Add(
             new StartupMessage().SetLevel(LogLevel.Information).SetMessage(
-                $"Startup urls is {FlagAssist.StartupUrls.Join(" ")}."
+                $"Startup urls: {FlagAssist.StartupUrls.Join(" ")}."
             )
         );
 

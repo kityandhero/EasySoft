@@ -1,7 +1,10 @@
 ﻿using EasySoft.Core.Config.ConfigCollection;
 using EasySoft.Core.Config.Utils;
+using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
+using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.Config.Pretreatments;
 
@@ -67,5 +70,13 @@ public static class PrepareStartAssist
                 itemPath.CreateFile(Tools.GetNlogDefaultConfig());
             }
         });
+        
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Information)
+                .SetMessage(
+                "All sample config file has generated in ./configures/simple folder."
+                )
+        );
     }
 }

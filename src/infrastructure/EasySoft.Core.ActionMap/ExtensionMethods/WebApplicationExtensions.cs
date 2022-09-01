@@ -26,11 +26,19 @@ public static class WebApplicationExtensions
 
         FlagAssist.SetActionMapSwitchOpen();
 
-        StartupNormalMessageAssist.Add(
+        StartupConfigMessageAssist.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
-                    $"UseActionMap: enabled{(!FlagAssist.StartupUrls.Any() ? "." : $", you can access {FlagAssist.StartupUrls.Select(o => $"{o}/ActionMap").Join(" ")}")} to visit it."
+                    $"UseActionMap: enabled."
+                )
+        );
+
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Information)
+                .SetMessage(
+                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/ActionMap").Join(" ")} to get all action info."
                 )
         );
 

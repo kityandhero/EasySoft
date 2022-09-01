@@ -14,7 +14,7 @@ public static class WebApplicationExtensions
     {
         if (!SwaggerConfigAssist.GetEnable())
         {
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage().SetLevel(LogLevel.Information).SetMessage(
                     "Swagger: disable."
                 )
@@ -26,7 +26,7 @@ public static class WebApplicationExtensions
         application.UseSwagger();
         application.UseSwaggerUI();
 
-        StartupNormalMessageAssist.Add(
+        StartupConfigMessageAssist.Add(
             new StartupMessage().SetLevel(LogLevel.Information).SetMessage(
                 $"swagger: enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/swagger/index.html" : FlagAssist.StartupUrls.Select(o => $"{o}/swagger/index.html").Join(" "))}."
             )

@@ -24,13 +24,21 @@ public static class WebApplicationExtensions
 
         application.UseLogDashboard();
 
-        StartupNormalMessageAssist.Add(
+        StartupConfigMessageAssist.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
-                    $"LogDashboard enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/LogDashboard" : FlagAssist.StartupUrls.Select(o => $"{o}/LogDashboard").Join(" "))}."
+                    $"LogDashboard enable."
                 )
         );
+        
+        StartupDescriptionMessageAssist.Add(
+                    new StartupMessage()
+                        .SetLevel(LogLevel.Information)
+                        .SetMessage(
+                            $"you can access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/LogDashboard" : FlagAssist.StartupUrls.Select(o => $"{o}/LogDashboard").Join(" "))} to visit LogDashboard."
+                        )
+                );
 
         return application;
     }

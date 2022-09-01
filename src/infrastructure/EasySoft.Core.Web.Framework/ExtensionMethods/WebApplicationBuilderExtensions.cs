@@ -183,7 +183,7 @@ public static class WebApplicationBuilderExtensions
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
@@ -194,7 +194,7 @@ public static class WebApplicationBuilderExtensions
         }
         else
         {
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
@@ -212,7 +212,7 @@ public static class WebApplicationBuilderExtensions
             app.UseHsts();
         }
 
-        StartupNormalMessageAssist.Add(
+        StartupConfigMessageAssist.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
@@ -223,7 +223,7 @@ public static class WebApplicationBuilderExtensions
 
         if (GeneralConfigAssist.GetCacheMode() == CacheModeCollection.Redis.ToString())
         {
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
@@ -237,7 +237,7 @@ public static class WebApplicationBuilderExtensions
         {
             if (FlagAssist.ApplicationChannelIsDefault)
             {
-                StartupNormalMessageAssist.Add(
+                StartupConfigMessageAssist.Add(
                     new StartupMessage()
                         .SetLevel(LogLevel.Information)
                         .SetMessage(
@@ -249,7 +249,7 @@ public static class WebApplicationBuilderExtensions
             {
                 var applicationChannel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
 
-                StartupNormalMessageAssist.Add(
+                StartupConfigMessageAssist.Add(
                     new StartupMessage()
                         .SetLevel(LogLevel.Information)
                         .SetMessage(
@@ -264,7 +264,7 @@ public static class WebApplicationBuilderExtensions
             // 当前项目启动后，监听的是否是多个端口，其中如果有协议是Https—我们在访问Http的默认会转发到Https中
             app.UseHttpsRedirection();
 
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
@@ -274,7 +274,7 @@ public static class WebApplicationBuilderExtensions
         }
         else
         {
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
@@ -294,7 +294,7 @@ public static class WebApplicationBuilderExtensions
                 staticFileOptionsTypeName = AutofacAssist.Instance.Resolve<AdvanceStaticFileOptions>().GetType().Name;
             }
 
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
@@ -304,7 +304,7 @@ public static class WebApplicationBuilderExtensions
         }
         else
         {
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
@@ -319,7 +319,7 @@ public static class WebApplicationBuilderExtensions
         {
             app.UseCors(ConstCollection.DefaultSpecificOrigins);
 
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
@@ -329,7 +329,7 @@ public static class WebApplicationBuilderExtensions
         }
         else
         {
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
@@ -343,7 +343,7 @@ public static class WebApplicationBuilderExtensions
         {
             app.UseAuthentication();
 
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
@@ -353,7 +353,7 @@ public static class WebApplicationBuilderExtensions
         }
         else
         {
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
@@ -380,7 +380,7 @@ public static class WebApplicationBuilderExtensions
         {
             if (FlagAssist.EasyTokenMiddlewareModeSwitch || FlagAssist.JsonWebTokenMiddlewareModeSwitch)
             {
-                StartupNormalMessageAssist.Add(
+                StartupConfigMessageAssist.Add(
                     new StartupMessage()
                         .SetLevel(LogLevel.Information)
                         .SetMessage(
@@ -390,7 +390,7 @@ public static class WebApplicationBuilderExtensions
             }
             else
             {
-                StartupNormalMessageAssist.Add(
+                StartupConfigMessageAssist.Add(
                     new StartupMessage()
                         .SetLevel(LogLevel.Information)
                         .SetMessage(
@@ -412,7 +412,7 @@ public static class WebApplicationBuilderExtensions
                 app.UsePermissionVerificationMiddleware();
             }
 
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
@@ -423,7 +423,7 @@ public static class WebApplicationBuilderExtensions
             );
         }
 
-        StartupNormalMessageAssist.Add(
+        StartupConfigMessageAssist.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
@@ -438,7 +438,7 @@ public static class WebApplicationBuilderExtensions
         {
             app.UseAuthorization();
 
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
@@ -448,7 +448,7 @@ public static class WebApplicationBuilderExtensions
         }
         else
         {
-            StartupNormalMessageAssist.Add(
+            StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
@@ -458,7 +458,7 @@ public static class WebApplicationBuilderExtensions
             );
         }
 
-        StartupNormalMessageAssist.Add(
+        StartupConfigMessageAssist.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
@@ -469,7 +469,7 @@ public static class WebApplicationBuilderExtensions
                 .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
         );
 
-        StartupNormalMessageAssist.Add(
+        StartupConfigMessageAssist.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
@@ -493,7 +493,7 @@ public static class WebApplicationBuilderExtensions
 
         app.UseAdvanceMapControllers();
 
-        StartupNormalMessageAssist.Add(
+        StartupConfigMessageAssist.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
@@ -501,7 +501,7 @@ public static class WebApplicationBuilderExtensions
                 )
         );
 
-        StartupNormalMessageAssist.Add(
+        StartupConfigMessageAssist.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
@@ -509,7 +509,7 @@ public static class WebApplicationBuilderExtensions
                 )
         );
 
-        StartupNormalMessageAssist.Add(
+        StartupConfigMessageAssist.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
@@ -517,7 +517,7 @@ public static class WebApplicationBuilderExtensions
                 )
         );
 
-        StartupNormalMessageAssist.Add(
+        StartupConfigMessageAssist.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
@@ -525,11 +525,11 @@ public static class WebApplicationBuilderExtensions
                 )
         );
 
-        StartupNormalMessageAssist.Add(
+        StartupConfigMessageAssist.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
-                    UtilityTools.Standard.ConstCollection.ApplicationStartMainMessageEndDivider
+                    UtilityTools.Standard.ConstCollection.ApplicationStartMessageDivider
                 )
         );
 
@@ -541,7 +541,9 @@ public static class WebApplicationBuilderExtensions
 
         StartupEndPointExtraActionMessageAssist.Print();
 
-        StartupNormalMessageAssist.Print();
+        StartupConfigMessageAssist.Print();
+
+        StartupDescriptionMessageAssist.Print();
 
         return app;
     }
@@ -582,13 +584,7 @@ public static class WebApplicationBuilderExtensions
         var startMessage = new StartupMessage()
             .SetLevel(LogLevel.Information)
             .SetMessage(
-                UtilityTools.Standard.ConstCollection.ApplicationStartExtraBuilderMessageStartDivider
-            );
-
-        var endMessage = new StartupMessage()
-            .SetLevel(LogLevel.Information)
-            .SetMessage(
-                UtilityTools.Standard.ConstCollection.ApplicationStartExtraBuilderMessageEndDivider
+                UtilityTools.Standard.ConstCollection.ApplicationStartExtraBuilderMessageDivider
             );
 
         StartupBuilderExtraActionMessageAssist.Add(startMessage);
@@ -612,20 +608,15 @@ public static class WebApplicationBuilderExtensions
                     new StartupMessage()
                         .SetLevel(LogLevel.Information)
                         .SetMessage(
-                            $"{i + 1}: {name}"
+                            $"{i}: {name}"
                         )
                 );
+
+                i += 1;
             }
 
             action(builder);
-
-            i += 1;
         });
-
-        if (extraActions.Count > 0)
-        {
-            StartupBuilderExtraActionMessageAssist.Add(endMessage);
-        }
     }
 
     /// <summary>
@@ -646,12 +637,6 @@ public static class WebApplicationBuilderExtensions
             .SetLevel(LogLevel.Information)
             .SetMessage(
                 UtilityTools.Standard.ConstCollection.ApplicationStartExtraApplicationMessageStartDivider
-            );
-
-        var endMessage = new StartupMessage()
-            .SetLevel(LogLevel.Information)
-            .SetMessage(
-                UtilityTools.Standard.ConstCollection.ApplicationStartExtraApplicationMessageEndDivider
             );
 
         StartupApplicationExtraActionMessageAssist.Add(startMessage);
@@ -675,20 +660,15 @@ public static class WebApplicationBuilderExtensions
                     new StartupMessage()
                         .SetLevel(LogLevel.Information)
                         .SetMessage(
-                            $"{i + 1}: {name}"
+                            $"{i}: {name}"
                         )
                 );
+
+                i += 1;
             }
 
             action(application);
-
-            i += 1;
         });
-
-        if (extraActions.Count > 0)
-        {
-            StartupApplicationExtraActionMessageAssist.Add(endMessage);
-        }
     }
 
     /// <summary>
@@ -709,12 +689,6 @@ public static class WebApplicationBuilderExtensions
             .SetLevel(LogLevel.Information)
             .SetMessage(
                 UtilityTools.Standard.ConstCollection.ApplicationStartExtraMvcOptionMessageStartDivider
-            );
-
-        var endMessage = new StartupMessage()
-            .SetLevel(LogLevel.Information)
-            .SetMessage(
-                UtilityTools.Standard.ConstCollection.ApplicationStartExtraMvcOptionMessageEndDivider
             );
 
         StartupMvcOptionExtraActionMessageAssist.Add(startMessage);
@@ -738,19 +712,14 @@ public static class WebApplicationBuilderExtensions
                     new StartupMessage()
                         .SetLevel(LogLevel.Information)
                         .SetMessage(
-                            $"{i + 1}: {name}"
+                            $"{i}: {name}"
                         )
                 );
+
+                i += 1;
             }
 
             action(option);
-
-            i += 1;
         });
-
-        if (extraActions.Count > 0)
-        {
-            StartupMvcOptionExtraActionMessageAssist.Add(endMessage);
-        }
     }
 }
