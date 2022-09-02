@@ -96,42 +96,82 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
     {
         var o = Get(where);
 
-        return o == null ? new ExecutiveResult(ReturnCode.NoData) : new ExecutiveResult(ReturnCode.Ok);
+        return !o.Success ? new ExecutiveResult(ReturnCode.NoData) : new ExecutiveResult(ReturnCode.Ok);
     }
 
     #endregion
 
-    public virtual T? Get(object id)
+    public virtual ExecutiveResult<T> Get(object id)
     {
-        return _dbSet.Find(id);
+        var entity = _dbSet.Find(id);
+
+        if (entity == null)
+        {
+            return new ExecutiveResult<T>(ReturnCode.NoData);
+        }
+
+        return new ExecutiveResult<T>(ReturnCode.Ok)
+        {
+            Data = entity
+        };
     }
 
     #region Get
 
-    public virtual T? Get(
+    public virtual ExecutiveResult<T> Get(
         Expression<Func<T, bool>> filter
     )
     {
-        return SingleList(filter).SingleOrDefault();
+        var entity = SingleList(filter).SingleOrDefault();
+
+        if (entity == null)
+        {
+            return new ExecutiveResult<T>(ReturnCode.NoData);
+        }
+
+        return new ExecutiveResult<T>(ReturnCode.Ok)
+        {
+            Data = entity
+        };
     }
 
-    public virtual T? Get<TKey>(
+    public virtual ExecutiveResult<T> Get<TKey>(
         Expression<Func<T, bool>> filter,
         Func<T, TKey> keySelector,
         bool descending = false
     )
     {
-        return SingleList(filter, keySelector, descending).SingleOrDefault();
+        var entity = SingleList(filter, keySelector, descending).SingleOrDefault();
+
+        if (entity == null)
+        {
+            return new ExecutiveResult<T>(ReturnCode.NoData);
+        }
+
+        return new ExecutiveResult<T>(ReturnCode.Ok)
+        {
+            Data = entity
+        };
     }
 
-    public virtual T? Get<TKey>(
+    public virtual ExecutiveResult<T> Get<TKey>(
         Expression<Func<T, bool>> filter,
         Func<T, TKey> keySelector,
         IComparer<TKey>? comparer,
         bool descending = false
     )
     {
-        return SingleList(filter, keySelector, comparer, descending).SingleOrDefault();
+        var entity = SingleList(filter, keySelector, comparer, descending).SingleOrDefault();
+
+        if (entity == null)
+        {
+            return new ExecutiveResult<T>(ReturnCode.NoData);
+        }
+
+        return new ExecutiveResult<T>(ReturnCode.Ok)
+        {
+            Data = entity
+        };
     }
 
     #endregion
@@ -141,6 +181,26 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
     public virtual ExecutiveResult<T> Add(T entity)
     {
         _context.Add(entity);
+
+        var success = _context.SaveChanges() > 0;
+
+        if (!success)
+        {
+            return new ExecutiveResult<T>(ReturnCode.NoChange)
+            {
+                Data = entity
+            };
+        }
+
+        return new ExecutiveResult<T>(ReturnCode.Ok)
+        {
+            Data = entity
+        };
+    }
+
+    public async Task<ExecutiveResult<T>> AddAsync(T entity)
+    {
+        await _context.AddAsync(entity);
 
         var success = _context.SaveChanges() > 0;
 

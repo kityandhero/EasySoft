@@ -5,12 +5,29 @@ using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.Attributes;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
+using EntityFrameworkTest.IServices;
 using Microsoft.AspNetCore.Mvc;
+using WebApplicationTest.Models;
 
 namespace WebApplicationTest.Areas.AuthTest.Controllers;
 
 public class EntranceController : AreaControllerCore
 {
+    private readonly IAuthorService _authorService;
+
+    public EntranceController(IAuthorService authorService)
+    {
+        _authorService = authorService;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Register()
+    {
+        var result = await _authorService.RegisterAsync("test", "123456");
+
+        return this.WrapperExecutiveResult(result);
+    }
+
     [HttpGet]
     public IActionResult SignIn()
     {
@@ -18,11 +35,21 @@ public class EntranceController : AreaControllerCore
     }
 
     [HttpPost]
-    public IActionResult SignIn(string userName, string password)
+    public IActionResult SignIn(string loginName, string password)
     {
-        var token = 123456.ToToken();
+        var result = _authorService.SignIn(loginName, password);
 
-        this.SetCookie(GeneralConfigAssist.GetTokenName(), token);
+        if (!result.Success)
+        {
+            return Content(result.Message);
+        }
+
+        var token = result.Data?.AuthorId.ToToken();
+
+        if (token != null)
+        {
+            this.SetCookie(GeneralConfigAssist.GetTokenName(), token);
+        }
 
         return Content("sign in success");
     }

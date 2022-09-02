@@ -47,6 +47,17 @@ namespace EasySoft.Core.Infrastructure.ExtensionMethods
             return !result.Success ? controller.Fail(result.Code) : controller.Success(result.Data);
         }
 
+        public static ActionResult WrapperExecutiveResult<T>(
+            this ControllerBase controller,
+            ExecutiveResult<T> result,
+            bool keyToLower = true
+        )
+        {
+            return !result.Success
+                ? controller.Fail(result.Code)
+                : controller.Success(keyToLower ? result.Data.ToExpandoObject() : result.Data);
+        }
+
         /// <summary>
         /// Data
         /// </summary>

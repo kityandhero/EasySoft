@@ -17,14 +17,14 @@
             <input type="hidden" asp-for="Id"/>
 
             <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control"/>
-                <span asp-validation-for="UserName" class="text-danger"></span>
+                <label asp-for="LoginName" class="control-label"></label>
+                <input asp-for="LoginName" name="LoginName" class="form-control"/>
+                <span asp-validation-for="LoginName" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" type="password"/>
+                <input asp-for="Password"  name="Password"  class="form-control" type="password"/>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 

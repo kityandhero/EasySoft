@@ -16,7 +16,7 @@ public abstract class ActualOperator : IActualOperator
     /// <exception cref="Exception"></exception>
     public void SetIdentification(object identification)
     {
-        this._identification = identification;
+        _identification = identification;
     }
 
     /// <summary>

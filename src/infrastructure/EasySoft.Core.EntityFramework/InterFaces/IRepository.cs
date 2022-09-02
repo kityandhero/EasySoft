@@ -52,19 +52,19 @@ public interface IRepository<T> : IRepository where T : class, new()
 
     #region Get
 
-    T? Get(object id);
+    ExecutiveResult<T> Get(object id);
 
-    T? Get(
+    ExecutiveResult<T> Get(
         Expression<Func<T, bool>> filter
     );
 
-    T? Get<TKey>(
+    ExecutiveResult<T> Get<TKey>(
         Expression<Func<T, bool>> filter,
         Func<T, TKey> keySelector,
         bool descending = false
     );
 
-    T? Get<TKey>(
+    ExecutiveResult<T> Get<TKey>(
         Expression<Func<T, bool>> filter,
         Func<T, TKey> keySelector,
         IComparer<TKey>? comparer,
