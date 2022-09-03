@@ -1,10 +1,9 @@
 ﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Mapster.Assists;
-using EasySoft.Core.Web.Framework.ExtensionMethods;
+using EasySoft.Simple.Shared.DataTransfer;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
-using WebApplicationTest.Mapsters;
 
 namespace WebApplicationTest.Areas.ComponentTest.Controllers;
 
@@ -98,9 +97,9 @@ public class AutoMapperController : AreaControllerCore
         // 可映射对象 Mapster 可以使用以下规则映射两个不同的对象 源类型和目标类型属性名称相同。 例如: dest.Name = src.Name
         // 源类型有 GetXXXX 方法。例如: dest.Name = src.GetName()
         // 源类型属性有子属性，可以将子属性的赋值给符合条件的目标类型属性，例如: dest.ContactName = src.Contact.Name 或 dest.Contact_Name = src.Contact.Name
-        
+
         // 可映射对象类型包括: 类 结构体 接口 实现 IDictionary<string, T> 接口的字典类型 Record 类型 (类、结构体、接口)
-        
+
         return this.Success();
     }
 }

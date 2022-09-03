@@ -1,7 +1,7 @@
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Web.Framework.BuilderAssists;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
-using EntityFrameworkTest.Contexts;
+using EasySoft.Simple.EntityFrameworkCore.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplicationBuilderAssist.CreateBuilder(args);

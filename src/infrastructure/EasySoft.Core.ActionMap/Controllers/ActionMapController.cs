@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 
 namespace EasySoft.Core.ActionMap.Controllers;
 
-public sealed class ActionMapController : ControllerCore
+public sealed class ActionMapController : BasicController
 {
     public IActionResult Index()
     {

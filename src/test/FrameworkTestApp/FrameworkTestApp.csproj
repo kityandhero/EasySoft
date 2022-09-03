@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EntityFrameworkTest\EntityFrameworkTest.csproj" />
+        <ProjectReference Include="..\EasySoft.Simple.EntityFrameworkCore\EasySoft.Simple.EntityFrameworkCore.csproj" />
     </ItemGroup>
 
 </Project>
