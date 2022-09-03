@@ -159,6 +159,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core. BootstrapBla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.FreeSql", "infrastructure\EasySoft.Core.FreeSql\EasySoft.Core.FreeSql.csproj", "{C4A263C2-A021-4072-AA91-803E7F6758CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Dapper.Elegant", "infrastructure\EasySoft.Core.Dapper.Elegant\EasySoft.Core.Dapper.Elegant.csproj", "{EC2B954F-ADB9-4A1A-8C31-63E6954825A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -373,6 +375,10 @@ Global
 		{C4A263C2-A021-4072-AA91-803E7F6758CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4A263C2-A021-4072-AA91-803E7F6758CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4A263C2-A021-4072-AA91-803E7F6758CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC2B954F-ADB9-4A1A-8C31-63E6954825A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC2B954F-ADB9-4A1A-8C31-63E6954825A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC2B954F-ADB9-4A1A-8C31-63E6954825A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC2B954F-ADB9-4A1A-8C31-63E6954825A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -452,6 +458,7 @@ Global
 		{DAEE0382-4C98-4B0D-82A4-FC817D294164} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
 		{58279D9D-1A78-45CD-868D-D9C15DA44A78} = {197B7656-8BFE-49AA-AA1E-C511B75B26B6}
 		{C4A263C2-A021-4072-AA91-803E7F6758CD} = {197B7656-8BFE-49AA-AA1E-C511B75B26B6}
+		{EC2B954F-ADB9-4A1A-8C31-63E6954825A5} = {3E4998D6-8F35-4340-9F9E-AA686E6E72D3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

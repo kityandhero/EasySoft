@@ -4,7 +4,6 @@ using System.Data;
 using System.Dynamic;
 using System.Linq.Expressions;
 using System.Text;
-using Autofac;
 using Dapper;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config.ConfigAssist;
@@ -44,25 +43,32 @@ namespace EasySoft.Core.Dapper.Base
             _sqlLogRecordJudge = null;
         }
 
-        public BaseMapper(IMapperChannel mapperChannel, Func<int, bool> action)
+        public BaseMapper(IMapperChannel mapperChannel, Func<int, bool> sqlLogRecordJudge)
         {
             _mapperChannel = mapperChannel ?? throw new Exception("无效的mapperChannel");
 
-            _sqlLogRecordJudge = action;
+            _sqlLogRecordJudge = sqlLogRecordJudge;
         }
 
-        public BaseMapper(IMapperTransaction mapperTransaction, Func<int, bool> action)
+        public BaseMapper(IMapperTransaction mapperTransaction, Func<int, bool> sqlLogRecordJudge)
         {
             _mapperTransaction = mapperTransaction ?? throw new Exception("无效的mapperTransaction");
 
             _mapperChannel = _mapperTransaction.GetMapperChannel();
 
-            _sqlLogRecordJudge = action;
+            _sqlLogRecordJudge = sqlLogRecordJudge;
         }
 
         #endregion Constructor
 
         #region Method
+
+        public bool GetUseLogSqlExecutionMessage()
+        {
+            var applicationChannel = AutofacAssist.Instance.Resolve<ApplicationChannel>();
+
+            return _sqlLogRecordJudge != null && _sqlLogRecordJudge(applicationChannel.GetChannel());
+        }
 
         #region Get
 
@@ -71,7 +77,7 @@ namespace EasySoft.Core.Dapper.Base
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public T? Get(long id)
+        public T? Get(object id)
         {
             var m = new T();
 
@@ -93,7 +99,7 @@ namespace EasySoft.Core.Dapper.Base
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected object? GetObject(long id)
+        protected object? GetObject(object id)
         {
             var o = Get(id);
 
@@ -208,7 +214,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     var data = conn.Query<T>(query).SingleOrDefault();
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     return data;
                 }
@@ -232,7 +238,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     var data = dbTransaction.Connection.Query<T>(query, null, dbTransaction).SingleOrDefault();
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     return data;
                 }
@@ -403,7 +409,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     conn.ExecuteScalar(sql, model);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -425,7 +431,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     dbTransaction.Connection.ExecuteScalar(sql, model, dbTransaction);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -579,7 +585,7 @@ namespace EasySoft.Core.Dapper.Base
                         return new ExecutiveResult<T>(ReturnCode.NoChange.ToMessage("执行失败"));
                     }
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -606,7 +612,7 @@ namespace EasySoft.Core.Dapper.Base
                         return new ExecutiveResult<T>(ReturnCode.NoChange.ToMessage("执行失败"));
                     }
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -666,7 +672,7 @@ namespace EasySoft.Core.Dapper.Base
                         {
                             dbTransaction.Connection.ExecuteScalar(sql, model, dbTransaction);
 
-                            LogCustomTimingRecord();
+                            LogSqlExecutionMessage();
 
                             mapperTransaction.Commit();
                         }
@@ -703,7 +709,7 @@ namespace EasySoft.Core.Dapper.Base
                     {
                         dbTransaction.Connection.ExecuteScalar(sql, model, dbTransaction);
 
-                        LogCustomTimingRecord();
+                        LogSqlExecutionMessage();
                     }
                     catch (Exception e)
                     {
@@ -744,7 +750,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     conn.Execute(sql, model);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -766,7 +772,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     dbTransaction.Connection.Execute(sql, model, dbTransaction);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -802,7 +808,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     conn.Execute(query, data);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -824,7 +830,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     dbTransaction.Connection.Execute(query, data, dbTransaction);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -861,7 +867,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     conn.Execute(sql, model);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -883,7 +889,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     dbTransaction.Connection.Execute(sql, model, dbTransaction);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -923,7 +929,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     conn.Execute(sql, model);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -945,7 +951,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     dbTransaction.Connection.Execute(sql, model, dbTransaction);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -985,7 +991,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     conn.Execute(sql, model);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -1007,7 +1013,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     dbTransaction.Connection.Execute(sql, model, dbTransaction);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -1047,7 +1053,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     conn.Execute(query, data);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -1069,7 +1075,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     dbTransaction.Connection.Execute(query, data, dbTransaction);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -1106,7 +1112,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     conn.Execute(query, data);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -1128,7 +1134,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     dbTransaction.Connection.Execute(query, data, dbTransaction);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -1168,7 +1174,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     conn.Execute(sql, model);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -1190,7 +1196,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     dbTransaction.Connection.Execute(sql, model, dbTransaction);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -1222,7 +1228,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     conn.Execute(sql, model);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -1244,7 +1250,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     dbTransaction.Connection.Execute(sql, model, dbTransaction);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -1341,7 +1347,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     conn.Execute(sql);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -1363,7 +1369,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     dbTransaction.Connection.Execute(sql, null, dbTransaction);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -1392,7 +1398,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     conn.Execute(sql);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -1414,7 +1420,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     dbTransaction.Connection.Execute(sql, null, dbTransaction);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -1568,7 +1574,7 @@ namespace EasySoft.Core.Dapper.Base
 
                     var list = ConvertAssist.DataReaderToExpandoObjectList(reader);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     return list;
                 }
@@ -1594,7 +1600,7 @@ namespace EasySoft.Core.Dapper.Base
 
                     var list = ConvertAssist.DataReaderToExpandoObjectList(reader);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     return list;
                 }
@@ -1748,7 +1754,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     var list = conn.Query<T>(query).ToList();
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     return list;
                 }
@@ -1772,7 +1778,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     var list = dbTransaction.Connection.Query<T>(query, null, dbTransaction).ToList();
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     return list;
                 }
@@ -1837,7 +1843,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     var list = conn.Query<T>(query).ToList();
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     return list;
                 }
@@ -1861,7 +1867,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     var list = dbTransaction.Connection.Query<T>(query, null, dbTransaction).ToList();
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     return list;
                 }
@@ -1895,7 +1901,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     result = conn.Query<T>(sql).ToList();
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -1917,7 +1923,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     result = dbTransaction.Connection.Query<T>(sql, null, dbTransaction).ToList();
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
                 }
                 catch (Exception e)
                 {
@@ -2110,7 +2116,7 @@ namespace EasySoft.Core.Dapper.Base
                         result = r[0].ConvertTo<long>();
                     }
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     return result;
                 }
@@ -2138,7 +2144,7 @@ namespace EasySoft.Core.Dapper.Base
                         dbTransaction
                     );
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     if (r.Read())
                     {
@@ -2175,7 +2181,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     var list = conn.Query<T>(sql).ToList();
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     return list;
                 }
@@ -2199,7 +2205,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     var list = dbTransaction.Connection.Query<T>(sql).ToList();
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     return list;
                 }
@@ -2278,7 +2284,7 @@ namespace EasySoft.Core.Dapper.Base
 
                     var reader = cmd.ExecuteReader();
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     var list = ConvertAssist.DataReaderToExpandoObjectList(reader);
 
@@ -2317,7 +2323,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     var r = conn.ExecuteReader(procName, ps, null, null, CommandType.StoredProcedure);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     var dt = ConvertAssist.DataReaderToDataTable(r);
 
@@ -2343,7 +2349,7 @@ namespace EasySoft.Core.Dapper.Base
                     CommandType.StoredProcedure);
                 try
                 {
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     var dt = ConvertAssist.DataReaderToDataTable(r);
 
@@ -2376,7 +2382,7 @@ namespace EasySoft.Core.Dapper.Base
 
                 try
                 {
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     return ConvertAssist.DataReaderToExpandoObjectList(r);
                 }
@@ -2401,7 +2407,7 @@ namespace EasySoft.Core.Dapper.Base
                     var r = dbTransaction.Connection.ExecuteReader(procName, ps, dbTransaction, null,
                         CommandType.StoredProcedure);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     return ConvertAssist.DataReaderToExpandoObjectList(r);
                 }
@@ -2431,7 +2437,7 @@ namespace EasySoft.Core.Dapper.Base
                 {
                     var result = conn.Execute(procName, ps, null, null, CommandType.StoredProcedure);
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     return result;
                 }
@@ -2461,7 +2467,7 @@ namespace EasySoft.Core.Dapper.Base
                         CommandType.StoredProcedure
                     );
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     return result;
                 }
@@ -2497,7 +2503,7 @@ namespace EasySoft.Core.Dapper.Base
                         CommandType.StoredProcedure
                     );
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     return result;
                 }
@@ -2527,7 +2533,7 @@ namespace EasySoft.Core.Dapper.Base
                         CommandType.StoredProcedure
                     );
 
-                    LogCustomTimingRecord();
+                    LogSqlExecutionMessage();
 
                     return result;
                 }
@@ -2639,7 +2645,7 @@ namespace EasySoft.Core.Dapper.Base
         /// <summary>
         /// 记录执行的sql
         /// </summary>
-        private void LogCustomTimingRecord()
+        private void LogSqlExecutionMessage()
         {
             if (_sqlLogRecordJudge == null)
             {
@@ -2648,7 +2654,7 @@ namespace EasySoft.Core.Dapper.Base
 
             var applicationChannel = AutofacAssist.Instance.Resolve<ApplicationChannel>();
 
-            if (!_sqlLogRecordJudge(applicationChannel.GetChannel()))
+            if (!GetUseLogSqlExecutionMessage())
             {
                 return;
             }
@@ -2692,7 +2698,7 @@ namespace EasySoft.Core.Dapper.Base
 
             foreach (var item in listCustomTiming)
             {
-                LogCustomTimingRecord(item);
+                LogSqlExecutionMessage(item);
             }
         }
 
@@ -2700,7 +2706,7 @@ namespace EasySoft.Core.Dapper.Base
         /// 记录执行的sql
         /// </summary>
         /// <param name="sqlExecutionMessage">sql</param>
-        private void LogCustomTimingRecord(SqlExecutionMessage sqlExecutionMessage)
+        private void LogSqlExecutionMessage(SqlExecutionMessage sqlExecutionMessage)
         {
             if (_sqlLogRecordJudge == null)
             {
