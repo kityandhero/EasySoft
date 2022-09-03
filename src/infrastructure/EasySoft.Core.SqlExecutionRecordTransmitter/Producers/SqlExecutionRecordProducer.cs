@@ -1,8 +1,8 @@
 ﻿using EasySoft.Core.ExchangeRegulation.Query;
-using EasySoft.Core.Infrastructure.Channels;
 using EasySoft.Core.SqlExecutionRecordTransmitter.Entities;
 using EasySoft.Core.SqlExecutionRecordTransmitter.Interfaces;
 using EasySoft.Core.SqlExecutionRecordTransmitter.MessageQuery;
+using EasySoft.UtilityTools.Core.Channels;
 
 namespace EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
 

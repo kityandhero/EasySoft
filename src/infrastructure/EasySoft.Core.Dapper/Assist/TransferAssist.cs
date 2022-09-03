@@ -20,15 +20,15 @@ namespace EasySoft.Core.Dapper.Assist
 
             if (tableAttribute == null)
             {
-                return nameof(T);
+                return typeof(T).Name;
             }
 
             if (string.IsNullOrWhiteSpace(tableAttribute.Name))
             {
-                throw new Exception($"{nameof(T)} disallow empty value");
+                throw new Exception($"{nameof(TableAttribute)} disallow empty value");
             }
 
-            return nameof(T);
+            return tableAttribute.Name;
         }
 
         public static string GetTableName<T>()
@@ -37,15 +37,15 @@ namespace EasySoft.Core.Dapper.Assist
 
             if (tableAttribute == null)
             {
-                return nameof(T);
+                return typeof(T).Name;
             }
 
             if (string.IsNullOrWhiteSpace(tableAttribute.Name))
             {
-                throw new Exception($"{nameof(T)} disallow empty value");
+                throw new Exception($"{nameof(TableAttribute)} disallow empty value");
             }
 
-            return nameof(T);
+            return tableAttribute.Name;
         }
 
         #region GetTableAndColumnName

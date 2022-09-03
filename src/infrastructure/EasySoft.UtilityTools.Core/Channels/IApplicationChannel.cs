@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Infrastructure.Channels;
+﻿namespace EasySoft.UtilityTools.Core.Channels;
 
 public interface IApplicationChannel
 {

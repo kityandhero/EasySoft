@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Channels;
+using EasySoft.UtilityTools.Core.Channels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 
@@ -45,7 +45,7 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
-            containerBuilder.RegisterType<ApplicationChannel>().As<IApplicationChannel>().SingleInstance();
+            containerBuilder.RegisterType<IApplicationChannel>().As<IApplicationChannel>().SingleInstance();
         });
 
         FlagAssist.ApplicationChannelInjectionComplete = true;

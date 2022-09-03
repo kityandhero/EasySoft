@@ -2,9 +2,9 @@
 using EasySoft.Core.AccessWayTransmitter.Producers;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Infrastructure.Channels;
 using EasySoft.Core.PermissionVerification.Detectors;
 using EasySoft.Core.PermissionVerification.Entities;
+using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.Competence;
 
 namespace EasySoft.Core.PermissionVerification.Officers;

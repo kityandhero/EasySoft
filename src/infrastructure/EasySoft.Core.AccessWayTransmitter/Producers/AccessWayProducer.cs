@@ -2,7 +2,7 @@
 using EasySoft.Core.AccessWayTransmitter.Interfaces;
 using EasySoft.Core.AccessWayTransmitter.MessageQuery;
 using EasySoft.Core.ExchangeRegulation.Query;
-using EasySoft.Core.Infrastructure.Channels;
+using EasySoft.UtilityTools.Core.Channels;
 
 namespace EasySoft.Core.AccessWayTransmitter.Producers;
 

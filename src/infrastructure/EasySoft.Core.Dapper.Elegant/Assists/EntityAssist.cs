@@ -369,7 +369,7 @@ namespace EasySoft.Core.Dapper.Elegant.Assists
                 var condition = new Condition<T>
                 {
                     ConditionType = ConditionType.In,
-                    Expression = o => o.GetPrimaryKeyLambda(),
+                    Expression = new T().GetPrimaryKeyLambda(),
                     Value = listId
                 };
 

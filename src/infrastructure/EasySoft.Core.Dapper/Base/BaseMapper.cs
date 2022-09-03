@@ -13,9 +13,9 @@ using EasySoft.Core.Dapper.Entities;
 using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.ExtensionMethods;
 using EasySoft.Core.Dapper.Interfaces;
-using EasySoft.Core.Infrastructure.Channels;
 using EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
 using EasySoft.IdGenerator;
+using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Enums;
@@ -65,7 +65,7 @@ namespace EasySoft.Core.Dapper.Base
 
         public bool GetUseLogSqlExecutionMessage()
         {
-            var applicationChannel = AutofacAssist.Instance.Resolve<ApplicationChannel>();
+            var applicationChannel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
 
             return _sqlLogRecordJudge != null && _sqlLogRecordJudge(applicationChannel.GetChannel());
         }
@@ -2652,7 +2652,7 @@ namespace EasySoft.Core.Dapper.Base
                 return;
             }
 
-            var applicationChannel = AutofacAssist.Instance.Resolve<ApplicationChannel>();
+            var applicationChannel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
 
             if (!GetUseLogSqlExecutionMessage())
             {
@@ -2713,7 +2713,7 @@ namespace EasySoft.Core.Dapper.Base
                 return;
             }
 
-            var applicationChannel = AutofacAssist.Instance.Resolve<ApplicationChannel>();
+            var applicationChannel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
 
             if (!_sqlLogRecordJudge(applicationChannel.GetChannel()))
             {

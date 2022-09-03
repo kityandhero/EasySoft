@@ -4,7 +4,7 @@ using EasySoft.Core.ExchangeRegulation.Query;
 using EasySoft.Core.GeneralLogTransmitter.Entities;
 using EasySoft.Core.GeneralLogTransmitter.Interfaces;
 using EasySoft.Core.GeneralLogTransmitter.MessageQuery;
-using EasySoft.Core.Infrastructure.Channels;
+using EasySoft.UtilityTools.Core.Channels;
 using Newtonsoft.Json;
 
 namespace EasySoft.Core.GeneralLogTransmitter.Producers;
