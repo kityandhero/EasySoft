@@ -11,7 +11,6 @@ using EasySoft.Simple.Dapper.Console.Entities;
 using EasySoft.Simple.Dapper.Console.Enums;
 using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.Assists;
-using Microsoft.Extensions.DependencyInjection;
 
 Console.WriteLine("Hello, World!");
 
