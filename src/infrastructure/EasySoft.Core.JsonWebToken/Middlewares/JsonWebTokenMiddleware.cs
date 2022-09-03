@@ -2,6 +2,7 @@
 using EasySoft.Core.AuthenticationCore.Attributes;
 using EasySoft.Core.AuthenticationCore.ExtensionMethods;
 using EasySoft.Core.AuthenticationCore.Operators;
+using EasySoft.Core.AuthenticationCore.Tools;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.ErrorLogTransmitter.Producers;
@@ -80,7 +81,7 @@ public class JsonWebTokenMiddleware : IMiddleware
         }
 
         var first = claimsPrincipal.Claims.FirstOrDefault(o =>
-            o.Properties.FirstOrDefault().Value == JwtRegisteredClaimNames.NameId
+            o.Type == JwtRegisteredClaimSpecialNames.EasySoftTokenIdentity
         );
 
         if (first == null)

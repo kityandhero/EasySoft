@@ -1,10 +1,10 @@
 ﻿using System.Security.Claims;
 using EasySoft.Core.AuthenticationCore.Operators;
+using EasySoft.Core.AuthenticationCore.Tools;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.Result;
-using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace EasySoft.Core.JsonWebToken.Assists;
 
@@ -31,7 +31,7 @@ public static class ActualOperatorAssist
         }
 
         var first = claimsPrincipal.Claims.FirstOrDefault(o =>
-            o.Properties.FirstOrDefault().Value == JwtRegisteredClaimNames.NameId
+            o.Type == JwtRegisteredClaimSpecialNames.EasySoftTokenIdentity
         );
 
         if (first == null)

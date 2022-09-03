@@ -7,7 +7,6 @@ using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.Simple.EntityFrameworkCore.IServices;
 using Microsoft.AspNetCore.Mvc;
-using WebApplicationTest.Models;
 
 namespace WebApplicationTest.Areas.AuthTest.Controllers;
 

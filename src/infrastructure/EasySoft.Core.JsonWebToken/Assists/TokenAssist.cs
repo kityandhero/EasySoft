@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using EasySoft.Core.AuthenticationCore.Tools;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.CacheCore.interfaces;
 using EasySoft.Core.Config.ConfigAssist;
@@ -40,7 +41,7 @@ public static class TokenAssist
     {
         var claimsAdjust = new List<Claim>
         {
-            new(JwtRegisteredClaimNames.NameId, identification),
+            new(JwtRegisteredClaimSpecialNames.EasySoftTokenIdentity, identification),
         };
 
         claimsAdjust.AddRange(claims);
