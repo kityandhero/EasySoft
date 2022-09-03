@@ -157,6 +157,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{DAEE0382-4C98-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core. BootstrapBlazor", "infrastructure\EasySoft.Core. BootstrapBlazor\EasySoft.Core. BootstrapBlazor.csproj", "{58279D9D-1A78-45CD-868D-D9C15DA44A78}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.FreeSql", "infrastructure\EasySoft.Core.FreeSql\EasySoft.Core.FreeSql.csproj", "{C4A263C2-A021-4072-AA91-803E7F6758CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -367,6 +369,10 @@ Global
 		{58279D9D-1A78-45CD-868D-D9C15DA44A78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58279D9D-1A78-45CD-868D-D9C15DA44A78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58279D9D-1A78-45CD-868D-D9C15DA44A78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4A263C2-A021-4072-AA91-803E7F6758CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4A263C2-A021-4072-AA91-803E7F6758CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4A263C2-A021-4072-AA91-803E7F6758CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4A263C2-A021-4072-AA91-803E7F6758CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -445,6 +451,7 @@ Global
 		{DF6CC39E-A6BC-4CA1-855A-79F6F3D3045C} = {197B7656-8BFE-49AA-AA1E-C511B75B26B6}
 		{DAEE0382-4C98-4B0D-82A4-FC817D294164} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
 		{58279D9D-1A78-45CD-868D-D9C15DA44A78} = {197B7656-8BFE-49AA-AA1E-C511B75B26B6}
+		{C4A263C2-A021-4072-AA91-803E7F6758CD} = {197B7656-8BFE-49AA-AA1E-C511B75B26B6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}
