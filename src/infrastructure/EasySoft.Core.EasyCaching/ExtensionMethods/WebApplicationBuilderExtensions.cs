@@ -52,33 +52,14 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// Add the AspectCore interceptor.
     /// </summary>
-    public static WebApplicationBuilder AddEasyCachingInterceptor(
+    private static WebApplicationBuilder AddEasyCachingInterceptor(
         this WebApplicationBuilder builder,
         Action<EasyCachingInterceptorOptions> action
     )
     {
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
-            containerBuilder.RegisterType<DefaultEasyCachingKeyGenerator>().As<IEasyCachingKeyGenerator>();
-
-            containerBuilder.RegisterType<EasyCachingInterceptor>();
-
-            var config = new EasyCachingInterceptorOptions();
-
-            action(config);
-
-            var options = Options.Create(config);
-
-            containerBuilder.Register(x => options);
-
-            containerBuilder.RegisterDynamicProxy(configure =>
-            {
-                bool All(MethodInfo x) => x.CustomAttributes.Any(data =>
-                    typeof(EasyCachingInterceptorAttribute).GetTypeInfo().IsAssignableFrom(data.AttributeType)
-                );
-
-                configure.Interceptors.AddTyped<EasyCachingInterceptor>(All);
-            });
+            containerBuilder.InterceptEasyCaching(action);
         });
 
         return builder;

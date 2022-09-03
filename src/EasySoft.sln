@@ -161,7 +161,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.FreeSql", "in
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Dapper.Elegant", "infrastructure\EasySoft.Core.Dapper.Elegant\EasySoft.Core.Dapper.Elegant.csproj", "{EC2B954F-ADB9-4A1A-8C31-63E6954825A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.Dapper.Test", "test\EasySoft.Simple.Dapper.Test\EasySoft.Simple.Dapper.Test.csproj", "{011611CC-65FD-45BD-B554-53D05DBDAA5C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.Dapper.Console", "test\EasySoft.Simple.Dapper.Console\EasySoft.Simple.Dapper.Console.csproj", "{011611CC-65FD-45BD-B554-53D05DBDAA5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

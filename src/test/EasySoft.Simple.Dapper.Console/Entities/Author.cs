@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using EasySoft.Core.Dapper.Base;
 
-namespace EasySoft.Simple.Dapper.Test.Entities;
+namespace EasySoft.Simple.Dapper.Console.Entities;
 
 [Table("author")]
 public class Author : AbstractFunctionEntity<Author>
