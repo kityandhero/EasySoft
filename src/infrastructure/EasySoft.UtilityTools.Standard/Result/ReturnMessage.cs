@@ -35,16 +35,16 @@ namespace EasySoft.UtilityTools.Standard.Result
         public ReturnMessage(ReturnCode code)
         {
             Code = (int)code;
-            Message = code.GetAttribute<DescriptionAttribute>().Description;
-            Success = code.GetAttribute<ReturnCodeSuccessAttribute>().Success;
+            Message = code.GetAttribute<DescriptionAttribute>()?.Description ?? "";
+            Success = code.GetAttribute<ReturnCodeSuccessAttribute>()?.Success ?? false;
             Extra = new { };
         }
 
         public ReturnMessage(ReturnCode code, object extra)
         {
             Code = (int)code;
-            Message = code.GetAttribute<DescriptionAttribute>().Description;
-            Success = code.GetAttribute<ReturnCodeSuccessAttribute>().Success;
+            Message = code.GetAttribute<DescriptionAttribute>()?.Description ?? "";
+            Success = code.GetAttribute<ReturnCodeSuccessAttribute>()?.Success ?? false;
             Extra = extra;
         }
 

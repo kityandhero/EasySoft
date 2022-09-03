@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -151,7 +150,7 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
                     MemberTypes.Field
                 );
 
-                if (keyValueDefinitionAttribute.Tag == tag)
+                if (keyValueDefinitionAttribute != null && keyValueDefinitionAttribute.Tag == tag)
                 {
                     return t;
                 }

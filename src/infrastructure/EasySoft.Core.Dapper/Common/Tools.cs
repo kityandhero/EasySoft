@@ -1,64 +1,64 @@
-﻿using System.Reflection;
-using EasySoft.UtilityTools.Standard.Attributes;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.Dapper.Common
 {
     public static class Tools
     {
-        public static CustomTableMapperAttribute GetCustomTableMapperAttribute<T>()
+        public static TableAttribute? GetTableAttribute<T>()
         {
             var type = typeof(T);
 
-            var customTableMapperAttribute = type.GetCustomAttribute<CustomTableMapperAttribute>();
+            var tableAttribute = type.GetCustomAttribute<TableAttribute>();
 
-            if (customTableMapperAttribute == null)
+            if (tableAttribute == null)
             {
-                throw new Exception($"{type.Name}缺少CustomTableMapperAttribute特性");
+                return null;
             }
 
-            if (string.IsNullOrWhiteSpace(customTableMapperAttribute.Name))
+            if (string.IsNullOrWhiteSpace(tableAttribute.Name))
             {
-                throw new Exception($"{type.Name}的特性CustomTableMapperAttribute赋值错误");
+                throw new Exception($"{type.Name}的特性 TableAttribute 赋值错误");
             }
 
-            return customTableMapperAttribute;
+            return tableAttribute;
         }
 
-        public static CustomTableMapperAttribute GetCustomTableMapperAttribute<T>(T model)
+        public static TableAttribute? GetTableAttribute<T>(T model)
         {
             if (model == null)
             {
                 throw new Exception("model disallow null");
             }
 
-            var customTableMapperAttribute = model.GetAttribute<CustomTableMapperAttribute>();
+            var tableAttribute = model.GetAttribute<TableAttribute>();
 
-            if (customTableMapperAttribute == null)
+            if (tableAttribute == null)
             {
-                throw new Exception($"{model.GetType().Name}缺少CustomTableMapperAttribute特性");
+                return null;
             }
 
-            if (string.IsNullOrWhiteSpace(customTableMapperAttribute.Name))
+            if (string.IsNullOrWhiteSpace(tableAttribute.Name))
             {
-                throw new Exception($"{model.GetType().Name}的特性CustomTableMapperAttribute赋值错误");
+                throw new Exception($"{model.GetType().Name}的特性 TableAttribute 赋值错误");
             }
 
-            return customTableMapperAttribute;
+            return tableAttribute;
         }
 
-        public static CustomColumnMapperAttribute? GetCustomColumnMapperAttribute(
+        public static ColumnAttribute? GetColumnAttribute(
             PropertyInfo property,
             bool throwExceptionWhenNoAttribute = true
         )
         {
-            var customColumnMapperAttribute = property.TryGetAttribute<CustomColumnMapperAttribute>();
+            var columnAttribute = property.TryGetAttribute<ColumnAttribute>();
 
-            if (customColumnMapperAttribute == null)
+            if (columnAttribute == null)
             {
                 if (!throwExceptionWhenNoAttribute)
                 {
-                    return customColumnMapperAttribute;
+                    return columnAttribute;
                 }
 
                 if (property.DeclaringType != null)
@@ -74,19 +74,21 @@ namespace EasySoft.Core.Dapper.Common
             }
             else
             {
-                if (!string.IsNullOrWhiteSpace(customColumnMapperAttribute.Name))
+                if (!string.IsNullOrWhiteSpace(columnAttribute.Name))
                 {
-                    return customColumnMapperAttribute;
+                    return columnAttribute;
                 }
 
                 if (property.DeclaringType != null)
                 {
                     throw new Exception(
-                        $"类型{property.DeclaringType.Name}属性${property.Name}的特性CustomColumnMapperAttribute赋值错误");
+                        $"类型{property.DeclaringType.Name}属性${property.Name}的特性CustomColumnMapperAttribute赋值错误"
+                    );
                 }
 
                 throw new Exception(
-                    $"属性${property.Name}的特性CustomColumnMapperAttribute赋值错误");
+                    $"属性${property.Name}的特性CustomColumnMapperAttribute赋值错误"
+                );
             }
         }
     }

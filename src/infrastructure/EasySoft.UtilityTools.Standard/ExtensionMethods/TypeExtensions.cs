@@ -26,6 +26,11 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
                 MemberTypes.Field
             );
 
+            if (keyValueDefinitionAttribute == null)
+            {
+                throw new Exception($"{nameof(KeyValueDefinitionAttribute)} do not exist");
+            }
+
             return keyValueDefinitionAttribute;
         }
 
@@ -36,7 +41,7 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
         /// </summary>
         /// <typeparam name="T">目标类型</typeparam>
         /// <returns></returns>
-        public static bool ContainAttribute<T>(this Enum source) where T : new()
+        public static bool ContainAttribute<T>(this Enum source) where T : class
         {
             var field = source.GetType().GetField(source.ToString());
 
@@ -50,7 +55,7 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
         /// <param name="source">调用源</param>
         /// <param name="nameFilter">筛选名称</param>
         /// <returns></returns>
-        public static T GetAttribute<T>(this Enum source, string nameFilter = "") where T : new()
+        public static T? GetAttribute<T>(this Enum source, string nameFilter = "") where T : class
         {
             var field = source.GetType().GetField(source.ToString());
 
@@ -104,13 +109,12 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
             string nameFilter = "",
             bool inherit = false,
             MemberTypes memberTypes = MemberTypes.All
-        ) where T : new()
+        ) where T : class
         {
-            var check = new T();
             var result = default(T);
             var list = source.GetAttribute(nameFilter, inherit, memberTypes);
 
-            foreach (var attr in list.Where(attr => attr.GetType().FullName == check.GetType().FullName))
+            foreach (var attr in list.Where(attr => attr.GetType().FullName == typeof(T).FullName))
             {
                 result = (T)attr;
             }
@@ -132,13 +136,12 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
             string nameFilter = "",
             bool inherit = false,
             MemberTypes memberTypes = MemberTypes.All
-        ) where T : new()
+        ) where T : class
         {
-            var check = new T();
             var result = default(T);
             var list = source.GetAttribute(nameFilter, inherit, memberTypes);
 
-            foreach (var attr in list.Where(attr => attr.GetType().FullName == check.GetType().FullName))
+            foreach (var attr in list.Where(attr => attr.GetType().FullName == typeof(T).FullName))
             {
                 result = (T)attr;
             }
@@ -155,25 +158,19 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
         /// <param name="inherit">继承</param>
         /// <param name="memberTypes">成员类型</param>
         /// <returns></returns>
-        public static T GetAttribute<T>(
+        public static T? GetAttribute<T>(
             this object source,
             string nameFilter = "",
             bool inherit = false,
             MemberTypes memberTypes = MemberTypes.All
-        ) where T : new()
+        ) where T : class
         {
-            var check = new T();
             var result = default(T);
             var list = source.GetAttribute(nameFilter, inherit, memberTypes);
 
-            foreach (var attr in list.Where(attr => attr.GetType().FullName == check.GetType().FullName))
+            foreach (var attr in list.Where(attr => attr.GetType().FullName == typeof(T).FullName))
             {
                 result = (T)attr;
-            }
-
-            if (result == null)
-            {
-                throw new Exception("Attribute not exist");
             }
 
             return result;
@@ -198,25 +195,25 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
             {
                 var tryPropertyInfo = source as PropertyInfo;
 
-                var attrs = Enumerable.ToList(tryPropertyInfo?.GetCustomAttributes(inherit));
+                var attrs = Enumerable.ToList(tryPropertyInfo?.GetCustomAttributes(inherit) ?? Array.Empty<object>());
 
-                return attrs ?? new List<object>();
+                return attrs;
             }
             else if ((source as FieldInfo) != null)
             {
                 var tryPropertyInfo = source as FieldInfo;
 
-                var attrs = Enumerable.ToList(tryPropertyInfo?.GetCustomAttributes(inherit));
+                var attrs = Enumerable.ToList(tryPropertyInfo?.GetCustomAttributes(inherit) ?? Array.Empty<object>());
 
-                return attrs ?? new List<object>();
+                return attrs;
             }
             else if ((source as MemberInfo) != null)
             {
                 var tryPropertyInfo = source as MemberInfo;
 
-                var attrs = Enumerable.ToList(tryPropertyInfo?.GetCustomAttributes(inherit));
+                var attrs = Enumerable.ToList(tryPropertyInfo?.GetCustomAttributes(inherit) ?? Array.Empty<object>());
 
-                return attrs ?? new List<object>();
+                return attrs;
             }
             else
             {
@@ -232,21 +229,27 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
 
                     case MemberTypes.Field:
                         var field = type.GetField(nameFilter);
-                        attrs = field.IsNull() ? attrs : Enumerable.ToList(field?.GetCustomAttributes(inherit));
+                        attrs = field.IsNull()
+                            ? attrs
+                            : Enumerable.ToList(field?.GetCustomAttributes(inherit) ?? Array.Empty<object>());
                         break;
 
                     case MemberTypes.Method:
                         var method = type.GetMethod(nameFilter);
-                        attrs = method.IsNull() ? attrs : Enumerable.ToList(method?.GetCustomAttributes(inherit));
+                        attrs = method.IsNull()
+                            ? attrs
+                            : Enumerable.ToList(method?.GetCustomAttributes(inherit) ?? Array.Empty<object>());
                         break;
 
                     case MemberTypes.Property:
                         var property = type.GetProperty(nameFilter);
-                        attrs = property.IsNull() ? attrs : Enumerable.ToList(property?.GetCustomAttributes(inherit));
+                        attrs = property.IsNull()
+                            ? attrs
+                            : Enumerable.ToList(property?.GetCustomAttributes(inherit) ?? Array.Empty<object>());
                         break;
                 }
 
-                return attrs ?? new List<object>();
+                return attrs;
             }
         }
 

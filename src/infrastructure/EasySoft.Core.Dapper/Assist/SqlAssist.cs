@@ -7,7 +7,6 @@ using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.ExtensionMethods;
 using EasySoft.Core.Dapper.Interfaces;
 using EasySoft.UtilityTools.Standard.Assists;
-using EasySoft.UtilityTools.Standard.Attributes;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Data.SqlClient;
 using StackExchange.Profiling;
@@ -113,18 +112,18 @@ namespace EasySoft.Core.Dapper.Assist
 
             foreach (var model in models)
             {
-                var customTableMapperAttribute = Tools.GetCustomTableMapperAttribute(model);
+                var tableName = TransferAssist.GetTableName(model);
 
                 var properties = model.GetType().GetProperties();
 
                 foreach (var property in properties)
                 {
-                    var customColumnMapperAttribute = Tools.GetCustomColumnMapperAttribute(property, false);
+                    var customColumnMapperAttribute = Tools.GetColumnAttribute(property, false);
 
                     if (customColumnMapperAttribute != null)
                     {
                         var v =
-                            $"{TransferAssist.BuildIsNullFragment(property, $"{(string.IsNullOrWhiteSpace(model.GetSqlSchemaName()) ? "" : $"{model.GetSqlFieldDecorateStart()}{model.GetSqlSchemaName()}{model.GetSqlFieldDecorateEnd()}" + ".")}{model.GetSqlFieldDecorateStart()}{customTableMapperAttribute.Name}{model.GetSqlFieldDecorateEnd()}.{model.GetSqlFieldDecorateStart()}{customColumnMapperAttribute.Name}{model.GetSqlFieldDecorateEnd()}", true)} AS {model.GetSqlFieldDecorateStart()}{property.Name}{model.GetSqlFieldDecorateEnd()}";
+                            $"{TransferAssist.BuildIsNullFragment(property, $"{(string.IsNullOrWhiteSpace(model.GetSqlSchemaName()) ? "" : $"{model.GetSqlFieldDecorateStart()}{model.GetSqlSchemaName()}{model.GetSqlFieldDecorateEnd()}" + ".")}{model.GetSqlFieldDecorateStart()}{tableName}{model.GetSqlFieldDecorateEnd()}.{model.GetSqlFieldDecorateStart()}{customColumnMapperAttribute.Name}{model.GetSqlFieldDecorateEnd()}", true)} AS {model.GetSqlFieldDecorateStart()}{property.Name}{model.GetSqlFieldDecorateEnd()}";
 
                         list.Add(v);
                     }
@@ -676,7 +675,7 @@ namespace EasySoft.Core.Dapper.Assist
             var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
 
             var schemaName = model.GetSqlSchemaName();
-            var tableName = Tools.GetCustomTableMapperAttribute(model).Name;
+            var tableName = TransferAssist.GetTableName(model);
 
             tableName = $"{fieldDecorateStart}{tableName}{fieldDecorateEnd}";
 
@@ -712,7 +711,7 @@ namespace EasySoft.Core.Dapper.Assist
         public static string InnerJoin<T>(string sql, T model) where T : IEntity
         {
             var schemaName = model.GetSqlSchemaName();
-            var tableName = Tools.GetCustomTableMapperAttribute(model).Name;
+            var tableName = TransferAssist.GetTableName(model);
 
             if (!string.IsNullOrWhiteSpace(schemaName))
             {
@@ -732,7 +731,7 @@ namespace EasySoft.Core.Dapper.Assist
         public static string LeftJoin<T>(string sql, T model) where T : IEntity
         {
             var schemaName = model.GetSqlSchemaName();
-            var tableName = Tools.GetCustomTableMapperAttribute(model).Name;
+            var tableName = TransferAssist.GetTableName(model);
 
             if (!string.IsNullOrWhiteSpace(schemaName))
             {
@@ -1483,9 +1482,9 @@ namespace EasySoft.Core.Dapper.Assist
             {
                 sql = $@"SELECT {fields}
                 FROM {model.GetTableName()} WITH (NOLOCK)
-                WHERE {model.GetTablePrimaryKeyName()} IN
+                WHERE {model.GetPrimaryKeyName()} IN
                       (
-                          SELECT TOP {top} {model.GetTablePrimaryKeyName()}
+                          SELECT TOP {top} {model.GetPrimaryKeyName()}
                           FROM {model.GetTableName()} WITH (NOLOCK)
                           {where}
                           {sort}
@@ -1554,9 +1553,9 @@ namespace EasySoft.Core.Dapper.Assist
             {
                 sql = $@"SELECT {fields}
                 FROM {model.GetTableName()} WITH (NOLOCK)
-                WHERE {model.GetTablePrimaryKeyName()} IN
+                WHERE {model.GetPrimaryKeyName()} IN
                       (
-                          SELECT TOP {top} {model.GetTablePrimaryKeyName()}
+                          SELECT TOP {top} {model.GetPrimaryKeyName()}
                           FROM {model.GetTableName()} WITH (NOLOCK)
                           {where}
                           {sort}
@@ -1654,12 +1653,12 @@ namespace EasySoft.Core.Dapper.Assist
 
             var sql = $@"SELECT {fields}
                     FROM {model.GetTableName()} WITH (NOLOCK)
-                    WHERE {model.GetTablePrimaryKeyName()} IN
+                    WHERE {model.GetPrimaryKeyName()} IN
                           (
-                              SELECT {model.GetTablePrimaryKeyName()}
+                              SELECT {model.GetPrimaryKeyName()}
                               FROM
                               (
-                                  SELECT {model.GetTablePrimaryKeyName()},
+                                  SELECT {model.GetPrimaryKeyName()},
                                          ROW_NUMBER() OVER ({sort}) AS rowId
                                   FROM {model.GetTableName()} WITH (NOLOCK)
                                   {@where}
@@ -1808,7 +1807,7 @@ namespace EasySoft.Core.Dapper.Assist
 
             var modelType = model.GetType();
 
-            var customTableMapperAttribute = Tools.GetCustomTableMapperAttribute(model);
+            var tableName = TransferAssist.GetTableName(model);
 
             var fieldDecorateStart = model.GetSqlFieldDecorateStart();
             var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
@@ -1820,7 +1819,7 @@ namespace EasySoft.Core.Dapper.Assist
                     continue;
                 }
 
-                var columnMapperAttribute = Tools.GetCustomColumnMapperAttribute(p);
+                var columnMapperAttribute = Tools.GetColumnAttribute(p);
 
                 if (columnMapperAttribute == null)
                 {
@@ -1852,7 +1851,7 @@ namespace EasySoft.Core.Dapper.Assist
                 result.Append($"{schemaName}.");
             }
 
-            result.Append(customTableMapperAttribute.Name);
+            result.Append(tableName);
             result.Append($" ( {nameString} ) VALUES ( {valueString} )");
 
             return result.ToString();
@@ -1869,7 +1868,7 @@ namespace EasySoft.Core.Dapper.Assist
 
             var modelType = model.GetType();
 
-            var customTableMapperAttribute = Tools.GetCustomTableMapperAttribute(model);
+            var tableName = TransferAssist.GetTableName(model);
 
             var fieldDecorateStart = model.GetSqlFieldDecorateStart();
             var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
@@ -1881,7 +1880,7 @@ namespace EasySoft.Core.Dapper.Assist
                     continue;
                 }
 
-                var columnMapperAttribute = Tools.GetCustomColumnMapperAttribute(p);
+                var columnMapperAttribute = Tools.GetColumnAttribute(p);
 
                 if (columnMapperAttribute == null)
                 {
@@ -1913,9 +1912,9 @@ namespace EasySoft.Core.Dapper.Assist
                 result.Append($"{schemaName}.");
             }
 
-            result.Append(customTableMapperAttribute.Name);
+            result.Append(tableName);
             result.Append(
-                $" ( {nameString} ) SELECT  {valueString} WHERE NOT EXISTS ({(Select().AppendFragment($"{model.GetTableName()}.{model.GetTablePrimaryKeyName()}").From(model).LinkConditions(uniquerConditions))})"
+                $" ( {nameString} ) SELECT  {valueString} WHERE NOT EXISTS ({(Select().AppendFragment($"{model.GetTableName()}.{model.GetPrimaryKeyName()}").From(model).LinkConditions(uniquerConditions))})"
             );
 
             return result.ToString();
@@ -1930,7 +1929,7 @@ namespace EasySoft.Core.Dapper.Assist
             var schemaName = model.GetSqlSchemaName();
             var nameValueString = new StringBuilder();
             var modelType = model.GetType();
-            var customTableMapperAttribute = Tools.GetCustomTableMapperAttribute(model);
+            var tableName = TransferAssist.GetTableName(model);
             var fieldDecorateStart = model.GetSqlFieldDecorateStart();
 
             var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
@@ -1941,17 +1940,17 @@ namespace EasySoft.Core.Dapper.Assist
                     continue;
                 }
 
-                var columnMapperAttribute = Tools.GetCustomColumnMapperAttribute(p);
+                var columnName = TransferAssist.GetColumnName(p);
 
-                if (columnMapperAttribute == null)
+                if (columnName == null)
                 {
                     throw new Exception("columnMapperAttribute is null");
                 }
 
-                if (!columnMapperAttribute.Name.ToLower().Equals(Constants.DefaultTablePrimaryKey))
+                if (!columnName.ToLower().Equals(Constants.DefaultTablePrimaryKey))
                 {
                     nameValueString.Append(
-                        $"{fieldDecorateStart}{columnMapperAttribute.Name}{fieldDecorateEnd} = @{p.Name},"
+                        $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name},"
                     );
                 }
             }
@@ -1974,9 +1973,9 @@ namespace EasySoft.Core.Dapper.Assist
                 result.Append($"{schemaName}.");
             }
 
-            result.Append(customTableMapperAttribute.Name);
+            result.Append(tableName);
             result.Append(
-                $" SET {nameValueString} Where {model.GetTablePrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
+                $" SET {nameValueString} Where {model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
             );
 
             return result.ToString();
@@ -1996,7 +1995,8 @@ namespace EasySoft.Core.Dapper.Assist
 
             var nameValueString = new StringBuilder();
             var modelType = model.GetType();
-            var customTableMapperAttribute = model.GetAttribute<CustomTableMapperAttribute>();
+            var tableName = TransferAssist.GetTableName(model);
+
             var fieldDecorateStart = model.GetSqlFieldDecorateStart();
 
             var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
@@ -2008,9 +2008,9 @@ namespace EasySoft.Core.Dapper.Assist
                     continue;
                 }
 
-                var columnMapperAttribute = Tools.GetCustomColumnMapperAttribute(p);
+                var columnName = TransferAssist.GetColumnName(p);
 
-                if (columnMapperAttribute == null)
+                if (columnName == null)
                 {
                     throw new Exception("columnMapperAttribute is null");
                 }
@@ -2018,7 +2018,7 @@ namespace EasySoft.Core.Dapper.Assist
                 if (!p.Name.ToLower().Equals(Constants.DefaultTablePrimaryKey))
                 {
                     nameValueString.Append(
-                        $"{fieldDecorateStart}{columnMapperAttribute.Name}{fieldDecorateEnd} = @{p.Name},"
+                        $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name},"
                     );
                 }
             }
@@ -2041,7 +2041,7 @@ namespace EasySoft.Core.Dapper.Assist
                 result.Append($"{schemaName}.");
             }
 
-            result.Append(customTableMapperAttribute.Name);
+            result.Append(tableName);
             result.Append(nameValueString);
             result.AppendLine(ConditionAssist.Build(conditions));
 
@@ -2061,7 +2061,7 @@ namespace EasySoft.Core.Dapper.Assist
             var schemaName = model.GetSqlSchemaName();
             var nameValueString = new StringBuilder();
             var modelType = model.GetType();
-            var customTableMapperAttribute = Tools.GetCustomTableMapperAttribute(model);
+            var tableName = TransferAssist.GetTableName(model);
             var fieldDecorateStart = model.GetSqlFieldDecorateStart();
 
             var listPropertyName = new List<string>();
@@ -2087,17 +2087,17 @@ namespace EasySoft.Core.Dapper.Assist
                     continue;
                 }
 
-                var columnMapperAttribute = Tools.GetCustomColumnMapperAttribute(p);
+                var columnName = TransferAssist.GetColumnName(p);
 
-                if (columnMapperAttribute == null)
+                if (columnName == null)
                 {
                     throw new Exception("columnMapperAttribute is null");
                 }
 
-                if (!columnMapperAttribute.Name.ToLower().Equals(Constants.DefaultTablePrimaryKey))
+                if (!columnName.ToLower().Equals(Constants.DefaultTablePrimaryKey))
                 {
                     nameValueString.Append(
-                        $"{fieldDecorateStart}{columnMapperAttribute.Name}{fieldDecorateEnd} = @{p.Name},"
+                        $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name},"
                     );
                 }
             }
@@ -2120,9 +2120,9 @@ namespace EasySoft.Core.Dapper.Assist
                 result.Append($"{schemaName}.");
             }
 
-            result.Append(customTableMapperAttribute.Name);
+            result.Append(tableName);
             result.Append(
-                $" SET {nameValueString} WHERE {model.GetTablePrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
+                $" SET {nameValueString} WHERE {model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
             );
 
             return result.ToString();
@@ -2141,7 +2141,7 @@ namespace EasySoft.Core.Dapper.Assist
             var schemaName = model.GetSqlSchemaName();
             var nameValueString = new StringBuilder();
             var modelType = model.GetType();
-            var customTableMapperAttribute = Tools.GetCustomTableMapperAttribute(model);
+            var tableName = TransferAssist.GetTableName(model);
             var fieldDecorateStart = model.GetSqlFieldDecorateStart();
 
             var listPropertyName = new List<string>();
@@ -2167,17 +2167,17 @@ namespace EasySoft.Core.Dapper.Assist
                     continue;
                 }
 
-                var columnMapperAttribute = Tools.GetCustomColumnMapperAttribute(p);
+                var columnName = TransferAssist.GetColumnName(p);
 
-                if (columnMapperAttribute == null)
+                if (columnName == null)
                 {
                     throw new Exception("columnMapperAttribute is null");
                 }
 
-                if (!columnMapperAttribute.Name.ToLower().Equals(Constants.DefaultTablePrimaryKey))
+                if (!columnName.ToLower().Equals(Constants.DefaultTablePrimaryKey))
                 {
                     nameValueString.Append(
-                        $"{fieldDecorateStart}{columnMapperAttribute.Name}{fieldDecorateEnd} = @{p.Name},"
+                        $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name},"
                     );
                 }
             }
@@ -2200,9 +2200,9 @@ namespace EasySoft.Core.Dapper.Assist
                 result.Append($"{schemaName}.");
             }
 
-            result.Append(customTableMapperAttribute.Name);
+            result.Append(tableName);
             result.Append(
-                $" SET {nameValueString} Where {model.GetTablePrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
+                $" SET {nameValueString} Where {model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
             );
 
             return result.ToString();
@@ -2228,7 +2228,7 @@ namespace EasySoft.Core.Dapper.Assist
 
             var nameValueString = new StringBuilder();
             var modelType = model.GetType();
-            var customTableMapperAttribute = model.GetAttribute<CustomTableMapperAttribute>();
+            var tableName = TransferAssist.GetTableName(model);
             var fieldDecorateStart = model.GetSqlFieldDecorateStart();
             var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
 
@@ -2253,7 +2253,7 @@ namespace EasySoft.Core.Dapper.Assist
                     continue;
                 }
 
-                var columnMapperAttribute = Tools.GetCustomColumnMapperAttribute(p);
+                var columnMapperAttribute = Tools.GetColumnAttribute(p);
 
                 if (columnMapperAttribute == null)
                 {
@@ -2286,7 +2286,7 @@ namespace EasySoft.Core.Dapper.Assist
                 result.Append($"{schemaName}.");
             }
 
-            result.Append(customTableMapperAttribute.Name);
+            result.Append(tableName);
             result.Append(" SET ");
             result.Append(nameValueString);
             result.AppendLine(ConditionAssist.Build(conditions));
@@ -2313,7 +2313,7 @@ namespace EasySoft.Core.Dapper.Assist
 
             var nameValueString = new StringBuilder();
             var modelType = model.GetType();
-            var customTableMapperAttribute = model.GetAttribute<CustomTableMapperAttribute>();
+            var tableName = TransferAssist.GetTableName(model);
             var fieldDecorateStart = model.GetSqlFieldDecorateStart();
             var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
 
@@ -2338,7 +2338,7 @@ namespace EasySoft.Core.Dapper.Assist
                     continue;
                 }
 
-                var columnMapperAttribute = Tools.GetCustomColumnMapperAttribute(p);
+                var columnMapperAttribute = Tools.GetColumnAttribute(p);
 
                 if (columnMapperAttribute == null)
                 {
@@ -2371,7 +2371,7 @@ namespace EasySoft.Core.Dapper.Assist
                 result.Append($"{schemaName}.");
             }
 
-            result.Append(customTableMapperAttribute.Name);
+            result.Append(tableName);
             result.Append(" SET ");
             result.Append(nameValueString);
             result.AppendLine(ConditionAssist.Build(conditions));
@@ -2390,9 +2390,9 @@ namespace EasySoft.Core.Dapper.Assist
             }
 
             var schemaName = model.GetSqlSchemaName();
-            var modelType = model.GetType();
-            var customTableMapperAttribute = Tools.GetCustomTableMapperAttribute(model);
-            var fieldDecorateStart = model.GetSqlFieldDecorateStart();
+            // var modelType = model.GetType();
+            var tableName = TransferAssist.GetTableName(model);
+            // var fieldDecorateStart = model.GetSqlFieldDecorateStart();
 
             var nameValueString = AssignFieldAssist.Build(listAssignField);
 
@@ -2414,9 +2414,9 @@ namespace EasySoft.Core.Dapper.Assist
                 result.Append($"{schemaName}.");
             }
 
-            result.Append(customTableMapperAttribute.Name);
+            result.Append(tableName);
             result.Append(
-                $" SET {nameValueString} Where {model.GetTablePrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
+                $" SET {nameValueString} Where {model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
             );
 
             return result.ToString();
@@ -2435,7 +2435,7 @@ namespace EasySoft.Core.Dapper.Assist
             var schemaName = model.GetSqlSchemaName();
             var nameValueString = new StringBuilder();
             var modelType = model.GetType();
-            var customTableMapperAttribute = Tools.GetCustomTableMapperAttribute(model);
+            var tableName = TransferAssist.GetTableName(model);
             var fieldDecorateStart = model.GetSqlFieldDecorateStart();
 
             var listPropertyName = new List<string>();
@@ -2461,17 +2461,17 @@ namespace EasySoft.Core.Dapper.Assist
                     continue;
                 }
 
-                var columnMapperAttribute = Tools.GetCustomColumnMapperAttribute(p);
+                var columnName = TransferAssist.GetColumnName(p);
 
-                if (columnMapperAttribute == null)
+                if (columnName == null)
                 {
                     throw new Exception("columnMapperAttribute is null");
                 }
 
-                if (!columnMapperAttribute.Name.ToLower().Equals(Constants.DefaultTablePrimaryKey))
+                if (!columnName.ToLower().Equals(Constants.DefaultTablePrimaryKey))
                 {
                     nameValueString.Append(
-                        $"{fieldDecorateStart}{columnMapperAttribute.Name}{fieldDecorateEnd} = @{p.Name},"
+                        $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name},"
                     );
                 }
             }
@@ -2494,9 +2494,9 @@ namespace EasySoft.Core.Dapper.Assist
                 result.Append($"{schemaName}.");
             }
 
-            result.Append(customTableMapperAttribute.Name);
+            result.Append(tableName);
             result.Append(
-                $" SET {nameValueString} Where {model.GetTablePrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
+                $" SET {nameValueString} Where {model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
             );
 
             return result.ToString();
@@ -2516,7 +2516,7 @@ namespace EasySoft.Core.Dapper.Assist
         public static string Delete<T>(T model) where T : IEntity, new()
         {
             var schemaName = model.GetSqlSchemaName();
-            var customTableMapperAttribute = Tools.GetCustomTableMapperAttribute(model);
+            var tableName = TransferAssist.GetTableName(model);
             var fieldDecorateStart = model.GetSqlFieldDecorateStart();
             var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
             var result = new StringBuilder();
@@ -2529,10 +2529,10 @@ namespace EasySoft.Core.Dapper.Assist
                 result.Append($"{fieldDecorateStart}{schemaName}{fieldDecorateEnd}.");
             }
 
-            result.Append($"{fieldDecorateStart}{customTableMapperAttribute.Name}{fieldDecorateEnd}");
+            result.Append($"{fieldDecorateStart}{tableName}{fieldDecorateEnd}");
             result.Append(" ");
             result.Append(
-                $"Where {fieldDecorateStart}{model.GetTablePrimaryKeyName()}{fieldDecorateEnd} = {model.TransferPrimaryKeyValueToSql()}"
+                $"Where {fieldDecorateStart}{model.GetPrimaryKeyName()}{fieldDecorateEnd} = {model.TransferPrimaryKeyValueToSql()}"
             );
 
             return result.ToString();
@@ -2550,7 +2550,7 @@ namespace EasySoft.Core.Dapper.Assist
                 throw new Exception("条件更新不能缺少条件语句！");
             }
 
-            var customTableMapperAttribute = model.GetAttribute<CustomTableMapperAttribute>();
+            var tableName = TransferAssist.GetTableName(model);
 
             var result = new StringBuilder();
 
@@ -2562,7 +2562,7 @@ namespace EasySoft.Core.Dapper.Assist
                 result.Append($"{schemaName}.");
             }
 
-            result.Append(customTableMapperAttribute.Name);
+            result.Append(tableName);
 
             result.AppendLine(ConditionAssist.Build(conditions));
 
@@ -2608,7 +2608,7 @@ namespace EasySoft.Core.Dapper.Assist
             var model = new T();
 
             var schemaName = model.GetSqlSchemaName();
-            var customTableMapperAttribute = Tools.GetCustomTableMapperAttribute(model);
+            var tableName = TransferAssist.GetTableName(model);
             var fieldDecorateStart = model.GetSqlFieldDecorateStart();
             var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
             var result = new StringBuilder();
@@ -2621,10 +2621,10 @@ namespace EasySoft.Core.Dapper.Assist
                 result.Append($"{fieldDecorateStart}{schemaName}{fieldDecorateEnd}.");
             }
 
-            result.Append($"{fieldDecorateStart}{customTableMapperAttribute.Name}{fieldDecorateEnd}");
+            result.Append($"{fieldDecorateStart}{tableName}{fieldDecorateEnd}");
             result.Append(" ");
             result.Append(
-                $"Where {fieldDecorateStart}{model.GetTablePrimaryKeyName()}{fieldDecorateEnd} IN ({values.Join(",", "'{0}'")})"
+                $"Where {fieldDecorateStart}{model.GetPrimaryKeyName()}{fieldDecorateEnd} IN ({values.Join(",", "'{0}'")})"
             );
 
             return result.ToString();

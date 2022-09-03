@@ -4,6 +4,7 @@ using EasySoft.Simple.EntityFrameworkCore.Bases;
 
 namespace EasySoft.Simple.EntityFrameworkCore.Entities;
 
+[Table("author")]
 public class Author : BaseEntity
 {
     [Key]

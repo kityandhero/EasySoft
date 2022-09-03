@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq.Expressions;
 using System.Reflection;
 using EasySoft.Core.Dapper.Common;
@@ -13,11 +14,38 @@ namespace EasySoft.Core.Dapper.Assist
 {
     public static class TransferAssist
     {
+        public static string GetTableName<T>(T entity)
+        {
+            var tableAttribute = Tools.GetTableAttribute(entity);
+
+            if (tableAttribute == null)
+            {
+                return nameof(T);
+            }
+
+            if (string.IsNullOrWhiteSpace(tableAttribute.Name))
+            {
+                throw new Exception($"{nameof(T)} disallow empty value");
+            }
+
+            return nameof(T);
+        }
+
         public static string GetTableName<T>()
         {
-            var customTableMapperAttribute = Tools.GetCustomTableMapperAttribute<T>();
+            var tableAttribute = Tools.GetTableAttribute<T>();
 
-            return customTableMapperAttribute.Name;
+            if (tableAttribute == null)
+            {
+                return nameof(T);
+            }
+
+            if (string.IsNullOrWhiteSpace(tableAttribute.Name))
+            {
+                throw new Exception($"{nameof(T)} disallow empty value");
+            }
+
+            return nameof(T);
         }
 
         #region GetTableAndColumnName
@@ -74,7 +102,7 @@ namespace EasySoft.Core.Dapper.Assist
 
                         propertyInfo = propertyInfoTemp;
 
-                        var customColumnMapperAttribute = Tools.GetCustomColumnMapperAttribute(propertyInfo);
+                        var customColumnMapperAttribute = Tools.GetColumnAttribute(propertyInfo);
 
                         if (customColumnMapperAttribute == null)
                         {
@@ -83,8 +111,7 @@ namespace EasySoft.Core.Dapper.Assist
                             );
                         }
 
-                        return Tools.GetCustomTableMapperAttribute(entityType.Create()).Name + "." +
-                               customColumnMapperAttribute.Name;
+                        return GetTableName(entityType.Create()) + "." + customColumnMapperAttribute.Name;
                     }
                 }
             }
@@ -128,17 +155,25 @@ namespace EasySoft.Core.Dapper.Assist
 
                 propertyInfo = propertyInfoTemp;
 
-                var customColumnMapperAttribute = Tools.GetCustomColumnMapperAttribute(propertyInfo);
+                var columnAttribute = Tools.GetColumnAttribute(propertyInfo);
 
-                if (customColumnMapperAttribute == null)
+                string columnName;
+
+                if (columnAttribute == null)
                 {
-                    throw new Exception(
-                        $"属性${propertyInfo.Name}缺少CustomColumnMapperAttribute特性"
-                    );
+                    columnName = propertyInfo.Name;
+                }
+                else
+                {
+                    if (string.IsNullOrWhiteSpace(columnAttribute.Name))
+                    {
+                        throw new Exception($"{nameof(ColumnAttribute)} disallow empty name");
+                    }
+
+                    columnName = columnAttribute.Name;
                 }
 
-                return Tools.GetCustomTableMapperAttribute(entityType.Create()).Name + "." +
-                       customColumnMapperAttribute.Name;
+                return GetTableName(entityType.Create()) + "." + columnName;
             }
 
             throw new ArgumentException("Cannot analyze type get name ");
@@ -205,16 +240,25 @@ namespace EasySoft.Core.Dapper.Assist
 
                         propertyInfo = propertyInfoTemp;
 
-                        var customColumnMapperAttribute = Tools.GetCustomColumnMapperAttribute(propertyInfo);
+                        var columnAttribute = Tools.GetColumnAttribute(propertyInfo);
 
-                        if (customColumnMapperAttribute == null)
+                        string columnName;
+
+                        if (columnAttribute == null)
                         {
-                            throw new Exception(
-                                $"属性${propertyInfo.Name}缺少CustomColumnMapperAttribute特性"
-                            );
+                            columnName = propertyInfo.Name;
+                        }
+                        else
+                        {
+                            if (string.IsNullOrWhiteSpace(columnAttribute.Name))
+                            {
+                                throw new Exception($"{nameof(ColumnAttribute)} disallow empty name");
+                            }
+
+                            columnName = columnAttribute.Name;
                         }
 
-                        return customColumnMapperAttribute.Name;
+                        return columnName;
                     }
                 }
             }
@@ -248,16 +292,25 @@ namespace EasySoft.Core.Dapper.Assist
 
                             propertyInfo = propertyInfoTemp;
 
-                            var customColumnMapperAttribute = Tools.GetCustomColumnMapperAttribute(propertyInfo);
+                            var columnAttribute = Tools.GetColumnAttribute(propertyInfo);
 
-                            if (customColumnMapperAttribute == null)
+                            string columnName;
+
+                            if (columnAttribute == null)
                             {
-                                throw new Exception(
-                                    $"属性${propertyInfo.Name}缺少CustomColumnMapperAttribute特性"
-                                );
+                                columnName = propertyInfo.Name;
+                            }
+                            else
+                            {
+                                if (string.IsNullOrWhiteSpace(columnAttribute.Name))
+                                {
+                                    throw new Exception($"{nameof(ColumnAttribute)} disallow empty name");
+                                }
+
+                                columnName = columnAttribute.Name;
                             }
 
-                            return customColumnMapperAttribute.Name;
+                            return columnName;
                         }
                     }
                 }
@@ -321,17 +374,25 @@ namespace EasySoft.Core.Dapper.Assist
 
                         propertyInfo = propertyInfoTemp;
 
-                        var customColumnMapperAttribute = Tools.GetCustomColumnMapperAttribute(propertyInfo);
+                        var columnAttribute = Tools.GetColumnAttribute(propertyInfo);
 
-                        if (customColumnMapperAttribute == null)
+                        string columnName;
+
+                        if (columnAttribute == null)
                         {
-                            throw new Exception(
-                                $"属性${propertyInfo.Name}缺少CustomColumnMapperAttribute特性"
-                            );
+                            columnName = propertyInfo.Name;
+                        }
+                        else
+                        {
+                            if (string.IsNullOrWhiteSpace(columnAttribute.Name))
+                            {
+                                throw new Exception($"{nameof(ColumnAttribute)} disallow empty name");
+                            }
+
+                            columnName = columnAttribute.Name;
                         }
 
-                        return Tools.GetCustomTableMapperAttribute(entityType.Create()).Name + "." +
-                               customColumnMapperAttribute.Name;
+                        return GetTableName(entityType.Create()) + "." + columnName;
                     }
                 }
             }
@@ -375,17 +436,25 @@ namespace EasySoft.Core.Dapper.Assist
 
                 propertyInfo = propertyInfoTemp;
 
-                var customColumnMapperAttribute = Tools.GetCustomColumnMapperAttribute(propertyInfo);
+                var columnAttribute = Tools.GetColumnAttribute(propertyInfo);
 
-                if (customColumnMapperAttribute == null)
+                string columnName;
+
+                if (columnAttribute == null)
                 {
-                    throw new Exception(
-                        $"属性${propertyInfo.Name}缺少CustomColumnMapperAttribute特性"
-                    );
+                    columnName = propertyInfo.Name;
+                }
+                else
+                {
+                    if (string.IsNullOrWhiteSpace(columnAttribute.Name))
+                    {
+                        throw new Exception($"{nameof(ColumnAttribute)} disallow empty name");
+                    }
+
+                    columnName = columnAttribute.Name;
                 }
 
-                return Tools.GetCustomTableMapperAttribute(entityType.Create()).Name + "." +
-                       customColumnMapperAttribute.Name;
+                return GetTableName(entityType.Create()) + "." + columnName;
             }
 
             throw new ArgumentException("Cannot analyze type get name ");
@@ -394,6 +463,23 @@ namespace EasySoft.Core.Dapper.Assist
         #endregion
 
         #region GetColumnName
+
+        public static string GetColumnName(PropertyInfo propertyInfo)
+        {
+            var columnAttribute = propertyInfo.GetAttribute<ColumnAttribute>();
+
+            if (columnAttribute == null)
+            {
+                return propertyInfo.Name;
+            }
+
+            if (string.IsNullOrWhiteSpace(columnAttribute.Name))
+            {
+                throw new Exception($"{nameof(ColumnAttribute)} disallow empty name");
+            }
+
+            return columnAttribute.Name;
+        }
 
         public static string GetColumnName<T>(Expression<Func<T>> propertyLambda)
         {
@@ -410,8 +496,10 @@ namespace EasySoft.Core.Dapper.Assist
             return GetColumnName(propertyLambda, out entityType, out _);
         }
 
-        public static string GetColumnName<T>(Expression<Func<T>> propertyLambda, out Type entityType,
-            out PropertyInfo propertyInfo)
+        public static string GetColumnName<T>(
+            Expression<Func<T>> propertyLambda, out Type entityType,
+            out PropertyInfo propertyInfo
+        )
         {
             dynamic? me;
 
@@ -443,16 +531,19 @@ namespace EasySoft.Core.Dapper.Assist
 
                         propertyInfo = propertyInfoTemp;
 
-                        var customColumnMapperAttribute = Tools.GetCustomColumnMapperAttribute(propertyInfo);
+                        var columnAttribute = Tools.GetColumnAttribute(propertyInfo);
 
-                        if (customColumnMapperAttribute == null)
+                        if (columnAttribute == null)
                         {
-                            throw new Exception(
-                                $"属性${propertyInfo.Name}缺少CustomColumnMapperAttribute特性"
-                            );
+                            return propertyInfo.Name;
                         }
 
-                        return customColumnMapperAttribute.Name;
+                        if (string.IsNullOrWhiteSpace(columnAttribute.Name))
+                        {
+                            throw new Exception($"{nameof(ColumnAttribute)} disallow empty name");
+                        }
+
+                        return columnAttribute.Name;
                     }
                 }
             }
@@ -496,16 +587,19 @@ namespace EasySoft.Core.Dapper.Assist
 
                 propertyInfo = propertyInfoTemp;
 
-                var customColumnMapperAttribute = Tools.GetCustomColumnMapperAttribute(propertyInfo);
+                var columnAttribute = Tools.GetColumnAttribute(propertyInfo);
 
-                if (customColumnMapperAttribute == null)
+                if (columnAttribute == null)
                 {
-                    throw new Exception(
-                        $"属性${propertyInfo.Name}缺少CustomColumnMapperAttribute特性"
-                    );
+                    return propertyInfo.Name;
                 }
 
-                return customColumnMapperAttribute.Name;
+                if (string.IsNullOrWhiteSpace(columnAttribute.Name))
+                {
+                    throw new Exception($"{nameof(ColumnAttribute)} disallow empty name");
+                }
+
+                return columnAttribute.Name;
             }
 
             throw new ArgumentException("Cannot analyze type get name ");

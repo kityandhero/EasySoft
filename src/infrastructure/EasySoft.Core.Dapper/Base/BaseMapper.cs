@@ -79,7 +79,7 @@ namespace EasySoft.Core.Dapper.Base
             {
                 new()
                 {
-                    Expression = m.GetTablePrimaryKeyLambda(),
+                    Expression = m.GetPrimaryKeyLambda(),
                     ConditionType = ConditionType.Eq,
                     Value = id
                 }
@@ -158,7 +158,7 @@ namespace EasySoft.Core.Dapper.Base
             if (transferWrapperQuery)
             {
                 query = SqlAssist.Select()
-                    .AppendFragment($" {(transferWrapperQuery ? " TOP 1 " : "")}{model.GetTablePrimaryKeyName()} ")
+                    .AppendFragment($" {(transferWrapperQuery ? " TOP 1 " : "")}{model.GetPrimaryKeyName()} ")
                     .From(model);
             }
             else
@@ -198,7 +198,7 @@ namespace EasySoft.Core.Dapper.Base
             if (transferWrapperQuery)
             {
                 query = SqlAssist.Select().AllField(model).From(model)
-                    .AppendFragment($" WHERE {model.GetTablePrimaryKeyName()} = ({query})");
+                    .AppendFragment($" WHERE {model.GetPrimaryKeyName()} = ({query})");
             }
 
             if (_mapperTransaction == null)

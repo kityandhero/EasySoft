@@ -14,7 +14,7 @@
 
 
 
-        string GetTablePrimaryKeyName();
+        string GetPrimaryKeyName();
 
         string GetSqlSchemaName();
 

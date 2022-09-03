@@ -495,7 +495,7 @@ namespace EasySoft.UtilityTools.Standard.Assists
 
                 var descriptionAttribute = enumItem.GetAttribute<DescriptionAttribute>();
 
-                var description = descriptionAttribute.Description;
+                var description = descriptionAttribute?.Description ?? "无描述";
 
                 if (changeKeyToLowerFirst)
                 {

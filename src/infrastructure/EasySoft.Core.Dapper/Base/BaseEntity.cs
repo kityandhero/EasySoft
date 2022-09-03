@@ -1,10 +1,10 @@
-﻿using System.Dynamic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Dynamic;
 using System.Linq.Expressions;
 using System.Reflection;
 using EasySoft.Core.Dapper.Common;
 using EasySoft.Core.Dapper.Interfaces;
 using EasySoft.UtilityTools.Standard.Assists;
-using EasySoft.UtilityTools.Standard.Attributes;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -68,27 +68,30 @@ namespace EasySoft.Core.Dapper.Base
 
         public string GetTableName()
         {
-            var customTableMapperAttribute = Tools.GetCustomTableMapperAttribute(GetType());
+            var tableAttribute = Tools.GetTableAttribute(GetType());
 
-            return customTableMapperAttribute.Name;
+            return tableAttribute == null ? GetType().Name : tableAttribute.Name;
         }
 
-        public abstract Expression<Func<T, object>> GetTablePrimaryKeyLambda();
+        public abstract Expression<Func<T, object>> GetPrimaryKeyLambda();
 
-        public string GetTablePrimaryKeyName()
+        public string GetPrimaryKeyName()
         {
-            var lambda = GetTablePrimaryKeyLambda();
+            var lambda = GetPrimaryKeyLambda();
 
-            var customColumnMapperAttribute = Tools.GetCustomColumnMapperAttribute(GetPropertyInfo(lambda));
+            var columnAttribute = Tools.GetColumnAttribute(GetPropertyInfo(lambda));
 
-            if (customColumnMapperAttribute == null)
+            if (columnAttribute == null)
             {
-                throw new Exception(
-                    "缺少CustomColumnMapperAttribute特性"
-                );
+                return GetPropertyName(lambda);
             }
 
-            return customColumnMapperAttribute.Name;
+            if (string.IsNullOrWhiteSpace(columnAttribute.Name))
+            {
+                throw new Exception($"{nameof(columnAttribute)} disallow empty value");
+            }
+
+            return columnAttribute.Name;
         }
 
         public virtual string GetSqlSchemaName()
@@ -120,16 +123,16 @@ namespace EasySoft.Core.Dapper.Base
         {
             var schemaName = GetSqlSchemaName();
 
-            var customTableMapperAttribute = GetType().GetCustomAttribute<CustomTableMapperAttribute>();
+            var tableAttribute = GetType().GetCustomAttribute<TableAttribute>();
 
-            if (customTableMapperAttribute == null)
+            if (tableAttribute == null)
             {
                 throw new Exception(
                     "缺少CustomTableMapperAttribute特性"
                 );
             }
 
-            var name = customTableMapperAttribute.Name;
+            var name = tableAttribute.Name;
 
             return !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{name}" : name;
         }
@@ -204,7 +207,7 @@ namespace EasySoft.Core.Dapper.Base
                 modelName = modelName.ToLowerFirst();
             }
 
-            var identification = ReflectionAssist.GetPropertyName(GetTablePrimaryKeyLambda());
+            var identification = ReflectionAssist.GetPropertyName(GetPrimaryKeyLambda());
 
             return $"{modelName}{identification}";
         }
@@ -278,7 +281,7 @@ namespace EasySoft.Core.Dapper.Base
 
             var modelName = ReflectionAssist.GetClassName(this).ToLowerFirst();
 
-            var identification = ReflectionAssist.GetPropertyName(GetTablePrimaryKeyLambda());
+            var identification = ReflectionAssist.GetPropertyName(GetPrimaryKeyLambda());
 
             var json = JsonConvertAssist.SerializeAndKeyToLower(d).Replace(
                 $"\"{identification.ToLowerFirst()}\"",
@@ -329,7 +332,7 @@ namespace EasySoft.Core.Dapper.Base
                 propertyList.Add(p);
             }
 
-            var identification = ReflectionAssist.GetPropertyName(GetTablePrimaryKeyLambda());
+            var identification = ReflectionAssist.GetPropertyName(GetPrimaryKeyLambda());
 
             foreach (var item in eo)
             {
@@ -382,7 +385,7 @@ namespace EasySoft.Core.Dapper.Base
                 propertyList.Add(p);
             }
 
-            var identification = ReflectionAssist.GetPropertyName(GetTablePrimaryKeyLambda());
+            var identification = ReflectionAssist.GetPropertyName(GetPrimaryKeyLambda());
 
             foreach (var item in eo)
             {

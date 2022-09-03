@@ -20,6 +20,6 @@ public static class ApplicationChannelCollectionExtensions
     {
         var descriptionAttribute = source.GetAttribute<DescriptionAttribute>();
 
-        return descriptionAttribute.Description;
+        return descriptionAttribute == null ? "" : descriptionAttribute.Description;
     }
 }
