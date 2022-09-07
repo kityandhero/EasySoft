@@ -163,6 +163,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Dapper.Elegan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.Dapper.Console", "test\EasySoft.Simple.Dapper.Console\EasySoft.Simple.Dapper.Console.csproj", "{011611CC-65FD-45BD-B554-53D05DBDAA5C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "storage", "storage", "{DD5ECD17-FD19-48D0-A02D-1C77ECA56FB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.MinIO", "infrastructure\EasySoft.Core.MinIO\EasySoft.Core.MinIO.csproj", "{AEA0BB1C-C188-4CD2-9D56-D0F2759BD0A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -385,6 +389,10 @@ Global
 		{011611CC-65FD-45BD-B554-53D05DBDAA5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{011611CC-65FD-45BD-B554-53D05DBDAA5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{011611CC-65FD-45BD-B554-53D05DBDAA5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEA0BB1C-C188-4CD2-9D56-D0F2759BD0A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEA0BB1C-C188-4CD2-9D56-D0F2759BD0A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEA0BB1C-C188-4CD2-9D56-D0F2759BD0A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEA0BB1C-C188-4CD2-9D56-D0F2759BD0A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -466,6 +474,8 @@ Global
 		{C4A263C2-A021-4072-AA91-803E7F6758CD} = {197B7656-8BFE-49AA-AA1E-C511B75B26B6}
 		{EC2B954F-ADB9-4A1A-8C31-63E6954825A5} = {3E4998D6-8F35-4340-9F9E-AA686E6E72D3}
 		{011611CC-65FD-45BD-B554-53D05DBDAA5C} = {E6D1E731-F18C-46B4-B08B-0672F0642295}
+		{DD5ECD17-FD19-48D0-A02D-1C77ECA56FB7} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{AEA0BB1C-C188-4CD2-9D56-D0F2759BD0A3} = {DD5ECD17-FD19-48D0-A02D-1C77ECA56FB7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}
