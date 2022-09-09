@@ -13,7 +13,7 @@ using StackExchange.Profiling;
 using StackExchange.Profiling.Data;
 using Constants = EasySoft.Core.Sql.Common.Constants;
 
-namespace EasySoft.Core.Sql.Assist
+namespace EasySoft.Core.Sql.Assists
 {
     public static class SqlAssist
     {

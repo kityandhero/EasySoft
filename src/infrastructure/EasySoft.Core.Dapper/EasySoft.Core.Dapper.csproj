@@ -21,4 +21,8 @@
       <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Assists" />
+    </ItemGroup>
+
 </Project>

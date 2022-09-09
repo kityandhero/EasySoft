@@ -10,7 +10,7 @@ using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Dapper.Common;
 using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.Interfaces;
-using EasySoft.Core.Sql.Assist;
+using EasySoft.Core.Sql.Assists;
 using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Entities;
 using EasySoft.Core.Sql.Enums;

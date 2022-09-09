@@ -7,7 +7,7 @@ using EasySoft.Core.Sql.Interfaces;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Newtonsoft.Json;
 
-namespace EasySoft.Core.Sql.Assist
+namespace EasySoft.Core.Sql.Assists
 {
     public static class TransferStrangeAssist
     {
