@@ -19,7 +19,7 @@ internal class PrepareCovertStartWork : IPrepareCovertStartWork
         JobConfigAssist.Init();
         LogConfigAssist.Init();
         MaintainConfigAssist.Init();
-        MessageQueueConfigAssist.Init();
+        RabbitMQConfigAssist.Init();
         MongoConfigAssist.Init();
         PayCallbackConfigAssist.Init();
         RedisConfigAssist.Init();

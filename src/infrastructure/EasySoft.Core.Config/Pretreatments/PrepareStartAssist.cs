@@ -41,7 +41,7 @@ public static class PrepareStartAssist
             typeof(JobConfig),
             typeof(LogConfig),
             typeof(MaintainConfig),
-            typeof(MessageQueueConfig),
+            typeof(RabbitMQConfig),
             typeof(MongoConfig),
             typeof(PayCallbackConfig),
             typeof(RedisConfig),

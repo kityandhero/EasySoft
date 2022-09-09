@@ -1,8 +1,7 @@
-﻿using EasySoft.Core.ErrorLogTransmitter.Entities;
+﻿using DotNetCore.CAP;
+using EasySoft.Core.ErrorLogTransmitter.Entities;
 using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 using EasySoft.Core.ErrorLogTransmitter.Interfaces;
-using EasySoft.Core.ErrorLogTransmitter.MessageQuery;
-using EasySoft.Core.ExchangeRegulation.Query;
 using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.Entity;
 
@@ -10,27 +9,20 @@ namespace EasySoft.Core.ErrorLogTransmitter.Producers;
 
 public class ErrorLogProducer : IErrorLogProducer
 {
-    private readonly IQuery<IErrorLogExchange> _query;
+    private readonly ICapPublisher _capPublisher;
 
     private readonly IApplicationChannel _applicationChannel;
 
-    public ErrorLogProducer(IApplicationChannel applicationChannel)
+    public ErrorLogProducer(ICapPublisher capPublisher, IApplicationChannel applicationChannel)
     {
-        var factory = new QueryFactory();
-
-        _query = factory.CreateQuery();
+        _capPublisher = capPublisher;
 
         _applicationChannel = applicationChannel;
     }
 
-    private IQuery<IErrorLogExchange> GetQuery()
-    {
-        return _query;
-    }
-
     public void Send(IErrorLogExchange log)
     {
-        GetQuery().Send(log);
+        _capPublisher.Publish(Configures.GetQueryName(), log);
     }
 
     public IErrorLogExchange Send(Exception ex)
@@ -52,7 +44,7 @@ public class ErrorLogProducer : IErrorLogProducer
 
         entity.Fill(ex, operatorId, requestInfo);
 
-        GetQuery().Send(entity);
+        _capPublisher.Publish(Configures.GetQueryName(), entity);
 
         return entity;
     }

@@ -1,29 +1,21 @@
-﻿using EasySoft.Core.ExchangeRegulation.Query;
+﻿using DotNetCore.CAP;
 using EasySoft.Core.SqlExecutionRecordTransmitter.Entities;
 using EasySoft.Core.SqlExecutionRecordTransmitter.Interfaces;
-using EasySoft.Core.SqlExecutionRecordTransmitter.MessageQuery;
 using EasySoft.UtilityTools.Core.Channels;
 
 namespace EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
 
 public class SqlExecutionRecordProducer : ISqlExecutionRecordProducer
 {
-    private readonly IQuery<ISqlExecutionRecordExchange> _query;
+    private readonly ICapPublisher _capPublisher;
 
     private readonly IApplicationChannel _applicationChannel;
 
-    public SqlExecutionRecordProducer(IApplicationChannel applicationChannel)
+    public SqlExecutionRecordProducer(ICapPublisher capPublisher, IApplicationChannel applicationChannel)
     {
-        var factory = new QueryFactory();
-
-        _query = factory.CreateQuery();
+        _capPublisher = capPublisher;
 
         _applicationChannel = applicationChannel;
-    }
-
-    private IQuery<ISqlExecutionRecordExchange> GetQuery()
-    {
-        return _query;
     }
 
     public ISqlExecutionRecordExchange Send(
@@ -56,7 +48,7 @@ public class SqlExecutionRecordProducer : ISqlExecutionRecordProducer
             Channel = _applicationChannel.GetChannel()
         };
 
-        GetQuery().Send(entity);
+        _capPublisher.Publish(Configures.GetQueryName(), entity);
 
         return entity;
     }

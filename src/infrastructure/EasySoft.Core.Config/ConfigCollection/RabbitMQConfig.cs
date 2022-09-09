@@ -2,9 +2,9 @@
 
 namespace EasySoft.Core.Config.ConfigCollection;
 
-public class MessageQueueConfig : IConfig
+public class RabbitMQConfig : IConfig
 {
-    public static readonly MessageQueueConfig Instance = new();
+    public static readonly RabbitMQConfig Instance = new();
 
     public string HostName { get; set; }
 
@@ -18,13 +18,16 @@ public class MessageQueueConfig : IConfig
 
     public string Prefix { get; set; }
 
-    public MessageQueueConfig()
+    public string PersistentConnection { get; set; }
+
+    public RabbitMQConfig()
     {
         HostName = "";
         UserName = "";
         Password = "";
         VirtualHost = "/";
         ConnectionTimeout = "30";
-        Prefix = "";
+        Prefix = "EasySoft";
+        PersistentConnection = "";
     }
 }

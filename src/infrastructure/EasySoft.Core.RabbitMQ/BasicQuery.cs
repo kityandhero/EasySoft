@@ -9,7 +9,7 @@ namespace EasySoft.Core.RabbitMQ
 {
     public class BasicQuery<T> : IQuery<T> where T : IExchangeEntity
     {
-        private readonly string _queryPrefix = MessageQueueConfigAssist.GetPrefix();
+        private readonly string _queryPrefix = RabbitMQConfigAssist.GetPrefix();
 
         protected virtual string RouteName
         {

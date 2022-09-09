@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using EasySoft.Core.AccessWayTransmitter.ExtensionMethods;
+using EasySoft.Core.Cap.Persistent;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.PermissionVerification.Middlewares;
 using EasySoft.Core.PermissionVerification.Observers;
@@ -29,7 +30,7 @@ public static class WebApplicationBuilderExtensions
         }
 
         builder.AddPermissionObserverInjection<TPermissionObserver>()
-            .UseAccessWayTransmitter();
+            .UseAccessWayTransmitter(PersistentType.SqlServer);
 
         if (middlewareMode)
         {

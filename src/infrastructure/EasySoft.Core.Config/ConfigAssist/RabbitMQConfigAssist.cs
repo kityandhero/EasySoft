@@ -5,17 +5,17 @@ using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
-public static class MessageQueueConfigAssist
+public static class RabbitMQConfigAssist
 {
-    private static readonly string ConfigFile = $"{nameof(MessageQueueConfig).ToLowerFirst()}.json";
+    private static readonly string ConfigFile = $"{nameof(RabbitMQConfig).ToLowerFirst()}.json";
 
     private static IConfiguration Configuration { get; set; }
 
-    static MessageQueueConfigAssist()
+    static RabbitMQConfigAssist()
     {
         var directory = Tools.GetConfigureDirectory();
 
-        var filePath = $"{directory}{nameof(MessageQueueConfig).ToLowerFirst()}.json";
+        var filePath = $"{directory}{nameof(RabbitMQConfig).ToLowerFirst()}.json";
 
         var builder = new ConfigurationBuilder().AddJsonFile(
             filePath,
@@ -25,16 +25,16 @@ public static class MessageQueueConfigAssist
 
         Configuration = builder.Build();
 
-        Configuration.Bind(MessageQueueConfig.Instance);
+        Configuration.Bind(RabbitMQConfig.Instance);
     }
-    
+
     public static void Init()
     {
     }
 
-    private static MessageQueueConfig GetConfig()
+    private static RabbitMQConfig GetConfig()
     {
-        return MessageQueueConfig.Instance;
+        return RabbitMQConfig.Instance;
     }
 
     public static string GetHostName()
@@ -44,7 +44,7 @@ public static class MessageQueueConfigAssist
         if (string.IsNullOrWhiteSpace(v))
         {
             throw new Exception(
-                $"请配置消息队列HostName项: {ConfigFile} -> HostName"
+                $"请配置RabbitMQ消息队列HostName项: {ConfigFile} -> HostName"
             );
         }
 
@@ -58,7 +58,7 @@ public static class MessageQueueConfigAssist
         if (string.IsNullOrWhiteSpace(v))
         {
             throw new Exception(
-                $"请配置消息队列UserName项: {ConfigFile} -> UserName"
+                $"请配置RabbitMQ消息队列UserName项: {ConfigFile} -> UserName"
             );
         }
 
@@ -72,7 +72,7 @@ public static class MessageQueueConfigAssist
         if (string.IsNullOrWhiteSpace(v))
         {
             throw new Exception(
-                $"请配置消息队列Password项: {ConfigFile} -> Password"
+                $"请配置RabbitMQ消息队列Password项: {ConfigFile} -> Password"
             );
         }
 
@@ -86,7 +86,7 @@ public static class MessageQueueConfigAssist
         if (string.IsNullOrWhiteSpace(v))
         {
             throw new Exception(
-                $"请配置消息队列VirtualHost项: {ConfigFile} -> VirtualHost"
+                $"请配置RabbitMQ消息队列VirtualHost项: {ConfigFile} -> VirtualHost"
             );
         }
 
@@ -100,7 +100,7 @@ public static class MessageQueueConfigAssist
         if (!v.IsInt() || v.ToInt() < 0)
         {
             throw new Exception(
-                $"请配置消息队列ConnectionTimeout项: {ConfigFile} -> ConnectionTimeout"
+                $"请配置RabbitMQ消息队列ConnectionTimeout项: {ConfigFile} -> ConnectionTimeout"
             );
         }
 
@@ -113,6 +113,16 @@ public static class MessageQueueConfigAssist
     public static string GetPrefix()
     {
         var v = GetConfig().Prefix.Remove(" ").Trim();
+
+        return string.IsNullOrWhiteSpace(v) ? "" : v;
+    }
+
+    /// <summary>
+    /// 持久化链接
+    /// </summary>
+    public static string GetPersistentConnection()
+    {
+        var v = GetConfig().PersistentConnection.Trim();
 
         return string.IsNullOrWhiteSpace(v) ? "" : v;
     }

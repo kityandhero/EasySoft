@@ -1,5 +1,7 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
+﻿using DotNetCore.CAP;
+using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.ExchangeRegulation.ExtensionMethods;
+using EasySoft.Core.GeneralLogTransmitter.Entities;
 using EasySoft.Core.GeneralLogTransmitter.Producers;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
@@ -34,5 +36,11 @@ public class RemoteGeneralLogController : AreaControllerCore
         var log = _generalLogProducer.Send("Test");
 
         return this.Success(log.ToObject());
+    }
+
+    [CapSubscribe("EasySoft.GeneralLog")]
+    public void SubscribeMessage(GeneralLogExchange generalLogExchange)
+    {
+        Console.WriteLine("message is:" + generalLogExchange.Message);
     }
 }

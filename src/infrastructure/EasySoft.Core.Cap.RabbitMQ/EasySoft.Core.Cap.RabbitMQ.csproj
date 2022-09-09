@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="6.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
+      <ProjectReference Include="..\EasySoft.Core.Cap.Persistent\EasySoft.Core.Cap.Persistent.csproj" />
+    </ItemGroup>
+
+</Project>

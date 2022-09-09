@@ -12,13 +12,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
       <ProjectReference Include="..\EasySoft.Core.ExchangeRegulation\EasySoft.Core.ExchangeRegulation.csproj" />
       <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
-      <ProjectReference Include="..\EasySoft.Core.RabbitMQ\EasySoft.Core.RabbitMQ.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Autofac" Version="6.4.0" />
+      <PackageReference Include="DotNetCore.CAP" Version="6.1.0" />
     </ItemGroup>
 
 </Project>

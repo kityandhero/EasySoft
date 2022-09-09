@@ -3,5 +3,5 @@
   "UserName": "pandora",
   "Password": "123456",
   "VirtualHost": "/",
-  "Prefix": ""
+  "PersistentConnection": "server=database.b.com; User ID=pandora;Password=!@#$1234;database=cap"
 }

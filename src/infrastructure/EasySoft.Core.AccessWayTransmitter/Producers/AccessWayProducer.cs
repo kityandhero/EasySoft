@@ -1,29 +1,21 @@
-﻿using EasySoft.Core.AccessWayTransmitter.Entities;
+﻿using DotNetCore.CAP;
+using EasySoft.Core.AccessWayTransmitter.Entities;
 using EasySoft.Core.AccessWayTransmitter.Interfaces;
-using EasySoft.Core.AccessWayTransmitter.MessageQuery;
-using EasySoft.Core.ExchangeRegulation.Query;
 using EasySoft.UtilityTools.Core.Channels;
 
 namespace EasySoft.Core.AccessWayTransmitter.Producers;
 
 public class AccessWayProducer : IAccessWayProducer
 {
-    private readonly IQuery<IAccessWayExchange> _query;
+    private readonly ICapPublisher _capPublisher;
 
     private readonly IApplicationChannel _applicationChannel;
 
-    public AccessWayProducer(IApplicationChannel applicationChannel)
+    public AccessWayProducer(ICapPublisher capPublisher, IApplicationChannel applicationChannel)
     {
-        var factory = new QueryFactory();
-
-        _query = factory.CreateQuery();
+        _capPublisher = capPublisher;
 
         _applicationChannel = applicationChannel;
-    }
-
-    private IQuery<IAccessWayExchange> GetQuery()
-    {
-        return _query;
     }
 
     public IAccessWayExchange Send(
@@ -42,7 +34,7 @@ public class AccessWayProducer : IAccessWayProducer
             Channel = _applicationChannel.GetChannel()
         };
 
-        GetQuery().Send(entity);
+        _capPublisher.Publish(Configures.GetQueryName(), entity);
 
         return entity;
     }

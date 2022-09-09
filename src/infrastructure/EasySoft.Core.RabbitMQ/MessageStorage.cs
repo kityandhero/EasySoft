@@ -12,11 +12,11 @@ namespace EasySoft.Core.RabbitMQ
         {
             return new ConnectionFactory
             {
-                HostName = MessageQueueConfigAssist.GetHostName(),
-                UserName = MessageQueueConfigAssist.GetUserName(),
-                Password = MessageQueueConfigAssist.GetPassword(),
-                VirtualHost = MessageQueueConfigAssist.GetVirtualHost(),
-                RequestedConnectionTimeout = TimeSpan.FromSeconds(MessageQueueConfigAssist.GetConnectionTimeout()),
+                HostName = RabbitMQConfigAssist.GetHostName(),
+                UserName = RabbitMQConfigAssist.GetUserName(),
+                Password = RabbitMQConfigAssist.GetPassword(),
+                VirtualHost = RabbitMQConfigAssist.GetVirtualHost(),
+                RequestedConnectionTimeout = TimeSpan.FromSeconds(RabbitMQConfigAssist.GetConnectionTimeout()),
                 AutomaticRecoveryEnabled = true
             };
         }

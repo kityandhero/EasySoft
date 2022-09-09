@@ -1,9 +1,8 @@
-﻿using EasySoft.Core.ExchangeRegulation.Enums;
+﻿using DotNetCore.CAP;
+using EasySoft.Core.ExchangeRegulation.Enums;
 using EasySoft.Core.ExchangeRegulation.ExtensionMethods;
-using EasySoft.Core.ExchangeRegulation.Query;
 using EasySoft.Core.GeneralLogTransmitter.Entities;
 using EasySoft.Core.GeneralLogTransmitter.Interfaces;
-using EasySoft.Core.GeneralLogTransmitter.MessageQuery;
 using EasySoft.UtilityTools.Core.Channels;
 using Newtonsoft.Json;
 
@@ -11,22 +10,15 @@ namespace EasySoft.Core.GeneralLogTransmitter.Producers;
 
 public class GeneralLogProducer : IGeneralLogProducer
 {
-    private readonly IQuery<IGeneralLogExchange> _query;
+    private readonly ICapPublisher _capPublisher;
 
     private readonly IApplicationChannel _applicationChannel;
 
-    public GeneralLogProducer(IApplicationChannel applicationChannel)
+    public GeneralLogProducer(ICapPublisher capPublisher, IApplicationChannel applicationChannel)
     {
-        var factory = new QueryFactory();
-
-        _query = factory.CreateQuery();
+        _capPublisher = capPublisher;
 
         _applicationChannel = applicationChannel;
-    }
-
-    private IQuery<IGeneralLogExchange> GetQuery()
-    {
-        return _query;
     }
 
     public IGeneralLogExchange Send(string message)
@@ -85,7 +77,7 @@ public class GeneralLogProducer : IGeneralLogProducer
                 break;
         }
 
-        GetQuery().Send(entity);
+        _capPublisher.Publish(Configures.GetQueryName(), entity);
 
         return entity;
     }

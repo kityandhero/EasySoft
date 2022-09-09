@@ -61,9 +61,6 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
       <None Remove="configures\messageQueueConfig.json" />
-      <Content Include="configures\messageQueueConfig.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="configures\mongoConfig.json" />
       <Content Include="configures\mongoConfig.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
