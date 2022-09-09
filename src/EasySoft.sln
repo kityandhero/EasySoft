@@ -169,7 +169,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.MinIO", "infr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{FDF888EA-C911-46BF-BD67-27DD566E1555}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.IdServer", "distribution\EasySoft.IdServer\EasySoft.IdServer.csproj", "{D482363A-E1ED-4F2B-A739-CDADCEBABBF7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.IdService", "distribution\EasySoft.IdService\EasySoft.IdService.csproj", "{D482363A-E1ED-4F2B-A739-CDADCEBABBF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
