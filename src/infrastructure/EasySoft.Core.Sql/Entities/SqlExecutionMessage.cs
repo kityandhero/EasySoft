@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Dapper.Entities;
+﻿namespace EasySoft.Core.Sql.Entities;
 
 public class SqlExecutionMessage
 {

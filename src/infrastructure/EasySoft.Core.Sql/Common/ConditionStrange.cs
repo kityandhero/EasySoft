@@ -1,9 +1,9 @@
 ﻿using System.Linq.Expressions;
-using EasySoft.Core.Dapper.Assist;
-using EasySoft.Core.Dapper.Enums;
-using EasySoft.Core.Dapper.Interfaces;
+using EasySoft.Core.Sql.Assist;
+using EasySoft.Core.Sql.Enums;
+using EasySoft.Core.Sql.Interfaces;
 
-namespace EasySoft.Core.Dapper.Common
+namespace EasySoft.Core.Sql.Common
 {
     public class ConditionStrange<T> where T : new()
     {

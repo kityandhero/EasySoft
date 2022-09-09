@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Dapper.Common
+﻿namespace EasySoft.Core.Sql.Common
 {
     public static class Constants
     {

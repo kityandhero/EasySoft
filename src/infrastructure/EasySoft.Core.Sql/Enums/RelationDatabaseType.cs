@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Dapper.Enums
+﻿namespace EasySoft.Core.Sql.Enums
 {
     /// <summary>
     /// 关系型数据库类型

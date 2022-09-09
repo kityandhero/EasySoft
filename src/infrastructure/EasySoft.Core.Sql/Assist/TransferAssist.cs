@@ -2,15 +2,15 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq.Expressions;
 using System.Reflection;
-using EasySoft.Core.Dapper.Common;
-using EasySoft.Core.Dapper.Enums;
-using EasySoft.Core.Dapper.Interfaces;
+using EasySoft.Core.Sql.Common;
+using EasySoft.Core.Sql.Enums;
+using EasySoft.Core.Sql.Interfaces;
 using EasySoft.UtilityTools.Standard;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Newtonsoft.Json;
 
-namespace EasySoft.Core.Dapper.Assist
+namespace EasySoft.Core.Sql.Assist
 {
     public static class TransferAssist
     {

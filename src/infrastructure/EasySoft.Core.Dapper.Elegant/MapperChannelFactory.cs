@@ -4,6 +4,7 @@ using EasySoft.Core.Config.ConfigCollection;
 using EasySoft.Core.Dapper.Common;
 using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.Interfaces;
+using EasySoft.Core.Sql.Enums;
 
 namespace EasySoft.Core.Dapper.Elegant
 {

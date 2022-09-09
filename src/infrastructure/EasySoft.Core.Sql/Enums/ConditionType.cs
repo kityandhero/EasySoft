@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace EasySoft.Core.Dapper.Enums
+namespace EasySoft.Core.Sql.Enums
 {
     /// <summary>
     /// 筛选条件

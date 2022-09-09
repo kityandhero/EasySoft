@@ -171,6 +171,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{FD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.IdService", "distribution\EasySoft.IdService\EasySoft.IdService.csproj", "{D482363A-E1ED-4F2B-A739-CDADCEBABBF7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Sql", "infrastructure\EasySoft.Core.Sql\EasySoft.Core.Sql.csproj", "{F945C696-8E30-4435-98EA-1F53AFB84939}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -401,6 +403,10 @@ Global
 		{D482363A-E1ED-4F2B-A739-CDADCEBABBF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D482363A-E1ED-4F2B-A739-CDADCEBABBF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D482363A-E1ED-4F2B-A739-CDADCEBABBF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F945C696-8E30-4435-98EA-1F53AFB84939}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F945C696-8E30-4435-98EA-1F53AFB84939}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F945C696-8E30-4435-98EA-1F53AFB84939}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F945C696-8E30-4435-98EA-1F53AFB84939}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -486,6 +492,7 @@ Global
 		{AEA0BB1C-C188-4CD2-9D56-D0F2759BD0A3} = {DD5ECD17-FD19-48D0-A02D-1C77ECA56FB7}
 		{FDF888EA-C911-46BF-BD67-27DD566E1555} = {30216632-B019-4908-9E7A-A119E4B6B0CE}
 		{D482363A-E1ED-4F2B-A739-CDADCEBABBF7} = {FDF888EA-C911-46BF-BD67-27DD566E1555}
+		{F945C696-8E30-4435-98EA-1F53AFB84939} = {3E4998D6-8F35-4340-9F9E-AA686E6E72D3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

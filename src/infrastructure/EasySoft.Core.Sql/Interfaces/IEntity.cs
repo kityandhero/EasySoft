@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Dapper.Interfaces
+﻿namespace EasySoft.Core.Sql.Interfaces
 {
     public interface IEntity
     {
@@ -11,8 +11,6 @@
         void SetPrimaryKeyValue(object value);
 
         string GetTableName();
-
-
 
         string GetPrimaryKeyName();
 

@@ -2,7 +2,7 @@
 using System.Reflection;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
-namespace EasySoft.Core.Dapper.Common
+namespace EasySoft.Core.Sql.Common
 {
     public static class Tools
     {

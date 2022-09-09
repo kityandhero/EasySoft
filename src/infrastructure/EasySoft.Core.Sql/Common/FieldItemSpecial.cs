@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace EasySoft.Core.Dapper.Common
+namespace EasySoft.Core.Sql.Common
 {
     public class FieldItemSpecial<T>
     {

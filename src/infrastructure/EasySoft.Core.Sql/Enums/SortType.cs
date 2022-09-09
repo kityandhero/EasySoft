@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Dapper.Enums
+﻿namespace EasySoft.Core.Sql.Enums
 {
     public enum SortType
     {

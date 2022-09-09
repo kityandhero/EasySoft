@@ -1,10 +1,10 @@
 ﻿using System.Linq.Expressions;
-using EasySoft.Core.Dapper.Assist;
-using EasySoft.Core.Dapper.Common;
-using EasySoft.Core.Dapper.Enums;
-using EasySoft.Core.Dapper.Interfaces;
+using EasySoft.Core.Sql.Assist;
+using EasySoft.Core.Sql.Common;
+using EasySoft.Core.Sql.Enums;
+using EasySoft.Core.Sql.Interfaces;
 
-namespace EasySoft.Core.Dapper.ExtensionMethods
+namespace EasySoft.Core.Sql.ExtensionMethods
 {
     public static class StringExtension
     {

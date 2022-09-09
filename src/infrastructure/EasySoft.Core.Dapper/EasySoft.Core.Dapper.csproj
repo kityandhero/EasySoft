@@ -16,6 +16,7 @@
       <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj" />
       <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
       <ProjectReference Include="..\EasySoft.Core.SqlExecutionRecordTransmitter\EasySoft.Core.SqlExecutionRecordTransmitter.csproj" />
+      <ProjectReference Include="..\EasySoft.Core.Sql\EasySoft.Core.Sql.csproj" />
       <ProjectReference Include="..\EasySoft.IdGenerator\EasySoft.IdGenerator.csproj" />
       <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
     </ItemGroup>
