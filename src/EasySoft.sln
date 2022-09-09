@@ -167,6 +167,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "storage", "storage", "{DD5E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.MinIO", "infrastructure\EasySoft.Core.MinIO\EasySoft.Core.MinIO.csproj", "{AEA0BB1C-C188-4CD2-9D56-D0F2759BD0A3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{FDF888EA-C911-46BF-BD67-27DD566E1555}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.IdServer", "distribution\EasySoft.IdServer\EasySoft.IdServer.csproj", "{D482363A-E1ED-4F2B-A739-CDADCEBABBF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -393,6 +397,10 @@ Global
 		{AEA0BB1C-C188-4CD2-9D56-D0F2759BD0A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEA0BB1C-C188-4CD2-9D56-D0F2759BD0A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEA0BB1C-C188-4CD2-9D56-D0F2759BD0A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D482363A-E1ED-4F2B-A739-CDADCEBABBF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D482363A-E1ED-4F2B-A739-CDADCEBABBF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D482363A-E1ED-4F2B-A739-CDADCEBABBF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D482363A-E1ED-4F2B-A739-CDADCEBABBF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -476,6 +484,8 @@ Global
 		{011611CC-65FD-45BD-B554-53D05DBDAA5C} = {E6D1E731-F18C-46B4-B08B-0672F0642295}
 		{DD5ECD17-FD19-48D0-A02D-1C77ECA56FB7} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
 		{AEA0BB1C-C188-4CD2-9D56-D0F2759BD0A3} = {DD5ECD17-FD19-48D0-A02D-1C77ECA56FB7}
+		{FDF888EA-C911-46BF-BD67-27DD566E1555} = {30216632-B019-4908-9E7A-A119E4B6B0CE}
+		{D482363A-E1ED-4F2B-A739-CDADCEBABBF7} = {FDF888EA-C911-46BF-BD67-27DD566E1555}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}
