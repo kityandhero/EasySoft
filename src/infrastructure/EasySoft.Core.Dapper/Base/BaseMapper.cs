@@ -15,6 +15,7 @@ using EasySoft.Core.Dapper.ExtensionMethods;
 using EasySoft.Core.Dapper.Interfaces;
 using EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
 using EasySoft.IdGenerator;
+using EasySoft.IdGenerator.Assists;
 using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard;
 using EasySoft.UtilityTools.Standard.Assists;
@@ -310,7 +311,7 @@ namespace EasySoft.Core.Dapper.Base
                 case TypeCode.String:
                     if (string.IsNullOrWhiteSpace((string)primaryKeyValue))
                     {
-                        model.SetPrimaryKeyValue($"D{LongGenerator.GetInstance().Generate()}");
+                        model.SetPrimaryKeyValue($"D{EasyIdAssist.Create()}");
                     }
 
                     break;
@@ -334,7 +335,7 @@ namespace EasySoft.Core.Dapper.Base
                 case TypeCode.Int64:
                     if (Convert.ToInt64(primaryKeyValue) == 0)
                     {
-                        model.SetPrimaryKeyValue(LongGenerator.GetInstance().Generate());
+                        model.SetPrimaryKeyValue(EasyIdAssist.Create());
                     }
 
                     break;
@@ -470,7 +471,7 @@ namespace EasySoft.Core.Dapper.Base
                 case TypeCode.String:
                     if (string.IsNullOrWhiteSpace((string)primaryKeyValue))
                     {
-                        model.SetPrimaryKeyValue($"D{LongGenerator.GetInstance().Generate()}");
+                        model.SetPrimaryKeyValue($"D{EasyIdAssist.Create()}");
                     }
 
                     break;
@@ -494,7 +495,7 @@ namespace EasySoft.Core.Dapper.Base
                 case TypeCode.Int64:
                     if (Convert.ToInt64(primaryKeyValue) == 0)
                     {
-                        model.SetPrimaryKeyValue(LongGenerator.GetInstance().Generate());
+                        model.SetPrimaryKeyValue(EasyIdAssist.Create());
                     }
 
                     break;
