@@ -1,13 +1,10 @@
 ﻿using System.Dynamic;
 using System.Linq.Expressions;
 using EasySoft.Core.Dapper.Base;
-using EasySoft.Core.Dapper.Common;
 using EasySoft.Core.Dapper.Elegant.Configure;
-using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.Interfaces;
 using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Enums;
-using EasySoft.Core.Sql.Interfaces;
 using EasySoft.UtilityTools.Standard;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
