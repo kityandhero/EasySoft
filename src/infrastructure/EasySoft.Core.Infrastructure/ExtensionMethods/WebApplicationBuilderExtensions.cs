@@ -1,8 +1,6 @@
-﻿using Autofac;
-using EasySoft.Core.Infrastructure.Assists;
+﻿using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Core.Channels;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.Infrastructure.ExtensionMethods;
 
@@ -27,11 +25,25 @@ public static class WebApplicationBuilderExtensions
             throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
         }
 
-        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+        builder.Host.AddAdvanceApplicationChannel(channel, name);
+
+        FlagAssist.ApplicationChannelInjectionComplete = true;
+        FlagAssist.ApplicationChannelIsDefault = false;
+
+        return builder;
+    }
+
+    public static WebApplicationBuilder AddAdvanceApplicationChannel<T>(
+        this WebApplicationBuilder builder,
+        T applicationChannel
+    ) where T : IApplicationChannel
+    {
+        if (FlagAssist.ApplicationChannelInjectionComplete)
         {
-            containerBuilder.RegisterInstance(new ApplicationChannel().SetChannel(channel).SetName(name))
-                .As<IApplicationChannel>().SingleInstance();
-        });
+            throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
+        }
+
+        builder.Host.AddAdvanceApplicationChannel(applicationChannel.GetChannel(), applicationChannel.GetName());
 
         FlagAssist.ApplicationChannelInjectionComplete = true;
         FlagAssist.ApplicationChannelIsDefault = false;
@@ -43,10 +55,12 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+        if (FlagAssist.ApplicationChannelInjectionComplete)
         {
-            containerBuilder.RegisterType<IApplicationChannel>().As<IApplicationChannel>().SingleInstance();
-        });
+            throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
+        }
+
+        builder.Host.AddAdvanceDefaultApplicationChannel();
 
         FlagAssist.ApplicationChannelInjectionComplete = true;
         FlagAssist.ApplicationChannelIsDefault = true;

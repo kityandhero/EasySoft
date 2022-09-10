@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace WebApplicationTest.Enums;
@@ -21,5 +22,10 @@ public static class ApplicationChannelCollectionExtensions
         var descriptionAttribute = source.GetAttribute<DescriptionAttribute>();
 
         return descriptionAttribute == null ? "" : descriptionAttribute.Description;
+    }
+
+    public static IApplicationChannel ToApplicationChannel(this ApplicationChannelCollection source)
+    {
+        return new ApplicationChannel().SetChannel(source.ToInt()).SetName(source.GetDescription());
     }
 }
