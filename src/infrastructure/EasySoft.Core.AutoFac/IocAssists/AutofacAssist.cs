@@ -1,8 +1,10 @@
 ﻿using Autofac;
 using Autofac.Configuration;
 using Autofac.Core;
+using Autofac.Extensions.DependencyInjection;
 using EasySoft.UtilityTools.Standard.Assists;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.AutoFac.IocAssists;

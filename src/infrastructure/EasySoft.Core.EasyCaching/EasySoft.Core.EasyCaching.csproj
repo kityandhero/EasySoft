@@ -34,4 +34,9 @@
       <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
     </ItemGroup>
 
+
+    <ItemGroup>
+      <Folder Include="Assists" />
+    </ItemGroup>
+
 </Project>
