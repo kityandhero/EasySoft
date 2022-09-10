@@ -171,7 +171,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.IdService", "distr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Sql", "infrastructure\EasySoft.Core.Sql\EasySoft.Core.Sql.csproj", "{F945C696-8E30-4435-98EA-1F53AFB84939}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Cap.RabbitMQ", "infrastructure\EasySoft.Core.Cap.RabbitMQ\EasySoft.Core.Cap.RabbitMQ.csproj", "{6C18283E-295D-4B68-AFF7-2D827AB2B37F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Cap.Transport", "infrastructure\EasySoft.Core.Cap.Transport\EasySoft.Core.Cap.Transport.csproj", "{6C18283E-295D-4B68-AFF7-2D827AB2B37F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Cap.Persistent", "infrastructure\EasySoft.Core.Cap.Persistent\EasySoft.Core.Cap.Persistent.csproj", "{94840004-0DF4-49D4-BE73-79A8A91B8B9A}"
 EndProject

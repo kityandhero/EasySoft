@@ -12,7 +12,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EasySoft.Core.Cap.RabbitMQ\EasySoft.Core.Cap.RabbitMQ.csproj" />
+      <ProjectReference Include="..\EasySoft.Core.Cap.Transport\EasySoft.Core.Cap.Transport.csproj" />
       <ProjectReference Include="..\EasySoft.Core.ExchangeRegulation\EasySoft.Core.ExchangeRegulation.csproj" />
       <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
       <ProjectReference Include="..\EasySoft.Core.Cap.Persistent\EasySoft.Core.Cap.Persistent.csproj" />

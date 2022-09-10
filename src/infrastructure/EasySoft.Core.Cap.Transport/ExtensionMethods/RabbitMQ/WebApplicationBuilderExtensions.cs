@@ -1,9 +1,10 @@
 ﻿using DotNetCore.CAP;
 using DotNetCore.CAP.Filter;
 using EasySoft.Core.Cap.Persistent;
+using EasySoft.Core.Cap.Transport.ExtensionMethods.RabbitMQ;
 using Microsoft.AspNetCore.Builder;
 
-namespace EasySoft.Core.Cap.RabbitMQ.ExtensionMethods;
+namespace EasySoft.Core.Cap.Transport.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {

@@ -3,7 +3,7 @@ using DotNetCore.CAP;
 using DotNetCore.CAP.Filter;
 using EasySoft.Core.AccessWayTransmitter.Assists;
 using EasySoft.Core.AccessWayTransmitter.Producers;
-using EasySoft.Core.Cap.RabbitMQ.ExtensionMethods;
+using EasySoft.Core.Cap.Transport.ExtensionMethods;
 using EasySoft.Core.Cap.Persistent;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;

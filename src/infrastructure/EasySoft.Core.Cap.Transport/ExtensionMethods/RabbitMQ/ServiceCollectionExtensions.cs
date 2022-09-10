@@ -1,11 +1,11 @@
 ﻿using DotNetCore.CAP;
 using DotNetCore.CAP.Filter;
-using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Cap.Persistent;
+using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EasySoft.Core.Cap.RabbitMQ.ExtensionMethods;
+namespace EasySoft.Core.Cap.Transport.ExtensionMethods.RabbitMQ;
 
 public static class ServiceCollectionExtensions
 {
