@@ -33,6 +33,21 @@ public static class GeneralConfigAssist
     {
     }
 
+    public static IConfiguration GetConfiguration()
+    {
+        return Configuration;
+    }
+
+    public static IConfigurationSection GetSection(string key)
+    {
+        return Configuration.GetSection(key);
+    }
+
+    public static string GetValue(string key)
+    {
+        return Configuration.GetSection(key).Value;
+    }
+
     public static string GetConfigFileInfo()
     {
         return "[generalConfig.json](./configures/generalConfig.json)";
@@ -41,6 +56,33 @@ public static class GeneralConfigAssist
     public static bool GetRemoteLogSwitch()
     {
         return GetRemoteErrorLogSwitch() || GetRemoteGeneralLogSwitch();
+    }
+
+    public static bool GetCapSwitch()
+    {
+        var v = GetConfig().CapSwitch.Remove(" ").Trim().ToLower();
+
+        v = string.IsNullOrWhiteSpace(v) ? "auto" : v;
+
+        if (!v.In("0", "1", "auto"))
+        {
+            throw new Exception(
+                $"请配置 CapSwitch: {ConfigFile} -> CapSwitch,请设置 0/1/auto"
+            );
+        }
+
+        if (v == 1.ToString())
+        {
+            return true;
+        }
+
+        if (v == "auto")
+        {
+            return GetAccessWayDetectSwitch() || GetRemoteErrorLogSwitch() || GetRemoteGeneralLogSwitch() ||
+                   GetRemoteSqlExecutionRecordSwitch();
+        }
+
+        return false;
     }
 
     private static GeneralConfig GetConfig()

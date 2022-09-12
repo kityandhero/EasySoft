@@ -1,6 +1,7 @@
 ﻿using DotNetCore.CAP;
 using DotNetCore.CAP.Filter;
 using EasySoft.Core.Cap.Persistent;
+using EasySoft.Core.Config.CapConfigure;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.DependencyInjection;

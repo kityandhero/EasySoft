@@ -179,6 +179,8 @@ public class GeneralConfig : IConfig
 
     public string WebRootPath { get; set; }
 
+    public string CapSwitch { get; set; }
+
     public GeneralConfig()
     {
         CacheMode = CacheModeCollection.InMemory.ToString();
@@ -236,5 +238,7 @@ public class GeneralConfig : IConfig
         MiniProFileSwitch = "0";
 
         WebRootPath = "";
+
+        CapSwitch = "auto";
     }
 }

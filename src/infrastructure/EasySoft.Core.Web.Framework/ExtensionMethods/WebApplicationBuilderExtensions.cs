@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using EasySoft.Core.AutoFac.IocAssists;
+using EasySoft.Core.Cap.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Options;
@@ -139,6 +140,8 @@ public static class WebApplicationBuilderExtensions
         builder.AddGeneralLogTransmitter();
 
         builder.AddErrorLogTransmitter();
+
+        builder.AddAdvanceCap();
 
         if (HangfireConfigAssist.GetEnable())
         {

@@ -11,11 +11,6 @@ public static class Configures
     {
         var prefix = RabbitMQConfigAssist.GetPrefix().Remove(" ").Trim();
 
-        if (string.IsNullOrWhiteSpace(prefix))
-        {
-            return QueryName;
-        }
-
-        return $"{prefix}.{QueryName}";
+        return string.IsNullOrWhiteSpace(prefix) ? QueryName : $"{prefix}.{QueryName}";
     }
 }

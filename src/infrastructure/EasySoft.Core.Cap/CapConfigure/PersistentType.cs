@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Cap.Persistent;
+﻿namespace EasySoft.Core.Cap.CapConfigure;
 
 public enum PersistentType
 {
@@ -11,4 +11,6 @@ public enum PersistentType
     MongoDB = 400,
 
     ImMemory = 500,
+
+    Sqlite = 600,
 }

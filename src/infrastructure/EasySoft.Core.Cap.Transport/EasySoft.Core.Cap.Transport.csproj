@@ -15,4 +15,13 @@
       <ProjectReference Include="..\EasySoft.Core.Cap.Persistent\EasySoft.Core.Cap.Persistent.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="ExtensionMethods\RabbitMQ\ServiceCollectionExtensions.cs" />
+      <Compile Remove="ExtensionMethods\RabbitMQ\WebApplicationBuilderExtensions.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="ExtensionMethods\RabbitMQ" />
+    </ItemGroup>
+
 </Project>

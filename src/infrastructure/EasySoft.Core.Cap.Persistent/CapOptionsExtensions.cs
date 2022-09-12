@@ -1,4 +1,5 @@
 ﻿using DotNetCore.CAP;
+using EasySoft.Core.Config.CapConfigure;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;

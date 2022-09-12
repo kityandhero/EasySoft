@@ -183,6 +183,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Cap.Dashboard
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tracking", "tracking", "{B50E1AC8-8E2A-4BD1-91A7-0761BD29A9E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Cap", "infrastructure\EasySoft.Core.Cap\EasySoft.Core.Cap.csproj", "{BF08506D-0E2D-4127-9AF5-181528FD52A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -429,6 +431,10 @@ Global
 		{D4F1FE73-3B2F-40A0-8902-4B34A9BFE92D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4F1FE73-3B2F-40A0-8902-4B34A9BFE92D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4F1FE73-3B2F-40A0-8902-4B34A9BFE92D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF08506D-0E2D-4127-9AF5-181528FD52A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF08506D-0E2D-4127-9AF5-181528FD52A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF08506D-0E2D-4127-9AF5-181528FD52A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF08506D-0E2D-4127-9AF5-181528FD52A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -520,6 +526,7 @@ Global
 		{A02A6E33-F1F5-43A8-ACA8-F04F3D3952E5} = {5EF62A50-A4A5-4C99-9238-66DF079D03BB}
 		{D4F1FE73-3B2F-40A0-8902-4B34A9BFE92D} = {044BF196-C30A-4582-ACED-E548C67F7827}
 		{B50E1AC8-8E2A-4BD1-91A7-0761BD29A9E7} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{BF08506D-0E2D-4127-9AF5-181528FD52A6} = {044BF196-C30A-4582-ACED-E548C67F7827}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

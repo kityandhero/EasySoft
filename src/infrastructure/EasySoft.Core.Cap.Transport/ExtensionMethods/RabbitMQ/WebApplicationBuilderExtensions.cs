@@ -1,16 +1,16 @@
 ﻿using DotNetCore.CAP;
 using DotNetCore.CAP.Filter;
 using EasySoft.Core.Cap.Persistent;
-using EasySoft.Core.Cap.Transport.ExtensionMethods.RabbitMQ;
+using EasySoft.Core.Config.CapConfigure;
 using Microsoft.AspNetCore.Builder;
 
-namespace EasySoft.Core.Cap.Transport.ExtensionMethods;
+namespace EasySoft.Core.Cap.Transport.ExtensionMethods.RabbitMQ;
 
 public static class WebApplicationBuilderExtensions
 {
     public static WebApplicationBuilder AddAdvanceCapRabbitMQ(
         this WebApplicationBuilder builder,
-        PersistentType persistentType
+        PersistentType persistentType  
     )
     {
         builder.Services.AddAdvanceCapRabbitMQ(persistentType);
