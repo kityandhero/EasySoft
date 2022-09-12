@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.Config.Cap;
 using EasySoft.Core.Config.ConfigInterface;
 using EasySoft.UtilityTools.Standard.Enums;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.Config.ConfigCollection;
 
@@ -183,6 +182,8 @@ public class GeneralConfig : IConfig
 
     public string CapSwitch { get; set; }
 
+    public string CapPrefix { get; set; }
+
     public string CapTransportType { get; set; }
 
     public string CapPersistentType { get; set; }
@@ -250,6 +251,7 @@ public class GeneralConfig : IConfig
         WebRootPath = "";
 
         CapSwitch = "auto";
+        CapPrefix = "EasySoft";
         CapTransportType = TransportType.InMemoryMessageQueue.ToString();
         CapPersistentType = PersistentType.ImMemory.ToString();
         CapDashboardSwitch = "0";

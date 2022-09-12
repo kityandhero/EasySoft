@@ -840,6 +840,13 @@ public static class GeneralConfigAssist
         return false;
     }
 
+    public static string GetCapPrefix()
+    {
+        var v = GetConfig().CapPrefix.Remove(" ").Trim();
+
+        return string.IsNullOrWhiteSpace(v) ? "" : v;
+    }
+
     public static string GetCapPersistentType()
     {
         var v = GetConfig().CapPersistentType;

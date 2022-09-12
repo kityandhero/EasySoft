@@ -16,10 +16,6 @@ public class RabbitMQConfig : IConfig
 
     public string ConnectionTimeout { get; set; }
 
-    public string Prefix { get; set; }
-
-    public string PersistentConnection { get; set; }
-
     public RabbitMQConfig()
     {
         HostName = "";
@@ -27,7 +23,5 @@ public class RabbitMQConfig : IConfig
         Password = "";
         VirtualHost = "/";
         ConnectionTimeout = "30";
-        Prefix = "EasySoft";
-        PersistentConnection = "";
     }
 }

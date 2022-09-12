@@ -106,24 +106,4 @@ public static class RabbitMQConfigAssist
 
         return v.ToInt();
     }
-
-    /// <summary>
-    /// 获取服务配应用安装前缀配置
-    /// </summary>
-    public static string GetPrefix()
-    {
-        var v = GetConfig().Prefix.Remove(" ").Trim();
-
-        return string.IsNullOrWhiteSpace(v) ? "" : v;
-    }
-
-    /// <summary>
-    /// 持久化链接
-    /// </summary>
-    public static string GetPersistentConnection()
-    {
-        var v = GetConfig().PersistentConnection.Trim();
-
-        return string.IsNullOrWhiteSpace(v) ? "" : v;
-    }
 }

@@ -1,8 +1,6 @@
 ﻿using Autofac;
-using DotNetCore.CAP.Filter;
 using EasySoft.Core.AccessWayTransmitter.Assists;
 using EasySoft.Core.AccessWayTransmitter.Producers;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 

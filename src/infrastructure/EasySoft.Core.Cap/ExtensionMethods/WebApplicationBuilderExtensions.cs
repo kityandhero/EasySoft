@@ -48,6 +48,11 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddCap(capOptions =>
         {
+            if (!string.IsNullOrWhiteSpace(capConfig.Prefix))
+            {
+                capOptions.GroupNamePrefix = capConfig.Prefix;
+            }
+
             var transportType = Enum.Parse<TransportType>(GeneralConfigAssist.GetCapTransportType());
 
             switch (transportType)
@@ -339,10 +344,10 @@ public static class WebApplicationBuilderExtensions
         {
             var nodeId = capConfig.DiscoveryOptions.NodeId;
             var nodeName = capConfig.DiscoveryOptions.NodeName;
-            
+
             nodeId = string.IsNullOrWhiteSpace(nodeId) ? "not set" : nodeId;
             nodeName = string.IsNullOrWhiteSpace(nodeName) ? "not set" : nodeName;
-            
+
             StartupDescriptionMessageAssist.Add(
                 new StartupMessage()
                     .SetMessage(
