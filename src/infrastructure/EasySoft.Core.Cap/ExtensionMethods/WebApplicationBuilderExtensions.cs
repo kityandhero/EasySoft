@@ -1,8 +1,10 @@
-﻿using EasySoft.Core.Cap.Assists;
+﻿using DotNetCore.CAP.Dashboard.NodeDiscovery;
+using EasySoft.Core.Cap.Assists;
 using EasySoft.Core.Config.Cap;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -27,6 +29,20 @@ public static class WebApplicationBuilderExtensions
         {
             return builder;
         }
+
+        StartupConfigMessageAssist.Add(
+            new StartupMessage()
+                .SetMessage(
+                    $"CapDashboardSwitch: {(GeneralConfigAssist.GetCapDashboardSwitch() ? "enable" : "disable")}"
+                )
+        );
+
+        StartupConfigMessageAssist.Add(
+            new StartupMessage()
+                .SetMessage(
+                    $"CapDiscoverySwitch: {(GeneralConfigAssist.GetCapDiscoverySwitch() ? "enable" : "disable")}"
+                )
+        );
 
         var capConfig = CapAssist.GetConfig();
 
@@ -264,15 +280,76 @@ public static class WebApplicationBuilderExtensions
                 default:
                     throw new Exception($"cap persistent type {persistentType.ToString()} not support");
             }
+
+            if (GeneralConfigAssist.GetCapDashboardSwitch())
+            {
+                capOptions.UseDashboard(o =>
+                {
+                    o.UseChallengeOnAuth = capConfig.DashboardOptions.UseChallengeOnAuth;
+                    o.UseAuth = capConfig.DashboardOptions.UseAuth;
+                    o.DefaultChallengeScheme = capConfig.DashboardOptions.DefaultChallengeScheme;
+                    o.PathMatch = capConfig.DashboardOptions.PathMatch;
+                    o.AuthorizationPolicy = capConfig.DashboardOptions.AuthorizationPolicy;
+                    o.PathBase = capConfig.DashboardOptions.PathBase;
+                    o.DefaultAuthenticationScheme = capConfig.DashboardOptions.DefaultAuthenticationScheme;
+                    o.StatsPollingInterval = capConfig.DashboardOptions.StatsPollingInterval;
+                });
+            }
+
+            if (GeneralConfigAssist.GetCapDiscoverySwitch())
+            {
+                capOptions.UseDiscovery(o =>
+                {
+                    o.DiscoveryServerHostName = capConfig.DiscoveryOptions.DiscoveryServerHostName;
+                    o.DiscoveryServerPort = capConfig.DiscoveryOptions.DiscoveryServerPort;
+                    o.CurrentNodeHostName = capConfig.DiscoveryOptions.CurrentNodeHostName;
+                    o.CurrentNodePort = capConfig.DiscoveryOptions.CurrentNodePort;
+                    o.NodeId = capConfig.DiscoveryOptions.NodeId;
+                    o.NodeName = capConfig.DiscoveryOptions.NodeName;
+                    o.Scheme = capConfig.DiscoveryOptions.Scheme;
+                    o.MatchPath = capConfig.DiscoveryOptions.MatchPath;
+                    o.CustomTags = capConfig.DiscoveryOptions.CustomTags;
+                });
+            }
         });
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"Cap transport mode is {GeneralConfigAssist.GetCapTransportType()}, persistent mode is {GeneralConfigAssist.GetCapPersistentType()}, use CapAssist.GetConfig() to set it."
-                )
-        );
+        var startupMessage = new StartupMessage()
+            .SetLevel(LogLevel.Information)
+            .SetMessage(
+                $"Cap transport mode is {GeneralConfigAssist.GetCapTransportType()}, persistent mode is {GeneralConfigAssist.GetCapPersistentType()}, use CapAssist.GetConfig() to set it."
+            );
+
+        if (GeneralConfigAssist.GetCapDashboardSwitch())
+        {
+            var pathBase = string.IsNullOrWhiteSpace(capConfig.DashboardOptions.PathBase)
+                ? "/cap"
+                : capConfig.DashboardOptions.PathBase;
+
+            startupMessage.SetExtraNewLie(true)
+                .SetExtra(
+                    $"Cap dashboard is {pathBase}, you can access {(!FlagAssist.StartupUrls.Any() ? $"https://[host]:[port]{capConfig.DashboardOptions.PathBase}" : FlagAssist.StartupUrls.Select(o => $"{o}{pathBase}").Join(" "))} to visit it."
+                );
+
+            StartupDescriptionMessageAssist.Add(
+                startupMessage
+            );
+        }
+
+        if (GeneralConfigAssist.GetCapDiscoverySwitch())
+        {
+            var nodeId = capConfig.DiscoveryOptions.NodeId;
+            var nodeName = capConfig.DiscoveryOptions.NodeName;
+            
+            nodeId = string.IsNullOrWhiteSpace(nodeId) ? "not set" : nodeId;
+            nodeName = string.IsNullOrWhiteSpace(nodeName) ? "not set" : nodeName;
+            
+            StartupDescriptionMessageAssist.Add(
+                new StartupMessage()
+                    .SetMessage(
+                        $"Cap discovery is open, discoveryServerHostName is {capConfig.DiscoveryOptions.DiscoveryServerHostName}, discoveryServerPort is {capConfig.DiscoveryOptions.DiscoveryServerPort}, nodeId is {nodeId}, nodeName is {nodeName}."
+                    )
+            );
+        }
 
         return builder;
     }

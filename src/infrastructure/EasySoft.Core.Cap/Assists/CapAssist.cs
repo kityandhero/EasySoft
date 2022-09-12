@@ -4,10 +4,10 @@ namespace EasySoft.Core.Cap.Assists;
 
 public static class CapAssist
 {
-    private static CapConfig _config = new();
+    private static readonly CapConfig Config = new();
 
     public static CapConfig GetConfig()
     {
-        return _config;
+        return Config;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DotNetCore.CAP;
+using DotNetCore.CAP.Dashboard.NodeDiscovery;
 using DotNetCore.CAP.MongoDB;
 
 namespace EasySoft.Core.Cap.CapConfigure;
@@ -9,11 +10,19 @@ public class CapConfig
 
     public Persistent Persistent { get; set; }
 
+    public DashboardOptions DashboardOptions { get; set; }
+
+    public DiscoveryOptions DiscoveryOptions { get; set; }
+
     public CapConfig()
     {
         Transport = new Transport();
 
         Persistent = new Persistent();
+
+        DashboardOptions = new DashboardOptions();
+
+        DiscoveryOptions = new DiscoveryOptions();
     }
 }
 

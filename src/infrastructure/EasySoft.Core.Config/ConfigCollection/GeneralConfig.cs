@@ -187,6 +187,10 @@ public class GeneralConfig : IConfig
 
     public string CapPersistentType { get; set; }
 
+    public string CapDashboardSwitch { get; set; }
+
+    public string CapDiscoverySwitch { get; set; }
+
     public GeneralConfig()
     {
         CacheMode = CacheModeCollection.InMemory.ToString();
@@ -248,5 +252,7 @@ public class GeneralConfig : IConfig
         CapSwitch = "auto";
         CapTransportType = TransportType.InMemoryMessageQueue.ToString();
         CapPersistentType = PersistentType.ImMemory.ToString();
+        CapDashboardSwitch = "0";
+        CapDiscoverySwitch = "0";
     }
 }

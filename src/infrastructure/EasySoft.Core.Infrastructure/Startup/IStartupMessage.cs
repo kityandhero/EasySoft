@@ -15,4 +15,8 @@ public interface IStartupMessage
     public IStartupMessage SetExtra(string extra);
 
     public string GetExtra();
+
+    public IStartupMessage SetExtraNewLie(bool newLine);
+
+    public bool GetExtraNewLie();
 }

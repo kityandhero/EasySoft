@@ -857,4 +857,36 @@ public static class GeneralConfigAssist
 
         return v;
     }
+
+    public static bool GetCapDashboardSwitch()
+    {
+        var v = GetConfig().CapDashboardSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 CapDashboardSwitch: {ConfigFile} -> CapDashboardSwitch,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
+
+    public static bool GetCapDiscoverySwitch()
+    {
+        var v = GetConfig().CapDiscoverySwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 CapDiscoverySwitch: {ConfigFile} -> CapDiscoverySwitch,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
 }

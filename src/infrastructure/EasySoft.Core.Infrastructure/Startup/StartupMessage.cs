@@ -8,12 +8,15 @@ public class StartupMessage : IStartupMessage
 
     private string _message;
 
+    private bool _extraNewLine;
+
     private string _extra;
 
     public StartupMessage()
     {
         _logLevel = LogLevel.Information;
         _message = "";
+        _extraNewLine = false;
         _extra = "";
     }
 
@@ -51,5 +54,17 @@ public class StartupMessage : IStartupMessage
     public string GetExtra()
     {
         return _extra;
+    }
+
+    public IStartupMessage SetExtraNewLie(bool newLine)
+    {
+        _extraNewLine = newLine;
+
+        return this;
+    }
+
+    public bool GetExtraNewLie()
+    {
+        return _extraNewLine;
     }
 }
