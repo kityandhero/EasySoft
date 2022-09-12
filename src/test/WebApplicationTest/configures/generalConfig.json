@@ -22,5 +22,5 @@
   "NlogDefaultConfigTraceToConsoleSwitch": "1",
   "NlogDefaultConfigDebugToConsoleSwitch": "1",
   "CapDashboardSwitch": "1",
-  "CapDiscoverySwitch": "1"
+  "CapDiscoverySwitch": "0"
 }
