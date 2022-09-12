@@ -7,6 +7,14 @@ namespace EasySoft.Simple.Dapper.Console.Entities;
 [Table("author")]
 public class Author : AbstractFunctionEntity<Author>
 {
+    public Author()
+    {
+        Id = 0;
+        RealName = "";
+        LoginName = "";
+        Password = "";
+    }
+
     [Column("id")]
     public int Id { get; set; }
 
