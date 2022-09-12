@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Cap.CapConfigure;
+﻿namespace EasySoft.Core.Config.Cap;
 
 public enum TransportType
 {

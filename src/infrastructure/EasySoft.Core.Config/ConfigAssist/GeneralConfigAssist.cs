@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Config.ConfigCollection;
+﻿using EasySoft.Core.Config.Cap;
+using EasySoft.Core.Config.ConfigCollection;
 using EasySoft.Core.Config.Utils;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -56,33 +57,6 @@ public static class GeneralConfigAssist
     public static bool GetRemoteLogSwitch()
     {
         return GetRemoteErrorLogSwitch() || GetRemoteGeneralLogSwitch();
-    }
-
-    public static bool GetCapSwitch()
-    {
-        var v = GetConfig().CapSwitch.Remove(" ").Trim().ToLower();
-
-        v = string.IsNullOrWhiteSpace(v) ? "auto" : v;
-
-        if (!v.In("0", "1", "auto"))
-        {
-            throw new Exception(
-                $"请配置 CapSwitch: {ConfigFile} -> CapSwitch,请设置 0/1/auto"
-            );
-        }
-
-        if (v == 1.ToString())
-        {
-            return true;
-        }
-
-        if (v == "auto")
-        {
-            return GetAccessWayDetectSwitch() || GetRemoteErrorLogSwitch() || GetRemoteGeneralLogSwitch() ||
-                   GetRemoteSqlExecutionRecordSwitch();
-        }
-
-        return false;
     }
 
     private static GeneralConfig GetConfig()
@@ -826,6 +800,60 @@ public static class GeneralConfigAssist
         var v = GetConfig().WebRootPath;
 
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        return v;
+    }
+
+    public static string GetCapSwitch()
+    {
+        var v = GetConfig().CapSwitch.Remove(" ").Trim().ToLower();
+
+        v = string.IsNullOrWhiteSpace(v) ? "auto" : v;
+
+        return v;
+    }
+
+    public static bool CheckCapSwitch()
+    {
+        var v = GetConfig().CapSwitch.Remove(" ").Trim().ToLower();
+
+        v = string.IsNullOrWhiteSpace(v) ? "auto" : v;
+
+        if (!v.In("0", "1", "auto"))
+        {
+            throw new Exception(
+                $"请配置 CapSwitch: {ConfigFile} -> CapSwitch,请设置 0/1/auto"
+            );
+        }
+
+        if (v == 1.ToString())
+        {
+            return true;
+        }
+
+        if (v == "auto")
+        {
+            return GetAccessWayDetectSwitch() || GetRemoteErrorLogSwitch() || GetRemoteGeneralLogSwitch() ||
+                   GetRemoteSqlExecutionRecordSwitch();
+        }
+
+        return false;
+    }
+
+    public static string GetCapPersistentType()
+    {
+        var v = GetConfig().CapPersistentType;
+
+        v = string.IsNullOrWhiteSpace(v) ? PersistentType.ImMemory.ToString() : v;
+
+        return v;
+    }
+
+    public static string GetCapTransportType()
+    {
+        var v = GetConfig().CapTransportType;
+
+        v = string.IsNullOrWhiteSpace(v) ? TransportType.InMemoryMessageQueue.ToString() : v;
 
         return v;
     }

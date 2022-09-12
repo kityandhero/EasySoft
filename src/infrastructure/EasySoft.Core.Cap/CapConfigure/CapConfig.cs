@@ -19,8 +19,6 @@ public class CapConfig
 
 public class Transport
 {
-    public string Type { get; set; }
-
     public AmazonSQSOptions? AmazonSQS { get; set; }
 
     public KafkaOptions? Kafka { get; set; }
@@ -37,8 +35,6 @@ public class Transport
 
     public Transport()
     {
-        Type = TransportType.InMemoryMessageQueue.ToString();
-
         AmazonSQS = new AmazonSQSOptions();
 
         Kafka = new KafkaOptions();
@@ -57,8 +53,6 @@ public class Transport
 
 public class Persistent
 {
-    public string Type { get; set; }
-
     public SqlServerOptions? SqlServer { get; set; }
 
     public PostgreSqlOptions? PostgreSql { get; set; }
@@ -71,8 +65,6 @@ public class Persistent
 
     public Persistent()
     {
-        Type = PersistentType.ImMemory.ToString();
-
         SqlServer = new SqlServerOptions();
 
         PostgreSql = new PostgreSqlOptions();
