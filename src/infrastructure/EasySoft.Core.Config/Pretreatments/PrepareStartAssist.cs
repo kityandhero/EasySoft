@@ -34,7 +34,6 @@ public static class PrepareStartAssist
             typeof(SwaggerConfig),
             typeof(GeneralConfig),
             typeof(HangfireConfig),
-            typeof(BusinessConfig),
             typeof(DatabaseConfig),
             typeof(DevelopConfig),
             typeof(ElasticSearchConfig),

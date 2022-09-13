@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
-public class JobConfigAssist
+public static class JobConfigAssist
 {
     private static readonly string ConfigFile = $"{nameof(JobConfig).ToLowerFirst()}.json";
 

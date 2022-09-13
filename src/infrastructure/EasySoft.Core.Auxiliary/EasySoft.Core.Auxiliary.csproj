@@ -4,9 +4,12 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Title>EasySoft.Core.Auxiliary</Title>
+        <Description>EasySoft.Core.Auxiliary</Description>
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
       <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
     </ItemGroup>
 

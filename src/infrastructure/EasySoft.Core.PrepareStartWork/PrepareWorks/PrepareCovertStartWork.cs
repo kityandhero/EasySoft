@@ -10,7 +10,6 @@ internal class PrepareCovertStartWork : IPrepareCovertStartWork
         PrepareStartAssist.ToWork();
 
         AppSettingAssist.Init();
-        BusinessConfigAssist.Init();
         DatabaseConfigAssist.Init();
         DevelopConfigAssist.Init();
         ElasticSearchConfigAssist.Init();

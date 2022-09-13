@@ -959,6 +959,26 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
 
         #endregion
 
+        #region RemoveEnd
+
+        /// <summary>
+        /// Removes everything that is in the filter text from the input.
+        /// </summary>
+        /// <param name="input">Input text</param>
+        /// <param name="filter">Regex expression of text to remove</param>
+        /// <returns>Everything not in the filter text.</returns>
+        public static string RemoveEnd(this string input, string filter)
+        {
+            if (string.IsNullOrEmpty(input) || string.IsNullOrEmpty(filter))
+            {
+                return input;
+            }
+
+            return new Regex($"{filter}$").Replace(input, "");
+        }
+
+        #endregion
+
         #region Private Functions
 
         private static string BuildFilter(StringFilter filter)

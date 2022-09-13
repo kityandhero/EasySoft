@@ -7,7 +7,7 @@ public static class FlagAssist
     private static bool _logDashboardSwitch;
     private static bool _entityFrameworkSwitch;
     private static bool _healthChecksSwitch;
-    private static bool _actionMapSwitch;
+    private static bool _auxiliarySwitch;
     private static bool _miniProfileSwitch;
 
     public static bool CovertInjectionComplete { get; set; }
@@ -43,7 +43,7 @@ public static class FlagAssist
         _logDashboardSwitch = false;
         _entityFrameworkSwitch = false;
         _healthChecksSwitch = false;
-        _actionMapSwitch = false;
+        _auxiliarySwitch = false;
         _miniProfileSwitch = false;
 
         CovertInjectionComplete = false;
@@ -121,12 +121,12 @@ public static class FlagAssist
 
     public static void SetActionMapSwitchOpen()
     {
-        _actionMapSwitch = true;
+        _auxiliarySwitch = true;
     }
 
-    public static bool GetActionMapSwitch()
+    public static bool GetAuxiliarySwitch()
     {
-        return _actionMapSwitch;
+        return _auxiliarySwitch;
     }
 
     public static void SetMiniProfileSwitchOpen()

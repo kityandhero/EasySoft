@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
-public class SwaggerConfigAssist
+public static class SwaggerConfigAssist
 {
     // ReSharper disable once UnusedMember.Local
     private static readonly string ConfigFile = $"{nameof(SwaggerConfig).ToLowerFirst()}.json";

@@ -1,9 +1,9 @@
 using Autofac;
 using AutoFacTest.Implementations;
 using AutoFacTest.Interfaces;
-using EasySoft.Core.ActionMap.ExtensionMethods;
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.ExtensionMethods;
+using EasySoft.Core.Auxiliary.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Web.Framework.BuilderAssists;
@@ -111,8 +111,8 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
 ApplicationConfigurator.AddAreas("AreaTest", "AuthTest", "DataTest", "ComponentTest");
 
 ApplicationConfigurator.AddWebApplicationExtraAction(
-    new ExtraAction<WebApplication>().SetName("UseActionMap")
-        .SetAction(application => application.UseActionMap())
+    new ExtraAction<WebApplication>().SetName("UseAuxiliary")
+        .SetAction(application => application.UseAuxiliary())
 );
 
 AgileConfigClientActionAssist.ActionAgileConfigChanged = e =>
