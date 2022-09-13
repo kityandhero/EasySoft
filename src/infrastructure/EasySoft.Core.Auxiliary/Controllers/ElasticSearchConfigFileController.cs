@@ -11,6 +11,6 @@ public class ElasticSearchConfigFileController : BasicController
     {
         var data = new ElasticSearchConfig();
 
-        return this.Success(data);
+        return this.Success(data, null, false);
     }
 }

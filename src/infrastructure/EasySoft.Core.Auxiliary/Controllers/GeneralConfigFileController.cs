@@ -11,6 +11,6 @@ public class GeneralConfigFileController : BasicController
     {
         var data = new GeneralConfig();
 
-        return this.Success(data);
+        return this.Success(data, null, false);
     }
 }

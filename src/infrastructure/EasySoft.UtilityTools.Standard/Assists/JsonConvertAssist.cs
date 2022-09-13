@@ -7,18 +7,21 @@ namespace EasySoft.UtilityTools.Standard.Assists
 {
     public static class JsonConvertAssist
     {
-        public static JsonSerializerSettings CreateJsonSerializerSettings()
+        public static JsonSerializerSettings CreateJsonSerializerSettings(bool camelCase = true)
         {
-            return CreateJsonSerializerSettings(Array.Empty<JsonConverter>());
+            return CreateJsonSerializerSettings(camelCase, Array.Empty<JsonConverter>());
         }
 
-        public static JsonSerializerSettings CreateJsonSerializerSettings(params JsonConverter[] converters)
+        public static JsonSerializerSettings CreateJsonSerializerSettings(
+            bool camelCase = true,
+            params JsonConverter[] converters
+        )
         {
             var converterAdjust = converters.ToList();
 
             converterAdjust.Add(new LongConverter());
 
-            return new JsonSerializerSettings
+            var setting = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 NullValueHandling = NullValueHandling.Include,
@@ -26,9 +29,15 @@ namespace EasySoft.UtilityTools.Standard.Assists
                 DateTimeZoneHandling = DateTimeZoneHandling.Local,
                 DateFormatHandling = DateFormatHandling.MicrosoftDateFormat,
                 DateFormatString = "yyyy-MM-dd HH:mm:ss",
-                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
                 Converters = converterAdjust
             };
+
+            if (camelCase)
+            {
+                setting.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
+            }
+
+            return setting;
         }
 
         public static T? DeserializeObject<T>(string data)
@@ -54,7 +63,7 @@ namespace EasySoft.UtilityTools.Standard.Assists
         /// <returns></returns>
         public static string SerializeAndKeyToLower(object data)
         {
-            return JsonConvert.SerializeObject(data, CreateJsonSerializerSettings());
+            return JsonConvert.SerializeObject(data, CreateJsonSerializerSettings(true));
         }
 
         /// <summary>
@@ -66,7 +75,7 @@ namespace EasySoft.UtilityTools.Standard.Assists
         /// <returns></returns>
         public static string SerializeAndKeyToLower(object data, params JsonConverter[] converters)
         {
-            return JsonConvert.SerializeObject(data, CreateJsonSerializerSettings(converters));
+            return JsonConvert.SerializeObject(data, CreateJsonSerializerSettings(true, converters));
         }
     }
 }

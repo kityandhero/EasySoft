@@ -54,28 +54,29 @@ public static class PrepareStartAssist
             itemPath.CreateFile(JsonConvertAssist.SerializeAndKeyToLower(new { }));
         });
 
-        configureFileNameList.ForEach(item =>
-        {
-            var itemPath = $"{directory}\\configures\\simples\\{item.Name.ToLowerFirst()}.json";
-
-            if (item.FullName != typeof(LogConfig).FullName)
-            {
-                itemPath.CreateFile(
-                    JsonConvertAssist.SerializeWithFormat(item.Create() ?? new { })
-                );
-            }
-            else
-            {
-                itemPath.CreateFile(Tools.GetNlogDefaultConfig());
-            }
-        });
-        
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                "All sample config file has generated in ./configures/simple folder."
-                )
-        );
+        //初始化创建配置示例文件，已经提供在线配置实例，此处功能取消
+        // configureFileNameList.ForEach(item =>
+        // {
+        //     var itemPath = $"{directory}\\configures\\simples\\{item.Name.ToLowerFirst()}.json";
+        //
+        //     if (item.FullName != typeof(LogConfig).FullName)
+        //     {
+        //         itemPath.CreateFile(
+        //             JsonConvertAssist.SerializeWithFormat(item.Create() ?? new { })
+        //         );
+        //     }
+        //     else
+        //     {
+        //         itemPath.CreateFile(Tools.GetNlogDefaultConfig());
+        //     }
+        // });
+        //
+        // StartupDescriptionMessageAssist.Add(
+        //     new StartupMessage()
+        //         .SetLevel(LogLevel.Information)
+        //         .SetMessage(
+        //             "All sample config file has generated in ./configures/simple folder."
+        //         )
+        // );
     }
 }

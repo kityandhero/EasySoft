@@ -9,6 +9,8 @@ namespace EasySoft.UtilityTools.Core.Results
     /// </summary>
     public class ApiResult : ActionResult
     {
+        public bool CamelCase { get; set; }
+
         /// <summary>
         /// 返回码
         /// </summary>
@@ -55,6 +57,7 @@ namespace EasySoft.UtilityTools.Core.Results
             object? extraData = null
         )
         {
+            CamelCase = true;
             Code = code.ToInt();
             Success = success;
             Message = message;
@@ -78,6 +81,7 @@ namespace EasySoft.UtilityTools.Core.Results
             object? extraData = null
         )
         {
+            CamelCase = true;
             Code = code;
             Success = success;
             Message = message;

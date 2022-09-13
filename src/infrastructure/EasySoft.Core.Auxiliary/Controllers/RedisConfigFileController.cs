@@ -11,6 +11,6 @@ public class RedisConfigFileController: BasicController
     {
         var data = new RedisConfig();
 
-        return this.Success(data);
+        return this.Success(data, null, false);
     }
 }

@@ -11,6 +11,6 @@ public class HangfireConfigFileController: BasicController
     {
         var data = new HangfireConfig();
 
-        return this.Success(data);
+        return this.Success(data, null, false);
     }
 }

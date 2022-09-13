@@ -11,6 +11,6 @@ public class RabbitMQConfigFileController : BasicController
     {
         var data = new RabbitMQConfig();
 
-        return this.Success(data);
+        return this.Success(data, null, false);
     }
 }

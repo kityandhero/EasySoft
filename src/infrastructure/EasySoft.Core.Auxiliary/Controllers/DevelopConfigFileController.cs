@@ -11,6 +11,6 @@ public class DevelopConfigFileController : BasicController
     {
         var data = new DevelopConfig();
 
-        return this.Success(data);
+        return this.Success(data, null, false);
     }
 }

@@ -77,6 +77,12 @@ public static class WebApplicationExtensions
                 .SetName("MapSwaggerConfigFile")
                 .SetAction(endpoints => { endpoints.MapSwaggerConfigFile(); })
         );
+        
+             ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
+                    new ExtraAction<IEndpointRouteBuilder>()
+                        .SetName("NLogInlayConfig")
+                        .SetAction(endpoints => { endpoints.MapNLogInlayConfig(); })
+                );
 
         FlagAssist.SetActionMapSwitchOpen();
 
@@ -100,7 +106,7 @@ public static class WebApplicationExtensions
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
-                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/DatabaseConfigFile").Join(" ")} to get databaseConfig simple template."
+                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/DatabaseConfigFile").Join(" ")} to get databaseConfig template."
                 )
         );
 
@@ -108,7 +114,7 @@ public static class WebApplicationExtensions
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
-                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/DevelopConfigFile").Join(" ")} to get developConfigFile simple template."
+                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/DevelopConfigFile").Join(" ")} to get developConfig template."
                 )
         );
 
@@ -116,7 +122,7 @@ public static class WebApplicationExtensions
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
-                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/ElasticSearchConfigFile").Join(" ")} to get elasticSearchConfigFile simple template."
+                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/ElasticSearchConfigFile").Join(" ")} to get elasticSearchConfig template."
                 )
         );
 
@@ -124,7 +130,7 @@ public static class WebApplicationExtensions
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
-                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/GeneralConfigFile").Join(" ")} to get generalConfigFile simple template."
+                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/GeneralConfigFile").Join(" ")} to get generalConfig template."
                 )
         );
 
@@ -132,7 +138,7 @@ public static class WebApplicationExtensions
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
-                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/HangfireConfigFile").Join(" ")} to get hangfireConfigFile simple template."
+                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/HangfireConfigFile").Join(" ")} to get hangfireConfig template."
                 )
         );
 
@@ -140,7 +146,7 @@ public static class WebApplicationExtensions
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
-                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/MongoConfigFile").Join(" ")} to get mongoConfigFile simple template."
+                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/MongoConfigFile").Join(" ")} to get mongoConfig template."
                 )
         );
 
@@ -148,7 +154,7 @@ public static class WebApplicationExtensions
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
-                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/RabbitMQConfigFile").Join(" ")} to get rabbitMQConfigFile simple template."
+                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/RabbitMQConfigFile").Join(" ")} to get rabbitMQConfig template."
                 )
         );
 
@@ -156,7 +162,7 @@ public static class WebApplicationExtensions
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
-                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/RedisConfigFile").Join(" ")} to get redisConfigFile simple template."
+                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/RedisConfigFile").Join(" ")} to get redisConfig template."
                 )
         );
 
@@ -164,9 +170,17 @@ public static class WebApplicationExtensions
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
-                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/SwaggerConfigFile").Join(" ")} to get swaggerConfigFile simple template."
+                    $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/SwaggerConfigFile").Join(" ")} to get swaggerConfig template."
                 )
         );
+        
+           StartupDescriptionMessageAssist.Add(
+                    new StartupMessage()
+                        .SetLevel(LogLevel.Information)
+                        .SetMessage(
+                            $"you can access {FlagAssist.StartupUrls.Select(o => $"{o}/NLogInlayConfig").Join(" ")} to get nLogInlayConfig template."
+                        )
+                );
 
         return application;
     }

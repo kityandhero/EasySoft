@@ -104,4 +104,14 @@ public static class EndpointConventionBuilderExtensions
             "{controller=SwaggerConfigFile}/{action=Index}"
         ).WithDisplayName("SwaggerConfigFile");
     }
+
+    internal static IEndpointConventionBuilder MapNLogInlayConfig(
+        this IEndpointRouteBuilder endpoints
+    )
+    {
+        return endpoints.MapControllerRoute(
+            "NLogInlayConfig",
+            "{controller=NLogInlayConfig}/{action=Index}"
+        ).WithDisplayName("NLogInlayConfig");
+    }
 }

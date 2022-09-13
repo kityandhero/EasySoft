@@ -11,6 +11,6 @@ public class DatabaseConfigFileController : BasicController
     {
         var data = new DatabaseConfig();
 
-        return this.Success(data);
+        return this.Success(data, null, false);
     }
 }

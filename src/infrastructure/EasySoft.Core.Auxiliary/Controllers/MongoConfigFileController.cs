@@ -11,6 +11,6 @@ public class MongoConfigFileController : BasicController
     {
         var data = new MongoConfig();
 
-        return this.Success(data);
+        return this.Success(data, null, false);
     }
 }

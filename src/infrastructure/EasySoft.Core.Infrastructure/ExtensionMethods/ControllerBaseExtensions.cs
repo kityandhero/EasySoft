@@ -61,16 +61,22 @@ namespace EasySoft.Core.Infrastructure.ExtensionMethods
         /// <summary>
         /// Data
         /// </summary>
-        public static ActionResult Data(
+        private static ActionResult Data(
             this ControllerBase controller,
             ReturnCode code = ReturnCode.Ok,
             bool success = true,
             string message = "success",
             object? data = null,
-            object? extraData = null
+            object? extraData = null,
+            bool camelCase = true
         )
         {
-            return new ApiResult(code, success, message, data, extraData);
+            var result = new ApiResult(code, success, message, data, extraData)
+            {
+                CamelCase = camelCase
+            };
+
+            return result;
         }
 
         /// <summary>
@@ -79,10 +85,11 @@ namespace EasySoft.Core.Infrastructure.ExtensionMethods
         public static ActionResult Success(
             this ControllerBase controller,
             object? data = null,
-            object? extraData = null
+            object? extraData = null,
+            bool camelCase = true
         )
         {
-            return Data(controller, ReturnCode.Ok, true, "success", data, extraData);
+            return controller.Data(ReturnCode.Ok, true, "success", data, extraData, camelCase);
         }
 
         /// <summary>
@@ -98,7 +105,7 @@ namespace EasySoft.Core.Infrastructure.ExtensionMethods
         {
             var messageAdjust = string.IsNullOrWhiteSpace(message) ? code.ToMessage().Message : message;
 
-            return Data(controller, code, false, messageAdjust, data, extraData);
+            return controller.Data(code, false, messageAdjust, data, extraData);
         }
 
         public static ActionResult Fail(
@@ -108,7 +115,7 @@ namespace EasySoft.Core.Infrastructure.ExtensionMethods
             object? extraData = null
         )
         {
-            return Data(controller, (ReturnCode)returnMessage.Code, false, returnMessage.Message, data, extraData);
+            return controller.Data((ReturnCode)returnMessage.Code, false, returnMessage.Message, data, extraData);
         }
 
         /// <summary>  
@@ -117,13 +124,15 @@ namespace EasySoft.Core.Infrastructure.ExtensionMethods
         /// <param name="controller"></param>
         /// <param name="list">      数据列表</param>
         /// <param name="extraData"> 额外数据</param>
+        /// <param name="camelCase"></param>
         public static ActionResult PagedData(
             this ControllerBase controller,
             List<object> list,
-            object? extraData = null
+            object? extraData = null,
+            bool camelCase = true
         )
         {
-            return Success(controller, list, extraData);
+            return controller.Success(list, extraData, camelCase);
         }
 
         /// <summary>
@@ -135,13 +144,15 @@ namespace EasySoft.Core.Infrastructure.ExtensionMethods
         /// <param name="pageSize">  分页大小</param>
         /// <param name="total">     总数据数</param>
         /// <param name="other">     </param>
+        /// <param name="camelCase"></param>
         public static ActionResult PagedData(
             this ControllerBase controller,
             List<object> list,
             int pageNo,
             int pageSize,
             long total,
-            object? other = null
+            object? other = null,
+            bool camelCase = true
         )
         {
             var extra = other == null
@@ -159,7 +170,7 @@ namespace EasySoft.Core.Infrastructure.ExtensionMethods
                     other
                 };
 
-            return PagedData(controller, list, extra);
+            return controller.PagedData(list, extra, camelCase);
         }
 
         /// <summary>
