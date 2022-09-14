@@ -3,7 +3,6 @@ using AutoFacTest.Implementations;
 using AutoFacTest.Interfaces;
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.ExtensionMethods;
-using EasySoft.Core.DevelopAuxiliary.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Web.Framework.BuilderAssists;
@@ -18,7 +17,6 @@ using WebApplicationTest.Enums;
 using WebApplicationTest.Hubs;
 using WebApplicationTest.PrepareStartWorks;
 using EasySoft.Core.EntityFramework.ExtensionMethods;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.LogDashboard.ExtensionMethods;
@@ -39,15 +37,6 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
                         DatabaseConfigAssist.GetMainConnection()
                     );
                 }
-            );
-        }),
-    new ExtraAction<WebApplicationBuilder>()
-        .SetName("AddAdvanceApplicationChannel")
-        .SetAction(applicationBuilder =>
-        {
-            applicationBuilder.AddAdvanceApplicationChannel(
-                ApplicationChannelCollection.TestApplication.ToInt(),
-                ApplicationChannelCollection.TestApplication.GetDescription()
             );
         }),
     new ExtraAction<WebApplicationBuilder>()
@@ -116,7 +105,10 @@ AgileConfigClientActionAssist.ActionAgileConfigChanged = e =>
 };
 
 var app = WebApplicationBuilderAssist
-    .CreateBuilder(args.ToArray())
+    .CreateBuilder(
+        ApplicationChannelCollection.TestApplication.ToApplicationChannel(),
+        args.ToArray()
+    )
     .EasyBuild();
 
 // 可使用下列代码创建数据（删除数据库，更改数据模型，创建具有新架构的数据库），真实项目应当使用 Migrations 来做创建工作, Migrations 无法使用迁移更新 EnsureCreated 创建的数据库

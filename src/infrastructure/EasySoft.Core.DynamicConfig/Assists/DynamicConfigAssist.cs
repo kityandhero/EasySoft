@@ -20,12 +20,12 @@ public static class DynamicConfigAssist
     {
         var defaultTokenExpires = GeneralConfigAssist.GetTokenExpires();
 
-        if (!GeneralConfigAssist.GetAgileConfigSwitch())
+        if (!GeneralConfigAssist.GetConfigCenterSwitch())
         {
             return defaultTokenExpires;
         }
 
-        var remoteConfigCache = ConfigClientAssist.GetConfigClient().Data;
+        var remoteConfigCache = AgileConfigClientAssist.GetConfigClient().Data;
 
         var remoteTokenExpires = remoteConfigCache[ConstCollection.TokenExpiresKey] ?? "";
 
@@ -41,7 +41,7 @@ public static class DynamicConfigAssist
     {
         try
         {
-            var remoteConfigCache = ConfigClientAssist.GetConfigClient().Data;
+            var remoteConfigCache = AgileConfigClientAssist.GetConfigClient().Data;
 
             if (!remoteConfigCache.Keys.Contains(ConstCollection.NLogJsonConfig))
             {

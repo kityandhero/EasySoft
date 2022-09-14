@@ -2,7 +2,7 @@
 
 namespace EasySoft.Core.AgileConfigClient.Assists;
 
-public class ConfigClientAssist
+public static class AgileConfigClientAssist
 {
     private static IConfigClient? _configClient;
 

@@ -1,10 +1,9 @@
 ﻿using Autofac;
-using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Core.Channels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 
-namespace EasySoft.Core.Infrastructure.ExtensionMethods;
+namespace EasySoft.Core.Web.Framework.ExtensionMethods;
 
 public static class ConfigureHostBuilderExtensions
 {

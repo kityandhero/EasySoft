@@ -28,26 +28,26 @@ public static class WebApplicationBuilderExtensions
 
                 try
                 {
-                    StartupConfigMessageAssist.Add(
+                    StartupDescriptionMessageAssist.Add(
                         new StartupMessage().SetLevel(LogLevel.Information).SetMessage(
-                            $"AgileConfig env: {GeneralConfigAssist.GetAgileConfigEnv()}, node: {GeneralConfigAssist.GetAgileConfigNodeCollection().Join(",")}."
+                            $"AgileConfig env is \"{AgileConfigAssist.GetAgileConfigEnv()}\", node is \"{AgileConfigAssist.GetAgileConfigNodeCollection().Join(",")}\"."
                         )
                     );
 
                     var configClient = new ConfigClient(
-                        GeneralConfigAssist.GetAgileConfigAppId(),
-                        GeneralConfigAssist.GetAgileConfigSecret(),
-                        GeneralConfigAssist.GetAgileConfigNodeCollection().Join(","),
-                        GeneralConfigAssist.GetAgileConfigEnv(),
+                        AgileConfigAssist.GetAgileConfigAppId(),
+                        AgileConfigAssist.GetAgileConfigSecret(),
+                        AgileConfigAssist.GetAgileConfigNodeCollection().Join(","),
+                        AgileConfigAssist.GetAgileConfigEnv(),
                         LogAssist.GetLogger()
                     )
                     {
                         Options =
                         {
-                            Name = GeneralConfigAssist.GetAgileConfigName(),
-                            Tag = GeneralConfigAssist.GetAgileConfigTag(),
-                            CacheDirectory = GeneralConfigAssist.GetAgileConfigCacheDirectory(),
-                            HttpTimeout = GeneralConfigAssist.GetAgileConfigHttpTimeout()
+                            Name = AgileConfigAssist.GetAgileConfigName(),
+                            Tag = AgileConfigAssist.GetAgileConfigTag(),
+                            CacheDirectory = AgileConfigAssist.GetAgileConfigCacheDirectory(),
+                            HttpTimeout = AgileConfigAssist.GetAgileConfigHttpTimeout()
                         }
                     };
 
@@ -64,10 +64,12 @@ public static class WebApplicationBuilderExtensions
                     config.AddAgileConfig(configClient);
 
                     //找一个变量挂载client实例，以便其他地方可以直接使用实例访问配置
-                    ConfigClientAssist.SetConfigClient(configClient);
+                    AgileConfigClientAssist.SetConfigClient(configClient);
                 }
                 catch (Exception e)
                 {
+                    LogAssist.Error(e.Message);
+
                     Console.WriteLine(e);
                 }
             });

@@ -27,6 +27,7 @@ public static class PrepareStartAssist
 
         var configureFileNameList = new List<Type>
         {
+            typeof(AgileConfig),
             typeof(SwaggerConfig),
             typeof(GeneralConfig),
             typeof(HangfireConfig),
