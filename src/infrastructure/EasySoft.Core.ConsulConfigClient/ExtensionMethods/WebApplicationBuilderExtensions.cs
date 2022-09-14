@@ -1,4 +1,6 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
+﻿using Consul;
+using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.ConsulConfigClient.Assists;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Core.Channels;
@@ -17,6 +19,11 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
+        if (ConsulFlagAssist.GetInitializeRegistrationWhetherComplete())
+        {
+            return builder;
+        }
+
         ApplicationConfigurator.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
@@ -43,15 +50,22 @@ public static class WebApplicationBuilderExtensions
                 )
         );
 
+        ConsulFlagAssist.SetInitializeRegistrationComplete();
+
         return builder;
     }
 
     public static WebApplicationBuilder AddAdvanceConsulConfigClient<T>(
         this WebApplicationBuilder builder,
         T applicationChannel,
-        Action<IConfigurationRoot>? action = null
+        Action<IConfiguration>? action = null
     ) where T : IApplicationChannel
     {
+        if (ConsulFlagAssist.GetInitializeConfigWhetherComplete())
+        {
+            return builder;
+        }
+
         builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
         {
             // 加载默认配置信息到Configuration
@@ -82,7 +96,7 @@ public static class WebApplicationBuilderExtensions
                     // 3、配置文件更新后重新加载
                     options.ReloadOnChange = true;
                     // 4、忽略异常
-                    // options.OnLoadException = exceptionContext => { exceptionContext.Ignore = true; };
+                    options.OnLoadException = exceptionContext => { exceptionContext.Ignore = true; };
                 }
             );
 
@@ -97,10 +111,12 @@ public static class WebApplicationBuilderExtensions
             {
                 ChangeToken.OnChange(
                     () => configure.GetReloadToken(),
-                    () => { action(configure); }
+                    () => action(ConsulConfigAssist.GetConfiguration())
                 );
             }
         });
+
+        ConsulFlagAssist.SetInitializeConfigComplete();
 
         return builder;
     }

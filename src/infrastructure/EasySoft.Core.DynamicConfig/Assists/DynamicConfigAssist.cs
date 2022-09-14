@@ -1,7 +1,11 @@
-﻿using EasySoft.Core.AgileConfigClient.Assists;
+﻿using System.Text;
+using EasySoft.Core.AgileConfigClient.Assists;
+using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.ConsulConfigClient.Assists;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -41,21 +45,31 @@ public static class DynamicConfigAssist
     {
         try
         {
-            var remoteConfigCache = AgileConfigClientAssist.GetConfigClient().Data;
+            string remoteNLogJsonConfig;
 
-            if (!remoteConfigCache.Keys.Contains(ConstCollection.NLogJsonConfig))
+            if (!GeneralConfigAssist.GetConfigCenterSwitch())
             {
-                LogAssist.Warning(
-                    "The “NLogJsonConfig” int the remote do not exist, will use local config."
-                );
-
                 return new ExecutiveResult<string>(ReturnCode.Ok)
                 {
                     Data = ""
                 };
             }
 
-            var remoteNLogJsonConfig = remoteConfigCache[ConstCollection.NLogJsonConfig] ?? "";
+            if (GeneralConfigAssist.GetConfigCenterType() == ConfigCenterType.AgileConfig)
+            {
+                remoteNLogJsonConfig = GetJsonConfigFromAgileConfig();
+            }
+            else if (GeneralConfigAssist.GetConfigCenterType() == ConfigCenterType.Consul)
+            {
+                remoteNLogJsonConfig = GetJsonConfigFromConsul();
+            }
+            else
+            {
+                return new ExecutiveResult<string>(ReturnCode.Ok)
+                {
+                    Data = ""
+                };
+            }
 
             if (string.IsNullOrWhiteSpace(remoteNLogJsonConfig))
             {
@@ -120,6 +134,44 @@ public static class DynamicConfigAssist
             {
                 Data = ""
             };
+        }
+    }
+
+    private static string GetJsonConfigFromAgileConfig()
+    {
+        var remoteConfigCache = AgileConfigClientAssist.GetConfigClient().Data;
+
+        if (!remoteConfigCache.Keys.Contains(ConstCollection.NLogJsonConfig))
+        {
+            LogAssist.Warning(
+                "The “NLogJsonConfig” int the remote do not exist, will use local config."
+            );
+
+            return "";
+        }
+
+        return remoteConfigCache[ConstCollection.NLogJsonConfig] ?? "";
+    }
+
+    private static string GetJsonConfigFromConsul()
+    {
+        try
+        {
+            var applicationChannel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
+
+            var consulClient = ConsulClientAssist.GetConfigClient();
+
+            var v = consulClient.KV.Get(
+                $"{applicationChannel.GetChannel()}/config.{EnvironmentAssist.GetEnvironment().EnvironmentName}.json"
+            ).Result;
+
+            var config = Encoding.UTF8.GetString(v.Response.Value, 0, v.Response.Value.Length);
+
+            return config;
+        }
+        catch (Exception)
+        {
+            return "";
         }
     }
 }

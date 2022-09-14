@@ -15,6 +15,7 @@ using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.Result;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using NLog;
@@ -121,51 +122,7 @@ public static class WebApplicationBuilderAssist
                 {
                     var result = DynamicConfigAssist.GetNLogJsonConfig();
 
-                    if (!result.Success || (result.Success && string.IsNullOrWhiteSpace(result.Data)))
-                    {
-                        LogManager.Configuration = BuildDefaultConfig();
-
-                        LogManager.Configuration.Reload();
-
-                        return;
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(result.Data))
-                    {
-                        var hasChanged = NLogAssist.CheckChange(result.Data);
-
-                        if (!hasChanged)
-                        {
-                            return;
-                        }
-
-                        try
-                        {
-                            LogManager.Configuration = new NLogLoggingConfiguration(
-                                new ConfigurationBuilder().AddJsonContent(
-                                    result.Data
-                                ).Build().GetSection("NLog")
-                            );
-
-                            LogManager.Configuration.Reload();
-
-                            LogAssist.Info("Receive agileConfig changed message, nlog configure reload success.");
-                        }
-                        catch (Exception e)
-                        {
-                            LogAssist.Error($"some error occur, message: \"{e.Message}\", will use local config.");
-
-                            LogManager.Configuration = BuildDefaultConfig();
-
-                            LogManager.Configuration.Reload();
-                        }
-                    }
-                    else
-                    {
-                        LogManager.Configuration = BuildDefaultConfig();
-
-                        LogManager.Configuration.Reload();
-                    }
+                    LoadDynamicNLogJsonConfig(result);
                 });
 
                 builder.AddAdvanceNLog(BuildDefaultConfig);
@@ -180,7 +137,12 @@ public static class WebApplicationBuilderAssist
 
                 builder.AddAdvanceConsulConfigClient(
                     applicationChannel,
-                    config => { LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog")); }
+                    _ =>
+                    {
+                        var result = DynamicConfigAssist.GetNLogJsonConfig();
+
+                        LoadDynamicNLogJsonConfig(result);
+                    }
                 );
 
                 builder.AddAdvanceNLog(BuildDefaultConfig);
@@ -205,6 +167,55 @@ public static class WebApplicationBuilderAssist
         }
 
         return builder;
+    }
+
+    private static void LoadDynamicNLogJsonConfig(ExecutiveResult<string> executiveResult)
+    {
+        if (!executiveResult.Success || (executiveResult.Success && string.IsNullOrWhiteSpace(executiveResult.Data)))
+        {
+            LogManager.Configuration = BuildDefaultConfig();
+
+            LogManager.Configuration.Reload();
+
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(executiveResult.Data))
+        {
+            var hasChanged = NLogAssist.CheckChange(executiveResult.Data);
+
+            if (!hasChanged)
+            {
+                return;
+            }
+
+            try
+            {
+                LogManager.Configuration = new NLogLoggingConfiguration(
+                    new ConfigurationBuilder().AddJsonContent(
+                        executiveResult.Data
+                    ).Build().GetSection("NLog")
+                );
+
+                LogManager.Configuration.Reload();
+
+                LogAssist.Info("Receive agileConfig changed message, nlog configure reload success.");
+            }
+            catch (Exception e)
+            {
+                LogAssist.Error($"some error occur, message: \"{e.Message}\", will use local config.");
+
+                LogManager.Configuration = BuildDefaultConfig();
+
+                LogManager.Configuration.Reload();
+            }
+        }
+        else
+        {
+            LogManager.Configuration = BuildDefaultConfig();
+
+            LogManager.Configuration.Reload();
+        }
     }
 
     private static NLogLoggingConfiguration BuildDefaultConfig()

@@ -1,5 +1,6 @@
 ﻿using Consul;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.ConsulConfigClient.Assists;
 using Microsoft.AspNetCore.Builder;
 
 namespace EasySoft.Core.ConsulConfigClient.ExtensionMethods;
@@ -10,7 +11,7 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        var consulClient = new ConsulClient(x => { x.Address = new Uri(ConsulConfigAssist.GetConsulAddress()); });
+        var consulClient = ConsulClientAssist.GetConfigClient();
 
         var serviceHealthCheck = ConsulConfigAssist.GetServiceHealthCheck();
 
