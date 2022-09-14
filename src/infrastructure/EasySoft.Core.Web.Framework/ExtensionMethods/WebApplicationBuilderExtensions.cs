@@ -5,6 +5,7 @@ using EasySoft.Core.Cap.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Options;
+using EasySoft.Core.DevelopAuxiliary.ExtensionMethods;
 using EasySoft.Core.EasyCaching.ExtensionMethods;
 using EasySoft.Core.EasyToken.ExtensionMethods;
 using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
@@ -489,6 +490,8 @@ public static class WebApplicationBuilderExtensions
         if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
+
+            app.UseDevelopAuxiliary();
         }
 
         WeaveApplicationExtraAction(app);

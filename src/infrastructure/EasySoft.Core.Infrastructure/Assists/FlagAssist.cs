@@ -124,7 +124,7 @@ public static class FlagAssist
         _auxiliarySwitch = true;
     }
 
-    public static bool GetAuxiliarySwitch()
+    public static bool GetDevelopAuxiliarySwitch()
     {
         return _auxiliarySwitch;
     }

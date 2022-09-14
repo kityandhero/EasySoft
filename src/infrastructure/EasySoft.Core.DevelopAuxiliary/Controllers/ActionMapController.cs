@@ -6,7 +6,7 @@ using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 
-namespace EasySoft.Core.Auxiliary.Controllers;
+namespace EasySoft.Core.DevelopAuxiliary.Controllers;
 
 public sealed class ActionMapController : BasicController
 {

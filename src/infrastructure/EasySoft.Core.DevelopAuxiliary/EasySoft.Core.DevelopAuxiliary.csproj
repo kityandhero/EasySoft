@@ -13,4 +13,8 @@
       <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="ViewConfig" Version="0.0.5" />
+    </ItemGroup>
+
 </Project>

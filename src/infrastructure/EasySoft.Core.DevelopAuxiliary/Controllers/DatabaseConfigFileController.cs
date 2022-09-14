@@ -3,13 +3,13 @@ using EasySoft.Core.Infrastructure.Abstracts;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EasySoft.Core.Auxiliary.Controllers;
+namespace EasySoft.Core.DevelopAuxiliary.Controllers;
 
-public class RabbitMQConfigFileController : BasicController
+public class DatabaseConfigFileController : BasicController
 {
     public IActionResult Index()
     {
-        var data = new RabbitMQConfig();
+        var data = new DatabaseConfig();
 
         return this.Success(data, null, false);
     }

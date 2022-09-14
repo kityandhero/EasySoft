@@ -3,13 +3,13 @@ using EasySoft.Core.Infrastructure.Abstracts;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EasySoft.Core.Auxiliary.Controllers;
+namespace EasySoft.Core.DevelopAuxiliary.Controllers;
 
-public class RedisConfigFileController: BasicController
+public class DevelopConfigFileController : BasicController
 {
     public IActionResult Index()
     {
-        var data = new RedisConfig();
+        var data = new DevelopConfig();
 
         return this.Success(data, null, false);
     }

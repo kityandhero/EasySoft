@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 
 namespace EasySoft.UtilityTools.Standard.Assists;
 
@@ -20,5 +22,10 @@ public static class AppContextAssist
         directory = directory.Replace("\\", "/");
 
         return directory;
+    }
+
+    public static string GetTempDirectory()
+    {
+        return Path.GetTempPath();
     }
 }

@@ -123,13 +123,18 @@ public static class WebApplicationExtensions
                 continue;
             }
 
-            StartupEndPointExtraActionMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        $"{i + 1}: {extraAction.GetName()}"
-                    )
-            );
+            var name = extraAction.GetName();
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                StartupEndPointExtraActionMessageAssist.Add(
+                    new StartupMessage()
+                        .SetLevel(LogLevel.Information)
+                        .SetMessage(
+                            $"{i + 1}: {extraAction.GetName()}"
+                        )
+                );
+            }
 
             action(endpoint);
         }
