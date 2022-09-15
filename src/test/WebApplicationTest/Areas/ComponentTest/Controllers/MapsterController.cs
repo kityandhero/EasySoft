@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Areas.ComponentTest.Controllers;
 
+/// <summary>
+/// AutoMapperController
+/// </summary>
 public class AutoMapperController : AreaControllerCore
 {
     private readonly IMapper _mapper;
@@ -19,16 +22,28 @@ public class AutoMapperController : AreaControllerCore
         Address = "NewYork"
     };
 
+    /// <summary>
+    /// AutoMapperController
+    /// </summary>
+    /// <param name="mapper"></param>
     public AutoMapperController(IMapper mapper)
     {
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Index
+    /// </summary>
+    /// <returns></returns>
     public IActionResult Index()
     {
         return Content("autoMapper test");
     }
 
+    /// <summary>
+    /// TestOne
+    /// </summary>
+    /// <returns></returns>
     public IActionResult TestOne()
     {
         var userDto = _userEntity.Adapt<UserDto>();
@@ -38,6 +53,10 @@ public class AutoMapperController : AreaControllerCore
         return this.Success(userDto);
     }
 
+    /// <summary>
+    /// TestTwo
+    /// </summary>
+    /// <returns></returns>
     public IActionResult TestTwo()
     {
         var userDto = _mapper.Map<UserDto>(_userEntity);
@@ -45,6 +64,10 @@ public class AutoMapperController : AreaControllerCore
         return this.Success(userDto);
     }
 
+    /// <summary>
+    /// TestThree
+    /// </summary>
+    /// <returns></returns>
     public IActionResult TestThree()
     {
         var mapper = MapperAssist.GetMapper();
@@ -54,6 +77,10 @@ public class AutoMapperController : AreaControllerCore
         return this.Success(userDto);
     }
 
+    /// <summary>
+    /// TestFour
+    /// </summary>
+    /// <returns></returns>
     public IActionResult TestFour()
     {
         var userIn = new UserIn()
@@ -78,10 +105,14 @@ public class AutoMapperController : AreaControllerCore
         });
     }
 
+    /// <summary>
+    /// TestOther
+    /// </summary>
+    /// <returns></returns>
     public IActionResult TestOther()
     {
         //equal to (decimal)123;
-        decimal i = 123.Adapt<decimal>();
+        var i = 123.Adapt<decimal>();
 
         // 字符串转枚举，如果字符串为空或空字符串，那么枚举将初始化为第一个枚举值。
         var e = "Read, Write, Delete".Adapt<FileShare>();

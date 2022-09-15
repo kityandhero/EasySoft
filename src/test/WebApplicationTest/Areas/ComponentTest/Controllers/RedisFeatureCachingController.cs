@@ -1,13 +1,15 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyCaching.interfaces;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
-using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 using WebApplicationTest.Models;
 
 namespace WebApplicationTest.Areas.ComponentTest.Controllers;
 
+/// <summary>
+/// RedisFeatureCachingController
+/// </summary>
 public class RedisFeatureCachingController : AreaControllerCore
 {
     private const string TestKey = "testKey";
@@ -15,11 +17,21 @@ public class RedisFeatureCachingController : AreaControllerCore
 
     private readonly IRedisFeatureCacheOperator _cacheOperator;
 
+    /// <summary>
+    /// RedisFeatureCachingController
+    /// </summary>
+    /// <param name="cacheOperator"></param>
     public RedisFeatureCachingController(IRedisFeatureCacheOperator cacheOperator)
     {
         _cacheOperator = cacheOperator;
     }
 
+    /// <summary>
+    /// Set
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public IActionResult Set(string value, string key = TestKey)
     {
         _cacheOperator.Set(key, value, new TimeSpan(TimeSpan.TicksPerSecond * 360));
@@ -31,6 +43,11 @@ public class RedisFeatureCachingController : AreaControllerCore
         });
     }
 
+    /// <summary>
+    /// Get
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public IActionResult Get(string key = TestKey)
     {
         var result = _cacheOperator.Get<string>(key);
@@ -48,6 +65,11 @@ public class RedisFeatureCachingController : AreaControllerCore
         });
     }
 
+    /// <summary>
+    /// SetObject
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public IActionResult SetObject(string key = TestObjectKey)
     {
         var value = new Hello
@@ -65,6 +87,11 @@ public class RedisFeatureCachingController : AreaControllerCore
         });
     }
 
+    /// <summary>
+    /// GetObject
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public IActionResult GetObject(string key = TestObjectKey)
     {
         var result = _cacheOperator.Get<Hello>(key);

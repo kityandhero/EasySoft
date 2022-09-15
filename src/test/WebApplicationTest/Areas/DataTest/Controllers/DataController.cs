@@ -1,14 +1,20 @@
 ﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
-using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.Simple.EntityFrameworkCore.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Areas.DataTest.Controllers;
 
+/// <summary>
+/// DataController
+/// </summary>
 public class DataController : AreaControllerCore
 {
     private readonly IAuthorService _authorService;
 
+    /// <summary>
+    /// DataController
+    /// </summary>
+    /// <param name="authorService"></param>
     public DataController(IAuthorService authorService)
     {
         _authorService = authorService;
@@ -20,6 +26,10 @@ public class DataController : AreaControllerCore
     //     _authorService = authorService;
     // }
 
+    /// <summary>
+    /// GetAuthor
+    /// </summary>
+    /// <returns></returns>
     public async Task<IActionResult> GetAuthor()
     {
         var result = await _authorService.GetAuthorDtoSync(0);

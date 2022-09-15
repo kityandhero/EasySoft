@@ -10,15 +10,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Areas.AuthTest.Controllers;
 
+/// <summary>
+/// EntranceController
+/// </summary>
 public class EntranceController : AreaControllerCore
 {
     private readonly IAuthorService _authorService;
 
+    /// <summary>
+    /// EntranceController
+    /// </summary>
+    /// <param name="authorService"></param>
     public EntranceController(IAuthorService authorService)
     {
         _authorService = authorService;
     }
 
+    /// <summary>
+    /// Register
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Register()
     {
@@ -27,12 +38,22 @@ public class EntranceController : AreaControllerCore
         return this.WrapperExecutiveResult(result);
     }
 
+    /// <summary>
+    /// SignIn
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IActionResult SignIn()
     {
         return View();
     }
 
+    /// <summary>
+    /// SignIn
+    /// </summary>
+    /// <param name="loginName"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
     [HttpPost]
     public IActionResult SignIn(string loginName, string password)
     {
@@ -53,6 +74,10 @@ public class EntranceController : AreaControllerCore
         return Content("sign in success");
     }
 
+    /// <summary>
+    /// Detail
+    /// </summary>
+    /// <returns></returns>
     [Operator]
     public IActionResult Detail()
     {
@@ -63,6 +88,10 @@ public class EntranceController : AreaControllerCore
         return Content($"token:{token}");
     }
 
+    /// <summary>
+    /// AddData
+    /// </summary>
+    /// <returns></returns>
     [Operator]
     [GuidTag("65641b2706db4ddb8357082fa8860386")]
     public IActionResult AddData()

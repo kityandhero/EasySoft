@@ -11,8 +11,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Areas.AuthTest.Controllers;
 
+/// <summary>
+/// TokenAuth
+/// </summary>
 public class TokenAuthController : AreaControllerCore
 {
+    /// <summary>
+    /// GenerateToken
+    /// </summary>
+    /// <returns></returns>
     public IActionResult GenerateToken()
     {
         var token = 123456.ToToken();
@@ -28,6 +35,10 @@ public class TokenAuthController : AreaControllerCore
         });
     }
 
+    /// <summary>
+    /// GetToken
+    /// </summary>
+    /// <returns></returns>
     public IActionResult GetToken()
     {
         var token = HttpContext.GetToken();
@@ -43,6 +54,10 @@ public class TokenAuthController : AreaControllerCore
         });
     }
 
+    /// <summary>
+    /// NeedAuth
+    /// </summary>
+    /// <returns></returns>
     [Operator]
     public IActionResult NeedAuth()
     {
@@ -65,6 +80,10 @@ public class TokenAuthController : AreaControllerCore
         });
     }
 
+    /// <summary>
+    /// NeedPermission
+    /// </summary>
+    /// <returns></returns>
     [Operator]
     [GuidTag("356316bbf81e4cda93ab9a1238765875")]
     public IActionResult NeedPermission()

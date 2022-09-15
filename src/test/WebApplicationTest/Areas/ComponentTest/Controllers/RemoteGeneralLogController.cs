@@ -10,10 +10,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Areas.ComponentTest.Controllers;
 
+/// <summary>
+/// RemoteGeneralLogController
+/// </summary>
 public class RemoteGeneralLogController : AreaControllerCore
 {
     private readonly IGeneralLogProducer _generalLogProducer;
 
+    /// <summary>
+    /// RemoteGeneralLogController
+    /// </summary>
+    /// <param name="generalLogProducer"></param>
     public RemoteGeneralLogController(IGeneralLogProducer generalLogProducer)
     {
         _generalLogProducer = generalLogProducer;
@@ -25,6 +32,10 @@ public class RemoteGeneralLogController : AreaControllerCore
     //     _authorService = authorService;
     // }
 
+    /// <summary>
+    /// Test
+    /// </summary>
+    /// <returns></returns>
     public IActionResult Test()
     {
         if (!GeneralConfigAssist.GetRemoteGeneralLogSwitch())
@@ -37,6 +48,10 @@ public class RemoteGeneralLogController : AreaControllerCore
         return this.Success(log.ToObject());
     }
 
+    /// <summary>
+    /// SubscribeMessage
+    /// </summary>
+    /// <param name="generalLogExchange"></param>
     [CapSubscribe("EasySoft.GeneralLog")]
     public void SubscribeMessage(GeneralLogExchange generalLogExchange)
     {

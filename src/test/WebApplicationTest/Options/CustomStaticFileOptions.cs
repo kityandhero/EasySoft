@@ -1,12 +1,16 @@
 ﻿using EasySoft.Core.Config.Options;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.StaticFiles;
-using Microsoft.Extensions.FileProviders;
 
 namespace WebApplicationTest.Options;
 
+/// <summary>
+/// CustomStaticFileOptions
+/// </summary>
 public class CustomStaticFileOptions : AdvanceStaticFileOptions
 {
+    /// <summary>
+    /// CustomStaticFileOptions
+    /// </summary>
     public CustomStaticFileOptions()
     {
         var provider = new FileExtensionContentTypeProvider

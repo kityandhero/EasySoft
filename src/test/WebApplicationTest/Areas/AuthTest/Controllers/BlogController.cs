@@ -6,16 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Areas.AuthTest.Controllers;
 
+/// <summary>
+/// AuthorController
+/// </summary>
 [Operator]
 public class AuthorController : AreaControllerCore
 {
     private readonly IAuthorService _authorService;
 
+    /// <summary>
+    /// AuthorController
+    /// </summary>
+    /// <param name="authorService"></param>
     public AuthorController(IAuthorService authorService)
     {
         _authorService = authorService;
     }
 
+    /// <summary>
+    /// GetAuthor
+    /// </summary>
+    /// <returns></returns>
     public async Task<IActionResult> GetAuthor()
     {
         var resultActualOperator = await this.GetActualOperator();

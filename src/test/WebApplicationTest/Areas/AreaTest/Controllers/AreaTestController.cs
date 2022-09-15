@@ -1,14 +1,20 @@
 ﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
-using EasySoft.Core.Web.Framework.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Areas.AreaTest.Controllers;
 
+/// <summary>
+/// AreaTestController
+/// </summary>
 // [ApiController]
 // [Route("Home")]
 public class AreaTestController : AreaControllerCore
 {
     // [HttpGet("doTest", Name = "DoTest")]
+    /// <summary>
+    /// DoTest
+    /// </summary>
+    /// <returns></returns>
     public ActionResult DoTest()
     {
         var a = this.Param("a", 0);

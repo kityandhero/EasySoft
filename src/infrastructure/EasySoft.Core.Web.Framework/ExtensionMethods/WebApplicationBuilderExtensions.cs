@@ -113,6 +113,16 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddRouting(o => { o.LowercaseUrls = true; });
 
+        builder.Services.AddApiVersioning(o =>
+        {
+            //return versions in a response header
+            o.ReportApiVersions = true;
+            //default version select 
+            o.DefaultApiVersion = new ApiVersion(1, 0);
+            //if not specifying an api version,show the default version
+            o.AssumeDefaultVersionWhenUnspecified = true;
+        });
+
         // AddMvc 最为全面， 涵盖 AddControllers 等的全部功能
         builder.Services.AddMvc(
                 option =>

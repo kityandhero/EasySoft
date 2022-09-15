@@ -1,26 +1,38 @@
-﻿using Autofac;
-using AutoFacTest.Interfaces;
+﻿using AutoFacTest.Interfaces;
 using EasySoft.Core.AutoFac.Attributes;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
-using EasySoft.Core.Web.Framework.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Areas.ComponentTest.Controllers;
 
+/// <summary>
+/// AutoFacController
+/// </summary>
 public class AutoFacController : AreaControllerCore
 {
+    /// <summary>
+    /// SimpleAutowired
+    /// </summary>
     [Autowired]
-    public ISimple? SimpleAutowired { get; set; }
+    private ISimple? SimpleAutowired { get; set; }
 
     private readonly ISimple _simple;
 
+    /// <summary>
+    /// AutoFacController
+    /// </summary>
+    /// <param name="simple"></param>
     public AutoFacController(ISimple simple)
     {
         _simple = simple;
     }
 
     // GET  
+    /// <summary>
+    /// Index
+    /// </summary>
+    /// <returns></returns>
     public IActionResult Index()
     {
         return this.Success(new
@@ -30,6 +42,10 @@ public class AutoFacController : AreaControllerCore
         });
     }
 
+    /// <summary>
+    /// TestCustom
+    /// </summary>
+    /// <returns></returns>
     public IActionResult TestCustom()
     {
         var simple = AutofacAssist.Instance.Resolve<ISimple>();
@@ -41,6 +57,10 @@ public class AutoFacController : AreaControllerCore
         });
     }
 
+    /// <summary>
+    /// TestAutowired
+    /// </summary>
+    /// <returns></returns>
     public IActionResult TestAutowired()
     {
         return this.Success(new

@@ -1,12 +1,18 @@
 ﻿using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
-using EasySoft.Core.Web.Framework.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Areas.ComponentTest.Controllers;
 
+/// <summary>
+/// LogController
+/// </summary>
 public class LogController : AreaControllerCore
 {
+    /// <summary>
+    /// Test
+    /// </summary>
+    /// <returns></returns>
     public IActionResult Test()
     {
         LogAssist.Info("info");

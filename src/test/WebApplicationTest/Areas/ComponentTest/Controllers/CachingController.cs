@@ -1,13 +1,15 @@
 ﻿using EasySoft.Core.CacheCore.interfaces;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
-using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 using WebApplicationTest.Models;
 
 namespace WebApplicationTest.Areas.ComponentTest.Controllers;
 
+/// <summary>
+/// CachingController
+/// </summary>
 public class CachingController : AreaControllerCore
 {
     private const string TestKey = "testKey";
@@ -20,6 +22,10 @@ public class CachingController : AreaControllerCore
 
     private readonly IAsyncCacheOperator _cacheOperator;
 
+    /// <summary>
+    /// CachingController
+    /// </summary>
+    /// <param name="cacheOperator"></param>
     public CachingController(IAsyncCacheOperator cacheOperator)
     {
         _cacheOperator = cacheOperator;
@@ -27,6 +33,12 @@ public class CachingController : AreaControllerCore
 
     #region 同步模式简单值测试
 
+    /// <summary>
+    /// Set
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public IActionResult Set(string value = "test", string key = TestKey)
     {
         _cacheOperator.Set(key, value, new TimeSpan(TimeSpan.TicksPerSecond * 360));
@@ -38,6 +50,11 @@ public class CachingController : AreaControllerCore
         });
     }
 
+    /// <summary>
+    /// Get
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public IActionResult Get(string key = TestKey)
     {
         var result = _cacheOperator.Get<string>(key);
@@ -59,6 +76,11 @@ public class CachingController : AreaControllerCore
 
     #region 同步模式类实例值测试
 
+    /// <summary>
+    /// SetObject
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public IActionResult SetObject(string key = TestObjectKey)
     {
         var value = new Hello
@@ -76,6 +98,11 @@ public class CachingController : AreaControllerCore
         });
     }
 
+    /// <summary>
+    /// GetObject
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public IActionResult GetObject(string key = TestObjectKey)
     {
         var result = _cacheOperator.Get<Hello>(key);
@@ -97,6 +124,12 @@ public class CachingController : AreaControllerCore
 
     #region 同步滑动模式测试
 
+    /// <summary>
+    /// SetSliding
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public IActionResult SetSliding(string value = "test", string key = TestSlidingKey)
     {
         _cacheOperator.Set(
@@ -113,6 +146,11 @@ public class CachingController : AreaControllerCore
         });
     }
 
+    /// <summary>
+    /// GetSliding
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public IActionResult GetSliding(string key = TestSlidingKey)
     {
         var result = _cacheOperator.Get<string>(key);
@@ -134,6 +172,12 @@ public class CachingController : AreaControllerCore
 
     #region 异步模式简单值测试
 
+    /// <summary>
+    /// AsyncSet
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public async Task<IActionResult> AsyncSet(string value = "test", string key = TestAsyncKey)
     {
         await _cacheOperator.SetAsync(key, value, new TimeSpan(TimeSpan.TicksPerSecond * 360));
@@ -145,6 +189,11 @@ public class CachingController : AreaControllerCore
         });
     }
 
+    /// <summary>
+    /// AsyncGet
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public async Task<IActionResult> AsyncGet(string key = TestAsyncKey)
     {
         var result = await _cacheOperator.GetAsync<string>(key);
@@ -166,6 +215,11 @@ public class CachingController : AreaControllerCore
 
     #region 异步模式类实例值测试
 
+    /// <summary>
+    /// AsyncSetObject
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public async Task<IActionResult> AsyncSetObject(string key = TestAsyncObjectKey)
     {
         var value = new Hello
@@ -183,6 +237,11 @@ public class CachingController : AreaControllerCore
         });
     }
 
+    /// <summary>
+    /// AsyncGetObject
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public async Task<IActionResult> AsyncGetObject(string key = TestAsyncObjectKey)
     {
         var result = await _cacheOperator.GetAsync<Hello>(key);
@@ -204,6 +263,12 @@ public class CachingController : AreaControllerCore
 
     #region 异步滑动模式测试
 
+    /// <summary>
+    /// AsyncSetSliding
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public async Task<IActionResult> AsyncSetSliding(string value = "test", string key = TestAsyncSlidingKey)
     {
         await _cacheOperator.SetAsync(
@@ -220,6 +285,11 @@ public class CachingController : AreaControllerCore
         });
     }
 
+    /// <summary>
+    /// AsyncGetSliding
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public async Task<IActionResult> AsyncGetSliding(string key = TestAsyncSlidingKey)
     {
         var result = await _cacheOperator.GetAsync<string>(key);

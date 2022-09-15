@@ -1,7 +1,6 @@
 using System.ComponentModel;
 using Asp.Versioning;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
-using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Core.Results;
 using Microsoft.AspNetCore.Mvc;
 using EasySoft.UtilityTools.Standard.Enums;
@@ -17,7 +16,7 @@ namespace WebApplicationTest.Controllers
     [Route("Weather")]
     public class WeatherForecastController : ControllerCore
     {
-        private static readonly string[] Summaries = new[]
+        private static readonly string[] Summaries =
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
@@ -33,6 +32,10 @@ namespace WebApplicationTest.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Get
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("get", Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
@@ -45,6 +48,10 @@ namespace WebApplicationTest.Controllers
                 .ToArray();
         }
 
+        /// <summary>
+        /// Get1
+        /// </summary>
+        /// <returns></returns>
         [Description("获取天气")]
         [ApiVersion("1.0")]
         [HttpGet("get1", Name = "GetWeatherForecast1")]
@@ -59,6 +66,10 @@ namespace WebApplicationTest.Controllers
                 .ToArray();
         }
 
+        /// <summary>
+        /// Get3
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("get3", Name = "GetWeatherForecast3")]
         public ActionResult Get3()
         {
@@ -75,6 +86,10 @@ namespace WebApplicationTest.Controllers
             };
         }
 
+        /// <summary>
+        /// Get4
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("get4", Name = "GetWeatherForecast4")]
         public ActionResult Get4()
         {
