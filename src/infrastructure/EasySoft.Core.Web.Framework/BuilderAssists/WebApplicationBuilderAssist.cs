@@ -31,7 +31,8 @@ public static class WebApplicationBuilderAssist
     {
         var builder = WebApplication.CreateBuilder(new WebApplicationOptions
         {
-            Args = args
+            Args = args,
+            ContentRootPath = AppContext.BaseDirectory
         });
 
         return CreateCore(builder, new ApplicationChannel().SetChannel(0).SetName("默认应用"));
@@ -132,7 +133,7 @@ public static class WebApplicationBuilderAssist
                 if (!GeneralConfigAssist.GetRegistrationCenterSwitch() ||
                     GeneralConfigAssist.GetRegistrationCenterType() != RegistrationCenterType.Consul)
                 {
-                    throw new Exception("consul as config center need set it as registration center.");
+                    throw new Exception("Consul as config center need set it as registration center.");
                 }
 
                 builder.AddAdvanceConsulConfigClient(

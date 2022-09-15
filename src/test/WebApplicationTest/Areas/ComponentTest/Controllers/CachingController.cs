@@ -16,7 +16,7 @@ public class CachingController : AreaControllerCore
 
     private const string TestAsyncKey = "testAsyncKey";
     private const string TestAsyncSlidingKey = "testAsyncSlidingKey";
-    private const string TestAsyncObjectKey = "testAsyncObjectKey";  
+    private const string TestAsyncObjectKey = "testAsyncObjectKey";
 
     private readonly IAsyncCacheOperator _cacheOperator;
 

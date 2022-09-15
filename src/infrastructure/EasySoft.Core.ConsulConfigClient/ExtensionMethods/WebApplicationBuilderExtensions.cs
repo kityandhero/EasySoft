@@ -81,7 +81,7 @@ public static class WebApplicationBuilderExtensions
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
-                        $"consul config center address is {ConsulConfigAssist.GetConsulAddress()}, key is {applicationChannel.GetChannel()}/config.{env.EnvironmentName}.json, key build by ApplicationChannel and Environment"
+                        $"Consul config center address is {ConsulConfigAssist.GetConsulAddress()}, key is {applicationChannel.GetChannel()}/config.{env.EnvironmentName}.json, key build by ApplicationChannel and Environment"
                     )
             );
 
