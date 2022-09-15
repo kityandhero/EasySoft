@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using Asp.Versioning;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Core.Results;
@@ -8,6 +10,9 @@ using WebApplicationTest.Common;
 
 namespace WebApplicationTest.Controllers
 {
+    /// <summary>
+    /// WeatherForecast
+    /// </summary>
     [ApiController]
     [Route("Weather")]
     public class WeatherForecastController : ControllerCore
@@ -19,6 +24,10 @@ namespace WebApplicationTest.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
+        /// <summary>
+        /// WeatherForecast
+        /// </summary>
+        /// <param name="logger"></param>
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
@@ -36,6 +45,8 @@ namespace WebApplicationTest.Controllers
                 .ToArray();
         }
 
+        [Description("获取天气")]
+        [ApiVersion("1.0")]
         [HttpGet("get1", Name = "GetWeatherForecast1")]
         public IEnumerable<WeatherForecast> Get1()
         {

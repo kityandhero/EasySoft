@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using Asp.Versioning;
+using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Cap.ExtensionMethods;
@@ -103,12 +104,14 @@ public static class WebApplicationBuilderExtensions
 
         return builder;
     }
-    
+
     public static WebApplication EasyBuild(
         this WebApplicationBuilder builder
     )
     {
         WeaveApplicationBuilderExtraAction(builder);
+
+        builder.Services.AddRouting(o => { o.LowercaseUrls = true; });
 
         // AddMvc 最为全面， 涵盖 AddControllers 等的全部功能
         builder.Services.AddMvc(
@@ -183,12 +186,18 @@ public static class WebApplicationBuilderExtensions
             {
                 options.AddPolicy(
                     name: ConstCollection.DefaultSpecificOrigins,
-                    configPolicy => { configPolicy.WithOrigins(GeneralConfigAssist.GetCorsPolicies().ToArray()); }
+                    configPolicy =>
+                    {
+                        configPolicy.WithOrigins(GeneralConfigAssist.GetCorsPolicies().ToArray());
+                        configPolicy.AllowAnyHeader();
+                        configPolicy.AllowAnyMethod();
+                        configPolicy.AllowCredentials();
+                    }
                 );
             });
         }
 
-        if (SwaggerConfigAssist.GetEnable())
+        if (SwaggerConfigAssist.GetSwitch())
         {
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

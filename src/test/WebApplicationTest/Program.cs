@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using Autofac;
 using AutoFacTest.Implementations;
 using AutoFacTest.Interfaces;
@@ -26,6 +27,20 @@ using EasySoft.Core.Web.Framework.ExtensionMethods;
 
 // 配置额外的构建项目
 ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
+    new ExtraAction<WebApplicationBuilder>()
+        .SetName("AddApiVersioning")
+        .SetAction(applicationBuilder =>
+        {
+            applicationBuilder.Services.AddApiVersioning(o =>
+            {
+                //return versions in a response header
+                o.ReportApiVersions = true;
+                //default version select 
+                o.DefaultApiVersion = new ApiVersion(1, 0);
+                //if not specifying an api version,show the default version
+                o.AssumeDefaultVersionWhenUnspecified = true;
+            });
+        }),
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddAdvanceDbContext<DataContext>")
         .SetAction(applicationBuilder =>

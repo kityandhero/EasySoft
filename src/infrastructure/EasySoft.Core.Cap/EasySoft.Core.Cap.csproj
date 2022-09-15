@@ -6,15 +6,19 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DocumentationFile>bin\Debug\EasySoft.Core.Cap.xml</DocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
-      <PackageReference Include="DotNetCore.CAP" Version="6.1.0" />
-      <PackageReference Include="DotNetCore.CAP.AmazonSQS" Version="6.1.0" />
-      <PackageReference Include="DotNetCore.CAP.AzureServiceBus" Version="6.1.0" />
-      <PackageReference Include="DotNetCore.CAP.Dashboard" Version="6.1.0" />
-      <PackageReference Include="DotNetCore.CAP.InMemoryStorage" Version="6.1.0" />
-      <PackageReference Include="DotNetCore.CAP.Kafka" Version="6.1.0" />
-      <PackageReference Include="DotNetCore.CAP.MongoDB" Version="6.1.0" />
-      <PackageReference Include="DotNetCore.CAP.MySql" Version="6.1.0" />
+        <PackageReference Include="DotNetCore.CAP" Version="6.1.0"/>
+        <PackageReference Include="DotNetCore.CAP.AmazonSQS" Version="6.1.0"/>
+        <PackageReference Include="DotNetCore.CAP.AzureServiceBus" Version="6.1.0"/>
+        <PackageReference Include="DotNetCore.CAP.Dashboard" Version="6.1.0"/>
+        <PackageReference Include="DotNetCore.CAP.InMemoryStorage" Version="6.1.0"/>
+        <PackageReference Include="DotNetCore.CAP.Kafka" Version="6.1.0"/>
+        <PackageReference Include="DotNetCore.CAP.MongoDB" Version="6.1.0"/>
+        <PackageReference Include="DotNetCore.CAP.MySql" Version="6.1.0"/>
       <PackageReference Include="DotNetCore.CAP.NATS" Version="6.1.0" />
       <PackageReference Include="DotNetCore.CAP.OpenTelemetry" Version="6.1.0" />
       <PackageReference Include="DotNetCore.CAP.PostgreSql" Version="6.1.0" />

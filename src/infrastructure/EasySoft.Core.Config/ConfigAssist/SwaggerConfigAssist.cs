@@ -28,7 +28,7 @@ public static class SwaggerConfigAssist
 
         Configuration.Bind(SwaggerConfig.Instance);
     }
-    
+
     public static void Init()
     {
     }
@@ -38,9 +38,9 @@ public static class SwaggerConfigAssist
         return SwaggerConfig.Instance;
     }
 
-    public static bool GetEnable()
+    public static bool GetSwitch()
     {
-        var v = GetConfig().Enable;
+        var v = GetConfig().Switch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 

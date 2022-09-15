@@ -4,10 +4,10 @@ public class SwaggerConfig
 {
     public static readonly SwaggerConfig Instance = new();
 
-    public string Enable { get; set; }
+    public string Switch { get; set; }
 
     public SwaggerConfig()
     {
-        Enable = "0";
+        Switch = "0";
     }
 }
