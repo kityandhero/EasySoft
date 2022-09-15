@@ -12,7 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EasySoft.Configuration\EasySoft.Configuration.csproj" />
       <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj" />
       <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
     </ItemGroup>

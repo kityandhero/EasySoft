@@ -8,20 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Configuration\EasySoft.Configuration.csproj" />
-        <ProjectReference Include="..\..\infrastructure\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Reference Include="Microsoft.Extensions.Configuration">
-          <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.8\Microsoft.Extensions.Configuration.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
-            <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.8\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Extensions.Primitives">
-          <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.8\Microsoft.Extensions.Primitives.dll</HintPath>
-        </Reference>
+        <ProjectReference Include="..\..\infrastructure\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
+        <ProjectReference Include="..\..\infrastructure\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
     </ItemGroup>
 
 </Project>

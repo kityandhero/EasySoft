@@ -1,4 +1,7 @@
-﻿namespace EasySoft.Configuration.ChangeTokens;
+﻿using System;
+using System.Threading;
+
+namespace EasySoft.UtilityTools.Core.ChangeTokens;
 
 public class ContentChangeToken : IContentChangeToken
 {

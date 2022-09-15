@@ -1,6 +1,6 @@
-﻿using EasySoft.Configuration.ExtensionMethods;
-using EasySoft.Core.Config.ConfigAssist;
+﻿using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Config.Utils;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Primitives;
 
-namespace EasySoft.Configuration.ChangeTokens;
+namespace EasySoft.UtilityTools.Core.ChangeTokens;
 
 internal interface IContentChangeToken : IChangeToken
 {

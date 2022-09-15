@@ -1,7 +1,8 @@
-﻿using EasySoft.Configuration.ConfigurationSources;
+﻿using System;
+using EasySoft.UtilityTools.Core.ConfigurationSources;
 using Microsoft.Extensions.Configuration;
 
-namespace EasySoft.Configuration.ExtensionMethods;
+namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 
 public static class JsonConfigurationExtensions
 {

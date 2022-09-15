@@ -1,5 +1,4 @@
-﻿using EasySoft.Configuration.ExtensionMethods;
-using EasySoft.Core.AgileConfigClient.ExtensionMethods;
+﻿using EasySoft.Core.AgileConfigClient.ExtensionMethods;
 using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Config.Utils;
@@ -13,6 +12,7 @@ using EasySoft.Core.NLog.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Core.Channels;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.Result;

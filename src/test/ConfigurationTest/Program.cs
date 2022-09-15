@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using EasySoft.Configuration.ExtensionMethods;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.Assists;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;

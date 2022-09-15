@@ -12,9 +12,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Reference Include="Microsoft.AspNetCore">
-        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.8\Microsoft.AspNetCore.dll</HintPath>
-      </Reference>
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
     </ItemGroup>
 
     <ItemGroup>

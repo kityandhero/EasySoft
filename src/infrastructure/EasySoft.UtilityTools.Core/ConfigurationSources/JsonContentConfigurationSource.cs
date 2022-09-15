@@ -1,9 +1,9 @@
-﻿using EasySoft.Configuration.ChangeTokens;
-using EasySoft.Configuration.ConfigurationProviders;
+﻿using EasySoft.UtilityTools.Core.ChangeTokens;
+using EasySoft.UtilityTools.Core.ConfigurationProviders;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 
-namespace EasySoft.Configuration.ConfigurationSources;
+namespace EasySoft.UtilityTools.Core.ConfigurationSources;
 
 public delegate void JsonContentEventHandler();
 

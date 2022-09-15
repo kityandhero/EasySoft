@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace EasySoft.Configuration.ConfigurationSources;
+namespace EasySoft.UtilityTools.Core.ConfigurationSources;
 
 public abstract class JsonContentConfigurationSourceCore : IConfigurationSource
 {

@@ -1,10 +1,12 @@
-﻿using System.Text.Json;
-using EasySoft.Configuration.ConfigurationFileParsers;
-using EasySoft.Configuration.ConfigurationSources;
+﻿using System;
+using System.Text.Json;
+using System.Threading;
+using EasySoft.UtilityTools.Core.ConfigurationFileParsers;
+using EasySoft.UtilityTools.Core.ConfigurationSources;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 
-namespace EasySoft.Configuration.ConfigurationProviders;
+namespace EasySoft.UtilityTools.Core.ConfigurationProviders;
 
 public class JsonContentConfigurationProvider : ConfigurationProvider, IDisposable
 {
