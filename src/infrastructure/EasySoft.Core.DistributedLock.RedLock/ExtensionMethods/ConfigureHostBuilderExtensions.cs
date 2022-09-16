@@ -12,9 +12,10 @@ internal static class ConfigureHostBuilderExtensions
     {
         builder.ConfigureContainer<ContainerBuilder>((context, containerBuilder) =>
         {
-            var factory = RedLockAssist.GetAdvanceRedLockFactory(options);
+            var advanceRedLockFactory = RedLockAssist.GetAdvanceRedLockFactory(options);
 
-            containerBuilder.RegisterInstance(factory).AsSelf().As<IAdvanceRedLockFactory>().PreserveExistingDefaults()
+            containerBuilder.RegisterInstance(advanceRedLockFactory).AsSelf().As<IAdvanceRedLockFactory>()
+                .PreserveExistingDefaults()
                 .SingleInstance();
         });
 
