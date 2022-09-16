@@ -5,26 +5,24 @@ using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Core.Results;
 using EasySoft.UtilityTools.Standard.Assists;
-using EasySoft.UtilityTools.Standard.Entity;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.Exceptions;
-using log4net;
+using Exceptionless;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.Web.Framework.Filters;
 
 public class GlobalExceptionFilter : IExceptionFilter
 {
     private readonly IWebHostEnvironment _hostEnvironment;
-    private readonly ILog _logger;
 
     public GlobalExceptionFilter(IWebHostEnvironment hostEnvironment)
     {
         _hostEnvironment = hostEnvironment;
-        _logger = LogManager.GetLogger(typeof(GlobalExceptionFilter));
     }
 
     public void OnException(ExceptionContext context)
@@ -34,14 +32,17 @@ public class GlobalExceptionFilter : IExceptionFilter
             return;
         }
 
-        LogAssist.Error($"Error message: {context.Exception.Message}");
+        LogAssist.GetLogger().LogError(0, context.Exception, "{Message}", context.Exception.Message);
 
         if (context.Exception.InnerException != null)
         {
-            LogAssist.Error($"Inner error message: {context.Exception.InnerException.Message}");
+            LogAssist.GetLogger().LogError(
+                0,
+                context.Exception.InnerException,
+                "{Message}",
+                context.Exception.InnerException.Message
+            );
         }
-
-        LogAssist.DebugData(context.Exception.InnerException ?? context.Exception, "More information: ");
 
         if (context.Exception is TokenException)
         {
@@ -61,29 +62,19 @@ public class GlobalExceptionFilter : IExceptionFilter
             return;
         }
 
-        var result = new ApiResult(ReturnCode.Error.ToInt(), false, "服务器发生未处理的异常");
+        var result = new ApiResult(ReturnCode.Error.ToInt(), false, "服务发生错误");
 
         if (_hostEnvironment.IsDevelopment())
         {
-            result.Message += "," + context.Exception.Message;
+            result.Message += ": " + context.Exception.Message;
             result.Data = context.Exception.StackTrace;
         }
-
-        _logger.Error(result);
 
         if (GeneralConfigAssist.GetRemoteErrorLogSwitch())
         {
             var errorLogProducer = AutofacAssist.Instance.Resolve<IErrorLogProducer>();
 
-            var requestInfo = new RequestInfo
-            {
-                Host = context.HttpContext.Request.GetHost(),
-                Url = context.HttpContext.Request.GetUrl(),
-                UrlParams = JsonConvertAssist.Serialize(context.HttpContext.Request.GetUrlParams()),
-                Header = JsonConvertAssist.Serialize(context.HttpContext.Request.GetHeaders()),
-                FormParam = JsonConvertAssist.Serialize(context.HttpContext.Request.GetFromParams()),
-                PayloadParam = JsonConvertAssist.Serialize(context.HttpContext.Request.GetPayloadParams()),
-            };
+            var requestInfo = context.HttpContext.BuildRequestInfo();
 
             errorLogProducer.Send(context.Exception, 0, requestInfo);
         }

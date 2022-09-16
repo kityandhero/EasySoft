@@ -8,6 +8,7 @@
       {
         "assembly": "NLog.Extensions.Logging"
       },
+      ###exceptionless-extensions###
       {
         "assembly": "NLog.Web.AspNetCore"
       }
@@ -26,6 +27,7 @@
       "async": true,
       ###trace-target###
       ###debug-target###
+      ###exceptionless-target###
       "production-file": {
         "type": "File",
         "createDirs": true,
@@ -123,6 +125,7 @@
     "rules": [
       ###trace-rule###
       ###debug-rule###
+      ###exceptionless-rule###
       {
         "logger": "*",
         "minLevel": "Info",

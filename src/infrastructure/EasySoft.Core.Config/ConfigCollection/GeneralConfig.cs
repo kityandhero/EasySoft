@@ -139,6 +139,8 @@ public class GeneralConfig : IConfig
 
     public string CapPersistentType { get; set; }
 
+    public string CapPersistentConnection { get; set; }
+
     public string CapDashboardSwitch { get; set; }
 
     public string CapDiscoverySwitch { get; set; }
@@ -146,10 +148,16 @@ public class GeneralConfig : IConfig
     public string RegistrationCenterSwitch { get; set; }
 
     public string RegistrationCenterType { get; set; }
-    
+
     public string ConfigCenterSwitch { get; set; }
 
     public string ConfigCenterType { get; set; }
+
+    public string ExceptionlessSwitch { get; set; }
+
+    public string ExceptionlessServerUrl { get; set; }
+
+    public string ExceptionlessApiKey { get; set; }
 
     public GeneralConfig()
     {
@@ -203,6 +211,7 @@ public class GeneralConfig : IConfig
         CapPrefix = "EasySoft";
         CapTransportType = TransportType.InMemoryMessageQueue.ToString();
         CapPersistentType = PersistentType.ImMemory.ToString();
+        CapPersistentConnection = "";
         CapDashboardSwitch = "0";
         CapDiscoverySwitch = "0";
 
@@ -210,5 +219,9 @@ public class GeneralConfig : IConfig
         RegistrationCenterType = "";
         ConfigCenterSwitch = "0";
         ConfigCenterType = "";
+
+        ExceptionlessSwitch = "0";
+        ExceptionlessServerUrl = "";
+        ExceptionlessApiKey = "";
     }
 }

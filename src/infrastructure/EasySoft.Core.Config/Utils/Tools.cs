@@ -24,6 +24,10 @@ public static class Tools
         var nlogDefaultConfigTraceToFileSwitch = GeneralConfigAssist.GetNlogDefaultConfigTraceToFileSwitch();
         var nlogDefaultConfigDebugToConsoleSwitch = GeneralConfigAssist.GetNlogDefaultConfigDebugToConsoleSwitch();
         var nlogDefaultConfigTraceToConsoleSwitch = GeneralConfigAssist.GetNlogDefaultConfigTraceToConsoleSwitch();
+        var nlogDefaultConfigDebugToExceptionlessSwitch = GeneralConfigAssist.GetExceptionlessSwitch();
+
+        var nlogDefaultConfigExceptionlessServerUrl = GeneralConfigAssist.GetExceptionlessServerUrl();
+        var nlogDefaultConfigExceptionlessApiKey = GeneralConfigAssist.GetExceptionlessApiKey();
 
         var debugRule = nlogDefaultConfigDebugToFileSwitch ? GetNlogDefaultDebugRuleConfig() : "";
         var debugTarget = nlogDefaultConfigDebugToFileSwitch ? GetNlogDefaultDebugTargetConfig() : "";
@@ -37,41 +41,80 @@ public static class Tools
         traceRule = string.IsNullOrWhiteSpace(traceRule) ? "" : $"{traceRule},";
         traceTarget = string.IsNullOrWhiteSpace(traceTarget) ? "" : $"{traceTarget},";
 
+        var exceptionlessExtensions =
+            nlogDefaultConfigDebugToExceptionlessSwitch ? GetNlogDefaultExceptionlessExtensionsConfig() : "";
+        var exceptionlessRule =
+            nlogDefaultConfigDebugToExceptionlessSwitch ? GetNlogDefaultExceptionlessRuleConfig() : "";
+        var exceptionlessTarget =
+            nlogDefaultConfigDebugToExceptionlessSwitch ? GetNlogDefaultExceptionlessTargetConfig() : "";
+
+        if (nlogDefaultConfigDebugToExceptionlessSwitch)
+        {
+            exceptionlessTarget = exceptionlessTarget
+                .Replace("###exceptionless-apiKey###", nlogDefaultConfigExceptionlessApiKey)
+                .Replace("###exceptionless-serverUrl###", nlogDefaultConfigExceptionlessServerUrl);
+        }
+
+        exceptionlessExtensions =
+            string.IsNullOrWhiteSpace(exceptionlessExtensions) ? "" : $"{exceptionlessExtensions},";
+        exceptionlessRule = string.IsNullOrWhiteSpace(exceptionlessRule) ? "" : $"{exceptionlessRule},";
+        exceptionlessTarget = string.IsNullOrWhiteSpace(exceptionlessTarget) ? "" : $"{exceptionlessTarget},";
+
         var consoleMinLevel = nlogDefaultConfigTraceToConsoleSwitch ? "Trace" :
             nlogDefaultConfigDebugToConsoleSwitch ? "Debug" : "Info";
 
-        mainConfig = mainConfig.Replace("###trace-target###", traceTarget)
+        mainConfig = mainConfig
+            .Replace("###exceptionless-extensions###", exceptionlessExtensions)
+            .Replace("###trace-target###", traceTarget)
             .Replace("###debug-target###", debugTarget)
+            .Replace("###exceptionless-target###", exceptionlessTarget)
             .Replace("###trace-rule###", traceRule)
             .Replace("###debug-rule###", debugRule)
+            .Replace("###exceptionless-rule###", exceptionlessRule)
             .Replace("###console-minLevel###", consoleMinLevel);
 
         return mainConfig;
     }
 
-    public static string GetNlogDefaultMainConfig()
+    private static string GetNlogDefaultMainConfig()
     {
         return GetEmbeddedResourceFileContent("/nlog.main.config.txt");
     }
 
-    public static string GetNlogDefaultDebugRuleConfig()
+    private static string GetNlogDefaultDebugRuleConfig()
     {
         return GetEmbeddedResourceFileContent("/nlog.debug.rule.txt");
     }
 
-    public static string GetNlogDefaultDebugTargetConfig()
+    private static string GetNlogDefaultDebugTargetConfig()
     {
         return GetEmbeddedResourceFileContent("/nlog.debug.target.txt");
     }
 
+    // ReSharper disable once MemberCanBePrivate.Global
     public static string GetNlogDefaultTraceRuleConfig()
     {
         return GetEmbeddedResourceFileContent("/nlog.trace.rule.txt");
     }
 
-    public static string GetNlogDefaultTraceTargetConfig()
+    private static string GetNlogDefaultTraceTargetConfig()
     {
         return GetEmbeddedResourceFileContent("/nlog.trace.target.txt");
+    }
+
+    public static string GetNlogDefaultExceptionlessExtensionsConfig()
+    {
+        return GetEmbeddedResourceFileContent("/nlog.exceptionless-extensions.txt");
+    }
+
+    public static string GetNlogDefaultExceptionlessRuleConfig()
+    {
+        return GetEmbeddedResourceFileContent("/nlog.exceptionless.rule.txt");
+    }
+
+    public static string GetNlogDefaultExceptionlessTargetConfig()
+    {
+        return GetEmbeddedResourceFileContent("/nlog.exceptionless.target.txt");
     }
 
     private static string GetEmbeddedResourceFileContent(string path)

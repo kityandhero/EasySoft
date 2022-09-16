@@ -111,7 +111,7 @@ public static class WebApplicationBuilderAssist
 
             StartupDescriptionMessageAssist.Add(
                 new StartupMessage()
-                    .SetLevel(Microsoft.Extensions.Logging.LogLevel.Warning)
+                    .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
                     .SetMessage(
                         $"Dynamic config key: {Config.ConstCollection.GetDynamicConfigKeyCollection().Join(",")}, they can set in ConfigCenter."
                     )

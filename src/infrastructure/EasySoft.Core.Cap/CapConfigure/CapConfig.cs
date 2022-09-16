@@ -96,17 +96,4 @@ public class Persistent
     public MongoDBOptions? MongoDB { get; set; }
 
     public SqliteOptions? Sqlite { get; set; }
-
-    public Persistent()
-    {
-        SqlServer = new SqlServerOptions();
-
-        PostgreSql = new PostgreSqlOptions();
-
-        MySql = new MySqlOptions();
-
-        MongoDB = new MongoDBOptions();
-
-        Sqlite = new SqliteOptions();
-    }
 }

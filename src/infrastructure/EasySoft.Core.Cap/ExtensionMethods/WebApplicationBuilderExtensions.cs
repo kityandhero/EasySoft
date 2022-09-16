@@ -1,4 +1,6 @@
-﻿using DotNetCore.CAP.Dashboard.NodeDiscovery;
+﻿using DotNetCore.CAP;
+using DotNetCore.CAP.Dashboard.NodeDiscovery;
+using DotNetCore.CAP.MongoDB;
 using EasySoft.Core.Cap.Assists;
 using EasySoft.Core.Config.Cap;
 using EasySoft.Core.Config.ConfigAssist;
@@ -64,23 +66,68 @@ public static class WebApplicationBuilderExtensions
 
                 case TransportType.RabbitMQ:
 
-                    if (capConfig.Transport.RabbitMQ == null)
+                    var configFileHostName = RabbitMQConfigAssist.GetHostName();
+                    var configFileUserName = RabbitMQConfigAssist.GetUserName();
+                    var configFilePassword = RabbitMQConfigAssist.GetPassword();
+                    var configFileVirtualHost = RabbitMQConfigAssist.GetVirtualHost();
+
+                    if (capConfig.Transport.RabbitMQ == null && (string.IsNullOrWhiteSpace(configFileHostName) ||
+                                                                 string.IsNullOrWhiteSpace(configFileUserName) ||
+                                                                 string.IsNullOrWhiteSpace(configFilePassword) ||
+                                                                 string.IsNullOrWhiteSpace(configFileVirtualHost)))
                     {
                         throw new Exception(
-                            "Cap transport type is RabbitMQ, it need config,use CapAssist.GetConfig().Transport.RabbitMQ to set it"
+                            $"Cap transport type is RabbitMQ, it need config,use config file in {(RabbitMQConfigAssist.GetConfigFileInfo())} or use CapAssist.GetConfig().Transport.RabbitMQ to set it"
                         );
+                    }
+
+                    if (capConfig.Transport.RabbitMQ == null)
+                    {
+                        capConfig.Transport.RabbitMQ = new RabbitMQOptions();
                     }
 
                     capOptions.UseRabbitMQ(o =>
                     {
-                        o.HostName = capConfig.Transport.RabbitMQ.HostName;
-                        o.UserName = capConfig.Transport.RabbitMQ.UserName;
-                        o.Password = capConfig.Transport.RabbitMQ.Password;
+                        var prefix = GeneralConfigAssist.GetCapPrefix().Remove(" ").Trim().ToLower();
+
+                        o.HostName = string.IsNullOrWhiteSpace(capConfig.Transport.RabbitMQ.HostName)
+                            ? RabbitMQConfigAssist.GetHostName()
+                            : capConfig.Transport.RabbitMQ.HostName;
+
+                        o.UserName = string.IsNullOrWhiteSpace(capConfig.Transport.RabbitMQ.UserName)
+                            ? RabbitMQConfigAssist.GetUserName()
+                            : capConfig.Transport.RabbitMQ.UserName;
+
+                        o.Password = string.IsNullOrWhiteSpace(capConfig.Transport.RabbitMQ.Password)
+                            ? RabbitMQConfigAssist.GetPassword()
+                            : capConfig.Transport.RabbitMQ.Password;
+
                         o.Port = capConfig.Transport.RabbitMQ.Port;
-                        o.ExchangeName = capConfig.Transport.RabbitMQ.ExchangeName;
-                        o.VirtualHost = capConfig.Transport.RabbitMQ.VirtualHost;
+
+                        o.ExchangeName = string.IsNullOrWhiteSpace(capConfig.Transport.RabbitMQ.ExchangeName)
+                            ? $"cap.{(string.IsNullOrWhiteSpace(prefix) ? "default" : prefix)}.topic"
+                            : capConfig.Transport.RabbitMQ.ExchangeName;
+
+                        o.VirtualHost = string.IsNullOrWhiteSpace(capConfig.Transport.RabbitMQ.VirtualHost)
+                            ? RabbitMQConfigAssist.GetVirtualHost()
+                            : capConfig.Transport.RabbitMQ.VirtualHost;
+
                         o.CustomHeaders = capConfig.Transport.RabbitMQ.CustomHeaders;
-                        o.ConnectionFactoryOptions = capConfig.Transport.RabbitMQ.ConnectionFactoryOptions;
+
+                        if (capConfig.Transport.RabbitMQ.ConnectionFactoryOptions == null)
+                        {
+                            o.ConnectionFactoryOptions = one =>
+                            {
+                                one.RequestedConnectionTimeout = TimeSpan.FromSeconds(
+                                    RabbitMQConfigAssist.GetConnectionTimeout()
+                                );
+                            };
+                        }
+                        else
+                        {
+                            o.ConnectionFactoryOptions = capConfig.Transport.RabbitMQ.ConnectionFactoryOptions;
+                        }
+
                         o.QueueArguments = capConfig.Transport.RabbitMQ.QueueArguments;
                     });
                     break;
@@ -199,6 +246,8 @@ public static class WebApplicationBuilderExtensions
 
             var persistentType = Enum.Parse<PersistentType>(GeneralConfigAssist.GetCapPersistentType());
 
+            var capPersistentConnection = GeneralConfigAssist.GetCapPersistentConnection();
+
             switch (persistentType)
             {
                 case PersistentType.ImMemory:
@@ -206,6 +255,14 @@ public static class WebApplicationBuilderExtensions
                     break;
 
                 case PersistentType.SqlServer:
+                    if (!string.IsNullOrWhiteSpace(capPersistentConnection) && capConfig.Persistent.SqlServer == null)
+                    {
+                        capConfig.Persistent.SqlServer = new SqlServerOptions
+                        {
+                            ConnectionString = capPersistentConnection
+                        };
+                    }
+
                     if (capConfig.Persistent.SqlServer == null)
                     {
                         throw new Exception(
@@ -221,6 +278,14 @@ public static class WebApplicationBuilderExtensions
                     break;
 
                 case PersistentType.MySql:
+                    if (!string.IsNullOrWhiteSpace(capPersistentConnection) && capConfig.Persistent.MySql == null)
+                    {
+                        capConfig.Persistent.MySql = new MySqlOptions
+                        {
+                            ConnectionString = capPersistentConnection
+                        };
+                    }
+
                     if (capConfig.Persistent.MySql == null)
                     {
                         throw new Exception(
@@ -236,6 +301,14 @@ public static class WebApplicationBuilderExtensions
                     break;
 
                 case PersistentType.PostgreSql:
+                    if (!string.IsNullOrWhiteSpace(capPersistentConnection) && capConfig.Persistent.PostgreSql == null)
+                    {
+                        capConfig.Persistent.PostgreSql = new PostgreSqlOptions
+                        {
+                            ConnectionString = capPersistentConnection
+                        };
+                    }
+
                     if (capConfig.Persistent.PostgreSql == null)
                     {
                         throw new Exception(
@@ -251,6 +324,14 @@ public static class WebApplicationBuilderExtensions
                     break;
 
                 case PersistentType.MongoDB:
+                    if (!string.IsNullOrWhiteSpace(capPersistentConnection) && capConfig.Persistent.MongoDB == null)
+                    {
+                        capConfig.Persistent.MongoDB = new MongoDBOptions()
+                        {
+                            DatabaseConnection = capPersistentConnection
+                        };
+                    }
+
                     if (capConfig.Persistent.MongoDB == null)
                     {
                         throw new Exception(
@@ -268,6 +349,14 @@ public static class WebApplicationBuilderExtensions
                     break;
 
                 case PersistentType.Sqlite:
+                    if (!string.IsNullOrWhiteSpace(capPersistentConnection) && capConfig.Persistent.Sqlite == null)
+                    {
+                        capConfig.Persistent.Sqlite = new SqliteOptions()
+                        {
+                            ConnectionString = capPersistentConnection
+                        };
+                    }
+
                     if (capConfig.Persistent.Sqlite == null)
                     {
                         throw new Exception(
@@ -321,7 +410,7 @@ public static class WebApplicationBuilderExtensions
         var startupMessage = new StartupMessage()
             .SetLevel(LogLevel.Information)
             .SetMessage(
-                $"Cap transport mode is {GeneralConfigAssist.GetCapTransportType()}, persistent mode is {GeneralConfigAssist.GetCapPersistentType()}, use CapAssist.GetConfig() to set it."
+                $"Cap transport mode is {GeneralConfigAssist.GetCapTransportType()}, persistent mode is {GeneralConfigAssist.GetCapPersistentType()}, if you need to customize it, use CapAssist.GetConfig() to set."
             );
 
         if (GeneralConfigAssist.GetCapDashboardSwitch())

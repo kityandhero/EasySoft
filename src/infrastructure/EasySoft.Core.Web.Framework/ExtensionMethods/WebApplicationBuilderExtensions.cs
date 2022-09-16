@@ -10,6 +10,7 @@ using EasySoft.Core.DevelopAuxiliary.ExtensionMethods;
 using EasySoft.Core.EasyCaching.ExtensionMethods;
 using EasySoft.Core.EasyToken.ExtensionMethods;
 using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
+using EasySoft.Core.Exceptionless.ExtensionMethods;
 using EasySoft.Core.GeneralLogTransmitter.ExtensionMethods;
 using EasySoft.Core.Hangfire.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.ExtensionMethods;
@@ -110,6 +111,8 @@ public static class WebApplicationBuilderExtensions
     )
     {
         WeaveApplicationBuilderExtraAction(builder);
+
+        builder.AddAdvanceExceptionless();
 
         builder.Services.AddRouting(o => { o.LowercaseUrls = true; });
 

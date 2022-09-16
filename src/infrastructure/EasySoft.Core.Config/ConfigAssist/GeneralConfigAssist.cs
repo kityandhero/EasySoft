@@ -715,6 +715,13 @@ public static class GeneralConfigAssist
         return v;
     }
 
+    public static string GetCapPersistentConnection()
+    {
+        var v = GetConfig().CapPersistentConnection;
+
+        return v;
+    }
+
     public static bool GetCapDashboardSwitch()
     {
         var v = GetConfig().CapDashboardSwitch;
@@ -809,5 +816,53 @@ public static class GeneralConfigAssist
         }
 
         return Enum.Parse<ConfigCenterType>(v);
+    }
+
+    public static bool GetExceptionlessSwitch()
+    {
+        var v = GetConfig().ExceptionlessSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 ExceptionlessSwitch: {ConfigFile} -> ExceptionlessSwitch,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
+
+    public static string GetExceptionlessServerUrl()
+    {
+        var v = GetConfig().ExceptionlessServerUrl;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        if (GetExceptionlessSwitch() && string.IsNullOrWhiteSpace(v))
+        {
+            throw new Exception(
+                $"开启Exceptionless时, 请配置 ExceptionlessServerUrl: {ConfigFile} -> ExceptionlessServerUrl"
+            );
+        }
+
+        return v;
+    }
+
+    public static string GetExceptionlessApiKey()
+    {
+        var v = GetConfig().ExceptionlessApiKey;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        if (GetExceptionlessSwitch() && string.IsNullOrWhiteSpace(v))
+        {
+            throw new Exception(
+                $"开启Exceptionless时, 请配置 ExceptionlessApiKey: {ConfigFile} -> ExceptionlessApiKey"
+            );
+        }
+
+        return v;
     }
 }

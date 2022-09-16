@@ -1,0 +1,43 @@
+"exceptionless": {
+  "type": "Exceptionless",
+  "apiKey": "###exceptionless-apiKey###",
+  "serverUrl": "###exceptionless-serverUrl###",
+    "Fields": [
+      {
+        "name": "StackTrace",
+        "layout": "${stacktrace}"
+      },
+      {
+        "name": "Message",
+        "layout": "${message}"
+      },
+      {
+        "name": "LogLevel",
+        "layout": "${level}"
+      },         
+      {
+        "name": "CreateDate",
+        "layout": "${date}"
+      },
+      {
+        "name": "MachineName",
+        "layout": "${machinename}"
+      },      
+      {
+        "name": "ThreadId",
+        "layout": "${threadid}"
+      },    
+      {
+        "name": "CallSite",
+        "layout": "${callsite}"
+      },           
+      {
+        "name": "AppdomainVersion",
+        "layout": "${assembly-version}"
+      },
+      {
+        "name": "Appdomain",
+        "layout": "${appdomain}"
+      },      
+    ]
+}

@@ -37,6 +37,11 @@ public static class RabbitMQConfigAssist
         return RabbitMQConfig.Instance;
     }
 
+    public static string GetConfigFileInfo()
+    {
+        return $"[generalConfig.json](./configures/{ConfigFile})";
+    }
+
     public static string GetHostName()
     {
         var v = GetConfig().HostName.Remove(" ").Trim();

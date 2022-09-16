@@ -183,6 +183,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lock", "lock", "{4368A973-A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.DistributedLock.RedLock", "infrastructure\EasySoft.Core.DistributedLock.RedLock\EasySoft.Core.DistributedLock.RedLock.csproj", "{6DF403AD-352C-4158-9E87-8F94E4C27F93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Exceptionless", "infrastructure\EasySoft.Core.Exceptionless\EasySoft.Core.Exceptionless.csproj", "{017833B0-2F19-4E36-A806-0AE69BD22DD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -425,6 +427,10 @@ Global
 		{6DF403AD-352C-4158-9E87-8F94E4C27F93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DF403AD-352C-4158-9E87-8F94E4C27F93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DF403AD-352C-4158-9E87-8F94E4C27F93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{017833B0-2F19-4E36-A806-0AE69BD22DD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{017833B0-2F19-4E36-A806-0AE69BD22DD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{017833B0-2F19-4E36-A806-0AE69BD22DD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{017833B0-2F19-4E36-A806-0AE69BD22DD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -516,6 +522,7 @@ Global
 		{6EA6C93B-6DBA-4744-A727-1A85A0D816FC} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
 		{4368A973-A517-4700-BE5E-0AE7E1147BF5} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
 		{6DF403AD-352C-4158-9E87-8F94E4C27F93} = {4368A973-A517-4700-BE5E-0AE7E1147BF5}
+		{017833B0-2F19-4E36-A806-0AE69BD22DD1} = {66411A08-ED31-424B-AED1-8D3E8558DD93}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

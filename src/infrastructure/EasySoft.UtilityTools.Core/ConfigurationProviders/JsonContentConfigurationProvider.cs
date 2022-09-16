@@ -55,6 +55,12 @@ public class JsonContentConfigurationProvider : ConfigurationProvider, IDisposab
         {
             throw new FormatException($"JSONParseError: {e.Message}");
         }
+        catch (Exception)
+        {
+            Console.WriteLine(Source.GetJsonContent());
+
+            throw;
+        }
     }
 
     public void Dispose()
