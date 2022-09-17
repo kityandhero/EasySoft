@@ -15,7 +15,6 @@
 
     <ItemGroup>
       <PackageReference Include="Autofac" Version="6.4.0" />
-      <PackageReference Include="DotNetCore.CAP" Version="6.1.0" />
     </ItemGroup>
 
     <ItemGroup>

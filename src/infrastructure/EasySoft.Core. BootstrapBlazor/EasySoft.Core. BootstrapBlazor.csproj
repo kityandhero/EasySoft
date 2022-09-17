@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="BootstrapBlazor" Version="6.9.14" />
+      <PackageReference Include="BootstrapBlazor" Version="6.10.5"/>
     </ItemGroup>
 
 </Project>

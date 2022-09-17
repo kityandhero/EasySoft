@@ -28,6 +28,8 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\EasySoft.Dependence.Core\EasySoft.Dependence.Core.csproj"/>
+        <ProjectReference Include="..\EasySoft.Dependence.Standard\EasySoft.Dependence.Standard.csproj"/>
         <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
     </ItemGroup>
 

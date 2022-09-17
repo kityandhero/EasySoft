@@ -2,12 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <LangVersion>10</LangVersion>
         <Nullable>enable</Nullable>
+        <LangVersion>10</LangVersion>
     </PropertyGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Dependence.Standard\EasySoft.Dependence.Standard.csproj"/>
-    </ItemGroup>
 
 </Project>

@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.Config.ConfigCollection;
-using EasySoft.Core.Config.Utils;
+﻿using EasySoft.Core.Config.Utils;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Configuration;
 
@@ -8,7 +7,7 @@ namespace EasySoft.Core.Config.ConfigAssist;
 public static class AgileConfigAssist
 {
     // ReSharper disable once UnusedMember.Local
-    private static readonly string ConfigFile = $"{nameof(AgileConfig).ToLowerFirst()}.json";
+    private static readonly string ConfigFile = $"{nameof(ConfigCollection.AgileConfig).ToLowerFirst()}.json";
 
     private static IConfiguration Configuration { get; set; }
 
@@ -26,16 +25,16 @@ public static class AgileConfigAssist
 
         Configuration = builder.Build();
 
-        Configuration.Bind(AgileConfig.Instance);
+        Configuration.Bind(ConfigCollection.AgileConfig.Instance);
     }
 
     public static void Init()
     {
     }
 
-    private static AgileConfig GetConfig()
+    private static ConfigCollection.AgileConfig GetConfig()
     {
-        return AgileConfig.Instance;
+        return ConfigCollection.AgileConfig.Instance;
     }
 
     /// <summary>
