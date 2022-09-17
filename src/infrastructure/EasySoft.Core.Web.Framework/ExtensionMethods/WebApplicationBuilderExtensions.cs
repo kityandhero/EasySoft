@@ -264,6 +264,14 @@ public static class WebApplicationBuilderExtensions
 
         // 中间件调用顺序请参阅: https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/middleware/?view=aspnetcore-6.0#middleware-order
 
+        // ASP.NET Core MVC的过滤器类别以及默认执行顺序：
+        // https://www.cnblogs.com/yangxu-pro/p/9010978.html
+        // 授权过滤器，它是第一个运行的，它的作用就是判断HTTP Context中的用户是否拥有当前请求的权限，如果用户没有权限，那么它就会“短路”管道。
+        // 资源过滤器，在授权过滤器后运行，在管道其它动作之前，和管道动作都结束后运行。它可以实现缓存或由于性能原因执行短路操作。它在实体绑定之前运行，所以它也可以对影响实体绑定。
+        // Action过滤器，它在Action方法调用之前和之后立即执行，它可以操作传进Action的参数和返回的结果。
+        // 异常过滤器，针对在写入响应Body之前发生的未处理的异常，它可以应用全局的策略，
+        // 结果过滤器，它可以在每个Action结果执行之前和之后运行代码，但也只是在Action方法无错误的成功完成后才可以执行。
+
         if (GeneralConfigAssist.GetForwardedHeadersSwitch())
         {
             // 配置反向代理服务器, 需要在调用其他中间件之前 
