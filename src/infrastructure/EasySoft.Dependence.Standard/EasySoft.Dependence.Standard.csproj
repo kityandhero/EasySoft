@@ -25,6 +25,10 @@
         <PackageReference Include="DotNetCore.CAP.RedisStreams" Version="6.1.0"/>
         <PackageReference Include="Exceptionless.AspNetCore" Version="4.8.0"/>
         <PackageReference Include="Exceptionless.NLog" Version="4.8.0"/>
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.2"/>
+        <PackageReference Include="Hangfire" Version="1.7.31"/>
+        <PackageReference Include="Hangfire.MemoryStorage" Version="1.7.0"/>
+        <PackageReference Include="LogDashboard" Version="1.4.8"/>
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0"/>
         <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0"/>
