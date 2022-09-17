@@ -8,7 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="BootstrapBlazor" Version="6.10.5"/>
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BootstrapBlazor" Version="6.10.5"/>
     </ItemGroup>
 
 </Project>
