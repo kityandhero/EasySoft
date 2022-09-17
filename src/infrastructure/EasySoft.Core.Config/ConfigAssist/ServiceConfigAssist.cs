@@ -20,7 +20,7 @@ public static class ServiceConfigAssist
 
         var builder = new ConfigurationBuilder().AddJsonFile(
             filePath,
-            false,
+            true,
             true
         );
 

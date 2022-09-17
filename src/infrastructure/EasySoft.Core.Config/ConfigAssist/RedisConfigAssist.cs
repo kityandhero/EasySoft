@@ -19,7 +19,7 @@ public static class RedisConfigAssist
 
         var builder = new ConfigurationBuilder().AddJsonFile(
             filePath,
-            false,
+            true,
             true
         );
 

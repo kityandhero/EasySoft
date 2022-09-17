@@ -20,7 +20,7 @@ public static class PayCallbackConfigAssist
 
         var builder = new ConfigurationBuilder().AddJsonFile(
             filePath,
-            false,
+            true,
             true
         );
 

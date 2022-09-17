@@ -20,7 +20,7 @@ public static class ElasticSearchConfigAssist
 
         var builder = new ConfigurationBuilder().AddJsonFile(
             filePath,
-            false,
+            true,
             true
         );
 

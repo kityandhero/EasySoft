@@ -20,7 +20,7 @@ public static class MaintainConfigAssist
 
         var builder = new ConfigurationBuilder().AddJsonFile(
             filePath,
-            false,
+            true,
             true
         );
 
