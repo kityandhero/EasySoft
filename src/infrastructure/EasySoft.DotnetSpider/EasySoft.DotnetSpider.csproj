@@ -7,10 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="DotnetSpider" Version="5.1.0"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\EasySoft.Dependence.Standard\EasySoft.Dependence.Standard.csproj"/>
     </ItemGroup>
 

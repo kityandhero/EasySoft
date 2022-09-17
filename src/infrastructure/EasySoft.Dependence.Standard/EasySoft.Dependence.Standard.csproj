@@ -23,6 +23,7 @@
         <PackageReference Include="DotNetCore.CAP.Pulsar" Version="6.1.0"/>
         <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="6.1.0"/>
         <PackageReference Include="DotNetCore.CAP.RedisStreams" Version="6.1.0"/>
+        <PackageReference Include="DotnetSpider" Version="5.1.0"/>
         <PackageReference Include="Exceptionless.AspNetCore" Version="4.8.0"/>
         <PackageReference Include="Exceptionless.NLog" Version="4.8.0"/>
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.2"/>
