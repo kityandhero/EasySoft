@@ -11,9 +11,4 @@
       <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.0"/>
-      <PackageReference Include="MiniProfiler.Shared" Version="4.2.22" />
-    </ItemGroup>
-
 </Project>

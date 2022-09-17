@@ -11,28 +11,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Consul" Version="1.6.10.7"/>
-        <PackageReference Include="DotNetCore.CAP.InMemoryStorage" Version="6.1.0"/>
-        <PackageReference Include="DotNetCore.CAP.Kafka" Version="6.1.0"/>
-        <PackageReference Include="DotNetCore.CAP.MongoDB" Version="6.1.0"/>
-        <PackageReference Include="DotNetCore.CAP.MySql" Version="6.1.0"/>
-        <PackageReference Include="DotNetCore.CAP.NATS" Version="6.1.0"/>
-        <PackageReference Include="DotNetCore.CAP.OpenTelemetry" Version="6.1.0"/>
-        <PackageReference Include="DotNetCore.CAP.PostgreSql" Version="6.1.0"/>
-        <PackageReference Include="DotNetCore.CAP.Pulsar" Version="6.1.0"/>
-        <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="6.1.0"/>
-        <PackageReference Include="DotNetCore.CAP.RedisStreams" Version="6.1.0"/>
-        <PackageReference Include="DotNetCore.CAP.Sqlite" Version="6.1.0"/>
-        <PackageReference Include="DotNetCore.CAP.SqlServer" Version="6.1.0"/>
-        <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.0"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.9"/>
-        <PackageReference Include="NETStandard.Library" Version="2.0.3"/>
-        <PackageReference Include="OpenTelemetry" Version="1.3.1"/>
-        <PackageReference Include="Savorboard.CAP.InMemoryMessageQueue" Version="6.0.0"/>
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
     </ItemGroup>
 

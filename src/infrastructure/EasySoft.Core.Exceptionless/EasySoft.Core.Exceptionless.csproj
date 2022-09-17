@@ -11,13 +11,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Exceptionless.AspNetCore" Version="4.8.0"/>
-        <PackageReference Include="Exceptionless.NLog" Version="4.8.0"/>
-        <PackageReference Include="NETStandard.Library" Version="2.0.3"/>
-        <PackageReference Include="NLog" Version="5.0.4"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
     </ItemGroup>
 
