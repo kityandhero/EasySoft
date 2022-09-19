@@ -14,7 +14,7 @@ namespace EasySoft.Core.Ocelot.ExtensionMethods;
 public static class ServiceCollectionExtensions
 {
     const string WarnMessage =
-        "Ocelot stored default  key is \"InternalConfiguration\" (you can custom it by \"GlobalConfiguration\" -> \"ServiceDiscoveryProvider\" -> \"ConfigurationKey\"), please ensure that the key and value exists in consul, if it not exist, will occur exception.";
+        "Ocelot stored default  key is \"InternalConfiguration\" (you can custom it by \"GlobalConfiguration\" -> \"ServiceDiscoveryProvider\" -> \"ConfigurationKey\"), please ensure that the key and value exists in Consul, if it not exist, will occur exception.";
 
     public static IServiceCollection AddAdvanceOcelot(
         this IServiceCollection serviceCollection,

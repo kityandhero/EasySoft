@@ -25,6 +25,7 @@ public static class WebApplicationBuilderExtensions
                 .SetMessage(
                     $"CapSwitch: {(capSwitch == 1.ToString() ? "enable" : capSwitch == 0.ToString() ? "disable" : capSwitch)}"
                 )
+                .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
         );
 
         if (!GeneralConfigAssist.CheckCapSwitch())
@@ -37,6 +38,7 @@ public static class WebApplicationBuilderExtensions
                 .SetMessage(
                     $"CapDashboardSwitch: {(GeneralConfigAssist.GetCapDashboardSwitch() ? "enable" : "disable")}"
                 )
+                .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
         );
 
         StartupConfigMessageAssist.Add(
@@ -44,6 +46,7 @@ public static class WebApplicationBuilderExtensions
                 .SetMessage(
                     $"CapDiscoverySwitch: {(GeneralConfigAssist.GetCapDiscoverySwitch() ? "enable" : "disable")}"
                 )
+                .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
         );
 
         var capConfig = CapAssist.GetConfig();
@@ -56,6 +59,14 @@ public static class WebApplicationBuilderExtensions
             }
 
             var transportType = Enum.Parse<TransportType>(GeneralConfigAssist.GetCapTransportType());
+
+            StartupConfigMessageAssist.Add(
+                new StartupMessage()
+                    .SetMessage(
+                        $"CapTransportType: {GeneralConfigAssist.GetCapTransportType()}"
+                    )
+                    .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+            );
 
             switch (transportType)
             {
@@ -245,6 +256,14 @@ public static class WebApplicationBuilderExtensions
             }
 
             var persistentType = Enum.Parse<PersistentType>(GeneralConfigAssist.GetCapPersistentType());
+
+            StartupConfigMessageAssist.Add(
+                new StartupMessage()
+                    .SetMessage(
+                        $"CapPersistentType: {GeneralConfigAssist.GetCapPersistentType()}"
+                    )
+                    .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+            );
 
             var capPersistentConnection = GeneralConfigAssist.GetCapPersistentConnection();
 
