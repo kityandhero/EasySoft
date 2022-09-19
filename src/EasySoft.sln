@@ -201,13 +201,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.FluentValidation",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.FluentValidation", "infrastructure\EasySoft.Core.FluentValidation\EasySoft.Core.FluentValidation.csproj", "{BED43A07-C59C-4D4D-94EB-BCAE5E2949E5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dependence", "dependence", "{D7E2EFA6-3EED-440A-8DE6-8DBC9BB86EF0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dependence-依赖版本控制", "dependence-依赖版本控制", "{D7E2EFA6-3EED-440A-8DE6-8DBC9BB86EF0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Dependence.Core", "infrastructure\EasySoft.Dependence.Core\EasySoft.Dependence.Core.csproj", "{D253A72D-C003-44EA-89E8-A18B8DBD1435}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Dependence.Standard", "infrastructure\EasySoft.Dependence.Standard\EasySoft.Dependence.Standard.csproj", "{AAFF87D6-3227-44FE-95CC-A74A4EFF9C9D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.BackgroundTaskTest", "test\EasySoft.Simple.BackgroundTaskTest\EasySoft.Simple.BackgroundTaskTest.csproj", "{42204749-CC2D-4B05-9BF5-098A01FDB337}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "measure-措施类-保护-熔断-限流-其他", "measure-措施类-保护-熔断-限流-其他", "{450371C9-F27A-419D-84FD-0DEE8F5A5F3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Ocelot", "infrastructure\EasySoft.Core.Ocelot\EasySoft.Core.Ocelot.csproj", "{383997FB-D2B8-4B23-B673-BBA4B8E41E7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -487,6 +491,10 @@ Global
 		{42204749-CC2D-4B05-9BF5-098A01FDB337}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42204749-CC2D-4B05-9BF5-098A01FDB337}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42204749-CC2D-4B05-9BF5-098A01FDB337}.Release|Any CPU.Build.0 = Release|Any CPU
+		{383997FB-D2B8-4B23-B673-BBA4B8E41E7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{383997FB-D2B8-4B23-B673-BBA4B8E41E7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{383997FB-D2B8-4B23-B673-BBA4B8E41E7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{383997FB-D2B8-4B23-B673-BBA4B8E41E7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -591,6 +599,8 @@ Global
 		{D253A72D-C003-44EA-89E8-A18B8DBD1435} = {D7E2EFA6-3EED-440A-8DE6-8DBC9BB86EF0}
 		{AAFF87D6-3227-44FE-95CC-A74A4EFF9C9D} = {D7E2EFA6-3EED-440A-8DE6-8DBC9BB86EF0}
 		{42204749-CC2D-4B05-9BF5-098A01FDB337} = {E3A85C9D-0AA6-456E-A8CF-7EB4773F33A2}
+		{450371C9-F27A-419D-84FD-0DEE8F5A5F3D} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{383997FB-D2B8-4B23-B673-BBA4B8E41E7D} = {450371C9-F27A-419D-84FD-0DEE8F5A5F3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}
