@@ -28,6 +28,8 @@ public static class PrepareStartAssist
         var configureFileNameList = new List<Type>
         {
             typeof(ConfigCollection.AgileConfig),
+            typeof(ConsulCenterConfig),
+            typeof(ConsulServiceConfig),
             typeof(SwaggerConfig),
             typeof(GeneralConfig),
             typeof(HangfireConfig),
@@ -39,6 +41,7 @@ public static class PrepareStartAssist
             typeof(MaintainConfig),
             typeof(RabbitMQConfig),
             typeof(MongoConfig),
+            typeof(OcelotConfig),
             typeof(PayCallbackConfig),
             typeof(RedisConfig),
             typeof(ServiceConfig),

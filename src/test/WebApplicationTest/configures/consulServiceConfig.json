@@ -1,5 +1,4 @@
 ﻿{
-  "ConsulAddress": "http://192.168.1.17:8500",
   "ServiceName": "TestService",
   "ServiceIP": "serviceTest.b.com",
   "ServicePort": "80",

@@ -14,22 +14,24 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.AgileConfigClient\EasySoft.Core.AgileConfigClient.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.Cap\EasySoft.Core.Cap.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.ConsulConfigClient\EasySoft.Core.ConsulConfigClient.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.DevelopAuxiliary\EasySoft.Core.DevelopAuxiliary.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.EasyCaching\EasySoft.Core.EasyCaching.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.EasyToken\EasySoft.Core.EasyToken.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.ErrorLogTransmitter\EasySoft.Core.ErrorLogTransmitter.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.AgileConfigClient\EasySoft.Core.AgileConfigClient.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Cap\EasySoft.Core.Cap.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.ConsulConfigCenterClient\EasySoft.Core.ConsulConfigCenterClient.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.ConsulRegistrationCenterClient\EasySoft.Core.ConsulRegistrationCenterClient.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.DevelopAuxiliary\EasySoft.Core.DevelopAuxiliary.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.EasyCaching\EasySoft.Core.EasyCaching.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.EasyToken\EasySoft.Core.EasyToken.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.ErrorLogTransmitter\EasySoft.Core.ErrorLogTransmitter.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Exceptionless\EasySoft.Core.Exceptionless.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.GeneralLogTransmitter\EasySoft.Core.GeneralLogTransmitter.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.Hangfire\EasySoft.Core.Hangfire.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.JsonWebToken\EasySoft.Core.JsonWebToken.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.Mapster\EasySoft.Core.Mapster.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.MiniProfiler\EasySoft.Core.MiniProfiler.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.GeneralLogTransmitter\EasySoft.Core.GeneralLogTransmitter.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Hangfire\EasySoft.Core.Hangfire.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.JsonWebToken\EasySoft.Core.JsonWebToken.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Mapster\EasySoft.Core.Mapster.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.MiniProfiler\EasySoft.Core.MiniProfiler.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.NLog\EasySoft.Core.NLog.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.Ocelot\EasySoft.Core.Ocelot.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.PermissionVerification\EasySoft.Core.PermissionVerification.csproj" />
         <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
         <ProjectReference Include="..\EasySoft.Core.PrepareStartWork\EasySoft.Core.PrepareStartWork.csproj" />

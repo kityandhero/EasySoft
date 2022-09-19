@@ -5,20 +5,20 @@ using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
-public static class ConsulConfigAssist
+public class ConsulServiceConfigAssist
 {
     // ReSharper disable once UnusedMember.Local
-    private static readonly string ConfigFile = $"{nameof(ConsulConfig).ToLowerFirst()}.json";
+    private static readonly string ConfigFile = $"{nameof(ConsulServiceConfig).ToLowerFirst()}.json";
 
     private static IConfiguration? Configuration { get; set; }
 
     private static IConfiguration ConsulConfiguration { get; set; }
 
-    static ConsulConfigAssist()
+    static ConsulServiceConfigAssist()
     {
         var directory = Tools.GetConfigureDirectory();
 
-        var filePath = $"{directory}{nameof(ConsulConfig).ToLowerFirst()}.json";
+        var filePath = $"{directory}{nameof(ConsulServiceConfig).ToLowerFirst()}.json";
 
         var builder = new ConfigurationBuilder().AddJsonFile(
             filePath,
@@ -28,7 +28,7 @@ public static class ConsulConfigAssist
 
         ConsulConfiguration = builder.Build();
 
-        ConsulConfiguration.Bind(ConsulConfig.Instance);
+        ConsulConfiguration.Bind(ConsulServiceConfig.Instance);
     }
 
     public static void Init()
@@ -62,25 +62,9 @@ public static class ConsulConfigAssist
         return GetConfiguration().GetSection(key).Value;
     }
 
-    private static ConsulConfig GetConsulConfig()
+    private static ConsulServiceConfig GetConsulConfig()
     {
-        return ConsulConfig.Instance;
-    }
-
-    public static string GetConsulAddress()
-    {
-        var v = GetConsulConfig().ConsulAddress.Trim();
-
-        v = string.IsNullOrWhiteSpace(v) ? "" : v;
-
-        if (string.IsNullOrWhiteSpace(v))
-        {
-            throw new Exception(
-                $"请配置 ConsulAddress: {ConfigFile} -> ConsulAddress"
-            );
-        }
-
-        return v;
+        return ConsulServiceConfig.Instance;
     }
 
     public static string GetServiceName()

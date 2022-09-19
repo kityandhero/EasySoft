@@ -2,7 +2,8 @@
 using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Config.Utils;
-using EasySoft.Core.ConsulConfigClient.ExtensionMethods;
+using EasySoft.Core.ConsulConfigCenterClient.ExtensionMethods;
+using EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;
 using EasySoft.Core.DynamicConfig.Assists;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
@@ -83,7 +84,7 @@ public static class WebApplicationBuilderAssist
 
             if (GeneralConfigAssist.GetRegistrationCenterType() == RegistrationCenterType.Consul)
             {
-                builder.AddAdvanceConsul();
+                builder.AddAdvanceConsulRegistrationCenter();
             }
             else
             {
@@ -130,13 +131,7 @@ public static class WebApplicationBuilderAssist
             }
             else if (GeneralConfigAssist.GetConfigCenterType() == ConfigCenterType.Consul)
             {
-                if (!GeneralConfigAssist.GetRegistrationCenterSwitch() ||
-                    GeneralConfigAssist.GetRegistrationCenterType() != RegistrationCenterType.Consul)
-                {
-                    throw new Exception("Consul as config center need set it as registration center.");
-                }
-
-                builder.AddAdvanceConsulConfigClient(
+                builder.AddAdvanceConsulConfigCenter(
                     applicationChannel,
                     _ =>
                     {

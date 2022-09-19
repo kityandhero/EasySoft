@@ -53,7 +53,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Swagger", "in
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Hangfire", "infrastructure\EasySoft.Core.Hangfire\EasySoft.Core.Hangfire.csproj", "{4AC651EA-B15C-4147-BFF9-963874EDEABD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{E3680D8B-1B50-4234-9E60-AAF8483FA0D3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework-整合框架", "framework-整合框架", "{E3680D8B-1B50-4234-9E60-AAF8483FA0D3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "transmitter", "transmitter", "{A4A52E96-6D09-4234-BD3F-FF1EEFBBAEC2}"
 EndProject
@@ -63,7 +63,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.EntityFramewo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.EasyCaching", "infrastructure\EasySoft.Core.EasyCaching\EasySoft.Core.EasyCaching.csproj", "{38C8DFFF-B515-4853-8DE3-E97B90440C08}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configures", "configures", "{5CFBCD84-655E-4724-A0FF-03C2390C471E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configures-配置-本地-动态远端", "configures-配置-本地-动态远端", "{5CFBCD84-655E-4724-A0FF-03C2390C471E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.AccessWayTransmitter", "infrastructure\EasySoft.Core.AccessWayTransmitter\EasySoft.Core.AccessWayTransmitter.csproj", "{B716B52E-EFF6-4D72-AC26-4D2DE89DC18C}"
 EndProject
@@ -127,7 +127,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "getway", "getway", "{DDC81A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "auth", "auth", "{217C060B-95D6-4350-A2CD-D8E7D6309E3D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "basic", "basic", "{6794F65F-8FC2-4A42-9EA1-F2E329BB0E7E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "basic-基础", "basic-基础", "{6794F65F-8FC2-4A42-9EA1-F2E329BB0E7E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cache", "cache", "{6EA6C93B-6DBA-4744-A727-1A85A0D816FC}"
 EndProject
@@ -177,7 +177,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.OpenTelemetry
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "consul", "consul", "{43A85ECD-6AE1-4F55-A0E5-869A429AE736}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.ConsulConfigClient", "infrastructure\EasySoft.Core.ConsulConfigClient\EasySoft.Core.ConsulConfigClient.csproj", "{595E0148-4C99-464F-89BC-3F61B23B1D86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.ConsulConfigCenterClient", "infrastructure\EasySoft.Core.ConsulConfigCenterClient\EasySoft.Core.ConsulConfigCenterClient.csproj", "{595E0148-4C99-464F-89BC-3F61B23B1D86}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lock", "lock", "{4368A973-A517-4700-BE5E-0AE7E1147BF5}"
 EndProject
@@ -212,6 +212,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "measure-措施类-保护-熔断-限流-其他", "measure-措施类-保护-熔断-限流-其他", "{450371C9-F27A-419D-84FD-0DEE8F5A5F3D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Ocelot", "infrastructure\EasySoft.Core.Ocelot\EasySoft.Core.Ocelot.csproj", "{383997FB-D2B8-4B23-B673-BBA4B8E41E7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Polly", "infrastructure\EasySoft.Core.Polly\EasySoft.Core.Polly.csproj", "{92242400-A970-4BE9-BBC4-746CC1EE6A2D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.ConsulRegistrationCenterClient", "infrastructure\EasySoft.Core.ConsulRegistrationCenterClient\EasySoft.Core.ConsulRegistrationCenterClient.csproj", "{B33712DC-E041-495D-82E5-60BE90BD3753}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.ConsulClient", "infrastructure\EasySoft.Core.ConsulClient\EasySoft.Core.ConsulClient.csproj", "{6F382EC7-48CC-4DCC-97EF-516A0A660D20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -495,6 +501,18 @@ Global
 		{383997FB-D2B8-4B23-B673-BBA4B8E41E7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{383997FB-D2B8-4B23-B673-BBA4B8E41E7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{383997FB-D2B8-4B23-B673-BBA4B8E41E7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92242400-A970-4BE9-BBC4-746CC1EE6A2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92242400-A970-4BE9-BBC4-746CC1EE6A2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92242400-A970-4BE9-BBC4-746CC1EE6A2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92242400-A970-4BE9-BBC4-746CC1EE6A2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B33712DC-E041-495D-82E5-60BE90BD3753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B33712DC-E041-495D-82E5-60BE90BD3753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B33712DC-E041-495D-82E5-60BE90BD3753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B33712DC-E041-495D-82E5-60BE90BD3753}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F382EC7-48CC-4DCC-97EF-516A0A660D20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F382EC7-48CC-4DCC-97EF-516A0A660D20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F382EC7-48CC-4DCC-97EF-516A0A660D20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F382EC7-48CC-4DCC-97EF-516A0A660D20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -601,6 +619,9 @@ Global
 		{42204749-CC2D-4B05-9BF5-098A01FDB337} = {E3A85C9D-0AA6-456E-A8CF-7EB4773F33A2}
 		{450371C9-F27A-419D-84FD-0DEE8F5A5F3D} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
 		{383997FB-D2B8-4B23-B673-BBA4B8E41E7D} = {450371C9-F27A-419D-84FD-0DEE8F5A5F3D}
+		{92242400-A970-4BE9-BBC4-746CC1EE6A2D} = {450371C9-F27A-419D-84FD-0DEE8F5A5F3D}
+		{B33712DC-E041-495D-82E5-60BE90BD3753} = {43A85ECD-6AE1-4F55-A0E5-869A429AE736}
+		{6F382EC7-48CC-4DCC-97EF-516A0A660D20} = {43A85ECD-6AE1-4F55-A0E5-869A429AE736}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

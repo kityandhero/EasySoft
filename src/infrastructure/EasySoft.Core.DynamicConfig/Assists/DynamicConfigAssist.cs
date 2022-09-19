@@ -3,7 +3,7 @@ using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config;
 using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.ConsulConfigClient.Assists;
+using EasySoft.Core.ConsulClient.Assists;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.Assists;

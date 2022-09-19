@@ -1,33 +1,33 @@
 ﻿using Consul;
 using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.ConsulConfigClient.Assists;
+using EasySoft.Core.ConsulClient.Assists;
 using Microsoft.AspNetCore.Builder;
 
-namespace EasySoft.Core.ConsulConfigClient.ExtensionMethods;
+namespace EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;
 
 public static class WebApplicationExtensions
 {
-    public static WebApplication UseAdvanceConsul(
+    public static WebApplication UseAdvanceConsulRegistrationCenter(
         this WebApplication application
     )
     {
         var consulClient = ConsulClientAssist.GetConfigClient();
 
-        var serviceHealthCheck = ConsulConfigAssist.GetServiceHealthCheck();
+        var serviceHealthCheck = ConsulServiceConfigAssist.GetServiceHealthCheck();
 
         var healthCheckAddress = string.IsNullOrWhiteSpace(serviceHealthCheck)
-            ? $"http://{ConsulConfigAssist.GetServiceIP()}:{ConsulConfigAssist.GetServicePort()}/{ConstCollection.ConsulServiceHealthEndpointName}"
+            ? $"http://{ConsulServiceConfigAssist.GetServiceIP()}:{ConsulServiceConfigAssist.GetServicePort()}/{ConstCollection.ConsulServiceHealthEndpointName}"
             : serviceHealthCheck;
 
         var registration = new AgentServiceRegistration
         {
             ID = Guid.NewGuid().ToString(),
             // 服务名
-            Name = ConsulConfigAssist.GetServiceName(),
+            Name = ConsulServiceConfigAssist.GetServiceName(),
             // 服务绑定IP
-            Address = ConsulConfigAssist.GetConsulAddress(),
+            Address = ConsulServiceConfigAssist.GetServiceIP(),
             // 服务绑定端口
-            Port = ConsulConfigAssist.GetServicePort(),
+            Port = ConsulServiceConfigAssist.GetServicePort(),
             Check = new AgentServiceCheck
             {
                 //服务启动多久后注册
