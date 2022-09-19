@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.Config.Cap;
 using EasySoft.Core.Config.ConfigCollection;
+using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Standard.Enums;
@@ -20,11 +21,9 @@ public static class GeneralConfigAssist
 
         var filePath = $"{directory}{ConfigFile}";
 
-        var builder = new ConfigurationBuilder().AddJsonFile(
-            filePath,
-            true,
-            true
-        );
+        var builder = new ConfigurationBuilder();
+
+        builder.AddMultiJsonFile(filePath);
 
         Configuration = builder.Build();
 

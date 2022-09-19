@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.AgileConfigClient.ExtensionMethods;
 using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
 using EasySoft.Core.ConsulConfigCenterClient.ExtensionMethods;
 using EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;
@@ -22,6 +23,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using NLog;
 using NLog.Extensions.Logging;
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace EasySoft.Core.Web.Framework.BuilderAssists;
 
@@ -31,10 +33,21 @@ public static class WebApplicationBuilderAssist
         string[] args
     )
     {
+        EnvironmentConfigAssist.Init();
+        GeneralConfigAssist.Init();
+
         var builder = WebApplication.CreateBuilder(new WebApplicationOptions
         {
             Args = args,
             ContentRootPath = AppContext.BaseDirectory
+        });
+
+        builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
+        {
+            config
+                .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
+                .AddMultiJsonFile("appsettings.json")
+                .AddEnvironmentVariables();
         });
 
         return CreateCore(builder, new ApplicationChannel().SetChannel(0).SetName("默认应用"));
@@ -58,6 +71,35 @@ public static class WebApplicationBuilderAssist
         IApplicationChannel applicationChannel
     )
     {
+        StartupConfigMessageAssist.Add(
+            new StartupMessage().SetLevel(LogLevel.Information)
+                .SetMessage(
+                    $"CustomEnv: {(string.IsNullOrWhiteSpace(EnvironmentConfigAssist.GetCustomEnv()) ? "not set" : EnvironmentConfigAssist.GetCustomEnv())}"
+                )
+        );
+
+        if (!string.IsNullOrWhiteSpace(EnvironmentConfigAssist.GetCustomEnv()))
+        {
+            StartupDescriptionMessageAssist.Add(
+                new StartupMessage().SetLevel(LogLevel.Information)
+                    .SetMessage(
+                        "Current loading custom config is normal file and it with current customEnv file, like generalConfig.json and generalConfig.dev.json."
+                    )
+            );
+        }
+
+        var list = ApplicationConfigurator.GetAllEnv();
+
+        if (list.Any())
+        {
+            StartupDescriptionMessageAssist.Add(
+                new StartupMessage().SetLevel(LogLevel.Information)
+                    .SetMessage(
+                        $"CustomEnv current available list: {list.Join(",")}, it can be adjusted by ApplicationConfigurator."
+                    )
+            );
+        }
+
         builder.AddAdvanceUrls()
             .AddAdvanceAutoFac()
             .AddCovertInjection()
@@ -80,7 +122,7 @@ public static class WebApplicationBuilderAssist
         {
             StartupConfigMessageAssist.Add(
                 new StartupMessage()
-                    .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
+                    .SetLevel(LogLevel.Information)
                     .SetMessage(
                         "RegistrationCenterSwitch: disable."
                     )
@@ -91,7 +133,7 @@ public static class WebApplicationBuilderAssist
 
         StartupConfigMessageAssist.Add(
             new StartupMessage()
-                .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
+                .SetLevel(LogLevel.Information)
                 .SetMessage(
                     "RegistrationCenterSwitch: enable."
                 )
@@ -99,7 +141,7 @@ public static class WebApplicationBuilderAssist
 
         StartupConfigMessageAssist.Add(
             new StartupMessage()
-                .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
+                .SetLevel(LogLevel.Information)
                 .SetMessage(
                     $"RegistrationCenterType: {GeneralConfigAssist.GetRegistrationCenterType()}."
                 )
@@ -126,7 +168,7 @@ public static class WebApplicationBuilderAssist
         {
             StartupConfigMessageAssist.Add(
                 new StartupMessage()
-                    .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
+                    .SetLevel(LogLevel.Information)
                     .SetMessage(
                         "ConfigCenterSwitch: enable."
                     )
@@ -134,7 +176,7 @@ public static class WebApplicationBuilderAssist
 
             StartupConfigMessageAssist.Add(
                 new StartupMessage()
-                    .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
+                    .SetLevel(LogLevel.Information)
                     .SetMessage(
                         $"ConfigCenterType: {GeneralConfigAssist.GetConfigCenterType()}."
                     )
@@ -142,7 +184,7 @@ public static class WebApplicationBuilderAssist
 
             StartupDescriptionMessageAssist.Add(
                 new StartupMessage()
-                    .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
+                    .SetLevel(LogLevel.Information)
                     .SetMessage(
                         $"Dynamic config key: {Config.ConstCollection.GetDynamicConfigKeyCollection().Join(",")}, they can set in ConfigCenter."
                     )
@@ -182,7 +224,7 @@ public static class WebApplicationBuilderAssist
         {
             StartupConfigMessageAssist.Add(
                 new StartupMessage()
-                    .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
+                    .SetLevel(LogLevel.Information)
                     .SetMessage(
                         "ConfigCenterSwitch: disable."
                     )
@@ -203,7 +245,7 @@ public static class WebApplicationBuilderAssist
         {
             StartupConfigMessageAssist.Add(
                 new StartupMessage()
-                    .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
+                    .SetLevel(LogLevel.Information)
                     .SetMessage(
                         "GatewaySwitch: disable."
                     )
@@ -214,7 +256,7 @@ public static class WebApplicationBuilderAssist
 
         StartupConfigMessageAssist.Add(
             new StartupMessage()
-                .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
+                .SetLevel(LogLevel.Information)
                 .SetMessage(
                     "GatewaySwitch: enable."
                 )
@@ -222,7 +264,7 @@ public static class WebApplicationBuilderAssist
 
         StartupConfigMessageAssist.Add(
             new StartupMessage()
-                .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
+                .SetLevel(LogLevel.Information)
                 .SetMessage(
                     $"GatewayType: {GeneralConfigAssist.GetGatewayType()}."
                 )

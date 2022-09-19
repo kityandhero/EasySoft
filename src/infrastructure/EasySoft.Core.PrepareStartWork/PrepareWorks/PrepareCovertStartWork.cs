@@ -9,18 +9,21 @@ internal class PrepareCovertStartWork : IPrepareCovertStartWork
     {
         PrepareStartAssist.ToWork();
 
+        AgileConfigAssist.Init();
         AppSettingAssist.Init();
         DatabaseConfigAssist.Init();
+        ConsulConfigCenterConfigAssist.Init();
+        ConsulRegistrationCenterConfigAssist.Init();
         DevelopConfigAssist.Init();
         ElasticSearchConfigAssist.Init();
-        GeneralConfigAssist.Init();
         HangfireConfigAssist.Init();
         JobConfigAssist.Init();
         LogConfigAssist.Init();
         MaintainConfigAssist.Init();
-        RabbitMQConfigAssist.Init();
         MongoConfigAssist.Init();
+        OcelotConfigAssist.Init();
         PayCallbackConfigAssist.Init();
+        RabbitMQConfigAssist.Init();
         RedisConfigAssist.Init();
         ServiceConfigAssist.Init();
         SwaggerConfigAssist.Init();

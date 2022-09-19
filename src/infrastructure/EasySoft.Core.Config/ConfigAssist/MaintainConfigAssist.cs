@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Config.ConfigCollection;
+using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Configuration;
@@ -18,17 +19,15 @@ public static class MaintainConfigAssist
 
         var filePath = $"{directory}{nameof(MaintainConfig).ToLowerFirst()}.json";
 
-        var builder = new ConfigurationBuilder().AddJsonFile(
-            filePath,
-            true,
-            true
-        );
+        var builder = new ConfigurationBuilder();
+
+        builder.AddMultiJsonFile(filePath);
 
         Configuration = builder.Build();
 
         Configuration.Bind(MaintainConfig.Instance);
     }
-    
+
     public static void Init()
     {
     }
@@ -40,7 +39,8 @@ public static class MaintainConfigAssist
 
     public static List<string> GetUrlPollingRequests()
     {
-        var list = GetConfig().UrlPollingRequests.Remove(" ").Trim().Split(',').Where(o => !string.IsNullOrWhiteSpace(o))
+        var list = GetConfig().UrlPollingRequests.Remove(" ").Trim().Split(',')
+            .Where(o => !string.IsNullOrWhiteSpace(o))
             .ToList();
 
         return list;

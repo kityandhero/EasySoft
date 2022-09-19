@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Config.ConfigCollection;
+using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Configuration;
@@ -17,17 +18,15 @@ public static class MongoConfigAssist
 
         var filePath = $"{directory}{nameof(MongoConfig).ToLowerFirst()}.json";
 
-        var builder = new ConfigurationBuilder().AddJsonFile(
-            filePath,
-            true,
-            true
-        );
+        var builder = new ConfigurationBuilder();
+
+        builder.AddMultiJsonFile(filePath);
 
         Configuration = builder.Build();
 
         Configuration.Bind(MongoConfig.Instance);
     }
-    
+
     public static void Init()
     {
     }

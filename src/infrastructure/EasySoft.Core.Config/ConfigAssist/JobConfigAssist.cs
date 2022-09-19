@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Config.ConfigCollection;
+using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -18,17 +19,15 @@ public static class JobConfigAssist
 
         var filePath = $"{directory}{nameof(JobConfig).ToLowerFirst()}.json";
 
-        var builder = new ConfigurationBuilder().AddJsonFile(
-            filePath,
-            true,
-            true
-        );
+        var builder = new ConfigurationBuilder();
+
+        builder.AddMultiJsonFile(filePath);
 
         Configuration = builder.Build();
 
         Configuration.Bind(JobConfig.Instance);
     }
-    
+
     public static void Init()
     {
     }

@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Standard.Assists;
+﻿using EasySoft.Core.Config.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.Assists;
 using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.Config.ConfigAssist;
@@ -15,11 +16,9 @@ public static class AppSettingAssist
 
         var filePath = $"{directory}{ConfigFile}";
 
-        var builder = new ConfigurationBuilder().AddJsonFile(
-            filePath,
-            false,
-            true
-        ).AddEnvironmentVariables();
+        var builder = new ConfigurationBuilder();
+
+        builder.AddMultiJsonFile(filePath).AddEnvironmentVariables();
 
         Configuration = builder.Build();
     }

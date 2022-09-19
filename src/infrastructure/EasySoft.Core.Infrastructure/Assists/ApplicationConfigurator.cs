@@ -9,6 +9,9 @@ namespace EasySoft.Core.Infrastructure.Assists;
 
 public static class ApplicationConfigurator
 {
+    private static readonly HashSet<string> CustomEnv = new(StringComparer.OrdinalIgnoreCase)
+        { "dev,stage,production,test" };
+
     private static readonly HashSet<string> Areas = new(StringComparer.OrdinalIgnoreCase);
     private static readonly List<IExtraAction<MvcOptions>> MvcOptionExtraActions = new();
     private static readonly List<IExtraAction<IEndpointRouteBuilder>> EndpointRouteBuilderExtraActions = new();
@@ -27,6 +30,26 @@ public static class ApplicationConfigurator
         return _miniProfileOptionAction;
     }
 
+    public static void AddEnv(string env)
+    {
+        if (string.IsNullOrWhiteSpace(env))
+        {
+            return;
+        }
+
+        CustomEnv.Add(env.Remove(" ").Trim().ToLower());
+    }
+
+    public static void AddEnv(params string[] envs)
+    {
+        CustomEnv.Add(envs.ToListFilterNullOrWhiteSpace().Select(o => o.Remove(" ").Trim().ToLower()));
+    }
+
+    public static ICollection<string> GetAllEnv()
+    {
+        return CustomEnv;
+    }
+
     public static void AddArea(string area)
     {
         if (string.IsNullOrWhiteSpace(area))
@@ -39,7 +62,7 @@ public static class ApplicationConfigurator
 
     public static void AddAreas(params string[] areas)
     {
-        areas.ForEach(AddArea);
+        Areas.Add(areas.ToListFilterNullOrWhiteSpace());
     }
 
     public static IEnumerable<string> GetAllAreas()
