@@ -3,7 +3,7 @@ using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config;
 using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.ConsulClient.Assists;
+using EasySoft.Core.ConsulConfigCenterClient.Assists;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.Assists;
@@ -159,7 +159,7 @@ public static class DynamicConfigAssist
         {
             var applicationChannel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
 
-            var consulClient = ConsulClientAssist.GetConfigClient();
+            var consulClient = ConsulConfigCenterClientAssist.GetConfigClient();
 
             var v = consulClient.KV.Get(
                 $"{applicationChannel.GetChannel()}/config.{EnvironmentAssist.GetEnvironment().EnvironmentName}.json"

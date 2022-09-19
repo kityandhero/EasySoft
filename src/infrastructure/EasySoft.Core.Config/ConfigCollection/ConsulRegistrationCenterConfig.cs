@@ -1,7 +1,9 @@
 ﻿namespace EasySoft.Core.Config.ConfigCollection;
 
-public class ConsulServiceConfig
+public class ConsulRegistrationCenterConfig
 {
+    public string CenterAddress { get; set; }
+
     public string ServiceName { get; set; }
 
     public string ServiceIP { get; set; }
@@ -10,10 +12,11 @@ public class ConsulServiceConfig
 
     public string ServiceHealthCheck { get; set; }
 
-    public static readonly ConsulServiceConfig Instance = new();
+    public static readonly ConsulRegistrationCenterConfig Instance = new();
 
-    public ConsulServiceConfig()
+    public ConsulRegistrationCenterConfig()
     {
+        CenterAddress = "";
         ServiceName = "";
         ServiceIP = "";
         ServicePort = "80";

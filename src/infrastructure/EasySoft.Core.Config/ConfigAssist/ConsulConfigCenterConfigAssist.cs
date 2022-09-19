@@ -5,20 +5,20 @@ using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
-public class ConsulServiceConfigAssist
+public static class ConsulConfigCenterConfigAssist
 {
     // ReSharper disable once UnusedMember.Local
-    private static readonly string ConfigFile = $"{nameof(ConsulServiceConfig).ToLowerFirst()}.json";
+    private static readonly string ConfigFile = $"{nameof(ConsulConfigCenterConfig).ToLowerFirst()}.json";
 
     private static IConfiguration? Configuration { get; set; }
 
     private static IConfiguration ConsulConfiguration { get; set; }
 
-    static ConsulServiceConfigAssist()
+    static ConsulConfigCenterConfigAssist()
     {
         var directory = Tools.GetConfigureDirectory();
 
-        var filePath = $"{directory}{nameof(ConsulServiceConfig).ToLowerFirst()}.json";
+        var filePath = $"{directory}{nameof(ConsulConfigCenterConfig).ToLowerFirst()}.json";
 
         var builder = new ConfigurationBuilder().AddJsonFile(
             filePath,
@@ -28,7 +28,7 @@ public class ConsulServiceConfigAssist
 
         ConsulConfiguration = builder.Build();
 
-        ConsulConfiguration.Bind(ConsulServiceConfig.Instance);
+        ConsulConfiguration.Bind(ConsulConfigCenterConfig.Instance);
     }
 
     public static void Init()
@@ -62,64 +62,23 @@ public class ConsulServiceConfigAssist
         return GetConfiguration().GetSection(key).Value;
     }
 
-    private static ConsulServiceConfig GetConsulConfig()
+    private static ConsulConfigCenterConfig GetConsulConfig()
     {
-        return ConsulServiceConfig.Instance;
+        return ConsulConfigCenterConfig.Instance;
     }
 
-    public static string GetServiceName()
+    public static string GetCenterAddress()
     {
-        var v = GetConsulConfig().ServiceName.Trim();
+        var v = GetConsulConfig().CenterAddress.Trim();
 
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
         {
             throw new Exception(
-                $"请配置 ServiceName: {ConfigFile} -> ServiceName"
+                $"You've enabled the configuration Center setting and set it to Consul type, please continue config CenterAddress, it in {ConfigFile} -> CenterAddress"
             );
         }
-
-        return v;
-    }
-
-    public static string GetServiceIP()
-    {
-        var v = GetConsulConfig().ServiceIP.Trim();
-
-        v = string.IsNullOrWhiteSpace(v) ? "" : v;
-
-        if (string.IsNullOrWhiteSpace(v))
-        {
-            throw new Exception(
-                $"请配置 ServiceIP: {ConfigFile} -> ServiceIP"
-            );
-        }
-
-        return v;
-    }
-
-    public static int GetServicePort()
-    {
-        var v = GetConsulConfig().ServicePort.Trim();
-
-        v = string.IsNullOrWhiteSpace(v) ? "" : v;
-
-        if (string.IsNullOrWhiteSpace(v) || !v.IsInt(out var value))
-        {
-            throw new Exception(
-                $"请配置 ServicePort: {ConfigFile} -> ServicePort"
-            );
-        }
-
-        return value;
-    }
-
-    public static string GetServiceHealthCheck()
-    {
-        var v = GetConsulConfig().ServiceHealthCheck.Trim();
-
-        v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         return v;
     }

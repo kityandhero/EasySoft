@@ -31,18 +31,19 @@ public static class WebApplicationBuilderExtensions
                 .SetAction(endpoints => endpoints.MapConsulHealthCheck())
         );
 
-        var serviceHealthCheck = ConsulServiceConfigAssist.GetServiceHealthCheck();
+        var serviceHealthCheck = ConsulRegistrationCenterConfigAssist.GetServiceHealthCheck();
 
         var healthCheckAddress = string.IsNullOrWhiteSpace(serviceHealthCheck)
-            ? $"http://{ConsulServiceConfigAssist.GetServiceIP()}:{ConsulServiceConfigAssist.GetServicePort()}/{ConstCollection.ConsulServiceHealthEndpointName}"
+            ? $"http://{ConsulRegistrationCenterConfigAssist.GetServiceIP()}:{ConsulRegistrationCenterConfigAssist.GetServicePort()}/{ConstCollection.ConsulServiceHealthEndpointName}"
             : serviceHealthCheck;
 
         StartupDescriptionMessageAssist.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
-                    $"consul registration center address is {ConsulCenterConfigAssist.GetCenterAddress()} , service name is \"{ConsulServiceConfigAssist.GetServiceName()}\", address is \"{ConsulServiceConfigAssist.GetServiceIP()}:{ConsulServiceConfigAssist.GetServicePort()}\", health check is {healthCheckAddress}."
+                    $"consul registration center address is {ConsulConfigCenterConfigAssist.GetCenterAddress()} , service name is \"{ConsulRegistrationCenterConfigAssist.GetServiceName()}\", address is \"{ConsulRegistrationCenterConfigAssist.GetServiceIP()}:{ConsulRegistrationCenterConfigAssist.GetServicePort()}\", health check is {healthCheckAddress}."
                 )
+                .SetExtra(ConsulRegistrationCenterConfigAssist.GetConfigFileInfo())
         );
 
         ConsulFlagAssist.SetInitializeRegistrationComplete();

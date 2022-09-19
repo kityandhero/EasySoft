@@ -228,8 +228,6 @@ public static class WebApplicationBuilderExtensions
 
         builder.AddAdvanceCap();
 
-        // builder.AddAdvanceOcelot();
-
         if (HangfireConfigAssist.GetEnable())
         {
             var storage = HangfireConfigAssist.GetStorage();

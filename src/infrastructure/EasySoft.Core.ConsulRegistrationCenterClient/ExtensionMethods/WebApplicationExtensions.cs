@@ -1,6 +1,6 @@
 ﻿using Consul;
 using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.ConsulClient.Assists;
+using EasySoft.Core.ConsulRegistrationCenterClient.Assists;
 using Microsoft.AspNetCore.Builder;
 
 namespace EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;
@@ -11,23 +11,23 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        var consulClient = ConsulClientAssist.GetConfigClient();
+        var consulClient = ConsulRegistrationCenterClientAssist.GetConfigClient();
 
-        var serviceHealthCheck = ConsulServiceConfigAssist.GetServiceHealthCheck();
+        var serviceHealthCheck = ConsulRegistrationCenterConfigAssist.GetServiceHealthCheck();
 
         var healthCheckAddress = string.IsNullOrWhiteSpace(serviceHealthCheck)
-            ? $"http://{ConsulServiceConfigAssist.GetServiceIP()}:{ConsulServiceConfigAssist.GetServicePort()}/{ConstCollection.ConsulServiceHealthEndpointName}"
+            ? $"http://{ConsulRegistrationCenterConfigAssist.GetServiceIP()}:{ConsulRegistrationCenterConfigAssist.GetServicePort()}/{ConstCollection.ConsulServiceHealthEndpointName}"
             : serviceHealthCheck;
 
         var registration = new AgentServiceRegistration
         {
             ID = Guid.NewGuid().ToString(),
             // 服务名
-            Name = ConsulServiceConfigAssist.GetServiceName(),
+            Name = ConsulRegistrationCenterConfigAssist.GetServiceName(),
             // 服务绑定IP
-            Address = ConsulServiceConfigAssist.GetServiceIP(),
+            Address = ConsulRegistrationCenterConfigAssist.GetServiceIP(),
             // 服务绑定端口
-            Port = ConsulServiceConfigAssist.GetServicePort(),
+            Port = ConsulRegistrationCenterConfigAssist.GetServicePort(),
             Check = new AgentServiceCheck
             {
                 //服务启动多久后注册
@@ -40,13 +40,19 @@ public static class WebApplicationExtensions
             }
         };
 
+        // 服务注销
+        consulClient.Agent.ServiceDeregister(registration.ID).ConfigureAwait(true);
         // 服务注册
-        consulClient.Agent.ServiceRegister(registration).Wait();
+        consulClient.Agent.ServiceRegister(registration).ConfigureAwait(true);
+
+        consulClient.Dispose();
 
         // 应用程序终止时，服务取消注册
         application.Lifetime.ApplicationStopping.Register(() =>
         {
-            consulClient.Agent.ServiceDeregister(registration.ID).Wait();
+            ConsulRegistrationCenterClientAssist.GetConfigClient()
+                .Agent.ServiceDeregister(registration.ID)
+                .ConfigureAwait(true);
         });
 
         return application;

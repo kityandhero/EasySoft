@@ -30,6 +30,11 @@ public static class OcelotConfigAssist
     {
     }
 
+    public static string GetConfigFileInfo()
+    {
+        return $"[{ConfigFile}](./configures/{ConfigFile})";
+    }
+
     public static IConfiguration GetConfiguration()
     {
         return Configuration;

@@ -1,54 +1,25 @@
 ﻿{
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/",
-      "UpstreamPathTemplate": "/",
-      "UpstreamHttpMethod": [
-        "Get"
-      ],
-      "AddHeadersToRequest": {},
-      "AddClaimsToRequest": {},
-      "RouteClaimsRequirement": {},
-      "AddQueriesToRequest": {},
-      "RequestIdKey": "",
-      "FileCacheOptions": {
-        "TtlSeconds": 0,
-        "Region": ""
-      },
-      "ReRouteIsCaseSensitive": false,
-      "ServiceName": "",
+      "DownstreamPathTemplate": "/{url}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 51876
-        }
+      "UpstreamPathTemplate": "/{url}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Post"
       ],
-      "QoSOptions": {
-        "ExceptionsAllowedBeforeBreaking": 3,
-        "DurationOfBreak": 10000,
-        "TimeoutValue": 5000
-      },
-      "LoadBalancer": "",
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": false,
-        "Period": "",
-        "PeriodTimespan": 0,
-        "Limit": 0
-      },
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "",
-        "AllowedScopes": []
-      },
-      "HttpHandlerOptions": {
-        "AllowAutoRedirect": true,
-        "UseCookieContainer": true,
-        "UseTracing": true
-      },
-      "DangerousAcceptAnyServerCertificateValidator": false
+      "ServiceName": "testService",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     }
   ],
   "GlobalConfiguration": {
+    "ServiceDiscoveryProvider": {
+      "Scheme": "http",
+      "Host": "host.docker.internal",
+      "Port": 8500,
+      "Type": "Consul"
+    }
   }
 }

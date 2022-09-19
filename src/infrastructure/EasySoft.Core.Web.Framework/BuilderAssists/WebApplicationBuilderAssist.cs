@@ -10,6 +10,7 @@ using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.Mapster.ExtensionMethods;
 using EasySoft.Core.NLog.Assists;
 using EasySoft.Core.NLog.ExtensionMethods;
+using EasySoft.Core.Ocelot.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Core.Channels;
@@ -64,34 +65,63 @@ public static class WebApplicationBuilderAssist
 
         builder.AddAdvanceApplicationChannel(applicationChannel);
 
-        if (GeneralConfigAssist.GetRegistrationCenterSwitch())
+        builder.BuildRegistrationCenter();
+        builder.BuildConfigCenter(applicationChannel);
+        builder.BuildGateway();
+
+        return builder;
+    }
+
+    private static WebApplicationBuilder BuildRegistrationCenter(
+        this WebApplicationBuilder builder
+    )
+    {
+        if (!GeneralConfigAssist.GetRegistrationCenterSwitch())
         {
             StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
                     .SetMessage(
-                        "RegistrationCenterSwitch: enable."
+                        "RegistrationCenterSwitch: disable."
                     )
             );
 
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
-                    .SetMessage(
-                        $"RegistrationCenterType: {GeneralConfigAssist.GetRegistrationCenterType()}."
-                    )
-            );
-
-            if (GeneralConfigAssist.GetRegistrationCenterType() == RegistrationCenterType.Consul)
-            {
-                builder.AddAdvanceConsulRegistrationCenter();
-            }
-            else
-            {
-                throw new Exception("Unknown registration center.");
-            }
+            return builder;
         }
 
+        StartupConfigMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
+                .SetMessage(
+                    "RegistrationCenterSwitch: enable."
+                )
+        );
+
+        StartupConfigMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
+                .SetMessage(
+                    $"RegistrationCenterType: {GeneralConfigAssist.GetRegistrationCenterType()}."
+                )
+        );
+
+        if (GeneralConfigAssist.GetRegistrationCenterType() == RegistrationCenterType.Consul)
+        {
+            builder.AddAdvanceConsulRegistrationCenter();
+        }
+        else
+        {
+            throw new Exception($"Unknown registration center: {GeneralConfigAssist.GetRegistrationCenterType()}.");
+        }
+
+        return builder;
+    }
+
+    private static WebApplicationBuilder BuildConfigCenter(
+        this WebApplicationBuilder builder,
+        IApplicationChannel applicationChannel
+    )
+    {
         if (GeneralConfigAssist.GetConfigCenterSwitch())
         {
             StartupConfigMessageAssist.Add(
@@ -160,6 +190,51 @@ public static class WebApplicationBuilderAssist
             );
 
             builder.AddAdvanceNLog();
+        }
+
+        return builder;
+    }
+
+    private static WebApplicationBuilder BuildGateway(
+        this WebApplicationBuilder builder
+    )
+    {
+        if (!GeneralConfigAssist.GetGatewaySwitch())
+        {
+            StartupConfigMessageAssist.Add(
+                new StartupMessage()
+                    .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
+                    .SetMessage(
+                        "GatewaySwitch: disable."
+                    )
+            );
+
+            return builder;
+        }
+
+        StartupConfigMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
+                .SetMessage(
+                    "GatewaySwitch: enable."
+                )
+        );
+
+        StartupConfigMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(Microsoft.Extensions.Logging.LogLevel.Information)
+                .SetMessage(
+                    $"GatewayType: {GeneralConfigAssist.GetGatewayType()}."
+                )
+        );
+
+        if (GeneralConfigAssist.GetGatewayType() == GatewayType.Ocelot)
+        {
+            builder.AddAdvanceOcelot();
+        }
+        else
+        {
+            throw new Exception($"Unknown registration center: {GeneralConfigAssist.GetGatewayType()}.");
         }
 
         return builder;

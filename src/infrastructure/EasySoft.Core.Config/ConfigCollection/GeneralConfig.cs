@@ -153,6 +153,10 @@ public class GeneralConfig : IConfig
 
     public string ConfigCenterType { get; set; }
 
+    public string GatewaySwitch { get; set; }
+
+    public string GatewayType { get; set; }
+
     public string ExceptionlessSwitch { get; set; }
 
     public string ExceptionlessServerUrl { get; set; }
@@ -219,6 +223,9 @@ public class GeneralConfig : IConfig
         RegistrationCenterType = "";
         ConfigCenterSwitch = "0";
         ConfigCenterType = "";
+
+        GatewaySwitch = "0";
+        GatewayType = "";
 
         ExceptionlessSwitch = "0";
         ExceptionlessServerUrl = "";

@@ -1,6 +1,6 @@
 ﻿namespace EasySoft.UtilityTools.Standard.Enums;
 
-public enum RegistrationCenterType
+public enum GatewayType
 {
-    Consul = 200
+    Ocelot = 100
 }

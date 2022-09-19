@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using EasySoft.Core.ConsulClient.Assists;
+using EasySoft.Core.ConsulConfigCenterClient.Assists;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationTest.Areas.ComponentTest.Controllers;
@@ -15,7 +15,7 @@ public class ConsulController : AreaControllerCore
     /// <returns></returns>
     public async Task<IActionResult> Index()
     {
-        var consulClient = ConsulClientAssist.GetConfigClient();
+        var consulClient = ConsulConfigCenterClientAssist.GetConfigClient();
 
         var v = await consulClient.KV.Get("100/config.Development.json");
 

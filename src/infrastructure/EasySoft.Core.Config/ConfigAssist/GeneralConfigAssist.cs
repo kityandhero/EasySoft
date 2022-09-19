@@ -52,7 +52,7 @@ public static class GeneralConfigAssist
 
     public static string GetConfigFileInfo()
     {
-        return "[generalConfig.json](./configures/generalConfig.json)";
+        return $"[{ConfigFile}](./configures/{ConfigFile})";
     }
 
     public static bool GetRemoteLogSwitch()
@@ -816,6 +816,38 @@ public static class GeneralConfigAssist
         }
 
         return Enum.Parse<ConfigCenterType>(v);
+    }
+
+    public static bool GetGatewaySwitch()
+    {
+        var v = GetConfig().GatewaySwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 GatewaySwitch: {ConfigFile} -> GatewaySwitch,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
+
+    public static GatewayType GetGatewayType()
+    {
+        var v = GetConfig().GatewayType;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        if (string.IsNullOrWhiteSpace(v))
+        {
+            throw new Exception(
+                $"请配置 GatewayType: {ConfigFile} -> GatewayType,请设置 {GatewayType.Ocelot.ToString()}"
+            );
+        }
+
+        return Enum.Parse<GatewayType>(v);
     }
 
     public static bool GetExceptionlessSwitch()

@@ -11,4 +11,8 @@
         <ProjectReference Include="..\EasySoft.Dependence.Core\EasySoft.Dependence.Core.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="Assists"/>
+    </ItemGroup>
+
 </Project>

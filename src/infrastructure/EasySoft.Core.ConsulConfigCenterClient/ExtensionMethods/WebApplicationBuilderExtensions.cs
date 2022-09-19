@@ -33,13 +33,13 @@ public static class WebApplicationBuilderExtensions
             var env = hostingContext.HostingEnvironment;
 
             // 加载consul配置中心配置
-            var consulUrl = ConsulCenterConfigAssist.GetCenterAddress();
+            var consulUrl = ConsulConfigCenterConfigAssist.GetCenterAddress();
 
             StartupDescriptionMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
-                        $"Consul config center address is {ConsulCenterConfigAssist.GetCenterAddress()}, key is {applicationChannel.GetChannel()}/config.{env.EnvironmentName}.json, key build by ApplicationChannel and Environment"
+                        $"Consul config center address is {ConsulConfigCenterConfigAssist.GetCenterAddress()}, key is {applicationChannel.GetChannel()}/config.{env.EnvironmentName}.json, key build by ApplicationChannel and Environment"
                     )
             );
 
@@ -66,13 +66,13 @@ public static class WebApplicationBuilderExtensions
 
             hostingContext.Configuration = configure;
 
-            ConsulCenterConfigAssist.SetConfiguration(configure);
+            ConsulConfigCenterConfigAssist.SetConfiguration(configure);
 
             if (action != null)
             {
                 ChangeToken.OnChange(
                     () => configure.GetReloadToken(),
-                    () => action(ConsulCenterConfigAssist.GetConfiguration())
+                    () => action(ConsulConfigCenterConfigAssist.GetConfiguration())
                 );
             }
         });
