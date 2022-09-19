@@ -14,7 +14,6 @@ using EasySoft.Simple.EntityFrameworkCore.Repositories;
 using EasySoft.Simple.EntityFrameworkCore.Services;
 using Microsoft.EntityFrameworkCore;
 using WebApplicationTest.EasyTokens;
-using WebApplicationTest.Enums;
 using WebApplicationTest.Hubs;
 using WebApplicationTest.PrepareStartWorks;
 using EasySoft.Core.EntityFramework.ExtensionMethods;
@@ -24,6 +23,7 @@ using EasySoft.Core.LogDashboard.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
+using EasySoft.Simple.Common.Enums;
 
 // 配置额外的构建项目
 ApplicationConfigurator.AddWebApplicationBuilderExtraActions(

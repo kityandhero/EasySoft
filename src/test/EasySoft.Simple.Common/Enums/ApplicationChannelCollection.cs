@@ -2,13 +2,25 @@
 using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
-namespace WebApplicationTest.Enums;
+namespace EasySoft.Simple.Common.Enums;
 
 /// <summary>
 /// ApplicationChannelCollection
 /// </summary>
 public enum ApplicationChannelCollection
 {
+    /// <summary>
+    /// Ocelot网关
+    /// </summary>
+    [Description("Ocelot网关")]
+    GateWayOcelot = 10,
+
+    /// <summary>
+    /// OneService
+    /// </summary>
+    [Description("OneService")]
+    OneService = 20,
+
     /// <summary>
     /// TestApplication
     /// </summary>

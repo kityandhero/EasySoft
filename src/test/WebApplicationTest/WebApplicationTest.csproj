@@ -28,6 +28,7 @@
         <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Mapster\EasySoft.Core.Mapster.csproj" />
         <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Ocelot\EasySoft.Core.Ocelot.csproj"/>
         <ProjectReference Include="..\AutoFacTest\AutoFacTest.csproj" />
+        <ProjectReference Include="..\EasySoft.Simple.Common\EasySoft.Simple.Common.csproj"/>
         <ProjectReference Include="..\EasySoft.Simple.EntityFrameworkCore\EasySoft.Simple.EntityFrameworkCore.csproj" />
     </ItemGroup>
 

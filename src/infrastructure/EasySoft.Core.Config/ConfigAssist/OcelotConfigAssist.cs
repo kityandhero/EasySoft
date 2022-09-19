@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.Config.ConfigCollection;
 using EasySoft.Core.Config.ExtensionMethods;
+using EasySoft.Core.Config.Utils;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +15,7 @@ public static class OcelotConfigAssist
 
     static OcelotConfigAssist()
     {
-        var directory = AppContextAssist.GetBaseDirectory();
+        var directory = Tools.GetConfigureDirectory();
 
         var filePath = $"{directory}{ConfigFile}";
 

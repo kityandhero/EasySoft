@@ -1,12 +1,13 @@
 ﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
+using EasySoft.Core.Web.Framework.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplicationTest.Areas.ComponentTest.Controllers;
+namespace EasySoft.Simple.OneService.Controllers;
 
 /// <summary>
 /// Ocelot
 /// </summary>
-public class OcelotController : AreaControllerCore
+public class OcelotController : CustomControllerBase
 {
     /// <summary>
     /// 测认识请求超时

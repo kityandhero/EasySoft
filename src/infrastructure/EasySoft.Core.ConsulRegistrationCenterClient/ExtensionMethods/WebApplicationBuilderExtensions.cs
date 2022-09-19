@@ -5,6 +5,7 @@ using EasySoft.Core.Infrastructure.Startup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
+using Ocelot.Provider.Consul;
 
 namespace EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;
 
@@ -41,7 +42,7 @@ public static class WebApplicationBuilderExtensions
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage(
-                    $"consul registration center address is {ConsulConfigCenterConfigAssist.GetCenterAddress()} , service name is \"{ConsulRegistrationCenterConfigAssist.GetServiceName()}\", address is \"{ConsulRegistrationCenterConfigAssist.GetServiceIP()}:{ConsulRegistrationCenterConfigAssist.GetServicePort()}\", health check is {healthCheckAddress}."
+                    $"consul registration center address is {ConsulRegistrationCenterConfigAssist.GetCenterAddress()} , service name is \"{ConsulRegistrationCenterConfigAssist.GetServiceName()}\", address is \"{ConsulRegistrationCenterConfigAssist.GetServiceIP()}:{ConsulRegistrationCenterConfigAssist.GetServicePort()}\", health check is {healthCheckAddress}."
                 )
                 .SetExtra(ConsulRegistrationCenterConfigAssist.GetConfigFileInfo())
         );

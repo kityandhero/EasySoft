@@ -21,8 +21,6 @@
   "RegistrationCenterType": "Consul",
   "ConfigCenterSwitch": "1",
   "ConfigCenterType": "Consul",
-  "GatewaySwitch": "1",
-  "GatewayType": "Ocelot",
   "ExceptionlessSwitch": "1",
   "ExceptionlessServerUrl": "http://host.docker.internal:5000",
   "ExceptionlessApiKey": "TyJSLx8tiv2LXPhLQ61puThgWzYDuIOLgzTGoE0u"
