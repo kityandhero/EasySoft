@@ -1,9 +1,7 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
-using EasySoft.UtilityTools.Standard.Enums;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Ocelot.DependencyInjection;
@@ -20,16 +18,22 @@ public static class ServiceCollectionExtensions
         bool useOcelotConfigFile = true
     )
     {
+        IOcelotBuilder ocelotBuilder;
+
         if (useOcelotConfigFile)
         {
-            serviceCollection.AddAdvanceOcelot(OcelotConfigAssist.GetConfiguration());
+            ocelotBuilder = serviceCollection.AddOcelot(OcelotConfigAssist.GetConfiguration());
+
+            StartupDescriptionMessageAssist.Add(
+                new StartupMessage()
+                    .SetLevel(LogLevel.Information)
+                    .SetMessage("Ocelot config use the ocelotConfig.json.")
+                    .SetExtra(OcelotConfigAssist.GetConfigFileInfo())
+            );
         }
         else
         {
-            serviceCollection.AddOcelot()
-                .AddPolly()
-                .AddConsul()
-                .AddConfigStoredInConsul();
+            ocelotBuilder = serviceCollection.AddOcelot();
 
             StartupDescriptionMessageAssist.Add(
                 new StartupMessage()
@@ -38,30 +42,51 @@ public static class ServiceCollectionExtensions
             );
         }
 
+        ocelotBuilder = ocelotBuilder.AddPolly();
+
+        if (GeneralConfigAssist.GetGatewayWithConsulSwitch())
+        {
+            StartupConfigMessageAssist.Add(
+                new StartupMessage().SetLevel(LogLevel.Information)
+                    .SetMessage("GatewayWithConsulSwitch: enable")
+            );
+
+            ocelotBuilder = ocelotBuilder.AddConsul();
+
+            if (GeneralConfigAssist.GetGatewayConfigInConsulSwitch())
+            {
+                ocelotBuilder = ocelotBuilder.AddConfigStoredInConsul();
+
+                StartupConfigMessageAssist.Add(
+                    new StartupMessage().SetLevel(LogLevel.Information)
+                        .SetMessage("GatewayConfigInConsulSwitch: enable")
+                );
+            }
+            else
+            {
+                StartupConfigMessageAssist.Add(
+                    new StartupMessage().SetLevel(LogLevel.Information)
+                        .SetMessage("GatewayConfigInConsulSwitch: disable")
+                );
+            }
+        }
+        else
+        {
+            StartupConfigMessageAssist.Add(
+                new StartupMessage().SetLevel(LogLevel.Information)
+                    .SetMessage("GatewayWithConsulSwitch: disable")
+            );
+
+            StartupConfigMessageAssist.Add(
+                new StartupMessage().SetLevel(LogLevel.Information)
+                    .SetMessage("GatewayConfigInConsulSwitch: disable")
+            );
+        }
+
         ApplicationConfigurator.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(application => { application.UseOcelot().Wait(); })
-        );
-
-        return serviceCollection;
-    }
-
-    private static IServiceCollection AddAdvanceOcelot(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration
-    )
-    {
-        serviceCollection.AddOcelot(configuration)
-            .AddPolly()
-            .AddConsul()
-            .AddConfigStoredInConsul();
-
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage("Ocelot config use the ocelotConfig.json.")
-                .SetExtra(OcelotConfigAssist.GetConfigFileInfo())
         );
 
         return serviceCollection;

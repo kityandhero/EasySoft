@@ -157,6 +157,10 @@ public class GeneralConfig : IConfig
 
     public string GatewayType { get; set; }
 
+    public string GatewayWithConsulSwitch { get; set; }
+
+    public string GatewayConfigInConsulSwitch { get; set; }
+
     public string ExceptionlessSwitch { get; set; }
 
     public string ExceptionlessServerUrl { get; set; }
@@ -226,6 +230,8 @@ public class GeneralConfig : IConfig
 
         GatewaySwitch = "0";
         GatewayType = "";
+        GatewayWithConsulSwitch = "0";
+        GatewayConfigInConsulSwitch = "0";
 
         ExceptionlessSwitch = "0";
         ExceptionlessServerUrl = "";

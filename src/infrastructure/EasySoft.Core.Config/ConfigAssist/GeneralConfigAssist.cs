@@ -849,6 +849,43 @@ public static class GeneralConfigAssist
         return Enum.Parse<GatewayType>(v);
     }
 
+    public static bool GetGatewayWithConsulSwitch()
+    {
+        var v = GetConfig().GatewayWithConsulSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 GatewayWithConsulSwitch: {ConfigFile} -> GatewayWithConsulSwitch,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
+
+    public static bool GetGatewayConfigInConsulSwitch()
+    {
+        if (!GetGatewayWithConsulSwitch())
+        {
+            return false;
+        }
+
+        var v = GetConfig().GatewayConfigInConsulSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 GatewayConfigInConsulSwitch: {ConfigFile} -> GatewayConfigInConsulSwitch,请设置 0/1"
+            );
+        }
+
+        return value == 1;
+    }
+
     public static bool GetExceptionlessSwitch()
     {
         var v = GetConfig().ExceptionlessSwitch;
