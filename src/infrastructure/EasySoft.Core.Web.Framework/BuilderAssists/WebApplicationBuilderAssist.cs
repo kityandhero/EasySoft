@@ -11,7 +11,7 @@ using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.Mapster.ExtensionMethods;
 using EasySoft.Core.NLog.Assists;
 using EasySoft.Core.NLog.ExtensionMethods;
-using EasySoft.Core.Ocelot.ExtensionMethods;
+using EasySoft.Core.Gateway.Ocelot.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Core.Channels;

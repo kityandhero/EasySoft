@@ -9,7 +9,7 @@ using Ocelot.Middleware;
 using Ocelot.Provider.Consul;
 using Ocelot.Provider.Polly;
 
-namespace EasySoft.Core.Ocelot.ExtensionMethods;
+namespace EasySoft.Core.Gateway.Ocelot.ExtensionMethods;
 
 public static class ServiceCollectionExtensions
 {

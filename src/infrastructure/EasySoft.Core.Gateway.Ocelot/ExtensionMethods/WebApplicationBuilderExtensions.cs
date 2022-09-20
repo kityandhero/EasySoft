@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace EasySoft.Core.Ocelot.ExtensionMethods;
+namespace EasySoft.Core.Gateway.Ocelot.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
