@@ -1,0 +1,10 @@
+﻿@model EasySoft.Simple.Single.Application.Models.Hello
+
+@{
+    ViewBag.Title = "Welcome";
+    Layout = "_Layout";
+}
+
+<h2 >hello : @ViewData["Name"]</h2>
+<h2>@Html.DisplayNameFor(model => model.Name) : @Html.DisplayFor(model => model.Name)</h2>
+<h2>@Html.DisplayNameFor(model => model.Date) : @Html.DisplayFor(model => model.Date)</h2>
