@@ -55,7 +55,7 @@ public static class ServiceCollectionExtensions
 
             if (GeneralConfigAssist.GetGatewayConfigInConsulSwitch())
             {
-                ocelotBuilder = ocelotBuilder.AddConfigStoredInConsul();
+                ocelotBuilder.AddConfigStoredInConsul();
 
                 StartupConfigMessageAssist.Add(
                     new StartupMessage().SetLevel(LogLevel.Information)

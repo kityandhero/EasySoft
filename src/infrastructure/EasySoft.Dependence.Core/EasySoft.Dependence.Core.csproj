@@ -15,10 +15,12 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="App.Metrics.AspNetCore.Core" Version="4.3.0"/>
         <PackageReference Include="AspNetCore.HealthChecks.UI" Version="6.0.5"/>
         <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5"/>
         <PackageReference Include="AspNetCore.HealthChecks.UI.Core" Version="6.0.5"/>
         <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="6.0.5"/>
+        <PackageReference Include="DnsClient" Version="1.6.1"/>
         <PackageReference Include="DotNetCore.CAP.Dashboard" Version="6.1.0"/>
         <PackageReference Include="DotNetCore.CAP.MySql" Version="6.1.0"/>
         <PackageReference Include="DotNetCore.CAP.PostgreSql" Version="6.1.0"/>
@@ -26,6 +28,11 @@
         <PackageReference Include="DotNetCore.CAP.SqlServer" Version="6.1.0"/>
         <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2"/>
         <PackageReference Include="Hangfire.AspNetCore" Version="1.7.31"/>
+        <PackageReference Include="HtmlSanitizer" Version="7.1.542"/>
+        <PackageReference Include="IP2Region.Net" Version="1.0.10"/>
+        <PackageReference Include="Masuit.Tools.AspNetCore" Version="1.1.5"/>
+        <PackageReference Include="Masuit.Tools.Core" Version="2.5.5"/>
+        <PackageReference Include="Masuit.Tools.Excel" Version="1.2.2"/>
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.9"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9">
@@ -41,11 +48,15 @@
         <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.5.1"/>
         <PackageReference Include="MiniProfiler.AspNetCore" Version="4.2.22"/>
         <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.2.22"/>
+        <PackageReference Include="Moq" Version="4.18.2"/>
         <PackageReference Include="NETStandard.Library" Version="2.0.3"/>
         <PackageReference Include="Ocelot" Version="18.0.0"/>
         <PackageReference Include="Ocelot.Provider.Consul" Version="18.0.0"/>
         <PackageReference Include="Ocelot.Provider.Polly" Version="18.0.0"/>
         <PackageReference Include="Polly" Version="7.2.3"/>
+        <PackageReference Include="SharpCompress" Version="0.32.2"/>
+        <PackageReference Include="Svg" Version="3.4.3"/>
+        <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="6.15.0"/>
     </ItemGroup>
 
 </Project>
