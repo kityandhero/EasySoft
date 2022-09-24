@@ -1,5 +1,5 @@
-﻿using Duende.IdentityServer.Configuration;
-using Duende.IdentityServer.Models;
+﻿using IdentityServer4.Configuration;
+using IdentityServer4.Models;
 
 namespace EasySoft.Core.IdentityServer.Configure;
 

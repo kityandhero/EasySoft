@@ -11,11 +11,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Duende.IdentityServer" Version="6.1.5" />
+        <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
+        <PackageReference Include="IdentityServer4" Version="4.1.2"/>
     </ItemGroup>
 
 </Project>
