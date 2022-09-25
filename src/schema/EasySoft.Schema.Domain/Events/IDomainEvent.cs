@@ -1,8 +1,7 @@
 ﻿using MediatR;
 
-namespace EasySoft.Schema.Domain.Events
+namespace EasySoft.Schema.Domain.Events;
+
+public interface IDomainEvent : INotification
 {
-    public interface IDomainEvent : INotification
-    {
-    }
 }

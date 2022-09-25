@@ -1,12 +1,11 @@
-﻿namespace EasySoft.Schema.Domain.Entities
-{
-    public interface IEntity
-    {
-        object GetKey();
-    }
+﻿namespace EasySoft.Schema.Domain.Entities;
 
-    public interface IEntity<out TKey> : IEntity
-    {
-        TKey Id { get; }
-    }
+public interface IEntity
+{
+    object GetKey();
+}
+
+public interface IEntity<out TKey> : IEntity
+{
+    TKey Id { get; }
 }

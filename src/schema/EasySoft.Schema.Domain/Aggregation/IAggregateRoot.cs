@@ -1,6 +1,5 @@
-﻿namespace EasySoft.Schema.Domain.Aggregation
+﻿namespace EasySoft.Schema.Domain.Aggregation;
+
+public interface IAggregateRoot
 {
-    public interface IAggregateRoot
-    {
-    }
 }
