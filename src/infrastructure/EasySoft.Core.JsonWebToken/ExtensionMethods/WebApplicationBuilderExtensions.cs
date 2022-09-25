@@ -36,7 +36,7 @@ public static class WebApplicationBuilderExtensions
             throw new Exception("UseAdvanceJsonWebToken disallow inject more than once");
         }
 
-        builder.UseOperatorInjection<TOperator>();
+        builder.AddOperator<TOperator>();
 
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
         {

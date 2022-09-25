@@ -39,7 +39,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.UseTokenSecretOptionsInjection<TTokenSecretOptions>()
             .UseTokenSecretInjection<TokenSecret>()
-            .UseOperatorInjection<TOperator>();
+            .AddOperator<TOperator>();
 
         if (middlewareMode)
         {
@@ -84,7 +84,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.UseTokenSecretOptionsInjection<TTokenSecretOptions>()
             .UseTokenSecretInjection<TTokenSecret>()
-            .UseOperatorInjection<TOperator>();
+            .AddOperator<TOperator>();
 
         if (middlewareMode)
         {

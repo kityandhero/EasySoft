@@ -1,19 +1,18 @@
 ﻿using DotNetCore.CAP;
 using EasySoft.Core.Data.Interfaces;
+using EasySoft.Core.EntityFramework.ExtensionMethods;
 using EasySoft.Core.EntityFramework.InterFaces;
-using LogDashboard.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using StackExchange.Redis;
 
-namespace EasySoft.Core.EntityFramework.Repositories;
+namespace EasySoft.Core.EntityFramework.Contexts.Basic;
 
-public class DataWork : DbContext, IAdvanceUnitOfWork, IAdvanceTransaction
+public abstract class AdvanceDatabaseContextBase : DbContext, IAdvanceUnitOfWork, IAdvanceTransaction
 {
     protected IMediator _mediator;
 
-    public DataWork(
+    protected AdvanceDatabaseContextBase(
         DbContextOptions options,
         IMediator mediator
     ) : base(options)
@@ -23,30 +22,17 @@ public class DataWork : DbContext, IAdvanceUnitOfWork, IAdvanceTransaction
 
     #region IUnitOfWork
 
-    public async Task<bool> SaveEntityAsync(CancellationToken cancellationToken = default)
-    {
-        var result = await base.SaveChangesAsync(cancellationToken);
-
-        //实现领域事件的发送
-        await _mediator.DispatchDomainEventsAsync(this);
-
-        return result > 0;
-    }
+    public abstract Task<bool> SaveEntityAsync(CancellationToken cancellationToken = default);
 
     #endregion
 
     #region ITransaction
 
-    private IDbContextTransaction _currentTransaction;
+    protected IDbContextTransaction _currentTransaction;
     public IDbContextTransaction GetCurrentTransaction() => _currentTransaction;
     public bool HasActiveTransaction => _currentTransaction != null;
 
-    public Task<IDbContextTransaction> BeginTransactionAsync(ICapPublisher capBus)
-    {
-        if (_currentTransaction != null) return null;
-        _currentTransaction = Database.BeginTransaction(capBus, autoCommit: false);
-        return Task.FromResult(_currentTransaction);
-    }
+    public abstract Task<IDbContextTransaction> BeginTransactionAsync(ICapPublisher capBus);
 
     public async Task CommitTransactionAsync(IDbContextTransaction transaction)
     {

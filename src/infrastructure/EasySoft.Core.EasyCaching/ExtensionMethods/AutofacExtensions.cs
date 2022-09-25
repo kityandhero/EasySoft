@@ -10,7 +10,7 @@ using Microsoft.Extensions.Options;
 
 namespace EasySoft.Core.EasyCaching.ExtensionMethods;
 
-public static class ContainerBuilderExtensions
+public static class AutofacExtensions
 {
     internal static void InterceptEasyCaching(
         this ContainerBuilder containerBuilder,
