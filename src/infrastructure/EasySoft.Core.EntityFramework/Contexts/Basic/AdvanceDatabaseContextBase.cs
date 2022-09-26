@@ -32,7 +32,22 @@ public abstract class AdvanceDatabaseContextBase : DbContext, IAdvanceUnitOfWork
     public IDbContextTransaction GetCurrentTransaction() => _currentTransaction;
     public bool HasActiveTransaction => _currentTransaction != null;
 
-    public abstract Task<IDbContextTransaction> BeginTransactionAsync(ICapPublisher capBus);
+    public Task<IDbContextTransaction> BeginTransactionAsync(ICapPublisher capBus)
+    {
+        if (_currentTransaction != null)
+        {
+            return null;
+        }
+
+        _currentTransaction = BeginTransactionWithPersistence(capBus, autoCommit: false);
+
+        return Task.FromResult(_currentTransaction);
+    }
+
+    protected abstract IDbContextTransaction BeginTransactionWithPersistence(
+        ICapPublisher publisher,
+        bool autoCommit = false
+    );
 
     public async Task CommitTransactionAsync(IDbContextTransaction transaction)
     {

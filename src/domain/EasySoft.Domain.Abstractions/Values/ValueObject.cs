@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Schema.Domain.Values;
+﻿namespace EasySoft.Domain.Abstractions.Values;
 
 public abstract class ValueObject
 {

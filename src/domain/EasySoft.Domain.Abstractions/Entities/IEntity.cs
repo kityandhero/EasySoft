@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Schema.Domain.Entities;
+﻿namespace EasySoft.Domain.Abstractions.Entities;
 
 public interface IEntity
 {

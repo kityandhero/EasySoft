@@ -15,8 +15,6 @@ using EasySoft.Simple.Dapper.Console.Enums;
 using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.Assists;
 
-Console.WriteLine("Hello, World!");
-
 var serviceProvider = AutoFacConsoleAssist.CreateServiceProvider(services =>
     {
         var cacheMode = GeneralConfigAssist.GetCacheMode();

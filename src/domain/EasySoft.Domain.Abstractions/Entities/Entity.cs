@@ -1,6 +1,6 @@
-﻿using EasySoft.Schema.Domain.Events;
+﻿using EasySoft.Domain.Abstractions.Events;
 
-namespace EasySoft.Schema.Domain.Entities;
+namespace EasySoft.Domain.Abstractions.Entities;
 
 public abstract class Entity : IEntity
 {
@@ -13,8 +13,8 @@ public abstract class Entity : IEntity
 
     #region 领域事件的处理
 
-    private List<IDomainEvent> _domainEvents;
-    public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents?.AsReadOnly();
+    private List<IDomainEvent>? _domainEvents;
+    public IReadOnlyCollection<IDomainEvent>? DomainEvents => _domainEvents?.AsReadOnly();
 
     public void AddDomainEvent(IDomainEvent eventItem)
     {
@@ -45,7 +45,7 @@ public abstract class Entity<TKey> : Entity, IEntity<TKey>
         return new object[] { Id };
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (obj == null || !(obj is Entity<TKey>))
             return false;

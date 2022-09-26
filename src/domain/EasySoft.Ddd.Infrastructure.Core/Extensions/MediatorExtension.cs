@@ -1,19 +1,19 @@
-﻿using EasySoft.Schema.Domain.Entities;
+﻿using EasySoft.Domain.Abstractions.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace EasySoft.Schema.Domain.Extensions;
+namespace EasySoft.Domain.Infrastructure.Core.Extensions;
 
-static class MediatorExtension
+public static class MediatorExtension
 {
     public static async Task DispatchDomainEventsAsync(this IMediator mediator, DbContext ctx)
     {
         var domainEntities = ctx.ChangeTracker
             .Entries<Entity>()
-            .Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any());
+            .Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any()).ToList();
 
         var domainEvents = domainEntities
-            .SelectMany(x => x.Entity.DomainEvents)
+            .SelectMany(x => x.Entity.DomainEvents!)
             .ToList();
 
         domainEntities.ToList()

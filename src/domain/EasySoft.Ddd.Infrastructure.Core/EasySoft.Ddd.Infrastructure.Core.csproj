@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>EasySoft.Domain.Infrastructure.Core</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="DotNetCore.CAP.MySql" Version="6.1.0" Aliases="MySql"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Data\EasySoft.Core.Data.csproj"/>
+        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj"/>
+        <ProjectReference Include="..\EasySoft.Domain.Abstractions\EasySoft.Domain.Abstractions.csproj"/>
+    </ItemGroup>
+
+</Project>
