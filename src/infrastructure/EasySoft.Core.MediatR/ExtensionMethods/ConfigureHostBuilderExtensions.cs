@@ -7,12 +7,13 @@ namespace EasySoft.Core.MediatR.ExtensionMethods;
 internal static class ConfigureHostBuilderExtensions
 {
     internal static ConfigureHostBuilder AddAdvanceMediatR(
-        this ConfigureHostBuilder builder
+        this ConfigureHostBuilder builder,
+        Assembly assembly
     )
     {
         builder.ConfigureContainer<ContainerBuilder>((_, containerBuilder) =>
         {
-            containerBuilder.AddAdvanceMediator();
+            containerBuilder.AddAdvanceMediator(assembly);
         });
 
         return builder;
@@ -20,7 +21,7 @@ internal static class ConfigureHostBuilderExtensions
 
     internal static ConfigureHostBuilder AddAdvanceMediatR(
         this ConfigureHostBuilder builder,
-        params Assembly[] assemblies
+        IEnumerable<Assembly> assemblies
     )
     {
         builder.ConfigureContainer<ContainerBuilder>((_, containerBuilder) =>

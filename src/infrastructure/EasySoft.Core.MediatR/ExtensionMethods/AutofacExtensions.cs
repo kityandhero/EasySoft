@@ -6,18 +6,20 @@ namespace EasySoft.Core.MediatR.ExtensionMethods;
 
 public static class AutofacExtensions
 {
-    public static ContainerBuilder AddAdvanceMediator(this ContainerBuilder builder)
+    public static ContainerBuilder AddAdvanceMediator(this ContainerBuilder builder, Assembly assembly)
     {
         RegisterCore(builder);
+
+        builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces();
 
         return builder;
     }
 
-    public static ContainerBuilder AddAdvanceMediator(this ContainerBuilder builder, params Assembly[] assemblies)
+    public static ContainerBuilder AddAdvanceMediator(this ContainerBuilder builder, IEnumerable<Assembly> assemblies)
     {
         RegisterCore(builder);
 
-        builder.RegisterAssemblyTypes(assemblies).AsImplementedInterfaces();
+        builder.RegisterAssemblyTypes(assemblies.ToArray()).AsImplementedInterfaces();
 
         return builder;
     }

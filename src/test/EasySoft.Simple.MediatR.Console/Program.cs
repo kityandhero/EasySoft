@@ -7,8 +7,8 @@ using MediatR;
 
 // https://github.com/jbogard/MediatR/wiki
 
-var serviceProvider = AutoFacConsoleAssist.CreateServiceProvider(
-    services => { },
+AutoFacConsoleAssist.CreateServiceProvider(
+    _ => { },
     containerBuilder => { containerBuilder.AddAdvanceMediator(typeof(Ping).Assembly); }
 );
 

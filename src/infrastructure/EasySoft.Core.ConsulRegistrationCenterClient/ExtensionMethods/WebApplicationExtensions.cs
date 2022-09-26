@@ -41,9 +41,9 @@ public static class WebApplicationExtensions
         };
 
         // 服务注销
-        consulClient.Agent.ServiceDeregister(registration.ID).ConfigureAwait(true);
+        consulClient.Agent.ServiceDeregister(registration.ID);
         // 服务注册
-        consulClient.Agent.ServiceRegister(registration).ConfigureAwait(true);
+        consulClient.Agent.ServiceRegister(registration);
 
         consulClient.Dispose();
 
