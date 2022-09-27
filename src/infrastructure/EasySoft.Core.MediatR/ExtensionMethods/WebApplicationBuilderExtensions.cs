@@ -5,7 +5,7 @@ namespace EasySoft.Core.MediatR.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
-    public static WebApplicationBuilder AddAdvanceMediator(
+    public static WebApplicationBuilder AddAdvanceMediatR(
         this WebApplicationBuilder builder,
         Assembly assembly
     )
@@ -15,7 +15,7 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
-    public static WebApplicationBuilder AddAdvanceMediator(
+    public static WebApplicationBuilder AddAdvanceMediatR(
         this WebApplicationBuilder builder,
         IEnumerable<Assembly> assemblies
     )

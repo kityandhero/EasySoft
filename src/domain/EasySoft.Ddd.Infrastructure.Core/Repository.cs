@@ -1,11 +1,12 @@
 ﻿using EasySoft.Core.Data.Interfaces;
 using EasySoft.Domain.Abstractions.Aggregation;
 using EasySoft.Domain.Abstractions.Entities;
+using EasySoft.Domain.Infrastructure.Core.Contexts;
 
 namespace EasySoft.Domain.Infrastructure.Core;
 
 public class Repository<TEntity, TDbContext> : IRepository<TEntity> where TEntity : Entity, IAggregateRoot
-    where TDbContext : AdvanceDatabaseContext
+    where TDbContext : AdvanceContext
 {
     protected virtual TDbContext DbContext { get; set; }
 

@@ -1,3 +1,4 @@
+using System.Reflection;
 using Asp.Versioning;
 using Autofac;
 using AutoFacTest.Implementations;
@@ -20,10 +21,14 @@ using EasySoft.Core.EntityFramework.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.LogDashboard.ExtensionMethods;
+using EasySoft.Core.MediatR.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.Simple.Common.Enums;
+
+// EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableDetailedErrors = true;
+// EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableSensitiveDataLogging = true;
 
 // 配置额外的构建项目
 ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
@@ -45,7 +50,7 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
         .SetName("AddAdvanceDbContext<DataContext>")
         .SetAction(applicationBuilder =>
         {
-            applicationBuilder.AddAdvanceDbContext<DataContext>(
+            applicationBuilder.AddAdvanceContext<DataContext>(
                 opt =>
                 {
                     opt.UseSqlServer(
@@ -97,6 +102,9 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddAdvanceLogDashboard")
         .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceLogDashboard(); }),
+    new ExtraAction<WebApplicationBuilder>()
+        .SetName("AddPermissionVerification")
+        .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceMediatR(Assembly.GetExecutingAssembly()); }),
     // 配置健康检测
     // applicationBuilder =>
     // {

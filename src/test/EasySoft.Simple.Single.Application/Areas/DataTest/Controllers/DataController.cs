@@ -32,7 +32,7 @@ public class DataController : AreaControllerCore
     /// <returns></returns>
     public async Task<IActionResult> GetAuthor()
     {
-        var result = await _authorService.GetAuthorDtoSync(0);
+        var result = await _authorService.GetAuthorDtoSync(21);
 
         return !result.Success ? this.Fail(result.Code) : this.Success(result.Data);
     }

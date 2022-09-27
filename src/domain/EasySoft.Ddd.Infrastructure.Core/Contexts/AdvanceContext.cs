@@ -4,12 +4,15 @@ using EasySoft.Domain.Infrastructure.Core.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Logging;
 
-namespace EasySoft.Domain.Infrastructure.Core;
+namespace EasySoft.Domain.Infrastructure.Core.Contexts;
 
-public class AdvanceDatabaseContext : AdvanceDatabaseContextBase
+public class AdvanceContext : AdvanceContextBase
 {
-    public AdvanceDatabaseContext(DbContextOptions options, IMediator mediator) : base(options, mediator)
+    public AdvanceContext(
+        DbContextOptions options
+    ) : base(options)
     {
     }
 

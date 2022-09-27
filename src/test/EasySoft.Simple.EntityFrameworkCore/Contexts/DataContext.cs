@@ -1,11 +1,18 @@
-﻿using EasySoft.Simple.EntityFrameworkCore.Entities;
+﻿using DotNetCore.CAP;
+using EasySoft.Core.EntityFramework.Contexts.Basic;
+using EasySoft.Simple.EntityFrameworkCore.Entities;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Simple.EntityFrameworkCore.Contexts;
 
-public class DataContext : DbContext
+public class DataContext : AdvanceContextBase
 {
-    public DataContext(DbContextOptions options) : base(options)
+    public DataContext(
+        DbContextOptions options
+    ) : base(options)
     {
     }
 
@@ -20,4 +27,15 @@ public class DataContext : DbContext
     public DbSet<Author> Authors { get; set; } = null!;
 
     public DbSet<Blog> Blogs { get; set; } = null!;
+
+    public override Task<bool> SaveEntityAsync(CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override IDbContextTransaction BeginTransactionWithPersistence(ICapPublisher publisher,
+        bool autoCommit = false)
+    {
+        throw new NotImplementedException();
+    }
 }

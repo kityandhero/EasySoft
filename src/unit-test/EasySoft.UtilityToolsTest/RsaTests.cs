@@ -22,7 +22,7 @@ public class RsaTests
         var rsa = RSA.Create();
         var privateKey = rsa.ExportPrivateKey(RSAKeyType.Pkcs1); //私钥
 
-        rsa.ImportRSAPublicKey();
+        // rsa.ImportRSAPublicKey();
 
         var v = rsa.EncryptBigData("test", RSAEncryptionPadding.Pkcs1);
 

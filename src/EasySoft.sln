@@ -247,6 +247,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Ddd.Service.Depend
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.MediatR.Console", "test\EasySoft.Simple.MediatR.Console\EasySoft.Simple.MediatR.Console.csproj", "{2D237DF8-37C8-4FF0-A21C-C5C870089CDB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "business 基础业务", "business 基础业务", "{7928CAF2-D3F1-4951-9369-B526E44F1FAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.MultiTenant", "infrastructure\EasySoft.Core.MultiTenant\EasySoft.Core.MultiTenant.csproj", "{94CBB91F-B6C1-45D2-9A5F-2869CFE44761}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -581,6 +585,10 @@ Global
 		{2D237DF8-37C8-4FF0-A21C-C5C870089CDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D237DF8-37C8-4FF0-A21C-C5C870089CDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D237DF8-37C8-4FF0-A21C-C5C870089CDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94CBB91F-B6C1-45D2-9A5F-2869CFE44761}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94CBB91F-B6C1-45D2-9A5F-2869CFE44761}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94CBB91F-B6C1-45D2-9A5F-2869CFE44761}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94CBB91F-B6C1-45D2-9A5F-2869CFE44761}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -703,6 +711,8 @@ Global
 		{75659289-8E11-4C92-9169-0BE816925A1D} = {19166D9C-DAAF-41BC-BB49-2D3F0DB2EDC8}
 		{247385FD-6CD4-4602-AD22-5E8457223867} = {19166D9C-DAAF-41BC-BB49-2D3F0DB2EDC8}
 		{2D237DF8-37C8-4FF0-A21C-C5C870089CDB} = {E6D1E731-F18C-46B4-B08B-0672F0642295}
+		{7928CAF2-D3F1-4951-9369-B526E44F1FAD} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{94CBB91F-B6C1-45D2-9A5F-2869CFE44761} = {7928CAF2-D3F1-4951-9369-B526E44F1FAD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

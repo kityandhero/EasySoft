@@ -1,8 +1,5 @@
-﻿using Autofac;
-using EasySoft.Core.AccessWayTransmitter.Assists;
-using EasySoft.Core.AccessWayTransmitter.Producers;
+﻿using EasySoft.Core.AccessWayTransmitter.Assists;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.AccessWayTransmitter.ExtensionMethods;
 
@@ -22,10 +19,7 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
-        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-        {
-            containerBuilder.RegisterType<AccessWayProducer>().As<IAccessWayProducer>().SingleInstance();
-        });
+        builder.Host.AddAccessWayTransmitter();
 
         InitialAssist.InitialComplete = true;
 

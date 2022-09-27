@@ -5,7 +5,6 @@ public static class FlagAssist
     private static bool _applicationRunPerformed;
     private static bool _advanceStaticFileOptionsSwitch;
     private static bool _logDashboardSwitch;
-    private static bool _entityFrameworkSwitch;
     private static bool _healthChecksSwitch;
     private static bool _auxiliarySwitch;
     private static bool _miniProfileSwitch;
@@ -41,7 +40,6 @@ public static class FlagAssist
         _applicationRunPerformed = false;
         _advanceStaticFileOptionsSwitch = false;
         _logDashboardSwitch = false;
-        _entityFrameworkSwitch = false;
         _healthChecksSwitch = false;
         _auxiliarySwitch = false;
         _miniProfileSwitch = false;
@@ -97,16 +95,6 @@ public static class FlagAssist
     public static bool GetLogDashboardSwitch()
     {
         return _logDashboardSwitch;
-    }
-
-    public static void SetEntityFrameworkSwitchOpen()
-    {
-        _entityFrameworkSwitch = true;
-    }
-
-    public static bool GetEntityFrameworkSwitch()
-    {
-        return _entityFrameworkSwitch;
     }
 
     public static void SetHealthChecksSwitchOpen()

@@ -1,23 +1,26 @@
 ﻿using DotNetCore.CAP;
 using EasySoft.Core.Data.Interfaces;
+using EasySoft.Core.EntityFramework.Configures;
 using EasySoft.Core.EntityFramework.ExtensionMethods;
 using EasySoft.Core.EntityFramework.InterFaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.EntityFramework.Contexts.Basic;
 
-public abstract class AdvanceDatabaseContextBase : DbContext, IAdvanceUnitOfWork, IAdvanceTransaction
+public abstract class AdvanceContextBase : DbContext, IAdvanceUnitOfWork, IAdvanceTransaction
 {
     protected IMediator _mediator;
 
-    protected AdvanceDatabaseContextBase(
-        DbContextOptions options,
-        IMediator mediator
+    protected AdvanceContextBase(
+        DbContextOptions options
+        // bool debugMode,
     ) : base(options)
     {
-        _mediator = mediator;
+        _mediator = this.GetService<IMediator>();
     }
 
     #region IUnitOfWork

@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿using EasySoft.Domain.Infrastructure.Core.Contexts;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasySoft.Domain.Infrastructure.Core.Behaviors
 {
     public class TransactionBehavior<TDbContext, TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TDbContext : AdvanceDatabaseContext
+        where TDbContext : AdvanceContext
         where TRequest : IRequest<TResponse>
     {
         ILogger _logger;
