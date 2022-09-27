@@ -4,7 +4,6 @@ using EasySoft.Core.EntityFramework.Contexts.ContextFactories;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,6 +14,13 @@ namespace EasySoft.Core.EntityFramework.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
+    /// <summary>
+    /// If available, use AddAdvanceContextPool first,AddAdvanceContextPool has higher performance.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="action"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static WebApplicationBuilder AddAdvanceContext<T>(
         this WebApplicationBuilder builder,
         Action<DbContextOptionsBuilder> action
