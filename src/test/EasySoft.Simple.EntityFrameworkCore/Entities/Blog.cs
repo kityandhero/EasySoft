@@ -4,6 +4,7 @@ using EasySoft.Simple.EntityFrameworkCore.Bases;
 
 namespace EasySoft.Simple.EntityFrameworkCore.Entities;
 
+[Table("blog")]
 public class Blog : BaseEntity
 {
     [Key]
@@ -15,7 +16,7 @@ public class Blog : BaseEntity
     public string Title { get; set; }
 
     public int AuthorId { get; set; }
-    
+
     [Column("create_time")]
     public DateTime CreateTime { get; set; }
 

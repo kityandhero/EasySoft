@@ -28,6 +28,8 @@ public class DataContext : AdvanceContextBase
 
     public DbSet<Blog> Blogs { get; set; } = null!;
 
+    public DbSet<Post> Posts { get; set; } = null!;
+
     public override Task<bool> SaveEntityAsync(CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();

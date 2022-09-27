@@ -56,6 +56,9 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
                     opt.UseSqlServer(
                         DatabaseConfigAssist.GetMainConnection()
                     );
+
+                    //自动转换命名格式
+                    opt.UseSnakeCaseNamingConvention();
                 }
             );
         }),
