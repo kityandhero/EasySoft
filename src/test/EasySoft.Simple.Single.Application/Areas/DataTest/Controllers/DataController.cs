@@ -19,6 +19,7 @@ public class DataController : AreaControllerCore
     /// DataController
     /// </summary>
     /// <param name="authorService"></param>
+    /// <param name="dataContext"></param>
     public DataController(IAuthorService authorService, DataContext dataContext)
     {
         _authorService = authorService;
