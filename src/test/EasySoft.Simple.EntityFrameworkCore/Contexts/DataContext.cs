@@ -35,7 +35,7 @@ public class DataContext : AdvanceContextBase
         throw new NotImplementedException();
     }
 
-    protected override IDbContextTransaction BeginTransactionWithPersistence(ICapPublisher publisher,
+    protected override IDbContextTransaction BeginTransactionWithPersistenceTarget(ICapPublisher publisher,
         bool autoCommit = false)
     {
         throw new NotImplementedException();

@@ -11,7 +11,7 @@ public interface IAdvanceTransaction
 
     Task<IDbContextTransaction> BeginTransactionAsync(ICapPublisher capBus);
 
-    Task CommitTransactionAsync(IDbContextTransaction transaction);
+    Task CommitAsync(IDbContextTransaction transaction);
 
-    void RollbackTransaction();
+    void Rollback();
 }

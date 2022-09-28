@@ -21,12 +21,12 @@ public class AdvanceContext : AdvanceContextBase
         await base.SaveChangesAsync(cancellationToken);
 
         //实现领域事件的发送
-        await _mediator.DispatchDomainEventsAsync(this);
+        await Mediator.DispatchDomainEventsAsync(this);
 
         return true;
     }
 
-    protected override IDbContextTransaction BeginTransactionWithPersistence(
+    protected override IDbContextTransaction BeginTransactionWithPersistenceTarget(
         ICapPublisher publisher,
         bool autoCommit = false
     )

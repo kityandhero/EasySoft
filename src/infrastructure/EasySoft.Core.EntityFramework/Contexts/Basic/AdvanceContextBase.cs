@@ -1,26 +1,23 @@
 ﻿using DotNetCore.CAP;
 using EasySoft.Core.Data.Interfaces;
-using EasySoft.Core.EntityFramework.Configures;
-using EasySoft.Core.EntityFramework.ExtensionMethods;
 using EasySoft.Core.EntityFramework.InterFaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.EntityFramework.Contexts.Basic;
 
 public abstract class AdvanceContextBase : DbContext, IAdvanceUnitOfWork, IAdvanceTransaction
 {
-    protected IMediator _mediator;
+    protected readonly IMediator Mediator;
 
     protected AdvanceContextBase(
         DbContextOptions options
         // bool debugMode,
     ) : base(options)
     {
-        _mediator = this.GetService<IMediator>();
+        Mediator = this.GetService<IMediator>();
     }
 
     #region IUnitOfWork
@@ -31,65 +28,66 @@ public abstract class AdvanceContextBase : DbContext, IAdvanceUnitOfWork, IAdvan
 
     #region ITransaction
 
-    protected IDbContextTransaction _currentTransaction;
-    public IDbContextTransaction GetCurrentTransaction() => _currentTransaction;
-    public bool HasActiveTransaction => _currentTransaction != null;
+    protected IDbContextTransaction? CurrentTransaction;
+    public IDbContextTransaction GetCurrentTransaction() => CurrentTransaction;
+    public bool HasActiveTransaction => CurrentTransaction != null;
 
-    public Task<IDbContextTransaction> BeginTransactionAsync(ICapPublisher capBus)
+    public async Task<IDbContextTransaction> BeginTransactionAsync(ICapPublisher capBus)
     {
-        if (_currentTransaction != null)
+        if (CurrentTransaction != null)
         {
-            return null;
+            return CurrentTransaction;
         }
 
-        _currentTransaction = BeginTransactionWithPersistence(capBus, autoCommit: false);
+        CurrentTransaction = BeginTransactionWithPersistenceTarget(capBus, autoCommit: false);
 
-        return Task.FromResult(_currentTransaction);
+        return await Task.FromResult(CurrentTransaction);
     }
 
-    protected abstract IDbContextTransaction BeginTransactionWithPersistence(
+    protected abstract IDbContextTransaction BeginTransactionWithPersistenceTarget(
         ICapPublisher publisher,
         bool autoCommit = false
     );
 
-    public async Task CommitTransactionAsync(IDbContextTransaction transaction)
+    public async Task CommitAsync(IDbContextTransaction transaction)
     {
         if (transaction == null) throw new ArgumentNullException(nameof(transaction));
-        if (transaction != _currentTransaction)
+        if (transaction != CurrentTransaction)
             throw new InvalidOperationException($"Transaction {transaction.TransactionId} is not current");
 
         try
         {
             await SaveChangesAsync();
-            transaction.Commit();
+
+            await transaction.CommitAsync();
         }
         catch
         {
-            RollbackTransaction();
+            Rollback();
             throw;
         }
         finally
         {
-            if (_currentTransaction != null)
+            if (CurrentTransaction != null)
             {
-                _currentTransaction.Dispose();
-                _currentTransaction = null;
+                CurrentTransaction.Dispose();
+                CurrentTransaction = null;
             }
         }
     }
 
-    public void RollbackTransaction()
+    public void Rollback()
     {
         try
         {
-            _currentTransaction?.Rollback();
+            CurrentTransaction?.Rollback();
         }
         finally
         {
-            if (_currentTransaction != null)
+            if (CurrentTransaction != null)
             {
-                _currentTransaction.Dispose();
-                _currentTransaction = null;
+                CurrentTransaction.Dispose();
+                CurrentTransaction = null;
             }
         }
     }

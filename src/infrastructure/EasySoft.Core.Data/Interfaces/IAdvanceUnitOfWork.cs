@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.Data.Interfaces;
+﻿using System.Data;
+
+namespace EasySoft.Core.Data.Interfaces;
 
 public interface IAdvanceUnitOfWork : IDisposable
 {

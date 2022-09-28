@@ -51,7 +51,7 @@ namespace EasySoft.Domain.Infrastructure.Core.Behaviors
                         _logger.LogInformation("----- 提交事务 {TransactionId} {CommandName}", transaction.TransactionId,
                             typeName);
 
-                        await _dbContext.CommitTransactionAsync(transaction);
+                        await _dbContext.CommitAsync(transaction);
 
                         transactionId = transaction.TransactionId;
                     }
