@@ -10,7 +10,7 @@ namespace EasySoft.UtilityTools.Standard.Encryption
     /// </summary>
     public static class DesAssist
     {
-        static byte[] _iv = new byte[]
+        private static readonly byte[] Iv =
         {
             101, 22, 34, 47, 54, 67, 75, 89, 99, 104, 118, 124, 133, 146, 158, 167
         };
@@ -53,7 +53,7 @@ namespace EasySoft.UtilityTools.Standard.Encryption
                 using var memoryStream = new MemoryStream();
                 using var cryptoStream = new CryptoStream(
                     memoryStream,
-                    Aes.Create().CreateEncryptor(key, _iv),
+                    Aes.Create().CreateEncryptor(key, Iv),
                     CryptoStreamMode.Write
                 );
 
@@ -107,7 +107,7 @@ namespace EasySoft.UtilityTools.Standard.Encryption
 
                 using var cryptoStream = new CryptoStream(
                     memoryStream,
-                    Aes.Create().CreateDecryptor(key, _iv),
+                    Aes.Create().CreateDecryptor(key, Iv),
                     CryptoStreamMode.Write
                 );
 
