@@ -1,6 +1,7 @@
 ﻿using Consul;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.ConsulRegistrationCenterClient.Assists;
+using Masuit.Tools.DateTimeExt;
 using Microsoft.AspNetCore.Builder;
 
 namespace EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;
@@ -31,12 +32,18 @@ public static class WebApplicationExtensions
             Check = new AgentServiceCheck
             {
                 //服务启动多久后注册
-                DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5),
+                DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(
+                    ConsulRegistrationCenterConfigAssist.GetDeregisterCriticalServiceAfter()
+                ),
                 //健康检查时间间隔
-                Interval = TimeSpan.FromSeconds(10),
+                Interval = TimeSpan.FromSeconds(
+                    ConsulRegistrationCenterConfigAssist.GetHealthCheckIntervalInSecond()
+                ),
                 //健康检查地址
                 HTTP = healthCheckAddress,
-                Timeout = TimeSpan.FromSeconds(5)
+                Timeout = TimeSpan.FromSeconds(
+                    ConsulRegistrationCenterConfigAssist.GetTimeout()
+                )
             }
         };
 

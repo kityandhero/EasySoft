@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.Enums;
 using Microsoft.AspNetCore.Http;
 
 namespace EasySoft.UtilityTools.Core.Assists
@@ -18,6 +20,55 @@ namespace EasySoft.UtilityTools.Core.Assists
     /// </summary>
     public static class IPAssist
     {
+        /// <summary>
+        /// get all ip address
+        /// </summary>
+        /// <param name="ipType">"InterNetwork":ipv4，"InterNetworkV6":ipv6</param>
+        public static List<string> GetLocalIpAddress(IPType ipType)
+        {
+            var netType = ipType switch
+            {
+                IPType.V4 => "ipv4",
+                IPType.V6 => "ipv6",
+                _ => ""
+            };
+
+            var hostName = Dns.GetHostName();
+            var addresses = Dns.GetHostAddresses(hostName);
+
+            var ipList = new List<string>();
+
+            if (netType == string.Empty)
+            {
+                ipList.AddRange(addresses.Select(t => t.ToString()));
+            }
+            else
+            {
+                //AddressFamily.InterNetwork = IPv4,
+                //AddressFamily.InterNetworkV6= IPv6
+                ipList.AddRange(
+                    from t in addresses
+                    where t.AddressFamily.ToString().ToLower() == netType
+                    select t.ToString()
+                );
+            }
+
+            return ipList;
+        }
+
+        /// <summary>
+        /// get all ip address
+        /// </summary>
+        public static List<string> GetServerIpAddress()
+        {
+            return NetworkInterface.GetAllNetworkInterfaces()
+                .Select(p => p.GetIPProperties())
+                .SelectMany(p => p.UnicastAddresses)
+                .Where(p => p.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork &&
+                            !IPAddress.IsLoopback(p.Address))
+                .Select(p => p.Address.ToString()).ToList();
+        }
+
         /// <summary>
         /// 判断IP地址是否为内网IP地址
         /// </summary>

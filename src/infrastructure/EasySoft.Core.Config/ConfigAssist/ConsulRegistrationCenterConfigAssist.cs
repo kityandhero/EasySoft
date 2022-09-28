@@ -135,6 +135,69 @@ public static class ConsulRegistrationCenterConfigAssist
         return value;
     }
 
+    /// <summary>
+    /// 服务停止多久后进行注销 (秒), 默认值 5
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static int GetDeregisterCriticalServiceAfter()
+    {
+        var v = GetConsulConfig().DeregisterCriticalServiceAfter.Trim();
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        if (string.IsNullOrWhiteSpace(v) || !v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 DeregisterCriticalServiceAfter: {ConfigFile} -> DeregisterCriticalServiceAfter"
+            );
+        }
+
+        return value;
+    }
+
+    /// <summary>
+    /// 健康检查间隔,心跳间隔 (秒), 默认值 10
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static int GetHealthCheckIntervalInSecond()
+    {
+        var v = GetConsulConfig().HealthCheckIntervalInSecond.Trim();
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        if (string.IsNullOrWhiteSpace(v) || !v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 HealthCheckIntervalInSecond: {ConfigFile} -> HealthCheckIntervalInSecond"
+            );
+        }
+
+        return value;
+    }
+
+    /// <summary>
+    /// 超时时间 (秒), 默认值 5
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static int GetTimeout()
+    {
+        var v = GetConsulConfig().Timeout.Trim();
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        if (string.IsNullOrWhiteSpace(v) || !v.IsInt(out var value))
+        {
+            throw new Exception(
+                $"请配置 Timeout: {ConfigFile} -> Timeout"
+            );
+        }
+
+        return value;
+    }
+
     public static string GetServiceHealthCheck()
     {
         var v = GetConsulConfig().ServiceHealthCheck.Trim();
