@@ -40,7 +40,9 @@ namespace EasySoft.Domain.Infrastructure.Core.Behaviors
                 await strategy.ExecuteAsync(async () =>
                 {
                     Guid transactionId;
+                    
                     using (var transaction = await _dbContext.BeginTransactionAsync(_capBus))
+                        
                     using (_logger.BeginScope("TransactionContext:{TransactionId}", transaction.TransactionId))
                     {
                         _logger.LogInformation("----- 开始事务 {TransactionId} ({@Command})", transaction.TransactionId,

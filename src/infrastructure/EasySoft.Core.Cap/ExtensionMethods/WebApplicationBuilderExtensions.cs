@@ -14,8 +14,17 @@ using Savorboard.CAP.InMemoryMessageQueue;
 
 namespace EasySoft.Core.Cap.ExtensionMethods;
 
+/// <summary>
+/// WebApplicationBuilderExtensions
+/// </summary>
 public static class WebApplicationBuilderExtensions
 {
+    /// <summary>
+    /// AddAdvanceCap
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static WebApplicationBuilder AddAdvanceCap(this WebApplicationBuilder builder)
     {
         var capSwitch = GeneralConfigAssist.GetCapSwitch();
