@@ -14,6 +14,28 @@ namespace EasySoft.UtilityTools.Standard.Assists
     public static class EnumAssist
     {
         /// <summary>
+        /// 获取实例
+        /// </summary>
+        /// <typeparam name="TEnum">枚举类型</typeparam>
+        /// <param name="member">成员名或值,范例:Enum1枚举有成员A=0,则传入"A"或"0"获取 Enum1.A</param>
+        public static TEnum? Parse<TEnum>(object member)
+        {
+            var value = member.SafeString();
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                if (typeof(TEnum).IsGenericType)
+                {
+                    return default;
+                }
+
+                throw new ArgumentNullException(nameof(member));
+            }
+
+            return (TEnum)Enum.Parse(typeof(TEnum), value, true);
+        }
+
+        /// <summary>
         /// GetIntValues
         /// 获取枚举值对应的整形值集合
         /// </summary>

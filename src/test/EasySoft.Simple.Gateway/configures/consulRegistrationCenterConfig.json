@@ -1,7 +1,0 @@
-﻿{
-  "CenterAddress": "http://host.docker.internal:8500",
-  "ServiceName": "TestService",
-  "ServiceIP": "serviceTest.b.com",
-  "ServicePort": "80",
-  "ServiceHealthCheck": ""
-}

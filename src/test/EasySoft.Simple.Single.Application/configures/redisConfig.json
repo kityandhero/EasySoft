@@ -1,3 +1,0 @@
-{
-  "Connections": "redis.b.com,abortConnect=false,poolsize=10"
-}

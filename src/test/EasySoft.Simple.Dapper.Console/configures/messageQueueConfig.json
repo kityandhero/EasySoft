@@ -1,7 +1,0 @@
-{
-  "HostName": "rabbit.b.com",
-  "UserName": "pandora",
-  "Password": "123456",
-  "VirtualHost": "/",
-  "Prefix": ""
-}

@@ -17,6 +17,11 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
             return source.ToString("yyyy-MM-dd HH:mm");
         }
 
+        public static string ToYearMonthDay(this DateTime dateTime)
+        {
+            return dateTime.ToString("yyyy-MM-dd");
+        }
+
         #region BeginningOf
 
         /// <summary>

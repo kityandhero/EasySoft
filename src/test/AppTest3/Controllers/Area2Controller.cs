@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace AppTest3.Controllers;
+﻿namespace AppTest3.Controllers;
 
 public class Area2Controller : Controller
 {

@@ -8,6 +8,15 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
     public static class ObjectExtensions
     {
         /// <summary>
+        /// 安全转换为字符串，去除两端空格，当值为null时返回""
+        /// </summary>
+        /// <param name="input">输入值</param>
+        public static string SafeString(this object? input)
+        {
+            return input?.ToString().Trim() ?? string.Empty;
+        }
+
+        /// <summary>
         /// 检测对象是否为null,为null则抛出<see cref="ArgumentNullException"/>异常
         /// </summary>
         /// <param name="obj">对象</param>

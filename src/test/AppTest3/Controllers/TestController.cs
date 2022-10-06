@@ -1,6 +1,4 @@
 ﻿using EasySoft.UtilityTools.Core.Results;
-using EasySoft.Simple.EntityFrameworkCore.Contexts;
-using Microsoft.AspNetCore.Mvc;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
