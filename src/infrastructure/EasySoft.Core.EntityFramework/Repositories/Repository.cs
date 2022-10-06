@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using EasySoft.Core.EntityFramework.InterFaces;
+using EasySoft.Core.Data.IRepositories;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.Result;
 using Microsoft.EntityFrameworkCore;

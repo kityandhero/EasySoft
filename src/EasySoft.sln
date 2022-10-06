@@ -253,6 +253,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.Shared", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.BackgroundTaskTest", "simple\monomer\EasySoft.Simple.BackgroundTaskTest\EasySoft.Simple.BackgroundTaskTest.csproj", "{EE671C60-EF35-49FD-BEFF-621BBA429F69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Repositories", "infrastructure\EasySoft.Core.Repositories\EasySoft.Core.Repositories.csproj", "{C28FF8E5-7A28-43EA-AB5D-E9D28FB84BE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -587,6 +589,10 @@ Global
 		{EE671C60-EF35-49FD-BEFF-621BBA429F69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE671C60-EF35-49FD-BEFF-621BBA429F69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE671C60-EF35-49FD-BEFF-621BBA429F69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C28FF8E5-7A28-43EA-AB5D-E9D28FB84BE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C28FF8E5-7A28-43EA-AB5D-E9D28FB84BE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C28FF8E5-7A28-43EA-AB5D-E9D28FB84BE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C28FF8E5-7A28-43EA-AB5D-E9D28FB84BE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -711,6 +717,7 @@ Global
 		{C4B3541E-F215-4533-8C86-8E720D845870} = {A61035C6-A94F-43A6-9FAD-64C3AC68E5C6}
 		{1CF43A96-572B-4B58-BA51-2AFAA87CE1FD} = {6E6F0E4E-2B5E-4275-B9F5-15585604799E}
 		{EE671C60-EF35-49FD-BEFF-621BBA429F69} = {6E6F0E4E-2B5E-4275-B9F5-15585604799E}
+		{C28FF8E5-7A28-43EA-AB5D-E9D28FB84BE1} = {3E4998D6-8F35-4340-9F9E-AA686E6E72D3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

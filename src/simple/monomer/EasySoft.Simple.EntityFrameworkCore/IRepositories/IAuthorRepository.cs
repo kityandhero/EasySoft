@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Simple.EntityFrameworkCore.IRepositories;
+﻿using EasySoft.Core.Data.IRepositories;
+
+namespace EasySoft.Simple.EntityFrameworkCore.IRepositories;
 
 public interface IAuthorRepository : IRepository<Author>
 {
