@@ -11,8 +11,6 @@ public static class WebApplicationBuilderExtensions
         Func<HttpContext?, Tenant> tenantBuilder
     )
     {
-        builder.Services.AddHttpContextAccessor();
-
         builder.Host.AddTenantFactory(tenantBuilder);
 
         return builder;

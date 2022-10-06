@@ -193,6 +193,9 @@ public static class WebApplicationBuilderExtensions
             containerBuilder.RegisterType<ActionContextAccessor>().As<IActionContextAccessor>().SingleInstance();
         });
 
+        // 注入IHttpClientFactory 
+        builder.Services.AddHttpClient();
+
         if (GeneralConfigAssist.GetCorsSwitch())
         {
             builder.Services.AddCors(options =>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using EasySoft.UtilityTools.Standard.Assists;
 
@@ -6,6 +7,19 @@ namespace EasySoft.UtilityTools.Standard.ExtensionMethods
 {
     public static class ObjectExtensions
     {
+        /// <summary>
+        /// 检测对象是否为null,为null则抛出<see cref="ArgumentNullException"/>异常
+        /// </summary>
+        /// <param name="obj">对象</param>
+        /// <param name="parameterName">参数名</param>
+        public static void CheckNull(this object? obj, string parameterName)
+        {
+            if (obj == null)
+            {
+                throw new ArgumentNullException(parameterName);
+            }
+        }
+
         public static T ConvertTo<T>(this object? value, object? defaultValue = null) where T : new()
         {
             return ConvertAssist.ObjectTo<T>(value, defaultValue)!;

@@ -249,6 +249,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "business 基础业务", "bu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.MultiTenant", "infrastructure\EasySoft.Core.MultiTenant\EasySoft.Core.MultiTenant.csproj", "{94CBB91F-B6C1-45D2-9A5F-2869CFE44761}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sms", "Sms", "{E1BAB9E5-5201-457C-82FE-0149A1AAC39C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.LuoSiMao", "infrastructure\EasySoft.Core.LuoSiMao\EasySoft.Core.LuoSiMao.csproj", "{47719C89-60EF-4D59-B222-1515DA30BB61}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -583,6 +587,10 @@ Global
 		{94CBB91F-B6C1-45D2-9A5F-2869CFE44761}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94CBB91F-B6C1-45D2-9A5F-2869CFE44761}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94CBB91F-B6C1-45D2-9A5F-2869CFE44761}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47719C89-60EF-4D59-B222-1515DA30BB61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47719C89-60EF-4D59-B222-1515DA30BB61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47719C89-60EF-4D59-B222-1515DA30BB61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47719C89-60EF-4D59-B222-1515DA30BB61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -706,6 +714,8 @@ Global
 		{2D237DF8-37C8-4FF0-A21C-C5C870089CDB} = {E6D1E731-F18C-46B4-B08B-0672F0642295}
 		{7928CAF2-D3F1-4951-9369-B526E44F1FAD} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
 		{94CBB91F-B6C1-45D2-9A5F-2869CFE44761} = {7928CAF2-D3F1-4951-9369-B526E44F1FAD}
+		{E1BAB9E5-5201-457C-82FE-0149A1AAC39C} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{47719C89-60EF-4D59-B222-1515DA30BB61} = {E1BAB9E5-5201-457C-82FE-0149A1AAC39C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}
