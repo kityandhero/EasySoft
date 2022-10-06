@@ -1,0 +1,7 @@
+﻿{
+  "CenterAddress": "http://host.docker.internal:8500",
+  "ServiceName": "OneService",
+  "ServiceIP": "oneservice.b.com",
+  "ServicePort": "80",
+  "ServiceHealthCheck": ""
+}
