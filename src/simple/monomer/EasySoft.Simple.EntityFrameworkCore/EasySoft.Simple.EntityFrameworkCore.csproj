@@ -16,9 +16,6 @@
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
         <ProjectReference Include="..\..\..\test\EasySoft.Simple.Shared\EasySoft.Simple.Shared.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj"/>
         <ProjectReference Include="..\EasySoft.Simple.Shared\EasySoft.Simple.Shared.csproj"/>
     </ItemGroup>
 

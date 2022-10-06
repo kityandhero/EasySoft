@@ -29,15 +29,6 @@
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.MediatR\EasySoft.Core.MediatR.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj"/>
         <ProjectReference Include="..\..\..\test\AutoFacTest\AutoFacTest.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.DevelopAuxiliary\EasySoft.Core.DevelopAuxiliary.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.EasyToken\EasySoft.Core.EasyToken.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.HealthChecks\EasySoft.Core.HealthChecks.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.LogDashboard\EasySoft.Core.LogDashboard.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Mapster\EasySoft.Core.Mapster.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Gateway.Ocelot\EasySoft.Core.Gateway.Ocelot.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.MediatR\EasySoft.Core.MediatR.csproj"/>
-        <ProjectReference Include="..\AutoFacTest\AutoFacTest.csproj"/>
-        <ProjectReference Include="..\EasySoft.Simple.Distribute.Common\EasySoft.Simple.Distribute.Common.csproj"/>
         <ProjectReference Include="..\EasySoft.Simple.EntityFrameworkCore\EasySoft.Simple.EntityFrameworkCore.csproj"/>
     </ItemGroup>
 

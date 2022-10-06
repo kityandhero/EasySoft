@@ -11,8 +11,6 @@
     <ItemGroup>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.MediatR\EasySoft.Core.MediatR.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.MediatR\EasySoft.Core.MediatR.csproj"/>
     </ItemGroup>
 
 </Project>

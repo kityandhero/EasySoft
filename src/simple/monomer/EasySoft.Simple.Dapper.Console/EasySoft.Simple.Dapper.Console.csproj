@@ -15,13 +15,6 @@
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Dapper.Elegant\EasySoft.Core.Dapper.Elegant.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Dapper\EasySoft.Core.Dapper.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EasyCaching\EasySoft.Core.EasyCaching.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Dapper.Elegant\EasySoft.Core.Dapper.Elegant.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Dapper\EasySoft.Core.Dapper.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.EasyCaching\EasySoft.Core.EasyCaching.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
