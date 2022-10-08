@@ -1,10 +1,7 @@
 ﻿using Autofac;
 using EasySoft.Core.EntityFramework.Contexts.Basic;
 using EasySoft.Core.EntityFramework.Contexts.ContextFactories;
-using EasySoft.Core.MultiTenant;
-using EasySoft.Core.MultiTenant.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 
 namespace EasySoft.Core.EntityFramework.ExtensionMethods;
 
@@ -12,7 +9,7 @@ internal static class ConfigureHostBuilderExtensions
 {
     public static ConfigureHostBuilder AddAdvanceTenantContextFactory<TFactory, T>(
         this ConfigureHostBuilder builder
-    ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : AdvanceTenantContextBase
+    ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : TenantBasicContext
     {
         builder.ConfigureContainer<ContainerBuilder>((_, containerBuilder) =>
         {
@@ -24,7 +21,7 @@ internal static class ConfigureHostBuilderExtensions
 
     public static ConfigureHostBuilder AddAdvanceTenantContext<TFactory, T>(
         this ConfigureHostBuilder builder
-    ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : AdvanceTenantContextBase
+    ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : TenantBasicContext
     {
         builder.ConfigureContainer<ContainerBuilder>((_, containerBuilder) =>
         {

@@ -1,21 +1,18 @@
-﻿using EasySoft.Core.Data.Interfaces;
-using EasySoft.Domain.Abstractions.Aggregation;
+﻿using EasySoft.Domain.Abstractions.Aggregation;
 using EasySoft.Domain.Abstractions.Entities;
 using EasySoft.Domain.Infrastructure.Core.Contexts;
 
 namespace EasySoft.Domain.Infrastructure.Core;
 
 public class Repository<TEntity, TDbContext> : IRepository<TEntity> where TEntity : Entity, IAggregateRoot
-    where TDbContext : AdvanceContext
+    where TDbContext : BaseContext
 {
-    protected virtual TDbContext DbContext { get; set; }
-
     public Repository(TDbContext context)
     {
-        this.DbContext = context;
+        DbContext = context;
     }
 
-    public virtual IAdvanceUnitOfWork UnitOfWork => DbContext;
+    protected virtual TDbContext DbContext { get; set; }
 
     public virtual TEntity Add(TEntity entity)
     {

@@ -8,7 +8,7 @@ public static class ContainerBuilderExtensions
 {
     public static ContainerBuilder AddAdvanceTenantContextFactory<TFactory, T>(
         this ContainerBuilder builder
-    ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : AdvanceTenantContextBase
+    ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : TenantBasicContext
     {
         builder.RegisterType<TFactory>().AsSelf().As<AdvanceTenantContextFactory<T>>()
             .InstancePerLifetimeScope();
@@ -18,7 +18,7 @@ public static class ContainerBuilderExtensions
 
     public static ContainerBuilder AddAdvanceTenantContext<TFactory, T>(
         this ContainerBuilder builder
-    ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : AdvanceTenantContextBase
+    ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : TenantBasicContext
     {
         builder.Register(c =>
         {

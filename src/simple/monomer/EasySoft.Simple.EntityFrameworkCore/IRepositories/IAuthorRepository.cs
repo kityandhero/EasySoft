@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Data.IRepositories;
+﻿using EasySoft.Core.Data.Repositories;
 
 namespace EasySoft.Simple.EntityFrameworkCore.IRepositories;
 

@@ -6,12 +6,10 @@ namespace AppTest3.Controllers;
 
 public class TestController : Controller
 {
-    private ILogger<TestController> _logger;
     private readonly DataContext _dataContext;
 
     public TestController(ILogger<TestController> logger, DataContext dataContext)
     {
-        _logger = logger;
         _dataContext = dataContext;
     }
 

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EasySoft.Simple.Single.Application.Areas.DataTest.Controllers;
 
 /// <summary>
-/// DataController
+///     DataController
 /// </summary>
 public class DataController : AreaControllerCore
 {
@@ -16,7 +16,7 @@ public class DataController : AreaControllerCore
     private readonly DataContext _dataContext;
 
     /// <summary>
-    /// DataController
+    ///     DataController
     /// </summary>
     /// <param name="authorService"></param>
     /// <param name="dataContext"></param>
@@ -34,7 +34,7 @@ public class DataController : AreaControllerCore
     // }
 
     /// <summary>
-    /// GetAuthor
+    ///     GetAuthor
     /// </summary>
     /// <returns></returns>
     public async Task<IActionResult> GetAuthor()

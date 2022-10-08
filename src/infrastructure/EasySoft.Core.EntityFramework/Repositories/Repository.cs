@@ -1,8 +1,7 @@
 ﻿using System.Linq.Expressions;
-using EasySoft.Core.Data.IRepositories;
+using EasySoft.Core.Data.Repositories;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.Result;
-using Microsoft.EntityFrameworkCore;
 
 namespace EasySoft.Core.EntityFramework.Repositories;
 
@@ -17,11 +16,6 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
         _dbSet = context.Set<T>();
     }
 
-    public DbSet<T> GetDbSet()
-    {
-        return _dbSet;
-    }
-
     #region PageList
 
     public IEnumerable<T> PageList<TS>(
@@ -30,20 +24,18 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
         Expression<Func<T, bool>> where,
         Expression<Func<T, TS>> orderBy,
         out int total,
-        bool descending = false
+        bool isAsc = true
     )
     {
         total = _context.Set<T>().Where(where).Count();
 
-        if (!descending)
-        {
+        if (isAsc)
             return
                 _context.Set<T>().Where(where)
                     .OrderBy(orderBy)
                     .Skip(pageSize * (pageIndex - 1))
                     .Take(pageSize)
                     .ToList();
-        }
 
         return
             _context.Set<T>().Where(where)
@@ -54,6 +46,49 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
     }
 
     #endregion
+
+    #region Exists
+
+    public ExecutiveResult Exists(Expression<Func<T, bool>> where)
+    {
+        var o = Get(where);
+
+        return !o.Success ? new ExecutiveResult(ReturnCode.NoData) : new ExecutiveResult(ReturnCode.Ok);
+    }
+
+    #endregion
+
+    #region Update
+
+    public virtual ExecutiveResult<T> Update(T entity)
+    {
+        _context.Entry(entity).State = EntityState.Modified;
+
+        var success = _context.SaveChanges() > 0;
+
+        if (!success)
+            return new ExecutiveResult<T>(ReturnCode.NoChange)
+            {
+                Data = entity
+            };
+
+        return new ExecutiveResult<T>(ReturnCode.Ok)
+        {
+            Data = entity
+        };
+    }
+
+    #endregion
+
+    public void Save()
+    {
+        _context.SaveChanges();
+    }
+
+    public DbSet<T> GetDbSet()
+    {
+        return _dbSet;
+    }
 
     #region SingleList
 
@@ -90,25 +125,13 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
 
     #endregion
 
-    #region Exists
-
-    public ExecutiveResult Exists(Expression<Func<T, bool>> where)
-    {
-        var o = Get(where);
-
-        return !o.Success ? new ExecutiveResult(ReturnCode.NoData) : new ExecutiveResult(ReturnCode.Ok);
-    }
-
-    #endregion
+    #region Get
 
     public virtual ExecutiveResult<T> Get(object id)
     {
         var entity = _dbSet.Find(id);
 
-        if (entity == null)
-        {
-            return new ExecutiveResult<T>(ReturnCode.NoData);
-        }
+        if (entity == null) return new ExecutiveResult<T>(ReturnCode.NoData);
 
         return new ExecutiveResult<T>(ReturnCode.Ok)
         {
@@ -116,18 +139,13 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
         };
     }
 
-    #region Get
-
     public virtual ExecutiveResult<T> Get(
         Expression<Func<T, bool>> filter
     )
     {
         var entity = SingleList(filter).SingleOrDefault();
 
-        if (entity == null)
-        {
-            return new ExecutiveResult<T>(ReturnCode.NoData);
-        }
+        if (entity == null) return new ExecutiveResult<T>(ReturnCode.NoData);
 
         return new ExecutiveResult<T>(ReturnCode.Ok)
         {
@@ -143,10 +161,7 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
     {
         var entity = SingleList(filter, keySelector, descending).SingleOrDefault();
 
-        if (entity == null)
-        {
-            return new ExecutiveResult<T>(ReturnCode.NoData);
-        }
+        if (entity == null) return new ExecutiveResult<T>(ReturnCode.NoData);
 
         return new ExecutiveResult<T>(ReturnCode.Ok)
         {
@@ -163,10 +178,7 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
     {
         var entity = SingleList(filter, keySelector, comparer, descending).SingleOrDefault();
 
-        if (entity == null)
-        {
-            return new ExecutiveResult<T>(ReturnCode.NoData);
-        }
+        if (entity == null) return new ExecutiveResult<T>(ReturnCode.NoData);
 
         return new ExecutiveResult<T>(ReturnCode.Ok)
         {
@@ -185,12 +197,10 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
         var success = _context.SaveChanges() > 0;
 
         if (!success)
-        {
             return new ExecutiveResult<T>(ReturnCode.NoChange)
             {
                 Data = entity
             };
-        }
 
         return new ExecutiveResult<T>(ReturnCode.Ok)
         {
@@ -205,12 +215,10 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
         var success = _context.SaveChanges() > 0;
 
         if (!success)
-        {
             return new ExecutiveResult<T>(ReturnCode.NoChange)
             {
                 Data = entity
             };
-        }
 
         return new ExecutiveResult<T>(ReturnCode.Ok)
         {
@@ -229,30 +237,6 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
 
     #endregion
 
-    #region Update
-
-    public virtual ExecutiveResult<T> Update(T entity)
-    {
-        _context.Entry(entity).State = EntityState.Modified;
-
-        var success = _context.SaveChanges() > 0;
-
-        if (!success)
-        {
-            return new ExecutiveResult<T>(ReturnCode.NoChange)
-            {
-                Data = entity
-            };
-        }
-
-        return new ExecutiveResult<T>(ReturnCode.Ok)
-        {
-            Data = entity
-        };
-    }
-
-    #endregion
-
     #region Delete
 
     public virtual ExecutiveResult Delete(object id)
@@ -266,10 +250,7 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
 
     public virtual ExecutiveResult<T> Delete(T entity)
     {
-        if (_context.Entry(entity).State == EntityState.Detached)
-        {
-            _dbSet.Attach(entity);
-        }
+        if (_context.Entry(entity).State == EntityState.Detached) _dbSet.Attach(entity);
 
         _dbSet.Remove(entity);
 
@@ -278,12 +259,10 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
         var success = _context.SaveChanges() > 0;
 
         if (!success)
-        {
             return new ExecutiveResult<T>(ReturnCode.NoChange)
             {
                 Data = entity
             };
-        }
 
         return new ExecutiveResult<T>(ReturnCode.Ok)
         {
@@ -315,9 +294,4 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
     }
 
     #endregion
-
-    public void Save()
-    {
-        _context.SaveChanges();
-    }
 }

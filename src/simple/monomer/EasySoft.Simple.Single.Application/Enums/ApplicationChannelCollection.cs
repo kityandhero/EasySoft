@@ -2,27 +2,26 @@
 using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
-namespace EasySoft.Simple.Distribute.Common.Enums;
+namespace EasySoft.Simple.Single.Application.Enums;
 
 /// <summary>
-/// ApplicationChannelCollection
+///     ApplicationChannelCollection
 /// </summary>
 public enum ApplicationChannelCollection
 {
     /// <summary>
-    /// TestApplication
+    ///     TestApplication
     /// </summary>
     [Description("测试应用")]
     TestApplication = 100
 }
 
 /// <summary>
-/// 
 /// </summary>
 public static class ApplicationChannelCollectionExtensions
 {
     /// <summary>
-    /// ToInt
+    ///     ToInt
     /// </summary>
     /// <param name="source"></param>
     /// <returns></returns>
@@ -32,7 +31,7 @@ public static class ApplicationChannelCollectionExtensions
     }
 
     /// <summary>
-    /// GetDescription
+    ///     GetDescription
     /// </summary>
     /// <param name="source"></param>
     /// <returns></returns>
@@ -44,7 +43,7 @@ public static class ApplicationChannelCollectionExtensions
     }
 
     /// <summary>
-    /// ToApplicationChannel
+    ///     ToApplicationChannel
     /// </summary>
     /// <param name="source"></param>
     /// <returns></returns>

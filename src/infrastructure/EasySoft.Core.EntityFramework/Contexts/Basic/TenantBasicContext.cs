@@ -1,19 +1,16 @@
 ﻿using EasySoft.Core.MultiTenant;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.EntityFramework.Contexts.Basic;
 
-public abstract class AdvanceTenantContextBase : AdvanceContextBase
+public abstract class TenantBasicContext : BasicContext
 {
-    public ITenant? Tenant { get; set; }
-
-    protected AdvanceTenantContextBase(
+    protected TenantBasicContext(
         DbContextOptions options
     ) : base(options)
     {
     }
+
+    public ITenant? Tenant { get; set; }
 
     protected sealed override void OnModelCreating(ModelBuilder modelBuilder)
     {

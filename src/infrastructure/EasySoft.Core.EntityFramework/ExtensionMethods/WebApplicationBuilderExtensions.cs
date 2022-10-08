@@ -4,7 +4,6 @@ using EasySoft.Core.EntityFramework.Contexts.ContextFactories;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -15,7 +14,7 @@ namespace EasySoft.Core.EntityFramework.ExtensionMethods;
 public static class WebApplicationBuilderExtensions
 {
     /// <summary>
-    /// If available, use AddAdvanceContextPool first,AddAdvanceContextPool has higher performance.
+    ///     If available, use AddAdvanceContextPool first,AddAdvanceContextPool has higher performance.
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="action"></param>
@@ -24,12 +23,9 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddAdvanceContext<T>(
         this WebApplicationBuilder builder,
         Action<DbContextOptionsBuilder> action
-    ) where T : AdvanceContextBase
+    ) where T : BasicContext
     {
-        if (FlagAssist.GetEntityFrameworkSwitch())
-        {
-            return builder;
-        }
+        if (FlagAssist.GetEntityFrameworkSwitch()) return builder;
 
         builder.Services.AddDbContext<T>((serviceProvider, optionsBuilder) =>
         {
@@ -38,18 +34,14 @@ public static class WebApplicationBuilderExtensions
                 optionsBuilder.UseLoggerFactory(serviceProvider.GetService<ILoggerFactory>());
 
                 if (ContextConfigure.EnableSensitiveDataLogging)
-                {
                     //敏感数据日志
                     //仅应在开发环境下开启
                     optionsBuilder.EnableSensitiveDataLogging();
-                }
 
                 if (ContextConfigure.EnableDetailedErrors)
-                {
                     //出于性能原因，EF Core 不会在 try-catch 块中包装每个调用以从数据库提供程序读取值。 但是，这有时会导致难以诊断的异常，尤其是当数据库在模型不允许的情况下返回 NULL 时
                     //仅应在开发环境下开启
                     optionsBuilder.EnableDetailedErrors();
-                }
             }
 
             action(optionsBuilder);
@@ -69,12 +61,9 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddAdvanceContextPool<T>(
         this WebApplicationBuilder builder,
         Action<DbContextOptionsBuilder> action
-    ) where T : AdvanceContextBase
+    ) where T : BasicContext
     {
-        if (FlagAssist.GetEntityFrameworkSwitch())
-        {
-            return builder;
-        }
+        if (FlagAssist.GetEntityFrameworkSwitch()) return builder;
 
         builder.Services.AddDbContextPool<T>(action);
 
@@ -92,12 +81,9 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddPooledAdvanceTenantContext<TFactory, T>(
         this WebApplicationBuilder builder,
         Action<DbContextOptionsBuilder> action
-    ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : AdvanceTenantContextBase
+    ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : TenantBasicContext
     {
-        if (FlagAssist.GetEntityFrameworkSwitch())
-        {
-            return builder;
-        }
+        if (FlagAssist.GetEntityFrameworkSwitch()) return builder;
 
         builder.Services.AddPooledDbContextFactory<T>(action);
 
@@ -118,7 +104,7 @@ public static class WebApplicationBuilderExtensions
 
     private static WebApplicationBuilder AddAdvanceTenantContextFactory<TFactory, T>(
         this WebApplicationBuilder builder
-    ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : AdvanceTenantContextBase
+    ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : TenantBasicContext
     {
         builder.Host.AddAdvanceTenantContextFactory<TFactory, T>();
 
@@ -127,7 +113,7 @@ public static class WebApplicationBuilderExtensions
 
     private static WebApplicationBuilder AddAdvanceTenantContext<TFactory, T>(
         this WebApplicationBuilder builder
-    ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : AdvanceTenantContextBase
+    ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : TenantBasicContext
     {
         builder.Host.AddAdvanceTenantContext<TFactory, T>();
 

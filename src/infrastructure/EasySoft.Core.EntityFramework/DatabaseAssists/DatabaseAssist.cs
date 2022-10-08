@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace EasySoft.Core.EntityFramework.DatabaseAssists;
+﻿namespace EasySoft.Core.EntityFramework.DatabaseAssists;
 
 public static class DatabaseAssist
 {

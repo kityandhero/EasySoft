@@ -1,17 +1,31 @@
 ﻿using System.Linq.Expressions;
 using EasySoft.UtilityTools.Standard.Result;
 
-namespace EasySoft.Core.Data.IRepositories;
+namespace EasySoft.Core.Data.Repositories;
 
 public interface IRepository
 {
 }
 
 /// <summary>
-/// Repository标记接口
+///     Repository标记接口
 /// </summary>
 public interface IRepository<T> : IRepository where T : class, new()
 {
+    #region Exists
+
+    ExecutiveResult Exists(Expression<Func<T, bool>> where);
+
+    #endregion
+
+    #region Update
+
+    ExecutiveResult<T> Update(T entity);
+
+    #endregion
+
+    void Save();
+
     #region PageList
 
     IEnumerable<T> PageList<TS>(
@@ -20,7 +34,7 @@ public interface IRepository<T> : IRepository where T : class, new()
         Expression<Func<T, bool>> where,
         Expression<Func<T, TS>> orderBy,
         out int total,
-        bool isAsc
+        bool isAsc = true
     );
 
     #endregion
@@ -41,12 +55,6 @@ public interface IRepository<T> : IRepository where T : class, new()
         IComparer<TKey>? comparer,
         bool descending = false
     );
-
-    #endregion
-
-    #region Exists
-
-    ExecutiveResult Exists(Expression<Func<T, bool>> where);
 
     #endregion
 
@@ -80,12 +88,6 @@ public interface IRepository<T> : IRepository where T : class, new()
 
     #endregion
 
-    #region Update
-
-    ExecutiveResult<T> Update(T entity);
-
-    #endregion
-
     #region Delete
 
     ExecutiveResult Delete(object id);
@@ -97,6 +99,4 @@ public interface IRepository<T> : IRepository where T : class, new()
     ExecutiveResult BatchDelete(IEnumerable<T> entities);
 
     #endregion
-
-    void Save();
 }

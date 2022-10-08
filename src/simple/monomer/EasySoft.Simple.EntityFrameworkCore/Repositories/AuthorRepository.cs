@@ -17,12 +17,10 @@ public class AuthorRepository : Repository<Author>, IAuthorRepository
         var author = await GetDbSet().FindAsync(authorId);
 
         if (author == null)
-        {
             return new ExecutiveResult<Author>(ReturnCode.NoData)
             {
                 Data = new Author()
             };
-        }
 
         return new ExistResult<Author>(ReturnCode.Ok)
         {
@@ -40,14 +38,10 @@ public class AuthorRepository : Repository<Author>, IAuthorRepository
     public async Task<ExecutiveResult<Author>> CreateAsync(string loginName, string password)
     {
         if (string.IsNullOrWhiteSpace(loginName))
-        {
             return new ExecutiveResult<Author>(ReturnCode.ParamError.ToMessage("登陆名不能为空白"));
-        }
 
         if (string.IsNullOrWhiteSpace(password))
-        {
             return new ExecutiveResult<Author>(ReturnCode.ParamError.ToMessage("密码不能为空白"));
-        }
 
         var author = new Author
         {

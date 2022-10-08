@@ -1,15 +1,14 @@
 ﻿using EasySoft.Core.EntityFramework.Contexts.Basic;
 using EasySoft.Core.MultiTenant;
-using Microsoft.EntityFrameworkCore;
 
 namespace EasySoft.Core.EntityFramework.Contexts.ContextFactories;
 
-public abstract class AdvanceTenantContextFactory<T> : IDbContextFactory<T> where T : AdvanceTenantContextBase
+public abstract class AdvanceTenantContextFactory<T> : IDbContextFactory<T> where T : TenantBasicContext
 {
     private readonly IDbContextFactory<T> _pooledFactory;
     private readonly ITenant? _tenant;
 
-    public AdvanceTenantContextFactory(
+    protected AdvanceTenantContextFactory(
         IDbContextFactory<T> pooledFactory,
         ITenant? tenant
     )

@@ -1,13 +1,10 @@
-﻿using EasySoft.Core.Data.Interfaces;
-using EasySoft.Domain.Abstractions.Aggregation;
+﻿using EasySoft.Domain.Abstractions.Aggregation;
 using EasySoft.Domain.Abstractions.Entities;
 
 namespace EasySoft.Domain.Infrastructure.Core;
 
 public interface IRepository<TEntity> where TEntity : Entity, IAggregateRoot
 {
-    IAdvanceUnitOfWork UnitOfWork { get; }
-
     TEntity Add(TEntity entity);
 
     Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default);

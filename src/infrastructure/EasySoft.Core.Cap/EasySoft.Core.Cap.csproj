@@ -11,7 +11,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="DotNetCore.CAP.MySql" Version="6.2.0"/>
+        <PackageReference Include="DotNetCore.CAP.PostgreSql" Version="6.2.0"/>
+        <PackageReference Include="DotNetCore.CAP.Sqlite" Version="6.2.0"/>
+        <PackageReference Include="DotNetCore.CAP.SqlServer" Version="6.2.0"/>
     </ItemGroup>
 
 </Project>
