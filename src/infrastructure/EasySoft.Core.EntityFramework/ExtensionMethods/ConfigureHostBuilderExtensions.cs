@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using EasySoft.Core.EntityFramework.Contexts.Basic;
 using EasySoft.Core.EntityFramework.Contexts.ContextFactories;
 using Microsoft.AspNetCore.Builder;
 

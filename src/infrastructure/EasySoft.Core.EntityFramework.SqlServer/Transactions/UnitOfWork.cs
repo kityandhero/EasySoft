@@ -1,7 +1,7 @@
 ﻿namespace EasySoft.Core.EntityFramework.SqlServer.Transactions;
 
 public class UnitOfWork<TContext> : BasicUnitOfWork<TContext>
-    where TContext : DataContext
+    where TContext : BaseContext
 {
     private readonly ICapPublisher? _publisher;
 

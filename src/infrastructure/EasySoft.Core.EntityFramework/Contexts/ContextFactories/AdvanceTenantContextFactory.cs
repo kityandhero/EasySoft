@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.EntityFramework.Contexts.Basic;
-using EasySoft.Core.MultiTenant;
+﻿using EasySoft.Core.MultiTenant;
 
 namespace EasySoft.Core.EntityFramework.Contexts.ContextFactories;
 

@@ -34,17 +34,26 @@ public class DataController : AreaControllerCore
     // }
 
     /// <summary>
+    ///     初始化数据库
+    /// </summary>
+    /// <returns></returns>
+    public async Task<IActionResult> InitDatabase()
+    {
+        await _dataContext.Database.EnsureDeletedAsync();
+        await _dataContext.Database.EnsureCreatedAsync();
+
+        return this.Success();
+    }
+
+    /// <summary>
     ///     GetAuthor
     /// </summary>
     /// <returns></returns>
     public async Task<IActionResult> GetAuthor()
     {
-        await _dataContext.Database.EnsureDeletedAsync();
-        await _dataContext.Database.EnsureCreatedAsync();
-
         var author = new Author
         {
-            LoginName = "lili",
+            LoginName = $"lili-{Guid.NewGuid().ToString()}",
             Password = "123456"
         };
 
@@ -52,11 +61,28 @@ public class DataController : AreaControllerCore
 
         _dataContext.Posts.Add(new Post
         {
-            Title = "this is .a simple post",
+            Title = "this is a simple post",
             Author = author
         });
 
         await _dataContext.SaveChangesAsync();
+
+        var result = await _authorService.GetAuthorDtoSync(1);
+
+        return !result.Success ? this.Fail(result.Code) : this.Success(result.Data);
+    }
+
+    /// <summary>
+    ///     使用工作单元操控
+    /// </summary>
+    /// <returns></returns>
+    public async Task<IActionResult> GetAuthorWithUnitOfWork()
+    {
+        var dictionary = new Dictionary<string, string>();
+
+        for (var i = 0; i < 10; i++) dictionary.Add($"lili-{Guid.NewGuid().ToString()}", "123456");
+
+        await _authorService.RegisterMultiAsync(dictionary);
 
         var result = await _authorService.GetAuthorDtoSync(1);
 

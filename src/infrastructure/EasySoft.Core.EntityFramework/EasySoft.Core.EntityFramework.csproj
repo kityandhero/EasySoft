@@ -26,4 +26,8 @@
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.9"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="Assists"/>
+    </ItemGroup>
+
 </Project>

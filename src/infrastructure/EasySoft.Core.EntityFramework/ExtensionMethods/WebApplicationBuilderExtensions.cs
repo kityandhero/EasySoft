@@ -1,20 +1,19 @@
-﻿using EasySoft.Core.EntityFramework.Configures;
-using EasySoft.Core.EntityFramework.Contexts.Basic;
-using EasySoft.Core.EntityFramework.Contexts.ContextFactories;
-using EasySoft.Core.Infrastructure.Assists;
+﻿using EasySoft.Core.EntityFramework.Contexts.ContextFactories;
 using EasySoft.Core.Infrastructure.Startup;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using FlagAssist = EasySoft.Core.EntityFramework.Assists.FlagAssist;
 
 namespace EasySoft.Core.EntityFramework.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
+    private const string UniqueIdentifierAddAdvanceContext = "3964d988-0ba6-44f4-90ba-cc5ae17a0a05";
+
+    private const string UniqueIdentifierAddAdvanceContextPool = "494c3ace-765a-45f4-b798-7a29d76847b1";
+
+    private const string UniqueIdentifierAddPooledAdvanceTenantContext = "bb87108a-a604-47e3-9166-60f424451c80";
+
     /// <summary>
-    ///     If available, use AddAdvanceContextPool first,AddAdvanceContextPool has higher performance.
+    ///     AddAdvanceContext
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="action"></param>
@@ -25,29 +24,13 @@ public static class WebApplicationBuilderExtensions
         Action<DbContextOptionsBuilder> action
     ) where T : BasicContext
     {
-        if (FlagAssist.GetEntityFrameworkSwitch()) return builder;
+        if (builder.HasRegistered(UniqueIdentifierAddAdvanceContextPool))
+            throw new Exception("AddAdvanceContext and AddAdvanceContextPool do not use at the same time");
 
-        builder.Services.AddDbContext<T>((serviceProvider, optionsBuilder) =>
-        {
-            if (EnvironmentAssist.GetEnvironment().IsDevelopment())
-            {
-                optionsBuilder.UseLoggerFactory(serviceProvider.GetService<ILoggerFactory>());
+        if (builder.HasRegistered(UniqueIdentifierAddAdvanceContext))
+            return builder;
 
-                if (ContextConfigure.EnableSensitiveDataLogging)
-                    //敏感数据日志
-                    //仅应在开发环境下开启
-                    optionsBuilder.EnableSensitiveDataLogging();
-
-                if (ContextConfigure.EnableDetailedErrors)
-                    //出于性能原因，EF Core 不会在 try-catch 块中包装每个调用以从数据库提供程序读取值。 但是，这有时会导致难以诊断的异常，尤其是当数据库在模型不允许的情况下返回 NULL 时
-                    //仅应在开发环境下开启
-                    optionsBuilder.EnableDetailedErrors();
-            }
-
-            action(optionsBuilder);
-        });
-
-        FlagAssist.SetEntityFrameworkSwitchOpen();
+        builder.Services.AddAdvanceContext<T>(action);
 
         ApplicationConfigurator.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
@@ -58,16 +41,26 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
-    public static WebApplicationBuilder AddAdvanceContextPool<T>(
+    /// <summary>
+    ///     AddAdvanceContextPool, 与工作单元的协同性未做测试，暂不开放
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="action"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    internal static WebApplicationBuilder AddAdvanceContextPool<T>(
         this WebApplicationBuilder builder,
         Action<DbContextOptionsBuilder> action
     ) where T : BasicContext
     {
-        if (FlagAssist.GetEntityFrameworkSwitch()) return builder;
+        if (builder.HasRegistered(UniqueIdentifierAddAdvanceContext))
+            throw new Exception("AddAdvanceContext and AddAdvanceContextPool do not use at the same time");
 
-        builder.Services.AddDbContextPool<T>(action);
+        if (builder.HasRegistered(UniqueIdentifierAddAdvanceContextPool))
+            return builder;
 
-        FlagAssist.SetEntityFrameworkSwitchOpen();
+        builder.Services.AddAdvanceContextPool<T>(action);
 
         ApplicationConfigurator.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
@@ -78,20 +71,26 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    ///     AddPooledAdvanceTenantContext, 与工作单元的协同性未做测试，暂不开放
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="action"></param>
+    /// <typeparam name="TFactory"></typeparam>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static WebApplicationBuilder AddPooledAdvanceTenantContext<TFactory, T>(
         this WebApplicationBuilder builder,
         Action<DbContextOptionsBuilder> action
     ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : TenantBasicContext
     {
-        if (FlagAssist.GetEntityFrameworkSwitch()) return builder;
+        if (builder.HasRegistered(UniqueIdentifierAddPooledAdvanceTenantContext))
+            return builder;
 
         builder.Services.AddPooledDbContextFactory<T>(action);
 
-        builder.AddAdvanceTenantContextFactory<TFactory, T>();
-
-        builder.AddAdvanceTenantContext<TFactory, T>();
-
-        FlagAssist.SetEntityFrameworkSwitchOpen();
+        builder.AddAdvanceTenantContextFactory<TFactory, T>()
+            .AddAdvanceTenantContext<TFactory, T>();
 
         ApplicationConfigurator.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()

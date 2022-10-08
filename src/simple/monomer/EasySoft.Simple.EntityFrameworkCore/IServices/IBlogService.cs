@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Simple.EntityFrameworkCore.IServices;
+﻿using EasySoft.Core.Infrastructure.Services;
+
+namespace EasySoft.Simple.EntityFrameworkCore.IServices;
 
 public interface IBlogService : IService
 {

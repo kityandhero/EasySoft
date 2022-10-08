@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.AspNetCore.Builder;
 
 namespace EasySoft.Core.EntityFramework.ExtensionMethods;
 
@@ -10,10 +8,7 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        if (EnvironmentAssist.GetEnvironment().IsDevelopment())
-        {
-            application.UseMigrationsEndPoint();
-        }
+        if (EnvironmentAssist.GetEnvironment().IsDevelopment()) application.UseMigrationsEndPoint();
 
         return application;
     }

@@ -86,6 +86,8 @@ public interface IRepository<T> : IRepository where T : class, new()
     ExecutiveResult<T> Add(T entity);
     ExecutiveResult AddRange(IEnumerable<T> entities);
 
+    Task<ExecutiveResult> AddRangeAsync(IEnumerable<T> entities);
+
     #endregion
 
     #region Delete

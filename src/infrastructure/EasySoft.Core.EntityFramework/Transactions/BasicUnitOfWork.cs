@@ -1,6 +1,5 @@
 ﻿using System.Data;
 using EasySoft.Core.Data.Transactions;
-using EasySoft.Core.EntityFramework.Contexts.Basic;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EasySoft.Core.EntityFramework.Transactions;

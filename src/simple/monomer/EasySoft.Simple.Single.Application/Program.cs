@@ -6,7 +6,7 @@ using AutoFacTest.Interfaces;
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.EntityFramework.ExtensionMethods;
+using EasySoft.Core.EntityFramework.SqlServer.Extensions;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
@@ -50,13 +50,10 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
         .SetName("AddAdvanceDbContext<DataContext>")
         .SetAction(applicationBuilder =>
         {
-            applicationBuilder.AddAdvanceContext<DataContext>(
+            applicationBuilder.AddAdvanceEntityFrameworkSqlServer<DataContext>(
+                DatabaseConfigAssist.GetMainConnection(),
                 opt =>
                 {
-                    opt.UseSqlServer(
-                        DatabaseConfigAssist.GetMainConnection()
-                    );
-
                     //自动转换命名格式
                     opt.UseSnakeCaseNamingConvention();
                 }

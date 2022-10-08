@@ -1,9 +1,9 @@
-﻿using EasySoft.Core.EntityFramework.Contexts.Basic;
+﻿using EasySoft.Core.EntityFramework.SqlServer.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace EasySoft.Simple.EntityFrameworkCore.Contexts;
 
-public class DataContext : BasicContext
+public class DataContext : BaseContext
 {
     public DataContext(
         DbContextOptions options

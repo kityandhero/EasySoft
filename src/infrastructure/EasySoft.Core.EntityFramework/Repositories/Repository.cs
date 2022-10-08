@@ -235,6 +235,15 @@ public abstract class Repository<T> : IRepository<T> where T : class, new()
         return !success ? new ExecutiveResult(ReturnCode.NoChange) : new ExecutiveResult(ReturnCode.Ok);
     }
 
+    public virtual async Task<ExecutiveResult> AddRangeAsync(IEnumerable<T> entities)
+    {
+        _context.AddRange(entities);
+
+        var success = await _context.SaveChangesAsync() > 0;
+
+        return !success ? new ExecutiveResult(ReturnCode.NoChange) : new ExecutiveResult(ReturnCode.Ok);
+    }
+
     #endregion
 
     #region Delete
