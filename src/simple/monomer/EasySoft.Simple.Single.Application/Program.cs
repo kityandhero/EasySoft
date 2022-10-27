@@ -6,6 +6,7 @@ using AutoFacTest.Interfaces;
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.Data.ExtensionMethods;
 using EasySoft.Core.EntityFramework.SqlServer.Extensions;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
@@ -56,6 +57,8 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
                     opt.UseSnakeCaseNamingConvention();
                 }
             );
+
+            applicationBuilder.AddAssemblyBusinessServiceInterceptors(typeof(AuthorBusinessService).Assembly);
         }),
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddPrepareStartWorkInjection")
@@ -84,13 +87,6 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
             applicationBuilder.AddExtraNormalInjection(containerBuilder =>
             {
                 containerBuilder.RegisterType<Simple>().As<ISimple>().SingleInstance();
-
-                containerBuilder.RegisterType<AuthorBusinessService>().As<IAuthorBusinessService>()
-                    .InstancePerDependency()
-                    .AsImplementedInterfaces();
-
-                containerBuilder.RegisterType<BlogBusinessService>().As<IBlogBusinessService>().InstancePerDependency()
-                    .AsImplementedInterfaces();
             });
         }),
     // 启用日志面板

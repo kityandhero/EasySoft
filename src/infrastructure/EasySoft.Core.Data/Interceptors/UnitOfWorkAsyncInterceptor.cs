@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using EasySoft.Core.Data.Attributes;
 using EasySoft.Core.Data.Transactions;
+using EasySoft.Core.Infrastructure.Assists;
 
 namespace EasySoft.Core.Data.Interceptors;
 
@@ -26,9 +27,17 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
         var attribute = GetAttribute(invocation);
 
         if (attribute == null)
+        {
+            LogAssist.Trace("Exec InterceptSynchronous");
+
             invocation.Proceed();
+
+            LogAssist.Trace("Complete InterceptSynchronous");
+        }
         else
+        {
             InternalInterceptSynchronous(invocation, attribute);
+        }
     }
 
     /// <summary>
@@ -69,11 +78,15 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
     {
         try
         {
+            LogAssist.Trace("Exec InternalInterceptSynchronous");
+
             _unitOfWork.BeginTransaction(distributed: attribute.SharedToCap);
 
             invocation.Proceed();
 
             _unitOfWork.Commit();
+
+            LogAssist.Trace("Complete InternalInterceptSynchronous");
         }
         catch (Exception)
         {
@@ -97,6 +110,8 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
     {
         try
         {
+            LogAssist.Trace("Exec InternalInterceptAsynchronous");
+
             _unitOfWork.BeginTransaction(distributed: attribute.SharedToCap);
 
             invocation.Proceed();
@@ -106,6 +121,8 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
             await task;
 
             await _unitOfWork.CommitAsync();
+
+            LogAssist.Trace("Complete InternalInterceptAsynchronous");
         }
         catch (Exception)
         {
@@ -135,6 +152,8 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
 
         try
         {
+            LogAssist.Trace("Exec InternalInterceptAsynchronous");
+
             _unitOfWork.BeginTransaction(distributed: attribute.SharedToCap);
 
             invocation.Proceed();
@@ -144,6 +163,8 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
             result = await task;
 
             await _unitOfWork.CommitAsync();
+
+            LogAssist.Trace("Complete InternalInterceptAsynchronous");
         }
         catch (Exception)
         {
@@ -166,7 +187,11 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
     /// <returns></returns>
     private async Task InternalInterceptAsynchronousWithoutUnitOfWork(IInvocation invocation)
     {
+        LogAssist.Trace("Exec InternalInterceptAsynchronousWithoutUnitOfWork");
+
         invocation.Proceed();
+
+        LogAssist.Trace("Complete InternalInterceptAsynchronousWithoutUnitOfWork");
 
         var task = (Task)invocation.ReturnValue;
 
@@ -181,13 +206,15 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
     /// <returns></returns>
     private async Task<TResult> InternalInterceptAsynchronousWithoutUnitOfWork<TResult>(IInvocation invocation)
     {
-        TResult result;
+        LogAssist.Trace("Exec InternalInterceptAsynchronousWithoutUnitOfWork");
 
         invocation.Proceed();
 
+        LogAssist.Trace("Complete InternalInterceptAsynchronousWithoutUnitOfWork");
+
         var task = (Task<TResult>)invocation.ReturnValue;
 
-        result = await task;
+        var result = await task;
 
         return result;
     }

@@ -27,7 +27,7 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddAssemblyInterceptors(
+    public static IServiceCollection AddAssemblyBusinessServiceInterceptors(
         this IServiceCollection services,
         params Assembly[] assemblies
     )
@@ -35,13 +35,13 @@ public static class ServiceCollectionExtensions
         if (assemblies.Length <= 0) return services;
 
         assemblies.ForEach(assembly =>
-            AddAssemblyInterceptors(services, assembly)
+            AddAssemblyBusinessServiceInterceptors(services, assembly)
         );
 
         return services;
     }
 
-    public static IServiceCollection AddAssemblyInterceptors(
+    public static IServiceCollection AddAssemblyBusinessServiceInterceptors(
         this IServiceCollection services,
         Assembly assembly
     )
