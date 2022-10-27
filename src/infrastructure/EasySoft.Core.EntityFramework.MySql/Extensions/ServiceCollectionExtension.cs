@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.EntityFramework.MySql.Extensions;
+﻿using EasySoft.Core.Data.Transactions;
+
+namespace EasySoft.Core.EntityFramework.MySql.Extensions;
 
 public static class ServiceCollectionExtension
 {

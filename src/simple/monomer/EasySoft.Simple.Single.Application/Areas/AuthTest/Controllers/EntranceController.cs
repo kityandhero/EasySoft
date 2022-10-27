@@ -15,15 +15,15 @@ namespace EasySoft.Simple.Single.Application.Areas.AuthTest.Controllers;
 /// </summary>
 public class EntranceController : AreaControllerCore
 {
-    private readonly IAuthorService _authorService;
+    private readonly IAuthorBusinessService _authorBusinessService;
 
     /// <summary>
     /// EntranceController
     /// </summary>
-    /// <param name="authorService"></param>
-    public EntranceController(IAuthorService authorService)
+    /// <param name="authorBusinessService"></param>
+    public EntranceController(IAuthorBusinessService authorBusinessService)
     {
-        _authorService = authorService;
+        _authorBusinessService = authorBusinessService;
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public class EntranceController : AreaControllerCore
     [HttpGet]
     public async Task<IActionResult> Register()
     {
-        var result = await _authorService.RegisterAsync("test", "123456");
+        var result = await _authorBusinessService.RegisterAsync("test", "123456");
 
         return this.WrapperExecutiveResult(result);
     }
@@ -55,21 +55,15 @@ public class EntranceController : AreaControllerCore
     /// <param name="password"></param>
     /// <returns></returns>
     [HttpPost]
-    public IActionResult SignIn(string loginName, string password)
+    public async Task<IActionResult> SignIn(string loginName, string password)
     {
-        var result = _authorService.SignIn(loginName, password);
+        var result = await _authorBusinessService.SignInAsync(loginName, password);
 
-        if (!result.Success)
-        {
-            return Content(result.Message);
-        }
+        if (!result.Success) return Content(result.Message);
 
         var token = result.Data?.AuthorId.ToToken();
 
-        if (token != null)
-        {
-            this.SetCookie(GeneralConfigAssist.GetTokenName(), token);
-        }
+        if (token != null) this.SetCookie(GeneralConfigAssist.GetTokenName(), token);
 
         return Content("sign in success");
     }

@@ -1,7 +1,10 @@
-﻿using EasySoft.Core.Data.Extensions;
+﻿using EasySoft.Core.Data.ExtensionMethods;
+using EasySoft.Core.Data.Repositories;
 using EasySoft.Core.Data.Transactions;
 using EasySoft.Core.EntityFramework.ExtensionMethods;
+using EasySoft.Core.EntityFramework.Repositories;
 using EasySoft.Core.EntityFramework.SqlServer.Transactions;
+using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -24,6 +27,7 @@ public static class ServiceCollectionExtension
 
         services.AddAdvanceUnitOfWorkInterceptor();
         services.TryAddScoped<IUnitOfWork, UnitOfWork<T>>();
+        services.TryAddScoped(typeof(IRepository<>), typeof(Repository<>));
 
         // services.TryAddScoped(typeof(IEfRepository<>), typeof(EfRepository<>));
         // services.TryAddScoped(typeof(IEfBasicRepository<>), typeof(EfBasicRepository<>));

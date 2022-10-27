@@ -11,18 +11,18 @@ namespace EasySoft.Simple.Single.Application.Areas.DataTest.Controllers;
 /// </summary>
 public class DataController : AreaControllerCore
 {
-    private readonly IAuthorService _authorService;
+    private readonly IAuthorBusinessService _authorBusinessService;
 
     private readonly DataContext _dataContext;
 
     /// <summary>
     ///     DataController
     /// </summary>
-    /// <param name="authorService"></param>
+    /// <param name="authorBusinessService"></param>
     /// <param name="dataContext"></param>
-    public DataController(IAuthorService authorService, DataContext dataContext)
+    public DataController(IAuthorBusinessService authorBusinessService, DataContext dataContext)
     {
-        _authorService = authorService;
+        _authorBusinessService = authorBusinessService;
 
         _dataContext = dataContext;
     }
@@ -67,7 +67,7 @@ public class DataController : AreaControllerCore
 
         await _dataContext.SaveChangesAsync();
 
-        var result = await _authorService.GetAuthorDtoSync(1);
+        var result = await _authorBusinessService.GetAuthorDtoSync(1);
 
         return !result.Success ? this.Fail(result.Code) : this.Success(result.Data);
     }
@@ -82,9 +82,9 @@ public class DataController : AreaControllerCore
 
         for (var i = 0; i < 10; i++) dictionary.Add($"lili-{Guid.NewGuid().ToString()}", "123456");
 
-        await _authorService.RegisterMultiAsync(dictionary);
+        await _authorBusinessService.RegisterMultiAsync(dictionary);
 
-        var result = await _authorService.GetAuthorDtoSync(1);
+        var result = await _authorBusinessService.GetAuthorDtoSync(1);
 
         return !result.Success ? this.Fail(result.Code) : this.Success(result.Data);
     }

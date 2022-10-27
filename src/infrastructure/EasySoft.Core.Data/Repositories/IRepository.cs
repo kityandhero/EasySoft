@@ -10,95 +10,137 @@ public interface IRepository
 /// <summary>
 ///     Repository标记接口
 /// </summary>
-public interface IRepository<T> : IRepository where T : class, new()
+public interface IRepository<TEntity> : IRepository where TEntity : class
 {
     #region Exists
 
-    ExecutiveResult Exists(Expression<Func<T, bool>> where);
+    Task<ExecutiveResult> ExistAsync(
+        Expression<Func<TEntity, bool>> where,
+        CancellationToken cancellationToken = default
+    );
 
     #endregion
-
-    #region Update
-
-    ExecutiveResult<T> Update(T entity);
-
-    #endregion
-
-    void Save();
 
     #region PageList
 
-    IEnumerable<T> PageList<TS>(
+    Task<PageListResult<TEntity>> PageListAsync<TS>(
         int pageIndex,
         int pageSize,
-        Expression<Func<T, bool>> where,
-        Expression<Func<T, TS>> orderBy,
-        out int total,
-        bool isAsc = true
+        Expression<Func<TEntity, bool>> where,
+        Expression<Func<TEntity, TS>> orderBy,
+        bool isAsc = true,
+        CancellationToken cancellationToken = default
     );
 
     #endregion
 
     #region SingleList
 
-    IEnumerable<T> SingleList(Expression<Func<T, bool>> filter);
-
-    IEnumerable<T> SingleList<TKey>(
-        Expression<Func<T, bool>> filter,
-        Func<T, TKey> keySelector,
-        bool descending = false
+    Task<IEnumerable<TEntity>> SingleListAsync(
+        Expression<Func<TEntity, bool>> filter,
+        CancellationToken cancellationToken = default
     );
 
-    IEnumerable<T> SingleList<TKey>(
-        Expression<Func<T, bool>> filter,
-        Func<T, TKey> keySelector,
+    Task<IEnumerable<TEntity>> SingleListAsync<TKey>(
+        Expression<Func<TEntity, bool>> filter,
+        Func<TEntity, TKey> keySelector,
+        bool descending = false,
+        CancellationToken cancellationToken = default
+    );
+
+    Task<IEnumerable<TEntity>> SingleListAsync<TKey>(
+        Expression<Func<TEntity, bool>> filter,
+        Func<TEntity, TKey> keySelector,
         IComparer<TKey>? comparer,
-        bool descending = false
+        bool descending = false,
+        CancellationToken cancellationToken = default
     );
 
     #endregion
 
     #region Get
 
-    ExecutiveResult<T> Get(object id);
-
-    ExecutiveResult<T> Get(
-        Expression<Func<T, bool>> filter
+    Task<ExecutiveResult<TEntity>> GetAsync(
+        object id,
+        CancellationToken cancellationToken = default
     );
 
-    ExecutiveResult<T> Get<TKey>(
-        Expression<Func<T, bool>> filter,
-        Func<T, TKey> keySelector,
-        bool descending = false
+    Task<ExecutiveResult<TEntity>> GetAsync(
+        Expression<Func<TEntity, bool>> filter,
+        CancellationToken cancellationToken = default
     );
 
-    ExecutiveResult<T> Get<TKey>(
-        Expression<Func<T, bool>> filter,
-        Func<T, TKey> keySelector,
+    Task<ExecutiveResult<TEntity>> GetAsync<TKey>(
+        Expression<Func<TEntity, bool>> filter,
+        Func<TEntity, TKey> keySelector,
+        bool descending = false,
+        CancellationToken cancellationToken = default
+    );
+
+    Task<ExecutiveResult<TEntity>> GetAsync<TKey>(
+        Expression<Func<TEntity, bool>> filter,
+        Func<TEntity, TKey> keySelector,
         IComparer<TKey>? comparer,
-        bool descending = false
+        bool descending = false,
+        CancellationToken cancellationToken = default
+    );
+
+    #endregion
+
+    #region CountAsync
+
+    Task<int> CountAsync(
+        Expression<Func<TEntity, bool>> whereExpression,
+        CancellationToken cancellationToken = default
     );
 
     #endregion
 
     #region Add
 
-    ExecutiveResult<T> Add(T entity);
-    ExecutiveResult AddRange(IEnumerable<T> entities);
+    Task<ExecutiveResult<TEntity>> AddAsync(
+        TEntity entity,
+        CancellationToken cancellationToken = default
+    );
 
-    Task<ExecutiveResult> AddRangeAsync(IEnumerable<T> entities);
+    Task<ExecutiveResult> AddRangeAsync(
+        IEnumerable<TEntity> entities,
+        CancellationToken cancellationToken = default
+    );
+
+    #endregion
+
+    #region Update
+
+    Task<ExecutiveResult<TEntity>> UpdateAsync(
+        TEntity entity,
+        CancellationToken cancellationToken = default
+    );
+
+    Task<int> UpdateRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
 
     #endregion
 
     #region Delete
 
-    ExecutiveResult Delete(object id);
+    Task<ExecutiveResult> DeleteAsync(
+        object id,
+        CancellationToken cancellationToken = default
+    );
 
-    ExecutiveResult<T> Delete(T entity);
+    Task<ExecutiveResult<TEntity>> DeleteAsync(
+        TEntity entity,
+        CancellationToken cancellationToken = default
+    );
 
-    ExecutiveResult BatchDelete(params object[] ids);
+    Task<ExecutiveResult> BatchDeleteAsync(
+        IEnumerable<object> idCollection,
+        CancellationToken cancellationToken = default
+    );
 
-    ExecutiveResult BatchDelete(IEnumerable<T> entities);
+    Task<ExecutiveResult> BatchDeleteAsync(IEnumerable<TEntity> entities,
+        CancellationToken cancellationToken = default
+    );
 
     #endregion
 }

@@ -3,7 +3,7 @@ using EasySoft.Core.Infrastructure.Services;
 
 namespace EasySoft.Simple.EntityFrameworkCore.IServices;
 
-public interface IAuthorService : IService
+public interface IAuthorBusinessService : IBusinessService
 {
     public Task<ExecutiveResult<AuthorDto>> GetAuthorDtoSync(int authorId);
 
@@ -12,5 +12,5 @@ public interface IAuthorService : IService
     [UnitOfWork]
     public Task<ExecutiveResult> RegisterMultiAsync(Dictionary<string, string> namePassword);
 
-    public ExecutiveResult<Author> SignIn(string loginName, string password);
+    public Task<ExecutiveResult<Author>> SignInAsync(string loginName, string password);
 }

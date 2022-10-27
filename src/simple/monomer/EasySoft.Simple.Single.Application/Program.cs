@@ -17,9 +17,7 @@ using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.BuilderAssists;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.Simple.EntityFrameworkCore.Contexts;
-using EasySoft.Simple.EntityFrameworkCore.IRepositories;
 using EasySoft.Simple.EntityFrameworkCore.IServices;
-using EasySoft.Simple.EntityFrameworkCore.Repositories;
 using EasySoft.Simple.EntityFrameworkCore.Services;
 using EasySoft.Simple.Single.Application.EasyTokens;
 using EasySoft.Simple.Single.Application.Enums;
@@ -87,14 +85,11 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
             {
                 containerBuilder.RegisterType<Simple>().As<ISimple>().SingleInstance();
 
-                containerBuilder.RegisterType<AuthorRepository>().As<IAuthorRepository>().AsImplementedInterfaces();
-
-                containerBuilder.RegisterType<BlogRepository>().As<IBlogRepository>().AsImplementedInterfaces();
-
-                containerBuilder.RegisterType<AuthorService>().As<IAuthorService>().InstancePerDependency()
+                containerBuilder.RegisterType<AuthorBusinessService>().As<IAuthorBusinessService>()
+                    .InstancePerDependency()
                     .AsImplementedInterfaces();
 
-                containerBuilder.RegisterType<BlogService>().As<IBlogService>().InstancePerDependency()
+                containerBuilder.RegisterType<BlogBusinessService>().As<IBlogBusinessService>().InstancePerDependency()
                     .AsImplementedInterfaces();
             });
         }),
@@ -122,7 +117,7 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
 
 ApplicationConfigurator.AddAreas("AreaTest", "AuthTest", "DataTest", "ComponentTest");
 
-AgileConfigClientActionAssist.ActionAgileConfigChanged = e =>
+AgileConfigClientActionAssist.ActionAgileConfigChanged = _ =>
 {
     // LogAssist.Info("config changed");
 };

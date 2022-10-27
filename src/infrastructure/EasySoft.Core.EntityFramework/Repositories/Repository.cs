@@ -5,299 +5,347 @@ using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.Core.EntityFramework.Repositories;
 
-public abstract class Repository<T> : IRepository<T> where T : class, new()
+public class Repository<TEntity> : Repository<DbContext, TEntity>
+    where TEntity : class, new()
 {
-    private readonly DbContext _context;
-    private readonly DbSet<T> _dbSet;
-
-    protected Repository(DbContext context)
+    public Repository(DbContext context) : base(context)
     {
-        _context = context;
-        _dbSet = context.Set<T>();
+    }
+}
+
+public abstract class Repository<TDbContext, TEntity> : IRepository<TEntity>
+    where TDbContext : DbContext
+    where TEntity : class, new()
+{
+    protected virtual TDbContext Context { get; }
+
+    protected Repository(TDbContext context)
+    {
+        Context = context;
     }
 
     #region PageList
 
-    public IEnumerable<T> PageList<TS>(
+    public async Task<PageListResult<TEntity>> PageListAsync<TS>(
         int pageIndex,
         int pageSize,
-        Expression<Func<T, bool>> where,
-        Expression<Func<T, TS>> orderBy,
-        out int total,
-        bool isAsc = true
+        Expression<Func<TEntity, bool>> where,
+        Expression<Func<TEntity, TS>> orderBy,
+        bool isAsc = true,
+        CancellationToken cancellationToken = default
     )
     {
-        total = _context.Set<T>().Where(where).Count();
+        var total = await Context.Set<TEntity>().Where(where).CountAsync(cancellationToken);
+
+        List<TEntity> list;
 
         if (isAsc)
-            return
-                _context.Set<T>().Where(where)
-                    .OrderBy(orderBy)
-                    .Skip(pageSize * (pageIndex - 1))
-                    .Take(pageSize)
-                    .ToList();
-
-        return
-            _context.Set<T>().Where(where)
+            list = await Context.Set<TEntity>().Where(where)
+                .OrderBy(orderBy)
+                .Skip(pageSize * (pageIndex - 1))
+                .Take(pageSize)
+                .ToListAsync(cancellationToken);
+        else
+            list = await Context.Set<TEntity>().Where(where)
                 .OrderByDescending(orderBy)
                 .Skip(pageSize * (pageIndex - 1))
                 .Take(pageSize)
-                .ToList();
-    }
+                .ToListAsync(cancellationToken);
 
-    #endregion
-
-    #region Exists
-
-    public ExecutiveResult Exists(Expression<Func<T, bool>> where)
-    {
-        var o = Get(where);
-
-        return !o.Success ? new ExecutiveResult(ReturnCode.NoData) : new ExecutiveResult(ReturnCode.Ok);
-    }
-
-    #endregion
-
-    #region Update
-
-    public virtual ExecutiveResult<T> Update(T entity)
-    {
-        _context.Entry(entity).State = EntityState.Modified;
-
-        var success = _context.SaveChanges() > 0;
-
-        if (!success)
-            return new ExecutiveResult<T>(ReturnCode.NoChange)
-            {
-                Data = entity
-            };
-
-        return new ExecutiveResult<T>(ReturnCode.Ok)
+        return new PageListResult<TEntity>(ReturnCode.Ok)
         {
-            Data = entity
+            List = list,
+            TotalSize = total
         };
     }
 
     #endregion
 
-    public void Save()
-    {
-        _context.SaveChanges();
-    }
-
-    public DbSet<T> GetDbSet()
-    {
-        return _dbSet;
-    }
-
     #region SingleList
 
-    public virtual IEnumerable<T> SingleList(
-        Expression<Func<T, bool>> filter
+    public virtual async Task<IEnumerable<TEntity>> SingleListAsync(
+        Expression<Func<TEntity, bool>> filter,
+        CancellationToken cancellationToken = default
     )
     {
-        return _context.Set<T>().Where(filter).ToList();
+        return await Context.Set<TEntity>().Where(filter).ToListAsync(cancellationToken);
     }
 
-    public virtual IEnumerable<T> SingleList<TKey>(
-        Expression<Func<T, bool>> filter,
-        Func<T, TKey> keySelector,
-        bool descending = false
+    public virtual async Task<IEnumerable<TEntity>> SingleListAsync<TKey>(
+        Expression<Func<TEntity, bool>> filter,
+        Func<TEntity, TKey> keySelector,
+        bool descending = false,
+        CancellationToken cancellationToken = default
     )
     {
         return descending
-            ? _context.Set<T>().Where(filter).AsEnumerable().OrderByDescending(keySelector).ToList()
-            : _context.Set<T>().Where(filter).AsEnumerable().OrderBy(keySelector).ToList();
+            ? await Context.Set<TEntity>().Where(filter).AsEnumerable().OrderByDescending(keySelector).AsQueryable()
+                .ToListAsync(cancellationToken)
+            : await Context.Set<TEntity>().Where(filter).AsEnumerable().OrderBy(keySelector).AsQueryable()
+                .ToListAsync(cancellationToken);
     }
 
-    public virtual IEnumerable<T> SingleList<TKey>(
-        Expression<Func<T, bool>> filter,
-        Func<T, TKey> keySelector,
+    public virtual async Task<IEnumerable<TEntity>> SingleListAsync<TKey>(
+        Expression<Func<TEntity, bool>> filter,
+        Func<TEntity, TKey> keySelector,
         IComparer<TKey>? comparer,
-        bool descending = false
+        bool descending = false,
+        CancellationToken cancellationToken = default
     )
     {
         return descending
-            ? _context.Set<T>().Where(filter).AsEnumerable().OrderByDescending(keySelector, comparer)
-                .ToList()
-            : _context.Set<T>().Where(filter).AsEnumerable().OrderBy(keySelector, comparer).ToList();
+            ? await Context.Set<TEntity>().Where(filter).AsEnumerable().OrderByDescending(keySelector, comparer)
+                .AsQueryable()
+                .ToListAsync(cancellationToken)
+            : await Context.Set<TEntity>().Where(filter).AsEnumerable().OrderBy(keySelector, comparer).AsQueryable()
+                .ToListAsync(cancellationToken);
     }
 
     #endregion
 
     #region Get
 
-    public virtual ExecutiveResult<T> Get(object id)
-    {
-        var entity = _dbSet.Find(id);
-
-        if (entity == null) return new ExecutiveResult<T>(ReturnCode.NoData);
-
-        return new ExecutiveResult<T>(ReturnCode.Ok)
-        {
-            Data = entity
-        };
-    }
-
-    public virtual ExecutiveResult<T> Get(
-        Expression<Func<T, bool>> filter
+    public virtual async Task<ExecutiveResult<TEntity>> GetAsync(
+        object id,
+        CancellationToken cancellationToken = default
     )
     {
-        var entity = SingleList(filter).SingleOrDefault();
+        var entity = await Context.Set<TEntity>().FindAsync(id);
 
-        if (entity == null) return new ExecutiveResult<T>(ReturnCode.NoData);
+        if (entity == null) return new ExecutiveResult<TEntity>(ReturnCode.NoData);
 
-        return new ExecutiveResult<T>(ReturnCode.Ok)
+        return new ExecutiveResult<TEntity>(ReturnCode.Ok)
         {
             Data = entity
         };
     }
 
-    public virtual ExecutiveResult<T> Get<TKey>(
-        Expression<Func<T, bool>> filter,
-        Func<T, TKey> keySelector,
-        bool descending = false
+    public virtual async Task<ExecutiveResult<TEntity>> GetAsync(
+        Expression<Func<TEntity, bool>> filter,
+        CancellationToken cancellationToken = default
     )
     {
-        var entity = SingleList(filter, keySelector, descending).SingleOrDefault();
+        var entity = (await SingleListAsync(filter, cancellationToken)).SingleOrDefault();
 
-        if (entity == null) return new ExecutiveResult<T>(ReturnCode.NoData);
+        if (entity == null) return new ExecutiveResult<TEntity>(ReturnCode.NoData);
 
-        return new ExecutiveResult<T>(ReturnCode.Ok)
+        return new ExecutiveResult<TEntity>(ReturnCode.Ok)
         {
             Data = entity
         };
     }
 
-    public virtual ExecutiveResult<T> Get<TKey>(
-        Expression<Func<T, bool>> filter,
-        Func<T, TKey> keySelector,
+    public virtual async Task<ExecutiveResult<TEntity>> GetAsync<TKey>(
+        Expression<Func<TEntity, bool>> filter,
+        Func<TEntity, TKey> keySelector,
+        bool descending = false,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var entity = (await SingleListAsync(filter, keySelector, descending, cancellationToken)).SingleOrDefault();
+
+        if (entity == null) return new ExecutiveResult<TEntity>(ReturnCode.NoData);
+
+        return new ExecutiveResult<TEntity>(ReturnCode.Ok)
+        {
+            Data = entity
+        };
+    }
+
+    public virtual async Task<ExecutiveResult<TEntity>> GetAsync<TKey>(
+        Expression<Func<TEntity, bool>> filter,
+        Func<TEntity, TKey> keySelector,
         IComparer<TKey>? comparer,
-        bool descending = false
+        bool descending = false,
+        CancellationToken cancellationToken = default
     )
     {
-        var entity = SingleList(filter, keySelector, comparer, descending).SingleOrDefault();
+        var entity = (await SingleListAsync(filter, keySelector, comparer, descending, cancellationToken))
+            .SingleOrDefault();
 
-        if (entity == null) return new ExecutiveResult<T>(ReturnCode.NoData);
+        if (entity == null) return new ExecutiveResult<TEntity>(ReturnCode.NoData);
 
-        return new ExecutiveResult<T>(ReturnCode.Ok)
+        return new ExecutiveResult<TEntity>(ReturnCode.Ok)
         {
             Data = entity
         };
+    }
+
+    #endregion
+
+    #region Exists
+
+    public async Task<ExecutiveResult> ExistAsync(
+        Expression<Func<TEntity, bool>> where,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var o = await GetAsync(where, cancellationToken);
+
+        return !o.Success ? new ExecutiveResult(ReturnCode.NoData) : new ExecutiveResult(ReturnCode.Ok);
+    }
+
+    #endregion
+
+    #region CountAsync
+
+    public virtual async Task<int> CountAsync(
+        Expression<Func<TEntity, bool>> whereExpression,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var dbSet = Context.Set<TEntity>().AsNoTracking();
+
+        return await dbSet.CountAsync(whereExpression, cancellationToken);
     }
 
     #endregion
 
     #region Add
 
-    public virtual ExecutiveResult<T> Add(T entity)
+    public async Task<ExecutiveResult<TEntity>> AddAsync(
+        TEntity entity,
+        CancellationToken cancellationToken = default
+    )
     {
-        _context.Add(entity);
+        await Context.Set<TEntity>().AddAsync(entity, cancellationToken);
 
-        var success = _context.SaveChanges() > 0;
+        var success = await Context.SaveChangesAsync(cancellationToken) > 0;
 
         if (!success)
-            return new ExecutiveResult<T>(ReturnCode.NoChange)
+            return new ExecutiveResult<TEntity>(ReturnCode.NoChange)
             {
                 Data = entity
             };
 
-        return new ExecutiveResult<T>(ReturnCode.Ok)
+        return new ExecutiveResult<TEntity>(ReturnCode.Ok)
         {
             Data = entity
         };
     }
 
-    public async Task<ExecutiveResult<T>> AddAsync(T entity)
+    public virtual async Task<ExecutiveResult> AddRangeAsync(
+        IEnumerable<TEntity> entities,
+        CancellationToken cancellationToken = default
+    )
     {
-        await _context.AddAsync(entity);
+        await Context.AddRangeAsync(entities, cancellationToken);
 
-        var success = _context.SaveChanges() > 0;
-
-        if (!success)
-            return new ExecutiveResult<T>(ReturnCode.NoChange)
-            {
-                Data = entity
-            };
-
-        return new ExecutiveResult<T>(ReturnCode.Ok)
-        {
-            Data = entity
-        };
-    }
-
-    public virtual ExecutiveResult AddRange(IEnumerable<T> entities)
-    {
-        _context.AddRange(entities);
-
-        var success = _context.SaveChanges() > 0;
-
-        return !success ? new ExecutiveResult(ReturnCode.NoChange) : new ExecutiveResult(ReturnCode.Ok);
-    }
-
-    public virtual async Task<ExecutiveResult> AddRangeAsync(IEnumerable<T> entities)
-    {
-        _context.AddRange(entities);
-
-        var success = await _context.SaveChangesAsync() > 0;
+        var success = await Context.SaveChangesAsync(cancellationToken) > 0;
 
         return !success ? new ExecutiveResult(ReturnCode.NoChange) : new ExecutiveResult(ReturnCode.Ok);
     }
 
     #endregion
 
-    #region Delete
+    #region Update
 
-    public virtual ExecutiveResult Delete(object id)
+    public virtual async Task<ExecutiveResult<TEntity>> UpdateAsync(
+        TEntity entity,
+        CancellationToken cancellationToken = default
+    )
     {
-        var entityToDelete = _dbSet.Find(id);
+        //获取实体状态
+        var entry = Context.Entry(entity);
 
-        return entityToDelete != null
-            ? Delete(entityToDelete).ToExecutiveResult()
-            : new ExecutiveResult(ReturnCode.NoData);
-    }
+        //如果实体没有被跟踪，必须指定需要更新的列
+        if (entry.State == EntityState.Detached)
+            throw new ArgumentException($"实体没有被跟踪，需要指定更新的列");
 
-    public virtual ExecutiveResult<T> Delete(T entity)
-    {
-        if (_context.Entry(entity).State == EntityState.Detached) _dbSet.Attach(entity);
+        if (entry.State is EntityState.Added or EntityState.Deleted)
+            throw new ArgumentException($"{nameof(entity)},实体状态为{nameof(entry.State)}");
 
-        _dbSet.Remove(entity);
-
-        _context.Entry(entity).State = EntityState.Deleted;
-
-        var success = _context.SaveChanges() > 0;
+        var success = await Context.SaveChangesAsync(cancellationToken) > 0;
 
         if (!success)
-            return new ExecutiveResult<T>(ReturnCode.NoChange)
+            return new ExecutiveResult<TEntity>(ReturnCode.NoChange)
             {
                 Data = entity
             };
 
-        return new ExecutiveResult<T>(ReturnCode.Ok)
+        return new ExecutiveResult<TEntity>(ReturnCode.Ok)
         {
             Data = entity
         };
     }
 
-    public virtual ExecutiveResult BatchDelete(params object[] ids)
+    public virtual async Task<int> UpdateRangeAsync(
+        IEnumerable<TEntity> entities,
+        CancellationToken cancellationToken = default
+    )
     {
-        foreach (var item in ids)
-        {
-            var entity = _context.Set<T>().Find(item); //如果实体已经在内存中，那么就直接从内存拿，如果内存中跟踪实体没有，那么才查询数据库。
+        Context.UpdateRange(entities);
 
-            if (entity != null) _context.Set<T>().Remove(entity);
+        return await Context.SaveChangesAsync(cancellationToken);
+    }
+
+    #endregion
+
+    #region Delete
+
+    public virtual async Task<ExecutiveResult> DeleteAsync(
+        object id,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var entityToDelete = await GetAsync(id, cancellationToken);
+
+        return entityToDelete.Success && entityToDelete.Data != null
+            ? (await DeleteAsync(entityToDelete.Data, cancellationToken)).ToExecutiveResult()
+            : new ExecutiveResult(ReturnCode.NoData);
+    }
+
+    public virtual async Task<ExecutiveResult<TEntity>> DeleteAsync(
+        TEntity entity,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (Context.Entry(entity).State == EntityState.Detached) Context.Set<TEntity>().Attach(entity);
+
+        Context.Set<TEntity>().Remove(entity);
+
+        Context.Entry(entity).State = EntityState.Deleted;
+
+        var success = await Context.SaveChangesAsync(cancellationToken) > 0;
+
+        if (!success)
+            return new ExecutiveResult<TEntity>(ReturnCode.NoChange)
+            {
+                Data = entity
+            };
+
+        return new ExecutiveResult<TEntity>(ReturnCode.Ok)
+        {
+            Data = entity
+        };
+    }
+
+    public virtual async Task<ExecutiveResult> BatchDeleteAsync(
+        IEnumerable<object> idCollection,
+        CancellationToken cancellationToken = default
+    )
+    {
+        foreach (var item in idCollection)
+        {
+            var entity = await Context.Set<TEntity>()
+                .FindAsync(item, cancellationToken); //如果实体已经在内存中，那么就直接从内存拿，如果内存中跟踪实体没有，那么才查询数据库。
+
+            if (entity != null) Context.Set<TEntity>().Remove(entity);
         }
 
-        var success = _context.SaveChanges() > 0;
+        var success = await Context.SaveChangesAsync(cancellationToken) > 0;
 
         return !success ? new ExecutiveResult(ReturnCode.NoChange) : new ExecutiveResult(ReturnCode.Ok);
     }
 
-    public virtual ExecutiveResult BatchDelete(IEnumerable<T> entities)
+    public virtual async Task<ExecutiveResult> BatchDeleteAsync(
+        IEnumerable<TEntity> entities,
+        CancellationToken cancellationToken = default
+    )
     {
-        _context.Set<T>().RemoveRange(entities);
+        Context.Set<TEntity>().RemoveRange(entities);
 
-        var success = _context.SaveChanges() > 0;
+        var success = await Context.SaveChangesAsync(cancellationToken) > 0;
 
         return !success ? new ExecutiveResult(ReturnCode.NoChange) : new ExecutiveResult(ReturnCode.Ok);
     }

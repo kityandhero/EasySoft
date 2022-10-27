@@ -1,10 +1,16 @@
-﻿namespace EasySoft.Core.EntityFramework.ExtensionMethods;
+﻿using EasySoft.Core.Data.Repositories;
+using EasySoft.Core.EntityFramework.Repositories;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+
+namespace EasySoft.Core.EntityFramework.ExtensionMethods;
 
 public static class ServiceCollectionExtension
 {
     private const string UniqueIdentifierAddAdvanceContext = "b8f6139c-9e5e-41ff-8c4b-2e81ed46548f";
 
     private const string UniqueIdentifierAddAdvanceContextPool = "3c843d66-f55c-42c8-b2b0-c7f7fe0d2dae";
+
+    private const string UniqueIdentifierRepository = "b2df7d25-94e7-457c-867f-0e568ea817ce";
 
     public static IServiceCollection AddAdvanceContext<T>(
         this IServiceCollection services,

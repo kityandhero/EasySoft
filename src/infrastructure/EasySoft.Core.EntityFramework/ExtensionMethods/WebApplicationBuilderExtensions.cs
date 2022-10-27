@@ -18,7 +18,7 @@ public static class WebApplicationBuilderExtensions
     /// <param name="builder"></param>
     /// <param name="action"></param>
     /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <returns></returns> 
     public static WebApplicationBuilder AddAdvanceContext<T>(
         this WebApplicationBuilder builder,
         Action<DbContextOptionsBuilder> action
@@ -79,7 +79,7 @@ public static class WebApplicationBuilderExtensions
     /// <typeparam name="TFactory"></typeparam>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static WebApplicationBuilder AddPooledAdvanceTenantContext<TFactory, T>(
+    internal static WebApplicationBuilder AddPooledAdvanceTenantContext<TFactory, T>(
         this WebApplicationBuilder builder,
         Action<DbContextOptionsBuilder> action
     ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : TenantBasicContext

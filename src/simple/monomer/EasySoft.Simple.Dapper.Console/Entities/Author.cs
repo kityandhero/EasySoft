@@ -5,7 +5,7 @@ using EasySoft.Core.Dapper.Base;
 namespace EasySoft.Simple.Dapper.Console.Entities;
 
 [Table("author")]
-public class Author : AbstractFunctionEntity<Author>
+public class Author : AbstractFunctionEntityExtra<Author>
 {
     public Author()
     {

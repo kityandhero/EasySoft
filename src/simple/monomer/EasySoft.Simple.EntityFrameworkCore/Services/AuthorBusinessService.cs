@@ -1,23 +1,23 @@
-﻿using EasySoft.Simple.EntityFrameworkCore.ExtensionMethods;
-using EasySoft.Simple.EntityFrameworkCore.IRepositories;
+﻿using EasySoft.Core.Data.Repositories;
+using EasySoft.Simple.EntityFrameworkCore.ExtensionMethods;
 using EasySoft.Simple.EntityFrameworkCore.IServices;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Simple.EntityFrameworkCore.Services;
 
-public class AuthorService : IAuthorService
+public class AuthorBusinessService : IAuthorBusinessService
 {
-    private readonly IAuthorRepository _authorRepository;
+    private readonly IRepository<Author> _authorRepository;
 
-    public AuthorService(IAuthorRepository authorRepository)
+    public AuthorBusinessService(IRepository<Author> repository)
     {
-        _authorRepository = authorRepository;
+        _authorRepository = repository;
     }
 
     public async Task<ExecutiveResult<AuthorDto>> GetAuthorDtoSync(int authorId)
     {
-        var result = await _authorRepository.GetAuthor(authorId);
+        var result = await _authorRepository.GetAsync(authorId);
 
         if (!result.Success) return new ExecutiveResult<AuthorDto>(result.Code);
 
@@ -32,16 +32,29 @@ public class AuthorService : IAuthorService
 
     public async Task<ExecutiveResult<Author>> RegisterAsync(string loginName, string password)
     {
-        if (_authorRepository.ExistLoginName(loginName).Success)
+        if (string.IsNullOrWhiteSpace(loginName))
+            return new ExecutiveResult<Author>(ReturnCode.ParamError.ToMessage("登陆名不能为空白"));
+
+        if (string.IsNullOrWhiteSpace(password))
+            return new ExecutiveResult<Author>(ReturnCode.ParamError.ToMessage("密码不能为空白"));
+
+        var result = await _authorRepository.ExistAsync(o => o.LoginName == loginName);
+
+        if (result.Success)
             return new ExecutiveResult<Author>(ReturnCode.NoChange.ToMessage("登录名已存在"));
 
-        return await _authorRepository.CreateAsync(loginName, password);
+        var author = new Author
+        {
+            LoginName = loginName,
+            Password = password.ToMd5()
+        };
+
+        return await _authorRepository.AddAsync(author);
     }
 
     public async Task<ExecutiveResult> RegisterMultiAsync(Dictionary<string, string> namePassword)
     {
-        if (namePassword.Count <= 0)
-            return new ExecutiveResult(ReturnCode.NoChange.ToMessage("无可添加数据"));
+        if (namePassword.Count <= 0) return new ExecutiveResult(ReturnCode.NoChange.ToMessage("无可添加数据"));
 
         var list = new List<Author>();
 
@@ -59,7 +72,7 @@ public class AuthorService : IAuthorService
         return await _authorRepository.AddRangeAsync(list);
     }
 
-    public ExecutiveResult<Author> SignIn(string loginName, string password)
+    public async Task<ExecutiveResult<Author>> SignInAsync(string loginName, string password)
     {
         if (string.IsNullOrWhiteSpace(loginName))
             return new ExecutiveResult<Author>(ReturnCode.ParamError.ToMessage("登录名不能为空白"));
@@ -67,6 +80,6 @@ public class AuthorService : IAuthorService
         if (string.IsNullOrWhiteSpace(password))
             return new ExecutiveResult<Author>(ReturnCode.ParamError.ToMessage("密码不能为空白"));
 
-        return _authorRepository.Get(o => o.LoginName == loginName && o.Password == password.ToMd5());
+        return await _authorRepository.GetAsync(o => o.LoginName == loginName && o.Password == password.ToMd5());
     }
 }
