@@ -6,7 +6,7 @@ namespace EasySoft.Core.Data.ExtensionMethods;
 public static class WebApplicationBuilderExtensions
 {
     /// <summary>
-    /// 自动注册程序集中的逻辑服务以及工作单元拦截器
+    /// 自动注册程序集中的逻辑服务以及工作单元拦截器代理
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="assemblies"></param>
@@ -22,7 +22,7 @@ public static class WebApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// 自动注册程序集中的逻辑服务以及工作单元拦截器  
+    /// 自动注册程序集中的逻辑服务以及工作单元拦截器代理  
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="assembly"></param> 
