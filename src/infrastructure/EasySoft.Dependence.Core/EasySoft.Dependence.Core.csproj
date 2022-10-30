@@ -7,57 +7,59 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Dependence.Standard\EasySoft.Dependence.Standard.csproj"/>
+        <ProjectReference Include="..\EasySoft.Dependence.Standard\EasySoft.Dependence.Standard.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="App.Metrics.AspNetCore.Core" Version="4.3.0"/>
-        <PackageReference Include="AspNetCore.HealthChecks.UI" Version="6.0.5"/>
-        <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5"/>
-        <PackageReference Include="AspNetCore.HealthChecks.UI.Core" Version="6.0.5"/>
-        <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="6.0.5"/>
-        <PackageReference Include="Castle.Core.AsyncInterceptor" Version="2.1.0"/>
-        <PackageReference Include="DotNetCore.CAP.Dashboard" Version="6.2.0"/>
-        <PackageReference Include="EFCore.BulkExtensions" Version="6.5.6"/>
-        <PackageReference Include="EFCore.NamingConventions" Version="6.0.0"/>
-        <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2"/>
-        <PackageReference Include="Hangfire.AspNetCore" Version="1.7.31"/>
-        <PackageReference Include="HtmlSanitizer" Version="7.1.542"/>
-        <PackageReference Include="IP2Region.Net" Version="1.0.10"/>
-        <PackageReference Include="Masuit.Tools.AspNetCore" Version="1.1.5"/>
-        <PackageReference Include="Masuit.Tools.Core" Version="2.5.5"/>
-        <PackageReference Include="Masuit.Tools.Excel" Version="1.2.2"/>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.9"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.9"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="6.0.9"/>
+        <PackageReference Include="App.Metrics.AspNetCore.Core" Version="4.3.0" />
+        <PackageReference Include="AspNetCore.HealthChecks.UI" Version="6.0.5" />
+        <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
+        <PackageReference Include="AspNetCore.HealthChecks.UI.Core" Version="6.0.5" />
+        <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="6.0.5" />
+        <PackageReference Include="Castle.Core.AsyncInterceptor" Version="2.1.0" />
+        <PackageReference Include="DotNetCore.CAP.Dashboard" Version="6.2.0" />
+        <PackageReference Include="EFCore.BulkExtensions" Version="6.5.6" />
+        <PackageReference Include="EFCore.NamingConventions" Version="6.0.0" />
+        <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+        <PackageReference Include="Hangfire.AspNetCore" Version="1.7.31" />
+        <PackageReference Include="HtmlSanitizer" Version="7.1.542" />
+        <PackageReference Include="IP2Region.Net" Version="1.0.10" />
+        <PackageReference Include="Masuit.Tools.AspNetCore" Version="1.1.5" />
+        <PackageReference Include="Masuit.Tools.Core" Version="2.5.5" />
+        <PackageReference Include="Masuit.Tools.Excel" Version="1.2.2" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="6.0.9" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.9"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.9"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.9"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.9"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="6.0.9"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.9"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="6.0.9"/>
-        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="6.0.9"/>
-        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions" Version="6.0.9"/>
-        <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.5.1"/>
-        <PackageReference Include="MiniProfiler.AspNetCore" Version="4.2.22"/>
-        <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.2.22"/>
-        <PackageReference Include="Moq" Version="4.18.2"/>
-        <PackageReference Include="NETStandard.Library" Version="2.0.3"/>
-        <PackageReference Include="Ocelot" Version="18.0.0"/>
-        <PackageReference Include="Ocelot.Provider.Consul" Version="18.0.0"/>
-        <PackageReference Include="Ocelot.Provider.Polly" Version="18.0.0"/>
-        <PackageReference Include="Svg" Version="3.4.3"/>
-        <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="6.15.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="6.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="6.0.9" />
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="6.0.9" />
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions" Version="6.0.9" />
+        <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.5.1" />
+        <PackageReference Include="MiniProfiler.AspNetCore" Version="4.2.22" />
+        <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.2.22" />
+        <PackageReference Include="Moq" Version="4.18.2" />
+        <PackageReference Include="NETStandard.Library" Version="2.0.3" />
+        <PackageReference Include="Ocelot" Version="18.0.0" />
+        <PackageReference Include="Ocelot.Provider.Consul" Version="18.0.0" />
+        <PackageReference Include="Ocelot.Provider.Polly" Version="18.0.0" />
+        <PackageReference Include="SkyAPM.Diagnostics.CAP" Version="2.1.0" />
+        <PackageReference Include="SkyAPM.Utilities.DependencyInjection" Version="2.1.0" />
+        <PackageReference Include="Svg" Version="3.4.3" />
+        <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="6.15.1" />
     </ItemGroup>
 
 </Project>

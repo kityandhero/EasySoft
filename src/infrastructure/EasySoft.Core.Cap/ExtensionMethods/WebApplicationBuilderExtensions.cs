@@ -37,10 +37,7 @@ public static class WebApplicationBuilderExtensions
                 .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
         );
 
-        if (!GeneralConfigAssist.CheckCapSwitch())
-        {
-            return builder;
-        }
+        if (!GeneralConfigAssist.CheckCapSwitch()) return builder;
 
         StartupConfigMessageAssist.Add(
             new StartupMessage()
@@ -62,10 +59,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddCap(capOptions =>
         {
-            if (!string.IsNullOrWhiteSpace(capConfig.Prefix))
-            {
-                capOptions.GroupNamePrefix = capConfig.Prefix;
-            }
+            if (!string.IsNullOrWhiteSpace(capConfig.Prefix)) capOptions.GroupNamePrefix = capConfig.Prefix;
 
             var transportType = Enum.Parse<TransportType>(GeneralConfigAssist.GetCapTransportType());
 
@@ -95,16 +89,11 @@ public static class WebApplicationBuilderExtensions
                                                                  string.IsNullOrWhiteSpace(configFileUserName) ||
                                                                  string.IsNullOrWhiteSpace(configFilePassword) ||
                                                                  string.IsNullOrWhiteSpace(configFileVirtualHost)))
-                    {
                         throw new Exception(
-                            $"Cap transport type is RabbitMQ, it need config,use config file in {(RabbitMQConfigAssist.GetConfigFileInfo())} or use CapAssist.GetConfig().Transport.RabbitMQ to set it"
+                            $"Cap transport type is RabbitMQ, it need config,use config file in {RabbitMQConfigAssist.GetConfigFileInfo()} or use CapAssist.GetConfig().Transport.RabbitMQ to set it"
                         );
-                    }
 
-                    if (capConfig.Transport.RabbitMQ == null)
-                    {
-                        capConfig.Transport.RabbitMQ = new RabbitMQOptions();
-                    }
+                    if (capConfig.Transport.RabbitMQ == null) capConfig.Transport.RabbitMQ = new RabbitMQOptions();
 
                     capOptions.UseRabbitMQ(o =>
                     {
@@ -135,18 +124,14 @@ public static class WebApplicationBuilderExtensions
                         o.CustomHeaders = capConfig.Transport.RabbitMQ.CustomHeaders;
 
                         if (capConfig.Transport.RabbitMQ.ConnectionFactoryOptions == null)
-                        {
                             o.ConnectionFactoryOptions = one =>
                             {
                                 one.RequestedConnectionTimeout = TimeSpan.FromSeconds(
                                     RabbitMQConfigAssist.GetConnectionTimeout()
                                 );
                             };
-                        }
                         else
-                        {
                             o.ConnectionFactoryOptions = capConfig.Transport.RabbitMQ.ConnectionFactoryOptions;
-                        }
 
                         o.QueueArguments = capConfig.Transport.RabbitMQ.QueueArguments;
                     });
@@ -155,11 +140,9 @@ public static class WebApplicationBuilderExtensions
                 case TransportType.AmazonSQS:
 
                     if (capConfig.Transport.AmazonSQS == null)
-                    {
                         throw new Exception(
                             "Cap transport type is AmazonSQS, it need config,use CapAssist.GetConfig().Transport.AmazonSQS to set it"
                         );
-                    }
 
                     capOptions.UseAmazonSQS(o =>
                     {
@@ -173,11 +156,9 @@ public static class WebApplicationBuilderExtensions
                 case TransportType.Kafka:
 
                     if (capConfig.Transport.Kafka == null)
-                    {
                         throw new Exception(
                             "Cap transport type is Kafka, it need config,use CapAssist.GetConfig().Transport.Kafka to set it"
                         );
-                    }
 
                     capOptions.UseKafka(o =>
                     {
@@ -191,11 +172,9 @@ public static class WebApplicationBuilderExtensions
                 case TransportType.Pulsar:
 
                     if (capConfig.Transport.Pulsar == null)
-                    {
                         throw new Exception(
                             "Cap transport type is Pulsar, it need config,use CapAssist.GetConfig().Transport.Pulsar to set it"
                         );
-                    }
 
                     capOptions.UsePulsar(o =>
                     {
@@ -208,11 +187,9 @@ public static class WebApplicationBuilderExtensions
                 case TransportType.AzureServiceBus:
 
                     if (capConfig.Transport.AzureServiceBus == null)
-                    {
                         throw new Exception(
                             "Cap transport type is AzureServiceBus, it need config,use CapAssist.GetConfig().Transport.AzureServiceBus to set it"
                         );
-                    }
 
                     capOptions.UseAzureServiceBus(o =>
                     {
@@ -227,11 +204,9 @@ public static class WebApplicationBuilderExtensions
                 case TransportType.NATS:
 
                     if (capConfig.Transport.NATS == null)
-                    {
                         throw new Exception(
                             "Cap transport type is NATS, it need config,use CapAssist.GetConfig().Transport.NATS to set it"
                         );
-                    }
 
                     capOptions.UseNATS(o =>
                     {
@@ -246,11 +221,9 @@ public static class WebApplicationBuilderExtensions
                 case TransportType.Redis:
 
                     if (capConfig.Transport.Redis == null)
-                    {
                         throw new Exception(
                             "Cap transport type is Redis, it need config,use CapAssist.GetConfig().Transport.Redis to set it"
                         );
-                    }
 
                     capOptions.UseRedis(o =>
                     {
@@ -284,19 +257,15 @@ public static class WebApplicationBuilderExtensions
 
                 case PersistentType.SqlServer:
                     if (!string.IsNullOrWhiteSpace(capPersistentConnection) && capConfig.Persistent.SqlServer == null)
-                    {
                         capConfig.Persistent.SqlServer = new SqlServerOptions
                         {
                             ConnectionString = capPersistentConnection
                         };
-                    }
 
                     if (capConfig.Persistent.SqlServer == null)
-                    {
                         throw new Exception(
                             "Cap persistent type is SqlServer, it need config,use CapAssist.GetConfig().Persistent.SqlServer to set it"
                         );
-                    }
 
                     capOptions.UseSqlServer(o =>
                     {
@@ -307,19 +276,15 @@ public static class WebApplicationBuilderExtensions
 
                 case PersistentType.MySql:
                     if (!string.IsNullOrWhiteSpace(capPersistentConnection) && capConfig.Persistent.MySql == null)
-                    {
                         capConfig.Persistent.MySql = new MySqlOptions
                         {
                             ConnectionString = capPersistentConnection
                         };
-                    }
 
                     if (capConfig.Persistent.MySql == null)
-                    {
                         throw new Exception(
                             "Cap persistent type is MySql, it need config,use CapAssist.GetConfig().Persistent.MySql to set it"
                         );
-                    }
 
                     capOptions.UseMySql(o =>
                     {
@@ -330,19 +295,15 @@ public static class WebApplicationBuilderExtensions
 
                 case PersistentType.PostgreSql:
                     if (!string.IsNullOrWhiteSpace(capPersistentConnection) && capConfig.Persistent.PostgreSql == null)
-                    {
                         capConfig.Persistent.PostgreSql = new PostgreSqlOptions
                         {
                             ConnectionString = capPersistentConnection
                         };
-                    }
 
                     if (capConfig.Persistent.PostgreSql == null)
-                    {
                         throw new Exception(
                             "Cap persistent type is PostgreSql, it need config,use CapAssist.GetConfig().Persistent.PostgreSql to set it"
                         );
-                    }
 
                     capOptions.UsePostgreSql(o =>
                     {
@@ -353,19 +314,15 @@ public static class WebApplicationBuilderExtensions
 
                 case PersistentType.MongoDB:
                     if (!string.IsNullOrWhiteSpace(capPersistentConnection) && capConfig.Persistent.MongoDB == null)
-                    {
                         capConfig.Persistent.MongoDB = new MongoDBOptions()
                         {
                             DatabaseConnection = capPersistentConnection
                         };
-                    }
 
                     if (capConfig.Persistent.MongoDB == null)
-                    {
                         throw new Exception(
                             "Cap persistent type is MongoDB, it need config,use CapAssist.GetConfig().Persistent.MongoDB to set it"
                         );
-                    }
 
                     capOptions.UseMongoDB(o =>
                     {
@@ -378,19 +335,15 @@ public static class WebApplicationBuilderExtensions
 
                 case PersistentType.Sqlite:
                     if (!string.IsNullOrWhiteSpace(capPersistentConnection) && capConfig.Persistent.Sqlite == null)
-                    {
                         capConfig.Persistent.Sqlite = new SqliteOptions()
                         {
                             ConnectionString = capPersistentConnection
                         };
-                    }
 
                     if (capConfig.Persistent.Sqlite == null)
-                    {
                         throw new Exception(
                             "Cap persistent type is Sqlite, it need config,use CapAssist.GetConfig().Persistent.Sqlite to set it"
                         );
-                    }
 
                     capOptions.UseSqlite(o =>
                     {
@@ -403,8 +356,28 @@ public static class WebApplicationBuilderExtensions
                     throw new Exception($"cap persistent type {persistentType.ToString()} not support");
             }
 
-            if (GeneralConfigAssist.GetCapDashboardSwitch())
+            // capOptions.Version = ServiceInfo.Version;
+            //默认值：cap.queue.{程序集名称},在 RabbitMQ 中映射到 Queue Names。
+            // capOptions.DefaultGroupName = $"cap.{ServiceInfo.ShortName}.{this.GetEnvShortName()}";
+            //默认值：60 秒,重试 & 间隔
+            //在默认情况下，重试将在发送和消费消息失败的 4分钟后 开始，这是为了避免设置消息状态延迟导致可能出现的问题。
+            //发送和消费消息的过程中失败会立即重试 3 次，在 3 次以后将进入重试轮询，此时 FailedRetryInterval 配置才会生效。
+            capOptions.FailedRetryInterval = 60;
+            //默认值：50,重试的最大次数。当达到此设置值时，将不会再继续重试，通过改变此参数来设置重试的最大次数。
+            capOptions.FailedRetryCount = 50;
+            //默认值：NULL,重试阈值的失败回调。当重试达到 FailedRetryCount 设置的值的时候，将调用此 Action 回调
+            //，你可以通过指定此回调来接收失败达到最大的通知，以做出人工介入。例如发送邮件或者短信。
+            capOptions.FailedThresholdCallback = (failed) =>
             {
+                //todo
+            };
+            //默认值：24*3600 秒（1天后),成功消息的过期时间（秒）。
+            //当消息发送或者消费成功时候，在时间达到 SucceedMessageExpiredAfter 秒时候将会从 Persistent 中删除，你可以通过指定此值来设置过期的时间。
+            capOptions.SucceedMessageExpiredAfter = 24 * 3600;
+            //默认值：1,消费者线程并行处理消息的线程数，当这个值大于1时，将不能保证消息执行的顺序。
+            capOptions.ConsumerThreadCount = 1;
+
+            if (GeneralConfigAssist.GetCapDashboardSwitch())
                 capOptions.UseDashboard(o =>
                 {
                     o.UseChallengeOnAuth = capConfig.DashboardOptions.UseChallengeOnAuth;
@@ -416,10 +389,8 @@ public static class WebApplicationBuilderExtensions
                     o.DefaultAuthenticationScheme = capConfig.DashboardOptions.DefaultAuthenticationScheme;
                     o.StatsPollingInterval = capConfig.DashboardOptions.StatsPollingInterval;
                 });
-            }
 
             if (GeneralConfigAssist.GetCapDiscoverySwitch())
-            {
                 capOptions.UseDiscovery(o =>
                 {
                     o.DiscoveryServerHostName = capConfig.DiscoveryOptions.DiscoveryServerHostName;
@@ -432,7 +403,6 @@ public static class WebApplicationBuilderExtensions
                     o.MatchPath = capConfig.DiscoveryOptions.MatchPath;
                     o.CustomTags = capConfig.DiscoveryOptions.CustomTags;
                 });
-            }
         });
 
         var startupMessage = new StartupMessage()

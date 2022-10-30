@@ -8,21 +8,27 @@ public static class EnvironmentAssist
 
     public static void SetEnvironment(IWebHostEnvironment? environment)
     {
-        if (_environment != null)
-        {
-            throw new Exception("environment has been set, it disallow set more than once.");
-        }
+        if (_environment != null) throw new Exception("environment has been set, it disallow set more than once.");
 
         _environment = environment;
     }
 
     public static IWebHostEnvironment GetEnvironment()
     {
-        if (_environment == null)
-        {
-            throw new Exception("environment has not set yet");
-        }
+        if (_environment == null) throw new Exception("environment has not set yet");
 
         return _environment;
+    }
+
+    public static string GetEnvironmentAliasName()
+    {
+        return GetEnvironment().EnvironmentName.ToLower() switch
+        {
+            "development" => "dev",
+            "test" => "test",
+            "staging" => "stag",
+            "production" => "prod",
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
 }

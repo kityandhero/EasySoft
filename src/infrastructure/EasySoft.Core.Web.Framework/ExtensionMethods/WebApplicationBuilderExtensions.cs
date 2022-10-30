@@ -59,9 +59,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         if (FlagAssist.ApplicationChannelInjectionComplete)
-        {
             throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
-        }
 
         builder.Host.AddAdvanceApplicationChannel(channel, name);
 
@@ -77,9 +75,7 @@ public static class WebApplicationBuilderExtensions
     ) where T : IApplicationChannel
     {
         if (FlagAssist.ApplicationChannelInjectionComplete)
-        {
             throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
-        }
 
         builder.Host.AddAdvanceApplicationChannel(applicationChannel.GetChannel(), applicationChannel.GetName());
 
@@ -94,9 +90,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         if (FlagAssist.ApplicationChannelInjectionComplete)
-        {
             throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
-        }
 
         builder.Host.AddAdvanceDefaultApplicationChannel();
 
@@ -134,24 +128,18 @@ public static class WebApplicationBuilderExtensions
 
                     if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.EasyToken &&
                         !FlagAssist.EasyTokenMiddlewareModeSwitch)
-                    {
                         // 设置及接口数据返回格式
                         option.Filters.Add<EasyToken.Filters.OperatorFilter>();
-                    }
 
                     if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.JsonWebToken &&
                         !FlagAssist.JsonWebTokenMiddlewareModeSwitch)
-                    {
                         // 设置及接口数据返回格式
                         option.Filters.Add<JsonWebToken.Filters.OperatorFilter>();
-                    }
 
                     if (FlagAssist.PermissionVerificationSwitch &&
                         !FlagAssist.PermissionVerificationMiddlewareModeSwitch)
-                    {
                         // 设置及接口数据返回格式
                         option.Filters.Add<PermissionFilter>();
-                    }
 
                     // 设置及接口数据返回格式
                     option.Filters.Add<WebApiResultFilterAttribute>();
@@ -197,11 +185,10 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddHttpClient();
 
         if (GeneralConfigAssist.GetCorsSwitch())
-        {
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(
-                    name: ConstCollection.DefaultSpecificOrigins,
+                    ConstCollection.DefaultSpecificOrigins,
                     configPolicy =>
                     {
                         configPolicy.WithOrigins(GeneralConfigAssist.GetCorsPolicies().ToArray());
@@ -211,7 +198,6 @@ public static class WebApplicationBuilderExtensions
                     }
                 );
             });
-        }
 
         if (SwaggerConfigAssist.GetSwitch())
         {
@@ -248,16 +234,11 @@ public static class WebApplicationBuilderExtensions
             builder.Services.AddHangfireServer();
         }
 
-        if (!FlagAssist.ApplicationChannelInjectionComplete)
-        {
-            builder.AddAdvanceDefaultApplicationChannel();
-        }
+        if (!FlagAssist.ApplicationChannelInjectionComplete) builder.AddAdvanceDefaultApplicationChannel();
 
         var app = builder.Build();
 
         LogAssist.SetLogger(app.Logger);
-
-        EnvironmentAssist.SetEnvironment(app.Environment);
 
         AutofacAssist.Instance.SetContainer(app.UseHostFiltering().ApplicationServices.GetAutofacRoot());
 
@@ -308,10 +289,8 @@ public static class WebApplicationBuilderExtensions
         app.UsePrepareStartWork();
 
         if (!app.Environment.IsDevelopment())
-        {
             // app.UseExceptionHandler("/Error");
             app.UseHsts();
-        }
 
         StartupConfigMessageAssist.Add(
             new StartupMessage()
@@ -323,7 +302,6 @@ public static class WebApplicationBuilderExtensions
         );
 
         if (GeneralConfigAssist.GetCacheMode() == CacheModeCollection.Redis.ToString())
-        {
             StartupConfigMessageAssist.Add(
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
@@ -332,7 +310,6 @@ public static class WebApplicationBuilderExtensions
                     )
                     .SetExtra(RedisConfigAssist.GetConfigFileInfo())
             );
-        }
 
         if (GeneralConfigAssist.GetRemoteLogSwitch())
         {
@@ -391,9 +368,7 @@ public static class WebApplicationBuilderExtensions
             var staticFileOptionsTypeName = "";
 
             if (FlagAssist.GetAdvanceStaticFileOptionsSwitch())
-            {
                 staticFileOptionsTypeName = AutofacAssist.Instance.Resolve<AdvanceStaticFileOptions>().GetType().Name;
-            }
 
             StartupConfigMessageAssist.Add(
                 new StartupMessage()
@@ -424,7 +399,7 @@ public static class WebApplicationBuilderExtensions
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
-                        $"cors: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}."
+                        $"cors: enable, policies: {GeneralConfigAssist.GetCorsPolicies().Join(",")}."
                     )
             );
         }
@@ -448,7 +423,7 @@ public static class WebApplicationBuilderExtensions
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
-                        $"UseAuthentication: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}."
+                        $"UseAuthentication: enable, policies: {GeneralConfigAssist.GetCorsPolicies().Join(",")}."
                     )
             );
         }
@@ -466,21 +441,16 @@ public static class WebApplicationBuilderExtensions
 
         if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.EasyToken &&
             FlagAssist.EasyTokenMiddlewareModeSwitch)
-        {
             // 设置及接口数据返回格式
             app.UseEasyTokenMiddleware();
-        }
 
         if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.JsonWebToken &&
             FlagAssist.JsonWebTokenMiddlewareModeSwitch)
-        {
             app.UseJsonWebTokenMiddleware();
-        }
 
         if (!string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
         {
             if (FlagAssist.EasyTokenMiddlewareModeSwitch || FlagAssist.JsonWebTokenMiddlewareModeSwitch)
-            {
                 StartupConfigMessageAssist.Add(
                     new StartupMessage()
                         .SetLevel(LogLevel.Information)
@@ -488,9 +458,7 @@ public static class WebApplicationBuilderExtensions
                             $"TokenMode: {FlagAssist.TokenMode}, use middleware mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}."
                         )
                 );
-            }
             else
-            {
                 StartupConfigMessageAssist.Add(
                     new StartupMessage()
                         .SetLevel(LogLevel.Information)
@@ -498,20 +466,14 @@ public static class WebApplicationBuilderExtensions
                             $"TokenMode: {FlagAssist.TokenMode}, use filter mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}."
                         )
                 );
-            }
         }
 
         if (FlagAssist.PermissionVerificationSwitch)
         {
             if (string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
-            {
                 throw new Exception("use PermissionVerification need config one of token mode");
-            }
 
-            if (FlagAssist.PermissionVerificationMiddlewareModeSwitch)
-            {
-                app.UsePermissionVerificationMiddleware();
-            }
+            if (FlagAssist.PermissionVerificationMiddlewareModeSwitch) app.UsePermissionVerificationMiddleware();
 
             StartupConfigMessageAssist.Add(
                 new StartupMessage()
@@ -543,7 +505,7 @@ public static class WebApplicationBuilderExtensions
                 new StartupMessage()
                     .SetLevel(LogLevel.Information)
                     .SetMessage(
-                        $"UseAuthorization: enable, policies: {(GeneralConfigAssist.GetCorsPolicies().Join(","))}."
+                        $"UseAuthorization: enable, policies: {GeneralConfigAssist.GetCorsPolicies().Join(",")}."
                     )
             );
         }
@@ -655,15 +617,9 @@ public static class WebApplicationBuilderExtensions
     {
         var result = EnvironmentAssist.GetEnvironment().WebRootPath;
 
-        if (!FlagAssist.GetAdvanceStaticFileOptionsSwitch())
-        {
-            return result;
-        }
+        if (!FlagAssist.GetAdvanceStaticFileOptionsSwitch()) return result;
 
-        if (!FlagAssist.GetAdvanceStaticFileOptionsSwitch())
-        {
-            return result;
-        }
+        if (!FlagAssist.GetAdvanceStaticFileOptionsSwitch()) return result;
 
         return string.IsNullOrWhiteSpace(GeneralConfigAssist.GetWebRootPath())
             ? result
@@ -679,10 +635,7 @@ public static class WebApplicationBuilderExtensions
     {
         var extraActions = ApplicationConfigurator.GetAllWebApplicationBuilderExtraActions().ToList();
 
-        if (extraActions.Count <= 0)
-        {
-            return;
-        }
+        if (extraActions.Count <= 0) return;
 
         var startMessage = new StartupMessage()
             .SetLevel(LogLevel.Information)
@@ -698,10 +651,7 @@ public static class WebApplicationBuilderExtensions
         {
             var action = extraAction.GetAction();
 
-            if (action == null)
-            {
-                return;
-            }
+            if (action == null) return;
 
             var name = extraAction.GetName();
 
@@ -731,10 +681,7 @@ public static class WebApplicationBuilderExtensions
     {
         var extraActions = ApplicationConfigurator.GetAllWebApplicationExtraActions().ToList();
 
-        if (extraActions.Count <= 0)
-        {
-            return;
-        }
+        if (extraActions.Count <= 0) return;
 
         var startMessage = new StartupMessage()
             .SetLevel(LogLevel.Information)
@@ -750,10 +697,7 @@ public static class WebApplicationBuilderExtensions
         {
             var action = extraAction.GetAction();
 
-            if (action == null)
-            {
-                return;
-            }
+            if (action == null) return;
 
             var name = extraAction.GetName();
 
@@ -783,10 +727,7 @@ public static class WebApplicationBuilderExtensions
     {
         var extraActions = ApplicationConfigurator.GetAllMvcOptionExtraActions().ToList();
 
-        if (extraActions.Count <= 0)
-        {
-            return;
-        }
+        if (extraActions.Count <= 0) return;
 
         var startMessage = new StartupMessage()
             .SetLevel(LogLevel.Information)
@@ -802,10 +743,7 @@ public static class WebApplicationBuilderExtensions
         {
             var action = extraAction.GetAction();
 
-            if (action == null)
-            {
-                return;
-            }
+            if (action == null) return;
 
             var name = extraAction.GetName();
 

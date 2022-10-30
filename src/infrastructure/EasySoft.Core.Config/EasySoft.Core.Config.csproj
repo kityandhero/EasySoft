@@ -22,23 +22,23 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="nlog.trace.target.txt"/>
-        <EmbeddedResource Include="nlog.trace.target.txt"/>
-        <None Remove="nlog.trace.rule.txt"/>
-        <EmbeddedResource Include="nlog.trace.rule.txt"/>
-        <None Remove="nlog.debug.target.txt"/>
-        <EmbeddedResource Include="nlog.debug.target.txt"/>
-        <None Remove="nlog.debug.rule.txt"/>
-        <EmbeddedResource Include="nlog.debug.rule.txt"/>
-        <None Remove="nlog.main.config.txt"/>
-        <EmbeddedResource Include="nlog.main.config.txt"/>
-        <None Remove="nlog.exceptionless.rule.txt"/>
-        <EmbeddedResource Include="nlog.exceptionless.rule.txt"/>
-        <None Remove="nlog.exceptionlesstarget.txt"/>
-        <EmbeddedResource Include="nlog.exceptionless.target.txt"/>
-        <None Remove="nlog.exceptionless-extensions.tet"/>
-        <None Remove="nlog.exceptionless-extensions.txt"/>
-        <EmbeddedResource Include="nlog.exceptionless-extensions.txt"/>
+        <None Remove="nlog.trace.target.txt" />
+        <EmbeddedResource Include="nlog.trace.target.txt" />
+        <None Remove="nlog.trace.rule.txt" />
+        <EmbeddedResource Include="nlog.trace.rule.txt" />
+        <None Remove="nlog.debug.target.txt" />
+        <EmbeddedResource Include="nlog.debug.target.txt" />
+        <None Remove="nlog.debug.rule.txt" />
+        <EmbeddedResource Include="nlog.debug.rule.txt" />
+        <None Remove="nlog.main.config.txt" />
+        <EmbeddedResource Include="nlog.main.config.txt" />
+        <None Remove="nlog.exceptionless.rule.txt" />
+        <EmbeddedResource Include="nlog.exceptionless.rule.txt" />
+        <None Remove="nlog.exceptionlesstarget.txt" />
+        <EmbeddedResource Include="nlog.exceptionless.target.txt" />
+        <None Remove="nlog.exceptionless-extensions.tet" />
+        <None Remove="nlog.exceptionless-extensions.txt" />
+        <EmbeddedResource Include="nlog.exceptionless-extensions.txt" />
     </ItemGroup>
     
 </Project>

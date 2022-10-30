@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
+﻿using EasySoft.Core.Infrastructure.Assists;
 using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.Config.ExtensionMethods;
@@ -16,9 +16,9 @@ public static class ConfigurationBuilderExtensions
             true
         );
 
-        if (!string.IsNullOrWhiteSpace(EnvironmentConfigAssist.GetCustomEnv()))
+        if (!string.IsNullOrWhiteSpace(EnvironmentAssist.GetEnvironmentAliasName()))
         {
-            var otherFilePath = filePath.Replace(".json", $".{EnvironmentConfigAssist.GetCustomEnv()}.json");
+            var otherFilePath = filePath.Replace(".json", $".{EnvironmentAssist.GetEnvironmentAliasName()}.json");
 
             builder.AddJsonFile(
                 otherFilePath,
