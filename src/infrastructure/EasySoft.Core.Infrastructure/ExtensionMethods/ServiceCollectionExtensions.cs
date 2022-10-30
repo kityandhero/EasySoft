@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Linq;
+﻿using System.Collections.Concurrent;
+using EasySoft.Core.Infrastructure.Services;
 using EasySoft.UtilityTools.Core.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 
-namespace EasySoft.UtilityTools.Core.ExtensionMethods;
+namespace EasySoft.Core.Infrastructure.ExtensionMethods;
 
-public static class ServiceCollectionExtension
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection ReplaceConfiguration(
         this IServiceCollection services,
@@ -32,6 +31,18 @@ public static class ServiceCollectionExtension
     public static IServiceInfo GetServiceInfo(this IServiceCollection services)
     {
         return services.GetSingletonInstance<IServiceInfo>();
+    }
+
+    private static readonly ConcurrentDictionary<string, char> RegisteredModels = new();
+
+    public static bool HasRegistered(this IServiceCollection _, string modelName)
+    {
+        return !RegisteredModels.TryAdd(modelName.ToLower(), '1');
+    }
+
+    public static IDependencyRegistrar GetWebApiRegistrar(this IServiceCollection services)
+    {
+        return services.GetSingletonInstance<IDependencyRegistrar>();
     }
 
     private static T? GetSingletonInstanceOrNull<T>(this IServiceCollection services) where T : class
