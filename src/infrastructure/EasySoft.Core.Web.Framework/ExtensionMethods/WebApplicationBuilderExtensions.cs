@@ -590,13 +590,21 @@ public static class WebApplicationBuilderExtensions
                 )
         );
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    UtilityTools.Standard.ConstCollection.ApplicationStartMessageDivider
-                )
-        );
+        // StartupConfigMessageAssist.Add(
+        //     new StartupMessage()
+        //         .SetLevel(LogLevel.Information)
+        //         .SetMessage(
+        //             UtilityTools.Standard.ConstCollection.ApplicationStartMessageDivider
+        //         )
+        // );
+        //
+        // StartupDescriptionMessageAssist.Add(
+        //     new StartupMessage()
+        //         .SetLevel(LogLevel.Information)
+        //         .SetMessage(
+        //             UtilityTools.Standard.ConstCollection.ApplicationStartMessageDivider
+        //         )
+        // );
 
         StartupBuilderExtraActionMessageAssist.Print();
 

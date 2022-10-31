@@ -45,9 +45,9 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.Add(
             new StartupMessage()
-                .SetLevel(LogLevel.Trace)
+                .SetLevel(LogLevel.Debug)
                 .SetMessage(
-                    $"Execute skyApmExtensions.AddCap()."
+                    "Execute skyApmExtensions.AddCap()."
                 )
         );
 
