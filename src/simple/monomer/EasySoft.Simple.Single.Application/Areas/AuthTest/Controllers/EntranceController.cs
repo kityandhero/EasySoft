@@ -61,7 +61,7 @@ public class EntranceController : AreaControllerCore
 
         if (!result.Success) return Content(result.Message);
 
-        var token = result.Data?.AuthorId.ToToken();
+        var token = result.Data?.Id.ToToken();
 
         if (token != null) this.SetCookie(GeneralConfigAssist.GetTokenName(), token);
 

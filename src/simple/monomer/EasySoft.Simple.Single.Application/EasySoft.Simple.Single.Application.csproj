@@ -24,6 +24,7 @@
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.AgileConfigClient\EasySoft.Core.AgileConfigClient.csproj" />
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework.SqlServer\EasySoft.Core.EntityFramework.SqlServer.csproj" />
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EventBus\EasySoft.Core.EventBus.csproj" />
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.HealthChecks\EasySoft.Core.HealthChecks.csproj" />
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.LogDashboard\EasySoft.Core.LogDashboard.csproj" />

@@ -11,6 +11,13 @@ namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 
 public static class ServiceCollectionExtension
 {
+    private static readonly ConcurrentDictionary<string, char> RegisteredModels = new();
+
+    public static bool HasRegistered(this IServiceCollection _, string modelName)
+    {
+        return !RegisteredModels.TryAdd(modelName.ToLower(), '1');
+    }
+
     public static IServiceCollection ReplaceConfiguration(
         this IServiceCollection services,
         IConfiguration configuration
@@ -29,9 +36,9 @@ public static class ServiceCollectionExtension
         return services.GetSingletonInstance<IConfiguration>();
     }
 
-    public static IServiceInfo GetServiceInfo(this IServiceCollection services)
+    public static IDependencyRegistrar GetWebApiRegistrar(this IServiceCollection services)
     {
-        return services.GetSingletonInstance<IServiceInfo>();
+        return services.GetSingletonInstance<IDependencyRegistrar>();
     }
 
     private static T? GetSingletonInstanceOrNull<T>(this IServiceCollection services) where T : class

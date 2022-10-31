@@ -8,6 +8,7 @@ using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Data.ExtensionMethods;
 using EasySoft.Core.EntityFramework.SqlServer.Extensions;
+using EasySoft.Core.EventBus.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
@@ -22,6 +23,7 @@ using EasySoft.Simple.EntityFrameworkCore.IServices;
 using EasySoft.Simple.EntityFrameworkCore.Services;
 using EasySoft.Simple.Single.Application.EasyTokens;
 using EasySoft.Simple.Single.Application.Enums;
+using EasySoft.Simple.Single.Application.EventSubscribers;
 using EasySoft.Simple.Single.Application.Hubs;
 using EasySoft.Simple.Single.Application.PrepareStartWorks;
 using Microsoft.EntityFrameworkCore;
@@ -59,6 +61,8 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
             );
 
             applicationBuilder.AddAssemblyBusinessServiceInterceptors(typeof(AuthorBusinessService).Assembly);
+
+            applicationBuilder.AddCapEventBus<CapEventSubscriber>();
         }),
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddPrepareStartWorkInjection")

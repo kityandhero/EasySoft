@@ -4,9 +4,9 @@ namespace EasySoft.Core.Infrastructure.Startup;
 
 public interface IStartupMessage
 {
-    public IStartupMessage SetLevel(LogLevel level);
+    public LogLevel Level { get; set; }
 
-    public LogLevel GetLevel();
+    public IStartupMessage SetLevel(LogLevel level);
 
     public IStartupMessage SetMessage(string message);
 

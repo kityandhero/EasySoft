@@ -14,6 +14,8 @@ public class RabbitMQConfig : IConfig
 
     public string VirtualHost { get; set; }
 
+    public string Port { get; set; }
+
     public string ConnectionTimeout { get; set; }
 
     public RabbitMQConfig()
@@ -22,6 +24,7 @@ public class RabbitMQConfig : IConfig
         UserName = "";
         Password = "";
         VirtualHost = "/";
+        Port = "5672";
         ConnectionTimeout = "30";
     }
 }

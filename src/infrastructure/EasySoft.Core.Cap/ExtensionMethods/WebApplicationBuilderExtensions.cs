@@ -6,6 +6,7 @@ using EasySoft.Core.Config.Cap;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -356,9 +357,10 @@ public static class WebApplicationBuilderExtensions
                     throw new Exception($"cap persistent type {persistentType.ToString()} not support");
             }
 
-            // capOptions.Version = ServiceInfo.Version;
+            capOptions.Version = GeneralConfigAssist.GetVersion();
             //默认值：cap.queue.{程序集名称},在 RabbitMQ 中映射到 Queue Names。
-            // capOptions.DefaultGroupName = $"cap.{ServiceInfo.ShortName}.{this.GetEnvShortName()}";
+            capOptions.DefaultGroupName =
+                $"cap.{GeneralConfigAssist.GetName()}.{EnvironmentAssist.GetEnvironmentAliasName()}";
             //默认值：60 秒,重试 & 间隔
             //在默认情况下，重试将在发送和消费消息失败的 4分钟后 开始，这是为了避免设置消息状态延迟导致可能出现的问题。
             //发送和消费消息的过程中失败会立即重试 3 次，在 3 次以后将进入重试轮询，此时 FailedRetryInterval 配置才会生效。
@@ -367,7 +369,7 @@ public static class WebApplicationBuilderExtensions
             capOptions.FailedRetryCount = 50;
             //默认值：NULL,重试阈值的失败回调。当重试达到 FailedRetryCount 设置的值的时候，将调用此 Action 回调
             //，你可以通过指定此回调来接收失败达到最大的通知，以做出人工介入。例如发送邮件或者短信。
-            capOptions.FailedThresholdCallback = (failed) =>
+            capOptions.FailedThresholdCallback = (_) =>
             {
                 //todo
             };

@@ -1,7 +1,6 @@
 ﻿using System.Net.Sockets;
-using EasySoft.Core.EventBus.Configurations;
+using EasySoft.Core.Config.ConfigAssist;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Polly;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;
@@ -14,33 +13,33 @@ public class RabbitMqConnection : IRabbitMqConnection
     private static readonly object LockObject = new();
     public IConnection Connection { get; private set; } = default!;
 
-    private RabbitMqConnection()
+    internal static RabbitMqConnection GetInstance(
+        string clientProvidedName,
+        ILogger logger
+    )
     {
-    }
+        if (_uniqueInstance is not null) return _uniqueInstance;
 
-    internal static RabbitMqConnection GetInstance(IOptions<RabbitMqOptions> options, string clientProvidedName,
-        ILogger<dynamic> logger)
-    {
-        if (_uniqueInstance is null)
-            lock (LockObject)
-            {
-                if (_uniqueInstance is null)
-                    _uniqueInstance = new RabbitMqConnection(options, clientProvidedName, logger);
-            }
+        lock (LockObject)
+        {
+            if (_uniqueInstance is not null) return _uniqueInstance;
+
+            _uniqueInstance = new RabbitMqConnection(clientProvidedName, logger);
+        }
 
         return _uniqueInstance;
     }
 
-    private RabbitMqConnection(IOptions<RabbitMqOptions> options, string clientProvidedName, ILogger logger)
+    private RabbitMqConnection(string clientProvidedName, ILogger logger)
     {
-        var factory = new ConnectionFactory()
+        var factory = new ConnectionFactory
         {
             ClientProvidedName = clientProvidedName,
-            HostName = options.Value.HostName,
-            VirtualHost = options.Value.VirtualHost,
-            UserName = options.Value.UserName,
-            Password = options.Value.Password,
-            Port = options.Value.Port,
+            HostName = RabbitMQConfigAssist.GetHostName(),
+            VirtualHost = RabbitMQConfigAssist.GetVirtualHost(),
+            UserName = RabbitMQConfigAssist.GetUserName(),
+            Password = RabbitMQConfigAssist.GetPassword(),
+            Port = RabbitMQConfigAssist.GetPort(),
             //Rabbitmq集群必需加这两个参数
             AutomaticRecoveryEnabled = true
             //TopologyRecoveryEnabled=true
@@ -50,8 +49,8 @@ public class RabbitMqConnection : IRabbitMqConnection
             .Or<BrokerUnreachableException>()
             .WaitAndRetry(
                 2,
-                retryAttempt => TimeSpan.FromSeconds(1),
-                (ex, time, retryCount, content) =>
+                _ => TimeSpan.FromSeconds(1),
+                (ex, _, retryCount, _) =>
                 {
                     if (2 == retryCount)
                         throw ex;

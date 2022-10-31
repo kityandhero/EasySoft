@@ -4,17 +4,17 @@ namespace EasySoft.Core.Infrastructure.Startup;
 
 public class StartupMessage : IStartupMessage
 {
-    private LogLevel _logLevel;
-
     private string _message;
 
     private bool _extraNewLine;
 
     private string _extra;
 
+    public LogLevel Level { get; set; }
+
     public StartupMessage()
     {
-        _logLevel = LogLevel.Information;
+        Level = LogLevel.Information;
         _message = "";
         _extraNewLine = false;
         _extra = "";
@@ -22,14 +22,9 @@ public class StartupMessage : IStartupMessage
 
     public IStartupMessage SetLevel(LogLevel level)
     {
-        _logLevel = level;
+        Level = level;
 
         return this;
-    }
-
-    public LogLevel GetLevel()
-    {
-        return _logLevel;
     }
 
     public IStartupMessage SetMessage(string message)

@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Data.Entities.Interfaces;
+﻿namespace EasySoft.Core.Infrastructure.Entities.Interfaces;
 
 public interface IConcurrency
 {

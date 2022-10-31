@@ -1,10 +1,12 @@
-﻿using EasySoft.Core.Config.Cap;
+﻿using System.Reflection;
+using EasySoft.Core.Config.Cap;
 using EasySoft.Core.Config.ConfigCollection;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
+using Masuit.Tools.DateTimeExt;
 using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.Config.ConfigAssist;
@@ -62,6 +64,49 @@ public static class GeneralConfigAssist
     private static GeneralConfig GetConfig()
     {
         return GeneralConfig.Instance;
+    }
+
+    public static string GetId()
+    {
+        var ticks = DateTime.Now.GetTotalMilliseconds();
+        var ticksHex = Convert.ToString(ticks, 16);
+        var name = GetName();
+
+        return $"{name}-{EnvironmentAssist.GetEnvironmentAliasName()}-{ticksHex}";
+    }
+
+    public static string GetName()
+    {
+        var startAssembly = Assembly.GetEntryAssembly();
+
+        var name = "";
+
+        if (startAssembly != null)
+        {
+            var assemblyName = startAssembly.GetName();
+            var fullName = assemblyName.Name?.ToLower() ?? "";
+
+            name = fullName.Replace(".", "-");
+        }
+
+        if (string.IsNullOrWhiteSpace(name)) throw new Exception("EntryAssembly not exist");
+
+        return name;
+    }
+
+    public static string GetVersion()
+    {
+        var startAssembly = Assembly.GetEntryAssembly();
+
+        var version = "1.0.0.0";
+
+        if (startAssembly == null) return version;
+
+        var assemblyName = startAssembly.GetName();
+
+        version = assemblyName.Version?.ToString() ?? "1.0.0.0";
+
+        return version;
     }
 
     public static string GetUrls()
@@ -832,19 +877,5 @@ public static class GeneralConfigAssist
             );
 
         return v;
-    }
-
-    public static bool GetSkyApmSwitch()
-    {
-        var v = GetConfig().SkyApmSwitch;
-
-        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
-
-        if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 SkyApmSwitch: {ConfigFile} -> SkyApmSwitch,请设置 0/1"
-            );
-
-        return value == 1;
     }
 }

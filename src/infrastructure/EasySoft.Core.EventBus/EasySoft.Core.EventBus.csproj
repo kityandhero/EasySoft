@@ -8,8 +8,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
+      <ProjectReference Include="..\EasySoft.Core.Data\EasySoft.Core.Data.csproj" />
       <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
       <ProjectReference Include="..\EasySoft.Dependence.Core\EasySoft.Dependence.Core.csproj" />
+      <ProjectReference Include="..\EasySoft.IdGenerator\EasySoft.IdGenerator.csproj" />
     </ItemGroup>
 
 </Project>

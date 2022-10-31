@@ -46,11 +46,9 @@ public static class RabbitMQConfigAssist
         var v = GetConfig().HostName.Remove(" ").Trim();
 
         if (string.IsNullOrWhiteSpace(v))
-        {
             throw new Exception(
                 $"请配置RabbitMQ消息队列HostName项: {ConfigFile} -> HostName"
             );
-        }
 
         return v;
     }
@@ -60,11 +58,9 @@ public static class RabbitMQConfigAssist
         var v = GetConfig().UserName.Remove(" ").Trim();
 
         if (string.IsNullOrWhiteSpace(v))
-        {
             throw new Exception(
                 $"请配置RabbitMQ消息队列UserName项: {ConfigFile} -> UserName"
             );
-        }
 
         return v;
     }
@@ -74,11 +70,9 @@ public static class RabbitMQConfigAssist
         var v = GetConfig().Password.Remove(" ").Trim();
 
         if (string.IsNullOrWhiteSpace(v))
-        {
             throw new Exception(
                 $"请配置RabbitMQ消息队列Password项: {ConfigFile} -> Password"
             );
-        }
 
         return v;
     }
@@ -88,13 +82,25 @@ public static class RabbitMQConfigAssist
         var v = GetConfig().VirtualHost.Remove(" ").Trim();
 
         if (string.IsNullOrWhiteSpace(v))
-        {
             throw new Exception(
                 $"请配置RabbitMQ消息队列VirtualHost项: {ConfigFile} -> VirtualHost"
             );
-        }
 
         return v;
+    }
+
+    public static int GetPort()
+    {
+        var v = GetConfig().Port.Remove(" ").Trim();
+
+        v = string.IsNullOrWhiteSpace(v) ? "5672" : v;
+
+        if (!v.IsInt(out var value) || value < 0)
+            throw new Exception(
+                $"请配置 Port: {ConfigFile} -> Port,请设置数字 value > 0"
+            );
+
+        return value;
     }
 
     public static int GetConnectionTimeout()
@@ -102,11 +108,9 @@ public static class RabbitMQConfigAssist
         var v = GetConfig().ConnectionTimeout.Remove(" ").Trim();
 
         if (!v.IsInt() || v.ToInt() < 0)
-        {
             throw new Exception(
                 $"请配置RabbitMQ消息队列ConnectionTimeout项: {ConfigFile} -> ConnectionTimeout"
             );
-        }
 
         return v.ToInt();
     }

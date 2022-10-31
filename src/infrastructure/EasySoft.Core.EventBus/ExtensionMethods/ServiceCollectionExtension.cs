@@ -1,13 +1,12 @@
 ﻿using DotNetCore.CAP;
+using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EventBus.Cap;
 using EasySoft.Core.EventBus.Cap.Filters;
-using EasySoft.Core.EventBus.Configurations;
 using EasySoft.Core.EventBus.RabbitMq;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace EasySoft.Core.EventBus.ExtensionMethods;
 
@@ -41,17 +40,13 @@ public static class ServiceCollectionExtension
             return services;
 
         return services
-                .Configure<RabbitMqOptions>(rabbitmqSection)
-                .AddSingleton<IRabbitMqConnection>(provider =>
-                {
-                    var options = provider.GetRequiredService<IOptions<RabbitMqOptions>>();
-                    var logger = provider.GetRequiredService<ILogger<RabbitMqConnection>>();
-                    var serviceInfo = services.GetServiceInfo();
-                    var clientProvidedName = serviceInfo.Id;
+            .AddSingleton<IRabbitMqConnection>(provider =>
+            {
+                var logger = provider.GetRequiredService<ILogger>();
+                var clientProvidedName = GeneralConfigAssist.GetId();
 
-                    return RabbitMqConnection.GetInstance(options, clientProvidedName, logger);
-                })
-                .AddSingleton<RabbitMqProducer>()
-            ;
+                return RabbitMqConnection.GetInstance(clientProvidedName, logger);
+            })
+            .AddSingleton<RabbitMqProducer>();
     }
 }

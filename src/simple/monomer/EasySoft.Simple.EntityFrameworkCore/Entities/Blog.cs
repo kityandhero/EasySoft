@@ -7,11 +7,6 @@ namespace EasySoft.Simple.EntityFrameworkCore.Entities;
 [Table("blog")]
 public class Blog : BaseEntity
 {
-    [Key]
-    [Column("id")]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int BlogId { get; set; }
-
     [Column("title")]
     public string Title { get; set; }
 

@@ -7,11 +7,6 @@ namespace EasySoft.Simple.EntityFrameworkCore.Entities;
 [Table("author")]
 public class Author : BaseEntity
 {
-    [Key]
-    [Column("id")]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int AuthorId { get; set; }
-
     [Column("real_name")]
     public string RealName { get; set; }
 

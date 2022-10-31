@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using EasySoft.Core.Data.Interceptors;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Services;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;

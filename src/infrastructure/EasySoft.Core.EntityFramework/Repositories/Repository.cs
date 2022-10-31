@@ -1,21 +1,30 @@
 ﻿using System.Linq.Expressions;
 using EasySoft.Core.Data.Repositories;
+using EasySoft.Core.Infrastructure.Entities.Interfaces;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.Core.EntityFramework.Repositories;
 
-public class Repository<TEntity> : Repository<DbContext, TEntity>
-    where TEntity : class, new()
+public class Repository<TEntity> : Repository<TEntity, long>, IRepository<TEntity>
+    where TEntity : class, IEntity<long>, new()
 {
     public Repository(DbContext context) : base(context)
     {
     }
 }
 
-public abstract class Repository<TDbContext, TEntity> : IRepository<TEntity>
+public abstract class Repository<TEntity, TKey> : Repository<DbContext, TEntity, TKey>
+    where TEntity : class, IEntity<TKey>, new()
+{
+    protected Repository(DbContext context) : base(context)
+    {
+    }
+}
+
+public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntity, TKey>
     where TDbContext : DbContext
-    where TEntity : class, new()
+    where TEntity : class, IEntity<TKey>, new()
 {
     protected virtual TDbContext Context { get; }
 
@@ -32,10 +41,11 @@ public abstract class Repository<TDbContext, TEntity> : IRepository<TEntity>
         Expression<Func<TEntity, bool>> where,
         Expression<Func<TEntity, TS>> orderBy,
         bool isAsc = true,
+        bool writeChannel = false,
         CancellationToken cancellationToken = default
     )
     {
-        var total = await Context.Set<TEntity>().Where(where).CountAsync(cancellationToken);
+        var total = await Where(where, writeChannel, true).CountAsync(cancellationToken);
 
         List<TEntity> list;
 
@@ -46,7 +56,7 @@ public abstract class Repository<TDbContext, TEntity> : IRepository<TEntity>
                 .Take(pageSize)
                 .ToListAsync(cancellationToken);
         else
-            list = await Context.Set<TEntity>().Where(where)
+            list = await Where(where, writeChannel, true)
                 .OrderByDescending(orderBy)
                 .Skip(pageSize * (pageIndex - 1))
                 .Take(pageSize)
@@ -64,40 +74,43 @@ public abstract class Repository<TDbContext, TEntity> : IRepository<TEntity>
     #region SingleList
 
     public virtual async Task<IEnumerable<TEntity>> SingleListAsync(
-        Expression<Func<TEntity, bool>> filter,
+        Expression<Func<TEntity, bool>> where,
+        bool writeChannel = false,
         CancellationToken cancellationToken = default
     )
     {
-        return await Context.Set<TEntity>().Where(filter).ToListAsync(cancellationToken);
+        return await Where(where, writeChannel, true).ToListAsync(cancellationToken);
     }
 
-    public virtual async Task<IEnumerable<TEntity>> SingleListAsync<TKey>(
-        Expression<Func<TEntity, bool>> filter,
-        Func<TEntity, TKey> keySelector,
+    public virtual async Task<IEnumerable<TEntity>> SingleListAsync<TTarget>(
+        Expression<Func<TEntity, bool>> where,
+        Func<TEntity, TTarget> keySelector,
         bool descending = false,
+        bool writeChannel = false,
         CancellationToken cancellationToken = default
     )
     {
         return descending
-            ? await Context.Set<TEntity>().Where(filter).AsEnumerable().OrderByDescending(keySelector).AsQueryable()
+            ? await Where(where, writeChannel, true).AsEnumerable().OrderByDescending(keySelector).AsQueryable()
                 .ToListAsync(cancellationToken)
-            : await Context.Set<TEntity>().Where(filter).AsEnumerable().OrderBy(keySelector).AsQueryable()
+            : await Where(where, writeChannel, true).AsEnumerable().OrderBy(keySelector).AsQueryable()
                 .ToListAsync(cancellationToken);
     }
 
-    public virtual async Task<IEnumerable<TEntity>> SingleListAsync<TKey>(
-        Expression<Func<TEntity, bool>> filter,
-        Func<TEntity, TKey> keySelector,
-        IComparer<TKey>? comparer,
+    public virtual async Task<IEnumerable<TEntity>> SingleListAsync<TTarget>(
+        Expression<Func<TEntity, bool>> where,
+        Func<TEntity, TTarget> keySelector,
+        IComparer<TTarget>? comparer,
         bool descending = false,
+        bool writeChannel = false,
         CancellationToken cancellationToken = default
     )
     {
         return descending
-            ? await Context.Set<TEntity>().Where(filter).AsEnumerable().OrderByDescending(keySelector, comparer)
+            ? await Where(where, writeChannel, true).AsEnumerable().OrderByDescending(keySelector, comparer)
                 .AsQueryable()
                 .ToListAsync(cancellationToken)
-            : await Context.Set<TEntity>().Where(filter).AsEnumerable().OrderBy(keySelector, comparer).AsQueryable()
+            : await Where(where, writeChannel, true).AsEnumerable().OrderBy(keySelector, comparer).AsQueryable()
                 .ToListAsync(cancellationToken);
     }
 
@@ -106,11 +119,16 @@ public abstract class Repository<TDbContext, TEntity> : IRepository<TEntity>
     #region Get
 
     public virtual async Task<ExecutiveResult<TEntity>> GetAsync(
-        object id,
+        TKey id,
+        bool writeChannel = false,
         CancellationToken cancellationToken = default
     )
     {
-        var entity = await Context.Set<TEntity>().FindAsync(id);
+        var entity = writeChannel
+            ? await Context.Set<TEntity>()
+                .TagWith(RepositoryConst.MaxScaleRouteToMaster)
+                .FirstAsync(x => x.Id != null && x.Id.Equals(id), cancellationToken)
+            : await Context.Set<TEntity>().FindAsync(id);
 
         if (entity == null) return new ExecutiveResult<TEntity>(ReturnCode.NoData);
 
@@ -122,10 +140,11 @@ public abstract class Repository<TDbContext, TEntity> : IRepository<TEntity>
 
     public virtual async Task<ExecutiveResult<TEntity>> GetAsync(
         Expression<Func<TEntity, bool>> filter,
+        bool writeChannel = false,
         CancellationToken cancellationToken = default
     )
     {
-        var entity = (await SingleListAsync(filter, cancellationToken)).SingleOrDefault();
+        var entity = (await SingleListAsync(filter, writeChannel, cancellationToken)).SingleOrDefault();
 
         if (entity == null) return new ExecutiveResult<TEntity>(ReturnCode.NoData);
 
@@ -135,14 +154,16 @@ public abstract class Repository<TDbContext, TEntity> : IRepository<TEntity>
         };
     }
 
-    public virtual async Task<ExecutiveResult<TEntity>> GetAsync<TKey>(
+    public virtual async Task<ExecutiveResult<TEntity>> GetAsync<TTarget>(
         Expression<Func<TEntity, bool>> filter,
-        Func<TEntity, TKey> keySelector,
+        Func<TEntity, TTarget> keySelector,
         bool descending = false,
+        bool writeChannel = false,
         CancellationToken cancellationToken = default
     )
     {
-        var entity = (await SingleListAsync(filter, keySelector, descending, cancellationToken)).SingleOrDefault();
+        var entity = (await SingleListAsync(filter, keySelector, descending, writeChannel, cancellationToken))
+            .SingleOrDefault();
 
         if (entity == null) return new ExecutiveResult<TEntity>(ReturnCode.NoData);
 
@@ -152,15 +173,23 @@ public abstract class Repository<TDbContext, TEntity> : IRepository<TEntity>
         };
     }
 
-    public virtual async Task<ExecutiveResult<TEntity>> GetAsync<TKey>(
+    public virtual async Task<ExecutiveResult<TEntity>> GetAsync<TTarget>(
         Expression<Func<TEntity, bool>> filter,
-        Func<TEntity, TKey> keySelector,
-        IComparer<TKey>? comparer,
+        Func<TEntity, TTarget> keySelector,
+        IComparer<TTarget>? comparer,
         bool descending = false,
+        bool writeChannel = false,
         CancellationToken cancellationToken = default
     )
     {
-        var entity = (await SingleListAsync(filter, keySelector, comparer, descending, cancellationToken))
+        var entity = (await SingleListAsync(
+                filter,
+                keySelector,
+                comparer,
+                descending,
+                writeChannel,
+                cancellationToken
+            ))
             .SingleOrDefault();
 
         if (entity == null) return new ExecutiveResult<TEntity>(ReturnCode.NoData);
@@ -175,12 +204,20 @@ public abstract class Repository<TDbContext, TEntity> : IRepository<TEntity>
 
     #region Exists
 
+    /// <summary>
+    /// 根据条件查询实体是否存在
+    /// </summary>
+    /// <param name="where">查询条件</param>
+    /// <param name="writeChannel">是否读写库，默认false,可选参数</param>
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+    /// <returns></returns>
     public async Task<ExecutiveResult> ExistAsync(
         Expression<Func<TEntity, bool>> where,
+        bool writeChannel = false,
         CancellationToken cancellationToken = default
     )
     {
-        var o = await GetAsync(where, cancellationToken);
+        var o = await GetAsync(where, writeChannel, cancellationToken);
 
         return !o.Success ? new ExecutiveResult(ReturnCode.NoData) : new ExecutiveResult(ReturnCode.Ok);
     }
@@ -189,14 +226,52 @@ public abstract class Repository<TDbContext, TEntity> : IRepository<TEntity>
 
     #region CountAsync
 
+    /// <summary>
+    /// 统计符合条件的实体数量
+    /// </summary>
+    /// <param name="where">查询条件</param>
+    /// <param name="writeChannel">是否读写库，默认false,可选参数</param>
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+    /// <returns></returns>
     public virtual async Task<int> CountAsync(
-        Expression<Func<TEntity, bool>> whereExpression,
+        Expression<Func<TEntity, bool>> where,
+        bool writeChannel = false,
         CancellationToken cancellationToken = default
     )
     {
-        var dbSet = Context.Set<TEntity>().AsNoTracking();
+        var dbSet = GetSet(writeChannel, true);
 
-        return await dbSet.CountAsync(whereExpression, cancellationToken);
+        return await dbSet.CountAsync(where, cancellationToken);
+    }
+
+    #endregion
+
+    #region where
+
+    protected virtual IQueryable<TEntity> GetSet(bool writeChannel, bool noTracking)
+    {
+        switch (noTracking)
+        {
+            case true when writeChannel:
+                return Context.Set<TEntity>().AsNoTracking().TagWith(RepositoryConst.MaxScaleRouteToMaster);
+
+            case true:
+                return Context.Set<TEntity>().AsNoTracking();
+        }
+
+        if (writeChannel)
+            return Context.Set<TEntity>().TagWith(RepositoryConst.MaxScaleRouteToMaster);
+
+        return Context.Set<TEntity>();
+    }
+
+    public virtual IQueryable<TEntity> Where(
+        Expression<Func<TEntity, bool>> expression,
+        bool writeChannel = false,
+        bool noTracking = true
+    )
+    {
+        return GetSet(writeChannel, noTracking).Where(expression);
     }
 
     #endregion
@@ -279,19 +354,24 @@ public abstract class Repository<TDbContext, TEntity> : IRepository<TEntity>
         return await Context.SaveChangesAsync(cancellationToken);
     }
 
+    public Task<ExecutiveResult> DeleteAsync(object id, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
     #endregion
 
     #region Delete
 
     public virtual async Task<ExecutiveResult> DeleteAsync(
-        object id,
+        TKey id,
         CancellationToken cancellationToken = default
     )
     {
-        var entityToDelete = await GetAsync(id, cancellationToken);
+        var executiveResult = await GetAsync(id, true, cancellationToken);
 
-        return entityToDelete.Success && entityToDelete.Data != null
-            ? (await DeleteAsync(entityToDelete.Data, cancellationToken)).ToExecutiveResult()
+        return executiveResult.Success && executiveResult.Data != null
+            ? (await DeleteAsync(executiveResult.Data, cancellationToken)).ToExecutiveResult()
             : new ExecutiveResult(ReturnCode.NoData);
     }
 
