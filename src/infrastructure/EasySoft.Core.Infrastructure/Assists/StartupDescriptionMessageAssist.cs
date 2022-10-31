@@ -62,7 +62,7 @@ public static class StartupDescriptionMessageAssist
 
     public static void AddExecute(string message, string extra = "")
     {
-        AddDebug(message, extra);
+        // AddDebug(message, extra);
     }
 
     public static void Print()
@@ -80,7 +80,7 @@ public static class StartupDescriptionMessageAssist
 
         list.Add(
             new StartupMessage()
-                .SetLevel(LogLevel.Debug)
+                .SetLevel(LogLevel.Trace)
                 .SetMessage(
                     "StartupMessage Complete"
                 )

@@ -32,7 +32,7 @@ public static class WebApplicationBuilderExtensions
         if (FlagAssist.JsonWebTokenConfigComplete)
             throw new Exception("UseAdvanceJsonWebToken disallow inject more than once");
 
-        StartupDescriptionMessageAssist.AddDescription(
+        StartupDescriptionMessageAssist.AddExecute(
             $"Execute {nameof(AddAdvanceJsonWebToken)}<{typeof(TOperator).Name}>()."
         );
 
