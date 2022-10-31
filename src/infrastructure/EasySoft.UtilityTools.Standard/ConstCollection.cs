@@ -15,7 +15,7 @@ public static class ConstCollection
         "===========================================================";
 
     public const string ApplicationStartMessageDescriptionDivider =
-        "###########################################################";
+        "***********************************************************";
 
     public const string ApplicationStartExtraBuilderMessageDivider =
         "==== Extra Builder Action Info ========";
