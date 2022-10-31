@@ -19,15 +19,15 @@ public static class WebApplicationBuilderExtensions
         Action<CapOptions>? action = null
     ) where TSubscriber : class, ICapSubscribe
     {
-        builder.Services.AddCapEventBus<TSubscriber>(option => { action?.Invoke(option); });
-
         StartupDescriptionMessageAssist.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Debug)
                 .SetMessage(
-                    $"Execute AddCapEventBus<{typeof(TSubscriber).Name}>."
+                    $"Execute {nameof(AddCapEventBus)}<{typeof(TSubscriber).Name}>()."
                 )
         );
+
+        builder.Services.AddCapEventBus<TSubscriber>(option => { action?.Invoke(option); });
 
         return builder;
     }
@@ -41,8 +41,6 @@ public static class WebApplicationBuilderExtensions
         Action<CapOptions>? action = null
     ) where TSubscriber : class, ICapSubscribe
     {
-        skyApmExtensions.AddCap();
-
         StartupDescriptionMessageAssist.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Debug)
@@ -50,6 +48,8 @@ public static class WebApplicationBuilderExtensions
                     "Execute skyApmExtensions.AddCap()."
                 )
         );
+
+        skyApmExtensions.AddCap();
 
         return builder.AddCapEventBus<TSubscriber>(action);
     }

@@ -1,5 +1,8 @@
-﻿using EasySoft.Core.LuoSiMao.LuoSiMao;
+﻿using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Infrastructure.Startup;
+using EasySoft.Core.LuoSiMao.LuoSiMao;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.LuoSiMao.ExtensionMethods;
 
@@ -13,9 +16,19 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder">服务集合</param>
     /// <param name="key">密钥</param>
-    public static void AddLuoSiMao(this WebApplicationBuilder builder, string key)
+    public static WebApplicationBuilder AddLuoSiMao(this WebApplicationBuilder builder, string key)
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddLuoSiMao)}()."
+                )
+        );
+
         builder.Host.AddLuoSiMao(new SmsConfig(key));
+
+        return builder;
     }
 
     /// <summary>
@@ -23,8 +36,18 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder">服务集合</param>
     /// <param name="smsConfig">密钥</param>
-    public static void AddLuoSiMao(this WebApplicationBuilder builder, SmsConfig smsConfig)
+    public static WebApplicationBuilder AddLuoSiMao(this WebApplicationBuilder builder, SmsConfig smsConfig)
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddLuoSiMao)}()."
+                )
+        );
+
         builder.Host.AddLuoSiMao(smsConfig);
+
+        return builder;
     }
 }

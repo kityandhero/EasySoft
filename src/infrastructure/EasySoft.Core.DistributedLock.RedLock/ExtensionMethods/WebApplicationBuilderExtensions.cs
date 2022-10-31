@@ -3,6 +3,7 @@ using EasySoft.Core.DistributedLock.RedLock.Configure;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.DistributedLock.RedLock.ExtensionMethods;
 
@@ -20,6 +21,14 @@ public static class WebApplicationBuilderExtensions
         Action<RedLockOptions> action
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddAdvanceRedLock)}()."
+                )
+        );
+
         var options = new RedLockOptions();
 
         action(options);

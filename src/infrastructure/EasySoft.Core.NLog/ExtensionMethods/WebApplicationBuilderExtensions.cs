@@ -1,5 +1,7 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Config.Utils;
+using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +11,7 @@ using NLog;
 using NLog.Config;
 using NLog.Extensions.Logging;
 using NLog.Web;
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace EasySoft.Core.NLog.ExtensionMethods;
 
@@ -32,17 +35,13 @@ public static class WebApplicationBuilderExtensions
             var configurationSection = LogConfigAssist.GetSection("NLog");
 
             if (configurationSection.GetChildren().Any())
-            {
                 LogManager.Configuration = new NLogLoggingConfiguration(configurationSection);
-            }
             else
-            {
                 LogManager.Configuration = new NLogLoggingConfiguration(
                     new ConfigurationBuilder().AddJsonContent(
                         Tools.GetNlogDefaultConfig()
                     ).Build().GetSection("NLog")
                 );
-            }
 
             b.AddNLogWeb();
         });
@@ -55,6 +54,14 @@ public static class WebApplicationBuilderExtensions
         Func<LoggingConfiguration> action
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddAdvanceNLog)}()."
+                )
+        );
+
         // NLog: Setup NLog for Dependency injection
         builder.Logging.ClearProviders();
 

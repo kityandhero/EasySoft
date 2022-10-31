@@ -28,14 +28,18 @@ public static class WebApplicationBuilderExtensions
     ) where TOperator : ActualOperator where TTokenSecretOptions : ITokenSecretOptions
     {
         if (!string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
-        {
             throw new Exception("token mode disallow use more than one");
-        }
 
         if (FlagAssist.EasyTokenConfigComplete)
-        {
             throw new Exception("UseEasyToken<TTokenSecretOptions, TOperator> disallow inject more than once");
-        }
+
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(UseEasyToken)}<{typeof(TTokenSecretOptions).Name},{typeof(TOperator).Name}>()."
+                )
+        );
 
         builder.UseTokenSecretOptionsInjection<TTokenSecretOptions>()
             .UseTokenSecretInjection<TokenSecret>()
@@ -78,9 +82,15 @@ public static class WebApplicationBuilderExtensions
         where TTokenSecret : ITokenSecret
     {
         if (FlagAssist.EasyTokenConfigComplete)
-        {
             throw new Exception("UseEasyToken<TTokenSecretOptions, TOperator> disallow inject more than once");
-        }
+
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(UseEasyToken)}<{typeof(TTokenSecretOptions).Name},{typeof(TTokenSecret).Name},{typeof(TOperator).Name}>()."
+                )
+        );
 
         builder.UseTokenSecretOptionsInjection<TTokenSecretOptions>()
             .UseTokenSecretInjection<TTokenSecret>()
@@ -109,9 +119,15 @@ public static class WebApplicationBuilderExtensions
     ) where T : ITokenSecretOptions
     {
         if (FlagAssist.EasyTokenSecretOptionInjectionComplete)
-        {
             throw new Exception("UseTokenSecretOptionsInjection<T> disallow inject more than once");
-        }
+
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(UseTokenSecretOptionsInjection)}<{typeof(T).Name}>()."
+                )
+        );
 
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
@@ -134,9 +150,15 @@ public static class WebApplicationBuilderExtensions
     ) where T : ITokenSecret
     {
         if (FlagAssist.EasyTokenSecretInjectionComplete)
-        {
             throw new Exception("UseTokenSecretInjection<T> disallow inject more than once");
-        }
+
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(UseTokenSecretInjection)}<{typeof(T).Name}>()."
+                )
+        );
 
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {

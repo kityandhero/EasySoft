@@ -1,5 +1,8 @@
-﻿using EasySoft.UtilityTools.Core.ExtensionMethods;
+﻿using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Infrastructure.Startup;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.EntityFramework.SqlServer.Extensions;
 
@@ -22,6 +25,14 @@ public static class WebApplicationBuilderExtensions
     {
         if (builder.HasRegistered(UniqueIdentifier))
             return builder;
+
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddAdvanceEntityFrameworkSqlServer)}<{typeof(T).Name}>()."
+                )
+        );
 
         builder.Services.AddAdvanceEntityFrameworkSqlServer<T>(opt =>
         {

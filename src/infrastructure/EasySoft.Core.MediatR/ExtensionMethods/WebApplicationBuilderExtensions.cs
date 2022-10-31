@@ -1,5 +1,8 @@
 ﻿using System.Reflection;
+using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Infrastructure.Startup;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.MediatR.ExtensionMethods;
 
@@ -10,6 +13,14 @@ public static class WebApplicationBuilderExtensions
         Assembly assembly
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddAdvanceMediatR)}()."
+                )
+        );
+
         builder.Host.AddAdvanceMediatR(assembly);
 
         return builder;
@@ -20,6 +31,14 @@ public static class WebApplicationBuilderExtensions
         IEnumerable<Assembly> assemblies
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddAdvanceMediatR)}()."
+                )
+        );
+
         builder.Host.AddAdvanceMediatR(assemblies);
 
         return builder;

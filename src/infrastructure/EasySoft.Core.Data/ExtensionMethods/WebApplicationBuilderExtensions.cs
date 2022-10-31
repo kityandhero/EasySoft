@@ -1,5 +1,8 @@
 ﻿using System.Reflection;
+using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Infrastructure.Startup;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.Data.ExtensionMethods;
 
@@ -16,6 +19,14 @@ public static class WebApplicationBuilderExtensions
         params Assembly[] assemblies
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddAssemblyBusinessServiceInterceptors)}()."
+                )
+        );
+
         builder.Services.AddAssemblyBusinessServiceInterceptors(assemblies);
 
         return builder;
@@ -32,6 +43,14 @@ public static class WebApplicationBuilderExtensions
         Assembly assembly
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddAssemblyBusinessServiceInterceptors)}()."
+                )
+        );
+
         builder.Services.AddAssemblyBusinessServiceInterceptors(assembly);
 
         return builder;

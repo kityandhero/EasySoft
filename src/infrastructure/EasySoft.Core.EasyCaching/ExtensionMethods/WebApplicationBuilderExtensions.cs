@@ -2,7 +2,10 @@
 using EasyCaching.Core.Configurations;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyCaching.Enums;
+using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Infrastructure.Startup;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.EasyCaching.ExtensionMethods;
 
@@ -20,17 +23,11 @@ public static class WebApplicationBuilderExtensions
         var cacheMode = GeneralConfigAssist.GetCacheMode();
 
         if (cacheMode == CacheModeCollection.InMemory.ToString())
-        {
             builder.AddAdvanceEasyCachingInMemory();
-        }
         else if (cacheMode == CacheModeCollection.Redis.ToString())
-        {
             builder.AddAdvanceEasyCachingCsRedis();
-        }
         else
-        {
             throw new Exception("not found available cache mode");
-        }
 
         return builder;
     }
@@ -43,6 +40,14 @@ public static class WebApplicationBuilderExtensions
         Action<EasyCachingInterceptorOptions> action
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddEasyCachingInterceptor)}()."
+                )
+        );
+
         builder.Host.AddEasyCachingInterceptor(action);
 
         return builder;
@@ -52,6 +57,14 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddAdvanceEasyCachingInMemory)}()."
+                )
+        );
+
         builder.AddEasyCachingInMemoryCaching()
             .AddEasyCachingInterceptor(x =>
                 x.CacheProviderName = EasyCachingConstValue.DefaultInMemoryName
@@ -70,6 +83,14 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddEasyCachingInMemoryCaching)}()."
+                )
+        );
+
         //Important step for In-Memory Caching
         builder.Services.AddEasyCachingInMemoryCaching();
 
@@ -85,6 +106,14 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddMemoryCacheOperatorInjection)}()."
+                )
+        );
+
         builder.Host.AddMemoryCacheOperatorInjection();
 
         return builder;
@@ -94,6 +123,14 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddAdvanceEasyCachingCsRedis)}()."
+                )
+        );
+
         //Important step for Redis Caching
         builder.AddEasyCachingRedisCaching()
             .AddEasyCachingInterceptor(x =>
@@ -113,6 +150,14 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddEasyCachingRedisCaching)}()."
+                )
+        );
+
         //Important step for In-Memory Caching
         builder.Services.AddEasyCachingRedisCaching();
 
@@ -128,6 +173,14 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddRedisCacheOperatorInjection)}()."
+                )
+        );
+
         builder.Host.AddRedisCacheOperatorInjection();
 
         return builder;

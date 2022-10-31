@@ -41,6 +41,14 @@ public static class WebApplicationBuilderAssist
         string[] args
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(CreateBuilder)}()."
+                )
+        );
+
         var builder = WebApplication.CreateBuilder(new WebApplicationOptions
         {
             Args = args,
@@ -67,6 +75,14 @@ public static class WebApplicationBuilderAssist
         IApplicationChannel applicationChannel
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(CreateCore)}()."
+                )
+        );
+
         StartupConfigMessageAssist.Add(
             new StartupMessage().SetLevel(LogLevel.Information)
                 .SetMessage(
@@ -99,17 +115,25 @@ public static class WebApplicationBuilderAssist
 
         builder.AddAdvanceApplicationChannel(applicationChannel);
 
-        builder.BuildRegistrationCenter();
-        builder.BuildConfigCenter(applicationChannel);
+        builder.AddRegistrationCenter();
+        builder.AddConfigCenter(applicationChannel);
         builder.BuildGateway();
 
         return builder;
     }
 
-    private static WebApplicationBuilder BuildRegistrationCenter(
+    private static WebApplicationBuilder AddRegistrationCenter(
         this WebApplicationBuilder builder
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddRegistrationCenter)}()."
+                )
+        );
+
         if (!GeneralConfigAssist.GetRegistrationCenterSwitch())
         {
             StartupConfigMessageAssist.Add(
@@ -147,11 +171,19 @@ public static class WebApplicationBuilderAssist
         return builder;
     }
 
-    private static WebApplicationBuilder BuildConfigCenter(
+    private static WebApplicationBuilder AddConfigCenter(
         this WebApplicationBuilder builder,
         IApplicationChannel applicationChannel
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddConfigCenter)}()."
+                )
+        );
+
         if (GeneralConfigAssist.GetConfigCenterSwitch())
         {
             StartupConfigMessageAssist.Add(
@@ -229,6 +261,14 @@ public static class WebApplicationBuilderAssist
         this WebApplicationBuilder builder
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(BuildGateway)}()."
+                )
+        );
+
         if (!GeneralConfigAssist.GetGatewaySwitch())
         {
             StartupConfigMessageAssist.Add(

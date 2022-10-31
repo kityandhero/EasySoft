@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Infrastructure.Startup;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement;
 
 namespace EasySoft.Core.FeatureManagement.ExtensionMethods;
@@ -23,6 +26,14 @@ public static class WebApplicationBuilderExtensions
         Action<IFeatureManagementBuilder>? action = null
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddAdvanceFeatureManagement)}()."
+                )
+        );
+
         builder.Services.AddAdvanceFeatureManagement(action);
 
         return builder;
@@ -40,6 +51,14 @@ public static class WebApplicationBuilderExtensions
         Action<IFeatureManagementBuilder>? action = null
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddAdvanceFeatureManagement)}()."
+                )
+        );
+
         builder.Services.AddAdvanceFeatureManagement(configuration, action);
 
         return builder;

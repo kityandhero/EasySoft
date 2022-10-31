@@ -17,14 +17,19 @@ public static class WebApplicationBuilderExtensions
         Action<ConfigChangedArg>? action = null
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddAgileConfigClient)}()."
+                )
+        );
+
         builder.Host.ConfigureHostConfiguration((config) =>
         {
             Task.Run(() =>
             {
-                while (!FlagAssist.GetApplicationRunWhetherPerformed())
-                {
-                    Thread.Sleep(500);
-                }
+                while (!FlagAssist.GetApplicationRunWhetherPerformed()) Thread.Sleep(500);
 
                 try
                 {
@@ -52,10 +57,8 @@ public static class WebApplicationBuilderExtensions
                     };
 
                     if (action != null)
-                    {
                         //注册配置项修改事件  
                         configClient.ConfigChanged += action;
-                    }
 
                     //注册配置项修改事件    
                     configClient.ConfigChanged += AgileConfigClientActionAssist.ActionAgileConfigChanged;

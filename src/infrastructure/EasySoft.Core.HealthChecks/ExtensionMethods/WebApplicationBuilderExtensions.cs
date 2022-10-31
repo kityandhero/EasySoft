@@ -16,22 +16,25 @@ public static class WebApplicationBuilderExtensions
         IEnumerable<IAdvanceHealthCheck> healthCheckList
     )
     {
-        if (FlagAssist.GetHealthChecksSwitch())
-        {
-            return builder;
-        }
+        if (FlagAssist.GetHealthChecksSwitch()) return builder;
+
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddAdvanceHealthChecks)}()."
+                )
+        );
 
         var healthChecksBuilder = builder.Services.AddHealthChecks();
 
         foreach (var item in healthCheckList)
-        {
             healthChecksBuilder.AddCheck(
                 item.GetName(),
                 item.GetCheckAction(),
                 item.GetTags(),
                 item.GetTimeout()
             );
-        }
 
         FlagAssist.SetHealthChecksSwitchOpen();
 

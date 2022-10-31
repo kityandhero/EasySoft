@@ -40,10 +40,15 @@ public static class WebApplicationBuilderExtensions
         Action<ContainerBuilder> action
     )
     {
-        if (action == null)
-        {
-            throw new ArgumentNullException(nameof(action));
-        }
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddExtraNormalInjection)}()."
+                )
+        );
+
+        if (action == null) throw new ArgumentNullException(nameof(action));
 
         builder.Host.ConfigureContainer(action);
 
@@ -55,10 +60,15 @@ public static class WebApplicationBuilderExtensions
         Assembly? assembly
     )
     {
-        if (assembly == null)
-        {
-            throw new ArgumentNullException(nameof(assembly));
-        }
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddControllerPropertiesAutowired)}()."
+                )
+        );
+
+        if (assembly == null) throw new ArgumentNullException(nameof(assembly));
 
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {

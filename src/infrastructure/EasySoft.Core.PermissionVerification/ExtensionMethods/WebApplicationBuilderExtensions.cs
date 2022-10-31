@@ -1,12 +1,14 @@
 ﻿using Autofac;
 using EasySoft.Core.AccessWayTransmitter.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.PermissionVerification.Middlewares;
 using EasySoft.Core.PermissionVerification.Observers;
 using EasySoft.Core.PermissionVerification.Officers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.PermissionVerification.ExtensionMethods;
 
@@ -24,9 +26,15 @@ public static class WebApplicationBuilderExtensions
     ) where TPermissionObserver : IPermissionObserver
     {
         if (FlagAssist.PermissionVerificationSwitch)
-        {
             throw new Exception("UsePermissionVerification<TPermissionObserver> disallow inject more than once");
-        }
+
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddPermissionVerification)}<{typeof(TPermissionObserver).Name}>()."
+                )
+        );
 
         builder.AddPermissionObserverInjection<TPermissionObserver>()
             .UseAccessWayTransmitter();
@@ -58,6 +66,14 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     ) where T : IPermissionObserver
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddPermissionObserverInjection)}<{typeof(T).Name}>()."
+                )
+        );
+
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
             // https://docs.autofac.org/en/latest/faq/per-request-scope.html

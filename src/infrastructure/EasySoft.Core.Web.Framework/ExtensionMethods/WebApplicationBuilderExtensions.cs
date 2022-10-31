@@ -61,6 +61,14 @@ public static class WebApplicationBuilderExtensions
         if (FlagAssist.ApplicationChannelInjectionComplete)
             throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
 
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddAdvanceApplicationChannel)}()."
+                )
+        );
+
         builder.Host.AddAdvanceApplicationChannel(channel, name);
 
         FlagAssist.ApplicationChannelInjectionComplete = true;
@@ -77,6 +85,14 @@ public static class WebApplicationBuilderExtensions
         if (FlagAssist.ApplicationChannelInjectionComplete)
             throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
 
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddAdvanceApplicationChannel)}<{typeof(T).Name}>()."
+                )
+        );
+
         builder.Host.AddAdvanceApplicationChannel(applicationChannel.GetChannel(), applicationChannel.GetName());
 
         FlagAssist.ApplicationChannelInjectionComplete = true;
@@ -91,6 +107,14 @@ public static class WebApplicationBuilderExtensions
     {
         if (FlagAssist.ApplicationChannelInjectionComplete)
             throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
+
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(AddAdvanceDefaultApplicationChannel)}()."
+                )
+        );
 
         builder.Host.AddAdvanceDefaultApplicationChannel();
 
