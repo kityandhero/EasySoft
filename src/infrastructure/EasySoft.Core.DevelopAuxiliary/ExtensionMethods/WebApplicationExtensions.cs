@@ -14,6 +14,14 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
+        StartupDescriptionMessageAssist.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(
+                    $"Execute {nameof(UseDevelopAuxiliary)}()."
+                )
+        );
+
         if (FlagAssist.GetDevelopAuxiliarySwitch()) return application;
 
         application.UseViewConfig(x => x.RenderPage());

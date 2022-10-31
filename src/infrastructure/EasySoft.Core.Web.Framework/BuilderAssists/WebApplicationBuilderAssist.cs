@@ -100,7 +100,7 @@ public static class WebApplicationBuilderAssist
 
         builder.AddRegistrationCenter();
         builder.AddConfigCenter(applicationChannel);
-        builder.BuildGateway();
+        builder.AddGateway();
 
         return builder;
     }
@@ -204,12 +204,12 @@ public static class WebApplicationBuilderAssist
         return builder;
     }
 
-    private static WebApplicationBuilder BuildGateway(
+    private static WebApplicationBuilder AddGateway(
         this WebApplicationBuilder builder
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(BuildGateway)}()."
+            $"Execute {nameof(AddGateway)}()."
         );
 
         if (!GeneralConfigAssist.GetGatewaySwitch())
