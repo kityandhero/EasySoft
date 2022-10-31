@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.Data.Transactions;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
 
 namespace EasySoft.Core.EntityFramework.MySql.Extensions;
 

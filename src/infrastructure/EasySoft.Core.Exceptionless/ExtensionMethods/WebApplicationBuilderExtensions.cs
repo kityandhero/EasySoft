@@ -3,7 +3,6 @@ using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using Exceptionless;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Logging;
 using FlagAssist = EasySoft.Core.Exceptionless.Assists.FlagAssist;
 
 namespace EasySoft.Core.Exceptionless.ExtensionMethods;

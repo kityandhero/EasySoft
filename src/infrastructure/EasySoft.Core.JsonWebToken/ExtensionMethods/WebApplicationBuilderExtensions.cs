@@ -6,10 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using EasySoft.Core.AuthenticationCore.ExtensionMethods;
 using EasySoft.Core.AuthenticationCore.Operators;
 using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.Assists;
 using EasySoft.UtilityTools.Standard;
-using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.JsonWebToken.ExtensionMethods;
 

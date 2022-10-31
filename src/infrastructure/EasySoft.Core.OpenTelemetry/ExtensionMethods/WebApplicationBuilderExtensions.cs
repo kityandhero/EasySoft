@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.OpenTelemetry.ExtensionMethods;
 

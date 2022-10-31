@@ -1,5 +1,4 @@
-﻿using Autofac;
-using EasySoft.Core.AccessWayTransmitter.Producers;
+﻿using EasySoft.Core.AccessWayTransmitter.Producers;
 using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.PermissionVerification.Detectors;

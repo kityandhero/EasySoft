@@ -1,9 +1,4 @@
-﻿using EasySoft.Core.Data.Repositories;
-using EasySoft.Core.EntityFramework.Repositories;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-
-namespace EasySoft.Core.EntityFramework.ExtensionMethods;
+﻿namespace EasySoft.Core.EntityFramework.ExtensionMethods;
 
 public static class ServiceCollectionExtension
 {

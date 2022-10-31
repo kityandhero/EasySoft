@@ -1,7 +1,6 @@
 ﻿using Consul;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.ConsulRegistrationCenterClient.Assists;
-using Masuit.Tools.DateTimeExt;
 using Microsoft.AspNetCore.Builder;
 
 namespace EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;

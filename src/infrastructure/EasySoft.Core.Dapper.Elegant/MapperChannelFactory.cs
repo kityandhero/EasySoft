@@ -1,8 +1,5 @@
-﻿using System.Configuration;
-using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Config.ConfigCollection;
+﻿using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Dapper.Common;
-using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.Interfaces;
 using EasySoft.Core.Sql.Enums;
 

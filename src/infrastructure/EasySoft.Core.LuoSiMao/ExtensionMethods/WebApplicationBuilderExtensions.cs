@@ -1,8 +1,6 @@
 ﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.LuoSiMao.LuoSiMao;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.LuoSiMao.ExtensionMethods;
 

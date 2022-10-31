@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.Interfaces;
 using EasySoft.Core.Sql.Enums;
 using Microsoft.Data.SqlClient;

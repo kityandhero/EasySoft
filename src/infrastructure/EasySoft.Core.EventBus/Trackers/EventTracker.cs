@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.Infrastructure.Entities.implementations;
-using EasySoft.Core.Infrastructure.Entities.Interfaces;
 
 namespace EasySoft.Core.EventBus.Trackers;
 

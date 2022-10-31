@@ -5,12 +5,10 @@ using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyToken.AccessControl;
 using EasySoft.Core.EasyToken.Middlewares;
 using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Standard;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.EasyToken.ExtensionMethods;
 

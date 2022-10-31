@@ -4,7 +4,6 @@ using EasySoft.Core.Data.Transactions;
 using EasySoft.Core.EntityFramework.ExtensionMethods;
 using EasySoft.Core.EntityFramework.Repositories;
 using EasySoft.Core.EntityFramework.SqlServer.Transactions;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;

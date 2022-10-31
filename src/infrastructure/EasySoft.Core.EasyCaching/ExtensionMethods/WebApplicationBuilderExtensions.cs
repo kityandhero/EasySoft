@@ -3,9 +3,7 @@ using EasyCaching.Core.Configurations;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyCaching.Enums;
 using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Startup;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.EasyCaching.ExtensionMethods;
 

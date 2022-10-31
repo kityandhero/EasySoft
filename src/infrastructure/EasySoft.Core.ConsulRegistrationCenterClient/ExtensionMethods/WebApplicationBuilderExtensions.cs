@@ -4,8 +4,6 @@ using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Logging;
-using Ocelot.Provider.Consul;
 
 namespace EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;
 

@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.Mapster.Assists;
 using Mapster;
 using MapsterMapper;

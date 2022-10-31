@@ -19,7 +19,6 @@ using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.BuilderAssists;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.Simple.EntityFrameworkCore.Contexts;
-using EasySoft.Simple.EntityFrameworkCore.IServices;
 using EasySoft.Simple.EntityFrameworkCore.Services;
 using EasySoft.Simple.Single.Application.EasyTokens;
 using EasySoft.Simple.Single.Application.Enums;

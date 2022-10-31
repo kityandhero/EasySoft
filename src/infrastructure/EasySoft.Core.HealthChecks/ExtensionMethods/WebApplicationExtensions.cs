@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-
-namespace EasySoft.Core.HealthChecks.ExtensionMethods;
+﻿namespace EasySoft.Core.HealthChecks.ExtensionMethods;
 
 public static class WebApplicationExtensions
 {

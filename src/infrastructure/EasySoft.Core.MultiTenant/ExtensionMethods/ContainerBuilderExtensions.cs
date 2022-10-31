@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Autofac.Builder;
 using Microsoft.AspNetCore.Http;
 
 namespace EasySoft.Core.MultiTenant.ExtensionMethods;

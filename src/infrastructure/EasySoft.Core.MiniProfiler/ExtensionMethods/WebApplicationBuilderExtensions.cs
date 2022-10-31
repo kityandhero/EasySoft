@@ -3,7 +3,6 @@ using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using StackExchange.Profiling;
 
 namespace EasySoft.Core.MiniProfiler.ExtensionMethods;

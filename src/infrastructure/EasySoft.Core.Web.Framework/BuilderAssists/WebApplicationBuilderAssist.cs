@@ -7,7 +7,6 @@ using EasySoft.Core.ConsulConfigCenterClient.ExtensionMethods;
 using EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;
 using EasySoft.Core.DynamicConfig.Assists;
 using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.Mapster.ExtensionMethods;
 using EasySoft.Core.NLog.Assists;
 using EasySoft.Core.NLog.ExtensionMethods;
@@ -23,7 +22,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using NLog;
 using NLog.Extensions.Logging;
-using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace EasySoft.Core.Web.Framework.BuilderAssists;
 
