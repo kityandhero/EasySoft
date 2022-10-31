@@ -28,12 +28,8 @@ public static class WebApplicationBuilderExtensions
         if (FlagAssist.PermissionVerificationSwitch)
             throw new Exception("UsePermissionVerification<TPermissionObserver> disallow inject more than once");
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddPermissionVerification)}<{typeof(TPermissionObserver).Name}>()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddPermissionVerification)}<{typeof(TPermissionObserver).Name}>()."
         );
 
         builder.AddPermissionObserverInjection<TPermissionObserver>()
@@ -66,12 +62,8 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     ) where T : IPermissionObserver
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddPermissionObserverInjection)}<{typeof(T).Name}>()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddPermissionObserverInjection)}<{typeof(T).Name}>()."
         );
 
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>

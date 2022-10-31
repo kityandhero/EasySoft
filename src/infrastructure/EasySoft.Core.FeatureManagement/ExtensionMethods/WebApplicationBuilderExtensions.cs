@@ -26,12 +26,8 @@ public static class WebApplicationBuilderExtensions
         Action<IFeatureManagementBuilder>? action = null
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceFeatureManagement)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceFeatureManagement)}()."
         );
 
         builder.Services.AddAdvanceFeatureManagement(action);
@@ -51,12 +47,8 @@ public static class WebApplicationBuilderExtensions
         Action<IFeatureManagementBuilder>? action = null
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceFeatureManagement)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceFeatureManagement)}()."
         );
 
         builder.Services.AddAdvanceFeatureManagement(configuration, action);

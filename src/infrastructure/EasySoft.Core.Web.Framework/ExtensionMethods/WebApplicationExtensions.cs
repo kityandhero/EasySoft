@@ -34,12 +34,8 @@ public static class WebApplicationExtensions
 
             if (areaAdjust.Any())
             {
-                StartupConfigMessageAssist.Add(
-                    new StartupMessage()
-                        .SetLevel(LogLevel.Information)
-                        .SetMessage(
-                            $"Areas: {ApplicationConfigurator.GetAllAreas().Join(",")}"
-                        )
+                StartupConfigMessageAssist.AddConfig(
+                    $"Areas: {ApplicationConfigurator.GetAllAreas().Join(",")}"
                 );
 
                 application.UseEndpoints(endpoints =>
@@ -49,20 +45,20 @@ public static class WebApplicationExtensions
                     areaAdjust.ForEach(o =>
                     {
                         endpoints.MapAreaControllerRoute(
-                            name: o,
-                            areaName: o,
-                            pattern: "{area:exists}/{controller}/{action}"
+                            o,
+                            o,
+                            "{area:exists}/{controller}/{action}"
                         );
                     });
 
                     endpoints.MapControllerRoute(
-                        name: "areaRoute",
-                        pattern: "{area:exists}/{controller}/{action}"
+                        "areaRoute",
+                        "{area:exists}/{controller}/{action}"
                     );
 
                     endpoints.MapControllerRoute(
-                        name: "default",
-                        pattern: "{controller=Home}/{action=Index}/{id?}"
+                        "default",
+                        "{controller=Home}/{action=Index}/{id?}"
                     );
                 });
             }
@@ -73,8 +69,8 @@ public static class WebApplicationExtensions
                     WeaveExtraAction(endpoints, startMessage);
 
                     endpoints.MapControllerRoute(
-                        name: "default",
-                        pattern: "{controller=Home}/{action=Index}/{id?}"
+                        "default",
+                        "{controller=Home}/{action=Index}/{id?}"
                     );
                 });
             }
@@ -86,8 +82,8 @@ public static class WebApplicationExtensions
                 WeaveExtraAction(endpoints, startMessage);
 
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}"
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}"
                 );
             });
         }
@@ -105,10 +101,7 @@ public static class WebApplicationExtensions
     {
         var extraActions = ApplicationConfigurator.GetAllEndpointRouteBuilderExtraActions().ToList();
 
-        if (extraActions.Count <= 0)
-        {
-            return;
-        }
+        if (extraActions.Count <= 0) return;
 
         StartupEndPointExtraActionMessageAssist.Add(startNormalMessageAssist);
 
@@ -118,15 +111,11 @@ public static class WebApplicationExtensions
 
             var action = extraAction.GetAction();
 
-            if (action == null)
-            {
-                continue;
-            }
+            if (action == null) continue;
 
             var name = extraAction.GetName();
 
             if (!string.IsNullOrWhiteSpace(name))
-            {
                 StartupEndPointExtraActionMessageAssist.Add(
                     new StartupMessage()
                         .SetLevel(LogLevel.Information)
@@ -134,7 +123,6 @@ public static class WebApplicationExtensions
                             $"{i + 1}: {extraAction.GetName()}"
                         )
                 );
-            }
 
             action(endpoint);
         }

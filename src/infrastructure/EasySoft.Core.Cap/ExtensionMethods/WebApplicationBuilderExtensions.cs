@@ -30,30 +30,21 @@ public static class WebApplicationBuilderExtensions
     {
         var capSwitch = GeneralConfigAssist.GetCapSwitch();
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetMessage(
-                    $"CapSwitch: {(capSwitch == 1.ToString() ? "enable" : capSwitch == 0.ToString() ? "disable" : capSwitch)}"
-                )
-                .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+        StartupConfigMessageAssist.AddConfig(
+            $"CapSwitch: {(capSwitch == 1.ToString() ? "enable" : capSwitch == 0.ToString() ? "disable" : capSwitch)}",
+            GeneralConfigAssist.GetConfigFileInfo()
         );
 
         if (!GeneralConfigAssist.CheckCapSwitch()) return builder;
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetMessage(
-                    $"CapDashboardSwitch: {(GeneralConfigAssist.GetCapDashboardSwitch() ? "enable" : "disable")}"
-                )
-                .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+        StartupConfigMessageAssist.AddConfig(
+            $"CapDashboardSwitch: {(GeneralConfigAssist.GetCapDashboardSwitch() ? "enable" : "disable")}",
+            GeneralConfigAssist.GetConfigFileInfo()
         );
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetMessage(
-                    $"CapDiscoverySwitch: {(GeneralConfigAssist.GetCapDiscoverySwitch() ? "enable" : "disable")}"
-                )
-                .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+        StartupConfigMessageAssist.AddConfig(
+            $"CapDiscoverySwitch: {(GeneralConfigAssist.GetCapDiscoverySwitch() ? "enable" : "disable")}",
+            GeneralConfigAssist.GetConfigFileInfo()
         );
 
         var capConfig = CapAssist.GetConfig();
@@ -64,12 +55,9 @@ public static class WebApplicationBuilderExtensions
 
             var transportType = Enum.Parse<TransportType>(GeneralConfigAssist.GetCapTransportType());
 
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetMessage(
-                        $"CapTransportType: {GeneralConfigAssist.GetCapTransportType()}"
-                    )
-                    .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+            StartupConfigMessageAssist.AddConfig(
+                $"CapTransportType: {GeneralConfigAssist.GetCapTransportType()}",
+                GeneralConfigAssist.GetConfigFileInfo()
             );
 
             switch (transportType)
@@ -240,12 +228,9 @@ public static class WebApplicationBuilderExtensions
 
             var persistentType = Enum.Parse<PersistentType>(GeneralConfigAssist.GetCapPersistentType());
 
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetMessage(
-                        $"CapPersistentType: {GeneralConfigAssist.GetCapPersistentType()}"
-                    )
-                    .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+            StartupConfigMessageAssist.AddConfig(
+                $"CapPersistentType: {GeneralConfigAssist.GetCapPersistentType()}",
+                GeneralConfigAssist.GetConfigFileInfo()
             );
 
             var capPersistentConnection = GeneralConfigAssist.GetCapPersistentConnection();
@@ -437,11 +422,8 @@ public static class WebApplicationBuilderExtensions
             nodeId = string.IsNullOrWhiteSpace(nodeId) ? "not set" : nodeId;
             nodeName = string.IsNullOrWhiteSpace(nodeName) ? "not set" : nodeName;
 
-            StartupDescriptionMessageAssist.Add(
-                new StartupMessage()
-                    .SetMessage(
-                        $"Cap discovery is open, discoveryServerHostName is {capConfig.DiscoveryOptions.DiscoveryServerHostName}, discoveryServerPort is {capConfig.DiscoveryOptions.DiscoveryServerPort}, nodeId is {nodeId}, nodeName is {nodeName}."
-                    )
+            StartupDescriptionMessageAssist.AddDescription(
+                $"Cap discovery is open, discoveryServerHostName is {capConfig.DiscoveryOptions.DiscoveryServerHostName}, discoveryServerPort is {capConfig.DiscoveryOptions.DiscoveryServerPort}, nodeId is {nodeId}, nodeName is {nodeName}."
             );
         }
 

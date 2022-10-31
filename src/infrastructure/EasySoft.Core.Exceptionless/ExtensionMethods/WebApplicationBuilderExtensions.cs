@@ -3,6 +3,7 @@ using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using Exceptionless;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Logging;
 using FlagAssist = EasySoft.Core.Exceptionless.Assists.FlagAssist;
 
 namespace EasySoft.Core.Exceptionless.ExtensionMethods;
@@ -13,29 +14,24 @@ public static class WebApplicationBuilderExtensions
     {
         if (!GeneralConfigAssist.GetExceptionlessSwitch())
         {
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetMessage(
-                        $"ExceptionlessSwitch: disable."
-                    )
-                    .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+            StartupConfigMessageAssist.AddConfig(
+                $"ExceptionlessSwitch: disable.",
+                GeneralConfigAssist.GetConfigFileInfo()
             );
 
             return builder;
         }
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetMessage(
-                    $"ExceptionlessSwitch: enable."
-                )
-                .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceExceptionless)}()."
         );
 
-        if (FlagAssist.GetAdvanceExceptionlessInitializeWhetherCompleted())
-        {
-            return builder;
-        }
+        StartupConfigMessageAssist.AddConfig(
+            $"ExceptionlessSwitch: enable.",
+            GeneralConfigAssist.GetConfigFileInfo()
+        );
+
+        if (FlagAssist.GetAdvanceExceptionlessInitializeWhetherCompleted()) return builder;
 
         builder.Services.AddAdvanceExceptionless();
 
@@ -45,11 +41,8 @@ public static class WebApplicationBuilderExtensions
 
         FlagAssist.SetAdvanceExceptionlessInitializeCompleted();
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetMessage(
-                    $"Exceptionless is in use, address is {GeneralConfigAssist.GetExceptionlessServerUrl()}."
-                )
+        StartupDescriptionMessageAssist.AddDescription(
+            $"Exceptionless is in use, address is {GeneralConfigAssist.GetExceptionlessServerUrl()}."
         );
 
         return builder;

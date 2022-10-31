@@ -30,12 +30,8 @@ public static class WebApplicationBuilderExtensions
         if (builder.HasRegistered(UniqueIdentifierAddAdvanceContext))
             return builder;
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceContext)}<{typeof(T).Name}>()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceContext)}<{typeof(T).Name}>()."
         );
 
         builder.Services.AddAdvanceContext<T>(action);
@@ -68,12 +64,8 @@ public static class WebApplicationBuilderExtensions
         if (builder.HasRegistered(UniqueIdentifierAddAdvanceContextPool))
             return builder;
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceContextPool)}<{typeof(T).Name}>()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceContextPool)}<{typeof(T).Name}>()."
         );
 
         builder.Services.AddAdvanceContextPool<T>(action);
@@ -103,12 +95,8 @@ public static class WebApplicationBuilderExtensions
         if (builder.HasRegistered(UniqueIdentifierAddPooledAdvanceTenantContext))
             return builder;
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddPooledAdvanceTenantContext)}<{typeof(TFactory).Name},{typeof(T).Name}>()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddPooledAdvanceTenantContext)}<{typeof(TFactory).Name},{typeof(T).Name}>()."
         );
 
         builder.Services.AddPooledDbContextFactory<T>(action);
@@ -129,12 +117,8 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : TenantBasicContext
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceTenantContextFactory)}<{typeof(TFactory).Name},{typeof(T).Name}>()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceTenantContextFactory)}<{typeof(TFactory).Name},{typeof(T).Name}>()."
         );
 
         builder.Host.AddAdvanceTenantContextFactory<TFactory, T>();
@@ -146,12 +130,8 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : TenantBasicContext
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceTenantContext)}<{typeof(TFactory).Name},{typeof(T).Name}>()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceTenantContext)}<{typeof(TFactory).Name},{typeof(T).Name}>()."
         );
 
         builder.Host.AddAdvanceTenantContext<TFactory, T>();

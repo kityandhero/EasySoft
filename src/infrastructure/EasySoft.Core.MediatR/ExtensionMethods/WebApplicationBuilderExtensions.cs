@@ -13,12 +13,8 @@ public static class WebApplicationBuilderExtensions
         Assembly assembly
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceMediatR)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceMediatR)}()."
         );
 
         builder.Host.AddAdvanceMediatR(assembly);
@@ -31,12 +27,8 @@ public static class WebApplicationBuilderExtensions
         IEnumerable<Assembly> assemblies
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceMediatR)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceMediatR)}()."
         );
 
         builder.Host.AddAdvanceMediatR(assemblies);

@@ -1,6 +1,6 @@
-﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
+﻿using System.Collections.Concurrent;
+using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Startup;
-using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Logging;
 
@@ -8,31 +8,86 @@ namespace EasySoft.Core.Infrastructure.Assists;
 
 public static class StartupDescriptionMessageAssist
 {
-    private static readonly List<IStartupMessage> MessageCollection = new();
+    private static readonly ConcurrentQueue<IStartupMessage> MessageCollection = new();
 
     public static void Add(IStartupMessage message)
     {
-        MessageCollection.Add(message);
+        MessageCollection.Enqueue(message);
+    }
+
+    private static void AddInformation(string message, string extra = "")
+    {
+        Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Information)
+                .SetMessage(message)
+                .SetExtra(extra)
+        );
+    }
+
+    private static void AddDebug(string message, string extra = "")
+    {
+        Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Debug)
+                .SetMessage(message)
+                .SetExtra(extra)
+        );
+    }
+
+    private static void AddTrace(string message, string extra = "")
+    {
+        Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Trace)
+                .SetMessage(message)
+                .SetExtra(extra)
+        );
+    }
+
+    private static void AddWarning(string message, string extra = "")
+    {
+        Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Warning)
+                .SetMessage(message)
+                .SetExtra(extra)
+        );
+    }
+
+    public static void AddDescription(string message, string extra = "")
+    {
+        AddInformation(message, extra);
+    }
+
+    public static void AddExecute(string message, string extra = "")
+    {
+        AddDebug(message, extra);
     }
 
     public static void Print()
     {
-        // ReSharper disable once RedundantAssignment
-        // ReSharper disable once EntityNameCapturedOnly.Local
-        var message = new StartupMessage();
-
         var list = MessageCollection.ToListFilterNullable()
-            .SortByPropertyValue(SortRule.Desc, nameof(message.Level))
             .ToList();
+
+        // list.Add(
+        //     new StartupMessage()
+        //         .SetLevel(LogLevel.Information)
+        //         .SetMessage(
+        //             UtilityTools.Standard.ConstCollection.ApplicationStartMessageDescriptionDivider
+        //         )
+        // );
 
         list.Add(
             new StartupMessage()
-                .SetLevel(LogLevel.Information)
+                .SetLevel(LogLevel.Debug)
                 .SetMessage(
-                    UtilityTools.Standard.ConstCollection.ApplicationStartMessageDescriptionDivider
+                    "StartupMessage Complete"
                 )
         );
 
         list.Print();
+
+        MessageCollection.Clear();
     }
 }

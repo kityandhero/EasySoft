@@ -61,12 +61,8 @@ public static class WebApplicationBuilderExtensions
         if (FlagAssist.ApplicationChannelInjectionComplete)
             throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceApplicationChannel)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceApplicationChannel)}()."
         );
 
         builder.Host.AddAdvanceApplicationChannel(channel, name);
@@ -85,12 +81,8 @@ public static class WebApplicationBuilderExtensions
         if (FlagAssist.ApplicationChannelInjectionComplete)
             throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceApplicationChannel)}<{typeof(T).Name}>()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceApplicationChannel)}<{typeof(T).Name}>()."
         );
 
         builder.Host.AddAdvanceApplicationChannel(applicationChannel.GetChannel(), applicationChannel.GetName());
@@ -108,12 +100,8 @@ public static class WebApplicationBuilderExtensions
         if (FlagAssist.ApplicationChannelInjectionComplete)
             throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceDefaultApplicationChannel)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceDefaultApplicationChannel)}()."
         );
 
         builder.Host.AddAdvanceDefaultApplicationChannel();
@@ -289,24 +277,16 @@ public static class WebApplicationBuilderExtensions
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        "ForwardedHeadersSwitch: enable."
-                    )
-                    .SetExtra(RedisConfigAssist.GetConfigFileInfo())
+            StartupConfigMessageAssist.AddConfig(
+                "ForwardedHeadersSwitch: enable.",
+                RedisConfigAssist.GetConfigFileInfo()
             );
         }
         else
         {
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        "ForwardedHeadersSwitch: disable."
-                    )
-                    .SetExtra(RedisConfigAssist.GetConfigFileInfo())
+            StartupConfigMessageAssist.AddConfig(
+                "ForwardedHeadersSwitch: disable.",
+                RedisConfigAssist.GetConfigFileInfo()
             );
         }
 
@@ -316,47 +296,31 @@ public static class WebApplicationBuilderExtensions
             // app.UseExceptionHandler("/Error");
             app.UseHsts();
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"CacheMode : {GeneralConfigAssist.GetCacheMode()}."
-                )
-                .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+        StartupConfigMessageAssist.AddConfig(
+            $"CacheMode : {GeneralConfigAssist.GetCacheMode()}.",
+            GeneralConfigAssist.GetConfigFileInfo()
         );
 
         if (GeneralConfigAssist.GetCacheMode() == CacheModeCollection.Redis.ToString())
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        $"{CacheModeCollection.Redis.ToString()} Connections: {RedisConfigAssist.GetConnectionCollection().Join("|")}."
-                    )
-                    .SetExtra(RedisConfigAssist.GetConfigFileInfo())
+            StartupConfigMessageAssist.AddConfig(
+                $"{CacheModeCollection.Redis.ToString()} Connections: {RedisConfigAssist.GetConnectionCollection().Join("|")}.",
+                RedisConfigAssist.GetConfigFileInfo()
             );
 
         if (GeneralConfigAssist.GetRemoteLogSwitch())
         {
             if (FlagAssist.ApplicationChannelIsDefault)
             {
-                StartupConfigMessageAssist.Add(
-                    new StartupMessage()
-                        .SetLevel(LogLevel.Information)
-                        .SetMessage(
-                            "ApplicationChannel use 0, suggest using builder.UseAdvanceApplicationChannel(int channel) with your Application, it make the data source easy to identify in the remote log."
-                        )
+                StartupConfigMessageAssist.AddConfig(
+                    "ApplicationChannel use 0, suggest using builder.UseAdvanceApplicationChannel(int channel) with your Application, it make the data source easy to identify in the remote log."
                 );
             }
             else
             {
                 var applicationChannel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
 
-                StartupConfigMessageAssist.Add(
-                    new StartupMessage()
-                        .SetLevel(LogLevel.Information)
-                        .SetMessage(
-                            $"ApplicationChannel use {applicationChannel.GetChannel()}."
-                        )
+                StartupConfigMessageAssist.AddConfig(
+                    $"ApplicationChannel use {applicationChannel.GetChannel()}."
                 );
             }
         }
@@ -366,22 +330,14 @@ public static class WebApplicationBuilderExtensions
             // 当前项目启动后，监听的是否是多个端口，其中如果有协议是Https—我们在访问Http的默认会转发到Https中
             app.UseHttpsRedirection();
 
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        "HttpRedirectionHttpsSwitch: enable."
-                    )
+            StartupConfigMessageAssist.AddConfig(
+                "HttpRedirectionHttpsSwitch: enable."
             );
         }
         else
         {
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        "HttpRedirectionHttpsSwitch: disabled."
-                    )
+            StartupConfigMessageAssist.AddConfig(
+                "HttpRedirectionHttpsSwitch: disabled."
             );
         }
 
@@ -394,22 +350,15 @@ public static class WebApplicationBuilderExtensions
             if (FlagAssist.GetAdvanceStaticFileOptionsSwitch())
                 staticFileOptionsTypeName = AutofacAssist.Instance.Resolve<AdvanceStaticFileOptions>().GetType().Name;
 
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        $"UseStaticFilesSwitch: enable, mode: {(FlagAssist.GetAdvanceStaticFileOptionsSwitch() ? $"custom, config class is \"{staticFileOptionsTypeName}\"" : "default")}."
-                    )
+            StartupConfigMessageAssist.AddConfig(
+                $"UseStaticFilesSwitch: enable, mode: {(FlagAssist.GetAdvanceStaticFileOptionsSwitch() ? $"custom, config class is \"{staticFileOptionsTypeName}\"" : "default")}."
             );
         }
         else
         {
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        "UseStaticFiles: disable."
-                    ).SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+            StartupConfigMessageAssist.AddConfig(
+                "UseStaticFiles: disable.",
+                GeneralConfigAssist.GetConfigFileInfo()
             );
         }
 
@@ -419,23 +368,15 @@ public static class WebApplicationBuilderExtensions
         {
             app.UseCors(ConstCollection.DefaultSpecificOrigins);
 
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        $"cors: enable, policies: {GeneralConfigAssist.GetCorsPolicies().Join(",")}."
-                    )
+            StartupConfigMessageAssist.AddConfig(
+                $"cors: enable, policies: {GeneralConfigAssist.GetCorsPolicies().Join(",")}."
             );
         }
         else
         {
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        "Cors: disable."
-                    )
-                    .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+            StartupConfigMessageAssist.AddConfig(
+                "Cors: disable.",
+                GeneralConfigAssist.GetConfigFileInfo()
             );
         }
 
@@ -443,23 +384,15 @@ public static class WebApplicationBuilderExtensions
         {
             app.UseAuthentication();
 
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        $"UseAuthentication: enable, policies: {GeneralConfigAssist.GetCorsPolicies().Join(",")}."
-                    )
+            StartupConfigMessageAssist.AddConfig(
+                $"UseAuthentication: enable, policies: {GeneralConfigAssist.GetCorsPolicies().Join(",")}."
             );
         }
         else
         {
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        "UseAuthentication: disable."
-                    )
-                    .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+            StartupConfigMessageAssist.AddConfig(
+                "UseAuthentication: disable.",
+                GeneralConfigAssist.GetConfigFileInfo()
             );
         }
 
@@ -475,20 +408,12 @@ public static class WebApplicationBuilderExtensions
         if (!string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
         {
             if (FlagAssist.EasyTokenMiddlewareModeSwitch || FlagAssist.JsonWebTokenMiddlewareModeSwitch)
-                StartupConfigMessageAssist.Add(
-                    new StartupMessage()
-                        .SetLevel(LogLevel.Information)
-                        .SetMessage(
-                            $"TokenMode: {FlagAssist.TokenMode}, use middleware mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}."
-                        )
+                StartupConfigMessageAssist.AddConfig(
+                    $"TokenMode: {FlagAssist.TokenMode}, use middleware mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}."
                 );
             else
-                StartupConfigMessageAssist.Add(
-                    new StartupMessage()
-                        .SetLevel(LogLevel.Information)
-                        .SetMessage(
-                            $"TokenMode: {FlagAssist.TokenMode}, use filter mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}."
-                        )
+                StartupConfigMessageAssist.AddConfig(
+                    $"TokenMode: {FlagAssist.TokenMode}, use filter mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}."
                 );
         }
 
@@ -499,72 +424,48 @@ public static class WebApplicationBuilderExtensions
 
             if (FlagAssist.PermissionVerificationMiddlewareModeSwitch) app.UsePermissionVerificationMiddleware();
 
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        FlagAssist.PermissionVerificationMiddlewareModeSwitch
-                            ? "PermissionVerificationSwitch: enable, use middleware mode."
-                            : "PermissionVerificationSwitch: enable, use filter mode."
-                    )
+            StartupConfigMessageAssist.AddConfig(
+                FlagAssist.PermissionVerificationMiddlewareModeSwitch
+                    ? "PermissionVerificationSwitch: enable, use middleware mode."
+                    : "PermissionVerificationSwitch: enable, use filter mode."
             );
         }
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    GeneralConfigAssist.GetAccessWayDetectSwitch()
-                        ? "AccessWayDetectSwitch: enable."
-                        : "AccessWayDetectSwitch: disable."
-                )
-                .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+        StartupConfigMessageAssist.AddConfig(
+            GeneralConfigAssist.GetAccessWayDetectSwitch()
+                ? "AccessWayDetectSwitch: enable."
+                : "AccessWayDetectSwitch: disable.",
+            GeneralConfigAssist.GetConfigFileInfo()
         );
 
         if (GeneralConfigAssist.GetUseAuthorization())
         {
             app.UseAuthorization();
 
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        $"UseAuthorization: enable, policies: {GeneralConfigAssist.GetCorsPolicies().Join(",")}."
-                    )
+            StartupConfigMessageAssist.AddConfig(
+                $"UseAuthorization: enable, policies: {GeneralConfigAssist.GetCorsPolicies().Join(",")}."
             );
         }
         else
         {
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        "UseAuthorization: disable."
-                    )
-                    .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+            StartupConfigMessageAssist.AddConfig(
+                "UseAuthorization: disable.",
+                GeneralConfigAssist.GetConfigFileInfo()
             );
         }
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    GeneralConfigAssist.GetRemoteErrorLogSwitch()
-                        ? "RemoteErrorLogEnable: enable."
-                        : "RemoteErrorLogEnable: disable."
-                )
-                .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+        StartupConfigMessageAssist.AddConfig(
+            GeneralConfigAssist.GetRemoteErrorLogSwitch()
+                ? "RemoteErrorLogEnable: enable."
+                : "RemoteErrorLogEnable: disable.",
+            GeneralConfigAssist.GetConfigFileInfo()
         );
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    GeneralConfigAssist.GetRemoteGeneralLogSwitch()
-                        ? "RemoteGeneralLogEnable: enable."
-                        : "RemoteGeneralLogEnable: disable."
-                )
-                .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+        StartupConfigMessageAssist.AddConfig(
+            GeneralConfigAssist.GetRemoteGeneralLogSwitch()
+                ? "RemoteGeneralLogEnable: enable."
+                : "RemoteGeneralLogEnable: disable.",
+            GeneralConfigAssist.GetConfigFileInfo()
         );
 
         if (app.Environment.IsDevelopment())
@@ -582,36 +483,20 @@ public static class WebApplicationBuilderExtensions
 
         app.UseAdvanceMapControllers();
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"Environment: {EnvironmentAssist.GetEnvironment().EnvironmentName}."
-                )
+        StartupConfigMessageAssist.AddConfig(
+            $"Environment: {EnvironmentAssist.GetEnvironment().EnvironmentName}."
         );
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"ContentRootPath: \"{EnvironmentAssist.GetEnvironment().ContentRootPath}\"."
-                )
+        StartupConfigMessageAssist.AddConfig(
+            $"ContentRootPath: \"{EnvironmentAssist.GetEnvironment().ContentRootPath}\"."
         );
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"WebRootPath: \"{GetWebRootPath()}\"."
-                )
+        StartupConfigMessageAssist.AddConfig(
+            $"WebRootPath: \"{GetWebRootPath()}\"."
         );
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"Application start completed{(!FlagAssist.StartupUrls.Any() ? "." : $" at {FlagAssist.StartupUrls.Join(" ")}.")}"
-                )
+        StartupConfigMessageAssist.AddConfig(
+            $"Application start completed{(!FlagAssist.StartupUrls.Any() ? "." : $" at {FlagAssist.StartupUrls.Join(" ")}.")}"
         );
 
         // StartupConfigMessageAssist.Add(

@@ -12,33 +12,19 @@ public static class WebApplicationExtensions
 {
     internal static WebApplication UseAdvanceLogDashboard(this WebApplication application)
     {
-        if (!FlagAssist.GetLogDashboardSwitch())
-        {
-            return application;
-        }
+        if (!FlagAssist.GetLogDashboardSwitch()) return application;
 
-        if (EnvironmentAssist.GetEnvironment().IsDevelopment())
-        {
-            application.UseDeveloperExceptionPage();
-        }
+        if (EnvironmentAssist.GetEnvironment().IsDevelopment()) application.UseDeveloperExceptionPage();
 
         application.UseLogDashboard();
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"LogDashboard enable."
-                )
+        StartupConfigMessageAssist.AddConfig(
+            $"LogDashboard enable."
         );
-        
-        StartupDescriptionMessageAssist.Add(
-                    new StartupMessage()
-                        .SetLevel(LogLevel.Information)
-                        .SetMessage(
-                            $"you can access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/LogDashboard" : FlagAssist.StartupUrls.Select(o => $"{o}/LogDashboard").Join(" "))} to visit LogDashboard."
-                        )
-                );
+
+        StartupDescriptionMessageAssist.AddDescription(
+            $"you can access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/LogDashboard" : FlagAssist.StartupUrls.Select(o => $"{o}/LogDashboard").Join(" "))} to visit LogDashboard."
+        );
 
         return application;
     }

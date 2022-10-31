@@ -40,12 +40,8 @@ public static class WebApplicationBuilderExtensions
         Action<EasyCachingInterceptorOptions> action
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddEasyCachingInterceptor)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddEasyCachingInterceptor)}()."
         );
 
         builder.Host.AddEasyCachingInterceptor(action);
@@ -57,12 +53,8 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceEasyCachingInMemory)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceEasyCachingInMemory)}()."
         );
 
         builder.AddEasyCachingInMemoryCaching()
@@ -83,12 +75,8 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddEasyCachingInMemoryCaching)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddEasyCachingInMemoryCaching)}()."
         );
 
         //Important step for In-Memory Caching
@@ -106,12 +94,8 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddMemoryCacheOperatorInjection)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddMemoryCacheOperatorInjection)}()."
         );
 
         builder.Host.AddMemoryCacheOperatorInjection();
@@ -123,12 +107,8 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceEasyCachingCsRedis)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceEasyCachingCsRedis)}()."
         );
 
         //Important step for Redis Caching
@@ -150,12 +130,8 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddEasyCachingRedisCaching)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddEasyCachingRedisCaching)}()."
         );
 
         //Important step for In-Memory Caching
@@ -173,12 +149,8 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddRedisCacheOperatorInjection)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddRedisCacheOperatorInjection)}()."
         );
 
         builder.Host.AddRedisCacheOperatorInjection();

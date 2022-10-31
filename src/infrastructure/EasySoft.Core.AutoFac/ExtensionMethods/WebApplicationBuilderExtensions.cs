@@ -24,12 +24,8 @@ public static class WebApplicationBuilderExtensions
 
         builder.AddControllerPropertiesAutowired(Assembly.GetEntryAssembly());
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    "You can set autoFac config with autoFac.json in ./configures/autoFac.json. The document link is https://autofac.readthedocs.io/en/latest/configuration/xml.html."
-                )
+        StartupDescriptionMessageAssist.AddDescription(
+            "You can set autoFac config with autoFac.json in ./configures/autoFac.json. The document link is https://autofac.readthedocs.io/en/latest/configuration/xml.html."
         );
 
         return builder;
@@ -40,12 +36,8 @@ public static class WebApplicationBuilderExtensions
         Action<ContainerBuilder> action
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddExtraNormalInjection)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddExtraNormalInjection)}()."
         );
 
         if (action == null) throw new ArgumentNullException(nameof(action));
@@ -60,12 +52,8 @@ public static class WebApplicationBuilderExtensions
         Assembly? assembly
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddControllerPropertiesAutowired)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddControllerPropertiesAutowired)}()."
         );
 
         if (assembly == null) throw new ArgumentNullException(nameof(assembly));

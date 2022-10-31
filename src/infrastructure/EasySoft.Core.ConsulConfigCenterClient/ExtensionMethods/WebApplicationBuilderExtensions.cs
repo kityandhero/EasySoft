@@ -16,12 +16,8 @@ public static class WebApplicationBuilderExtensions
         Action<IConfiguration>? action = null
     ) where T : IApplicationChannel
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceConsulConfigCenter)}<{typeof(T).Name}>()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceConsulConfigCenter)}<{typeof(T).Name}>()."
         );
 
         if (ConsulFlagAssist.GetInitializeConfigWhetherComplete()) return builder;

@@ -17,12 +17,8 @@ public static class WebApplicationBuilderExtensions
         Action<ConfigChangedArg>? action = null
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAgileConfigClient)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAgileConfigClient)}()."
         );
 
         builder.Host.ConfigureHostConfiguration((config) =>
@@ -33,10 +29,8 @@ public static class WebApplicationBuilderExtensions
 
                 try
                 {
-                    StartupDescriptionMessageAssist.Add(
-                        new StartupMessage().SetLevel(LogLevel.Information).SetMessage(
-                            $"AgileConfig env is \"{AgileConfigAssist.GetAgileConfigEnv()}\", node is \"{AgileConfigAssist.GetAgileConfigNodeCollection().Join(",")}\"."
-                        )
+                    StartupDescriptionMessageAssist.AddDescription(
+                        $"AgileConfig env is \"{AgileConfigAssist.GetAgileConfigEnv()}\", node is \"{AgileConfigAssist.GetAgileConfigNodeCollection().Join(",")}\"."
                     );
 
                     var configClient = new ConfigClient(

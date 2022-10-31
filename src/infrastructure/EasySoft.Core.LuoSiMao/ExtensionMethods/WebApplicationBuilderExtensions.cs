@@ -18,12 +18,8 @@ public static class WebApplicationBuilderExtensions
     /// <param name="key">密钥</param>
     public static WebApplicationBuilder AddLuoSiMao(this WebApplicationBuilder builder, string key)
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddLuoSiMao)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddLuoSiMao)}()."
         );
 
         builder.Host.AddLuoSiMao(new SmsConfig(key));
@@ -38,12 +34,8 @@ public static class WebApplicationBuilderExtensions
     /// <param name="smsConfig">密钥</param>
     public static WebApplicationBuilder AddLuoSiMao(this WebApplicationBuilder builder, SmsConfig smsConfig)
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddLuoSiMao)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddLuoSiMao)}()."
         );
 
         builder.Host.AddLuoSiMao(smsConfig);

@@ -14,12 +14,8 @@ public static class WebApplicationExtensions
     {
         if (!HangfireConfigAssist.GetEnable())
         {
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        "Hangfire: disable."
-                    )
+            StartupConfigMessageAssist.AddConfig(
+                "Hangfire: disable."
             );
 
             return application;
@@ -28,12 +24,8 @@ public static class WebApplicationExtensions
         //启用Hangfire面板 
         application.UseHangfireDashboard();
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"Hangfire: enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/hangfire" : FlagAssist.StartupUrls.Select(o => $"{o}/hangfire").Join(" "))}."
-                )
+        StartupConfigMessageAssist.AddConfig(
+            $"Hangfire: enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/hangfire" : FlagAssist.StartupUrls.Select(o => $"{o}/hangfire").Join(" "))}."
         );
 
         return application;

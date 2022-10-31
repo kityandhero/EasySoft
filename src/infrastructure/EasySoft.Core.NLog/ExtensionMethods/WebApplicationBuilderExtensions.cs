@@ -54,12 +54,8 @@ public static class WebApplicationBuilderExtensions
         Func<LoggingConfiguration> action
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceNLog)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceNLog)}()."
         );
 
         // NLog: Setup NLog for Dependency injection

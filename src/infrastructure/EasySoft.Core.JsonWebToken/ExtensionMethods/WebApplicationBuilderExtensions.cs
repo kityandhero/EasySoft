@@ -32,12 +32,8 @@ public static class WebApplicationBuilderExtensions
         if (FlagAssist.JsonWebTokenConfigComplete)
             throw new Exception("UseAdvanceJsonWebToken disallow inject more than once");
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceJsonWebToken)}<{typeof(TOperator).Name}>()."
-                )
+        StartupDescriptionMessageAssist.AddDescription(
+            $"Execute {nameof(AddAdvanceJsonWebToken)}<{typeof(TOperator).Name}>()."
         );
 
         builder.AddOperator<TOperator>();
@@ -58,13 +54,9 @@ public static class WebApplicationBuilderExtensions
 
         FlagAssist.TokenMode = ConstCollection.JsonWebToken;
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    "JsonWebToken already available, you can config it with config file."
-                )
-                .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+        StartupDescriptionMessageAssist.AddDescription(
+            "JsonWebToken already available, you can config it with config file.",
+            GeneralConfigAssist.GetConfigFileInfo()
         );
 
         return builder;

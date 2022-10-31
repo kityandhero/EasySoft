@@ -18,12 +18,8 @@ public static class WebApplicationBuilderExtensions
     {
         if (FlagAssist.GetHealthChecksSwitch()) return builder;
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceHealthChecks)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceHealthChecks)}()."
         );
 
         var healthChecksBuilder = builder.Services.AddHealthChecks();
@@ -52,12 +48,8 @@ public static class WebApplicationBuilderExtensions
                 .SetAction(endpointRouteBuilder => { endpointRouteBuilder.UseAdvanceHealthChecks(); })
         );
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"HealthChecks: enable{(!FlagAssist.StartupUrls.Any() ? "." : $", you can access {FlagAssist.StartupUrls.Select(o => $"{o}/HealthChecks-ui").Join(" ")}")} to visit it."
-                )
+        StartupConfigMessageAssist.AddConfig(
+            $"HealthChecks: enable{(!FlagAssist.StartupUrls.Any() ? "." : $", you can access {FlagAssist.StartupUrls.Select(o => $"{o}/HealthChecks-ui").Join(" ")}")} to visit it."
         );
 
         return builder;

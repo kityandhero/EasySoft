@@ -26,12 +26,8 @@ public static class WebApplicationBuilderExtensions
         if (builder.HasRegistered(UniqueIdentifier))
             return builder;
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAdvanceEntityFrameworkSqlServer)}<{typeof(T).Name}>()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceEntityFrameworkSqlServer)}<{typeof(T).Name}>()."
         );
 
         builder.Services.AddAdvanceEntityFrameworkSqlServer<T>(opt =>

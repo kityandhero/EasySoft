@@ -19,12 +19,8 @@ public static class WebApplicationBuilderExtensions
         params Assembly[] assemblies
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAssemblyBusinessServiceInterceptors)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAssemblyBusinessServiceInterceptors)}()."
         );
 
         builder.Services.AddAssemblyBusinessServiceInterceptors(assemblies);
@@ -43,12 +39,8 @@ public static class WebApplicationBuilderExtensions
         Assembly assembly
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddAssemblyBusinessServiceInterceptors)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAssemblyBusinessServiceInterceptors)}()."
         );
 
         builder.Services.AddAssemblyBusinessServiceInterceptors(assembly);

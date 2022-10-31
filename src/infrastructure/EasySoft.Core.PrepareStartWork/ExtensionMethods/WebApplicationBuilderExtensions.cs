@@ -1,13 +1,11 @@
 ﻿using Autofac;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.PrepareStartWork.PrepareWorks;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.PrepareStartWork.ExtensionMethods;
 
@@ -33,10 +31,8 @@ public static class WebApplicationBuilderExtensions
 
         if (string.IsNullOrWhiteSpace(urls))
         {
-            StartupConfigMessageAssist.Add(
-                new StartupMessage().SetLevel(LogLevel.Information).SetMessage(
-                    "Urls in generalConfig.json has not setting, suggest setting it with number or url, there will be better development experience."
-                )
+            StartupConfigMessageAssist.AddConfig(
+                "Urls in generalConfig.json has not setting, suggest setting it with number or url, there will be better development experience."
             );
 
             return builder;
@@ -50,10 +46,8 @@ public static class WebApplicationBuilderExtensions
 
         builder.WebHost.UseUrls(FlagAssist.StartupUrls.ToArray());
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage().SetLevel(LogLevel.Information).SetMessage(
-                $"Startup urls: {FlagAssist.StartupUrls.Join(" ")}."
-            )
+        StartupConfigMessageAssist.AddConfig(
+            $"Startup urls: {FlagAssist.StartupUrls.Join(" ")}."
         );
 
         return builder;
@@ -69,9 +63,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         if (FlagAssist.CovertInjectionComplete)
-        {
             throw new Exception("UseCovertInjection disallow inject more than once");
-        }
 
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {

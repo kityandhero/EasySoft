@@ -16,30 +16,23 @@ public static class WebApplicationBuilderExtensions
     {
         if (!GeneralConfigAssist.GetMiniProFileSwitch())
         {
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        "MiniProFileSwitch : disable."
-                    )
-                    .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+            StartupConfigMessageAssist.AddConfig(
+                "MiniProFileSwitch : disable.",
+                GeneralConfigAssist.GetConfigFileInfo()
             );
 
             return builder;
         }
 
-        if (FlagAssist.GetMiniProfileSwitch())
-        {
-            return builder;
-        }
+        if (FlagAssist.GetMiniProfileSwitch()) return builder;
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    "MiniProFileSwitch : enable."
-                )
-                .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceMiniProfile)}()."
+        );
+
+        StartupConfigMessageAssist.AddConfig(
+            "MiniProFileSwitch : enable.",
+            GeneralConfigAssist.GetConfigFileInfo()
         );
 
         builder.Services.AddMiniProfiler(options =>
@@ -63,10 +56,8 @@ public static class WebApplicationBuilderExtensions
 
         FlagAssist.SetMiniProfileSwitchOpen();
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage().SetMessage(
-                "You can add \"@using StackExchange.Profiling\" and \"@addTagHelper *, MiniProfiler.AspNetCore.Mvc\" to the _Layout.cshtml and add <mini-profiler /> to the target view to show analysis information."
-            )
+        StartupDescriptionMessageAssist.AddDescription(
+            "You can add \"@using StackExchange.Profiling\" and \"@addTagHelper *, MiniProfiler.AspNetCore.Mvc\" to the _Layout.cshtml and add <mini-profiler /> to the target view to show analysis information."
         );
 
         return builder;

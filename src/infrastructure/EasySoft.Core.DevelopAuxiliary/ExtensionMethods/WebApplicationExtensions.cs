@@ -14,10 +14,7 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        if (FlagAssist.GetDevelopAuxiliarySwitch())
-        {
-            return application;
-        }
+        if (FlagAssist.GetDevelopAuxiliarySwitch()) return application;
 
         application.UseViewConfig(x => x.RenderPage());
 
@@ -89,108 +86,56 @@ public static class WebApplicationExtensions
 
         FlagAssist.SetActionMapSwitchOpen();
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"UseAuxiliary: enabled."
-                )
+        StartupConfigMessageAssist.AddConfig(
+            $"UseAuxiliary: enabled."
         );
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/viewConfig ").Join(" ")} to get info such as appSetting."
-                )
+        StartupDescriptionMessageAssist.AddDescription(
+            $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/viewConfig ").Join(" ")} to get info such as appSetting."
         );
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/ActionMap").Join(" ")} to get all action info."
-                )
+        StartupDescriptionMessageAssist.AddDescription(
+            $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/ActionMap").Join(" ")} to get all action info."
         );
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/DatabaseConfigFile").Join(" ")} to get databaseConfig template."
-                )
+        StartupDescriptionMessageAssist.AddDescription(
+            $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/DatabaseConfigFile").Join(" ")} to get databaseConfig template."
         );
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/DevelopConfigFile").Join(" ")} to get developConfig template."
-                )
+        StartupDescriptionMessageAssist.AddDescription(
+            $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/DevelopConfigFile").Join(" ")} to get developConfig template."
         );
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/ElasticSearchConfigFile").Join(" ")} to get elasticSearchConfig template."
-                )
+        StartupDescriptionMessageAssist.AddDescription(
+            $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/ElasticSearchConfigFile").Join(" ")} to get elasticSearchConfig template."
         );
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/GeneralConfigFile").Join(" ")} to get generalConfig template."
-                )
+        StartupDescriptionMessageAssist.AddDescription(
+            $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/GeneralConfigFile").Join(" ")} to get generalConfig template."
         );
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/HangfireConfigFile").Join(" ")} to get hangfireConfig template."
-                )
+        StartupDescriptionMessageAssist.AddDescription(
+            $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/HangfireConfigFile").Join(" ")} to get hangfireConfig template."
         );
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/MongoConfigFile").Join(" ")} to get mongoConfig template."
-                )
+        StartupDescriptionMessageAssist.AddDescription(
+            $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/MongoConfigFile").Join(" ")} to get mongoConfig template."
         );
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/RabbitMQConfigFile").Join(" ")} to get rabbitMQConfig template."
-                )
+        StartupDescriptionMessageAssist.AddDescription(
+            $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/RabbitMQConfigFile").Join(" ")} to get rabbitMQConfig template."
         );
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/RedisConfigFile").Join(" ")} to get redisConfig template."
-                )
+        StartupDescriptionMessageAssist.AddDescription(
+            $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/RedisConfigFile").Join(" ")} to get redisConfig template."
         );
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/SwaggerConfigFile").Join(" ")} to get swaggerConfig template."
-                )
+        StartupDescriptionMessageAssist.AddDescription(
+            $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/SwaggerConfigFile").Join(" ")} to get swaggerConfig template."
         );
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/NLogInlayConfig").Join(" ")} to get nLogInlayConfig template."
-                )
+        StartupDescriptionMessageAssist.AddDescription(
+            $"Develop auxiliary: you can access {FlagAssist.StartupUrls.Select(o => $"{o}/NLogInlayConfig").Join(" ")} to get nLogInlayConfig template."
         );
 
         return application;

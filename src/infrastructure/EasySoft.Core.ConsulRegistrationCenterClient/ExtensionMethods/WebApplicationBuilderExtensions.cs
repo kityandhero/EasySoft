@@ -15,10 +15,7 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        if (ConsulFlagAssist.GetInitializeRegistrationWhetherComplete())
-        {
-            return builder;
-        }
+        if (ConsulFlagAssist.GetInitializeRegistrationWhetherComplete()) return builder;
 
         ApplicationConfigurator.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
@@ -38,13 +35,9 @@ public static class WebApplicationBuilderExtensions
             ? $"http://{ConsulRegistrationCenterConfigAssist.GetServiceIP()}:{ConsulRegistrationCenterConfigAssist.GetServicePort()}/{ConstCollection.ConsulServiceHealthEndpointName}"
             : serviceHealthCheck;
 
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"consul registration center address is {ConsulRegistrationCenterConfigAssist.GetCenterAddress()} , service name is \"{ConsulRegistrationCenterConfigAssist.GetServiceName()}\", address is \"{ConsulRegistrationCenterConfigAssist.GetServiceIP()}:{ConsulRegistrationCenterConfigAssist.GetServicePort()}\", health check is {healthCheckAddress}."
-                )
-                .SetExtra(ConsulRegistrationCenterConfigAssist.GetConfigFileInfo())
+        StartupDescriptionMessageAssist.AddDescription(
+            $"consul registration center address is {ConsulRegistrationCenterConfigAssist.GetCenterAddress()} , service name is \"{ConsulRegistrationCenterConfigAssist.GetServiceName()}\", address is \"{ConsulRegistrationCenterConfigAssist.GetServiceIP()}:{ConsulRegistrationCenterConfigAssist.GetServicePort()}\", health check is {healthCheckAddress}.",
+            ConsulRegistrationCenterConfigAssist.GetConfigFileInfo()
         );
 
         ConsulFlagAssist.SetInitializeRegistrationComplete();

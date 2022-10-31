@@ -41,12 +41,8 @@ public static class WebApplicationBuilderAssist
         string[] args
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(CreateBuilder)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(CreateBuilder)}()."
         );
 
         var builder = WebApplication.CreateBuilder(new WebApplicationOptions
@@ -75,37 +71,24 @@ public static class WebApplicationBuilderAssist
         IApplicationChannel applicationChannel
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(CreateCore)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(CreateCore)}()."
         );
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage().SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"EnvironmentAlias: {EnvironmentAssist.GetEnvironmentAliasName()}."
-                )
+        StartupConfigMessageAssist.AddConfig(
+            $"EnvironmentAlias: {EnvironmentAssist.GetEnvironmentAliasName()}."
         );
 
         if (!string.IsNullOrWhiteSpace(EnvironmentAssist.GetEnvironmentAliasName()))
-            StartupDescriptionMessageAssist.Add(
-                new StartupMessage().SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        "Current loading custom config file both with normal and special env, like generalConfig.json and generalConfig.dev.json."
-                    )
+            StartupDescriptionMessageAssist.AddDescription(
+                "Current loading custom config file both with normal and special env, like generalConfig.json and generalConfig.dev.json."
             );
 
         var list = ApplicationConfigurator.GetAllEnv();
 
         if (list.Any())
-            StartupDescriptionMessageAssist.Add(
-                new StartupMessage().SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        $"CustomEnv current available list: {list.Join(",")}, it can be adjusted by ApplicationConfigurator."
-                    )
+            StartupDescriptionMessageAssist.AddDescription(
+                $"CustomEnv current available list: {list.Join(",")}, it can be adjusted by ApplicationConfigurator."
             );
 
         builder.AddAdvanceUrls()
@@ -126,41 +109,25 @@ public static class WebApplicationBuilderAssist
         this WebApplicationBuilder builder
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddRegistrationCenter)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddRegistrationCenter)}()."
         );
 
         if (!GeneralConfigAssist.GetRegistrationCenterSwitch())
         {
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        "RegistrationCenterSwitch: disable."
-                    )
+            StartupConfigMessageAssist.AddConfig(
+                "RegistrationCenterSwitch: disable."
             );
 
             return builder;
         }
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    "RegistrationCenterSwitch: enable."
-                )
+        StartupConfigMessageAssist.AddConfig(
+            "RegistrationCenterSwitch: enable."
         );
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"RegistrationCenterType: {GeneralConfigAssist.GetRegistrationCenterType()}."
-                )
+        StartupConfigMessageAssist.AddConfig(
+            $"RegistrationCenterType: {GeneralConfigAssist.GetRegistrationCenterType()}."
         );
 
         if (GeneralConfigAssist.GetRegistrationCenterType() == RegistrationCenterType.Consul)
@@ -176,38 +143,22 @@ public static class WebApplicationBuilderAssist
         IApplicationChannel applicationChannel
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddConfigCenter)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddConfigCenter)}()."
         );
 
         if (GeneralConfigAssist.GetConfigCenterSwitch())
         {
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        "ConfigCenterSwitch: enable."
-                    )
+            StartupConfigMessageAssist.AddConfig(
+                "ConfigCenterSwitch: enable."
             );
 
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        $"ConfigCenterType: {GeneralConfigAssist.GetConfigCenterType()}."
-                    )
+            StartupConfigMessageAssist.AddConfig(
+                $"ConfigCenterType: {GeneralConfigAssist.GetConfigCenterType()}."
             );
 
-            StartupDescriptionMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        $"Dynamic config key: {Config.ConstCollection.GetDynamicConfigKeyCollection().Join(",")}, they can set in ConfigCenter."
-                    )
+            StartupDescriptionMessageAssist.AddDescription(
+                $"Dynamic config key: {Config.ConstCollection.GetDynamicConfigKeyCollection().Join(",")}, they can set in ConfigCenter."
             );
 
             if (GeneralConfigAssist.GetConfigCenterType() == ConfigCenterType.AgileConfig)
@@ -242,13 +193,9 @@ public static class WebApplicationBuilderAssist
         }
         else
         {
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        "ConfigCenterSwitch: disable."
-                    )
-                    .SetExtra(GeneralConfigAssist.GetConfigFileInfo())
+            StartupConfigMessageAssist.AddConfig(
+                "ConfigCenterSwitch: disable.",
+                GeneralConfigAssist.GetConfigFileInfo()
             );
 
             builder.AddAdvanceNLog();
@@ -261,41 +208,25 @@ public static class WebApplicationBuilderAssist
         this WebApplicationBuilder builder
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(BuildGateway)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(BuildGateway)}()."
         );
 
         if (!GeneralConfigAssist.GetGatewaySwitch())
         {
-            StartupConfigMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        "GatewaySwitch: disable."
-                    )
+            StartupConfigMessageAssist.AddConfig(
+                "GatewaySwitch: disable."
             );
 
             return builder;
         }
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    "GatewaySwitch: enable."
-                )
+        StartupConfigMessageAssist.AddConfig(
+            "GatewaySwitch: enable."
         );
 
-        StartupConfigMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Information)
-                .SetMessage(
-                    $"GatewayType: {GeneralConfigAssist.GetGatewayType()}."
-                )
+        StartupConfigMessageAssist.AddConfig(
+            $"GatewayType: {GeneralConfigAssist.GetGatewayType()}."
         );
 
         if (GeneralConfigAssist.GetGatewayType() == GatewayType.Ocelot)

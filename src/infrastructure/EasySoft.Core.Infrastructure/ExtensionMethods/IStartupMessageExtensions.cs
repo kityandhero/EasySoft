@@ -2,7 +2,6 @@
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Logging;
-using EasySoft.UtilityTools.Standard.Enums;
 
 namespace EasySoft.Core.Infrastructure.ExtensionMethods;
 

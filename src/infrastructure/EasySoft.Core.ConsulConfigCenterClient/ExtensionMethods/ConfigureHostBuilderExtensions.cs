@@ -29,12 +29,8 @@ public static class ConfigureHostBuilderExtensions
             // 加载consul配置中心配置
             var consulUrl = ConsulConfigCenterConfigAssist.GetCenterAddress();
 
-            StartupDescriptionMessageAssist.Add(
-                new StartupMessage()
-                    .SetLevel(LogLevel.Information)
-                    .SetMessage(
-                        $"Consul config center address is {ConsulConfigCenterConfigAssist.GetCenterAddress()}, key is {applicationChannel.GetChannel()}/config.{env.EnvironmentName}.json, key build by ApplicationChannel and Environment"
-                    )
+            StartupDescriptionMessageAssist.AddDescription(
+                $"Consul config center address is {ConsulConfigCenterConfigAssist.GetCenterAddress()}, key is {applicationChannel.GetChannel()}/config.{env.EnvironmentName}.json, key build by ApplicationChannel and Environment"
             );
 
             config.AddConsul(
@@ -63,12 +59,10 @@ public static class ConfigureHostBuilderExtensions
             ConsulConfigCenterConfigAssist.SetConfiguration(configure);
 
             if (action != null)
-            {
                 ChangeToken.OnChange(
                     () => configure.GetReloadToken(),
                     () => action(ConsulConfigCenterConfigAssist.GetConfiguration())
                 );
-            }
         });
 
         return builder;

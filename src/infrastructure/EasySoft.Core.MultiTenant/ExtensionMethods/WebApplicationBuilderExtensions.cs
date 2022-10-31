@@ -14,12 +14,8 @@ public static class WebApplicationBuilderExtensions
         Func<HttpContext?, Tenant> tenantBuilder
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(AddTenantFactory)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddTenantFactory)}()."
         );
 
         builder.Host.AddTenantFactory(tenantBuilder);
