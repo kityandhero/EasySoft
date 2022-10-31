@@ -606,6 +606,20 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    public static int GetNlogConsoleMessageLimit()
+    {
+        var v = GetConfig().NlogConsoleMessageLimit;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+            throw new Exception(
+                $"请配置 NlogConsoleMessageLimit: {ConfigFile} -> NlogConsoleMessageLimit,请设置"
+            );
+
+        return value;
+    }
+
     public static bool GetMiniProFileSwitch()
     {
         var v = GetConfig().MiniProFileSwitch;

@@ -62,7 +62,7 @@ public static class StartupDescriptionMessageAssist
 
     public static void AddExecute(string message, string extra = "")
     {
-        // AddDebug(message, extra);
+        AddDebug(message, extra);
     }
 
     public static void Print()
@@ -70,13 +70,13 @@ public static class StartupDescriptionMessageAssist
         var list = MessageCollection.ToListFilterNullable()
             .ToList();
 
-        // list.Add(
-        //     new StartupMessage()
-        //         .SetLevel(LogLevel.Information)
-        //         .SetMessage(
-        //             UtilityTools.Standard.ConstCollection.ApplicationStartMessageDescriptionDivider
-        //         )
-        // );
+        list.Add(
+            new StartupMessage()
+                .SetLevel(LogLevel.Information)
+                .SetMessage(
+                    UtilityTools.Standard.ConstCollection.ApplicationStartMessageDescriptionDivider
+                )
+        );
 
         list.Add(
             new StartupMessage()

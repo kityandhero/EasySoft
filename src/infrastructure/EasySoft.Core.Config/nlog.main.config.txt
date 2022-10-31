@@ -74,7 +74,7 @@
       "own-console": {
         "type": "LimitingWrapper",
         "interval": "00:00:01",
-        "messageLimit": 100,
+        ###messageLimit###
         "target": {
           "type": "ColoredConsole",
           "layout": "[${longDate}] ${uppercase:${level}:padding=-5:padCharacter= } ${message} ${exception:format=toString}",

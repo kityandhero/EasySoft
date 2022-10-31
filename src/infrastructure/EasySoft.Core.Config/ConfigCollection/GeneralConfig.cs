@@ -127,6 +127,11 @@ public class GeneralConfig : IConfig
     /// </summary>
     public string NlogDefaultConfigDebugToConsoleSwitch { get; set; }
 
+    /// <summary>
+    /// Nlog 控制台输出限额, 默认不详
+    /// </summary>
+    public string NlogConsoleMessageLimit { get; set; }
+
     public string MiniProFileSwitch { get; set; }
 
     public string WebRootPath { get; set; }
@@ -210,6 +215,8 @@ public class GeneralConfig : IConfig
 
         NlogDefaultConfigTraceToConsoleSwitch = "1";
         NlogDefaultConfigDebugToConsoleSwitch = "1";
+
+        NlogConsoleMessageLimit = "0";
 
         MiniProFileSwitch = "0";
 

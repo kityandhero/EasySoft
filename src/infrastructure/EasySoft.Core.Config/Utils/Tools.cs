@@ -49,11 +49,9 @@ public static class Tools
             nlogDefaultConfigDebugToExceptionlessSwitch ? GetNlogDefaultExceptionlessTargetConfig() : "";
 
         if (nlogDefaultConfigDebugToExceptionlessSwitch)
-        {
             exceptionlessTarget = exceptionlessTarget
                 .Replace("###exceptionless-apiKey###", nlogDefaultConfigExceptionlessApiKey)
                 .Replace("###exceptionless-serverUrl###", nlogDefaultConfigExceptionlessServerUrl);
-        }
 
         exceptionlessExtensions =
             string.IsNullOrWhiteSpace(exceptionlessExtensions) ? "" : $"{exceptionlessExtensions},";
@@ -63,6 +61,10 @@ public static class Tools
         var consoleMinLevel = nlogDefaultConfigTraceToConsoleSwitch ? "Trace" :
             nlogDefaultConfigDebugToConsoleSwitch ? "Debug" : "Info";
 
+        var consoleMessageLimit = GeneralConfigAssist.GetNlogConsoleMessageLimit();
+
+        var consoleMessageLimitSetting = consoleMessageLimit <= 0 ? "" : $"\"messageLimit\": {consoleMessageLimit},";
+
         mainConfig = mainConfig
             .Replace("###exceptionless-extensions###", exceptionlessExtensions)
             .Replace("###trace-target###", traceTarget)
@@ -71,7 +73,8 @@ public static class Tools
             .Replace("###trace-rule###", traceRule)
             .Replace("###debug-rule###", debugRule)
             .Replace("###exceptionless-rule###", exceptionlessRule)
-            .Replace("###console-minLevel###", consoleMinLevel);
+            .Replace("###console-minLevel###", consoleMinLevel)
+            .Replace("###messageLimit###", consoleMessageLimitSetting);
 
         return mainConfig;
     }
