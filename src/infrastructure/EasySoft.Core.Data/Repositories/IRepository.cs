@@ -19,11 +19,11 @@ public interface IRepository<TEntity, in TKey> : IRepository where TEntity : cla
 {
     #region PageList
 
-    Task<PageListResult<TEntity>> PageListAsync<TS>(
+    Task<PageListResult<TEntity>> PageListAsync<TTarget>(
         int pageIndex,
         int pageSize,
-        Expression<Func<TEntity, bool>> where,
-        Expression<Func<TEntity, TS>> orderBy,
+        Expression<Func<TEntity, bool>>? where = null,
+        Expression<Func<TEntity, TTarget>>? order = null,
         bool isAsc = true,
         bool writeChannel = false,
         CancellationToken cancellationToken = default
@@ -32,6 +32,11 @@ public interface IRepository<TEntity, in TKey> : IRepository where TEntity : cla
     #endregion
 
     #region SingleList
+
+    Task<IEnumerable<TEntity>> SingleListAsync(
+        bool writeChannel = false,
+        CancellationToken cancellationToken = default
+    );
 
     Task<IEnumerable<TEntity>> SingleListAsync(
         Expression<Func<TEntity, bool>> filter,

@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Mapster.Assists;
-using EasySoft.Simple.Shared.DataTransfer;
+using EasySoft.Simple.Shared.Application.DataTransfer;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -86,7 +86,7 @@ public class AutoMapperController : AreaControllerCore
         var userIn = new UserIn()
         {
             Name = "Snow",
-            Age = 20,
+            Age = 20
         };
 
         var userDto1 = _userEntity.BuildAdapter()
@@ -101,7 +101,7 @@ public class AutoMapperController : AreaControllerCore
         return this.Success(new
         {
             userDto1,
-            userDto2,
+            userDto2
         });
     }
 
@@ -122,7 +122,7 @@ public class AutoMapperController : AreaControllerCore
         var i2 = "123".Adapt<int>(); // 等同于: int.Parse("123");
 
         // 集合, 包括列表、数组、集合、包括各种接口的字典之间的映射: IList<T> , ICollection<T >, IEnumerable<T> , ISet<T >, IDictionary<TKey, TValue> 等等…
-        var list = (new UserEntity[] { _userEntity }).ToList();
+        var list = new UserEntity[] { _userEntity }.ToList();
         var target = list.Adapt<IEnumerable<UserDto>>();
 
         // 可映射对象 Mapster 可以使用以下规则映射两个不同的对象 源类型和目标类型属性名称相同。 例如: dest.Name = src.Name

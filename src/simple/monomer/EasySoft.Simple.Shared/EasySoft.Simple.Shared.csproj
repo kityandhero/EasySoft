@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EventBus\EasySoft.Core.EventBus.csproj" />
+      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>

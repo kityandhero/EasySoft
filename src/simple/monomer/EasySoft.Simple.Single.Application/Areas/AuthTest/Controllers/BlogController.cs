@@ -12,15 +12,15 @@ namespace EasySoft.Simple.Single.Application.Areas.AuthTest.Controllers;
 [Operator]
 public class AuthorController : AreaControllerCore
 {
-    private readonly IAuthorBusinessService _authorBusinessService;
+    private readonly IAuthorService _authorService;
 
     /// <summary>
     /// AuthorController
     /// </summary>
-    /// <param name="authorBusinessService"></param>
-    public AuthorController(IAuthorBusinessService authorBusinessService)
+    /// <param name="authorService"></param>
+    public AuthorController(IAuthorService authorService)
     {
-        _authorBusinessService = authorBusinessService;
+        _authorService = authorService;
     }
 
     /// <summary>
@@ -32,11 +32,9 @@ public class AuthorController : AreaControllerCore
         var resultActualOperator = await this.GetActualOperator();
 
         if (!resultActualOperator.Success || resultActualOperator.Data == null)
-        {
             return this.Fail(resultActualOperator.Code);
-        }
 
-        var result = await _authorBusinessService.GetAuthorDtoSync(
+        var result = await _authorService.GetAuthorDtoSync(
             Convert.ToInt32(resultActualOperator.Data.GetIdentification())
         );
 

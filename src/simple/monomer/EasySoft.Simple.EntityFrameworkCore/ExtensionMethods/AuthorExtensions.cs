@@ -1,4 +1,5 @@
-﻿using Mapster;
+﻿using EasySoft.Simple.Shared.Application.DataTransfer;
+using Mapster;
 
 namespace EasySoft.Simple.EntityFrameworkCore.ExtensionMethods;
 

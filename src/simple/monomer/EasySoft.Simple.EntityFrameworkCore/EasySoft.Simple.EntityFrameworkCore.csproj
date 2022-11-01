@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Folder Include="IServices" />
         <Folder Include="Modals" />
     </ItemGroup>
 
@@ -16,6 +17,7 @@
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj" />
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
+        <ProjectReference Include="..\EasySoft.Simple.Shared.Application\EasySoft.Simple.Shared.Application.csproj" />
         <ProjectReference Include="..\EasySoft.Simple.Shared\EasySoft.Simple.Shared.csproj" />
     </ItemGroup>
 

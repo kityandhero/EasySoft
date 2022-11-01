@@ -1,5 +1,5 @@
 ﻿using System.Security.Cryptography;
-using EasySoft.UtilityTools.Standard.Encryption;
+using EasySoft.UtilityTools.Standard.Securities.Encryption;
 using RSAExtensions;
 using Shouldly;
 using Xunit;

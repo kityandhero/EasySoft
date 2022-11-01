@@ -38,8 +38,8 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
     public async Task<PageListResult<TEntity>> PageListAsync<TS>(
         int pageIndex,
         int pageSize,
-        Expression<Func<TEntity, bool>> where,
-        Expression<Func<TEntity, TS>> orderBy,
+        Expression<Func<TEntity, bool>>? where = null,
+        Expression<Func<TEntity, TS>>? order = null,
         bool isAsc = true,
         bool writeChannel = false,
         CancellationToken cancellationToken = default
@@ -50,17 +50,27 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         List<TEntity> list;
 
         if (isAsc)
-            list = await Context.Set<TEntity>().Where(where)
-                .OrderBy(orderBy)
-                .Skip(pageSize * (pageIndex - 1))
-                .Take(pageSize)
-                .ToListAsync(cancellationToken);
+            list = order == null
+                ? await Where(where, writeChannel, true)
+                    .Skip(pageSize * (pageIndex - 1))
+                    .Take(pageSize)
+                    .ToListAsync(cancellationToken)
+                : await Where(where, writeChannel, true)
+                    .OrderBy(order)
+                    .Skip(pageSize * (pageIndex - 1))
+                    .Take(pageSize)
+                    .ToListAsync(cancellationToken);
         else
-            list = await Where(where, writeChannel, true)
-                .OrderByDescending(orderBy)
-                .Skip(pageSize * (pageIndex - 1))
-                .Take(pageSize)
-                .ToListAsync(cancellationToken);
+            list = order == null
+                ? await Where(where, writeChannel, true)
+                    .Skip(pageSize * (pageIndex - 1))
+                    .Take(pageSize)
+                    .ToListAsync(cancellationToken)
+                : await Where(where, writeChannel, true)
+                    .OrderByDescending(order)
+                    .Skip(pageSize * (pageIndex - 1))
+                    .Take(pageSize)
+                    .ToListAsync(cancellationToken);
 
         return new PageListResult<TEntity>(ReturnCode.Ok)
         {
@@ -72,6 +82,14 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
     #endregion
 
     #region SingleList
+
+    public virtual async Task<IEnumerable<TEntity>> SingleListAsync(
+        bool writeChannel = false,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await GetSet(writeChannel, true).ToListAsync(cancellationToken);
+    }
 
     public virtual async Task<IEnumerable<TEntity>> SingleListAsync(
         Expression<Func<TEntity, bool>> where,
@@ -266,12 +284,14 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
     }
 
     public virtual IQueryable<TEntity> Where(
-        Expression<Func<TEntity, bool>> expression,
+        Expression<Func<TEntity, bool>>? expression = null,
         bool writeChannel = false,
         bool noTracking = true
     )
     {
-        return GetSet(writeChannel, noTracking).Where(expression);
+        return expression == null
+            ? GetSet(writeChannel, noTracking)
+            : GetSet(writeChannel, noTracking).Where(expression);
     }
 
     #endregion
