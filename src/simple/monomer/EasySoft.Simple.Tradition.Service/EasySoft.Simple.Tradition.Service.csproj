@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Data\EasySoft.Core.Data.csproj" />
+      <ProjectReference Include="..\EasySoft.Simple.Tradition.Data\EasySoft.Simple.Tradition.Data.csproj" />
+    </ItemGroup>
+
+</Project>

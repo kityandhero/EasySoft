@@ -5,6 +5,10 @@ using AutoFacTest.Implementations;
 using AutoFacTest.Interfaces;
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.ExtensionMethods;
+using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.Data.ExtensionMethods;
+using EasySoft.Core.EntityFramework.SqlServer.Extensions;
+using EasySoft.Core.EventBus.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
@@ -14,10 +18,14 @@ using EasySoft.Core.PermissionVerification.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.BuilderAssists;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
+using EasySoft.Simple.Shared.EventSubscribers;
 using EasySoft.Simple.Single.Application.EasyTokens;
 using EasySoft.Simple.Single.Application.Enums;
 using EasySoft.Simple.Single.Application.Hubs;
 using EasySoft.Simple.Single.Application.PrepareStartWorks;
+using EasySoft.Simple.Tradition.Data.Contexts;
+using EasySoft.Simple.Tradition.Service.Services.Implementations;
+using Microsoft.EntityFrameworkCore;
 
 // EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableDetailedErrors = true;
 // EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableSensitiveDataLogging = true;
@@ -37,6 +45,23 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
                 //if not specifying an api version,show the default version
                 o.AssumeDefaultVersionWhenUnspecified = true;
             });
+        }),
+    new ExtraAction<WebApplicationBuilder>()
+        .SetName("AddAdvanceDbContext<DataContext>")
+        .SetAction(applicationBuilder =>
+        {
+            applicationBuilder.AddAdvanceEntityFrameworkSqlServer<DataContext>(
+                DatabaseConfigAssist.GetMainConnection(),
+                opt =>
+                {
+                    //自动转换命名格式
+                    opt.UseSnakeCaseNamingConvention();
+                }
+            );
+
+            applicationBuilder.AddAssemblyBusinessServiceInterceptors(typeof(AuthorService).Assembly);
+
+            applicationBuilder.AddCapEventBus<CapEventSubscriber>();
         }),
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddPrepareStartWorkInjection")
@@ -89,7 +114,7 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
     })
 );
 
-ApplicationConfigurator.AddAreas("AreaTest", "AuthTest", "DataTest", "ComponentTest");
+ApplicationConfigurator.AddAreas("AuthTest", "DataTest");
 
 AgileConfigClientActionAssist.ActionAgileConfigChanged = _ =>
 {
