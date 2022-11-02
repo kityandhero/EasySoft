@@ -17,7 +17,7 @@
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj" />
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
-        <ProjectReference Include="..\EasySoft.Simple.Application.Contracts\EasySoft.Simple.Application.Contracts.csproj" />
+        <ProjectReference Include="..\EasySoft.Simple.WebLog.Application.Contracts\EasySoft.Simple.WebLog.Application.Contracts.csproj" />
         <ProjectReference Include="..\EasySoft.Simple.Shared\EasySoft.Simple.Shared.csproj" />
     </ItemGroup>
 

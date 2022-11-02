@@ -273,11 +273,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "domain-driven-design", "dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Domain.Base", "infrastructure\EasySoft.Core.Domain.Base\EasySoft.Core.Domain.Base.csproj", "{8C9CA6C8-AB9C-4F4C-B483-AE3137E33482}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.Domain", "simple\monomer\EasySoft.Simple.Domain\EasySoft.Simple.Domain.csproj", "{3F03F069-0ED7-4814-B7A7-0A7A63BDE23B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.WebLog.Domain", "simple\monomer\EasySoft.Simple.WebLog.Domain\EasySoft.Simple.WebLog.Domain.csproj", "{3F03F069-0ED7-4814-B7A7-0A7A63BDE23B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.Application.Contracts", "simple\monomer\EasySoft.Simple.Application.Contracts\EasySoft.Simple.Application.Contracts.csproj", "{7ED87802-BDBC-44C7-B5F6-AA6382250B87}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.WebLog.Application.Contracts", "simple\monomer\EasySoft.Simple.WebLog.Application.Contracts\EasySoft.Simple.WebLog.Application.Contracts.csproj", "{7ED87802-BDBC-44C7-B5F6-AA6382250B87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.Application", "simple\monomer\EasySoft.Simple.Application\EasySoft.Simple.Application.csproj", "{A03DE23B-E848-4817-8F8C-483E871C654F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.WebLog.Application", "simple\monomer\EasySoft.Simple.WebLog.Application\EasySoft.Simple.WebLog.Application.csproj", "{A03DE23B-E848-4817-8F8C-483E871C654F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tradition 传统模式", "tradition 传统模式", "{5885234C-5890-49C3-A682-B4893569EDDF}"
 EndProject
@@ -286,6 +286,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.Tradition.Application", "simple\monomer\EasySoft.Simple.Tradition.Application\EasySoft.Simple.Tradition.Application.csproj", "{D1194807-2E7D-428A-A2FA-7C6B50546AB2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.Tradition.Service", "simple\monomer\EasySoft.Simple.Tradition.Service\EasySoft.Simple.Tradition.Service.csproj", "{9825B9CC-8644-4502-BBCA-CE620BF0C595}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "customer_center 用户中心", "customer_center 用户中心", "{13B4903D-80CD-4176-B88D-6BC79E67082B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "blog", "blog", "{33BF5DA7-4088-4A48-B456-2B5EEC18DF7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.CustomerCenter.Domain", "simple\monomer\EasySoft.Simple.CustomerCenter.Domain\EasySoft.Simple.CustomerCenter.Domain.csproj", "{B9A80B0F-BD8F-4ED0-8DBB-6E84D2366A04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.CustomerCenter.Application.Contracts", "simple\monomer\EasySoft.Simple.CustomerCenter.Application.Contracts\EasySoft.Simple.CustomerCenter.Application.Contracts.csproj", "{DD366D2A-7A96-4FAD-BE7E-35D3E393DC79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.CustomerCenter.Application", "simple\monomer\EasySoft.Simple.CustomerCenter.Application\EasySoft.Simple.CustomerCenter.Application.csproj", "{57ACE43D-B443-4D77-A9A5-F451A7B9BAC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -661,6 +671,18 @@ Global
 		{9825B9CC-8644-4502-BBCA-CE620BF0C595}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9825B9CC-8644-4502-BBCA-CE620BF0C595}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9825B9CC-8644-4502-BBCA-CE620BF0C595}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9A80B0F-BD8F-4ED0-8DBB-6E84D2366A04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9A80B0F-BD8F-4ED0-8DBB-6E84D2366A04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9A80B0F-BD8F-4ED0-8DBB-6E84D2366A04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9A80B0F-BD8F-4ED0-8DBB-6E84D2366A04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD366D2A-7A96-4FAD-BE7E-35D3E393DC79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD366D2A-7A96-4FAD-BE7E-35D3E393DC79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD366D2A-7A96-4FAD-BE7E-35D3E393DC79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD366D2A-7A96-4FAD-BE7E-35D3E393DC79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57ACE43D-B443-4D77-A9A5-F451A7B9BAC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57ACE43D-B443-4D77-A9A5-F451A7B9BAC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57ACE43D-B443-4D77-A9A5-F451A7B9BAC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57ACE43D-B443-4D77-A9A5-F451A7B9BAC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -794,14 +816,19 @@ Global
 		{C719359B-7002-4B4C-AA31-16D032F02604} = {6B0550AC-54D0-4ED0-BBFD-60CEFD3E802F}
 		{1CF43A96-572B-4B58-BA51-2AFAA87CE1FD} = {C719359B-7002-4B4C-AA31-16D032F02604}
 		{5B9FB532-C444-40B3-952F-C449137BB71E} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
-		{3F03F069-0ED7-4814-B7A7-0A7A63BDE23B} = {6B0550AC-54D0-4ED0-BBFD-60CEFD3E802F}
 		{8C9CA6C8-AB9C-4F4C-B483-AE3137E33482} = {5B9FB532-C444-40B3-952F-C449137BB71E}
-		{7ED87802-BDBC-44C7-B5F6-AA6382250B87} = {6B0550AC-54D0-4ED0-BBFD-60CEFD3E802F}
-		{A03DE23B-E848-4817-8F8C-483E871C654F} = {6B0550AC-54D0-4ED0-BBFD-60CEFD3E802F}
 		{5885234C-5890-49C3-A682-B4893569EDDF} = {6E6F0E4E-2B5E-4275-B9F5-15585604799E}
 		{547CFAFD-E7D7-4FFC-AF0A-E352550FADB7} = {5885234C-5890-49C3-A682-B4893569EDDF}
 		{D1194807-2E7D-428A-A2FA-7C6B50546AB2} = {5885234C-5890-49C3-A682-B4893569EDDF}
 		{9825B9CC-8644-4502-BBCA-CE620BF0C595} = {5885234C-5890-49C3-A682-B4893569EDDF}
+		{13B4903D-80CD-4176-B88D-6BC79E67082B} = {6B0550AC-54D0-4ED0-BBFD-60CEFD3E802F}
+		{33BF5DA7-4088-4A48-B456-2B5EEC18DF7F} = {6B0550AC-54D0-4ED0-BBFD-60CEFD3E802F}
+		{B9A80B0F-BD8F-4ED0-8DBB-6E84D2366A04} = {13B4903D-80CD-4176-B88D-6BC79E67082B}
+		{3F03F069-0ED7-4814-B7A7-0A7A63BDE23B} = {33BF5DA7-4088-4A48-B456-2B5EEC18DF7F}
+		{A03DE23B-E848-4817-8F8C-483E871C654F} = {33BF5DA7-4088-4A48-B456-2B5EEC18DF7F}
+		{7ED87802-BDBC-44C7-B5F6-AA6382250B87} = {33BF5DA7-4088-4A48-B456-2B5EEC18DF7F}
+		{DD366D2A-7A96-4FAD-BE7E-35D3E393DC79} = {13B4903D-80CD-4176-B88D-6BC79E67082B}
+		{57ACE43D-B443-4D77-A9A5-F451A7B9BAC4} = {13B4903D-80CD-4176-B88D-6BC79E67082B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}
