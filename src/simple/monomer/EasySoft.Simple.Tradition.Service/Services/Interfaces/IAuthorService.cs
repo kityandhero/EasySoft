@@ -17,6 +17,5 @@ public interface IAuthorService : IBusinessService
 
     public Task<ExecutiveResult<Author>> SignInAsync(string loginName, string password);
 
-    [UnitOfWork(SharedToCap = true)]
-    public Task<ExecutiveResult<Author>> UpdateFirstAuthor(string loginName, string password);
+    public Task<ExecutiveResult<Author>> UpdateFirstAuthor();
 }

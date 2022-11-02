@@ -1,10 +1,10 @@
 ﻿using EasySoft.Core.Data.Repositories;
+using EasySoft.IdGenerator.Assists;
 using EasySoft.Simple.Application.Contracts.DataTransferObjects;
 using EasySoft.Simple.Application.Contracts.ExtensionMethods;
 using EasySoft.Simple.Application.Contracts.Services;
 using EasySoft.Simple.Domain.Aggregates.AuthorAggregate;
 using EasySoft.Simple.Shared.Events;
-using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.Result;
@@ -107,11 +107,15 @@ public class AuthorService : IAuthorService
         if (resultUpdate.Success)
         {
             //发布领域事件，通知客户中心扣款(Demo是从余额中扣款)
-            var eventId = IdAssist.CreateUUID();
+            var eventId = IdentifierAssist.Create();
             var eventData = new AuthorUpdateEvent.EventData
-                { OrderId = order.Id, CustomerId = order.CustomerId, Amount = order.Amount };
-            var eventSource = nameof(PayAsync);
-            await order.EventPublisher.Value.PublishAsync(new OrderPaidEvent(eventId, eventData, eventSource));
+            {
+                AuthorId = first.Id
+            };
+
+            const string eventSource = nameof(UpdateFirstAuthor);
+
+            await first.EventPublisher.Value.PublishAsync(new AuthorUpdateEvent(eventId, eventData, eventSource));
 
             return new ExecutiveResult<Author>(ReturnCode.Ok)
             {

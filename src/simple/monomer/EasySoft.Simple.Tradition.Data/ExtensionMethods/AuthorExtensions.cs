@@ -1,5 +1,5 @@
-﻿using EasySoft.Simple.Application.Contracts.DataTransferObjects;
-using EasySoft.Simple.Domain.Aggregates.AuthorAggregate;
+﻿using EasySoft.Simple.Tradition.Data.DataTransferObjects;
+using EasySoft.Simple.Tradition.Data.Entities;
 using Mapster;
 
 namespace EasySoft.Simple.Tradition.Data.ExtensionMethods;

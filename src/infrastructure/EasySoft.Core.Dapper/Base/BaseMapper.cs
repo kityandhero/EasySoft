@@ -287,7 +287,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
 
             case TypeCode.String:
                 if (string.IsNullOrWhiteSpace((string)primaryKeyValue))
-                    model.SetPrimaryKeyValue($"D{EasyIdAssist.Create()}");
+                    model.SetPrimaryKeyValue($"D{IdentifierAssist.Create()}");
 
                 break;
 
@@ -302,7 +302,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
                 break;
 
             case TypeCode.Int64:
-                if (Convert.ToInt64(primaryKeyValue) == 0) model.SetPrimaryKeyValue(EasyIdAssist.Create());
+                if (Convert.ToInt64(primaryKeyValue) == 0) model.SetPrimaryKeyValue(IdentifierAssist.Create());
 
                 break;
 
@@ -412,7 +412,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
 
             case TypeCode.String:
                 if (string.IsNullOrWhiteSpace((string)primaryKeyValue))
-                    model.SetPrimaryKeyValue($"D{EasyIdAssist.Create()}");
+                    model.SetPrimaryKeyValue($"D{IdentifierAssist.Create()}");
 
                 break;
 
@@ -427,7 +427,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
                 break;
 
             case TypeCode.Int64:
-                if (Convert.ToInt64(primaryKeyValue) == 0) model.SetPrimaryKeyValue(EasyIdAssist.Create());
+                if (Convert.ToInt64(primaryKeyValue) == 0) model.SetPrimaryKeyValue(IdentifierAssist.Create());
 
                 break;
 

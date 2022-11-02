@@ -3,9 +3,9 @@ using Yitter.IdGenerator;
 
 namespace EasySoft.IdGenerator.Assists;
 
-public static class EasyIdAssist
+public static class IdentifierAssist
 {
-    static EasyIdAssist()
+    static IdentifierAssist()
     {
         var easyOptions = OptionBuilder.CreateEasyOptions();
 

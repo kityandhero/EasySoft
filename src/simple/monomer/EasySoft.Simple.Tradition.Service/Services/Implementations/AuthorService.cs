@@ -86,7 +86,7 @@ public class AuthorService : IAuthorService
         return await _authorRepository.GetAsync(o => o.LoginName == loginName && o.Password == password.ToMd5());
     }
 
-    public async Task<ExecutiveResult<Author>> UpdateFirstAuthor(string loginName, string password)
+    public async Task<ExecutiveResult<Author>> UpdateFirstAuthor()
     {
         var enumerable = await _authorRepository.SingleListAsync();
 

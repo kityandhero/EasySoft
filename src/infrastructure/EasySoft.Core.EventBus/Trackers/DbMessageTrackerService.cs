@@ -29,7 +29,7 @@ public class DbMessageTrackerService : IMessageTracker
     {
         await _trackerRepository.AddAsync(new EventTracker
         {
-            Id = EasyIdAssist.Create(),
+            Id = IdentifierAssist.Create(),
             EventId = eventId,
             TrackerName = trackerName
         });

@@ -96,6 +96,8 @@ public class DataController : AreaControllerCore
     [HttpPost]
     public async Task<IActionResult> UpdateFirstAuthor()
     {
+        var result = await _authorService.UpdateFirstAuthor();
+
         return !result.Success ? this.Fail(result.Code) : this.Success(result.Data);
     }
 }
