@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.Domain.Base.Entities.Interfaces;
 
-namespace EasySoft.Core.Domain.Base.Entities.implementations;
+namespace EasySoft.Core.Domain.Base.Entities.Implementations;
 
 public abstract class BaseValueObject : IValueObject
 {

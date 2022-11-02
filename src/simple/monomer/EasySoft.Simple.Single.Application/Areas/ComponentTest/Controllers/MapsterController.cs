@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Mapster.Assists;
-using EasySoft.Simple.Shared.Application.DataTransfer;
+using EasySoft.Simple.Shared.Application.Contracts.DataTransfer;
+using EasySoft.Simple.Single.Application.DataTransfer;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;

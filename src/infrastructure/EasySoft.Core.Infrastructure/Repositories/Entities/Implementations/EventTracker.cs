@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Entities.implementations;
-
-namespace EasySoft.Core.EventBus.Trackers;
+﻿namespace EasySoft.Core.Infrastructure.Repositories.Entities.Implementations;
 
 public class EventTracker : Entity
 {

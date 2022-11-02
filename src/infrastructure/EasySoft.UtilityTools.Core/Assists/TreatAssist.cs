@@ -1,4 +1,4 @@
-﻿using EasySoft.UtilityTools.Core.Securities.implementations;
+﻿using EasySoft.UtilityTools.Core.Securities.Implementations;
 using EasySoft.UtilityTools.Core.Securities.Interfaces;
 
 namespace EasySoft.UtilityTools.Core.Assists;

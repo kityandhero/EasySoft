@@ -1,6 +1,6 @@
 ﻿using EasySoft.UtilityTools.Core.Securities.Interfaces;
 
-namespace EasySoft.UtilityTools.Core.Securities.implementations;
+namespace EasySoft.UtilityTools.Core.Securities.Implementations;
 
 internal class Security : ISecurity
 {

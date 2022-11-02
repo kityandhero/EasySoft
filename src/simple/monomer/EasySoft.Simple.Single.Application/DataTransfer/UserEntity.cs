@@ -1,5 +1,8 @@
-﻿namespace EasySoft.Simple.Shared.Application.Contracts.DataTransfer;
+﻿namespace EasySoft.Simple.Single.Application.DataTransfer;
 
+/// <summary>
+/// 数据转换样例
+/// </summary>
 public class UserEntity
 {
     public string Name { get; set; }

@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using EasySoft.Core.Infrastructure.Entities.Interfaces;
+using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
 using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.Core.Data.Repositories;

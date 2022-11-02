@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using EasySoft.Core.Infrastructure.Entities.Interfaces;
+using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
 
 namespace EasySoft.Simple.EntityFrameworkCore.Bases;
 

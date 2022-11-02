@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Infrastructure.Entities.Interfaces;
+﻿namespace EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
 
 public interface IOperate
 {
@@ -8,7 +8,7 @@ public interface IOperate
     public long CreateBy { get; set; }
 
     /// <summary>
-    /// 创建时间/注册时间
+    /// 创建时间
     /// </summary>
     public DateTime CreateTime { get; set; }
 

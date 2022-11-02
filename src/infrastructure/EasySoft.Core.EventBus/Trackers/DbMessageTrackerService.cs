@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Data.Repositories;
+using EasySoft.Core.Infrastructure.Repositories.Entities.Implementations;
 using EasySoft.IdGenerator.Assists;
 
 namespace EasySoft.Core.EventBus.Trackers;

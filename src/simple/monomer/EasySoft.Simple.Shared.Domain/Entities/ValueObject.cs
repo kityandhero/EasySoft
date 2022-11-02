@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Domain.Base.Entities.implementations;
+﻿using EasySoft.Core.Domain.Base.Entities.Implementations;
 
 namespace EasySoft.Simple.Shared.Domain.Entities;
 
