@@ -1,25 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 using EasySoft.Simple.Tradition.Data.Entities.Bases;
-using Microsoft.EntityFrameworkCore;
 
 namespace EasySoft.Simple.Tradition.Data.Entities;
 
-[Table("blog")]
 public class Blog : BaseEntity
 {
-    [Column("title")]
+    [MaxLength(200)]
     public string Title { get; set; }
 
     /// <summary>
     /// 笔名
     /// </summary>
-    [Column("pseudonym")]
     public string Pseudonym { get; set; }
 
     /// <summary>
     /// 座右铭
     /// </summary>
-    [Column("motto")]
     public string Motto { get; set; }
 
     public long CustomerId { get; set; }

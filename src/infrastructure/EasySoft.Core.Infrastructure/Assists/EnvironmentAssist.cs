@@ -22,13 +22,22 @@ public static class EnvironmentAssist
 
     public static string GetEnvironmentAliasName()
     {
-        return GetEnvironment().EnvironmentName.ToLower() switch
+        try
         {
-            "development" => "dev",
-            "test" => "test",
-            "staging" => "stag",
-            "production" => "prod",
-            _ => throw new ArgumentOutOfRangeException()
-        };
+            var environment = GetEnvironment();
+
+            return environment.EnvironmentName.ToLower() switch
+            {
+                "development" => "dev",
+                "test" => "test",
+                "staging" => "stag",
+                "production" => "prod",
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+        catch (Exception)
+        {
+            return "";
+        }
     }
 }
