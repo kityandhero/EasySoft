@@ -11,4 +11,8 @@
       <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework.SqlServer\EasySoft.Core.EntityFramework.SqlServer.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="configures\databaseConfig.json" />
+    </ItemGroup>
+
 </Project>
