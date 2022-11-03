@@ -1,7 +1,7 @@
 ﻿using EasySoft.Core.Data.Repositories;
 using EasySoft.Core.Data.Transactions;
+using EasySoft.Core.EntityFramework.EntityFactories;
 using EasySoft.Simple.Tradition.Data.Entities;
-using EasySoft.Simple.Tradition.Data.EntityFactories;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -15,20 +15,16 @@ public class CustomerService : ICustomerService
 
     private readonly IRepository<Customer> _customerRepository;
 
-    private readonly IRepository<Author> _authorRepository;
-
     private readonly IRepository<Blog> _blogRepository;
 
     public CustomerService(
         IUnitOfWork unitOfWork,
         IRepository<Customer> repository,
-        IRepository<Author> authorRepository,
         IRepository<Blog> blogRepository
     )
     {
         _unitOfWork = unitOfWork;
         _customerRepository = repository;
-        _authorRepository = authorRepository;
         _blogRepository = blogRepository;
     }
 
@@ -48,26 +44,17 @@ public class CustomerService : ICustomerService
         try
         {
             var customer = EntityFactory.Create<Customer>();
-            var author = EntityFactory.Create<Author>();
             var blog = EntityFactory.Create<Blog>();
 
             customer.LoginName = loginName;
             customer.Password = password.ToMd5();
 
-            author.CustomerId = customer.Id;
-            author.Blog = blog;
-
-            blog.AuthorId = author.Id;
+            blog.CustomerId = customer.Id;
 
             var resultAddCustomer = await _customerRepository.AddAsync(customer);
 
             if (!resultAddCustomer.Success)
                 throw new Exception(resultAddCustomer.Message);
-
-            var resultAddAuthor = await _authorRepository.AddAsync(author);
-
-            if (!resultAddAuthor.Success)
-                throw new Exception(resultAddAuthor.Message);
 
             var resultAddBlog = await _blogRepository.AddAsync(blog);
 
@@ -97,34 +84,23 @@ public class CustomerService : ICustomerService
         try
         {
             var customers = new List<Customer>();
-            var authors = new List<Author>();
             var blogs = new List<Blog>();
 
             foreach (var item in namePassword)
             {
                 var customer = EntityFactory.Create<Customer>();
-                var author = EntityFactory.Create<Author>();
                 var blog = EntityFactory.Create<Blog>();
 
                 customer.LoginName = item.Key;
                 customer.Password = item.Value;
 
-                author.CustomerId = customer.Id;
-                author.Blog = blog;
-
-                blog.AuthorId = author.Id;
+                blog.CustomerId = customer.Id;
 
                 customers.Add(customer);
-                authors.Add(author);
                 blogs.Add(blog);
             }
 
             var result = await _customerRepository.AddRangeAsync(customers);
-
-            if (!result.Success)
-                throw new Exception(result.Message);
-
-            result = await _authorRepository.AddRangeAsync(authors);
 
             if (!result.Success)
                 throw new Exception(result.Message);

@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
+using EasySoft.Core.Infrastructure.Repositories.Entities.Implementations;
 
 namespace EasySoft.Simple.Tradition.Data.Entities.Bases;
 
-public abstract class BaseEntity : IEntity<long>
+public abstract class BaseEntity : Entity
 {
     [Key]
     [Column("id")]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public long Id { get; set; }
+    public override long Id { get; set; }
 }

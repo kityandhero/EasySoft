@@ -8,10 +8,10 @@ public class DataContext : BasicContext
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnAdvanceModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasCharSet("utf8mb4 ");
 
-        base.OnModelCreating(modelBuilder);
+        OnModelCreating(modelBuilder);
     }
 }

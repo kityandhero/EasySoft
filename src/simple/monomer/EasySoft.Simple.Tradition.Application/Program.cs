@@ -26,8 +26,8 @@ using EasySoft.Simple.Tradition.Data.Contexts;
 using EasySoft.Simple.Tradition.Service.Services.Implementations;
 using Microsoft.EntityFrameworkCore;
 
-// EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableDetailedErrors = true;
-// EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableSensitiveDataLogging = true;
+EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableDetailedErrors = true;
+EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableSensitiveDataLogging = true;
 
 // 配置额外的构建项目
 ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
@@ -58,7 +58,7 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
                 }
             );
 
-            applicationBuilder.AddAssemblyBusinessServiceInterceptors(typeof(AuthorService).Assembly);
+            applicationBuilder.AddAssemblyBusinessServiceInterceptors(typeof(BlogService).Assembly);
         }),
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddPrepareStartWorkInjection")

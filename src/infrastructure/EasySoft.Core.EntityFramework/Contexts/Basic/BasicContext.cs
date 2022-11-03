@@ -9,6 +9,23 @@ public abstract class BasicContext : DbContext, IDataContext
         Database.AutoTransactionsEnabled = false;
     }
 
+    protected sealed override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        OnAdvanceModelCreating(modelBuilder);
+
+        OnSeedCreating(modelBuilder);
+    }
+
+    protected virtual void OnAdvanceModelCreating(ModelBuilder modelBuilder)
+    {
+    }
+
+    protected virtual void OnSeedCreating(ModelBuilder modelBuilder)
+    {
+    }
+
     /// <summary>
     ///     保存前预处理
     /// </summary>

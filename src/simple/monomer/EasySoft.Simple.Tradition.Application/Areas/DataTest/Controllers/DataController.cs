@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.Data.Transactions;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Simple.Tradition.Data.Contexts;
-using EasySoft.Simple.Tradition.Data.Entities;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -18,7 +17,7 @@ public class DataController : AreaControllerCore
 
     private readonly ICustomerService _customerService;
 
-    private readonly IAuthorService _authorService;
+    private readonly IBlogService _blogService;
 
     private readonly DataContext _dataContext;
 
@@ -27,18 +26,18 @@ public class DataController : AreaControllerCore
     /// </summary>
     /// <param name="unitOfWork"></param>
     /// <param name="customerService"></param>
-    /// <param name="authorService"></param>
+    /// <param name="blogService"></param>
     /// <param name="dataContext"></param>
     public DataController(
         IUnitOfWork unitOfWork,
         ICustomerService customerService,
-        IAuthorService authorService,
+        IBlogService blogService,
         DataContext dataContext
     )
     {
         _unitOfWork = unitOfWork;
         _customerService = customerService;
-        _authorService = authorService;
+        _blogService = blogService;
         _dataContext = dataContext;
     }
 
@@ -64,25 +63,9 @@ public class DataController : AreaControllerCore
     ///     GetAuthor
     /// </summary>
     /// <returns></returns>
-    public async Task<IActionResult> GetAuthor()
+    public async Task<IActionResult> GetBlog()
     {
-        var author = new Author
-        {
-            Motto = $"lili-{Guid.NewGuid().ToString()}",
-            Pseudonym = "123456"
-        };
-
-        _dataContext.Authors.Add(author);
-
-        _dataContext.Posts.Add(new Post
-        {
-            Title = "this is a simple post",
-            Author = author
-        });
-
-        await _dataContext.SaveChangesAsync();
-
-        var result = await _authorService.GetAuthorDtoSync(1);
+        var result = await _blogService.GetFirstAsync();
 
         return !result.Success ? this.Fail(result.Code) : this.Success(result.Data);
     }
@@ -103,7 +86,7 @@ public class DataController : AreaControllerCore
 
             await _customerService.RegisterMultiAsync(dictionary);
 
-            var result = await _authorService.GetAuthorDtoSync(1);
+            var result = await _blogService.GetBlogDtoSync(1);
 
             await _unitOfWork.CommitAsync();
 
@@ -122,13 +105,13 @@ public class DataController : AreaControllerCore
     }
 
     /// <summary>
-    /// UpdateFirstAuthor  
+    /// UpdateFirstBlog  
     /// </summary>
     /// <returns></returns>
     [HttpPost]
-    public async Task<IActionResult> UpdateFirstAuthor()
+    public async Task<IActionResult> UpdateFirstBlog()
     {
-        var result = await _authorService.UpdateFirstAuthor();
+        var result = await _blogService.UpdateFirst();
 
         return !result.Success ? this.Fail(result.Code) : this.Success(result.Data);
     }

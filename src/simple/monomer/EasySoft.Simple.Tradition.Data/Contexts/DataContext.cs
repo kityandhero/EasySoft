@@ -13,16 +13,12 @@ public class DataContext : BaseContext
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnSeedCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
-
         modelBuilder.Seed();
     }
 
     public DbSet<Customer> Customers { get; set; } = null!;
-
-    public DbSet<Author> Authors { get; set; } = null!;
 
     public DbSet<Blog> Blogs { get; set; } = null!;
 

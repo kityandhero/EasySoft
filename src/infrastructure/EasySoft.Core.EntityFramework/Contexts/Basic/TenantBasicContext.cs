@@ -12,7 +12,7 @@ public abstract class TenantBasicContext : BasicContext
 
     public ITenant? Tenant { get; set; }
 
-    protected sealed override void OnModelCreating(ModelBuilder modelBuilder)
+    protected sealed override void OnAdvanceModelCreating(ModelBuilder modelBuilder)
     {
         OnModelCreatingWithTenant(modelBuilder, Tenant);
         OnMoreModelCreating(modelBuilder);

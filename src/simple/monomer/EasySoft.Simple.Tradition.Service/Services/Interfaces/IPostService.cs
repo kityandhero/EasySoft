@@ -6,9 +6,6 @@ using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.Simple.Tradition.Service.Services.Interfaces;
 
-public interface IAuthorService : IBusinessService
+public interface IPostService : IBusinessService
 {
-    public Task<ExecutiveResult<AuthorDto>> GetAuthorDtoSync(int authorId);
-
-    public Task<ExecutiveResult<Author>> UpdateFirstAuthor();
 }
