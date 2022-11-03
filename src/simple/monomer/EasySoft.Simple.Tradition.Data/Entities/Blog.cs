@@ -5,7 +5,6 @@ namespace EasySoft.Simple.Tradition.Data.Entities;
 
 public class Blog : BaseEntity
 {
-    [MaxLength(200)]
     public string Name { get; set; }
 
     /// <summary>

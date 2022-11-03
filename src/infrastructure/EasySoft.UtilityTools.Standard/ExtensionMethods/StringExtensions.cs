@@ -779,6 +779,63 @@ public static class StringExtensions
         return PathAssist.Combine(path, target);
     }
 
+    #region ToCamelCase
+
+    public static string ToCamelCase(this string source)
+    {
+        if (string.IsNullOrWhiteSpace(source)) return source;
+
+        var adjust = source.Trim();
+
+        var firstChar = adjust[0];
+
+        if (firstChar == char.ToLowerInvariant(firstChar)) return adjust;
+
+        var name = adjust.ToCharArray();
+
+        name[0] = char.ToLowerInvariant(firstChar);
+
+        return new string(name);
+    }
+
+    #endregion
+
+    #region ToSnakeCase
+
+    public static string ToSnakeCase(this string source)
+    {
+        if (string.IsNullOrWhiteSpace(source)) return source;
+
+        var adjust = source.Trim();
+
+        var builder = new StringBuilder();
+        var previousUpper = false;
+
+        for (var i = 0; i < adjust.Length; i++)
+        {
+            var c = adjust[i];
+
+            if (char.IsUpper(c))
+            {
+                if (i > 0 && !previousUpper) builder.Append("_");
+
+                builder.Append(char.ToLowerInvariant(c));
+
+                previousUpper = true;
+            }
+            else
+            {
+                builder.Append(c);
+
+                previousUpper = false;
+            }
+        }
+
+        return builder.ToString();
+    }
+
+    #endregion
+
     #region Remove
 
     /// <summary>

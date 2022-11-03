@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.EntityFramework.SqlServer.Contexts;
+﻿using System.Reflection;
+using EasySoft.Core.EntityFramework.SqlServer.Contexts;
 using EasySoft.Simple.Tradition.Data.Entities;
 using EasySoft.Simple.Tradition.Data.ExtensionMethods;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,15 @@ public class DataContext : BaseContext
     {
     }
 
-    protected override void OnSeedCreating(ModelBuilder modelBuilder)
+    protected sealed override List<Assembly> GetEntityTypeConfigureAssemblies()
+    {
+        return new List<Assembly>
+        {
+            typeof(Blog).Assembly
+        };
+    }
+
+    protected sealed override void OnSeedCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Seed();
     }

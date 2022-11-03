@@ -1,4 +1,9 @@
-﻿namespace EasySoft.Core.EntityFramework.Contexts.Basic;
+﻿using System.Reflection;
+using DotNetCore.CAP.Processor;
+using EasySoft.Core.EntityFramework.EntityTypeConfigures;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
+
+namespace EasySoft.Core.EntityFramework.Contexts.Basic;
 
 public abstract class BasicContext : DbContext, IDataContext
 {
@@ -6,12 +11,15 @@ public abstract class BasicContext : DbContext, IDataContext
         DbContextOptions options
     ) : base(options)
     {
+        // ReSharper disable once VirtualMemberCallInConstructor
         Database.AutoTransactionsEnabled = false;
     }
 
     protected sealed override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        OnEntityTypeConfig(modelBuilder);
 
         OnAdvanceModelCreating(modelBuilder);
 
@@ -22,8 +30,41 @@ public abstract class BasicContext : DbContext, IDataContext
     {
     }
 
+    /// <summary>
+    /// 配置实体
+    /// </summary>
+    /// <param name="modelBuilder"></param>
+    private void OnEntityTypeConfig(ModelBuilder modelBuilder)
+    {
+        var assemblies = GetEntityTypeConfigureAssemblies();
+
+        foreach (var assembly in assemblies) ConfigEntityType(modelBuilder, assembly);
+    }
+
+    protected virtual List<Assembly> GetEntityTypeConfigureAssemblies()
+    {
+        return new List<Assembly>();
+    }
+
     protected virtual void OnSeedCreating(ModelBuilder modelBuilder)
     {
+    }
+
+    private static void ConfigEntityType(ModelBuilder modelBuilder, Assembly assembly)
+    {
+        var types = assembly.GetTypes()
+            .Where(m => m.FullName != null &&
+                        typeof(IAdvanceEntityTypeConfiguration).IsAssignableFrom(m) &&
+                        !m.IsAbstract).ToList();
+
+        foreach (var type in types)
+        {
+            type.Create();
+
+            dynamic configurationInstance = Activator.CreateInstance(type) ?? throw new InvalidOperationException();
+
+            modelBuilder.ApplyConfiguration(configurationInstance);
+        }
     }
 
     /// <summary>

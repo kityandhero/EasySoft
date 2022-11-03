@@ -8,10 +8,8 @@ namespace EasySoft.Simple.Tradition.Data.EntityConfig;
 
 public class BlogConfig : BaseEntityTypeConfiguration<Blog>
 {
-    public override void Configure(EntityTypeBuilder<Blog> builder)
+    protected override void ConfigureColumn(EntityTypeBuilder<Blog> builder, Type entityType)
     {
-        base.Configure(builder);
-
         builder.Property(x => x.Name)
             .HasColumnName("name")
             .HasColumnType(DatabaseConstant.Nvarchar)
@@ -23,17 +21,20 @@ public class BlogConfig : BaseEntityTypeConfiguration<Blog>
             .HasColumnName("pseudonym")
             .HasColumnType(DatabaseConstant.Nvarchar)
             .HasMaxLength(200)
-            .HasDefaultValue(string.Empty);
+            .HasDefaultValue(string.Empty)
+            .HasComment("");
 
         builder.Property(x => x.Motto)
             .HasColumnName("motto")
             .HasColumnType(DatabaseConstant.Nvarchar)
             .HasMaxLength(200)
-            .HasDefaultValue(string.Empty);
+            .HasDefaultValue(string.Empty)
+            .HasComment("");
 
         builder.Property(x => x.CustomerId)
             .HasColumnName("customer_id")
-            .HasDefaultValue(0);
+            .HasDefaultValue(0)
+            .HasComment("");
 
         builder.HasMany(x => x.Posts).WithOne().HasForeignKey(y => y.BlogId);
     }

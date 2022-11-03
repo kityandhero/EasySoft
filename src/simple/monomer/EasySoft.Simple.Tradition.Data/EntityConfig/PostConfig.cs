@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.EntityFramework.EntityTypeConfigures;
+using EasySoft.Core.EntityFramework.ValueGenerators;
 using EasySoft.Simple.Tradition.Data.Entities;
 using EasySoft.UtilityTools.Standard;
 using Microsoft.EntityFrameworkCore;
@@ -8,16 +9,16 @@ namespace EasySoft.Simple.Tradition.Data.EntityConfig;
 
 public class PostConfig : BaseEntityTypeConfiguration<Post>
 {
-    public override void Configure(EntityTypeBuilder<Post> builder)
+    protected override void ConfigureColumn(EntityTypeBuilder<Post> builder, Type entityType)
     {
-        base.Configure(builder);
-
         builder.Property(x => x.BlogId).IsRequired();
 
         builder.Property(x => x.Title)
             .HasColumnName("title")
             .HasColumnType(DatabaseConstant.Nvarchar)
-            .HasMaxLength(200).HasDefaultValue(string.Empty);
+            .HasMaxLength(200)
+            .HasDefaultValue(string.Empty)
+            .HasComment("");
 
         // builder.Property(x => x.Blog).HasColumnName("blog_id").HasDefaultValue(0);
 

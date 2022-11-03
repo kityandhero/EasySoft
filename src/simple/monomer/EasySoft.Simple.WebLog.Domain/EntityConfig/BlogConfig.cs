@@ -6,10 +6,8 @@ namespace EasySoft.Simple.WebLog.Domain.EntityConfig;
 
 public class BlogConfig : BaseEntityTypeConfiguration<Blog>
 {
-    public override void Configure(EntityTypeBuilder<Blog> builder)
+    protected override void ConfigureColumn(EntityTypeBuilder<Blog> builder, Type entityType)
     {
-        base.Configure(builder);
-
         builder.Property(x => x.Title).HasMaxLength(200);
 
         builder.Property(x => x.Author).HasColumnName("author_id");

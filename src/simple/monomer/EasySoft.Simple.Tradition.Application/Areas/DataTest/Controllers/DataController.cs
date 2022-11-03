@@ -1,10 +1,13 @@
 ﻿using EasySoft.Core.Data.Transactions;
+using EasySoft.Core.EntityFramework.EntityTypeConfigures;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Simple.Tradition.Data.Contexts;
+using EasySoft.Simple.Tradition.Data.EntityConfig;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EasySoft.Simple.Tradition.Application.Areas.DataTest.Controllers;
 
