@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using EasySoft.Simple.Tradition.Data.Bases;
+using EasySoft.Simple.Tradition.Data.Entities.Bases;
 
 namespace EasySoft.Simple.Tradition.Data.Entities;
 
@@ -13,6 +13,11 @@ public class Post : BaseEntity
     public string Title { get; set; }
 
     public Author? Author { get; set; }
+
+    /// <summary>
+    /// 博客标识
+    /// </summary>
+    public Blog? Blog { get; set; }
 
     public Post()
     {

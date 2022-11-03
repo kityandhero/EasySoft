@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using EasySoft.Simple.Tradition.Data.Bases;
+using EasySoft.Simple.Tradition.Data.Entities.Bases;
 
 namespace EasySoft.Simple.Tradition.Data.Entities;
 
@@ -10,7 +10,7 @@ public class Blog : BaseEntity
     public string Title { get; set; }
 
     [Column("author_id")]
-    public int AuthorId { get; set; }
+    public long AuthorId { get; set; }
 
     public Blog()
     {

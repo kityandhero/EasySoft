@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
 
-namespace EasySoft.Simple.Tradition.Data.Bases;
+namespace EasySoft.Simple.Tradition.Data.Entities.Bases;
 
 public abstract class BaseEntity : IEntity<long>
 {

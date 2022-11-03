@@ -15,15 +15,15 @@ namespace EasySoft.Simple.Tradition.Application.Areas.AuthTest.Controllers;
 /// </summary>
 public class EntranceController : AreaControllerCore
 {
-    private readonly IAuthorService _authorService;
+    private readonly ICustomerService _customerService;
 
     /// <summary>
     /// EntranceController
     /// </summary>
-    /// <param name="authorService"></param>
-    public EntranceController(IAuthorService authorService)
+    /// <param name="customerService"></param>
+    public EntranceController(ICustomerService customerService)
     {
-        _authorService = authorService;
+        _customerService = customerService;
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public class EntranceController : AreaControllerCore
     [HttpGet]
     public async Task<IActionResult> Register()
     {
-        var result = await _authorService.RegisterAsync("test", "123456");
+        var result = await _customerService.RegisterAsync("test", "123456");
 
         return this.WrapperExecutiveResult(result);
     }
@@ -57,7 +57,7 @@ public class EntranceController : AreaControllerCore
     [HttpPost]
     public async Task<IActionResult> SignIn(string loginName, string password)
     {
-        var result = await _authorService.SignInAsync(loginName, password);
+        var result = await _customerService.SignInAsync(loginName, password);
 
         if (!result.Success) return Content(result.Message);
 

@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
       <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework.SqlServer\EasySoft.Core.EntityFramework.SqlServer.csproj" />
+      <ProjectReference Include="..\..\..\infrastructure\EasySoft.IdGenerator\EasySoft.IdGenerator.csproj" />
     </ItemGroup>
 
     <ItemGroup>

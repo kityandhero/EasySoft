@@ -1,24 +1,38 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using EasySoft.Simple.Tradition.Data.Bases;
+using EasySoft.Simple.Tradition.Data.Entities.Bases;
 
 namespace EasySoft.Simple.Tradition.Data.Entities;
 
 [Table("author")]
 public class Author : BaseEntity
 {
-    [Column("real_name")]
-    public string RealName { get; set; }
+    [Column("customer_id")]
+    public long CustomerId { get; set; }
 
-    [Column("login_name")]
-    public string LoginName { get; set; }
+    /// <summary>
+    /// 笔名
+    /// </summary>
+    [Column("pseudonym")]
+    public string Pseudonym { get; set; }
 
-    [Column("password")]
-    public string Password { get; set; }
+    /// <summary>
+    /// 座右铭
+    /// </summary>
+    [Column("motto")]
+    public string Motto { get; set; }
+
+    /// <summary>
+    /// 博客标识
+    /// </summary>
+    public Blog? Blog { get; set; }
+
+    public int Status { get; set; }
 
     public Author()
     {
-        RealName = "";
-        LoginName = "";
-        Password = "";
+        CustomerId = 0;
+        Pseudonym = "";
+        Motto = "";
+        Status = 0;
     }
 }

@@ -10,12 +10,5 @@ public interface IAuthorService : IBusinessService
 {
     public Task<ExecutiveResult<AuthorDto>> GetAuthorDtoSync(int authorId);
 
-    public Task<ExecutiveResult<Author>> RegisterAsync(string loginName, string password);
-
-    [UnitOfWork]
-    public Task<ExecutiveResult> RegisterMultiAsync(Dictionary<string, string> namePassword);
-
-    public Task<ExecutiveResult<Author>> SignInAsync(string loginName, string password);
-
     public Task<ExecutiveResult<Author>> UpdateFirstAuthor();
 }

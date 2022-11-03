@@ -1,7 +1,10 @@
-﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
+﻿using EasySoft.Core.Data.Transactions;
+using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Simple.Tradition.Data.Contexts;
 using EasySoft.Simple.Tradition.Data.Entities;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
+using EasySoft.UtilityTools.Standard.Enums;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Simple.Tradition.Application.Areas.DataTest.Controllers;
@@ -11,6 +14,10 @@ namespace EasySoft.Simple.Tradition.Application.Areas.DataTest.Controllers;
 /// </summary>
 public class DataController : AreaControllerCore
 {
+    private readonly IUnitOfWork _unitOfWork;
+
+    private readonly ICustomerService _customerService;
+
     private readonly IAuthorService _authorService;
 
     private readonly DataContext _dataContext;
@@ -18,12 +25,20 @@ public class DataController : AreaControllerCore
     /// <summary>
     ///     DataController
     /// </summary>
+    /// <param name="unitOfWork"></param>
+    /// <param name="customerService"></param>
     /// <param name="authorService"></param>
     /// <param name="dataContext"></param>
-    public DataController(IAuthorService authorService, DataContext dataContext)
+    public DataController(
+        IUnitOfWork unitOfWork,
+        ICustomerService customerService,
+        IAuthorService authorService,
+        DataContext dataContext
+    )
     {
+        _unitOfWork = unitOfWork;
+        _customerService = customerService;
         _authorService = authorService;
-
         _dataContext = dataContext;
     }
 
@@ -53,8 +68,8 @@ public class DataController : AreaControllerCore
     {
         var author = new Author
         {
-            LoginName = $"lili-{Guid.NewGuid().ToString()}",
-            Password = "123456"
+            Motto = $"lili-{Guid.NewGuid().ToString()}",
+            Pseudonym = "123456"
         };
 
         _dataContext.Authors.Add(author);
@@ -78,15 +93,32 @@ public class DataController : AreaControllerCore
     /// <returns></returns>
     public async Task<IActionResult> GetAuthorWithUnitOfWork()
     {
-        var dictionary = new Dictionary<string, string>();
+        try
+        {
+            _unitOfWork.BeginTransaction(distributed: false);
 
-        for (var i = 0; i < 10; i++) dictionary.Add($"lili-{Guid.NewGuid().ToString()}", "123456");
+            var dictionary = new Dictionary<string, string>();
 
-        await _authorService.RegisterMultiAsync(dictionary);
+            for (var i = 0; i < 10; i++) dictionary.Add($"lili-{Guid.NewGuid().ToString()}", "123456");
 
-        var result = await _authorService.GetAuthorDtoSync(1);
+            await _customerService.RegisterMultiAsync(dictionary);
 
-        return !result.Success ? this.Fail(result.Code) : this.Success(result.Data);
+            var result = await _authorService.GetAuthorDtoSync(1);
+
+            await _unitOfWork.CommitAsync();
+
+            return !result.Success ? this.Fail(result.Code) : this.Success(result.Data);
+        }
+        catch (Exception ex)
+        {
+            await _unitOfWork.RollbackAsync();
+
+            return this.Fail(ReturnCode.Exception.ToMessage(ex.Message));
+        }
+        finally
+        {
+            _unitOfWork.Dispose();
+        }
     }
 
     /// <summary>
