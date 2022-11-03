@@ -7,11 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="DotNetCore.CAP.SqlServer" Version="6.2.0"/>
+        <PackageReference Include="DotNetCore.CAP.SqlServer" Version="6.2.1" />
     </ItemGroup>
 
 </Project>

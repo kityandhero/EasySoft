@@ -11,6 +11,11 @@ public class Post : BaseEntity
 
     public long BlogId { get; set; }
 
+    /// <summary>
+    /// 博客标识
+    /// </summary>
+    public Blog? Blog { get; set; }
+
     public Post()
     {
         Title = "";
