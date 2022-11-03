@@ -1,4 +1,4 @@
 {
-  "MainConnection": "server=database.b.com; User ID=pandora;Password=!@#$1234;database=frameworkTest;Encrypt=False",
-  "MirrorConnection": "server=database.b.com; User ID=pandora;Password=!@#$1234;database=frameworkTest;Encrypt=False"
+  "MainConnection": "server=database.b.com; User ID=pandora;Password=!@#$1234;database=easy_soft_simple_tradition;Encrypt=False",
+  "MirrorConnection": "server=database.b.com; User ID=pandora;Password=!@#$1234;database=easy_soft_simple_tradition;Encrypt=False"
 }

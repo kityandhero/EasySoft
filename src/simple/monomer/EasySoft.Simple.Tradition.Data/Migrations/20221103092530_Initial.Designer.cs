@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EasySoft.Simple.Tradition.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221103090615_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221103092530_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,31 +37,29 @@ namespace EasySoft.Simple.Tradition.Data.Migrations
 
                     b.Property<string>("Motto")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("motto");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Pseudonym")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("pseudonym");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("title");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("blog");
+                    b.ToTable("Blogs");
 
                     b.HasData(
                         new
                         {
-                            Id = 349393606803462L,
-                            CustomerId = 349393606803461L,
+                            Id = 349398334455814L,
+                            CustomerId = 349398334455813L,
                             Motto = "",
-                            Pseudonym = "",
-                            Title = ""
+                            Name = "",
+                            Pseudonym = ""
                         });
                 });
 
@@ -101,7 +99,7 @@ namespace EasySoft.Simple.Tradition.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 349393606803461L,
+                            Id = 349398334455813L,
                             Alias = "粽子用户",
                             LoginName = "first",
                             Password = "123456",
@@ -134,21 +132,21 @@ namespace EasySoft.Simple.Tradition.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 349393606803463L,
-                            BlogId = 349393606803462L,
-                            Title = "766d09cd4a0046d78bf57e8b20093d1c"
+                            Id = 349398334455815L,
+                            BlogId = 349398334455814L,
+                            Title = "f11c83da344b4fcda64496a2a2f1cd6b"
                         },
                         new
                         {
-                            Id = 349393606803464L,
-                            BlogId = 349393606803462L,
-                            Title = "8f3c1268b3674c43adcce219ea579828"
+                            Id = 349398334455816L,
+                            BlogId = 349398334455814L,
+                            Title = "4d9f974ae78b49178209d5c23ed4472d"
                         },
                         new
                         {
-                            Id = 349393606803465L,
-                            BlogId = 349393606803462L,
-                            Title = "b018925aa4da4ed1aa06562a3bc15f58"
+                            Id = 349398334455817L,
+                            BlogId = 349398334455814L,
+                            Title = "24d4de325cdc4f32bee9af2406a9c085"
                         });
                 });
 

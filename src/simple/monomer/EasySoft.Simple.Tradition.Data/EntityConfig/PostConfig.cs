@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.EntityFramework.EntityTypeConfigures;
 using EasySoft.Simple.Tradition.Data.Entities;
+using EasySoft.UtilityTools.Standard;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,7 +14,10 @@ public class PostConfig : BaseEntityTypeConfiguration<Post>
 
         builder.Property(x => x.BlogId).IsRequired();
 
-        builder.Property(x => x.Title).HasColumnName("title").HasMaxLength(200).HasDefaultValue(string.Empty);
+        builder.Property(x => x.Title)
+            .HasColumnName("title")
+            .HasColumnType(DatabaseConstant.Nvarchar)
+            .HasMaxLength(200).HasDefaultValue(string.Empty);
 
         // builder.Property(x => x.Blog).HasColumnName("blog_id").HasDefaultValue(0);
 

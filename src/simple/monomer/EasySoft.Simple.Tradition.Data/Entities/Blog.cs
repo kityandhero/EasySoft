@@ -6,7 +6,7 @@ namespace EasySoft.Simple.Tradition.Data.Entities;
 public class Blog : BaseEntity
 {
     [MaxLength(200)]
-    public string Title { get; set; }
+    public string Name { get; set; }
 
     /// <summary>
     /// 笔名
@@ -24,7 +24,7 @@ public class Blog : BaseEntity
 
     public Blog()
     {
-        Title = string.Empty;
+        Name = string.Empty;
         Pseudonym = string.Empty;
         Motto = string.Empty;
     }
