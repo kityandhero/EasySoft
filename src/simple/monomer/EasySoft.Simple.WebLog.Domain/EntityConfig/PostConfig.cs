@@ -16,6 +16,6 @@ public class PostConfig : BaseEntityTypeConfiguration<Post>
             .HasColumnType(DatabaseConstant.Nvarchar)
             .HasMaxLength(200)
             .HasDefaultValue(string.Empty)
-            .HasComment("");
+            .HasComment("帖子标题");
     }
 }

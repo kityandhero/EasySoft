@@ -18,13 +18,6 @@ public class PostConfig : BaseEntityTypeConfiguration<Post>
             .HasColumnType(DatabaseConstant.Nvarchar)
             .HasMaxLength(200)
             .HasDefaultValue(string.Empty)
-            .HasComment("");
-
-        // builder.Property(x => x.Blog).HasColumnName("blog_id").HasDefaultValue(0);
-
-        // builder.OwnsOne(
-        //     x => x.BlogId,
-        //     y => { y.Property(z => z.Id).HasColumnName("blog_id").HasDefaultValue(0); }
-        // );
+            .HasComment("帖子标题");
     }
 }
