@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Abstracts;
+﻿using EasySoft.Core.Infrastructure.Controllers;
 
 namespace EasySoft.Core.Web.Framework.Controllers;
 

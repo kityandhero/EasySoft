@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.EntityFramework.EntityTypeConfigures;
-using EasySoft.Core.EntityFramework.ValueGenerators;
 using EasySoft.Simple.Tradition.Data.Entities;
 using EasySoft.UtilityTools.Standard;
 using Microsoft.EntityFrameworkCore;

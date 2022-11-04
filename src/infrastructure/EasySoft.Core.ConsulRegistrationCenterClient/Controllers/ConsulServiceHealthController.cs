@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Abstracts;
+﻿using EasySoft.Core.Infrastructure.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Core.ConsulRegistrationCenterClient.Controllers;

@@ -285,7 +285,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.Tradition.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.Tradition.Service", "simple\monomer\EasySoft.Simple.Tradition.Service\EasySoft.Simple.Tradition.Service.csproj", "{9825B9CC-8644-4502-BBCA-CE620BF0C595}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "customer_center 用户中心", "customer_center 用户中心", "{13B4903D-80CD-4176-B88D-6BC79E67082B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "customer_center 客户中心", "customer_center 客户中心", "{13B4903D-80CD-4176-B88D-6BC79E67082B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web_blog_center 博客中心 ", "web_blog_center 博客中心 ", "{33BF5DA7-4088-4A48-B456-2B5EEC18DF7F}"
 EndProject
@@ -294,6 +294,18 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.CustomerCenter.Application.Contracts", "simple\monomer\EasySoft.Simple.CustomerCenter.Application.Contracts\EasySoft.Simple.CustomerCenter.Application.Contracts.csproj", "{DD366D2A-7A96-4FAD-BE7E-35D3E393DC79}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.CustomerCenter.Application", "simple\monomer\EasySoft.Simple.CustomerCenter.Application\EasySoft.Simple.CustomerCenter.Application.csproj", "{57ACE43D-B443-4D77-A9A5-F451A7B9BAC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.WebLog.WebApi", "simple\monomer\EasySoft.Simple.WebLog.WebApi\EasySoft.Simple.WebLog.WebApi.csproj", "{9BA2EB34-D625-4015-B41F-3337695B15C8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "account_center 基础账户中心", "account_center 基础账户中心", "{D8FCD863-CBF1-4590-89B4-4FEFF38359A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "manager_center 管理账户中心", "manager_center 管理账户中心", "{CA62CD00-BD61-4CD9-8DE1-A9CC6DB90E5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.AccountCenter.Domain", "simple\monomer\EasySoft.Simple.AccountCenter.Domain\EasySoft.Simple.AccountCenter.Domain.csproj", "{BA11B42D-D314-414B-A872-0C285F80B55D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.AccountCenter.Application.Contracts", "simple\monomer\EasySoft.Simple.AccountCenter.Application.Contracts\EasySoft.Simple.AccountCenter.Application.Contracts.csproj", "{3EF6C803-BE86-4473-8A5B-457A8E609A4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.AccountCenter.Application", "simple\monomer\EasySoft.Simple.AccountCenter.Application\EasySoft.Simple.AccountCenter.Application.csproj", "{89FF294E-FAFD-4867-AD9C-32A6CE811F90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -677,6 +689,22 @@ Global
 		{57ACE43D-B443-4D77-A9A5-F451A7B9BAC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57ACE43D-B443-4D77-A9A5-F451A7B9BAC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57ACE43D-B443-4D77-A9A5-F451A7B9BAC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BA2EB34-D625-4015-B41F-3337695B15C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BA2EB34-D625-4015-B41F-3337695B15C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BA2EB34-D625-4015-B41F-3337695B15C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BA2EB34-D625-4015-B41F-3337695B15C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA11B42D-D314-414B-A872-0C285F80B55D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA11B42D-D314-414B-A872-0C285F80B55D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA11B42D-D314-414B-A872-0C285F80B55D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA11B42D-D314-414B-A872-0C285F80B55D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EF6C803-BE86-4473-8A5B-457A8E609A4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EF6C803-BE86-4473-8A5B-457A8E609A4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EF6C803-BE86-4473-8A5B-457A8E609A4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EF6C803-BE86-4473-8A5B-457A8E609A4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89FF294E-FAFD-4867-AD9C-32A6CE811F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89FF294E-FAFD-4867-AD9C-32A6CE811F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89FF294E-FAFD-4867-AD9C-32A6CE811F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89FF294E-FAFD-4867-AD9C-32A6CE811F90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -822,6 +850,12 @@ Global
 		{7ED87802-BDBC-44C7-B5F6-AA6382250B87} = {33BF5DA7-4088-4A48-B456-2B5EEC18DF7F}
 		{DD366D2A-7A96-4FAD-BE7E-35D3E393DC79} = {13B4903D-80CD-4176-B88D-6BC79E67082B}
 		{57ACE43D-B443-4D77-A9A5-F451A7B9BAC4} = {13B4903D-80CD-4176-B88D-6BC79E67082B}
+		{9BA2EB34-D625-4015-B41F-3337695B15C8} = {33BF5DA7-4088-4A48-B456-2B5EEC18DF7F}
+		{D8FCD863-CBF1-4590-89B4-4FEFF38359A7} = {6B0550AC-54D0-4ED0-BBFD-60CEFD3E802F}
+		{CA62CD00-BD61-4CD9-8DE1-A9CC6DB90E5C} = {6B0550AC-54D0-4ED0-BBFD-60CEFD3E802F}
+		{BA11B42D-D314-414B-A872-0C285F80B55D} = {D8FCD863-CBF1-4590-89B4-4FEFF38359A7}
+		{3EF6C803-BE86-4473-8A5B-457A8E609A4E} = {D8FCD863-CBF1-4590-89B4-4FEFF38359A7}
+		{89FF294E-FAFD-4867-AD9C-32A6CE811F90} = {D8FCD863-CBF1-4590-89B4-4FEFF38359A7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

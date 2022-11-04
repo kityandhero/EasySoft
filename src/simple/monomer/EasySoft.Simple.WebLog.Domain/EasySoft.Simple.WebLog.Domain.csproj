@@ -12,4 +12,10 @@
       <ProjectReference Include="..\EasySoft.Simple.Shared\EasySoft.Simple.Shared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="configures\databaseConfig.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

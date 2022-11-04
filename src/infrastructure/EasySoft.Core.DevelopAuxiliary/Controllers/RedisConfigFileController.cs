@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.Config.ConfigCollection;
-using EasySoft.Core.Infrastructure.Abstracts;
+using EasySoft.Core.Infrastructure.Controllers;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 

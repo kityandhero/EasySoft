@@ -7,10 +7,4 @@ namespace EasySoft.Simple.CustomerCenter.Application.Contracts.Services;
 
 public interface ICustomerService : IBusinessService
 {
-    public Task<ExecutiveResult<Customer>> RegisterAsync(string loginName, string password);
-
-    [UnitOfWork]
-    public Task<ExecutiveResult> RegisterMultiAsync(Dictionary<string, string> namePassword);
-
-    public Task<ExecutiveResult<Customer>> SignInAsync(string loginName, string password);
 }

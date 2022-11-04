@@ -5,5 +5,5 @@ public interface ISoftDelete
     /// <summary>
     /// 逻辑删除标记
     /// </summary>
-    bool IsDeleted { get; set; }
+    int Deleted { get; set; }
 }
