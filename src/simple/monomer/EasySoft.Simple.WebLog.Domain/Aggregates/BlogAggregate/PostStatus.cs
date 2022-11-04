@@ -1,19 +1,19 @@
 ﻿using EasySoft.Core.Domain.Base.Entities.Implementations;
 using EasySoft.Simple.WebLog.Domain.Enums;
 
-namespace EasySoft.Simple.WebLog.Domain.Aggregates.AuthorAggregate;
+namespace EasySoft.Simple.WebLog.Domain.Aggregates.BlogAggregate;
 
-public record BlogStatus : BaseValueRecord
+public record PostStatus : BaseValueRecord
 {
     public BlogStatusCode Code { get; }
 
     public string? ChangesReason { get; }
 
-    private BlogStatus()
+    private PostStatus()
     {
     }
 
-    public BlogStatus(BlogStatusCode statusCode, string? reason = null)
+    public PostStatus(BlogStatusCode statusCode, string? reason = null)
     {
         Code = statusCode;
         ChangesReason = reason is null ? string.Empty : reason.Trim();
