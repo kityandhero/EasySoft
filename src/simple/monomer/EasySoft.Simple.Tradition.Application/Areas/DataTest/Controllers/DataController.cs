@@ -3,6 +3,7 @@ using EasySoft.Core.EntityFramework.EntityTypeConfigures;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Simple.Tradition.Data.Contexts;
 using EasySoft.Simple.Tradition.Data.EntityConfig;
+using EasySoft.Simple.Tradition.Data.ExtensionMethods;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -70,7 +71,7 @@ public class DataController : AreaControllerCore
     {
         var result = await _blogService.GetFirstAsync();
 
-        return !result.Success ? this.Fail(result.Code) : this.Success(result.Data);
+        return !result.Success ? this.Fail(result.Code) : this.Success(result.Data?.ToBlogDto());
     }
 
     /// <summary>

@@ -12,7 +12,7 @@ public static class ModelBuilderExtensions
     {
         var customer = EntityFactory.Create<Customer>();
 
-        customer.Alias = "粽子用户";
+        customer.Alias = "种子用户";
         customer.RealName = "张小明";
         customer.LoginName = "first";
         customer.Password = "123456";
