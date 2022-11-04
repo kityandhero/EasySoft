@@ -15,16 +15,28 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
     {
         var entityType = typeof(TEntity);
 
-        ConfigureTableName(builder, entityType);
+        ConfigureTable(builder, entityType);
         ConfigureKey(builder, entityType);
         ConfigureColumn(builder, entityType);
+        ConfigureIndex(builder, entityType);
         ConfigureConcurrency(builder, entityType);
         ConfigureQueryFilter(builder, entityType);
     }
 
-    protected virtual void ConfigureTableName(EntityTypeBuilder<TEntity> builder, Type entityType)
+    protected virtual void ConfigureTable(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
-        builder.ToTable(entityType.Name.ToSnakeCase());
+        builder.ToTable(BuildTableName(entityType))
+            .HasComment(BuildTableComment(entityType));
+    }
+
+    protected virtual string BuildTableName(Type entityType)
+    {
+        return entityType.Name.ToSnakeCase();
+    }
+
+    protected virtual string BuildTableComment(Type entityType)
+    {
+        return entityType.Name.ToCamelCase();
     }
 
     protected virtual void ConfigureKey(EntityTypeBuilder<TEntity> builder, Type entityType)
@@ -40,6 +52,10 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
     }
 
     protected virtual void ConfigureColumn(EntityTypeBuilder<TEntity> builder, Type entityType)
+    {
+    }
+
+    protected virtual void ConfigureIndex(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
     }
 
