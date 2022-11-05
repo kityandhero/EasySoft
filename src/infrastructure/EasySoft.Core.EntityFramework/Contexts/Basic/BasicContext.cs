@@ -1,18 +1,21 @@
-﻿using System.Reflection;
-using DotNetCore.CAP.Processor;
-using EasySoft.Core.EntityFramework.EntityTypeConfigures;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿using EasySoft.Core.Data.Contexts.Interfaces;
+using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
 
 namespace EasySoft.Core.EntityFramework.Contexts.Basic;
 
 public abstract class BasicContext : DbContext, IDataContext
 {
+    private readonly IEntityConfigure _entityConfigure;
+
     protected BasicContext(
-        DbContextOptions options
+        DbContextOptions options,
+        IEntityConfigure entityConfigure
     ) : base(options)
     {
         // ReSharper disable once VirtualMemberCallInConstructor
         Database.AutoTransactionsEnabled = false;
+
+        _entityConfigure = entityConfigure;
     }
 
     protected sealed override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,6 +29,12 @@ public abstract class BasicContext : DbContext, IDataContext
         OnSeedCreating(modelBuilder);
     }
 
+    // protected virtual void BuildTenantQueryFilter(ModelBuilder modelBuilder)
+    // {
+    //     modelBuilder.Entity<MultitenantContact>()
+    //         .HasQueryFilter(mt => mt.Tenant == _tenant);
+    // }
+
     protected virtual void OnAdvanceModelCreating(ModelBuilder modelBuilder)
     {
     }
@@ -36,35 +45,17 @@ public abstract class BasicContext : DbContext, IDataContext
     /// <param name="modelBuilder"></param>
     private void OnEntityTypeConfig(ModelBuilder modelBuilder)
     {
-        var assemblies = GetEntityTypeConfigureAssemblies();
+        // var assemblies = GetEntityTypeConfigureAssemblies();
+        //
+        // assemblies.Add(typeof(EventTracker).Assembly);
+        //
+        // foreach (var assembly in assemblies) ConfigEntityType(modelBuilder, assembly);
 
-        foreach (var assembly in assemblies) ConfigEntityType(modelBuilder, assembly);
-    }
-
-    protected virtual List<Assembly> GetEntityTypeConfigureAssemblies()
-    {
-        return new List<Assembly>();
+        _entityConfigure.OnModelCreating(modelBuilder);
     }
 
     protected virtual void OnSeedCreating(ModelBuilder modelBuilder)
     {
-    }
-
-    private static void ConfigEntityType(ModelBuilder modelBuilder, Assembly assembly)
-    {
-        var types = assembly.GetTypes()
-            .Where(m => m.FullName != null &&
-                        typeof(IAdvanceEntityTypeConfiguration).IsAssignableFrom(m) &&
-                        !m.IsAbstract).ToList();
-
-        foreach (var type in types)
-        {
-            type.Create();
-
-            dynamic configurationInstance = Activator.CreateInstance(type) ?? throw new InvalidOperationException();
-
-            modelBuilder.ApplyConfiguration(configurationInstance);
-        }
     }
 
     /// <summary>

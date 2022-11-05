@@ -1,11 +1,11 @@
-﻿using EasySoft.Core.Domain.Base.Contexts.Interfaces;
+﻿using EasySoft.Core.Infrastructure.Operations.Interfaces;
 
-namespace EasySoft.Core.Domain.Base.Contexts.Implementations;
+namespace EasySoft.Core.Infrastructure.Contexts.Interfaces;
 
 /// <summary>
 /// 操作者上下文
 /// </summary>
-public abstract class BaseOperatorContext : IOperatorContext
+public interface IOperatorContext
 {
     /// <summary>
     /// 操作者标识
@@ -14,7 +14,7 @@ public abstract class BaseOperatorContext : IOperatorContext
 
     /// <summary>
     /// 名称
-    /// </summary>  
+    /// </summary>
     public string Name { get; set; }
 
     /// <summary>
@@ -32,12 +32,5 @@ public abstract class BaseOperatorContext : IOperatorContext
     /// </summary>
     public string RemoteIpAddress { get; set; }
 
-    protected BaseOperatorContext()
-    {
-        Id = 0;
-        Name = string.Empty;
-        Email = string.Empty;
-        Device = string.Empty;
-        RemoteIpAddress = string.Empty;
-    }
+    IOperator GetOperator();
 }

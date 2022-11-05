@@ -23,7 +23,7 @@ public static class ModelBuilderExtensions
 
         var blog = EntityFactory.Create<Blog>();
 
-        blog.CustomerId = customer.Id;
+        blog.UserId = customer.Id;
 
         modelBuilder.Entity<Blog>().HasData(
             blog

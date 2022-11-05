@@ -17,6 +17,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\EasySoft.Core.Data\EasySoft.Core.Data.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.Domain.Base\EasySoft.Core.Domain.Base.csproj" />
         <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
         <ProjectReference Include="..\EasySoft.Core.MultiTenant\EasySoft.Core.MultiTenant.csproj" />
         <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj" />

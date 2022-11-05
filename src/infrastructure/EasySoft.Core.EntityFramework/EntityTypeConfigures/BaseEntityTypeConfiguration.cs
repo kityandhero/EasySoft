@@ -2,7 +2,6 @@
 using EasySoft.Core.Infrastructure.Repositories.Entities.Implementations;
 using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
 using EasySoft.UtilityTools.Standard;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EasySoft.Core.EntityFramework.EntityTypeConfigures;
@@ -27,18 +26,23 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
 
     protected virtual void ConfigureTable(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
-        builder.ToTable(BuildTableName(entityType))
-            .HasComment(BuildTableComment(entityType));
+        var tableName = BuildTableName(entityType);
+
+        if (!string.IsNullOrWhiteSpace(tableName)) builder.ToTable(tableName);
+
+        var tableComment = BuildTableComment(entityType);
+
+        if (!string.IsNullOrWhiteSpace(tableName)) builder.HasComment(tableComment);
     }
 
     protected virtual string BuildTableName(Type entityType)
     {
-        return entityType.Name.ToSnakeCase();
+        return "";
     }
 
     protected virtual string BuildTableComment(Type entityType)
     {
-        return entityType.Name.ToCamelCase();
+        return "";
     }
 
     protected virtual void ConfigureKey(EntityTypeBuilder<TEntity> builder, Type entityType)
@@ -49,8 +53,7 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
             .HasColumnName(DatabaseConstant.KeyName)
             .ValueGeneratedNever()
             .HasValueGenerator<IdentifierGenerator>()
-            .HasDefaultValue(0)
-            .HasComment("主键标识");
+            .HasDefaultValue(0);
     }
 
     protected virtual void ConfigureColumn(EntityTypeBuilder<TEntity> builder, Type entityType)
@@ -77,8 +80,7 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
             builder.Property(o => ((ITenant)o).TenantId)
                 .HasColumnName("row_version")
                 .IsRequired()
-                .HasDefaultValue(0)
-                .HasComment("租户标识");
+                .HasDefaultValue(0);
     }
 
     protected virtual void ConfigureQueryFilter(EntityTypeBuilder<TEntity> builder, Type entityType)

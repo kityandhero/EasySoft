@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
+﻿using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 
@@ -15,20 +16,20 @@ public static class WebApplicationBuilderExtensions
     /// <param name="connectionString"></param>
     /// <param name="action"></param>
     /// <returns></returns> 
-    public static WebApplicationBuilder AddAdvanceEntityFrameworkSqlServer<T>(
+    public static WebApplicationBuilder AddAdvanceEntityFrameworkSqlServer<TContext, TEntityConfigure>(
         this WebApplicationBuilder builder,
         string connectionString,
         Action<DbContextOptionsBuilder> action
-    ) where T : BaseContext
+    ) where TContext : BaseContext where TEntityConfigure : class, IEntityConfigure
     {
         if (builder.HasRegistered(UniqueIdentifier))
             return builder;
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceEntityFrameworkSqlServer)}<{typeof(T).Name}>()."
+            $"Execute {nameof(AddAdvanceEntityFrameworkSqlServer)}<{typeof(TContext).Name}>()."
         );
 
-        builder.Services.AddAdvanceEntityFrameworkSqlServer<T>(opt =>
+        builder.Services.AddAdvanceEntityFrameworkSqlServer<TContext, TEntityConfigure>(opt =>
         {
             opt.UseSqlServer(connectionString);
 

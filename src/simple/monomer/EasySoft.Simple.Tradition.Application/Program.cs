@@ -8,7 +8,6 @@ using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Data.ExtensionMethods;
 using EasySoft.Core.EntityFramework.SqlServer.Extensions;
-using EasySoft.Core.EventBus.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
@@ -23,6 +22,7 @@ using EasySoft.Simple.Single.Application.Enums;
 using EasySoft.Simple.Single.Application.Hubs;
 using EasySoft.Simple.Single.Application.PrepareStartWorks;
 using EasySoft.Simple.Tradition.Data.Contexts;
+using EasySoft.Simple.Tradition.Data.EntityConfigures;
 using EasySoft.Simple.Tradition.Service.Services.Implementations;
 using Microsoft.EntityFrameworkCore;
 
@@ -49,7 +49,7 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
         .SetName("AddAdvanceDbContext<DataContext>")
         .SetAction(applicationBuilder =>
         {
-            applicationBuilder.AddAdvanceEntityFrameworkSqlServer<DataContext>(
+            applicationBuilder.AddAdvanceEntityFrameworkSqlServer<DataContext, IntegrationEntityConfigure>(
                 DatabaseConfigAssist.GetMainConnection(),
                 opt =>
                 {

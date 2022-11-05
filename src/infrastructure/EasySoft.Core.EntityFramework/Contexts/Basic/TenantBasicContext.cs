@@ -1,12 +1,14 @@
-﻿using EasySoft.Core.MultiTenant;
+﻿using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
+using EasySoft.Core.MultiTenant;
 
 namespace EasySoft.Core.EntityFramework.Contexts.Basic;
 
 public abstract class TenantBasicContext : BasicContext
 {
     protected TenantBasicContext(
-        DbContextOptions options
-    ) : base(options)
+        DbContextOptions options,
+        IEntityConfigure entityConfigure
+    ) : base(options, entityConfigure)
     {
     }
 

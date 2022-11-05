@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Data.Contexts;
+﻿namespace EasySoft.Core.Data.Contexts.Interfaces;
 
 public interface IDataContext
 {

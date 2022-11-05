@@ -30,15 +30,13 @@ namespace EasySoft.Simple.Tradition.Data.Migrations
                         .HasColumnType("bigint")
                         .HasDefaultValue(0L)
                         .HasColumnName("id")
-                        .HasColumnOrder(1)
-                        .HasComment("主键标识");
+                        .HasColumnOrder(1);
 
                     b.Property<long>("CustomerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasDefaultValue(0L)
-                        .HasColumnName("customer_id")
-                        .HasComment("");
+                        .HasColumnName("customer_id");
 
                     b.Property<string>("Motto")
                         .IsRequired()
@@ -46,8 +44,7 @@ namespace EasySoft.Simple.Tradition.Data.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)")
                         .HasDefaultValue("")
-                        .HasColumnName("motto")
-                        .HasComment("");
+                        .HasColumnName("motto");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -55,8 +52,7 @@ namespace EasySoft.Simple.Tradition.Data.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)")
                         .HasDefaultValue("")
-                        .HasColumnName("name")
-                        .HasComment("博客名称");
+                        .HasColumnName("name");
 
                     b.Property<string>("Pseudonym")
                         .IsRequired()
@@ -64,8 +60,7 @@ namespace EasySoft.Simple.Tradition.Data.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)")
                         .HasDefaultValue("")
-                        .HasColumnName("pseudonym")
-                        .HasComment("");
+                        .HasColumnName("pseudonym");
 
                     b.HasKey("Id");
 

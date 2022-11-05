@@ -2,7 +2,6 @@
 using EasySoft.Core.EntityFramework.EntityTypeConfigures;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Simple.Tradition.Data.Contexts;
-using EasySoft.Simple.Tradition.Data.EntityConfig;
 using EasySoft.Simple.Tradition.Data.ExtensionMethods;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 using EasySoft.UtilityTools.Standard.Enums;

@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using EasySoft.Simple.Tradition.Data.Entities.Bases;
-using Microsoft.EntityFrameworkCore;
+﻿using EasySoft.Simple.Tradition.Data.Entities.Bases;
 
 namespace EasySoft.Simple.Tradition.Data.Entities;
 

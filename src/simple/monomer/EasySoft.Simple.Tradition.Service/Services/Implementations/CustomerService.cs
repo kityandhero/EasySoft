@@ -49,7 +49,7 @@ public class CustomerService : ICustomerService
             customer.LoginName = loginName;
             customer.Password = password.ToMd5();
 
-            blog.CustomerId = customer.Id;
+            blog.UserId = customer.Id;
 
             var resultAddCustomer = await _customerRepository.CreateAsync(customer);
 
@@ -94,7 +94,7 @@ public class CustomerService : ICustomerService
                 customer.LoginName = item.Key;
                 customer.Password = item.Value;
 
-                blog.CustomerId = customer.Id;
+                blog.UserId = customer.Id;
 
                 customers.Add(customer);
                 blogs.Add(blog);

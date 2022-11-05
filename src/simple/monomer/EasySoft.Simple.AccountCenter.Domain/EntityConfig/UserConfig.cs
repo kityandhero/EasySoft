@@ -14,28 +14,24 @@ public class UserConfig : BaseEntityTypeConfiguration<User>
             .HasColumnName("alias")
             .HasColumnType(DatabaseConstant.Nvarchar)
             .HasMaxLength(50)
-            .HasDefaultValue(string.Empty)
-            .HasComment("昵称");
+            .HasDefaultValue(string.Empty);
 
         builder.Property(x => x.RealName)
             .HasColumnName("real_name")
             .HasColumnType(DatabaseConstant.Nvarchar)
             .HasMaxLength(50)
-            .HasDefaultValue(string.Empty)
-            .HasComment("真实姓名");
+            .HasDefaultValue(string.Empty);
 
         builder.Property(x => x.LoginName)
             .HasColumnName("login_name")
             .HasColumnType(DatabaseConstant.Nvarchar)
             .HasMaxLength(50)
-            .HasDefaultValue(string.Empty)
-            .HasComment("登录名");
+            .HasDefaultValue(string.Empty);
 
         builder.Property(x => x.Password)
             .HasColumnName("password")
             .HasColumnType(DatabaseConstant.Nvarchar)
             .HasMaxLength(100)
-            .HasDefaultValue(string.Empty)
-            .HasComment("密码");
+            .HasDefaultValue(string.Empty);
     }
 }

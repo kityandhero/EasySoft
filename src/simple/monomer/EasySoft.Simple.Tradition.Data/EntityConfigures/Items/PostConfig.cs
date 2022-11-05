@@ -4,7 +4,7 @@ using EasySoft.UtilityTools.Standard;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EasySoft.Simple.Tradition.Data.EntityConfig;
+namespace EasySoft.Simple.Tradition.Data.EntityConfigures.Items;
 
 public class PostConfig : BaseEntityTypeConfiguration<Post>
 {
@@ -16,7 +16,6 @@ public class PostConfig : BaseEntityTypeConfiguration<Post>
             .HasColumnName("title")
             .HasColumnType(DatabaseConstant.Nvarchar)
             .HasMaxLength(200)
-            .HasDefaultValue(string.Empty)
-            .HasComment("帖子标题");
+            .HasDefaultValue(string.Empty);
     }
 }

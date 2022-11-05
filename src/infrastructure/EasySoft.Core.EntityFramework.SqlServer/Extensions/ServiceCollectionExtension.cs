@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.Data.ExtensionMethods;
 using EasySoft.Core.Data.Repositories;
 using EasySoft.Core.Data.Transactions;
+using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
 using EasySoft.Core.EntityFramework.ExtensionMethods;
 using EasySoft.Core.EntityFramework.Repositories;
 using EasySoft.Core.EntityFramework.SqlServer.Transactions;
@@ -14,22 +15,20 @@ public static class ServiceCollectionExtension
 {
     private const string UniqueIdentifier = "e85c3371-e050-4974-b4ec-007325517d32";
 
-    public static IServiceCollection AddAdvanceEntityFrameworkSqlServer<T>(
+    public static IServiceCollection AddAdvanceEntityFrameworkSqlServer<TContext, TEntityConfigure>(
         this IServiceCollection services,
         Action<DbContextOptionsBuilder> optionsBuilder
-    ) where T : BaseContext
+    ) where TContext : BaseContext where TEntityConfigure : class, IEntityConfigure
     {
         if (services.HasRegistered(UniqueIdentifier))
             return services;
 
-        services.AddAdvanceContext<T>(optionsBuilder);
+        services.AddAdvanceContext<TContext>(optionsBuilder);
 
         services.AddAdvanceUnitOfWorkInterceptor();
-        services.TryAddScoped<IUnitOfWork, UnitOfWork<T>>();
+        services.TryAddScoped<IUnitOfWork, UnitOfWork<TContext>>();
         services.TryAddScoped(typeof(IRepository<>), typeof(Repository<>));
-
-        // services.TryAddScoped(typeof(IEfRepository<>), typeof(EfRepository<>));
-        // services.TryAddScoped(typeof(IEfBasicRepository<>), typeof(EfBasicRepository<>));
+        services.TryAddSingleton<IEntityConfigure, TEntityConfigure>();
 
         return services;
     }
