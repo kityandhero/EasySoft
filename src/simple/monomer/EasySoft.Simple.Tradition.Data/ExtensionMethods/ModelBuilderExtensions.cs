@@ -10,12 +10,20 @@ public static class ModelBuilderExtensions
 {
     public static void Seed(this ModelBuilder modelBuilder)
     {
+        var user = EntityFactory.Create<User>();
+
+        user.Alias = "种子用户";
+        user.RealName = "张小明";
+        user.LoginName = "first";
+        user.Password = "123456";
+
+        modelBuilder.Entity<User>().HasData(
+            user
+        );
+
         var customer = EntityFactory.Create<Customer>();
 
-        customer.Alias = "种子用户";
-        customer.RealName = "张小明";
-        customer.LoginName = "first";
-        customer.Password = "123456";
+        customer.UserId = user.Id;
 
         modelBuilder.Entity<Customer>().HasData(
             customer

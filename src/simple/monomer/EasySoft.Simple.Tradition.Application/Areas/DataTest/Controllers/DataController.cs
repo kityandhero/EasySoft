@@ -18,7 +18,7 @@ public class DataController : AreaControllerCore
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    private readonly ICustomerService _customerService;
+    private readonly IUserService _userService;
 
     private readonly IBlogService _blogService;
 
@@ -28,18 +28,18 @@ public class DataController : AreaControllerCore
     ///     DataController
     /// </summary>
     /// <param name="unitOfWork"></param>
-    /// <param name="customerService"></param>
+    /// <param name="userService"></param>
     /// <param name="blogService"></param>
     /// <param name="dataContext"></param>
     public DataController(
         IUnitOfWork unitOfWork,
-        ICustomerService customerService,
+        IUserService userService,
         IBlogService blogService,
         DataContext dataContext
     )
     {
         _unitOfWork = unitOfWork;
-        _customerService = customerService;
+        _userService = userService;
         _blogService = blogService;
         _dataContext = dataContext;
     }
@@ -87,7 +87,7 @@ public class DataController : AreaControllerCore
 
             for (var i = 0; i < 10; i++) dictionary.Add($"lili-{Guid.NewGuid().ToString()}", "123456");
 
-            await _customerService.RegisterMultiAsync(dictionary);
+            await _userService.RegisterMultiAsync(dictionary);
 
             var result = await _blogService.GetBlogDtoSync(1);
 
