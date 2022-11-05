@@ -13,6 +13,11 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Domain.Base\EasySoft.Core.Domain.Base.csproj" />
       <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj" />
+      <ProjectReference Include="..\EasySoft.Simple.DomainDrivenDesign.Application.Contracts\EasySoft.Simple.DomainDrivenDesign.Application.Contracts.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="DataTransferObjects" />
     </ItemGroup>
 
 </Project>

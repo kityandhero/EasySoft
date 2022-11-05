@@ -51,12 +51,12 @@ public class CustomerService : ICustomerService
 
             blog.CustomerId = customer.Id;
 
-            var resultAddCustomer = await _customerRepository.AddAsync(customer);
+            var resultAddCustomer = await _customerRepository.CreateAsync(customer);
 
             if (!resultAddCustomer.Success)
                 throw new Exception(resultAddCustomer.Message);
 
-            var resultAddBlog = await _blogRepository.AddAsync(blog);
+            var resultAddBlog = await _blogRepository.CreateAsync(blog);
 
             if (!resultAddBlog.Success)
                 throw new Exception(resultAddBlog.Message);
@@ -100,12 +100,12 @@ public class CustomerService : ICustomerService
                 blogs.Add(blog);
             }
 
-            var result = await _customerRepository.AddRangeAsync(customers);
+            var result = await _customerRepository.CreateRangeAsync(customers);
 
             if (!result.Success)
                 throw new Exception(result.Message);
 
-            result = await _blogRepository.AddRangeAsync(blogs);
+            result = await _blogRepository.CreateRangeAsync(blogs);
 
             if (!result.Success)
                 throw new Exception(result.Message);

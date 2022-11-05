@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.AutoFac.IocAssists;
+using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.Result;
@@ -23,10 +24,7 @@ public static class MinioClientAssist
             // Make a bucket on the server, if not already present.
             var found = await minioClient.BucketExistsAsync(new BucketExistsArgs().WithBucket(bucketName));
 
-            if (!found)
-            {
-                await minioClient.MakeBucketAsync(new MakeBucketArgs().WithBucket(bucketName));
-            }
+            if (!found) await minioClient.MakeBucketAsync(new MakeBucketArgs().WithBucket(bucketName));
 
             var putObjectArgs = new PutObjectArgs()
                 .WithBucket(bucketName)
@@ -36,7 +34,7 @@ public static class MinioClientAssist
             // Upload a file to bucket.
             await minioClient.PutObjectAsync(putObjectArgs);
 
-            return ExecutiveResult.Ok;
+            return ExecutiveResultAssist.CreateOk();
         }
         catch (MinioException e)
         {

@@ -27,7 +27,7 @@ public class DbMessageTrackerService : IMessageTracker
 
     public async Task MarkAsProcessedAsync(long eventId, string trackerName)
     {
-        await _trackerRepository.AddAsync(new EventTracker
+        await _trackerRepository.CreateAsync(new EventTracker
         {
             Id = IdentifierAssist.Create(),
             EventId = eventId,

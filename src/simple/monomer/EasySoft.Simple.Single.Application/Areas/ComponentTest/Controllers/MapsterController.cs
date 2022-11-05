@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Mapster.Assists;
-using EasySoft.Simple.Shared.Application.Contracts.DataTransfer;
 using EasySoft.Simple.Single.Application.DataTransfer;
 using Mapster;
 using MapsterMapper;
@@ -15,7 +14,7 @@ public class AutoMapperController : AreaControllerCore
 {
     private readonly IMapper _mapper;
 
-    private readonly UserEntity _userEntity = new()
+    private readonly SimpleEntity _simpleEntity = new()
     {
         Name = "Jon",
         Gender = "male",
@@ -47,9 +46,9 @@ public class AutoMapperController : AreaControllerCore
     /// <returns></returns>
     public IActionResult TestOne()
     {
-        var userDto = _userEntity.Adapt<UserDto>();
+        var userDto = _simpleEntity.Adapt<SimpleDto>();
 
-        _userEntity.Adapt(userDto);
+        _simpleEntity.Adapt(userDto);
 
         return this.Success(userDto);
     }
@@ -60,7 +59,7 @@ public class AutoMapperController : AreaControllerCore
     /// <returns></returns>
     public IActionResult TestTwo()
     {
-        var userDto = _mapper.Map<UserDto>(_userEntity);
+        var userDto = _mapper.Map<SimpleDto>(_simpleEntity);
 
         return this.Success(userDto);
     }
@@ -73,7 +72,7 @@ public class AutoMapperController : AreaControllerCore
     {
         var mapper = MapperAssist.GetMapper();
 
-        var userDto = mapper.Map<UserDto>(_userEntity);
+        var userDto = mapper.Map<SimpleDto>(_simpleEntity);
 
         return this.Success(userDto);
     }
@@ -84,20 +83,20 @@ public class AutoMapperController : AreaControllerCore
     /// <returns></returns>
     public IActionResult TestFour()
     {
-        var userIn = new UserIn()
+        var userIn = new SimpleIn()
         {
             Name = "Snow",
             Age = 20
         };
 
-        var userDto1 = _userEntity.BuildAdapter()
+        var userDto1 = _simpleEntity.BuildAdapter()
             .AddParameters("Age", userIn.Age)
-            .AdaptToType<UserDto>();
+            .AdaptToType<SimpleDto>();
 
-        var userDto2 = _mapper.From(_userEntity)
+        var userDto2 = _mapper.From(_simpleEntity)
             .AddParameters("name", userIn.Name)
             .AddParameters("age", userIn.Age)
-            .AdaptToType<UserDto>();
+            .AdaptToType<SimpleDto>();
 
         return this.Success(new
         {
@@ -123,8 +122,8 @@ public class AutoMapperController : AreaControllerCore
         var i2 = "123".Adapt<int>(); // 等同于: int.Parse("123");
 
         // 集合, 包括列表、数组、集合、包括各种接口的字典之间的映射: IList<T> , ICollection<T >, IEnumerable<T> , ISet<T >, IDictionary<TKey, TValue> 等等…
-        var list = new UserEntity[] { _userEntity }.ToList();
-        var target = list.Adapt<IEnumerable<UserDto>>();
+        var list = new SimpleEntity[] { _simpleEntity }.ToList();
+        var target = list.Adapt<IEnumerable<SimpleDto>>();
 
         // 可映射对象 Mapster 可以使用以下规则映射两个不同的对象 源类型和目标类型属性名称相同。 例如: dest.Name = src.Name
         // 源类型有 GetXXXX 方法。例如: dest.Name = src.GetName()

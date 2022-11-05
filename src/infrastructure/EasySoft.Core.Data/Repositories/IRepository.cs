@@ -17,6 +17,8 @@ public interface IRepository<TEntity> : IRepository<TEntity, long> where TEntity
 /// </summary>
 public interface IRepository<TEntity, in TKey> : IRepository where TEntity : class, IEntity<TKey>
 {
+    #region Read
+
     #region PageList
 
     Task<PageListResult<TEntity>> PageListAsync<TTarget>(
@@ -130,6 +132,8 @@ public interface IRepository<TEntity, in TKey> : IRepository where TEntity : cla
 
     #endregion
 
+    #region Where
+
     /// <summary>
     /// 根据条件查询，返回IQueryable 
     /// </summary>
@@ -139,14 +143,18 @@ public interface IRepository<TEntity, in TKey> : IRepository where TEntity : cla
     /// <returns></returns>
     IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> expression, bool writeDb = false, bool noTracking = true);
 
-    #region Add
+    #endregion
 
-    Task<ExecutiveResult<TEntity>> AddAsync(
+    #endregion
+
+    #region Create
+
+    Task<ExecutiveResult<TEntity>> CreateAsync(
         TEntity entity,
         CancellationToken cancellationToken = default
     );
 
-    Task<ExecutiveResult> AddRangeAsync(
+    Task<ExecutiveResult> CreateRangeAsync(
         IEnumerable<TEntity> entities,
         CancellationToken cancellationToken = default
     );

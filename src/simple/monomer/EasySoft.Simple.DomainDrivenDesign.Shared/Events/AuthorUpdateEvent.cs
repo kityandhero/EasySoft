@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.EventBus.Events;
 
-namespace EasySoft.Simple.Shared.Events;
+namespace EasySoft.Simple.DomainDrivenDesign.Shared.Events;
 
 /// <summary>
 /// 作者信息更新

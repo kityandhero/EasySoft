@@ -9,7 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Domain.Base\EasySoft.Core.Domain.Base.csproj" />
       <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj" />
-      <ProjectReference Include="..\EasySoft.Simple.Shared\EasySoft.Simple.Shared.csproj" />
+      <ProjectReference Include="..\EasySoft.Simple.DomainDrivenDesign.Shared\EasySoft.Simple.DomainDrivenDesign.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>

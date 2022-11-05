@@ -245,7 +245,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.Gateway.Oce
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.OneService", "simple\distribution\EasySoft.Simple.OneService\EasySoft.Simple.OneService.csproj", "{C4B3541E-F215-4533-8C86-8E720D845870}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.Shared", "simple\monomer\EasySoft.Simple.Shared\EasySoft.Simple.Shared.csproj", "{1CF43A96-572B-4B58-BA51-2AFAA87CE1FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.DomainDrivenDesign.Shared", "simple\monomer\EasySoft.Simple.DomainDrivenDesign.Shared\EasySoft.Simple.DomainDrivenDesign.Shared.csproj", "{1CF43A96-572B-4B58-BA51-2AFAA87CE1FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.BackgroundTaskTest", "simple\monomer\EasySoft.Simple.BackgroundTaskTest\EasySoft.Simple.BackgroundTaskTest.csproj", "{EE671C60-EF35-49FD-BEFF-621BBA429F69}"
 EndProject
@@ -306,6 +306,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.AccountCenter.Application.Contracts", "simple\monomer\EasySoft.Simple.AccountCenter.Application.Contracts\EasySoft.Simple.AccountCenter.Application.Contracts.csproj", "{3EF6C803-BE86-4473-8A5B-457A8E609A4E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.AccountCenter.Application", "simple\monomer\EasySoft.Simple.AccountCenter.Application\EasySoft.Simple.AccountCenter.Application.csproj", "{89FF294E-FAFD-4867-AD9C-32A6CE811F90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.DomainDrivenDesign.Domain.Shared", "simple\monomer\EasySoft.Simple.DomainDrivenDesign.Domain.Shared\EasySoft.Simple.DomainDrivenDesign.Domain.Shared.csproj", "{80B1BE9E-8FA6-4F11-B9EE-E398B991B612}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.DomainDrivenDesign.Application.Contracts", "simple\monomer\EasySoft.Simple.DomainDrivenDesign.Application.Contracts\EasySoft.Simple.DomainDrivenDesign.Application.Contracts.csproj", "{52512C18-FCBE-4214-8A1E-DD4813EB16A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -705,6 +709,14 @@ Global
 		{89FF294E-FAFD-4867-AD9C-32A6CE811F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89FF294E-FAFD-4867-AD9C-32A6CE811F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89FF294E-FAFD-4867-AD9C-32A6CE811F90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80B1BE9E-8FA6-4F11-B9EE-E398B991B612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80B1BE9E-8FA6-4F11-B9EE-E398B991B612}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80B1BE9E-8FA6-4F11-B9EE-E398B991B612}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80B1BE9E-8FA6-4F11-B9EE-E398B991B612}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52512C18-FCBE-4214-8A1E-DD4813EB16A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52512C18-FCBE-4214-8A1E-DD4813EB16A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52512C18-FCBE-4214-8A1E-DD4813EB16A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52512C18-FCBE-4214-8A1E-DD4813EB16A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -856,6 +868,8 @@ Global
 		{BA11B42D-D314-414B-A872-0C285F80B55D} = {D8FCD863-CBF1-4590-89B4-4FEFF38359A7}
 		{3EF6C803-BE86-4473-8A5B-457A8E609A4E} = {D8FCD863-CBF1-4590-89B4-4FEFF38359A7}
 		{89FF294E-FAFD-4867-AD9C-32A6CE811F90} = {D8FCD863-CBF1-4590-89B4-4FEFF38359A7}
+		{80B1BE9E-8FA6-4F11-B9EE-E398B991B612} = {C719359B-7002-4B4C-AA31-16D032F02604}
+		{52512C18-FCBE-4214-8A1E-DD4813EB16A7} = {C719359B-7002-4B4C-AA31-16D032F02604}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

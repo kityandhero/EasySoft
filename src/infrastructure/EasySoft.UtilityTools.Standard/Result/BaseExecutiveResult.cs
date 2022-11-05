@@ -1,33 +1,39 @@
 ﻿using EasySoft.UtilityTools.Standard.Enums;
 
-namespace EasySoft.UtilityTools.Standard.Result
+namespace EasySoft.UtilityTools.Standard.Result;
+
+public abstract class BaseExecutiveResult
 {
-    public abstract class BaseExecutiveResult
+    /// <summary>
+    /// 是否成功
+    /// </summary>
+    public bool Success { get; set; }
+
+    /// <summary>
+    /// 结果代码
+    /// </summary>
+    public ReturnMessage Code { get; set; }
+
+    /// <summary>
+    /// 消息
+    /// </summary>
+    public string Message { get; set; }
+
+    protected BaseExecutiveResult(ReturnMessage returnMessage)
     {
-        /// <summary>
-        /// 是否成功
-        /// </summary>
-        public bool Success { get; set; }
+        Success = returnMessage.Success;
+        Code = returnMessage;
+        Message = returnMessage.Message;
+    }
 
-        /// <summary>
-        /// 结果代码
-        /// </summary>
-        public ReturnMessage Code { get; set; }
+    protected BaseExecutiveResult(ReturnCode returnCode) : this(new ReturnMessage(returnCode))
+    {
+    }
 
-        /// <summary>
-        /// 消息
-        /// </summary>
-        public string Message { get; set; }
+    public BaseExecutiveResult SetMessage(string message)
+    {
+        Message = message;
 
-        protected BaseExecutiveResult(ReturnMessage returnMessage)
-        {
-            Success = returnMessage.Success;
-            Code = returnMessage;
-            Message = returnMessage.Message;
-        }
-
-        protected BaseExecutiveResult(ReturnCode returnCode) : this(new ReturnMessage(returnCode))
-        {
-        }
+        return this;
     }
 }

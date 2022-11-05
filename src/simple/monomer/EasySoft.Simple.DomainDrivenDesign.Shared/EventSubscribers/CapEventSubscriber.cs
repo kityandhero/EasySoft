@@ -1,10 +1,10 @@
 ﻿using DotNetCore.CAP;
 using EasySoft.Core.EventBus.ExtensionMethods;
 using EasySoft.Core.EventBus.Trackers;
-using EasySoft.Simple.Shared.Events;
+using EasySoft.Simple.DomainDrivenDesign.Shared.Events;
 using Microsoft.Extensions.Logging;
 
-namespace EasySoft.Simple.Shared.EventSubscribers;
+namespace EasySoft.Simple.DomainDrivenDesign.Shared.EventSubscribers;
 
 /// <summary>
 /// CapEventSubscriber

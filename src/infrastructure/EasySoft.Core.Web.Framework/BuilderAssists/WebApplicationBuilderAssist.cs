@@ -82,13 +82,6 @@ public static class WebApplicationBuilderAssist
                 "Current loading custom config file both with normal and special env, like generalConfig.json and generalConfig.dev.json."
             );
 
-        var list = ApplicationConfigurator.GetAllEnv();
-
-        if (list.Any())
-            StartupDescriptionMessageAssist.AddDescription(
-                $"CustomEnv current available list: {list.Join(",")}, it can be adjusted by ApplicationConfigurator."
-            );
-
         builder.AddAdvanceUrls()
             .AddAdvanceAutoFac()
             .AddCovertInjection()

@@ -33,6 +33,8 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         Context = context;
     }
 
+    #region Read
+
     #region PageList
 
     public async Task<PageListResult<TEntity>> PageListAsync<TS>(
@@ -296,9 +298,11 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
 
     #endregion
 
-    #region Add
+    #endregion
 
-    public async Task<ExecutiveResult<TEntity>> AddAsync(
+    #region Creeate
+
+    public async Task<ExecutiveResult<TEntity>> CreateAsync(
         TEntity entity,
         CancellationToken cancellationToken = default
     )
@@ -319,7 +323,7 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         };
     }
 
-    public virtual async Task<ExecutiveResult> AddRangeAsync(
+    public virtual async Task<ExecutiveResult> CreateRangeAsync(
         IEnumerable<TEntity> entities,
         CancellationToken cancellationToken = default
     )

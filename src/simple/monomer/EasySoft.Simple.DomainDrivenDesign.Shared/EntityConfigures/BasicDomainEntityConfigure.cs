@@ -1,8 +1,8 @@
 ﻿using EasySoft.Core.Domain.Base.Contexts.Interfaces;
 using EasySoft.Core.Domain.Base.EntityConfigures.Implementations;
-using EasySoft.Simple.Shared.Operations;
+using EasySoft.Simple.DomainDrivenDesign.Shared.Operations;
 
-namespace EasySoft.Simple.Shared.EntityConfigures;
+namespace EasySoft.Simple.DomainDrivenDesign.Shared.EntityConfigures;
 
 public class BasicDomainEntityConfigure : BaseDomainEntityConfigure<Operator>
 {

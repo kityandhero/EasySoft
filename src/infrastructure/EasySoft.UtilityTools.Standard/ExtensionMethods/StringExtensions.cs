@@ -59,6 +59,17 @@ public static class StringExtensions
         return Md5Assist.ToMd5(source);
     }
 
+    /// <summary>
+    /// 转换为md5字符串
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="salt"></param>
+    /// <returns></returns>
+    public static string ToMd5(this string source, string salt)
+    {
+        return string.IsNullOrWhiteSpace(salt) ? source.ToMd5() : Md5Assist.ToMd5(source + salt);
+    }
+
     #endregion
 
     #region CutOut

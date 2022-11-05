@@ -9,8 +9,7 @@ namespace EasySoft.Core.Infrastructure.Assists;
 
 public static class ApplicationConfigurator
 {
-    private static readonly HashSet<string> CustomEnv = new(StringComparer.OrdinalIgnoreCase)
-        { "dev,stage,production,test" };
+    public static string PasswordSalt { get; set; } = "";
 
     private static readonly HashSet<string> Areas = new(StringComparer.OrdinalIgnoreCase);
     private static readonly List<IExtraAction<MvcOptions>> MvcOptionExtraActions = new();
@@ -30,32 +29,9 @@ public static class ApplicationConfigurator
         return _miniProfileOptionAction;
     }
 
-    public static void AddEnv(string env)
-    {
-        if (string.IsNullOrWhiteSpace(env))
-        {
-            return;
-        }
-
-        CustomEnv.Add(env.Remove(" ").Trim().ToLower());
-    }
-
-    public static void AddEnv(params string[] envs)
-    {
-        CustomEnv.Add(envs.ToListFilterNullOrWhiteSpace().Select(o => o.Remove(" ").Trim().ToLower()));
-    }
-
-    public static ICollection<string> GetAllEnv()
-    {
-        return CustomEnv;
-    }
-
     public static void AddArea(string area)
     {
-        if (string.IsNullOrWhiteSpace(area))
-        {
-            return;
-        }
+        if (string.IsNullOrWhiteSpace(area)) return;
 
         Areas.Add(area);
     }
