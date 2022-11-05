@@ -15,6 +15,9 @@ public class SimpleIn
     /// </summary>
     public string Gender { get; set; }
 
+    /// <summary>
+    /// Age
+    /// </summary>
     public int Age { get; set; }
 
     /// <summary>
