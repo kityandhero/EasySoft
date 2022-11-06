@@ -4,7 +4,7 @@ using EasySoft.UtilityTools.Standard;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EasySoft.Simple.AccountCenter.Domain.EntityConfig;
+namespace EasySoft.Simple.AccountCenter.Domain.EntityConfigures.Items;
 
 public class UserConfig : BaseEntityTypeConfiguration<User>
 {

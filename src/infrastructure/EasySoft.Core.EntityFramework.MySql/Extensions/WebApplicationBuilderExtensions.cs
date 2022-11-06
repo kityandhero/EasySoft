@@ -1,13 +1,12 @@
 ﻿using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
 using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 
-namespace EasySoft.Core.EntityFramework.SqlServer.Extensions;
+namespace EasySoft.Core.EntityFramework.MySql.Extensions;
 
 public static class WebApplicationBuilderExtensions
 {
-    private const string UniqueIdentifier = "6909f3a5-aa12-4cb4-8637-c412f4beb9af";
+    private const string UniqueIdentifier = "b1c4d305-2488-4271-bc75-4b9d27d1eed8";
 
     /// <summary>
     ///     注册基于 SqlServer 并已集成好数据操作上下文、工作单元以及通用仓储的 EntityFramework Core 工具集
@@ -16,22 +15,22 @@ public static class WebApplicationBuilderExtensions
     /// <param name="connectionString"></param>
     /// <param name="action"></param>
     /// <returns></returns> 
-    public static WebApplicationBuilder AddAdvanceEntityFrameworkSqlServer<TContext, TEntityConfigure>(
+    public static WebApplicationBuilder AddAdvanceMySql<TContext, TEntityConfigure>(
         this WebApplicationBuilder builder,
         string connectionString,
         Action<DbContextOptionsBuilder> action
-    ) where TContext : SqlServerContext where TEntityConfigure : class, IEntityConfigure
+    ) where TContext : MysqlContext where TEntityConfigure : class, IEntityConfigure
     {
         if (builder.HasRegistered(UniqueIdentifier))
             return builder;
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceEntityFrameworkSqlServer)}<{typeof(TContext).Name}>()."
+            $"Execute {nameof(AddAdvanceMySql)}<{typeof(TContext).Name}>()."
         );
 
-        builder.Services.AddAdvanceSqlServer<TContext, TEntityConfigure>(opt =>
+        builder.Services.AddAdvanceMySql<TContext, TEntityConfigure>(opt =>
         {
-            opt.UseSqlServer(connectionString);
+            opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 
             action(opt);
         });

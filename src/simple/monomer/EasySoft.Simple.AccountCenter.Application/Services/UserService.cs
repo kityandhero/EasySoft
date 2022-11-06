@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.Data.Repositories;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Simple.AccountCenter.Application.Contracts.DataTransferObjects.ApiParams;
 using EasySoft.Simple.AccountCenter.Application.Contracts.ExtensionMethods;
 using EasySoft.Simple.AccountCenter.Application.Contracts.Services;
 using EasySoft.Simple.AccountCenter.Domain.Aggregates.AccountAggregate;
@@ -19,23 +20,23 @@ public class UserService : IUserService
         _userRepository = repository;
     }
 
-    public async Task<ExecutiveResult<User>> RegisterAsync(string loginName, string password)
+    public async Task<ExecutiveResult<User>> RegisterAsync(RegisterDto registerDto)
     {
-        if (string.IsNullOrWhiteSpace(loginName))
+        if (string.IsNullOrWhiteSpace(registerDto.LoginName))
             return new ExecutiveResult<User>(ReturnCode.ParamError.ToMessage("登陆名不能为空白"));
 
-        if (string.IsNullOrWhiteSpace(password))
+        if (string.IsNullOrWhiteSpace(registerDto.Password))
             return new ExecutiveResult<User>(ReturnCode.ParamError.ToMessage("密码不能为空白"));
 
-        var result = await _userRepository.ExistAsync(o => o.LoginName == loginName);
+        var result = await _userRepository.ExistAsync(o => o.LoginName == registerDto.LoginName);
 
         if (result.Success)
             return new ExecutiveResult<User>(ReturnCode.NoChange.ToMessage("登录名已存在"));
 
         var user = new User
         {
-            LoginName = loginName,
-            Password = password.ToMd5()
+            LoginName = registerDto.LoginName,
+            Password = registerDto.Password.ToMd5()
         };
 
         return await _userRepository.CreateAsync(user);
@@ -55,22 +56,22 @@ public class UserService : IUserService
         return await _userRepository.CreateRangeAsync(list);
     }
 
-    public async Task<ExecutiveResult<UserDto>> SignInAsync(string loginName, string password)
+    public async Task<ExecutiveResult<UserDto>> SignInAsync(SignInDto signInDto)
     {
-        if (string.IsNullOrWhiteSpace(loginName))
+        if (string.IsNullOrWhiteSpace(signInDto.LoginName))
             return new ExecutiveResult<UserDto>(ReturnCode.ParamError.ToMessage("登录名不能为空白"));
 
-        if (string.IsNullOrWhiteSpace(password))
+        if (string.IsNullOrWhiteSpace(signInDto.Password))
             return new ExecutiveResult<UserDto>(ReturnCode.ParamError.ToMessage("密码不能为空白"));
 
-        var result = await _userRepository.GetAsync(o => o.LoginName == loginName);
+        var result = await _userRepository.GetAsync(o => o.LoginName == signInDto.Password);
 
         if (!result.Success || result.Data == null)
             return new ExecutiveResult<UserDto>(ReturnCode.NoData.ToMessage("用户名不存在"));
 
         var user = result.Data;
 
-        if (password.ToMd5(ApplicationConfigurator.PasswordSalt) != user.Password)
+        if (signInDto.Password.ToMd5(ApplicationConfigurator.PasswordSalt) != user.Password)
             return new ExecutiveResult<UserDto>(ReturnCode.ParamError.ToMessage("用户名或密码错误"));
 
         return new ExecutiveResult<UserDto>(ReturnCode.Ok)

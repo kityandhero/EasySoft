@@ -1,0 +1,4 @@
+{
+  "MainConnection": "server=127.0.0.1;port=3306;database=easy_soft_simple_domain-driven-design;user=root;password=123456;",
+  "MirrorConnection": "server=127.0.0.1;port=3306;database=easy_soft_simple_domain-driven-design;user=root;password=123456;"
+}

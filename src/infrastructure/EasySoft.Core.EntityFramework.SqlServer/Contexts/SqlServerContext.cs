@@ -4,9 +4,9 @@ using EasySoft.Core.Infrastructure.Operations.Interfaces;
 
 namespace EasySoft.Core.EntityFramework.SqlServer.Contexts;
 
-public class BaseContext : BasicContext
+public class SqlServerContext : BasicContext
 {
-    public BaseContext(DbContextOptions options, IEntityConfigure entityConfigure) : base(
+    public SqlServerContext(DbContextOptions options, IEntityConfigure entityConfigure) : base(
         options,
         entityConfigure
     )

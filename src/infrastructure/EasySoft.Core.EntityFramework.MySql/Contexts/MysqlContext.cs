@@ -5,9 +5,9 @@ using EasySoft.Core.Infrastructure.Operations.Interfaces;
 
 namespace EasySoft.Core.EntityFramework.MySql.Contexts;
 
-public class DataContext : BasicContext
+public class MysqlContext : BasicContext
 {
-    public DataContext(DbContextOptions options, IEntityConfigure entityConfigure) : base(
+    public MysqlContext(DbContextOptions options, IEntityConfigure entityConfigure) : base(
         options,
         entityConfigure
     )
@@ -17,7 +17,5 @@ public class DataContext : BasicContext
     protected override void OnAdvanceModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasCharSet("utf8mb4 ");
-
-        OnModelCreating(modelBuilder);
     }
 }

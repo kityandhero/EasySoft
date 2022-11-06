@@ -1,7 +1,7 @@
 ﻿namespace EasySoft.Core.EntityFramework.MySql.Transactions;
 
 public class UnitOfWork<TContext> : BasicUnitOfWork<TContext>
-    where TContext : DataContext
+    where TContext : MysqlContext
 {
     private readonly ICapPublisher? _publisher;
 

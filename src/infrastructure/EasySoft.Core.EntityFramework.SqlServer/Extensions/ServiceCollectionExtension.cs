@@ -15,10 +15,10 @@ public static class ServiceCollectionExtension
 {
     private const string UniqueIdentifier = "e85c3371-e050-4974-b4ec-007325517d32";
 
-    public static IServiceCollection AddAdvanceEntityFrameworkSqlServer<TContext, TEntityConfigure>(
+    public static IServiceCollection AddAdvanceSqlServer<TContext, TEntityConfigure>(
         this IServiceCollection services,
         Action<DbContextOptionsBuilder> optionsBuilder
-    ) where TContext : BaseContext where TEntityConfigure : class, IEntityConfigure
+    ) where TContext : SqlServerContext where TEntityConfigure : class, IEntityConfigure
     {
         if (services.HasRegistered(UniqueIdentifier))
             return services;
