@@ -16,7 +16,7 @@ public static class WebApplicationBuilderExtensions
     /// <param name="connectionString"></param>
     /// <param name="action"></param>
     /// <returns></returns> 
-    public static WebApplicationBuilder AddAdvanceEntityFrameworkSqlServer<TContext, TEntityConfigure>(
+    public static WebApplicationBuilder AddAdvanceSqlServer<TContext, TEntityConfigure>(
         this WebApplicationBuilder builder,
         string connectionString,
         Action<DbContextOptionsBuilder> action
@@ -26,7 +26,7 @@ public static class WebApplicationBuilderExtensions
             return builder;
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceEntityFrameworkSqlServer)}<{typeof(TContext).Name}>()."
+            $"Execute {nameof(AddAdvanceSqlServer)}<{typeof(TContext).Name}>()."
         );
 
         builder.Services.AddAdvanceSqlServer<TContext, TEntityConfigure>(opt =>

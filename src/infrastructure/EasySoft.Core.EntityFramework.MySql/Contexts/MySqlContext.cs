@@ -5,9 +5,9 @@ using EasySoft.Core.Infrastructure.Operations.Interfaces;
 
 namespace EasySoft.Core.EntityFramework.MySql.Contexts;
 
-public class MysqlContext : BasicContext
+public class MySqlContext : BasicContext
 {
-    public MysqlContext(DbContextOptions options, IEntityConfigure entityConfigure) : base(
+    public MySqlContext(DbContextOptions options, IEntityConfigure entityConfigure) : base(
         options,
         entityConfigure
     )

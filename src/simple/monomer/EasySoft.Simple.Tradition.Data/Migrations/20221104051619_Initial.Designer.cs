@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EasySoft.Simple.Tradition.Data.Migrations
 {
-    [DbContext(typeof(DataContext))]
+    [DbContext(typeof(SqlServerDataContext))]
     [Migration("20221104051619_Initial")]
     partial class Initial
     {

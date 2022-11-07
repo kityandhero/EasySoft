@@ -1,13 +1,13 @@
 ﻿using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
-using EasySoft.Core.EntityFramework.SqlServer.Contexts;
+using EasySoft.Core.EntityFramework.MySql.Contexts;
 using EasySoft.Simple.Tradition.Data.ExtensionMethods;
 using Microsoft.EntityFrameworkCore;
 
 namespace EasySoft.Simple.Tradition.Data.Contexts;
 
-public class DataContext : SqlServerContext
+public class MySqlDataContext : MySqlContext
 {
-    public DataContext(
+    public MySqlDataContext(
         DbContextOptions options,
         IEntityConfigure entityConfigure
     ) : base(options, entityConfigure)

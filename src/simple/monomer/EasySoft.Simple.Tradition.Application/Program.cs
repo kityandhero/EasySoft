@@ -7,6 +7,7 @@ using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Data.ExtensionMethods;
+using EasySoft.Core.EntityFramework.MySql.Extensions;
 using EasySoft.Core.EntityFramework.SqlServer.Extensions;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
@@ -49,7 +50,18 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
         .SetName("AddAdvanceDbContext<DataContext>")
         .SetAction(applicationBuilder =>
         {
-            applicationBuilder.AddAdvanceEntityFrameworkSqlServer<DataContext, IntegrationEntityConfigure>(
+            //使用 Sql Server
+            // applicationBuilder.AddAdvanceSqlServer<SqlServerDataContext, IntegrationEntityConfigure>(
+            //     DatabaseConfigAssist.GetMainConnection(),
+            //     opt =>
+            //     {
+            //         //自动转换命名格式
+            //         opt.UseSnakeCaseNamingConvention();
+            //     }
+            // );
+
+            // 使用 MySql
+            applicationBuilder.AddAdvanceMySql<MySqlDataContext, IntegrationEntityConfigure>(
                 DatabaseConfigAssist.GetMainConnection(),
                 opt =>
                 {

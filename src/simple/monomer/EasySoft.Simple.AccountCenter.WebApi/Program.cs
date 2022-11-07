@@ -3,7 +3,7 @@ using Asp.Versioning;
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Data.ExtensionMethods;
-using EasySoft.Core.EntityFramework.SqlServer.Extensions;
+using EasySoft.Core.EntityFramework.MySql.Extensions;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
@@ -13,7 +13,7 @@ using EasySoft.Core.PermissionVerification.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.BuilderAssists;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
-using EasySoft.Simple.AccountCenter.Application.Contracts.Services;
+using EasySoft.Simple.AccountCenter.Application.Services;
 using EasySoft.Simple.AccountCenter.Domain.EntityConfigures;
 using EasySoft.Simple.DomainDrivenDesign.Infrastructure.Contexts;
 using EasySoft.Simple.Single.Application.EasyTokens;
@@ -44,7 +44,7 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
         .SetName("AddAdvanceDbContext<DataContext>")
         .SetAction(applicationBuilder =>
         {
-            applicationBuilder.AddAdvanceEntityFrameworkSqlServer<DataContext, IntegrationEntityConfigure>(
+            applicationBuilder.AddAdvanceMySql<DataContext, IntegrationEntityConfigure>(
                 DatabaseConfigAssist.GetMainConnection(),
                 opt =>
                 {
@@ -53,7 +53,7 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
                 }
             );
 
-            applicationBuilder.AddAssemblyBusinessServiceInterceptors(typeof(IUserService).Assembly);
+            applicationBuilder.AddAssemblyBusinessServiceInterceptors(typeof(UserService).Assembly);
         }),
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddPrepareStartWorkInjection")

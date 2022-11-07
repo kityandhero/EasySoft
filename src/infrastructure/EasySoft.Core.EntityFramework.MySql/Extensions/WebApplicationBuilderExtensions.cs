@@ -19,7 +19,7 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder,
         string connectionString,
         Action<DbContextOptionsBuilder> action
-    ) where TContext : MysqlContext where TEntityConfigure : class, IEntityConfigure
+    ) where TContext : MySqlContext where TEntityConfigure : class, IEntityConfigure
     {
         if (builder.HasRegistered(UniqueIdentifier))
             return builder;

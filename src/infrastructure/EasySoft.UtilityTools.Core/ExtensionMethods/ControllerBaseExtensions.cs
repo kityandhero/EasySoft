@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Threading.Tasks;
 using EasySoft.UtilityTools.Standard.Entity;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Http;
@@ -14,11 +15,11 @@ public static class ControllerBaseExtensions
     /// </summary>
     /// <param name="controller"></param>
     /// <returns></returns>
-    public static NameValueCollection GetIntegratedParams(this ControllerBase controller)
+    public static async Task<NameValueCollection> GetIntegratedParamsAsync(this ControllerBase controller)
     {
         var request = controller.Request;
 
-        return request.GetIntegratedParams();
+        return await request.GetIntegratedParamsAsync();
     }
 
     /// <summary>
@@ -26,9 +27,9 @@ public static class ControllerBaseExtensions
     /// </summary>
     /// <param name="controller"></param>
     /// <returns></returns>
-    public static List<string> GetAllParamNames(this ControllerBase controller)
+    public static async Task<List<string>> GetAllParamNamesAsync(this ControllerBase controller)
     {
-        var nv = GetIntegratedParams(controller);
+        var nv = await GetIntegratedParamsAsync(controller);
 
         return nv.AllKeys.ToListFilterNullable();
     }
@@ -39,18 +40,18 @@ public static class ControllerBaseExtensions
     /// <param name="controller"></param>
     /// <param name="name"></param>
     /// <returns></returns>
-    public static bool ExistParamName(this ControllerBase controller, string name)
+    public static async Task<bool> ExistParamNameAsync(this ControllerBase controller, string name)
     {
-        var names = GetAllParamNames(controller);
+        var names = await GetAllParamNamesAsync(controller);
 
         return names.Contains(name);
     }
 
-    public static string GetParamValue(this ControllerBase controller, string param)
+    public static async Task<string> GetParamValueAsync(this ControllerBase controller, string param)
     {
         var request = controller.Request;
 
-        var nv = request.GetIntegratedParams();
+        var nv = await request.GetIntegratedParamsAsync();
 
         var result = "";
 

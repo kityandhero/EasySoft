@@ -17,7 +17,7 @@ public class AreaTestController : AreaControllerCore
     /// <returns></returns>
     public ActionResult DoTest()
     {
-        var a = this.Param("a", 0);
+        var a = this.ParamAsync("a", 0);
 
         return this.Success(new
         {

@@ -1,7 +1,6 @@
-﻿using EasySoft.Core.Data.Transactions;
-using EasySoft.Core.EntityFramework.EntityTypeConfigures;
+﻿using EasySoft.Core.Data.Contexts.Interfaces;
+using EasySoft.Core.Data.Transactions;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
-using EasySoft.Simple.Tradition.Data.Contexts;
 using EasySoft.Simple.Tradition.Data.ExtensionMethods;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 using EasySoft.UtilityTools.Standard.Enums;
@@ -22,7 +21,7 @@ public class DataController : AreaControllerCore
 
     private readonly IBlogService _blogService;
 
-    private readonly DataContext _dataContext;
+    private readonly DbContext _dataContext;
 
     /// <summary>
     ///     DataController
@@ -35,7 +34,7 @@ public class DataController : AreaControllerCore
         IUnitOfWork unitOfWork,
         IUserService userService,
         IBlogService blogService,
-        DataContext dataContext
+        DbContext dataContext
     )
     {
         _unitOfWork = unitOfWork;

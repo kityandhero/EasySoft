@@ -14,7 +14,7 @@ public static class ServiceCollectionExtension
     public static IServiceCollection AddAdvanceMySql<TContext, TEntityConfigure>(
         this IServiceCollection services,
         Action<DbContextOptionsBuilder> optionsBuilder
-    ) where TContext : MysqlContext where TEntityConfigure : class, IEntityConfigure
+    ) where TContext : MySqlContext where TEntityConfigure : class, IEntityConfigure
     {
         if (services.HasRegistered(UniqueServiceIdentifier))
             return services;
