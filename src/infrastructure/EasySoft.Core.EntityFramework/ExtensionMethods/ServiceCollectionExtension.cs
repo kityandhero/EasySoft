@@ -6,8 +6,6 @@ public static class ServiceCollectionExtension
 
     private const string UniqueIdentifierAddAdvanceContextPool = "3c843d66-f55c-42c8-b2b0-c7f7fe0d2dae";
 
-    private const string UniqueIdentifierRepository = "b2df7d25-94e7-457c-867f-0e568ea817ce";
-
     public static IServiceCollection AddAdvanceContext<T>(
         this IServiceCollection services,
         Action<DbContextOptionsBuilder> action

@@ -23,6 +23,7 @@
         <ProjectReference Include="..\EasySoft.Core.DevelopAuxiliary\EasySoft.Core.DevelopAuxiliary.csproj" />
         <ProjectReference Include="..\EasySoft.Core.EasyCaching\EasySoft.Core.EasyCaching.csproj" />
         <ProjectReference Include="..\EasySoft.Core.EasyToken\EasySoft.Core.EasyToken.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj" />
         <ProjectReference Include="..\EasySoft.Core.ErrorLogTransmitter\EasySoft.Core.ErrorLogTransmitter.csproj" />
         <ProjectReference Include="..\EasySoft.Core.Exceptionless\EasySoft.Core.Exceptionless.csproj" />
         <ProjectReference Include="..\EasySoft.Core.GeneralLogTransmitter\EasySoft.Core.GeneralLogTransmitter.csproj" />

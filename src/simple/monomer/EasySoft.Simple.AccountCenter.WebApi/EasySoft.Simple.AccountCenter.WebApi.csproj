@@ -43,8 +43,8 @@
       <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Application.Contracts\EasySoft.Simple.AccountCenter.Application.Contracts.csproj" />
       <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Application\EasySoft.Simple.AccountCenter.Application.csproj" />
       <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Domain\EasySoft.Simple.AccountCenter.Domain.csproj" />
+      <ProjectReference Include="..\EasySoft.Simple.DomainDrivenDesign.Domain.Shared\EasySoft.Simple.DomainDrivenDesign.Domain.Shared.csproj" />
       <ProjectReference Include="..\EasySoft.Simple.DomainDrivenDesign.Infrastructure\EasySoft.Simple.DomainDrivenDesign.Infrastructure.csproj" />
-      <ProjectReference Include="..\EasySoft.Simple.Single.Application\EasySoft.Simple.Single.Application.csproj" />
     </ItemGroup>
 
 </Project>

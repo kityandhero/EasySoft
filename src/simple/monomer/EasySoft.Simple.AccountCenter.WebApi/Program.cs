@@ -10,19 +10,20 @@ using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.LogDashboard.ExtensionMethods;
 using EasySoft.Core.MediatR.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.ExtensionMethods;
-using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.BuilderAssists;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
+using EasySoft.Simple.AccountCenter.Application.Contracts.Services;
 using EasySoft.Simple.AccountCenter.Application.Services;
 using EasySoft.Simple.AccountCenter.Domain.EntityConfigures;
+using EasySoft.Simple.DomainDrivenDesign.Domain.Shared.Enums;
+using EasySoft.Simple.DomainDrivenDesign.Infrastructure.Authentication;
 using EasySoft.Simple.DomainDrivenDesign.Infrastructure.Contexts;
-using EasySoft.Simple.Single.Application.EasyTokens;
-using EasySoft.Simple.Single.Application.Enums;
-using EasySoft.Simple.Single.Application.PrepareStartWorks;
+using EasySoft.Simple.DomainDrivenDesign.Infrastructure.Permissions;
 using Microsoft.EntityFrameworkCore;
 
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableDetailedErrors = true;
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableSensitiveDataLogging = true;
+EasySoft.Core.EntityFramework.Configures.ContextConfigure.AutoEnsureCreated = true;
 
 // 配置额外的构建项目
 ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
@@ -53,22 +54,14 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
                 }
             );
 
-            applicationBuilder.AddAssemblyBusinessServiceInterceptors(typeof(UserService).Assembly);
+            applicationBuilder.AddAssemblyBusinessServices(
+                typeof(IUserService).Assembly,
+                typeof(UserService).Assembly
+            );
         }),
-    new ExtraAction<WebApplicationBuilder>()
-        .SetName("AddPrepareStartWorkInjection")
-        .SetAction(applicationBuilder =>
-        {
-            applicationBuilder.AddPrepareStartWorkInjection<SimplePrepareStartWork>();
-        }),
-    // 自定义静态文件配置 如有特殊需求，可以进行配置，不配置将采用内置选项，此处仅作为有需要时的样例
-    // applicationBuilder => { applicationBuilder.AddStaticFileOptionsInjection<CustomStaticFileOptions>(); },
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddAdvanceJsonWebToken")
         .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceJsonWebToken<ApplicationOperator>(); }),
-    // applicationBuilder => { applicationBuilder.UseEasyToken<CustomTokenSecretOptions, ApplicationOperator>(); },
-    // 自定义token密钥解析类
-    // applicationBuilder => { applicationBuilder.UseEasyToken<CustomTokenSecretOptions, CustomTokenSecret, ApplicationOperator>(); },
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddPermissionVerification")
         .SetAction(applicationBuilder =>
@@ -92,8 +85,6 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
     // },
 );
 
-ApplicationConfigurator.AddAreas("AuthTest", "DataTest");
-
 AgileConfigClientActionAssist.ActionAgileConfigChanged = _ =>
 {
     // LogAssist.Info("config changed");
@@ -101,7 +92,7 @@ AgileConfigClientActionAssist.ActionAgileConfigChanged = _ =>
 
 var app = WebApplicationBuilderAssist
     .CreateBuilder(
-        ApplicationChannelCollection.TestApplication.ToApplicationChannel(),
+        ApplicationChannelCollection.AccountCenter.ToApplicationChannel(),
         args.ToArray()
     )
     .EasyBuild();

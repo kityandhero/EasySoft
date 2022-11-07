@@ -1,4 +1,4 @@
 {
-  "MainConnection": "server=127.0.0.1;port=3306;database=easy_soft_simple_domain-driven-design;user=root;password=123456;",
-  "MirrorConnection": "server=127.0.0.1;port=3306;database=easy_soft_simple_domain-driven-design;user=root;password=123456;"
+  "MainConnection": "Server=database.b.com;Database=easy_soft_simple_ddd;Uid=root;Pwd=123456;Port=3306;",
+  "MirrorConnection": "Server=database.b.com;Database=easy_soft_simple_ddd;Uid=root;Pwd=123456;Port=3306;"
 }

@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using EasySoft.Core.Data.Interceptors;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Services;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -27,7 +28,7 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddAssemblyBusinessServiceInterceptors(
+    public static IServiceCollection AddAssemblyBusinessServiceInterfaces(
         this IServiceCollection services,
         params Assembly[] assemblies
     )
@@ -35,13 +36,13 @@ public static class ServiceCollectionExtensions
         if (assemblies.Length <= 0) return services;
 
         assemblies.ForEach(assembly =>
-            AddAssemblyBusinessServiceInterceptors(services, assembly)
+            AddAssemblyBusinessServiceInterfaces(services, assembly)
         );
 
         return services;
     }
 
-    public static IServiceCollection AddAssemblyBusinessServiceInterceptors(
+    public static IServiceCollection AddAssemblyBusinessServiceInterfaces(
         this IServiceCollection services,
         Assembly assembly
     )
@@ -52,7 +53,31 @@ public static class ServiceCollectionExtensions
             .Where(type => type.IsInterface && type.IsAssignableTo(targetType))
             .ToList();
 
-        serviceTypes.ForEach(serviceType =>
+        BusinessServiceAssist.AddRange(serviceTypes);
+
+        return services;
+    }
+
+    public static IServiceCollection AddAssemblyBusinessServiceImplementations(
+        this IServiceCollection services,
+        params Assembly[] assemblies
+    )
+    {
+        if (assemblies.Length <= 0) return services;
+
+        assemblies.ForEach(assembly =>
+            AddAssemblyBusinessServiceImplementations(services, assembly)
+        );
+
+        return services;
+    }
+
+    public static IServiceCollection AddAssemblyBusinessServiceImplementations(
+        this IServiceCollection services,
+        Assembly assembly
+    )
+    {
+        BusinessServiceAssist.GetBusinessServiceInterfaceCollection().ForEach(serviceType =>
         {
             var implType = assembly.ExportedTypes.FirstOrDefault(type =>
                 type.IsAssignableTo(serviceType) && type.IsNotAbstractClass(true)

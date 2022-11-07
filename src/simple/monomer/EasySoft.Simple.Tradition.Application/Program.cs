@@ -7,7 +7,6 @@ using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.ExtensionMethods;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Data.ExtensionMethods;
-using EasySoft.Core.EntityFramework.MySql.Extensions;
 using EasySoft.Core.EntityFramework.SqlServer.Extensions;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
@@ -20,15 +19,16 @@ using EasySoft.Core.Web.Framework.BuilderAssists;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.Simple.Single.Application.EasyTokens;
 using EasySoft.Simple.Single.Application.Enums;
-using EasySoft.Simple.Single.Application.Hubs;
 using EasySoft.Simple.Single.Application.PrepareStartWorks;
 using EasySoft.Simple.Tradition.Data.Contexts;
 using EasySoft.Simple.Tradition.Data.EntityConfigures;
 using EasySoft.Simple.Tradition.Service.Services.Implementations;
+using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableDetailedErrors = true;
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableSensitiveDataLogging = true;
+EasySoft.Core.EntityFramework.Configures.ContextConfigure.AutoEnsureCreated = true;
 
 // 配置额外的构建项目
 ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
@@ -51,17 +51,7 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
         .SetAction(applicationBuilder =>
         {
             //使用 Sql Server
-            // applicationBuilder.AddAdvanceSqlServer<SqlServerDataContext, IntegrationEntityConfigure>(
-            //     DatabaseConfigAssist.GetMainConnection(),
-            //     opt =>
-            //     {
-            //         //自动转换命名格式
-            //         opt.UseSnakeCaseNamingConvention();
-            //     }
-            // );
-
-            // 使用 MySql
-            applicationBuilder.AddAdvanceMySql<MySqlDataContext, IntegrationEntityConfigure>(
+            applicationBuilder.AddAdvanceSqlServer<SqlServerDataContext, IntegrationEntityConfigure>(
                 DatabaseConfigAssist.GetMainConnection(),
                 opt =>
                 {
@@ -70,7 +60,20 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
                 }
             );
 
-            applicationBuilder.AddAssemblyBusinessServiceInterceptors(typeof(BlogService).Assembly);
+            // 使用 MySql
+            // applicationBuilder.AddAdvanceMySql<MySqlDataContext, IntegrationEntityConfigure>(
+            //     DatabaseConfigAssist.GetMainConnection(),
+            //     opt =>
+            //     {
+            //         //自动转换命名格式
+            //         opt.UseSnakeCaseNamingConvention();
+            //     }
+            // );
+
+            applicationBuilder.AddAssemblyBusinessServices(
+                typeof(IBlogService).Assembly,
+                typeof(BlogService).Assembly
+            );
         }),
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddPrepareStartWorkInjection")
@@ -107,7 +110,7 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
         .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceLogDashboard(); }),
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddPermissionVerification")
-        .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceMediatR(Assembly.GetExecutingAssembly()); }),
+        .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceMediatR(Assembly.GetExecutingAssembly()); })
     // 配置健康检测
     // applicationBuilder =>
     // {
@@ -117,10 +120,6 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
     //     });
     // },
     // SignalR
-    new ExtraAction<WebApplicationBuilder>().SetName("AddSignalR").SetAction(applicationBuilder =>
-    {
-        applicationBuilder.Services.AddSignalR();
-    })
 );
 
 ApplicationConfigurator.AddAreas("AuthTest", "DataTest");
@@ -148,8 +147,5 @@ var app = WebApplicationBuilderAssist
 // }
 
 app.MapGet("/", () => "Hello World!");
-
-// SignalR
-app.MapHub<ChatHub>("/chatHub");
 
 app.Run();
