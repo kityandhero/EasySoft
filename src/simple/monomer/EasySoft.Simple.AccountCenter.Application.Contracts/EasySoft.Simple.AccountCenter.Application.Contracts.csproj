@@ -13,17 +13,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\entrance.proto">
-            <!--            <GrpcServices>Both</GrpcServices>-->
-            <Access>Public</Access>
-            <ProtoCompile>True</ProtoCompile>
-            <CompileOutputs>True</CompileOutputs>
-            <OutputDir>obj\Debug\net6.0\</OutputDir>
-            <Generator>MSBuild:Compile</Generator>
-        </Protobuf>
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Grpc.AspNetCore" Version="2.49.0" />
     </ItemGroup>
 

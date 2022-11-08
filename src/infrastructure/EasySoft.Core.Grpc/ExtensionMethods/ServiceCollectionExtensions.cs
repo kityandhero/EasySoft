@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Grpc.Net.ClientFactory;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EasySoft.Core.Grpc.ExtensionMethods;
 
@@ -8,9 +9,26 @@ public static class ServiceCollectionExtensions
         this IServiceCollection serviceCollection
     )
     {
-        var builder = serviceCollection.AddGrpc();
+        serviceCollection.AddGrpc();
 
-        builder.Services.AddGrpc();
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddAdvanceGrpcClient<TGrpcClient>(
+        this IServiceCollection serviceCollection
+    ) where TGrpcClient : class
+    {
+        serviceCollection.AddGrpcClient<TGrpcClient>();
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddAdvanceGrpcClient<TGrpcClient>(
+        this IServiceCollection serviceCollection,
+        Action<GrpcClientFactoryOptions> action
+    ) where TGrpcClient : class
+    {
+        serviceCollection.AddGrpcClient<TGrpcClient>(action);
 
         return serviceCollection;
     }
