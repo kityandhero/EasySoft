@@ -5,7 +5,9 @@ using Grpc.Net.Client;
 
 Console.WriteLine("Hello, World!");
 
-using var channel = GrpcChannel.ForAddress("https://localhost:8865");
+using var channel = GrpcChannel.ForAddress(
+    "https://localhost:8866"
+);
 
 var client = new Entrance.EntranceClient(channel);
 var reply = await client.RegisterAsync(
@@ -13,6 +15,6 @@ var reply = await client.RegisterAsync(
     {
         LoginName = "GreeterClient"
     });
-Console.WriteLine("Greeting: " + reply.Message);
+Console.WriteLine("Message: " + reply.Message);
 Console.WriteLine("Press any key to exit...");
 Console.ReadKey();

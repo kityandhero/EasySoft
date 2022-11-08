@@ -27,6 +27,10 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
+        StartupDescriptionMessageAssist.AddExecute(
+            $"{nameof(AddAdvanceUrls)}()"
+        );
+
         var urls = GeneralConfigAssist.GetUrls();
 
         if (string.IsNullOrWhiteSpace(urls))

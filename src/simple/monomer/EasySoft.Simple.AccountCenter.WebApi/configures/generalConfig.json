@@ -1,5 +1,5 @@
 {
-  "Urls": "8865",
+  "Urls": "http://localhost:8865,https://localhost:8866",
   "HttpRedirectionHttpsSwitch": "0",
   "CorsEnable": "1",
   "CorsPolicies": "*",
