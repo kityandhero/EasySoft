@@ -20,7 +20,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAssemblyBusinessServices)}()."
+            $"{nameof(AddAssemblyBusinessServices)}()."
         );
 
         builder.Services.AddAssemblyBusinessServiceInterfaces(serviceInterfaceAssemblies.ToArray());
@@ -43,7 +43,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAssemblyBusinessServices)}()."
+            $"{nameof(AddAssemblyBusinessServices)}()."
         );
 
         builder.Services.AddAssemblyBusinessServiceInterfaces(serviceInterfaceAssembly);
@@ -64,7 +64,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAssemblyBusinessServiceInterfaces)}()."
+            $"{nameof(AddAssemblyBusinessServiceInterfaces)}()."
         );
 
         builder.Services.AddAssemblyBusinessServiceInterfaces(assemblies);
@@ -84,7 +84,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAssemblyBusinessServiceInterfaces)}()."
+            $"{nameof(AddAssemblyBusinessServiceInterfaces)}()."
         );
 
         builder.Services.AddAssemblyBusinessServiceInterfaces(assembly);
@@ -104,7 +104,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAssemblyBusinessServiceImplementations)}()."
+            $"{nameof(AddAssemblyBusinessServiceImplementations)}()."
         );
 
         builder.Services.AddAssemblyBusinessServiceImplementations(assemblies);
@@ -124,7 +124,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAssemblyBusinessServiceImplementations)}()."
+            $"{nameof(AddAssemblyBusinessServiceImplementations)}()."
         );
 
         builder.Services.AddAssemblyBusinessServiceImplementations(assembly);

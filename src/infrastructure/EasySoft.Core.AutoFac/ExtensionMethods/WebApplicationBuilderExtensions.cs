@@ -17,7 +17,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceAutoFac)}()."
+            $"{nameof(AddAdvanceAutoFac)}()."
         );
 
         builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -39,7 +39,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddExtraNormalInjection)}()."
+            $"{nameof(AddExtraNormalInjection)}()."
         );
 
         if (action == null) throw new ArgumentNullException(nameof(action));
@@ -55,7 +55,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddControllerPropertiesAutowired)}()."
+            $"{nameof(AddControllerPropertiesAutowired)}()."
         );
 
         if (assembly == null) throw new ArgumentNullException(nameof(assembly));

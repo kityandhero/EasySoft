@@ -28,5 +28,7 @@ public class Blog : BaseAggregateOperatorRoot
         Name = string.Empty;
         Pseudonym = string.Empty;
         Motto = string.Empty;
+
+        Posts = new List<Post>();
     }
 }

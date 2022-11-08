@@ -12,7 +12,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceMediatR)}()."
+            $"{nameof(AddAdvanceMediatR)}()."
         );
 
         builder.Host.AddAdvanceMediatR(assembly);
@@ -26,7 +26,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceMediatR)}()."
+            $"{nameof(AddAdvanceMediatR)}()."
         );
 
         builder.Host.AddAdvanceMediatR(assemblies);

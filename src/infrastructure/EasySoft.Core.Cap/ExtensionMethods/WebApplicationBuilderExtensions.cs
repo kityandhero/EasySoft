@@ -28,7 +28,7 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddAdvanceCap(this WebApplicationBuilder builder)
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceCap)}()."
+            $"{nameof(AddAdvanceCap)}()."
         );
 
         var capSwitch = GeneralConfigAssist.GetCapSwitch();

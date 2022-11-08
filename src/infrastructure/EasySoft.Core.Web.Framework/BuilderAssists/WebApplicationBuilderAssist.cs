@@ -40,7 +40,7 @@ public static class WebApplicationBuilderAssist
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(CreateBuilder)}()."
+            $"{nameof(CreateBuilder)}()."
         );
 
         var builder = WebApplication.CreateBuilder(new WebApplicationOptions
@@ -70,11 +70,7 @@ public static class WebApplicationBuilderAssist
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(CreateCore)}()."
-        );
-
-        StartupConfigMessageAssist.AddConfig(
-            $"EnvironmentAlias: {EnvironmentAssist.GetEnvironmentAliasName()}."
+            $"{nameof(CreateCore)}()."
         );
 
         if (!string.IsNullOrWhiteSpace(EnvironmentAssist.GetEnvironmentAliasName()))
@@ -101,7 +97,7 @@ public static class WebApplicationBuilderAssist
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddRegistrationCenter)}()."
+            $"{nameof(AddRegistrationCenter)}()."
         );
 
         if (!GeneralConfigAssist.GetRegistrationCenterSwitch())
@@ -135,7 +131,7 @@ public static class WebApplicationBuilderAssist
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddConfigCenter)}()."
+            $"{nameof(AddConfigCenter)}()."
         );
 
         if (GeneralConfigAssist.GetConfigCenterSwitch())
@@ -200,7 +196,7 @@ public static class WebApplicationBuilderAssist
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddGateway)}()."
+            $"{nameof(AddGateway)}()."
         );
 
         if (!GeneralConfigAssist.GetGatewaySwitch())

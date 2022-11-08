@@ -25,7 +25,7 @@ public static class WebApplicationBuilderExtensions
             return builder;
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceMySql)}<{typeof(TContext).Name}>()."
+            $"{nameof(AddAdvanceMySql)}<{typeof(TContext).Name}>()."
         );
 
         builder.Services.AddAdvanceMySql<TContext, TEntityConfigure>(opt =>

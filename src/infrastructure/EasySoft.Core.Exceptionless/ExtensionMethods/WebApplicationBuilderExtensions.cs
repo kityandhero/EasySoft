@@ -22,7 +22,7 @@ public static class WebApplicationBuilderExtensions
         }
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceExceptionless)}()."
+            $"{nameof(AddAdvanceExceptionless)}()."
         );
 
         StartupConfigMessageAssist.AddConfig(

@@ -14,7 +14,7 @@ public static class WebApplicationExtensions
     ) where TService : class
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(MapAdvanceGrpcService)}<{typeof(TService).Name}>()."
+            $"{nameof(MapAdvanceGrpcService)}<{typeof(TService).Name}>()."
         );
 
         application.MapGrpcService<TService>();

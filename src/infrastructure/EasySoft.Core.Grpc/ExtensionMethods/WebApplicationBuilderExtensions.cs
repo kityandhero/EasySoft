@@ -15,7 +15,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceGrpc)}()."
+            $"{nameof(AddAdvanceGrpc)}()."
         );
 
         builder.Services.AddAdvanceGrpc();

@@ -19,7 +19,7 @@ public static class WebApplicationExtensions
         }
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(UseAdvanceSwagger)}()."
+            $"{nameof(UseAdvanceSwagger)}()."
         );
 
         application.UseSwagger();

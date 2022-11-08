@@ -32,7 +32,7 @@ public static class WebApplicationBuilderExtensions
             throw new Exception("UseEasyToken<TTokenSecretOptions, TOperator> disallow inject more than once");
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(UseEasyToken)}<{typeof(TTokenSecretOptions).Name},{typeof(TOperator).Name}>()."
+            $"{nameof(UseEasyToken)}<{typeof(TTokenSecretOptions).Name},{typeof(TOperator).Name}>()."
         );
 
         builder.UseTokenSecretOptionsInjection<TTokenSecretOptions>()
@@ -75,7 +75,7 @@ public static class WebApplicationBuilderExtensions
             throw new Exception("UseEasyToken<TTokenSecretOptions, TOperator> disallow inject more than once");
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(UseEasyToken)}<{typeof(TTokenSecretOptions).Name},{typeof(TTokenSecret).Name},{typeof(TOperator).Name}>()."
+            $"{nameof(UseEasyToken)}<{typeof(TTokenSecretOptions).Name},{typeof(TTokenSecret).Name},{typeof(TOperator).Name}>()."
         );
 
         builder.UseTokenSecretOptionsInjection<TTokenSecretOptions>()
@@ -108,7 +108,7 @@ public static class WebApplicationBuilderExtensions
             throw new Exception("UseTokenSecretOptionsInjection<T> disallow inject more than once");
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(UseTokenSecretOptionsInjection)}<{typeof(T).Name}>()."
+            $"{nameof(UseTokenSecretOptionsInjection)}<{typeof(T).Name}>()."
         );
 
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
@@ -135,7 +135,7 @@ public static class WebApplicationBuilderExtensions
             throw new Exception("UseTokenSecretInjection<T> disallow inject more than once");
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(UseTokenSecretInjection)}<{typeof(T).Name}>()."
+            $"{nameof(UseTokenSecretInjection)}<{typeof(T).Name}>()."
         );
 
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>

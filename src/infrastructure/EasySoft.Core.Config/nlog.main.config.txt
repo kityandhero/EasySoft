@@ -111,6 +111,10 @@
               "foregroundColor": "DarkGreen"
             },
             {
+               "regex": "Execute (.*)",
+               "foregroundColor": "DarkYellow"
+            }, 
+            {
                "regex": "\\[[0-9a-zA-Z_]+\\.json\\]\\(\\.\\/configures\\/[0-9a-zA-Z_]+\\.json\\)",
                "foregroundColor": "DarkGray"
             },           

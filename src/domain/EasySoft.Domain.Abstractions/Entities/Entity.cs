@@ -35,9 +35,15 @@ public abstract class Entity : IEntity
     #endregion
 }
 
-public abstract class Entity<TKey> : Entity, IEntity<TKey>
+public abstract class Entity<TKey> : Entity, IEntity<TKey> where TKey : struct
 {
-    int? _requestedHashCode;
+    private int? _requestedHashCode;
+
+    protected Entity()
+    {
+        Id = new TKey();
+    }
+
     public virtual TKey Id { get; protected set; }
 
     public override object GetKey()
@@ -50,18 +56,18 @@ public abstract class Entity<TKey> : Entity, IEntity<TKey>
         if (obj == null || !(obj is Entity<TKey>))
             return false;
 
-        if (Object.ReferenceEquals(this, obj))
+        if (ReferenceEquals(this, obj))
             return true;
 
-        if (this.GetType() != obj.GetType())
+        if (GetType() != obj.GetType())
             return false;
 
-        Entity<TKey> item = (Entity<TKey>)obj;
+        var item = (Entity<TKey>)obj;
 
-        if (item.IsTransient() || this.IsTransient())
+        if (item.IsTransient() || IsTransient())
             return false;
         else
-            return item.Id.Equals(this.Id);
+            return item.Id.Equals(Id);
     }
 
     public override int GetHashCode()
@@ -69,12 +75,14 @@ public abstract class Entity<TKey> : Entity, IEntity<TKey>
         if (!IsTransient())
         {
             if (!_requestedHashCode.HasValue)
-                _requestedHashCode = this.Id.GetHashCode() ^ 31;
+                _requestedHashCode = Id.GetHashCode() ^ 31;
 
             return _requestedHashCode.Value;
         }
         else
+        {
             return base.GetHashCode();
+        }
     }
 
     //表示对象是否为全新创建的，未持久化的

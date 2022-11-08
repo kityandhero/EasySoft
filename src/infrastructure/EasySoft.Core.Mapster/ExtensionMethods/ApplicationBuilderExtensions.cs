@@ -22,7 +22,7 @@ public static class ApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceMapster)}()."
+            $"{nameof(AddAdvanceMapster)}()."
         );
 
         ConfigActionAssist.GetConfigAction().ForEach(action => { action(TypeAdapterConfig.GlobalSettings); });

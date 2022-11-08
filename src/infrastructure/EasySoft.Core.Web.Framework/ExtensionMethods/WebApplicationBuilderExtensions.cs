@@ -63,7 +63,7 @@ public static class WebApplicationBuilderExtensions
             throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceApplicationChannel)}()."
+            $"{nameof(AddAdvanceApplicationChannel)}()."
         );
 
         builder.Host.AddAdvanceApplicationChannel(channel, name);
@@ -83,7 +83,7 @@ public static class WebApplicationBuilderExtensions
             throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceApplicationChannel)}<{typeof(T).Name}>()."
+            $"{nameof(AddAdvanceApplicationChannel)}<{typeof(T).Name}>()."
         );
 
         builder.Host.AddAdvanceApplicationChannel(applicationChannel.GetChannel(), applicationChannel.GetName());
@@ -102,7 +102,7 @@ public static class WebApplicationBuilderExtensions
             throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceDefaultApplicationChannel)}()."
+            $"{nameof(AddAdvanceDefaultApplicationChannel)}()."
         );
 
         builder.Host.AddAdvanceDefaultApplicationChannel();
@@ -486,6 +486,10 @@ public static class WebApplicationBuilderExtensions
 
         StartupConfigMessageAssist.AddConfig(
             $"Environment: {EnvironmentAssist.GetEnvironment().EnvironmentName}."
+        );
+
+        StartupConfigMessageAssist.AddConfig(
+            $"EnvironmentAlias: {EnvironmentAssist.GetEnvironmentAliasName()}."
         );
 
         StartupConfigMessageAssist.AddConfig(

@@ -62,7 +62,7 @@ public static class StartupDescriptionMessageAssist
 
     public static void AddExecute(string message, string extra = "")
     {
-        AddDebug(message, extra);
+        AddDebug($"Execute {message}", extra);
     }
 
     public static void Print()

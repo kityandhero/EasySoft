@@ -26,7 +26,7 @@ public static class WebApplicationBuilderExtensions
         if (FlagAssist.GetMiniProfileSwitch()) return builder;
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceMiniProfile)}()."
+            $"{nameof(AddAdvanceMiniProfile)}()."
         );
 
         StartupConfigMessageAssist.AddConfig(

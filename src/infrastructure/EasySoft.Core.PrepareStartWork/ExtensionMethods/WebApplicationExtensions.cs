@@ -14,12 +14,8 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        StartupDescriptionMessageAssist.Add(
-            new StartupMessage()
-                .SetLevel(LogLevel.Debug)
-                .SetMessage(
-                    $"Execute {nameof(UsePrepareStartWork)}()."
-                )
+        StartupDescriptionMessageAssist.AddExecute(
+            $"{nameof(UsePrepareStartWork)}()."
         );
 
         var prepareCovertStartWork = application.UseHostFiltering().ApplicationServices.GetAutofacRoot()

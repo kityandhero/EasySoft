@@ -39,7 +39,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddEasyCachingInterceptor)}()."
+            $"{nameof(AddEasyCachingInterceptor)}()."
         );
 
         builder.Host.AddEasyCachingInterceptor(action);
@@ -52,7 +52,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceEasyCachingInMemory)}()."
+            $"{nameof(AddAdvanceEasyCachingInMemory)}()."
         );
 
         builder.AddEasyCachingInMemoryCaching()
@@ -74,7 +74,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddEasyCachingInMemoryCaching)}()."
+            $"{nameof(AddEasyCachingInMemoryCaching)}()."
         );
 
         //Important step for In-Memory Caching
@@ -93,7 +93,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddMemoryCacheOperatorInjection)}()."
+            $"{nameof(AddMemoryCacheOperatorInjection)}()."
         );
 
         builder.Host.AddMemoryCacheOperatorInjection();
@@ -106,7 +106,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceEasyCachingCsRedis)}()."
+            $"{nameof(AddAdvanceEasyCachingCsRedis)}()."
         );
 
         //Important step for Redis Caching
@@ -129,7 +129,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddEasyCachingRedisCaching)}()."
+            $"{nameof(AddEasyCachingRedisCaching)}()."
         );
 
         //Important step for In-Memory Caching
@@ -148,7 +148,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddRedisCacheOperatorInjection)}()."
+            $"{nameof(AddRedisCacheOperatorInjection)}()."
         );
 
         builder.Host.AddRedisCacheOperatorInjection();

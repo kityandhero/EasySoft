@@ -18,7 +18,7 @@ public static class WebApplicationBuilderExtensions
         if (FlagAssist.GetHealthChecksSwitch()) return builder;
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceHealthChecks)}()."
+            $"{nameof(AddAdvanceHealthChecks)}()."
         );
 
         var healthChecksBuilder = builder.Services.AddHealthChecks();

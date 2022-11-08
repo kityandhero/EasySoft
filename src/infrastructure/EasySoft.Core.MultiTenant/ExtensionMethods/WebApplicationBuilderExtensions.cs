@@ -12,7 +12,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddTenantFactory)}()."
+            $"{nameof(AddTenantFactory)}()."
         );
 
         builder.Host.AddTenantFactory(tenantBuilder);

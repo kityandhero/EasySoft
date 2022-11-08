@@ -18,7 +18,9 @@ public interface IRepository<TEntity> where TEntity : Entity, IAggregateRoot
     Task<bool> RemoveAsync(Entity entity);
 }
 
-public interface IRepository<TEntity, in TKey> : IRepository<TEntity> where TEntity : Entity<TKey>, IAggregateRoot
+public interface IRepository<TEntity, in TKey> : IRepository<TEntity>
+    where TEntity : Entity<TKey>, IAggregateRoot
+    where TKey : struct
 {
     bool Delete(TKey id);
 

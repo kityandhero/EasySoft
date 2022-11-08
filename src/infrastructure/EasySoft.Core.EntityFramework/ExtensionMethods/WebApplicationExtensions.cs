@@ -30,7 +30,7 @@ public static class WebApplicationExtensions
 
         if (!ContextConfigure.AutoMigrate) return application;
 
-        LogAssist.Debug($"Execute {nameof(UseAutoMigrate)}().");
+        LogAssist.Debug($"{nameof(UseAutoMigrate)}().");
 
         var context = ServiceAssist.GetServiceProvider().GetService<DbContext>();
 
@@ -56,7 +56,7 @@ public static class WebApplicationExtensions
 
         if (!ContextConfigure.AutoEnsureCreated) return application;
 
-        LogAssist.Debug($"Execute {nameof(UseAutoEnsureCreated)}().");
+        LogAssist.Debug($"{nameof(UseAutoEnsureCreated)}().");
 
         var context = ServiceAssist.GetServiceProvider().GetService<DbContext>();
 

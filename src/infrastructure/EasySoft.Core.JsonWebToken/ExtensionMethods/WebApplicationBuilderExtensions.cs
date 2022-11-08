@@ -31,7 +31,7 @@ public static class WebApplicationBuilderExtensions
             throw new Exception("UseAdvanceJsonWebToken disallow inject more than once");
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"Execute {nameof(AddAdvanceJsonWebToken)}<{typeof(TOperator).Name}>()."
+            $"{nameof(AddAdvanceJsonWebToken)}<{typeof(TOperator).Name}>()."
         );
 
         builder.AddOperator<TOperator>();
