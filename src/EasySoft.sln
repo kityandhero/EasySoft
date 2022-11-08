@@ -325,6 +325,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.DomainDrivenDesign.Infrastructure", "simple\monomer\EasySoft.Simple.DomainDrivenDesign.Infrastructure\EasySoft.Simple.DomainDrivenDesign.Infrastructure.csproj", "{D952BDC5-EC68-4396-8452-11ABD2B93FBA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcServiceTest", "test\GrpcServiceTest\GrpcServiceTest.csproj", "{635A6DDA-4659-4633-9FB2-FE0E62199FC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{EEC50F5C-E741-4FE4-8238-A246AE108511}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.AccountCenter.Console", "simple\monomer\EasySoft.Simple.AccountCenter.Console\EasySoft.Simple.AccountCenter.Console.csproj", "{C880DA09-4095-4B1F-86B0-A5BB583AF330}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grpc", "grpc", "{298F018F-D197-4124-BECE-D8546643568F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Grpc", "infrastructure\EasySoft.Core.Grpc\EasySoft.Core.Grpc.csproj", "{F2B12BBF-9E40-440E-AD2B-885FD35FA325}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -743,6 +753,18 @@ Global
 		{D952BDC5-EC68-4396-8452-11ABD2B93FBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D952BDC5-EC68-4396-8452-11ABD2B93FBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D952BDC5-EC68-4396-8452-11ABD2B93FBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{635A6DDA-4659-4633-9FB2-FE0E62199FC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{635A6DDA-4659-4633-9FB2-FE0E62199FC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{635A6DDA-4659-4633-9FB2-FE0E62199FC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{635A6DDA-4659-4633-9FB2-FE0E62199FC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C880DA09-4095-4B1F-86B0-A5BB583AF330}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C880DA09-4095-4B1F-86B0-A5BB583AF330}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C880DA09-4095-4B1F-86B0-A5BB583AF330}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C880DA09-4095-4B1F-86B0-A5BB583AF330}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2B12BBF-9E40-440E-AD2B-885FD35FA325}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2B12BBF-9E40-440E-AD2B-885FD35FA325}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2B12BBF-9E40-440E-AD2B-885FD35FA325}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2B12BBF-9E40-440E-AD2B-885FD35FA325}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -900,6 +922,11 @@ Global
 		{5C672C26-6641-4980-9611-1EDD8C684B16} = {D8FCD863-CBF1-4590-89B4-4FEFF38359A7}
 		{9DBDD133-9E7E-4B6E-B918-6F569CF96A5A} = {6B0550AC-54D0-4ED0-BBFD-60CEFD3E802F}
 		{D952BDC5-EC68-4396-8452-11ABD2B93FBA} = {9DBDD133-9E7E-4B6E-B918-6F569CF96A5A}
+		{635A6DDA-4659-4633-9FB2-FE0E62199FC2} = {E6D1E731-F18C-46B4-B08B-0672F0642295}
+		{EEC50F5C-E741-4FE4-8238-A246AE108511} = {D8FCD863-CBF1-4590-89B4-4FEFF38359A7}
+		{C880DA09-4095-4B1F-86B0-A5BB583AF330} = {EEC50F5C-E741-4FE4-8238-A246AE108511}
+		{298F018F-D197-4124-BECE-D8546643568F} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{F2B12BBF-9E40-440E-AD2B-885FD35FA325} = {298F018F-D197-4124-BECE-D8546643568F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

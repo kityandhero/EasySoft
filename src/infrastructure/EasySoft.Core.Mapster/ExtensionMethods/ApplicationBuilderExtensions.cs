@@ -21,6 +21,10 @@ public static class ApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceMapster)}()."
+        );
+
         ConfigActionAssist.GetConfigAction().ForEach(action => { action(TypeAdapterConfig.GlobalSettings); });
 
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>

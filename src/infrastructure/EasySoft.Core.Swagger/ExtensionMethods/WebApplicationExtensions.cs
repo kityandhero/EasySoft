@@ -18,6 +18,10 @@ public static class WebApplicationExtensions
             return application;
         }
 
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(UseAdvanceSwagger)}()."
+        );
+
         application.UseSwagger();
         application.UseSwaggerUI();
 

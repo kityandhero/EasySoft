@@ -4,6 +4,7 @@ using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Data.ExtensionMethods;
 using EasySoft.Core.EntityFramework.MySql.Extensions;
+using EasySoft.Core.Grpc.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
@@ -74,7 +75,7 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
         .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceLogDashboard(); }),
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddPermissionVerification")
-        .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceMediatR(Assembly.GetExecutingAssembly()); })
+        .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceMediatR(Assembly.GetExecutingAssembly()); }),
     // 配置健康检测
     // applicationBuilder =>
     // {
@@ -83,6 +84,19 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
     //         new HelloHealthCheck().ToIAdvanceHealthCheck()
     //     });
     // },
+    new ExtraAction<WebApplicationBuilder>()
+        .SetName("AddAdvanceGrpc")
+        .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceGrpc(); })
+);
+
+ApplicationConfigurator.AddWebApplicationExtraAction(
+    new ExtraAction<WebApplication>()
+        .SetName("MapAdvanceGrpcService")
+        .SetAction(application =>
+        {
+            application
+                .MapAdvanceGrpcService<EasySoft.Simple.AccountCenter.Application.GrpcServices.EntranceService>();
+        })
 );
 
 AgileConfigClientActionAssist.ActionAgileConfigChanged = _ =>
@@ -106,7 +120,5 @@ var app = WebApplicationBuilderAssist
 //
 //     context.Database.EnsureCreated();
 // }
-
-app.MapGet("/", () => "Hello World!");
 
 app.Run();

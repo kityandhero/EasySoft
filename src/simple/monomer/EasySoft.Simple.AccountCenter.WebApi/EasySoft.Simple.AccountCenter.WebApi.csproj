@@ -8,43 +8,44 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Content Update="configures\agileConfig.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Update="configures\consulConfigCenterConfig.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Update="configures\consulRegistrationCenterConfig.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Update="configures\databaseConfig.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Update="configures\generalConfig.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Update="configures\rabbitMQConfig.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Update="configures\redisConfig.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Update="configures\swaggerConfig.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+        <Content Update="configures\agileConfig.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Update="configures\consulConfigCenterConfig.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Update="configures\consulRegistrationCenterConfig.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Update="configures\databaseConfig.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Update="configures\generalConfig.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Update="configures\rabbitMQConfig.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Update="configures\redisConfig.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Update="configures\swaggerConfig.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework.MySql\EasySoft.Core.EntityFramework.MySql.csproj" />
-      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
-      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.LogDashboard\EasySoft.Core.LogDashboard.csproj" />
-      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.MediatR\EasySoft.Core.MediatR.csproj" />
-      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj" />
-      <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Application.Contracts\EasySoft.Simple.AccountCenter.Application.Contracts.csproj" />
-      <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Application\EasySoft.Simple.AccountCenter.Application.csproj" />
-      <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Domain\EasySoft.Simple.AccountCenter.Domain.csproj" />
-      <ProjectReference Include="..\EasySoft.Simple.DomainDrivenDesign.Domain.Shared\EasySoft.Simple.DomainDrivenDesign.Domain.Shared.csproj" />
-      <ProjectReference Include="..\EasySoft.Simple.DomainDrivenDesign.Infrastructure\EasySoft.Simple.DomainDrivenDesign.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework.MySql\EasySoft.Core.EntityFramework.MySql.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Grpc\EasySoft.Core.Grpc.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.LogDashboard\EasySoft.Core.LogDashboard.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.MediatR\EasySoft.Core.MediatR.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj" />
+        <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Application.Contracts\EasySoft.Simple.AccountCenter.Application.Contracts.csproj" />
+        <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Application\EasySoft.Simple.AccountCenter.Application.csproj" />
+        <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Domain\EasySoft.Simple.AccountCenter.Domain.csproj" />
+        <ProjectReference Include="..\EasySoft.Simple.DomainDrivenDesign.Domain.Shared\EasySoft.Simple.DomainDrivenDesign.Domain.Shared.csproj" />
+        <ProjectReference Include="..\EasySoft.Simple.DomainDrivenDesign.Infrastructure\EasySoft.Simple.DomainDrivenDesign.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

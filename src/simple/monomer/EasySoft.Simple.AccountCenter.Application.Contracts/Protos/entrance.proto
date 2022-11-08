@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+option csharp_namespace = "EntranceService";
+
+package entrance;
+
+// The user service definition.
+service Entrance {
+  // Sends a greeting
+  rpc Register (RegisterRequest) returns (RegisterReply);
+
+  rpc SignIn (SignInRequest) returns (SignInReply);
+}
+
+// The request message containing the user's name.
+message RegisterRequest {
+  string loginName = 1;
+  
+  string password = 2;
+}
+
+// The response message containing the greetings.
+message RegisterReply {
+  bool success=1;
+  int32 Code=2;
+  string message = 3;
+}
+
+
+// The request message containing the user's name.
+message SignInRequest {
+  string loginName = 1;
+
+  string password = 2;
+}
+
+// The response message containing the greetings.
+message SignInReply {
+  bool success=1;
+  int32 Code=2;
+  string message = 3;
+}
+
+

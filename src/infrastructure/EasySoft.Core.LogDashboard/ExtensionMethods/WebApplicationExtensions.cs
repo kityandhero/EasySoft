@@ -12,6 +12,10 @@ public static class WebApplicationExtensions
     {
         if (!FlagAssist.GetLogDashboardSwitch()) return application;
 
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(UseAdvanceLogDashboard)}()."
+        );
+
         if (EnvironmentAssist.GetEnvironment().IsDevelopment()) application.UseDeveloperExceptionPage();
 
         application.UseLogDashboard();

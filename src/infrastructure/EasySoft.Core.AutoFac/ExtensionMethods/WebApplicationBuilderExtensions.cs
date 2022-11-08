@@ -16,6 +16,10 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
+        StartupDescriptionMessageAssist.AddExecute(
+            $"Execute {nameof(AddAdvanceAutoFac)}()."
+        );
+
         builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
         builder.Host.ConfigureContainer<ContainerBuilder>(AutofacAssist.Init);
