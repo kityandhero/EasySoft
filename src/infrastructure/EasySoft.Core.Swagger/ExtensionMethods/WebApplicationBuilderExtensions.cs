@@ -40,10 +40,6 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
-        StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access swagger api document by {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/swagger/index.html" : FlagAssist.StartupUrls.Select(o => $"{o}/swagger/index.html").Join(" "))}."
-        );
-
         builder.Services.AddSwaggerGen(c =>
         {
             var openApiContact = new OpenApiContact

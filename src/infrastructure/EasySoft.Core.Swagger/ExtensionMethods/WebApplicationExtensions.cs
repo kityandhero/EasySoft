@@ -20,6 +20,10 @@ public static class WebApplicationExtensions
 
         application.UseSwaggerUI();
 
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"You can access swagger api document by {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/swagger/index.html" : FlagAssist.StartupUrls.Select(o => $"{o}/swagger/index.html").Join(" "))}."
+        );
+
         return application;
     }
 
