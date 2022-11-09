@@ -39,6 +39,8 @@
         <None Remove="nlog.exceptionless-extensions.tet" />
         <None Remove="nlog.exceptionless-extensions.txt" />
         <EmbeddedResource Include="nlog.exceptionless-extensions.txt" />
+        <None Remove="wordHighlightingRules.txt" />
+        <EmbeddedResource Include="nlog.wordHighlightingRules.txt" />
     </ItemGroup>
     
 </Project>

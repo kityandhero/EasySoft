@@ -55,7 +55,7 @@ public static class WebApplicationBuilderExtensions
 
         FlagAssist.SetMiniProfileSwitchOpen();
 
-        StartupDescriptionMessageAssist.AddDescription(
+        StartupDescriptionMessageAssist.AddPrompt(
             "You can add \"@using StackExchange.Profiling\" and \"@addTagHelper *, MiniProfiler.AspNetCore.Mvc\" to the _Layout.cshtml and add <mini-profiler /> to the target view to show analysis information."
         );
 

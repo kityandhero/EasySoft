@@ -27,7 +27,7 @@ public static class WebApplicationBuilderExtensions
 
                 try
                 {
-                    StartupDescriptionMessageAssist.AddDescription(
+                    StartupDescriptionMessageAssist.AddPrompt(
                         $"AgileConfig env is \"{AgileConfigAssist.GetAgileConfigEnv()}\", node is \"{AgileConfigAssist.GetAgileConfigNodeCollection().Join(",")}\"."
                     );
 

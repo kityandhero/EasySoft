@@ -1,0 +1,26 @@
+"wordHighlightingRules": [
+            {
+              "regex": "INFO",
+              "foregroundColor": "DarkGreen"
+            },
+            {
+               "regex": " EXEC: (.*)",
+               "foregroundColor": "DarkYellow"
+            }, 
+            {
+               "regex": " HINT: (.*)",
+               "foregroundColor": "DarkRed"
+            }, 
+            {
+               "regex": " DESC: (.*)",
+               "foregroundColor": "Green"
+            },
+            {
+               "regex": "\\[[0-9a-zA-Z_]+\\.json\\]\\(\\.\\/configures\\/[0-9a-zA-Z_]+\\.json\\)",
+               "foregroundColor": "DarkGray"
+            },           
+            {
+              "regex": "\\[\\d{4}\\-\\d{2}\\-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{4}\\]",
+              "foregroundColor": "DarkGray"
+            }
+          ],

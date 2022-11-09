@@ -27,7 +27,7 @@ public static class ConfigureHostBuilderExtensions
             // 加载consul配置中心配置
             var consulUrl = ConsulConfigCenterConfigAssist.GetCenterAddress();
 
-            StartupDescriptionMessageAssist.AddDescription(
+            StartupDescriptionMessageAssist.AddPrompt(
                 $"Consul config center address is {ConsulConfigCenterConfigAssist.GetCenterAddress()}, key is {applicationChannel.GetChannel()}/config.{env.EnvironmentName}.json, key build by ApplicationChannel and Environment"
             );
 

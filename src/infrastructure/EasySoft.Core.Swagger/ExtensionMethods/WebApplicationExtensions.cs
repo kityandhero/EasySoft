@@ -29,7 +29,7 @@ public static class WebApplicationExtensions
             $"swagger: enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/swagger/index.html" : FlagAssist.StartupUrls.Select(o => $"{o}/swagger/index.html").Join(" "))}."
         );
 
-        StartupDescriptionMessageAssist.AddDescription(
+        StartupDescriptionMessageAssist.AddPrompt(
             $"You can access swagger api document by {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/swagger/index.html" : FlagAssist.StartupUrls.Select(o => $"{o}/swagger/index.html").Join(" "))}."
         );
 

@@ -50,7 +50,7 @@ public static class WebApplicationBuilderExtensions
 
         FlagAssist.TokenMode = ConstCollection.EasyToken;
 
-        StartupDescriptionMessageAssist.AddDescription(
+        StartupDescriptionMessageAssist.AddPrompt(
             "EasyToken already available, you can config it with config file.",
             GeneralConfigAssist.GetConfigFileInfo()
         );

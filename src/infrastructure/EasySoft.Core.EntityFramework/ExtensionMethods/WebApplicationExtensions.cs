@@ -30,7 +30,7 @@ public static class WebApplicationExtensions
 
         if (!ContextConfigure.AutoMigrate) return application;
 
-        LogAssist.Debug($"{nameof(UseAutoMigrate)}().");
+        LogAssist.Execute($"{nameof(UseAutoMigrate)}().");
 
         LogAssist.Hint(
             $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.AutoMigrate)} is {ContextConfigure.AutoMigrate}."

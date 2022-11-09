@@ -40,7 +40,7 @@ public static class WebApplicationBuilderExtensions
 
         FlagAssist.SetAdvanceExceptionlessInitializeCompleted();
 
-        StartupDescriptionMessageAssist.AddDescription(
+        StartupDescriptionMessageAssist.AddPrompt(
             $"Exceptionless is in use, address is {GeneralConfigAssist.GetExceptionlessServerUrl()}."
         );
 

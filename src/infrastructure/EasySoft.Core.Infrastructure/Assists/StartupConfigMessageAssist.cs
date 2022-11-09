@@ -14,7 +14,7 @@ public static class StartupConfigMessageAssist
     {
         MessageCollection.Enqueue(
             new StartupMessage()
-                .SetLevel(LogLevel.Information)
+                .SetLevel(LogLevel.Trace)
                 .SetMessage(UtilityTools.Standard.ConstCollection.ApplicationStartConfigMessageDivider)
         );
 
@@ -26,7 +26,7 @@ public static class StartupConfigMessageAssist
 
         MessageCollection.Enqueue(
             new StartupMessage()
-                .SetLevel(LogLevel.Information)
+                .SetLevel(LogLevel.Trace)
                 .SetMessage(UtilityTools.Standard.ConstCollection.ApplicationStartConfigMessageDivider)
         );
     }
@@ -88,7 +88,7 @@ public static class StartupConfigMessageAssist
 
         list.Add(
             new StartupMessage()
-                .SetLevel(LogLevel.Information)
+                .SetLevel(LogLevel.Trace)
                 .SetMessage(
                     UtilityTools.Standard.ConstCollection.ApplicationStartMessageDivider
                 )

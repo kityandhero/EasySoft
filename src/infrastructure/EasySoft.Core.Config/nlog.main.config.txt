@@ -77,7 +77,6 @@
         ###messageLimit###
         "target": {
           "type": "ColoredConsole",
-          "layout": "[${longDate}] ${uppercase:${level}:padding=-5:padCharacter= } ${message} ${exception:format=toString}",
           "rowHighlightingRules": [
             {
               "condition": "level == LogLevel.Trace",
@@ -105,32 +104,8 @@
               "backgroundColor": "White"
             }
           ],
-          "wordHighlightingRules": [
-            {
-              "regex": "INFO",
-              "foregroundColor": "DarkGreen"
-            },
-            {
-               "regex": " Execute (.*)",
-               "foregroundColor": "DarkYellow"
-            }, 
-            {
-               "regex": " Hint: (.*)",
-               "foregroundColor": "DarkRed"
-            }, 
-            {
-               "regex": " Prompt: (.*)",
-               "foregroundColor": "Green"
-            },
-            {
-               "regex": "\\[[0-9a-zA-Z_]+\\.json\\]\\(\\.\\/configures\\/[0-9a-zA-Z_]+\\.json\\)",
-               "foregroundColor": "DarkGray"
-            },           
-            {
-              "regex": "\\[\\d{4}\\-\\d{2}\\-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{4}\\]",
-              "foregroundColor": "DarkGray"
-            }
-          ]
+          ###word-highlighting-rules###
+          "layout": "[${longDate}] ${uppercase:${level}:padding=-5:padCharacter= } ${message} ${exception:format=toString}"
         }
       }
     },

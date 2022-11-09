@@ -395,11 +395,9 @@ public static class WebApplicationBuilderExtensions
                 });
         });
 
-        var startupMessage = new StartupMessage()
-            .SetLevel(LogLevel.Information)
-            .SetMessage(
-                $"Cap transport mode is {GeneralConfigAssist.GetCapTransportType()}, persistent mode is {GeneralConfigAssist.GetCapPersistentType()}, if you need to customize it, use CapAssist.GetConfig() to set."
-            );
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"Cap transport mode is {GeneralConfigAssist.GetCapTransportType()}, persistent mode is {GeneralConfigAssist.GetCapPersistentType()}, if you need to customize it, use CapAssist.GetConfig() to set."
+        );
 
         if (GeneralConfigAssist.GetCapDashboardSwitch())
         {
@@ -407,13 +405,8 @@ public static class WebApplicationBuilderExtensions
                 ? "/cap"
                 : capConfig.DashboardOptions.PathBase;
 
-            startupMessage.SetExtraNewLie(true)
-                .SetExtra(
-                    $"Cap dashboard is {pathBase}, you can access {(!FlagAssist.StartupUrls.Any() ? $"https://[host]:[port]{capConfig.DashboardOptions.PathBase}" : FlagAssist.StartupUrls.Select(o => $"{o}{pathBase}").Join(" "))} to visit it."
-                );
-
-            StartupDescriptionMessageAssist.Add(
-                startupMessage
+            StartupDescriptionMessageAssist.AddPrompt(
+                $"Cap dashboard is {pathBase}, you can access {(!FlagAssist.StartupUrls.Any() ? $"https://[host]:[port]{capConfig.DashboardOptions.PathBase}" : FlagAssist.StartupUrls.Select(o => $"{o}{pathBase}").Join(" "))} to visit it."
             );
         }
 
@@ -425,7 +418,7 @@ public static class WebApplicationBuilderExtensions
             nodeId = string.IsNullOrWhiteSpace(nodeId) ? "not set" : nodeId;
             nodeName = string.IsNullOrWhiteSpace(nodeName) ? "not set" : nodeName;
 
-            StartupDescriptionMessageAssist.AddDescription(
+            StartupDescriptionMessageAssist.AddPrompt(
                 $"Cap discovery is open, discoveryServerHostName is {capConfig.DiscoveryOptions.DiscoveryServerHostName}, discoveryServerPort is {capConfig.DiscoveryOptions.DiscoveryServerPort}, nodeId is {nodeId}, nodeName is {nodeName}."
             );
         }

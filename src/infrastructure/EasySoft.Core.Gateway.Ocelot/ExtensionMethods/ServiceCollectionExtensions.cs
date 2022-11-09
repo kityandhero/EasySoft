@@ -23,7 +23,7 @@ public static class ServiceCollectionExtensions
         {
             ocelotBuilder = serviceCollection.AddOcelot(OcelotConfigAssist.GetConfiguration());
 
-            StartupDescriptionMessageAssist.AddDescription(
+            StartupDescriptionMessageAssist.AddPrompt(
                 "Ocelot config use the ocelotConfig.json.",
                 OcelotConfigAssist.GetConfigFileInfo()
             );
@@ -32,7 +32,7 @@ public static class ServiceCollectionExtensions
         {
             ocelotBuilder = serviceCollection.AddOcelot();
 
-            StartupDescriptionMessageAssist.AddDescription(
+            StartupDescriptionMessageAssist.AddPrompt(
                 "Ocelot config use the default way."
             );
         }

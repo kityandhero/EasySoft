@@ -1,7 +1,9 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.Config.Utils;
 
@@ -63,6 +65,12 @@ public static class Tools
 
         var consoleMessageLimitSetting = consoleMessageLimit <= 0 ? "" : $"\"messageLimit\": {consoleMessageLimit},";
 
+        var nlogWordHighlightingRules = EnvironmentAssist
+            .GetEnvironment()
+            .IsDevelopment()
+            ? GetNlogWordHighlightingRules()
+            : "";
+
         mainConfig = mainConfig
             .Replace("###exceptionless-extensions###", exceptionlessExtensions)
             .Replace("###trace-target###", traceTarget)
@@ -72,7 +80,8 @@ public static class Tools
             .Replace("###debug-rule###", debugRule)
             .Replace("###exceptionless-rule###", exceptionlessRule)
             .Replace("###console-minLevel###", consoleMinLevel)
-            .Replace("###messageLimit###", consoleMessageLimitSetting);
+            .Replace("###messageLimit###", consoleMessageLimitSetting)
+            .Replace("###word-highlighting-rules###", nlogWordHighlightingRules);
 
         return mainConfig;
     }
@@ -116,6 +125,11 @@ public static class Tools
     public static string GetNlogDefaultExceptionlessTargetConfig()
     {
         return GetEmbeddedResourceFileContent("/nlog.exceptionless.target.txt");
+    }
+
+    public static string GetNlogWordHighlightingRules()
+    {
+        return GetEmbeddedResourceFileContent("/nlog.wordHighlightingRules.txt");
     }
 
     private static string GetEmbeddedResourceFileContent(string path)

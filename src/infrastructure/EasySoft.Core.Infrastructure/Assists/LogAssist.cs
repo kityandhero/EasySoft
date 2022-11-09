@@ -193,7 +193,7 @@ public static class LogAssist
     {
         if (string.IsNullOrWhiteSpace(log)) return;
 
-        GetLogger().LogDebug("Execute {Log}", log.Trim());
+        GetLogger().LogTrace("EXEC: {Log}", log.Trim());
     }
 
     /// <summary>
@@ -203,7 +203,7 @@ public static class LogAssist
     {
         if (string.IsNullOrWhiteSpace(log)) return;
 
-        GetLogger().LogDebug("Prompt: {Log}", log.Trim());
+        GetLogger().LogTrace("DESC: {Log}", log.Trim());
     }
 
     /// <summary>
@@ -213,7 +213,7 @@ public static class LogAssist
     {
         if (string.IsNullOrWhiteSpace(log)) return;
 
-        GetLogger().LogDebug("Hint: {Log}", log.Trim());
+        GetLogger().LogTrace("HINT: {Log}", log.Trim());
     }
 
     #endregion

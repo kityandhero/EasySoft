@@ -60,9 +60,14 @@ public static class StartupDescriptionMessageAssist
         AddInformation(message, extra);
     }
 
+    public static void AddPrompt(string message, string extra = "")
+    {
+        AddTrace($"DESC: {message}", extra);
+    }
+
     public static void AddExecute(string message, string extra = "")
     {
-        AddDebug($"Execute {message}", extra);
+        AddTrace($"EXEC: {message}", extra);
     }
 
     public static void Print()
@@ -72,7 +77,7 @@ public static class StartupDescriptionMessageAssist
 
         list.Add(
             new StartupMessage()
-                .SetLevel(LogLevel.Information)
+                .SetLevel(LogLevel.Trace)
                 .SetMessage(
                     UtilityTools.Standard.ConstCollection.ApplicationStartMessageDescriptionDivider
                 )

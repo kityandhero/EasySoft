@@ -74,7 +74,7 @@ public static class WebApplicationBuilderAssist
         );
 
         if (!string.IsNullOrWhiteSpace(EnvironmentAssist.GetEnvironmentAliasName()))
-            StartupDescriptionMessageAssist.AddDescription(
+            StartupDescriptionMessageAssist.AddPrompt(
                 "Current loading custom config file both with normal and special env, like generalConfig.json and generalConfig.dev.json."
             );
 
@@ -144,8 +144,8 @@ public static class WebApplicationBuilderAssist
                 $"ConfigCenterType: {GeneralConfigAssist.GetConfigCenterType()}."
             );
 
-            StartupDescriptionMessageAssist.AddDescription(
-                $"Dynamic config key: {Config.ConstCollection.GetDynamicConfigKeyCollection().Join(",")}, they can set in ConfigCenter."
+            StartupDescriptionMessageAssist.AddPrompt(
+                $"Dynamic config key is {Config.ConstCollection.GetDynamicConfigKeyCollection().Join(", ")}, they can set in ConfigCenter."
             );
 
             if (GeneralConfigAssist.GetConfigCenterType() == ConfigCenterType.AgileConfig)

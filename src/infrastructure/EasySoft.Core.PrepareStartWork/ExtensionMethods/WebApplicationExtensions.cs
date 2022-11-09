@@ -23,7 +23,7 @@ public static class WebApplicationExtensions
 
         prepareCovertStartWork.DoWork();
 
-        StartupDescriptionMessageAssist.AddDescription(
+        StartupDescriptionMessageAssist.AddPrompt(
             "PrepareCovertStartWork do work complete."
         );
 
@@ -35,7 +35,7 @@ public static class WebApplicationExtensions
 
         prepareStartWork.DoWork();
 
-        StartupDescriptionMessageAssist.AddDescription(
+        StartupDescriptionMessageAssist.AddPrompt(
             "PrepareStartWork do work complete."
         );
 

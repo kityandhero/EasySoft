@@ -26,7 +26,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.AddControllerPropertiesAutowired(Assembly.GetEntryAssembly());
 
-        StartupDescriptionMessageAssist.AddDescription(
+        StartupDescriptionMessageAssist.AddPrompt(
             "You can set autoFac config with autoFac.json in ./configures/autoFac.json. The document link is https://autofac.readthedocs.io/en/latest/configuration/xml.html."
         );
 
