@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
+﻿using System.Reflection;
+using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
@@ -98,6 +99,15 @@ public static class WebApplicationBuilderExtensions
 
                 return controllerAction?.ControllerName + "-" + controllerAction?.ActionName;
             });
+
+            var entryAssemblyName = Assembly.GetEntryAssembly()?.GetName().Name;
+
+            if (string.IsNullOrWhiteSpace(entryAssemblyName))
+            {
+                var filePath = Path.Combine(AppContext.BaseDirectory, $"{entryAssemblyName}.xml");
+
+                c.IncludeXmlComments(filePath, true);
+            }
         });
 
         ApplicationConfigurator.AddWebApplicationExtraAction(
