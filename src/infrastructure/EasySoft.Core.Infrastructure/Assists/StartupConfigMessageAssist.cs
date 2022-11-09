@@ -78,7 +78,7 @@ public static class StartupConfigMessageAssist
 
     public static void AddConfig(string message, string extra = "")
     {
-        AddInformation(message);
+        AddInformation(message, extra);
     }
 
     public static void Print()

@@ -32,6 +32,11 @@ public static class SwaggerConfigAssist
     {
     }
 
+    public static string GetConfigFileInfo()
+    {
+        return $"[{ConfigFile}](./configures/{ConfigFile})";
+    }
+
     private static SwaggerConfig GetConfig()
     {
         return SwaggerConfig.Instance;
@@ -44,12 +49,100 @@ public static class SwaggerConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt())
-        {
             throw new Exception(
                 $"请配置Swagger Enable: {ConfigFile} -> Enable,请设置 0/1"
             );
-        }
 
         return v.ToInt() == 1;
+    }
+
+    public static string GetTitle()
+    {
+        var v = GetConfig().Title;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        return v;
+    }
+
+    public static string GetDescription()
+    {
+        var v = GetConfig().Description;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        return v;
+    }
+
+    public static string GetVersion()
+    {
+        var v = GetConfig().Version;
+
+        v = string.IsNullOrWhiteSpace(v) ? "1.0" : v;
+
+        return v;
+    }
+
+    public static string GetContactName()
+    {
+        var v = GetConfig().ContactName;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        return v;
+    }
+
+    public static string GetContactEmail()
+    {
+        var v = GetConfig().ContactEmail;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        return v;
+    }
+
+    public static string GetContactUrl()
+    {
+        var v = GetConfig().ContactUrl;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        return v;
+    }
+
+    public static string GetLicenseName()
+    {
+        var v = GetConfig().LicenseName;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        return v;
+    }
+
+    public static string GetLicenseUrl()
+    {
+        var v = GetConfig().LicenseUrl;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        return v;
+    }
+
+    public static string GetOpenApiServerUrl()
+    {
+        var v = GetConfig().OpenApiServerUrl;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        return v;
+    }
+
+    public static string GetOpenApiServerDescription()
+    {
+        var v = GetConfig().OpenApiServerDescription;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        return v;
     }
 }

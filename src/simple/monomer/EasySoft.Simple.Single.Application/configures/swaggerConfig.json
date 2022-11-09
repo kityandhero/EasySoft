@@ -1,3 +1,13 @@
 ﻿{
-  "Switch": 1
+  "Switch": 1,
+  "Title": "组件测试应用",
+  "Version": "1.1",
+  "Description": "组件测试应用, 用于测试框架各项中间件以及组件功能",
+  "ContactName": "kityandhero",
+  "ContactUrl": "https://kityandhero.com",
+  "ContactEmail": "kityandhero@gmail.com",
+  "LicenseName": "MIT",
+  "LicenseUrl": "https://license.com",
+  "OpenApiServerUrl": "",
+  "OpenApiServerDescription": ""
 }
