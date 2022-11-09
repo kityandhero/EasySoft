@@ -45,7 +45,7 @@ public static class StartupDescriptionMessageAssist
         );
     }
 
-    private static void AddWarning(string message, string extra = "")
+    public static void AddWarning(string message, string extra = "")
     {
         Add(
             new StartupMessage()
@@ -53,11 +53,6 @@ public static class StartupDescriptionMessageAssist
                 .SetMessage(message)
                 .SetExtra(extra)
         );
-    }
-
-    public static void AddDescription(string message, string extra = "")
-    {
-        AddInformation(message, extra);
     }
 
     public static void AddPrompt(string message, string extra = "")

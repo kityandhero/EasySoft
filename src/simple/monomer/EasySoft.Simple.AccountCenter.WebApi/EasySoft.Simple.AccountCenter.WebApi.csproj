@@ -7,6 +7,14 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\EasySoft.Simple.AccountCenter.WebApi.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\EasySoft.Simple.AccountCenter.WebApi.xml</DocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
         <Content Update="configures\agileConfig.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -98,11 +98,20 @@ public static class WebApplicationBuilderExtensions
 
             var entryAssemblyName = Assembly.GetEntryAssembly()?.GetName().Name;
 
-            if (string.IsNullOrWhiteSpace(entryAssemblyName))
+            if (!string.IsNullOrWhiteSpace(entryAssemblyName))
             {
                 var filePath = Path.Combine(AppContext.BaseDirectory, $"{entryAssemblyName}.xml");
 
-                c.IncludeXmlComments(filePath, true);
+                LogAssist.Prompt(
+                    $"The swagger include xml comments file is {filePath}."
+                );
+
+                if (filePath.ExistFile())
+                    c.IncludeXmlComments(filePath, true);
+                else
+                    LogAssist.Warning(
+                        $"The swagger include xml comments file is not exist."
+                    );
             }
         });
 
