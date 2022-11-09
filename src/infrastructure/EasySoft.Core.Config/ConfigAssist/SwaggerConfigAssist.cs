@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Config.ConfigCollection;
+﻿using System.Reflection;
+using EasySoft.Core.Config.ConfigCollection;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -60,7 +61,7 @@ public static class SwaggerConfigAssist
     {
         var v = GetConfig().Title;
 
-        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+        v = (string.IsNullOrWhiteSpace(v) ? Assembly.GetEntryAssembly()?.GetName()?.Name : v) ?? "";
 
         return v;
     }

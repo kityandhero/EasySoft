@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using EasySoft.Core.Config.ConfigAssist;
+﻿using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
@@ -46,10 +45,6 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddSwaggerGen(c =>
         {
-            var title = SwaggerConfigAssist.GetTitle();
-
-            title = string.IsNullOrWhiteSpace(title) ? Assembly.GetEntryAssembly()?.GetName().Name : title;
-
             var openApiContact = new OpenApiContact
             {
                 Name = SwaggerConfigAssist.GetContactName(),
@@ -73,7 +68,7 @@ public static class WebApplicationBuilderExtensions
                 "v1",
                 new OpenApiInfo
                 {
-                    Title = title,
+                    Title = SwaggerConfigAssist.GetTitle(),
                     Description = SwaggerConfigAssist.GetDescription(),
                     Version = SwaggerConfigAssist.GetVersion(),
                     Contact = openApiContact,
@@ -108,7 +103,12 @@ public static class WebApplicationBuilderExtensions
         ApplicationConfigurator.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
-                .SetAction(application => { application.UseAdvanceSwagger(); })
+                .SetAction(application =>
+                {
+                    application.UseAdvanceSwagger();
+
+                    application.UseAdvanceKnife4UI();
+                })
         );
 
         return builder;

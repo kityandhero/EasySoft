@@ -337,8 +337,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Grpc", "infra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "document 文档工具", "document 文档工具", "{B3B2B8B0-3719-47C9-9695-6C04A303C14B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Swagger.Knife4jUI", "infrastructure\EasySoft.Core.Swagger.Knife4jUI\EasySoft.Core.Swagger.Knife4jUI.csproj", "{C7F548A0-C7D7-4886-B690-5EF8FDD474FA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -769,10 +767,6 @@ Global
 		{F2B12BBF-9E40-440E-AD2B-885FD35FA325}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2B12BBF-9E40-440E-AD2B-885FD35FA325}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2B12BBF-9E40-440E-AD2B-885FD35FA325}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C7F548A0-C7D7-4886-B690-5EF8FDD474FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7F548A0-C7D7-4886-B690-5EF8FDD474FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7F548A0-C7D7-4886-B690-5EF8FDD474FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7F548A0-C7D7-4886-B690-5EF8FDD474FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -936,7 +930,6 @@ Global
 		{F2B12BBF-9E40-440E-AD2B-885FD35FA325} = {298F018F-D197-4124-BECE-D8546643568F}
 		{B3B2B8B0-3719-47C9-9695-6C04A303C14B} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
 		{94D99BC3-5FD0-4D9C-B8E1-F0DA5842AAE4} = {B3B2B8B0-3719-47C9-9695-6C04A303C14B}
-		{C7F548A0-C7D7-4886-B690-5EF8FDD474FA} = {B3B2B8B0-3719-47C9-9695-6C04A303C14B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}
