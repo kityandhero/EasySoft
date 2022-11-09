@@ -16,10 +16,7 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        if (FlagAssist.GetLogDashboardSwitch())
-        {
-            return builder;
-        }
+        if (FlagAssist.GetLogDashboardSwitch()) return builder;
 
         builder.Services.AddLogDashboard();
 
@@ -30,6 +27,7 @@ public static class WebApplicationBuilderExtensions
                 .SetName("UseAdvanceLogDashboard")
                 .SetAction(application => { application.UseAdvanceLogDashboard(); })
         );
+
         return builder;
     }
 }

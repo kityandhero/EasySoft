@@ -212,12 +212,9 @@ public static class WebApplicationBuilderExtensions
                 );
             });
 
-        if (SwaggerConfigAssist.GetSwitch())
-        {
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-        }
+        builder.Services.AddEndpointsApiExplorer();
+
+        builder.AddAdvanceSwagger();
 
         builder.AddAdvanceEasyCaching();
 
@@ -477,8 +474,6 @@ public static class WebApplicationBuilderExtensions
         }
 
         WeaveApplicationExtraAction(app);
-
-        app.UseAdvanceSwagger();
 
         app.UseAdvanceHangfire();
 

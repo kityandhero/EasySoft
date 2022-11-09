@@ -9,14 +9,7 @@ public static class WebApplicationExtensions
 {
     public static WebApplication UseAdvanceSwagger(this WebApplication application)
     {
-        if (!SwaggerConfigAssist.GetSwitch())
-        {
-            StartupConfigMessageAssist.AddConfig(
-                "Swagger: disable."
-            );
-
-            return application;
-        }
+        if (!SwaggerConfigAssist.GetSwitch()) return application;
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseAdvanceSwagger)}()."
@@ -24,14 +17,6 @@ public static class WebApplicationExtensions
 
         application.UseSwagger();
         application.UseSwaggerUI();
-
-        StartupConfigMessageAssist.AddConfig(
-            $"swagger: enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/swagger/index.html" : FlagAssist.StartupUrls.Select(o => $"{o}/swagger/index.html").Join(" "))}."
-        );
-
-        StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access swagger api document by {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/swagger/index.html" : FlagAssist.StartupUrls.Select(o => $"{o}/swagger/index.html").Join(" "))}."
-        );
 
         return application;
     }
