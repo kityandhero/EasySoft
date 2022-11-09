@@ -10,10 +10,7 @@ public static class LogAssist
 
     public static void SetLogger(ILogger logger)
     {
-        if (_logger != null)
-        {
-            throw new Exception("logger has been set, it disallow set more than once.");
-        }
+        if (_logger != null) throw new Exception("logger has been set, it disallow set more than once.");
 
         _logger = logger;
     }
@@ -22,10 +19,7 @@ public static class LogAssist
 
     public static ILogger GetLogger()
     {
-        if (_logger == null)
-        {
-            throw new Exception("logger has not set yet");
-        }
+        if (_logger == null) throw new Exception("logger has not set yet");
 
         return _logger;
     }
@@ -35,13 +29,12 @@ public static class LogAssist
     /// </summary>
     public static void Info(string? log)
     {
-        if (string.IsNullOrWhiteSpace(log))
-        {
-            return;
-        }
+        if (string.IsNullOrWhiteSpace(log)) return;
 
         GetLogger().LogInformation("{Log}", log.Trim());
     }
+
+    #region Common
 
     /// <summary>
     /// 记录一般信息集合 【输出多条】
@@ -64,10 +57,7 @@ public static class LogAssist
     /// </summary>
     public static void Debug(string? log)
     {
-        if (string.IsNullOrWhiteSpace(log))
-        {
-            return;
-        }
+        if (string.IsNullOrWhiteSpace(log)) return;
 
         GetLogger().LogDebug("{Log}", log.Trim());
     }
@@ -93,10 +83,7 @@ public static class LogAssist
     /// </summary>
     public static void Critical(string? log)
     {
-        if (string.IsNullOrWhiteSpace(log))
-        {
-            return;
-        }
+        if (string.IsNullOrWhiteSpace(log)) return;
 
         GetLogger().LogCritical("{Log}", log.Trim());
     }
@@ -122,10 +109,7 @@ public static class LogAssist
     /// </summary>
     public static void Warning(string? log)
     {
-        if (string.IsNullOrWhiteSpace(log))
-        {
-            return;
-        }
+        if (string.IsNullOrWhiteSpace(log)) return;
 
         GetLogger().LogWarning("{Log}", log.Trim());
     }
@@ -151,10 +135,7 @@ public static class LogAssist
     /// </summary>
     public static void Trace(string? log)
     {
-        if (string.IsNullOrWhiteSpace(log))
-        {
-            return;
-        }
+        if (string.IsNullOrWhiteSpace(log)) return;
 
         GetLogger().LogTrace("{Log}", log.Trim());
     }
@@ -180,10 +161,7 @@ public static class LogAssist
     /// </summary>
     public static void Error(string? log)
     {
-        if (string.IsNullOrWhiteSpace(log))
-        {
-            return;
-        }
+        if (string.IsNullOrWhiteSpace(log)) return;
 
         GetLogger().LogError("{Log}", log.Trim());
     }
@@ -206,6 +184,42 @@ public static class LogAssist
 
     #endregion
 
+    #region Special
+
+    /// <summary>
+    /// 记录调试时的说明信息
+    /// </summary>
+    public static void Execute(string? log)
+    {
+        if (string.IsNullOrWhiteSpace(log)) return;
+
+        GetLogger().LogDebug("Execute {Log}", log.Trim());
+    }
+
+    /// <summary>
+    /// 记录调试时的说明信息
+    /// </summary>
+    public static void Prompt(string? log)
+    {
+        if (string.IsNullOrWhiteSpace(log)) return;
+
+        GetLogger().LogDebug("Prompt: {Log}", log.Trim());
+    }
+
+    /// <summary>
+    /// 记录调试时的配置信息
+    /// </summary>
+    public static void Hint(string? log)
+    {
+        if (string.IsNullOrWhiteSpace(log)) return;
+
+        GetLogger().LogDebug("Hint: {Log}", log.Trim());
+    }
+
+    #endregion
+
+    #endregion
+
     #region object
 
     /// <summary>
@@ -213,10 +227,7 @@ public static class LogAssist
     /// </summary>
     public static void InfoData(object? log, string prefix = "")
     {
-        if (log == null)
-        {
-            return;
-        }
+        if (log == null) return;
 
         GetLogger().LogInformation(
             "{Prefix}{Log}",
@@ -238,10 +249,7 @@ public static class LogAssist
     /// </summary>
     public static void DebugData(object? log, string prefix = "")
     {
-        if (log == null)
-        {
-            return;
-        }
+        if (log == null) return;
 
         GetLogger().LogDebug(
             "{Prefix}{Log}",
@@ -263,10 +271,7 @@ public static class LogAssist
     /// </summary>
     public static void CriticalData(object? log, string prefix = "")
     {
-        if (log == null)
-        {
-            return;
-        }
+        if (log == null) return;
 
         GetLogger().LogCritical(
             "{Prefix}{Log}",
@@ -288,10 +293,7 @@ public static class LogAssist
     /// </summary>
     public static void WarningData(object? log, string prefix = "")
     {
-        if (log == null)
-        {
-            return;
-        }
+        if (log == null) return;
 
         GetLogger().LogWarning(
             "{Prefix}{Log}",
@@ -313,10 +315,7 @@ public static class LogAssist
     /// </summary>
     public static void TraceData(object? log, string prefix = "")
     {
-        if (log == null)
-        {
-            return;
-        }
+        if (log == null) return;
 
         GetLogger().LogTrace(
             "{Prefix}{Log}",
@@ -338,10 +337,7 @@ public static class LogAssist
     /// </summary>
     public static void ErrorData(object? log, string prefix = "")
     {
-        if (log == null)
-        {
-            return;
-        }
+        if (log == null) return;
 
         GetLogger().LogError(
             "{Prefix}{Log}",

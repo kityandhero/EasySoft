@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System;
 using EntranceService;
 using Grpc.Net.Client;
 
@@ -17,4 +18,7 @@ var reply = await client.RegisterAsync(
     });
 Console.WriteLine("Message: " + reply.Message);
 Console.WriteLine("Press any key to exit...");
+
+var color = ConsoleColor.Green;
+
 Console.ReadKey();
