@@ -72,41 +72,7 @@
         }
       },
       "own-console": {
-        "type": "LimitingWrapper",
-        "interval": "00:00:01",
-        ###messageLimit###
-        "target": {
-          "type": "ColoredConsole",
-          "rowHighlightingRules": [
-            {
-              "condition": "level == LogLevel.Trace",
-              "foregroundColor": "DarkGray"
-            },
-            {
-              "condition": "level == LogLevel.Debug",
-              "foregroundColor": "DarkCyan"
-            },
-            {
-              "condition": "level == LogLevel.Info",
-              "foregroundColor": "White"
-            },
-            {
-              "condition": "level == LogLevel.WARN",
-              "foregroundColor": "DarkMagenta"
-            },
-            {
-              "condition": "level == LogLevel.Error",
-              "foregroundColor": "Red"
-            },
-            {
-              "condition": "level == LogLevel.Fatal",
-              "foregroundColor": "Red",
-              "backgroundColor": "White"
-            }
-          ],
-          ###word-highlighting-rules###
-          "layout": "[${longDate}] ${uppercase:${level}:padding=-5:padCharacter= } ${message} ${exception:format=toString}"
-        }
+        ###console-config###
       }
     },
     "rules": [
@@ -120,12 +86,9 @@
       },
       {
         "logger": "*",
-        "minLevel": "###console-minLevel###",
         "writeTo": "own-console",
-        "filterDefaultAction": "Log",
-        "filters": {
-          ###console-filters###
-        }
+        ###console-filter-config###
+        "minLevel": "###console-minLevel###",
       }
     ]
   }

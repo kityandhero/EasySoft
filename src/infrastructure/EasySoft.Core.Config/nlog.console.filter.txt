@@ -1,0 +1,4 @@
+        "filterDefaultAction": "Log",
+        "filters": {
+          ###console-filters###
+        },

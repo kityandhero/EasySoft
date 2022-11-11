@@ -133,6 +133,11 @@ public class GeneralConfig : IConfig
     public string NlogConsoleMessageLimit { get; set; }
 
     /// <summary>
+    /// Nlog 控制台日志节流开关, 默认不启用
+    /// </summary>
+    public string NlogConsoleLimitingWrapperSwitch { get; set; }
+
+    /// <summary>
     /// Nlog 控制台忽略重复输出, 默认不启用
     /// </summary>
     public string NlogConsoleRepeatedFilterSwitch { get; set; }
@@ -220,6 +225,7 @@ public class GeneralConfig : IConfig
         NlogDefaultConfigTraceToConsoleSwitch = "1";
         NlogDefaultConfigDebugToConsoleSwitch = "1";
         NlogConsoleMessageLimit = "0";
+        NlogConsoleLimitingWrapperSwitch = "0";
         NlogConsoleRepeatedFilterSwitch = "0";
 
         MiniProFileSwitch = "0";

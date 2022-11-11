@@ -8,11 +8,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Simple.AccountCenter.WebApi.Controllers;
 
+/// <summary>
+/// EntranceController
+/// </summary>
 [Route("entrance")]
 public class EntranceController : ControllerCore
 {
     private readonly IUserService _userService;
 
+    /// <summary>
+    /// EntranceController
+    /// </summary>
+    /// <param name="userService"></param>
     public EntranceController(IUserService userService)
     {
         _userService = userService;

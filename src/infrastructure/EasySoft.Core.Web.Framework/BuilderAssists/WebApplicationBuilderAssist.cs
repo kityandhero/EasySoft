@@ -108,6 +108,8 @@ public static class WebApplicationBuilderAssist
         this WebApplicationBuilder builder
     )
     {
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddRegistrationCenter)}."
         );
@@ -142,6 +144,8 @@ public static class WebApplicationBuilderAssist
         IApplicationChannel applicationChannel
     )
     {
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddConfigCenter)}."
         );
@@ -207,6 +211,8 @@ public static class WebApplicationBuilderAssist
         this WebApplicationBuilder builder
     )
     {
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddGateway)}."
         );

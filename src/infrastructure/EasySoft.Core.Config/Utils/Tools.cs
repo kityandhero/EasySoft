@@ -59,6 +59,15 @@ public static class Tools
         exceptionlessRule = string.IsNullOrWhiteSpace(exceptionlessRule) ? "" : $"{exceptionlessRule},";
         exceptionlessTarget = string.IsNullOrWhiteSpace(exceptionlessTarget) ? "" : $"{exceptionlessTarget},";
 
+        var nlogConsoleLimitingWrapper = GetNlogConsoleLimitingWrapper();
+        var nlogConsoleTarget = GetNlogConsoleTarget();
+
+        if (GeneralConfigAssist.GetNlogConsoleLimitingWrapperSwitch())
+            mainConfig = mainConfig.Replace("###console-config###", nlogConsoleTarget);
+        else
+            mainConfig = mainConfig.Replace("###console-config###", nlogConsoleLimitingWrapper)
+                .Replace("###console-target###", nlogConsoleTarget);
+
         var consoleMinLevel = nlogDefaultConfigTraceToConsoleSwitch ? "Trace" :
             nlogDefaultConfigDebugToConsoleSwitch ? "Debug" : "Info";
 
@@ -71,6 +80,8 @@ public static class Tools
             .IsDevelopment()
             ? GetNlogWordHighlightingRules()
             : "";
+
+        var nlogConsoleFilter = GetNlogConsoleFilter();
 
         var consoleFilters = new List<string>();
 
@@ -87,6 +98,10 @@ public static class Tools
             .Replace("###console-minLevel###", consoleMinLevel)
             .Replace("###messageLimit###", consoleMessageLimitSetting)
             .Replace("###word-highlighting-rules###", nlogWordHighlightingRules)
+            .Replace(
+                "###console-filter-config###",
+                consoleFilters.Any() ? nlogConsoleFilter : ""
+            )
             .Replace(
                 "###console-filters###",
                 consoleFilters.Any() ? consoleFilters.Join(",") : ""
@@ -141,9 +156,24 @@ public static class Tools
         return GetEmbeddedResourceFileContent("/nlog.console.word.highlighting.rules.txt");
     }
 
+    public static string GetNlogConsoleFilter()
+    {
+        return GetEmbeddedResourceFileContent("/nlog.console.filter.txt");
+    }
+
     public static string GetNlogConsoleFilterRepeated()
     {
         return GetEmbeddedResourceFileContent("/nlog.console.filter.repeated.txt");
+    }
+
+    public static string GetNlogConsoleLimitingWrapper()
+    {
+        return GetEmbeddedResourceFileContent("/nlog.console.limiting.wrapper.txt");
+    }
+
+    public static string GetNlogConsoleTarget()
+    {
+        return GetEmbeddedResourceFileContent("/nlog.console.target.txt");
     }
 
     private static string GetEmbeddedResourceFileContent(string path)

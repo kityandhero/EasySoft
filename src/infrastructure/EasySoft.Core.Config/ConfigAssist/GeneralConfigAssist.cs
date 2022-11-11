@@ -640,12 +640,36 @@ public static class GeneralConfigAssist
     }
 
     /// <summary>
-    /// 开关: Nlog 控制台忽略重复输出, 默认不启用
+    /// 开关: Nlog 控制台日志节流开关, 默认不启用
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static bool GetNlogConsoleLimitingWrapperSwitch()
+    {
+        if (GetNlogDefaultConfigTraceToConsoleSwitch()) return true;
+
+        var v = GetConfig().NlogConsoleLimitingWrapperSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+            throw new ConfigErrorException(
+                $"请配置 NlogConsoleLimitingWrapperSwitch: {ConfigFile} -> NlogConsoleLimitingWrapperSwitch, 请设置 0/1",
+                GetConfigFileInfo()
+            );
+
+        return value == 1;
+    }
+
+    /// <summary>
+    /// 开关: Nlog 控制台忽略重复输出, 默认不启用, 需要前置开启 NlogConsoleLimitingWrapperSwitch
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     public static bool GetNlogConsoleRepeatedFilterSwitch()
     {
+        if (GetNlogConsoleLimitingWrapperSwitch()) return false;
+
         if (GetNlogDefaultConfigTraceToConsoleSwitch()) return true;
 
         var v = GetConfig().NlogConsoleRepeatedFilterSwitch;

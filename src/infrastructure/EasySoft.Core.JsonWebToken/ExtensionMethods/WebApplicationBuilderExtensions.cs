@@ -24,6 +24,8 @@ public static class WebApplicationBuilderExtensions
         bool middlewareMode = true
     ) where TOperator : ActualOperator
     {
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         if (!string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
             throw new Exception("token mode disallow use more than one");
 

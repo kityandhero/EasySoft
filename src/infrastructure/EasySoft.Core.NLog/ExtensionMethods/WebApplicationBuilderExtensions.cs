@@ -15,10 +15,17 @@ namespace EasySoft.Core.NLog.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
+    private const string UniqueIdentifierAddAdvanceNLog = "8c1ba1e4-2745-47e6-8286-afe73de2b7ed";
+
     public static WebApplicationBuilder AddAdvanceNLog(
         this WebApplicationBuilder builder
     )
     {
+        if (builder.HasRegistered(UniqueIdentifierAddAdvanceNLog))
+            return builder;
+
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         // NLog: Setup NLog for Dependency injection
         builder.Logging.ClearProviders();
 
@@ -52,6 +59,11 @@ public static class WebApplicationBuilderExtensions
         Func<LoggingConfiguration> action
     )
     {
+        if (builder.HasRegistered(UniqueIdentifierAddAdvanceNLog))
+            return builder;
+
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceNLog)}."
         );

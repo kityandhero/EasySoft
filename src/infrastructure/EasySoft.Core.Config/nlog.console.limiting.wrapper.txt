@@ -1,0 +1,6 @@
+ "type": "LimitingWrapper",
+        "interval": "00:00:01",
+        ###messageLimit###
+        "target": {
+          ###console-target###
+        }

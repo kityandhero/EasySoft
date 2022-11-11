@@ -23,9 +23,6 @@ public static class WebApplicationBuilderExtensions
         bool middlewareMode = true
     ) where TPermissionObserver : IPermissionObserver
     {
-        if (FlagAssist.PermissionVerificationSwitch)
-            throw new Exception("UsePermissionVerification<TPermissionObserver> disallow inject more than once");
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddPermissionVerification)}<{typeof(TPermissionObserver).Name}>."
         );

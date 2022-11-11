@@ -28,8 +28,6 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddTraceDivider();
 
-        RedisConfigAssist.Init();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceEasyCaching)}."
         );
@@ -40,10 +38,14 @@ public static class WebApplicationBuilderExtensions
         );
 
         if (GeneralConfigAssist.GetCacheMode() == CacheModeCollection.Redis.ToString())
+        {
+            RedisConfigAssist.Init();
+
             StartupDescriptionMessageAssist.AddPrompt(
                 $"{CacheModeCollection.Redis.ToString()} Connections: {RedisConfigAssist.GetConnectionCollection().Join("|")}.",
                 RedisConfigAssist.GetConfigFileInfo()
             );
+        }
 
         var cacheMode = GeneralConfigAssist.GetCacheMode();
 

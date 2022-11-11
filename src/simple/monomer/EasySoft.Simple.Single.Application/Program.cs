@@ -98,7 +98,7 @@ AgileConfigClientActionAssist.ActionAgileConfigChanged = _ =>
 
 var app = WebApplicationBuilderAssist
     .CreateBuilder(
-        // ApplicationChannelCollection.TestApplication.ToApplicationChannel(),
+        ApplicationChannelCollection.TestApplication.ToApplicationChannel(),
         args.ToArray()
     )
     .EasyBuild();

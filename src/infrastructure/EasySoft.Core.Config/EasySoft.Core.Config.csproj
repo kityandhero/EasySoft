@@ -43,6 +43,12 @@
         <EmbeddedResource Include="nlog.console.word.highlighting.rules.txt" />
         <None Remove="nlog.console.filter.repeated.txt" />
         <EmbeddedResource Include="nlog.console.filter.repeated.txt" />
+        <None Remove="nlog.console.target.txt" />
+        <EmbeddedResource Include="nlog.console.target.txt" />
+        <None Remove="nlog.console.limiting.wrapper.txt" />
+        <EmbeddedResource Include="nlog.console.limiting.wrapper.txt" />
+        <None Remove="nlog.console.filter.txt" />
+        <EmbeddedResource Include="nlog.console.filter.txt" />
     </ItemGroup>
     
 </Project>

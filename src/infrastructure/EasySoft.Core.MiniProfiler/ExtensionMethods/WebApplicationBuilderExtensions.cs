@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Profiling;
@@ -9,10 +10,15 @@ namespace EasySoft.Core.MiniProfiler.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
+    private const string UniqueIdentifierAddAdvanceMiniProfile = "0087964a-ea50-4f11-9f85-35ee4146de53";
+
     public static WebApplicationBuilder AddAdvanceMiniProfile(
         this WebApplicationBuilder builder
     )
     {
+        if (builder.HasRegistered(UniqueIdentifierAddAdvanceMiniProfile))
+            return builder;
+
         if (!GeneralConfigAssist.GetMiniProFileSwitch())
         {
             StartupConfigMessageAssist.AddConfig(
@@ -24,6 +30,8 @@ public static class WebApplicationBuilderExtensions
         }
 
         if (FlagAssist.GetMiniProfileSwitch()) return builder;
+
+        StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceMiniProfile)}."
