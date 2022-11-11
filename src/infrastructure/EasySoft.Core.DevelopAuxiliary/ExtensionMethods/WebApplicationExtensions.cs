@@ -3,9 +3,6 @@ using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EasySoft.Core.DevelopAuxiliary.ExtensionMethods;
 
@@ -112,10 +109,6 @@ public static class WebApplicationExtensions
 
         StartupDescriptionMessageAssist.AddPrompt(
             $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/RabbitMQConfigFile").Join(" ")} to get rabbitMQConfig template, display only in view development mode."
-        );
-
-        StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/NLogInlayConfig").Join(" ")} to get nLogInlayConfig template, display only in view development mode."
         );
 
         return application;

@@ -408,8 +408,6 @@ public static class WebApplicationBuilderExtensions
 
         WeaveApplicationExtraAction(app);
 
-        app.UseAdvanceHangfire();
-
         app.UseAdvanceMapControllers();
 
         StartupConfigMessageAssist.AddConfig(

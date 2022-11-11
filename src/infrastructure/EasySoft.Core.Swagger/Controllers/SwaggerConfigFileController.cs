@@ -13,7 +13,8 @@ public class SwaggerConfigFileController : BasicController
         var data = new SwaggerConfig();
 
         return this.Success(
-            data, new
+            data,
+            new
             {
                 ConfigureFileInfo = SwaggerConfigAssist.GetConfigFileInfo()
             },

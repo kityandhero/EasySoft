@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
-
-namespace EasySoft.Core.DevelopAuxiliary.ExtensionMethods;
+﻿namespace EasySoft.Core.DevelopAuxiliary.ExtensionMethods;
 
 public static class EndpointConventionBuilderExtensions
 {
