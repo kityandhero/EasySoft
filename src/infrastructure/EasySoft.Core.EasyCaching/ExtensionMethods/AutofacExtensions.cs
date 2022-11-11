@@ -1,12 +1,4 @@
-﻿using System.Reflection;
-using AspectCore.Configuration;
-using AspectCore.Extensions.Autofac;
-using Autofac;
-using EasyCaching.Core.Interceptor;
-using EasyCaching.Interceptor.AspectCore;
-using Microsoft.Extensions.Options;
-
-namespace EasySoft.Core.EasyCaching.ExtensionMethods;
+﻿namespace EasySoft.Core.EasyCaching.ExtensionMethods;
 
 public static class AutofacExtensions
 {

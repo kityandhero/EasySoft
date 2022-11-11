@@ -1,8 +1,5 @@
-﻿using Autofac;
-using EasySoft.Core.CacheCore.interfaces;
-using EasySoft.Core.EasyCaching.interfaces;
+﻿using EasySoft.Core.EasyCaching.interfaces;
 using EasySoft.Core.EasyCaching.Operators;
-using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.EasyCaching.ExtensionMethods;
 

@@ -1,8 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Microsoft.AspNetCore.Routing;
-
-namespace EasySoft.Core.EasyCaching.ExtensionMethods;
+﻿namespace EasySoft.Core.EasyCaching.ExtensionMethods;
 
 public static class EndpointConventionBuilderExtensions
 {

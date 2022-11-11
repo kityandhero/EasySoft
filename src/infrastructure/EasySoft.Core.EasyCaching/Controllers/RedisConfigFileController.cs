@@ -1,8 +1,6 @@
 ﻿using EasySoft.Core.EasyCaching.ConfigAssist;
 using EasySoft.Core.EasyCaching.ConfigCollection;
 using EasySoft.Core.Infrastructure.Controllers;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Core.EasyCaching.Controllers;
 
