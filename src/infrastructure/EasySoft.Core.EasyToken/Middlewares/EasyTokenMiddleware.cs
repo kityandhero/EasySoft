@@ -6,6 +6,7 @@ using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyToken.AccessControl;
 using EasySoft.Core.ErrorLogTransmitter.Producers;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Core.Results;
 using EasySoft.UtilityTools.Standard.Enums;
@@ -58,13 +59,11 @@ public class EasyTokenMiddleware : IMiddleware
             catch (Exception e)
             {
                 if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
-                {
                     AutofacAssist.Instance.Resolve<IErrorLogProducer>().Send(
                         e,
                         0,
                         context.BuildRequestInfo()
                     );
-                }
 
                 await context.Response.WriteObjectAsJsonAsync(
                     new ApiResult(
@@ -97,11 +96,8 @@ public class EasyTokenMiddleware : IMiddleware
             actualOperator.SetIdentification(identity);
 
             if (!actualOperator.IsAnonymous())
-            {
                 await next.Invoke(context);
-            }
             else
-            {
                 await context.Response.WriteObjectAsJsonAsync(
                     new ApiResult(
                         ReturnCode.TokenExpired.ToInt(),
@@ -109,18 +105,15 @@ public class EasyTokenMiddleware : IMiddleware
                         "无操作凭证或凭证已过期"
                     ).ToExpandoObject()
                 );
-            }
         }
         catch (Exception e)
         {
             if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
-            {
                 AutofacAssist.Instance.Resolve<IErrorLogProducer>().Send(
                     e,
                     0,
                     context.BuildRequestInfo()
                 );
-            }
 
             await context.Response.WriteObjectAsJsonAsync(
                 new ApiResult(

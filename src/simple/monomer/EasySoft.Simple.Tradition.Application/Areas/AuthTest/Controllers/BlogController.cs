@@ -2,6 +2,7 @@
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Simple.Tradition.Application.Areas.AuthTest.Controllers;

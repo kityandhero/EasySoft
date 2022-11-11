@@ -6,6 +6,7 @@ using EasySoft.Core.Config.Cap;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;

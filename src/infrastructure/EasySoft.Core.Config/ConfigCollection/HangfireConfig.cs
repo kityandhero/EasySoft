@@ -4,13 +4,16 @@ public class HangfireConfig
 {
     public static readonly HangfireConfig Instance = new();
 
-    public string Enable { get; set; }
+    public string Switch { get; set; }
 
-    public string Storage { get; set; }
+    public string StorageType { get; set; }
+
+    public string StorageConnection { get; set; }
 
     public HangfireConfig()
     {
-        Enable = "0";
-        Storage = "MemoryStorage";
+        Switch = "0";
+        StorageType = "MemoryStorage";
+        StorageConnection = "";
     }
 }

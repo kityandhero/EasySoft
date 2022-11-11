@@ -24,11 +24,10 @@ using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Swagger.ExtensionMethods;
 using EasySoft.Core.Web.Framework.Attributes;
 using EasySoft.Core.Web.Framework.Filters;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Hangfire;
-using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -226,23 +225,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.AddAdvanceCap();
 
-        if (HangfireConfigAssist.GetEnable())
-        {
-            var storage = HangfireConfigAssist.GetStorage();
-
-            switch (storage)
-            {
-                case "MemoryStorage":
-                    builder.Services.AddHangfire(x => x.UseStorage(new MemoryStorage()));
-                    break;
-
-                default:
-                    throw new Exception($"Hangfire config Storage {storage} does not support just");
-            }
-
-            //启用Hangfire服务.
-            builder.Services.AddHangfireServer();
-        }
+        builder.AddAdvanceHangfire();
 
         if (!FlagAssist.ApplicationChannelInjectionComplete) builder.AddAdvanceDefaultApplicationChannel();
 

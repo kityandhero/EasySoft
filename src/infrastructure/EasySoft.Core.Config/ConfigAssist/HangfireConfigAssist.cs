@@ -32,39 +32,54 @@ public static class HangfireConfigAssist
     {
     }
 
+    public static string GetConfigFileInfo()
+    {
+        return $"[{ConfigFile}](./configures/{ConfigFile})";
+    }
+
     private static HangfireConfig GetConfig()
     {
         return HangfireConfig.Instance;
     }
 
-    public static bool GetEnable()
+    public static bool GetSwitch()
     {
-        var v = GetConfig().Enable;
+        var v = GetConfig().Switch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt())
-        {
             throw new Exception(
-                $"请配置Swagger Enable: {ConfigFile} -> Enable,请设置 0/1"
+                $"请配置Hangfire Switch: {ConfigFile} -> Enable,请设置 0/1"
             );
-        }
 
         return v.ToInt() == 1;
     }
 
-    public static string GetStorage()
+    public static string GetStorageType()
     {
-        var v = GetConfig().Storage;
+        var v = GetConfig().StorageType;
 
         v = v.Remove(" ").Trim();
 
         if (string.IsNullOrWhiteSpace(v))
-        {
             throw new Exception(
-                $"请配置Swagger Enable: {ConfigFile} -> Storage"
+                $"请配置Hangfire StorageType: {ConfigFile} -> StorageType"
             );
-        }
+
+        return v;
+    }
+
+    public static string GetStorageConnection()
+    {
+        var v = GetConfig().StorageConnection;
+
+        v = v.Remove(" ").Trim();
+
+        if (string.IsNullOrWhiteSpace(v))
+            throw new Exception(
+                $"请配置Hangfire StorageConnection: {ConfigFile} -> StorageConnection"
+            );
 
         return v;
     }

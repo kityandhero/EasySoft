@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.EntityFramework.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Core.Assists;
+
+namespace EasySoft.Core.EntityFramework.ExtensionMethods;
 
 public static class ServiceCollectionExtension
 {

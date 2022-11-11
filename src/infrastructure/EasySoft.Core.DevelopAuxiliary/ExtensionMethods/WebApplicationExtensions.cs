@@ -4,7 +4,6 @@ using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.DevelopAuxiliary.ExtensionMethods;
 

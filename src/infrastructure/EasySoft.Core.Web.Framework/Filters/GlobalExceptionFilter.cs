@@ -2,6 +2,7 @@
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.ErrorLogTransmitter.Producers;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Core.Results;
 using EasySoft.UtilityTools.Standard.Assists;
@@ -26,22 +27,17 @@ public class GlobalExceptionFilter : IExceptionFilter
 
     public void OnException(ExceptionContext context)
     {
-        if (context.ExceptionHandled)
-        {
-            return;
-        }
+        if (context.ExceptionHandled) return;
 
         LogAssist.GetLogger().LogError(0, context.Exception, "{Message}", context.Exception.Message);
 
         if (context.Exception.InnerException != null)
-        {
             LogAssist.GetLogger().LogError(
                 0,
                 context.Exception.InnerException,
                 "{Message}",
                 context.Exception.InnerException.Message
             );
-        }
 
         if (context.Exception is TokenException)
         {

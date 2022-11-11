@@ -1,18 +1,17 @@
 ﻿using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
-namespace EasySoft.UtilityTools.Standard.Exceptions
+namespace EasySoft.UtilityTools.Standard.Exceptions;
+
+/// <summary>
+/// 未知的错误
+/// </summary>
+public class UnknownException : System.Exception
 {
     /// <summary>
-    /// 未知的错误
+    /// UnknownException
     /// </summary>
-    public class UnknownException : System.Exception
+    /// <param name="message"></param>
+    public UnknownException(string message = "") : base("未知的错误{0}".FormatValue(message))
     {
-        /// <summary>
-        /// UnknownException
-        /// </summary>
-        /// <param name="message"></param>
-        public UnknownException(string message = "") : base("未知的错误{0}".FormatValue(message))
-        {
-        }
     }
 }

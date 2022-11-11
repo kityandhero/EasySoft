@@ -10,20 +10,17 @@ public static class WebApplicationExtensions
 {
     public static WebApplication UseAdvanceHangfire(this WebApplication application)
     {
-        if (!HangfireConfigAssist.GetEnable())
-        {
-            StartupConfigMessageAssist.AddConfig(
-                "Hangfire: disable."
-            );
+        if (!HangfireConfigAssist.GetSwitch()) return application;
 
-            return application;
-        }
+        StartupDescriptionMessageAssist.AddExecute(
+            $"{nameof(UseAdvanceHangfire)}()."
+        );
 
         //启用Hangfire面板 
         application.UseHangfireDashboard();
 
-        StartupConfigMessageAssist.AddConfig(
-            $"Hangfire: enable, access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/hangfire" : FlagAssist.StartupUrls.Select(o => $"{o}/hangfire").Join(" "))}."
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"Young can access hangfire by {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/hangfire" : FlagAssist.StartupUrls.Select(o => $"{o}/hangfire").Join(" "))}."
         );
 
         return application;

@@ -55,6 +55,9 @@
         <Content Update="configures\swaggerConfig.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <Content Update="configures\hangfireConfig.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>

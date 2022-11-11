@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
+using Microsoft.AspNetCore.Hosting;
 
-namespace EasySoft.Core.Infrastructure.Assists;
+namespace EasySoft.UtilityTools.Core.Assists;
 
 public static class EnvironmentAssist
 {
@@ -22,22 +24,8 @@ public static class EnvironmentAssist
 
     public static string GetEnvironmentAliasName()
     {
-        try
-        {
-            var environment = GetEnvironment();
+        var environment = GetEnvironment();
 
-            return environment.EnvironmentName.ToLower() switch
-            {
-                "development" => "dev",
-                "test" => "test",
-                "staging" => "stag",
-                "production" => "prod",
-                _ => throw new ArgumentOutOfRangeException()
-            };
-        }
-        catch (Exception)
-        {
-            return "";
-        }
+        return environment.GetAliasName();
     }
 }

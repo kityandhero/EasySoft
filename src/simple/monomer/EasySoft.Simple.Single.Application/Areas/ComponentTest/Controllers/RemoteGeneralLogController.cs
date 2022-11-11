@@ -3,7 +3,7 @@ using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.ExchangeRegulation.ExtensionMethods;
 using EasySoft.Core.GeneralLogTransmitter.Entities;
 using EasySoft.Core.GeneralLogTransmitter.Producers;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
@@ -39,9 +39,7 @@ public class RemoteGeneralLogController : AreaControllerCore
     public IActionResult Test()
     {
         if (!GeneralConfigAssist.GetRemoteGeneralLogSwitch())
-        {
             return this.Fail(ReturnCode.NoChange.ToMessage("RemoteGeneralLogEnable switch is not open"));
-        }
 
         var log = _generalLogProducer.Send("Test");
 

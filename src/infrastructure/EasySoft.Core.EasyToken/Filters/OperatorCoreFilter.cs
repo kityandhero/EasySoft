@@ -8,6 +8,7 @@ using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyToken.AccessControl;
 using EasySoft.Core.ErrorLogTransmitter.Producers;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Core.Results;
 using EasySoft.UtilityTools.Standard.Enums;
@@ -27,10 +28,7 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
             filterContext.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor &&
             controllerActionDescriptor.MethodInfo.ContainAttribute<OperatorAttribute>();
 
-        if (!hasOperatorAttribute)
-        {
-            return;
-        }
+        if (!hasOperatorAttribute) return;
 
         var token = filterContext.HttpContext.GetToken(GeneralConfigAssist.GetTokenName());
 
@@ -61,13 +59,11 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
             catch (Exception e)
             {
                 if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
-                {
                     AutofacAssist.Instance.Resolve<IErrorLogProducer>().Send(
                         e,
                         0,
                         filterContext.HttpContext.BuildRequestInfo()
                     );
-                }
 
                 filterContext.Result = new ApiResult(
                     ReturnCode.TokenExpired.ToInt(),
@@ -96,24 +92,20 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
             actualOperator.SetIdentification(identity);
 
             if (actualOperator.IsAnonymous())
-            {
                 filterContext.Result = new ApiResult(
                     ReturnCode.TokenExpired.ToInt(),
                     false,
                     "凭证无效或凭证已过期"
                 );
-            }
         }
         catch (Exception e)
         {
             if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
-            {
                 AutofacAssist.Instance.Resolve<IErrorLogProducer>().Send(
                     e,
                     0,
                     filterContext.HttpContext.BuildRequestInfo()
                 );
-            }
 
             filterContext.Result = new ApiResult(
                 ReturnCode.TokenExpired.ToInt(),

@@ -2,6 +2,7 @@
 using EasySoft.Core.Data.Attributes;
 using EasySoft.Core.Data.Transactions;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Core.Assists;
 
 namespace EasySoft.Core.Data.Interceptors;
 

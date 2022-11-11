@@ -1,7 +1,7 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyCaching.interfaces;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Simple.Single.Application.Models;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,10 +52,7 @@ public class RedisFeatureCachingController : AreaControllerCore
     {
         var result = _cacheOperator.Get<string>(key);
 
-        if (!result.Success)
-        {
-            return this.Fail(result.Code);
-        }
+        if (!result.Success) return this.Fail(result.Code);
 
         return this.Success(new
         {
@@ -96,10 +93,7 @@ public class RedisFeatureCachingController : AreaControllerCore
     {
         var result = _cacheOperator.Get<Hello>(key);
 
-        if (!result.Success)
-        {
-            return this.Fail(result.Code);
-        }
+        if (!result.Success) return this.Fail(result.Code);
 
         return this.Success(new
         {

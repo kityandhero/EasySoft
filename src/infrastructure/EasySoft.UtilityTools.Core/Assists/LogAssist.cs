@@ -1,8 +1,10 @@
-﻿using EasySoft.UtilityTools.Standard.Assists;
+﻿using System;
+using System.Collections.Generic;
+using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Logging;
 
-namespace EasySoft.Core.Infrastructure.Assists;
+namespace EasySoft.UtilityTools.Core.Assists;
 
 public static class LogAssist
 {

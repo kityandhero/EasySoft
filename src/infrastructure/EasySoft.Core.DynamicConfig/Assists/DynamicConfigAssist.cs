@@ -5,6 +5,7 @@ using EasySoft.Core.Config;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.ConsulConfigCenterClient.Assists;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Enums;
@@ -24,19 +25,13 @@ public static class DynamicConfigAssist
     {
         var defaultTokenExpires = GeneralConfigAssist.GetTokenExpires();
 
-        if (!GeneralConfigAssist.GetConfigCenterSwitch())
-        {
-            return defaultTokenExpires;
-        }
+        if (!GeneralConfigAssist.GetConfigCenterSwitch()) return defaultTokenExpires;
 
         var remoteConfigCache = AgileConfigClientAssist.GetConfigClient().Data;
 
         var remoteTokenExpires = remoteConfigCache[ConstCollection.TokenExpiresKey] ?? "";
 
-        if (remoteTokenExpires.IsInt(out var value) && value > 0)
-        {
-            return value;
-        }
+        if (remoteTokenExpires.IsInt(out var value) && value > 0) return value;
 
         return defaultTokenExpires;
     }
@@ -48,36 +43,26 @@ public static class DynamicConfigAssist
             string remoteNLogJsonConfig;
 
             if (!GeneralConfigAssist.GetConfigCenterSwitch())
-            {
                 return new ExecutiveResult<string>(ReturnCode.Ok)
                 {
                     Data = ""
                 };
-            }
 
             if (GeneralConfigAssist.GetConfigCenterType() == ConfigCenterType.AgileConfig)
-            {
                 remoteNLogJsonConfig = GetJsonConfigFromAgileConfig();
-            }
             else if (GeneralConfigAssist.GetConfigCenterType() == ConfigCenterType.Consul)
-            {
                 remoteNLogJsonConfig = GetJsonConfigFromConsul();
-            }
             else
-            {
                 return new ExecutiveResult<string>(ReturnCode.Ok)
                 {
                     Data = ""
                 };
-            }
 
             if (string.IsNullOrWhiteSpace(remoteNLogJsonConfig))
-            {
                 return new ExecutiveResult<string>(ReturnCode.Ok)
                 {
                     Data = ""
                 };
-            }
 
             try
             {

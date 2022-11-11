@@ -1,7 +1,7 @@
 ﻿using AutoFacTest.Interfaces;
 using EasySoft.Core.AutoFac.Attributes;
 using EasySoft.Core.AutoFac.IocAssists;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;

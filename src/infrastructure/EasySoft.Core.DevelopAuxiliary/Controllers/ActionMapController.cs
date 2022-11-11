@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Controllers;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
@@ -25,7 +25,8 @@ public sealed class ActionMapController : BasicController
             ModuleName = x.Module.Name,
             ActionUrls = x.DeclaredMethods.Where(m => m.IsPublic && !m.IsDefined(typeof(NonActionAttribute)))
                 .Select(y => $"{x.Name.RemoveEnd("Controller")}/{y.Name}"),
-            ActionParameterDetails = x.DeclaredMethods.Where(m => m.IsPublic && !m.IsDefined(typeof(NonActionAttribute)))
+            ActionParameterDetails = x.DeclaredMethods
+                .Where(m => m.IsPublic && !m.IsDefined(typeof(NonActionAttribute)))
                 .Select(y =>
                     new
                     {
@@ -38,7 +39,7 @@ public sealed class ActionMapController : BasicController
                                 z.ParameterType.FullName,
                                 z.Position
                             })
-                    }),
+                    })
         }).Cast<object>().ToList();
 
         return this.Success(data);

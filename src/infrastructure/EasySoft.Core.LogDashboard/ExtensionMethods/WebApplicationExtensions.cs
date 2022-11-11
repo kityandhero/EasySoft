@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using LogDashboard;
 using Microsoft.AspNetCore.Builder;

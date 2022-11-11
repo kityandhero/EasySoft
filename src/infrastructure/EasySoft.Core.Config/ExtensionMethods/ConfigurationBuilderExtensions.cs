@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Core.Assists;
 using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.Config.ExtensionMethods;

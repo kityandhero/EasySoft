@@ -1,6 +1,6 @@
 ﻿using EasySoft.UtilityTools.Core.Securities.Interfaces;
 
-namespace EasySoft.UtilityTools.Core.Securities.Implementations;
+namespace EasySoft.UtilityTools.Core.Securities.implementations;
 
 internal class HashGenerator : IHashGenerator
 {

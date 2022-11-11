@@ -2,6 +2,7 @@
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

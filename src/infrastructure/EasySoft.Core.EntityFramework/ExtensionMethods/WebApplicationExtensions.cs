@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using EasySoft.UtilityTools.Core.Assists;
+using Microsoft.AspNetCore.Builder;
 
 namespace EasySoft.Core.EntityFramework.ExtensionMethods;
 
