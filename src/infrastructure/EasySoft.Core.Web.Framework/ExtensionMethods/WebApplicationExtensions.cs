@@ -105,6 +105,8 @@ public static class WebApplicationExtensions
 
         StartupEndPointExtraActionMessageAssist.Add(startNormalMessageAssist);
 
+        if (extraActions.Any()) StartupDescriptionMessageAssist.AddTraceDivider();
+
         for (var i = 0; i < extraActions.Count; i++)
         {
             var extraAction = extraActions[i];

@@ -1,6 +1,4 @@
-﻿using EasyCaching.Core;
-
-namespace EasySoft.Core.EasyCaching.Operators;
+﻿namespace EasySoft.Core.EasyCaching.Operators;
 
 public class RedisCacheOperator : GeneralCacheOperator
 {

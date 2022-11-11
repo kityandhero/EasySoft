@@ -1,12 +1,9 @@
-﻿using EasyCaching.Core;
-using EasyCaching.Core.Configurations;
-using EasySoft.Core.Config.ConfigAssist;
+﻿using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.EasyCaching.ConfigAssist;
 using EasySoft.Core.EasyCaching.Enums;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Microsoft.AspNetCore.Builder;
 
 namespace EasySoft.Core.EasyCaching.ExtensionMethods;
 

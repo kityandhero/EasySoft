@@ -1,5 +1,4 @@
-﻿using EasyCaching.Core;
-using EasySoft.UtilityTools.Standard.Enums;
+﻿using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.Core.EasyCaching.Operators;
@@ -17,10 +16,7 @@ public abstract class GeneralCacheOperator : BaseCacheOperator
     {
         var cacheValue = _provider.Get<T>(key);
 
-        if (!cacheValue.HasValue)
-        {
-            return new ExecutiveResult<T>(ReturnCode.NoData);
-        }
+        if (!cacheValue.HasValue) return new ExecutiveResult<T>(ReturnCode.NoData);
 
         return new ExecutiveResult<T>(ReturnCode.Ok)
         {
@@ -54,10 +50,7 @@ public abstract class GeneralCacheOperator : BaseCacheOperator
     {
         var cacheValue = await _provider.GetAsync<T>(key);
 
-        if (!cacheValue.HasValue)
-        {
-            return new ExecutiveResult<T>(ReturnCode.NoData);
-        }
+        if (!cacheValue.HasValue) return new ExecutiveResult<T>(ReturnCode.NoData);
 
         return new ExecutiveResult<T>(ReturnCode.Ok)
         {

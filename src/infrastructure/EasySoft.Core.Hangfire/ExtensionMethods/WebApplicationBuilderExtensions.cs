@@ -23,11 +23,11 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddTraceDivider();
 
-        HangfireConfigAssist.Init();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceHangfire)}."
         );
+
+        HangfireConfigAssist.Init();
 
         var hangfireSwitch = HangfireConfigAssist.GetSwitch();
 

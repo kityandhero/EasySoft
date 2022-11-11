@@ -1,5 +1,4 @@
-﻿using EasyCaching.Core;
-using EasySoft.Core.EasyCaching.interfaces;
+﻿using EasySoft.Core.EasyCaching.interfaces;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.Result;
@@ -26,10 +25,7 @@ public class RedisFeatureCacheOperator : BaseCacheOperator, IRedisFeatureCacheOp
 
     private string ValueToString<T>(T value)
     {
-        if (value == null)
-        {
-            throw new Exception("do not set null to cache");
-        }
+        if (value == null) throw new Exception("do not set null to cache");
 
         string valueAdjust;
 
@@ -61,10 +57,7 @@ public class RedisFeatureCacheOperator : BaseCacheOperator, IRedisFeatureCacheOp
 
     public override void RemoveBatch(IEnumerable<string> keys)
     {
-        foreach (var key in keys)
-        {
-            _provider.KeyDel(key);
-        }
+        foreach (var key in keys) _provider.KeyDel(key);
     }
 
     public override void RemoveByPrefix(string prefix)
@@ -97,10 +90,7 @@ public class RedisFeatureCacheOperator : BaseCacheOperator, IRedisFeatureCacheOp
 
     public override async Task RemoveBatchAsync(IEnumerable<string> keys)
     {
-        foreach (var key in keys)
-        {
-            await RemoveAsync(key);
-        }
+        foreach (var key in keys) await RemoveAsync(key);
     }
 
     public override async Task RemoveByPrefixAsync(string prefix)

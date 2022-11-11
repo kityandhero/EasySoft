@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.PermissionVerification.Middlewares;
-using Microsoft.AspNetCore.Builder;
 
 namespace EasySoft.Core.PermissionVerification.ExtensionMethods;
 

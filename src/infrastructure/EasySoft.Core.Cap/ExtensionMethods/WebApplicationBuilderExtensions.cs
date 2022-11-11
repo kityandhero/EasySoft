@@ -28,6 +28,8 @@ public static class WebApplicationBuilderExtensions
     /// <exception cref="Exception"></exception>
     public static WebApplicationBuilder AddAdvanceCap(this WebApplicationBuilder builder)
     {
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceCap)}."
         );

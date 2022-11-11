@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-
-namespace EasySoft.Core.Infrastructure.Startup;
+﻿namespace EasySoft.Core.Infrastructure.Startup;
 
 public class StartupMessage : IStartupMessage
 {

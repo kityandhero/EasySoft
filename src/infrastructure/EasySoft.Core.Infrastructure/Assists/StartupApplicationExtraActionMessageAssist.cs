@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Standard;
-using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.Infrastructure.Assists;
 

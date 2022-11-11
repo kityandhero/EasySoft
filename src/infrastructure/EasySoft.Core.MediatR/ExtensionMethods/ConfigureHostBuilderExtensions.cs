@@ -1,8 +1,4 @@
-﻿using System.Reflection;
-using Autofac;
-using Microsoft.AspNetCore.Builder;
-
-namespace EasySoft.Core.MediatR.ExtensionMethods;
+﻿namespace EasySoft.Core.MediatR.ExtensionMethods;
 
 internal static class ConfigureHostBuilderExtensions
 {

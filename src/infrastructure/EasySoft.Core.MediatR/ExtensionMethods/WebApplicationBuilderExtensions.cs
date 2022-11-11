@@ -1,8 +1,4 @@
-﻿using System.Reflection;
-using EasySoft.Core.Infrastructure.Assists;
-using Microsoft.AspNetCore.Builder;
-
-namespace EasySoft.Core.MediatR.ExtensionMethods;
+﻿namespace EasySoft.Core.MediatR.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
@@ -11,6 +7,8 @@ public static class WebApplicationBuilderExtensions
         Assembly assembly
     )
     {
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceMediatR)}."
         );
@@ -25,6 +23,8 @@ public static class WebApplicationBuilderExtensions
         IEnumerable<Assembly> assemblies
     )
     {
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceMediatR)}."
         );

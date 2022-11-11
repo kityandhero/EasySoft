@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.JsonWebToken.Middlewares;
-using Microsoft.AspNetCore.Builder;
 
 namespace EasySoft.Core.JsonWebToken.ExtensionMethods;
 

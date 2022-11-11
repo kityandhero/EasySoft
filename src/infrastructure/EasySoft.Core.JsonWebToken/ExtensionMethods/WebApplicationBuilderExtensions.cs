@@ -1,8 +1,5 @@
 ﻿using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.JsonWebToken.Middlewares;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 using EasySoft.Core.AuthenticationCore.ExtensionMethods;
 using EasySoft.Core.AuthenticationCore.Operators;
 using EasySoft.Core.Config.ConfigAssist;

@@ -1,7 +1,4 @@
-﻿using EasyCaching.CSRedis;
-using EasyCaching.InMemory;
-using EasySoft.Core.EasyCaching.ConfigAssist;
-using Microsoft.Extensions.DependencyInjection;
+﻿using EasySoft.Core.EasyCaching.ConfigAssist;
 
 namespace EasySoft.Core.EasyCaching.ExtensionMethods;
 

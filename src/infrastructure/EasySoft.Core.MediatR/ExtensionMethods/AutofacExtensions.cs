@@ -1,8 +1,4 @@
-﻿using System.Reflection;
-using Autofac;
-using MediatR;
-
-namespace EasySoft.Core.MediatR.ExtensionMethods;
+﻿namespace EasySoft.Core.MediatR.ExtensionMethods;
 
 public static class AutofacExtensions
 {

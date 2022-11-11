@@ -2,8 +2,6 @@
 using AspectCore.Configuration;
 using AspectCore.Extensions.Autofac;
 using Autofac;
-using EasyCaching.Core;
-using EasyCaching.Core.Configurations;
 using EasyCaching.Core.Interceptor;
 using EasyCaching.Interceptor.AspectCore;
 using Microsoft.Extensions.Options;
@@ -31,9 +29,12 @@ public static class AutofacExtensions
 
         containerBuilder.RegisterDynamicProxy(configure =>
         {
-            bool All(MethodInfo x) => x.CustomAttributes.Any(data =>
-                typeof(EasyCachingInterceptorAttribute).GetTypeInfo().IsAssignableFrom(data.AttributeType)
-            );
+            bool All(MethodInfo x)
+            {
+                return x.CustomAttributes.Any(data =>
+                    typeof(EasyCachingInterceptorAttribute).GetTypeInfo().IsAssignableFrom(data.AttributeType)
+                );
+            }
 
             configure.Interceptors.AddTyped<EasyCachingInterceptor>(All);
         });
