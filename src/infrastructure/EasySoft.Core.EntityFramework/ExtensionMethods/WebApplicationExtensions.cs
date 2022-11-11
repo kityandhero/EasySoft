@@ -1,7 +1,4 @@
-﻿using EasySoft.UtilityTools.Core.Assists;
-using Microsoft.AspNetCore.Builder;
-
-namespace EasySoft.Core.EntityFramework.ExtensionMethods;
+﻿namespace EasySoft.Core.EntityFramework.ExtensionMethods;
 
 public static class WebApplicationExtensions
 {

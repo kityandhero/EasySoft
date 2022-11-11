@@ -6,7 +6,6 @@ using EasySoft.Core.EventBus.RabbitMq;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.EventBus.ExtensionMethods;
 

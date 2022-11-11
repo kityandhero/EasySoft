@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace EasySoft.Core.Sql.Common
+﻿namespace EasySoft.Core.Sql.Common
 {
     public static class FieldItemSpecialFactory
     {

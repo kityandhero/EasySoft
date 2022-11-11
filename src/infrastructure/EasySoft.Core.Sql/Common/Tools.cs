@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-
-namespace EasySoft.Core.Sql.Common
+﻿namespace EasySoft.Core.Sql.Common
 {
     public static class Tools
     {

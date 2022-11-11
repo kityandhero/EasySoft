@@ -1,9 +1,4 @@
-﻿using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-using Microsoft.AspNetCore.Builder;
-
-namespace EasySoft.Core.EntityFramework.SqlServer.Extensions;
+﻿namespace EasySoft.Core.EntityFramework.SqlServer.Extensions;
 
 public static class WebApplicationBuilderExtensions
 {

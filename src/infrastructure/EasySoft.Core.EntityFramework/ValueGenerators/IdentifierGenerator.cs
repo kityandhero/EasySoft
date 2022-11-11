@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
-
-namespace EasySoft.Core.EntityFramework.ValueGenerators;
+﻿namespace EasySoft.Core.EntityFramework.ValueGenerators;
 
 public class IdentifierGenerator : ValueGenerator
 {

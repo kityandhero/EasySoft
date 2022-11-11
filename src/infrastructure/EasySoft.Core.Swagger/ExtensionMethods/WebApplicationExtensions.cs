@@ -1,12 +1,4 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Startup;
-using EasySoft.Core.Swagger.ConfigAssist;
-using EasySoft.UtilityTools.Core.Assists;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using IGeekFan.AspNetCore.Knife4jUI;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
+﻿using EasySoft.Core.Swagger.ConfigAssist;
 
 namespace EasySoft.Core.Swagger.ExtensionMethods;
 

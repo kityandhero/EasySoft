@@ -1,6 +1,5 @@
 ﻿using System.Net.Sockets;
 using EasySoft.Core.Config.ConfigAssist;
-using Microsoft.Extensions.Logging;
 using Polly;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;

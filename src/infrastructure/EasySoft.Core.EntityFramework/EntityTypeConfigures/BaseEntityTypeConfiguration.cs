@@ -1,7 +1,5 @@
 ﻿using EasySoft.Core.EntityFramework.ValueGenerators;
 using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
-using EasySoft.UtilityTools.Standard;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EasySoft.Core.EntityFramework.EntityTypeConfigures;
 

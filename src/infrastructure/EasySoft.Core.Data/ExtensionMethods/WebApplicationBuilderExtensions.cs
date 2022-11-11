@@ -1,8 +1,4 @@
-﻿using System.Reflection;
-using EasySoft.Core.Infrastructure.Assists;
-using Microsoft.AspNetCore.Builder;
-
-namespace EasySoft.Core.Data.ExtensionMethods;
+﻿namespace EasySoft.Core.Data.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {

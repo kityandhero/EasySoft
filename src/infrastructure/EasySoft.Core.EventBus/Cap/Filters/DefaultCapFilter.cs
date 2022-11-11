@@ -1,7 +1,4 @@
-﻿using DotNetCore.CAP.Filter;
-using Microsoft.Extensions.Logging;
-
-namespace EasySoft.Core.EventBus.Cap.Filters;
+﻿namespace EasySoft.Core.EventBus.Cap.Filters;
 
 public class DefaultCapFilter : SubscribeFilter
 {

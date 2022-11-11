@@ -1,8 +1,4 @@
-﻿using System.Linq.Expressions;
-using EasySoft.Core.Data.Repositories;
-using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
-using EasySoft.UtilityTools.Standard.Enums;
-using EasySoft.UtilityTools.Standard.Result;
+﻿using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
 
 namespace EasySoft.Core.EntityFramework.Repositories;
 

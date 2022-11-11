@@ -1,7 +1,4 @@
-﻿using DotNetCore.CAP;
-using Microsoft.EntityFrameworkCore.Storage;
-
-namespace EasySoft.Core.EntityFramework.InterFaces;
+﻿namespace EasySoft.Core.EntityFramework.InterFaces;
 
 public interface IAdvanceTransaction
 {

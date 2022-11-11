@@ -1,8 +1,4 @@
-﻿using EasySoft.Core.EntityFramework.Contexts.ContextFactories;
-using EasySoft.Core.Infrastructure.Startup;
-using Microsoft.AspNetCore.Builder;
-
-namespace EasySoft.Core.EntityFramework.ExtensionMethods;
+﻿namespace EasySoft.Core.EntityFramework.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {

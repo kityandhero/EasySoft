@@ -1,8 +1,5 @@
-﻿using EasySoft.Core.Infrastructure.Controllers;
-using EasySoft.Core.Swagger.ConfigAssist;
+﻿using EasySoft.Core.Swagger.ConfigAssist;
 using EasySoft.Core.Swagger.ConfigCollection;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Core.Swagger.Controllers;
 

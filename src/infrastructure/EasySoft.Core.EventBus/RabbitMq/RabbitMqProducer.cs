@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using EasySoft.UtilityTools.Standard.Assists;
-using Microsoft.Extensions.Logging;
 using Polly;
 using RabbitMQ.Client;
 

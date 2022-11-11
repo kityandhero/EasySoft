@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using EasySoft.Core.Sql.Assists;
+﻿using EasySoft.Core.Sql.Assists;
 using EasySoft.Core.Sql.Enums;
 using EasySoft.Core.Sql.Interfaces;
 

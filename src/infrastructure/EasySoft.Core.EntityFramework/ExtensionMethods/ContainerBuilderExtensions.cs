@@ -1,5 +1,4 @@
-﻿using Autofac;
-using EasySoft.Core.EntityFramework.Contexts.ContextFactories;
+﻿using EasySoft.Core.EntityFramework.Contexts.ContextFactories;
 
 namespace EasySoft.Core.EntityFramework.ExtensionMethods;
 

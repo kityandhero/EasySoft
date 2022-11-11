@@ -1,6 +1,4 @@
-﻿using Autofac;
-using EasySoft.Core.EntityFramework.Contexts.ContextFactories;
-using Microsoft.AspNetCore.Builder;
+﻿using EasySoft.Core.EntityFramework.Contexts.ContextFactories;
 
 namespace EasySoft.Core.EntityFramework.ExtensionMethods;
 

@@ -1,8 +1,4 @@
-﻿using System.Data;
-using EasySoft.Core.Data.Transactions;
-using Microsoft.EntityFrameworkCore.Storage;
-
-namespace EasySoft.Core.EntityFramework.Transactions;
+﻿namespace EasySoft.Core.EntityFramework.Transactions;
 
 public abstract class BasicUnitOfWork<TContext> : IUnitOfWork where TContext : BasicContext
 {

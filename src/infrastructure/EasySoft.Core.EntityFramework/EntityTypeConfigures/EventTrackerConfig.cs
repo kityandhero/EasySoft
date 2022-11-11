@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace EasySoft.Core.EntityFramework.EntityTypeConfigures;
+﻿namespace EasySoft.Core.EntityFramework.EntityTypeConfigures;
 
 public class EventTrackerConfig : BaseEntityTypeConfiguration<EventTracker>
 {

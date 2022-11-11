@@ -1,8 +1,4 @@
-﻿using EasySoft.Core.EntityFramework.Contexts.Basic;
-using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
-using EasySoft.Core.Infrastructure.Operations.Interfaces;
-
-namespace EasySoft.Core.EntityFramework.SqlServer.Contexts;
+﻿namespace EasySoft.Core.EntityFramework.SqlServer.Contexts;
 
 public class SqlServerContext : BasicContext
 {

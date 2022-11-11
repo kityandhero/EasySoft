@@ -1,6 +1,4 @@
-﻿using System.Data;
-
-namespace EasySoft.Core.Data.Transactions;
+﻿namespace EasySoft.Core.Data.Transactions;
 
 public interface IUnitOfWork : IDisposable
 {

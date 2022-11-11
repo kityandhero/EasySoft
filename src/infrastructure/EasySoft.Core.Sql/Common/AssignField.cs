@@ -1,8 +1,6 @@
-﻿using System.Linq.Expressions;
-using EasySoft.Core.Sql.Assists;
+﻿using EasySoft.Core.Sql.Assists;
 using EasySoft.Core.Sql.Enums;
 using EasySoft.Core.Sql.Interfaces;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.Sql.Common;
 

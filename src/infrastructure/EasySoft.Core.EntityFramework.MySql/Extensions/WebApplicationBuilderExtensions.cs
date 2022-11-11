@@ -1,8 +1,4 @@
-﻿using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
-using EasySoft.Core.Infrastructure.Assists;
-using Microsoft.AspNetCore.Builder;
-
-namespace EasySoft.Core.EntityFramework.MySql.Extensions;
+﻿namespace EasySoft.Core.EntityFramework.MySql.Extensions;
 
 public static class WebApplicationBuilderExtensions
 {
