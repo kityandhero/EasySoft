@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.Config.Cap;
 using EasySoft.Core.Config.ConfigInterface;
-using EasySoft.UtilityTools.Standard.Enums;
 
 namespace EasySoft.Core.Config.ConfigCollection;
 

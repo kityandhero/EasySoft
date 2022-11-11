@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace EasySoft.Core.AuthenticationCore.ExtensionMethods;
+﻿namespace EasySoft.Core.AuthenticationCore.ExtensionMethods;
 
 public static class HttpContextExtensions
 {

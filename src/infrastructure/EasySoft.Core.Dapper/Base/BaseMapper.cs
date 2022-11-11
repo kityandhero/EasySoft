@@ -1,29 +1,5 @@
-﻿using System.Collections;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.Dynamic;
-using System.Linq.Expressions;
-using System.Text;
-using Dapper;
-using EasySoft.Core.AutoFac.IocAssists;
-using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Dapper.Enums;
+﻿using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.Interfaces;
-using EasySoft.Core.Sql.Assists;
-using EasySoft.Core.Sql.Common;
-using EasySoft.Core.Sql.Entities;
-using EasySoft.Core.Sql.Enums;
-using EasySoft.Core.Sql.ExtensionMethods;
-using EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
-using EasySoft.IdGenerator.Assists;
-using EasySoft.UtilityTools.Core.Channels;
-using EasySoft.UtilityTools.Standard;
-using EasySoft.UtilityTools.Standard.Assists;
-using EasySoft.UtilityTools.Standard.Enums;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using EasySoft.UtilityTools.Standard.Result;
-using Newtonsoft.Json;
-using StackExchange.Profiling;
 
 namespace EasySoft.Core.Dapper.Base;
 

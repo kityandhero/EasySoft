@@ -1,8 +1,4 @@
-﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using EasySoft.Core.Config.Options;
-using EasySoft.Core.Infrastructure.Assists;
-using Microsoft.AspNetCore.Builder;
+﻿using EasySoft.Core.Config.Options;
 
 namespace EasySoft.Core.Config.ExtensionMethods;
 

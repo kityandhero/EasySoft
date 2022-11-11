@@ -1,18 +1,14 @@
-﻿using System.Data;
-using EasySoft.Core.Sql.Enums;
+﻿namespace EasySoft.Core.Dapper.Interfaces;
 
-namespace EasySoft.Core.Dapper.Interfaces
+public interface IMapperChannel
 {
-    public interface IMapperChannel
-    {
-        string GetChannel();
+    string GetChannel();
 
-        string GetConnectionString();
+    string GetConnectionString();
 
-        RelationDatabaseType GetRelationDatabaseType();
+    RelationDatabaseType GetRelationDatabaseType();
 
-        IDbConnection OpenConnection();
+    IDbConnection OpenConnection();
 
-        IMapperTransaction CreateMapperTransaction();
-    }
+    IMapperTransaction CreateMapperTransaction();
 }

@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.Data.Contexts.Interfaces;
-using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
+﻿using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
 
 namespace EasySoft.Core.EntityFramework.Contexts.Basic;
 

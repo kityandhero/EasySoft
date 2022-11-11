@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.CacheCore.interfaces;
-
-namespace EasySoft.Core.Dapper.Elegant.Configure;
+﻿namespace EasySoft.Core.Dapper.Elegant.Configure;
 
 public static class DapperElegantConfigurator
 {

@@ -1,5 +1,4 @@
-﻿using EasySoft.IdGenerator.Assists;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 namespace EasySoft.Core.EntityFramework.ValueGenerators;

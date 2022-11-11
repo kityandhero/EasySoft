@@ -1,7 +1,4 @@
-﻿using Autofac;
-using EasySoft.Core.AuthenticationCore.Operators;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
+﻿using EasySoft.Core.AuthenticationCore.Operators;
 
 namespace EasySoft.Core.AuthenticationCore.ExtensionMethods;
 

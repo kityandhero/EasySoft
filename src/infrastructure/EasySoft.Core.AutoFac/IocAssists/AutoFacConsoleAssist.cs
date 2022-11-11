@@ -1,9 +1,4 @@
-﻿using System.ComponentModel;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace EasySoft.Core.AutoFac.IocAssists;
+﻿namespace EasySoft.Core.AutoFac.IocAssists;
 
 [Description("该类暂时未考虑用处")]
 public static class AutoFacConsoleAssist

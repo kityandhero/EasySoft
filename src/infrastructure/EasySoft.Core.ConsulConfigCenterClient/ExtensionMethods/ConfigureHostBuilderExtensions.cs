@@ -1,12 +1,4 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.UtilityTools.Core.Channels;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Primitives;
-using Winton.Extensions.Configuration.Consul;
-
-namespace EasySoft.Core.ConsulConfigCenterClient.ExtensionMethods;
+﻿namespace EasySoft.Core.ConsulConfigCenterClient.ExtensionMethods;
 
 public static class ConfigureHostBuilderExtensions
 {

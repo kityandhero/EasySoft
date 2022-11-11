@@ -1,9 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.FeatureManagement;
-
-namespace EasySoft.Core.FeatureManagement.ExtensionMethods;
+﻿namespace EasySoft.Core.FeatureManagement.ExtensionMethods;
 
 /// <summary>
 /// Feature Management

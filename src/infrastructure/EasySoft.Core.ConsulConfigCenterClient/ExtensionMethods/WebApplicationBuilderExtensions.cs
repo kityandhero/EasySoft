@@ -1,8 +1,4 @@
 ﻿using EasySoft.Core.ConsulConfigCenterClient.Assists;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.UtilityTools.Core.Channels;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.ConsulConfigCenterClient.ExtensionMethods;
 

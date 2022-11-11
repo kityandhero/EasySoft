@@ -1,10 +1,4 @@
-﻿using Autofac;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Mapster.Assists;
-using Mapster;
-using MapsterMapper;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
+﻿using EasySoft.Core.Mapster.Assists;
 
 namespace EasySoft.Core.Mapster.ExtensionMethods;
 

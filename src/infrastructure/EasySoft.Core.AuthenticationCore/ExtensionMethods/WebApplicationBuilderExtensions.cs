@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.AuthenticationCore.Operators;
-using Microsoft.AspNetCore.Builder;
 
 namespace EasySoft.Core.AuthenticationCore.ExtensionMethods;
 

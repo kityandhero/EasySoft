@@ -1,78 +1,73 @@
-﻿using System.Data;
-using EasySoft.Core.Dapper.Interfaces;
-using EasySoft.Core.Sql.Enums;
-using Microsoft.Data.SqlClient;
-using StackExchange.Profiling.Data;
+﻿using EasySoft.Core.Dapper.Interfaces;
 
-namespace EasySoft.Core.Dapper.Common
+namespace EasySoft.Core.Dapper.Common;
+
+public class MapperTransaction : IMapperTransaction
 {
-    public class MapperTransaction : IMapperTransaction
+    private readonly ProfiledDbConnection _dbConnection;
+
+    private readonly IDbTransaction _dbTransaction;
+
+    private readonly IMapperChannel _mapperChannel;
+
+    public MapperTransaction(IMapperChannel mapperChannel)
     {
-        private readonly ProfiledDbConnection _dbConnection;
+        _mapperChannel = new MapperChannel(
+            mapperChannel.GetChannel(),
+            mapperChannel.GetConnectionString(),
+            mapperChannel.GetRelationDatabaseType()
+        );
 
-        private readonly IDbTransaction _dbTransaction;
-
-        private readonly IMapperChannel _mapperChannel;
-
-        public MapperTransaction(IMapperChannel mapperChannel)
+        switch (_mapperChannel.GetRelationDatabaseType())
         {
-            _mapperChannel = new MapperChannel(
-                mapperChannel.GetChannel(),
-                mapperChannel.GetConnectionString(),
-                mapperChannel.GetRelationDatabaseType()
-            );
+            case RelationDatabaseType.SqlServer:
+                _dbConnection = new ProfiledDbConnection(
+                    new SqlConnection(_mapperChannel.GetConnectionString()),
+                    MiniProfiler.Current
+                );
+                break;
 
-            switch (_mapperChannel.GetRelationDatabaseType())
-            {
-                case RelationDatabaseType.SqlServer:
-                    _dbConnection = new ProfiledDbConnection(
-                        new SqlConnection(_mapperChannel.GetConnectionString()),
-                        StackExchange.Profiling.MiniProfiler.Current
-                    );
-                    break;
-
-                default:
-                    throw new Exception("未知的关系型数据库");
-            }
-
-            _dbConnection.Open();
-            _dbTransaction = _dbConnection.BeginTransaction();
+            default:
+                throw new Exception("未知的关系型数据库");
         }
 
-        public ProfiledDbConnection GetDbConnection()
-        {
-            return _dbConnection;
-        }
+        _dbConnection.Open();
+        _dbTransaction = _dbConnection.BeginTransaction();
+    }
 
-        public IDbTransaction GetTransaction()
-        {
-            return _dbTransaction;
-        }
+    public ProfiledDbConnection GetDbConnection()
+    {
+        return _dbConnection;
+    }
 
-        public IMapperChannel GetMapperChannel()
-        {
-            return _mapperChannel;
-        }
+    public IDbTransaction GetTransaction()
+    {
+        return _dbTransaction;
+    }
 
-        public RelationDatabaseType GetRelationDatabaseType()
-        {
-            return _mapperChannel.GetRelationDatabaseType();
-        }
+    public IMapperChannel GetMapperChannel()
+    {
+        return _mapperChannel;
+    }
 
-        public void Commit()
-        {
-            _dbTransaction.Commit();
-        }
+    public RelationDatabaseType GetRelationDatabaseType()
+    {
+        return _mapperChannel.GetRelationDatabaseType();
+    }
 
-        public void Rollback()
-        {
-            _dbTransaction.Rollback();
-        }
+    public void Commit()
+    {
+        _dbTransaction.Commit();
+    }
 
-        public void Dispose()
-        {
-            _dbConnection.Dispose();
-            _dbTransaction.Dispose();
-        }
+    public void Rollback()
+    {
+        _dbTransaction.Rollback();
+    }
+
+    public void Dispose()
+    {
+        _dbConnection.Dispose();
+        _dbTransaction.Dispose();
     }
 }

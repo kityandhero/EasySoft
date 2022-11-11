@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Repositories.Entities.Implementations;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EasySoft.Core.EntityFramework.EntityTypeConfigures;
 

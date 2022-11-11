@@ -1,15 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using EasySoft.Core.AuthenticationCore.Tools;
-using EasySoft.Core.AutoFac.IocAssists;
-using EasySoft.Core.CacheCore.interfaces;
-using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.DynamicConfig.Assists;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Microsoft.IdentityModel.Tokens;
-
-namespace EasySoft.Core.JsonWebToken.Assists;
+﻿namespace EasySoft.Core.JsonWebToken.Assists;
 
 public static class TokenAssist
 {
@@ -17,7 +6,7 @@ public static class TokenAssist
     {
         return new JwtSecurityTokenHandler().ValidateToken(
             token,
-            TokenAssist.GenerateTokenValidationParameters(),
+            GenerateTokenValidationParameters(),
             out _
         );
     }
@@ -41,7 +30,7 @@ public static class TokenAssist
     {
         var claimsAdjust = new List<Claim>
         {
-            new(JwtRegisteredClaimSpecialNames.EasySoftTokenIdentity, identification),
+            new(JwtRegisteredClaimSpecialNames.EasySoftTokenIdentity, identification)
         };
 
         claimsAdjust.AddRange(claims);
@@ -55,19 +44,16 @@ public static class TokenAssist
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var securityToken = new JwtSecurityToken(
-            issuer: GeneralConfigAssist.GetJsonWebTokenValidIssuer(),
-            audience: GeneralConfigAssist.GetJsonWebTokenValidAudience(),
-            claims: claimsAdjust,
+            GeneralConfigAssist.GetJsonWebTokenValidIssuer(),
+            GeneralConfigAssist.GetJsonWebTokenValidAudience(),
+            claimsAdjust,
             expires: DateTime.Now.AddSeconds(DynamicConfigAssist.GetTokenExpires()),
             signingCredentials: credentials
         );
 
         var token = new JwtSecurityTokenHandler().WriteToken(securityToken);
 
-        if (!GeneralConfigAssist.GetTokenServerDumpSwitch())
-        {
-            return token;
-        }
+        if (!GeneralConfigAssist.GetTokenServerDumpSwitch()) return token;
 
         var asyncCacheOperator = AutofacAssist.Instance.Resolve<IAsyncCacheOperator>();
 

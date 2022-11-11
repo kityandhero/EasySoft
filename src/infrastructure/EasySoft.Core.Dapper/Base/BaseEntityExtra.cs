@@ -1,13 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Dynamic;
-using System.Linq.Expressions;
-using System.Reflection;
-using EasySoft.Core.Dapper.Interfaces;
-using EasySoft.Core.Sql.Common;
-using EasySoft.UtilityTools.Standard.Assists;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using EasySoft.Core.Dapper.Interfaces;
 
 namespace EasySoft.Core.Dapper.Base;
 

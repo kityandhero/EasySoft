@@ -1,7 +1,4 @@
-﻿using Autofac;
-using EasySoft.Core.Config.Options;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
+﻿using EasySoft.Core.Config.Options;
 
 namespace EasySoft.Core.Config.ExtensionMethods;
 

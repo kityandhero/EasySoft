@@ -1,7 +1,4 @@
-﻿using System.Reflection;
-using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
-using EasySoft.Core.Infrastructure.Repositories.Entities.Implementations;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
 
 namespace EasySoft.Core.EntityFramework.EntityConfigures.Implementations;
 

@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Result;
-
-namespace EasySoft.Core.CacheCore.interfaces;
+﻿namespace EasySoft.Core.CacheCore.interfaces;
 
 public interface IAsyncCacheOperator : ICacheOperator
 {

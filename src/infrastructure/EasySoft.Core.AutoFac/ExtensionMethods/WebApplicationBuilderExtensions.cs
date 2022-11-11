@@ -1,12 +1,5 @@
-﻿using System.Reflection;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using EasySoft.Core.AutoFac.IocAssists;
+﻿using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.AutoFac.Selectors;
-using EasySoft.Core.Infrastructure.Assists;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.AutoFac.ExtensionMethods;
 

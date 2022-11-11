@@ -1,21 +1,4 @@
-﻿using System.Data;
-using System.Dynamic;
-using Dapper;
-using EasySoft.Core.AutoFac.IocAssists;
-using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Dapper.Elegant.Configure;
-using EasySoft.Core.Dapper.Enums;
-using EasySoft.Core.Dapper.Interfaces;
-using EasySoft.Core.ErrorLogTransmitter.Producers;
-using EasySoft.Core.Sql.Assists;
-using EasySoft.Core.Sql.Entities;
-using EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
-using EasySoft.UtilityTools.Core.Channels;
-using EasySoft.UtilityTools.Standard;
-using EasySoft.UtilityTools.Standard.Assists;
-using EasySoft.UtilityTools.Standard.Enums;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using EasySoft.UtilityTools.Standard.Result;
+﻿using EasySoft.Core.Dapper.Elegant.Configure;
 
 namespace EasySoft.Core.Dapper.Elegant.Assists;
 
@@ -85,7 +68,6 @@ public class QueryAssist
             try
             {
                 foreach (var sql in listSql)
-                {
                     try
                     {
                         LogSql(mapperChannel, sql);
@@ -98,7 +80,6 @@ public class QueryAssist
 
                         throw;
                     }
-                }
 
                 mapperTransaction.Commit();
             }
@@ -686,10 +667,7 @@ public class QueryAssist
 
                     var list = ConvertAssist.DataReaderToExpandoObjectList(reader);
 
-                    if (!reader.IsClosed)
-                    {
-                        reader.Close();
-                    }
+                    if (!reader.IsClosed) reader.Close();
 
                     var totalCount = Convert.ToInt32(conn.ExecuteScalar(countSql));
 
@@ -896,10 +874,7 @@ public class QueryAssist
 
                     var list = ConvertAssist.DataReaderToExpandoObjectList(reader);
 
-                    if (!reader.IsClosed)
-                    {
-                        reader.Close();
-                    }
+                    if (!reader.IsClosed) reader.Close();
 
                     var totalCount = Convert.ToInt32(conn.ExecuteScalar(countSql));
 
@@ -924,22 +899,13 @@ public class QueryAssist
 
         private static void LogSql(IMapperChannel mapperChannel, params string[] sqlArray)
         {
-            if (sqlArray.Length <= 0)
-            {
-                return;
-            }
+            if (sqlArray.Length <= 0) return;
 
-            if (GeneralConfigAssist.GetRemoteGeneralLogSwitch())
-            {
-                return;
-            }
+            if (GeneralConfigAssist.GetRemoteGeneralLogSwitch()) return;
 
             var applicationChannel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
 
-            if (!DapperElegantConfigurator.GetSqlLogRecordJudge()(applicationChannel.GetChannel()))
-            {
-                return;
-            }
+            if (!DapperElegantConfigurator.GetSqlLogRecordJudge()(applicationChannel.GetChannel())) return;
 
             var listRecord = (
                 from sql in sqlArray
@@ -960,10 +926,7 @@ public class QueryAssist
                 }
             ).ToList();
 
-            if (listRecord.Count > 0)
-            {
-                listRecord.ForEach(LogSqlExecutionMessage);
-            }
+            if (listRecord.Count > 0) listRecord.ForEach(LogSqlExecutionMessage);
         }
 
         /// <summary>
@@ -1024,10 +987,7 @@ public class QueryAssist
             IMapperChannel mapperChannel
         )
         {
-            if (GeneralConfigAssist.GetRemoteErrorLogSwitch())
-            {
-                return;
-            }
+            if (GeneralConfigAssist.GetRemoteErrorLogSwitch()) return;
 
             var sqlList = sqlCollection.ToListFilterNullOrWhiteSpace();
 
@@ -1083,10 +1043,7 @@ public class QueryAssist
         {
             needSetCatch = true;
 
-            if (count <= totalCountCacheThreshold)
-            {
-                needSetCatch = false;
-            }
+            if (count <= totalCountCacheThreshold) needSetCatch = false;
 
             if (count > totalCountCacheThreshold && count <= totalCountCacheThreshold + 500)
             {
@@ -1149,10 +1106,7 @@ public class QueryAssist
 
             var resultCache = cacheOperator.Get<int>(key);
 
-            if (resultCache.Success)
-            {
-                return resultCache.Data;
-            }
+            if (resultCache.Success) return resultCache.Data;
 
             result = calculateFunc();
 
@@ -1163,10 +1117,7 @@ public class QueryAssist
                 out var needSetCatch
             );
 
-            if (needSetCatch)
-            {
-                cacheOperator.Set(key, result, timeSpan);
-            }
+            if (needSetCatch) cacheOperator.Set(key, result, timeSpan);
 
             return result;
         }

@@ -1,9 +1,4 @@
-﻿using System.Reflection;
-using Autofac;
-using Autofac.Builder;
-using Autofac.Features.Scanning;
-
-namespace EasySoft.Core.AutoFac.ExtensionMethods;
+﻿namespace EasySoft.Core.AutoFac.ExtensionMethods;
 
 public static class AutofacExtensions
 {
@@ -22,10 +17,7 @@ public static class AutofacExtensions
             Func<Type, string>? serviceNameMapping = null
         ) where T : class
     {
-        if (assemblies == null || !assemblies.Any())
-        {
-            throw new ArgumentNullException(nameof(assemblies));
-        }
+        if (assemblies == null || !assemblies.Any()) throw new ArgumentNullException(nameof(assemblies));
 
         var registrationBuilder = builder.RegisterAssemblyTypes(assemblies)
             .Where(t => typeof(T).IsAssignableFrom(t) && !t.IsAbstract)
@@ -38,15 +30,9 @@ public static class AutofacExtensions
         //     
         // }
 
-        if (typeof(T).IsInterface)
-        {
-            registrationBuilder = registrationBuilder.AsImplementedInterfaces();
-        }
+        if (typeof(T).IsInterface) registrationBuilder = registrationBuilder.AsImplementedInterfaces();
 
-        if (serviceNameMapping != null)
-        {
-            registrationBuilder = registrationBuilder.Named<T>(serviceNameMapping);
-        }
+        if (serviceNameMapping != null) registrationBuilder = registrationBuilder.Named<T>(serviceNameMapping);
 
         return registrationBuilder;
     }

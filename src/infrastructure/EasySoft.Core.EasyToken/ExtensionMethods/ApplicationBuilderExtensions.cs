@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.EasyToken.Middlewares;
-using Microsoft.AspNetCore.Builder;
 
 namespace EasySoft.Core.EasyToken.ExtensionMethods;
 

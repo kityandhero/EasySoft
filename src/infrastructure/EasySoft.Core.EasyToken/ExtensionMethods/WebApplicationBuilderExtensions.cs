@@ -1,14 +1,5 @@
-﻿using Autofac;
-using EasySoft.Core.AuthenticationCore.ExtensionMethods;
-using EasySoft.Core.AuthenticationCore.Operators;
-using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.EasyToken.AccessControl;
+﻿using EasySoft.Core.EasyToken.AccessControl;
 using EasySoft.Core.EasyToken.Middlewares;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.UtilityTools.Standard;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.EasyToken.ExtensionMethods;
 

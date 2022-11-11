@@ -1,6 +1,4 @@
-﻿using AgileConfig.Client;
-
-namespace EasySoft.Core.AgileConfigClient.Assists;
+﻿namespace EasySoft.Core.AgileConfigClient.Assists;
 
 public static class AgileConfigClientActionAssist
 {

@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using Autofac.Core;
-using EasySoft.Core.AutoFac.Attributes;
+﻿using EasySoft.Core.AutoFac.Attributes;
 
 namespace EasySoft.Core.AutoFac.Selectors;
 

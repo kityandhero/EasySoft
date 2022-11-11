@@ -3,7 +3,6 @@ using EasySoft.Core.Config.Exceptions;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 

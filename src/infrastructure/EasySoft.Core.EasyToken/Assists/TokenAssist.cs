@@ -1,9 +1,4 @@
-﻿using EasySoft.Core.AutoFac.IocAssists;
-using EasySoft.Core.CacheCore.interfaces;
-using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.DynamicConfig.Assists;
-using EasySoft.Core.EasyToken.AccessControl;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿using EasySoft.Core.EasyToken.AccessControl;
 
 namespace EasySoft.Core.EasyToken.Assists;
 
@@ -18,10 +13,7 @@ public static class TokenAssist
             new TimeSpan(TimeSpan.TicksPerSecond * DynamicConfigAssist.GetTokenExpires())
         );
 
-        if (!GeneralConfigAssist.GetTokenServerDumpSwitch())
-        {
-            return token;
-        }
+        if (!GeneralConfigAssist.GetTokenServerDumpSwitch()) return token;
 
         var asyncCacheOperator = AutofacAssist.Instance.Resolve<IAsyncCacheOperator>();
 

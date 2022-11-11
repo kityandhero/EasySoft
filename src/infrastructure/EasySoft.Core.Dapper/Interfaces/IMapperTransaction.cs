@@ -1,21 +1,16 @@
-﻿using System.Data;
-using EasySoft.Core.Sql.Enums;
-using StackExchange.Profiling.Data;
+﻿namespace EasySoft.Core.Dapper.Interfaces;
 
-namespace EasySoft.Core.Dapper.Interfaces
+public interface IMapperTransaction : IDisposable
 {
-    public interface IMapperTransaction : IDisposable
-    {
-        ProfiledDbConnection GetDbConnection();
+    ProfiledDbConnection GetDbConnection();
 
-        IDbTransaction GetTransaction();
+    IDbTransaction GetTransaction();
 
-        IMapperChannel GetMapperChannel();
+    IMapperChannel GetMapperChannel();
 
-        RelationDatabaseType GetRelationDatabaseType();
+    RelationDatabaseType GetRelationDatabaseType();
 
-        void Commit();
+    void Commit();
 
-        void Rollback();
-    }
+    void Rollback();
 }

@@ -1,6 +1,4 @@
-﻿using Mapster;
-
-namespace EasySoft.Core.Mapster.Assists;
+﻿namespace EasySoft.Core.Mapster.Assists;
 
 public static class ConfigActionAssist
 {

@@ -19,6 +19,6 @@ var reply = await client.RegisterAsync(
 Console.WriteLine("Message: " + reply.Message);
 Console.WriteLine("Press any key to exit...");
 
-var color = ConsoleColor.Green;
+// var color = ConsoleColor.Green;
 
 Console.ReadKey();

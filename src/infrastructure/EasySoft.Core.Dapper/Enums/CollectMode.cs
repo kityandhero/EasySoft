@@ -1,25 +1,22 @@
-﻿using System.ComponentModel;
+﻿namespace EasySoft.Core.Dapper.Enums;
 
-namespace EasySoft.Core.Dapper.Enums
+public enum CollectMode
 {
-    public enum CollectMode
+    [Description("未知")]
+    Unknown = 0,
+
+    [Description("日记记录")]
+    LogRecord = 10,
+
+    [Description("MiniProfiler")]
+    MiniProfiler = 20
+}
+
+public static class CollectModeExtensionMethods
+{
+    public static int ToInt(this CollectMode collectMode
+    )
     {
-        [Description("未知")]
-        Unknown = 0,
-
-        [Description("日记记录")]
-        LogRecord = 10,
-
-        [Description("MiniProfiler")]
-        MiniProfiler = 20,
-    }
-
-    public static class CollectModeExtensionMethods
-    {
-        public static int ToInt(this CollectMode collectMode
-        )
-        {
-            return (int)collectMode;
-        }
+        return (int)collectMode;
     }
 }

@@ -1,6 +1,4 @@
-﻿using MapsterMapper;
-
-namespace EasySoft.Core.Mapster.Assists;
+﻿namespace EasySoft.Core.Mapster.Assists;
 
 public static class MapperAssist
 {
@@ -13,10 +11,7 @@ public static class MapperAssist
 
     public static IMapper GetMapper()
     {
-        if (_mapper == null)
-        {
-            throw new Exception("please set mapper before get it");
-        }
+        if (_mapper == null) throw new Exception("please set mapper before get it");
 
         return _mapper;
     }

@@ -1,6 +1,4 @@
-﻿using AgileConfig.Client;
-
-namespace EasySoft.Core.AgileConfigClient.Assists;
+﻿namespace EasySoft.Core.AgileConfigClient.Assists;
 
 public static class AgileConfigClientAssist
 {
@@ -13,10 +11,7 @@ public static class AgileConfigClientAssist
 
     public static IConfigClient GetConfigClient()
     {
-        if (_configClient == null)
-        {
-            throw new Exception("configClient has not set yet");
-        }
+        if (_configClient == null) throw new Exception("configClient has not set yet");
 
         return _configClient;
     }

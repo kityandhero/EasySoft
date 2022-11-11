@@ -1,18 +1,4 @@
-﻿using System.ComponentModel;
-using System.IdentityModel.Tokens.Jwt;
-using EasySoft.Core.AuthenticationCore.Attributes;
-using EasySoft.Core.AuthenticationCore.ExtensionMethods;
-using EasySoft.Core.AuthenticationCore.Filters;
-using EasySoft.Core.AuthenticationCore.Operators;
-using EasySoft.Core.AutoFac.IocAssists;
-using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.UtilityTools.Core.Results;
-using EasySoft.UtilityTools.Standard.Enums;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.Filters;
-
-namespace EasySoft.Core.JsonWebToken.Filters;
+﻿namespace EasySoft.Core.JsonWebToken.Filters;
 
 public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
 {
@@ -23,10 +9,7 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
             filterContext.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor &&
             controllerActionDescriptor.MethodInfo.ContainAttribute<OperatorAttribute>();
 
-        if (!hasOperatorAttribute)
-        {
-            return;
-        }
+        if (!hasOperatorAttribute) return;
 
         var token = filterContext.HttpContext.GetToken(GeneralConfigAssist.GetTokenName());
 
@@ -64,12 +47,10 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
         actualOperator.SetIdentification(identification);
 
         if (actualOperator.IsAnonymous())
-        {
             filterContext.Result = new ApiResult(
                 ReturnCode.TokenExpired.ToInt(),
                 false,
                 "凭证无效或凭证已过期"
             );
-        }
     }
 }

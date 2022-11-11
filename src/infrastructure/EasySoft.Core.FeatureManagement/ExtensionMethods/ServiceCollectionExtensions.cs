@@ -1,8 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.FeatureManagement;
-
-namespace EasySoft.Core.FeatureManagement.ExtensionMethods;
+﻿namespace EasySoft.Core.FeatureManagement.ExtensionMethods;
 
 public static class ServiceCollectionExtensions
 {

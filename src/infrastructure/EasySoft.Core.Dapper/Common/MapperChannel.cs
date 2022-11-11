@@ -1,62 +1,55 @@
-﻿using System.Data;
-using EasySoft.Core.Dapper.Interfaces;
-using EasySoft.Core.Sql.Assists;
-using EasySoft.Core.Sql.Enums;
+﻿using EasySoft.Core.Dapper.Interfaces;
 
-namespace EasySoft.Core.Dapper.Common
+namespace EasySoft.Core.Dapper.Common;
+
+[Serializable]
+public class MapperChannel : IMapperChannel
 {
-    [Serializable]
-    public class MapperChannel : IMapperChannel
+    private readonly string _channel;
+
+    private readonly string _connectionString;
+
+    private RelationDatabaseType _relationDatabaseType;
+
+    public MapperChannel(string connectionString, RelationDatabaseType relationDatabaseType) : this(
+        "",
+        connectionString,
+        relationDatabaseType
+    )
     {
-        private readonly string _channel;
+    }
 
-        private readonly string _connectionString;
+    public MapperChannel(string channel, string connectionString, RelationDatabaseType relationDatabaseType)
+    {
+        _channel = channel;
+        _connectionString = connectionString;
+        _relationDatabaseType = relationDatabaseType;
+    }
 
-        private RelationDatabaseType _relationDatabaseType;
+    public string GetChannel()
+    {
+        return _channel;
+    }
 
-        public MapperChannel(string connectionString, RelationDatabaseType relationDatabaseType) : this(
-            "",
-            connectionString,
-            relationDatabaseType
-        )
-        {
-        }
+    public string GetConnectionString()
+    {
+        if (string.IsNullOrWhiteSpace(_connectionString)) throw new Exception("无效的连接字符串");
 
-        public MapperChannel(string channel, string connectionString, RelationDatabaseType relationDatabaseType)
-        {
-            _channel = channel;
-            _connectionString = connectionString;
-            _relationDatabaseType = relationDatabaseType;
-        }
+        return _connectionString;
+    }
 
-        public string GetChannel()
-        {
-            return _channel;
-        }
+    public RelationDatabaseType GetRelationDatabaseType()
+    {
+        return _relationDatabaseType;
+    }
 
-        public string GetConnectionString()
-        {
-            if (string.IsNullOrWhiteSpace(_connectionString))
-            {
-                throw new Exception("无效的连接字符串");
-            }
+    public IDbConnection OpenConnection()
+    {
+        return SqlAssist.CreateConnection(_connectionString, _relationDatabaseType);
+    }
 
-            return _connectionString;
-        }
-
-        public RelationDatabaseType GetRelationDatabaseType()
-        {
-            return _relationDatabaseType;
-        }
-
-        public IDbConnection OpenConnection()
-        {
-            return SqlAssist.CreateConnection(_connectionString, _relationDatabaseType);
-        }
-
-        public IMapperTransaction CreateMapperTransaction()
-        {
-            return new MapperTransaction(this);
-        }
+    public IMapperTransaction CreateMapperTransaction()
+    {
+        return new MapperTransaction(this);
     }
 }

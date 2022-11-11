@@ -1,11 +1,4 @@
-﻿using Autofac;
-using Autofac.Configuration;
-using Autofac.Core;
-using EasySoft.UtilityTools.Standard.Assists;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-
-namespace EasySoft.Core.AutoFac.IocAssists;
+﻿namespace EasySoft.Core.AutoFac.IocAssists;
 
 public class AutofacAssist
 {
@@ -27,7 +20,7 @@ public class AutofacAssist
 
         config.AddJsonFile(
             filePath,
-            optional: true,
+            true,
             true
         );
 
@@ -41,20 +34,14 @@ public class AutofacAssist
 
     public void SetContainer(ILifetimeScope container)
     {
-        if (_container != null)
-        {
-            throw new Exception("container has been set, it disallow set more than once.");
-        }
+        if (_container != null) throw new Exception("container has been set, it disallow set more than once.");
 
         _container = container;
     }
 
     public ILifetimeScope GetContainer()
     {
-        if (_container == null)
-        {
-            throw new Exception("Container is null, please assign a value before use it.");
-        }
+        if (_container == null) throw new Exception("Container is null, please assign a value before use it.");
 
         return _container;
     }
