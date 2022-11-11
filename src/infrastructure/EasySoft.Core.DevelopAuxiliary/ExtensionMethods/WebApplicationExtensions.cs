@@ -14,7 +14,7 @@ public static class WebApplicationExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(UseDevelopAuxiliary)}()."
+            $"{nameof(UseDevelopAuxiliary)}."
         );
 
         if (FlagAssist.GetDevelopAuxiliarySwitch()) return application;

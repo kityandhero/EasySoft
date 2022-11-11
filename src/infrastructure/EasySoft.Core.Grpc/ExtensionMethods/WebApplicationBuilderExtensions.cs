@@ -16,7 +16,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceGrpc)}()."
+            $"{nameof(AddAdvanceGrpc)}."
         );
 
         builder.Services.AddAdvanceGrpc();
@@ -34,7 +34,7 @@ public static class WebApplicationBuilderExtensions
     ) where TGrpcClient : class
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceGrpcClient)}()."
+            $"{nameof(AddAdvanceGrpcClient)}."
         );
 
         builder.Services.AddAdvanceGrpcClient<TGrpcClient>();
@@ -54,7 +54,7 @@ public static class WebApplicationBuilderExtensions
     ) where TGrpcClient : class
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceGrpcClient)}<{typeof(TGrpcClient).Name}>()."
+            $"{nameof(AddAdvanceGrpcClient)}<{typeof(TGrpcClient).Name}>."
         );
 
         builder.Services.AddAdvanceGrpcClient<TGrpcClient>(action);

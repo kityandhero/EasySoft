@@ -31,7 +31,7 @@ public static class WebApplicationExtensions
 
         if (!ContextConfigure.AutoMigrate) return application;
 
-        LogAssist.Execute($"{nameof(UseAutoMigrate)}().");
+        LogAssist.Execute($"{nameof(UseAutoMigrate)}.");
 
         LogAssist.Hint(
             $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.AutoMigrate)} is {ContextConfigure.AutoMigrate}."
@@ -61,7 +61,7 @@ public static class WebApplicationExtensions
 
         if (!ContextConfigure.AutoEnsureCreated) return application;
 
-        LogAssist.Execute($"{nameof(UseAutoEnsureCreated)}().");
+        LogAssist.Execute($"{nameof(UseAutoEnsureCreated)}.");
 
         LogAssist.Hint(
             $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.AutoEnsureCreated)} is {ContextConfigure.AutoEnsureCreated}."

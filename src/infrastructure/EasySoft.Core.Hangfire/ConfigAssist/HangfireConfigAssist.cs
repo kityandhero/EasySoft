@@ -2,6 +2,7 @@
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
 using EasySoft.Core.Hangfire.ConfigCollection;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Configuration;
 
@@ -30,6 +31,9 @@ public static class HangfireConfigAssist
 
     public static void Init()
     {
+        StartupDescriptionMessageAssist.AddExecute(
+            $"{nameof(HangfireConfigAssist)}.{nameof(Init)}."
+        );
     }
 
     public static string GetConfigFileInfo()

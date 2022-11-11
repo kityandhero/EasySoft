@@ -17,7 +17,7 @@ public static class WebApplicationExtensions
         if (!SwaggerConfigAssist.GetSwitch()) return application;
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(UseAdvanceSwagger)}()."
+            $"{nameof(UseAdvanceSwagger)}."
         );
 
         application.UseSwagger();
@@ -43,7 +43,7 @@ public static class WebApplicationExtensions
         if (!SwaggerConfigAssist.GetSwitch()) return application;
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(UseAdvanceKnife4UI)}()."
+            $"{nameof(UseAdvanceKnife4UI)}."
         );
 
         const string routePrefix = "knife4";

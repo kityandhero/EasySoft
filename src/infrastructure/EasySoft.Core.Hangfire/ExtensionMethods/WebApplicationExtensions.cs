@@ -18,7 +18,7 @@ public static class WebApplicationExtensions
         if (!HangfireConfigAssist.GetSwitch()) return application;
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(UseAdvanceHangfire)}()."
+            $"{nameof(UseAdvanceHangfire)}."
         );
 
         //启用Hangfire面板 

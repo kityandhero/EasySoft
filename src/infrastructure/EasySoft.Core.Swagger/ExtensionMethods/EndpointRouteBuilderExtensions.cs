@@ -12,7 +12,7 @@ public static class EndpointConventionBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(MapSwaggerConfigFile)}()."
+            $"{nameof(MapSwaggerConfigFile)}."
         );
 
         StartupDescriptionMessageAssist.AddPrompt(

@@ -191,11 +191,15 @@ public static class LogAssist
     /// <summary>
     /// 记录调试时的说明信息
     /// </summary>
-    public static void Execute(string? log)
+    public static void Execute(string? log, bool supplementRoundBracket = false)
     {
         if (string.IsNullOrWhiteSpace(log)) return;
 
-        GetLogger().LogTrace("EXEC: {Log}", log.Trim());
+        GetLogger().LogTrace(
+            "EXEC: {Log}{Bracket}",
+            log.Trim(),
+            supplementRoundBracket ? "()" : ""
+        );
     }
 
     /// <summary>

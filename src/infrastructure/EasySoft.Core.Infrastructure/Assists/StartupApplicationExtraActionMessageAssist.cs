@@ -1,12 +1,13 @@
 ﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Startup;
+using EasySoft.UtilityTools.Standard;
 using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.Infrastructure.Assists;
 
 public static class StartupApplicationExtraActionMessageAssist
 {
-    private static readonly List<IStartupMessage> MessageCollection = new();
+    private static readonly IList<IStartupMessage> MessageCollection = new List<IStartupMessage>();
 
     public static void Add(IStartupMessage message)
     {
@@ -53,8 +54,25 @@ public static class StartupApplicationExtraActionMessageAssist
         );
     }
 
+    public static void AddTraceDivider(string divider = ConstCollection.PromptMessageDivider)
+    {
+        AddTrace(divider);
+    }
+
+    public static void AddPrompt(string message, string extra = "")
+    {
+        AddTrace($"DESC: {message}", extra);
+    }
+
+    public static void AddExecute(string message, string extra = "", bool supplementRoundBracket = false)
+    {
+        AddTrace($"EXEC: {message}{(supplementRoundBracket ? "()" : "")}", extra);
+    }
+
     public static void Print()
     {
         MessageCollection.Print();
+
+        MessageCollection.Clear();
     }
 }

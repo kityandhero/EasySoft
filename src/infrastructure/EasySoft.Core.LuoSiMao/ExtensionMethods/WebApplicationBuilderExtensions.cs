@@ -17,7 +17,7 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddLuoSiMao(this WebApplicationBuilder builder, string key)
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddLuoSiMao)}()."
+            $"{nameof(AddLuoSiMao)}."
         );
 
         builder.Host.AddLuoSiMao(new SmsConfig(key));
@@ -33,7 +33,7 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddLuoSiMao(this WebApplicationBuilder builder, SmsConfig smsConfig)
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddLuoSiMao)}()."
+            $"{nameof(AddLuoSiMao)}."
         );
 
         builder.Host.AddLuoSiMao(smsConfig);

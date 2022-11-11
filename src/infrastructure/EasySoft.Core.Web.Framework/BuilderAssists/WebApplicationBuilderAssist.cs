@@ -32,7 +32,18 @@ public static class WebApplicationBuilderAssist
         string[] args
     )
     {
-        return CreateBuilder(new ApplicationChannel().SetChannel(0).SetName("默认应用"), args);
+        StartupDescriptionMessageAssist.AddPrompt(
+            "ApplicationChannel use default, suggest using CreateBuilder(IApplicationChannel applicationChannel,string[] args) with your Application, it make the data source easy to identify in the remote log."
+        );
+
+        var builder = CreateBuilder(
+            new ApplicationChannel()
+                .SetChannel(ApplicationChannel.DefaultChannel)
+                .SetName(ApplicationChannel.DefaultName),
+            args
+        );
+
+        return builder;
     }
 
     public static WebApplicationBuilder CreateBuilder(
@@ -41,7 +52,7 @@ public static class WebApplicationBuilderAssist
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(CreateBuilder)}()."
+            $"{nameof(CreateBuilder)}."
         );
 
         var builder = WebApplication.CreateBuilder(new WebApplicationOptions
@@ -71,7 +82,7 @@ public static class WebApplicationBuilderAssist
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(CreateCore)}()."
+            $"{nameof(CreateCore)}."
         );
 
         if (!string.IsNullOrWhiteSpace(EnvironmentAssist.GetEnvironmentAliasName()))
@@ -98,7 +109,7 @@ public static class WebApplicationBuilderAssist
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddRegistrationCenter)}()."
+            $"{nameof(AddRegistrationCenter)}."
         );
 
         if (!GeneralConfigAssist.GetRegistrationCenterSwitch())
@@ -132,7 +143,7 @@ public static class WebApplicationBuilderAssist
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddConfigCenter)}()."
+            $"{nameof(AddConfigCenter)}."
         );
 
         if (GeneralConfigAssist.GetConfigCenterSwitch())
@@ -197,7 +208,7 @@ public static class WebApplicationBuilderAssist
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddGateway)}()."
+            $"{nameof(AddGateway)}."
         );
 
         if (!GeneralConfigAssist.GetGatewaySwitch())

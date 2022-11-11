@@ -31,7 +31,7 @@ public static class WebApplicationBuilderExtensions
     //         return builder;
     //
     //     StartupDescriptionMessageAssist.AddExecute(
-    //         $"{nameof(AddAdvanceContext)}<{typeof(T).Name}>()."
+    //         $"{nameof(AddAdvanceContext)}<{typeof(T).Name}>."
     //     );
     //
     //     builder.Services.AddAdvanceContext<T>(action);
@@ -65,7 +65,7 @@ public static class WebApplicationBuilderExtensions
     //         return builder;
     //
     //     StartupDescriptionMessageAssist.AddExecute(
-    //         $"{nameof(AddAdvanceContextPool)}<{typeof(T).Name}>()."
+    //         $"{nameof(AddAdvanceContextPool)}<{typeof(T).Name}>."
     //     );
     //
     //     builder.Services.AddAdvanceContextPool<T>(action);
@@ -96,7 +96,7 @@ public static class WebApplicationBuilderExtensions
     //         return builder;
     //
     //     StartupDescriptionMessageAssist.AddExecute(
-    //         $"{nameof(AddPooledAdvanceTenantContext)}<{typeof(TFactory).Name},{typeof(T).Name}>()."
+    //         $"{nameof(AddPooledAdvanceTenantContext)}<{typeof(TFactory).Name},{typeof(T).Name}>."
     //     );
     //
     //     builder.Services.AddPooledDbContextFactory<T>(action);
@@ -118,7 +118,7 @@ public static class WebApplicationBuilderExtensions
     // ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : TenantBasicContext
     // {
     //     StartupDescriptionMessageAssist.AddExecute(
-    //         $"{nameof(AddAdvanceTenantContextFactory)}<{typeof(TFactory).Name},{typeof(T).Name}>()."
+    //         $"{nameof(AddAdvanceTenantContextFactory)}<{typeof(TFactory).Name},{typeof(T).Name}>."
     //     );
     //
     //     builder.Host.AddAdvanceTenantContextFactory<TFactory, T>();
@@ -131,7 +131,7 @@ public static class WebApplicationBuilderExtensions
     // ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : TenantBasicContext
     // {
     //     StartupDescriptionMessageAssist.AddExecute(
-    //         $"{nameof(AddAdvanceTenantContext)}<{typeof(TFactory).Name},{typeof(T).Name}>()."
+    //         $"{nameof(AddAdvanceTenantContext)}<{typeof(TFactory).Name},{typeof(T).Name}>."
     //     );
     //
     //     builder.Host.AddAdvanceTenantContext<TFactory, T>();

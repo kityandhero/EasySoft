@@ -2,6 +2,10 @@
 
 public class ApplicationChannel : IApplicationChannel
 {
+    public const int DefaultChannel = 0;
+
+    public const string DefaultName = "默认应用";
+
     private int _channel;
 
     private string _name;

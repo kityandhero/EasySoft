@@ -32,7 +32,7 @@ public static class RedisConfigAssist
     public static void Init()
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(RedisConfigAssist)}.{nameof(Init)}()."
+            $"{nameof(RedisConfigAssist)}.{nameof(Init)}."
         );
     }
 

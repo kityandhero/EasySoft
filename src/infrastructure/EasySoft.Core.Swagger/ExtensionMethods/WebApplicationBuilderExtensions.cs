@@ -21,10 +21,12 @@ public static class WebApplicationBuilderExtensions
         if (builder.HasRegistered(UniqueIdentifierAddSwaggerGen))
             return builder;
 
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         SwaggerConfigAssist.Init();
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceSwagger)}()."
+            $"{nameof(AddAdvanceSwagger)}."
         );
 
         var swaggerSwitch = SwaggerConfigAssist.GetSwitch();

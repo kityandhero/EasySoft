@@ -25,7 +25,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceFeatureManagement)}()."
+            $"{nameof(AddAdvanceFeatureManagement)}."
         );
 
         builder.Services.AddAdvanceFeatureManagement(action);
@@ -46,7 +46,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceFeatureManagement)}()."
+            $"{nameof(AddAdvanceFeatureManagement)}."
         );
 
         builder.Services.AddAdvanceFeatureManagement(configuration, action);

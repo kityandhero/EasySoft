@@ -12,7 +12,7 @@ public static class EndpointConventionBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(MapHangfireConfigFile)}()."
+            $"{nameof(MapHangfireConfigFile)}."
         );
 
         StartupDescriptionMessageAssist.AddPrompt(

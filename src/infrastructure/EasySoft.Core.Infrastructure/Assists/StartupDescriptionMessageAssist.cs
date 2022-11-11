@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
+﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Standard;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -56,9 +55,9 @@ public static class StartupDescriptionMessageAssist
         );
     }
 
-    public static void AddTraceDivider()
+    public static void AddTraceDivider(string divider = ConstCollection.PromptMessageDivider)
     {
-        AddTrace(ConstCollection.PromptMessageDivider);
+        AddTrace(divider);
     }
 
     public static void AddPrompt(string message, string extra = "")
@@ -66,9 +65,9 @@ public static class StartupDescriptionMessageAssist
         AddTrace($"DESC: {message}", extra);
     }
 
-    public static void AddExecute(string message, string extra = "")
+    public static void AddExecute(string message, string extra = "", bool supplementRoundBracket = false)
     {
-        AddTrace($"EXEC: {message}", extra);
+        AddTrace($"EXEC: {message}{(supplementRoundBracket ? "()" : "")}", extra);
     }
 
     public static void Print()

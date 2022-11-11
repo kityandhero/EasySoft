@@ -17,7 +17,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAgileConfigClient)}()."
+            $"{nameof(AddAgileConfigClient)}."
         );
 
         builder.Host.ConfigureHostConfiguration((config) =>

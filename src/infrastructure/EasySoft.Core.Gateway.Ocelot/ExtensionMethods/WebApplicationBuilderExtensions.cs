@@ -11,7 +11,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceOcelot)}()."
+            $"{nameof(AddAdvanceOcelot)}."
         );
 
         builder.Services.AddAdvanceOcelot(useOcelotConfigFile);

@@ -29,10 +29,6 @@ public static class FlagAssist
 
     public static bool PermissionVerificationMiddlewareModeSwitch { get; set; }
 
-    public static bool ApplicationChannelInjectionComplete { get; set; }
-
-    public static bool ApplicationChannelIsDefault { get; set; }
-
     public static IEnumerable<string> StartupUrls { get; set; }
 
     static FlagAssist()
@@ -54,8 +50,6 @@ public static class FlagAssist
         JsonWebTokenMiddlewareModeSwitch = false;
         PermissionVerificationSwitch = false;
         PermissionVerificationMiddlewareModeSwitch = false;
-        ApplicationChannelInjectionComplete = false;
-        ApplicationChannelIsDefault = false;
         StartupUrls = new List<string>();
     }
 

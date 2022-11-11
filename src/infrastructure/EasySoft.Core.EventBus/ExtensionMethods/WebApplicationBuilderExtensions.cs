@@ -17,7 +17,7 @@ public static class WebApplicationBuilderExtensions
     ) where TSubscriber : class, ICapSubscribe
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddCapEventBus)}<{typeof(TSubscriber).Name}>()."
+            $"{nameof(AddCapEventBus)}<{typeof(TSubscriber).Name}>."
         );
 
         builder.Services.AddCapEventBus<TSubscriber>(option => { action?.Invoke(option); });

@@ -53,7 +53,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceNLog)}()."
+            $"{nameof(AddAdvanceNLog)}."
         );
 
         // NLog: Setup NLog for Dependency injection

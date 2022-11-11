@@ -14,11 +14,16 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(UsePrepareStartWork)}()."
+            $"{nameof(UsePrepareStartWork)}."
         );
 
-        var prepareCovertStartWork = application.UseHostFiltering().ApplicationServices.GetAutofacRoot()
+        var prepareCovertStartWork = application
+            .UseHostFiltering()
+            .ApplicationServices
+            .GetAutofacRoot()
             .Resolve<IPrepareCovertStartWork>();
 
         prepareCovertStartWork.DoWork();

@@ -26,7 +26,7 @@ public static class WebApplicationBuilderExtensions
             return builder;
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceSqlServer)}<{typeof(TContext).Name}>()."
+            $"{nameof(AddAdvanceSqlServer)}<{typeof(TContext).Name}>."
         );
 
         builder.Services.AddAdvanceSqlServer<TContext, TEntityConfigure>(opt =>

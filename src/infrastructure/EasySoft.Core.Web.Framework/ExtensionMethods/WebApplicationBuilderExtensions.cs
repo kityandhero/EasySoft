@@ -7,7 +7,6 @@ using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Options;
 using EasySoft.Core.DevelopAuxiliary.ExtensionMethods;
-using EasySoft.Core.EasyCaching.ConfigAssist;
 using EasySoft.Core.EasyCaching.ExtensionMethods;
 using EasySoft.Core.EasyToken.ExtensionMethods;
 using EasySoft.Core.EntityFramework.ExtensionMethods;
@@ -27,7 +26,7 @@ using EasySoft.Core.Web.Framework.Attributes;
 using EasySoft.Core.Web.Framework.Filters;
 using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.Channels;
-using EasySoft.UtilityTools.Standard.Enums;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -45,6 +44,8 @@ namespace EasySoft.Core.Web.Framework.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
+    private const string UniqueIdentifierAddAdvanceApplicationChannel = "9ef8c9f4-08b9-4755-912c-6ff80988f513";
+
     /// <summary>
     /// 标记当前应用通道值, 用于远程日志等数据中, 便于数据辨认, 不使用此方法标记, 框架将采用内置值 0 代替
     /// </summary>
@@ -59,17 +60,16 @@ public static class WebApplicationBuilderExtensions
         string name
     )
     {
-        if (FlagAssist.ApplicationChannelInjectionComplete)
-            throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
+        if (builder.HasRegistered(UniqueIdentifierAddAdvanceApplicationChannel))
+            return builder;
+
+        StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceApplicationChannel)}()."
+            $"{nameof(AddAdvanceApplicationChannel)}."
         );
 
         builder.Host.AddAdvanceApplicationChannel(channel, name);
-
-        FlagAssist.ApplicationChannelInjectionComplete = true;
-        FlagAssist.ApplicationChannelIsDefault = false;
 
         return builder;
     }
@@ -79,36 +79,16 @@ public static class WebApplicationBuilderExtensions
         T applicationChannel
     ) where T : IApplicationChannel
     {
-        if (FlagAssist.ApplicationChannelInjectionComplete)
-            throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
+        if (builder.HasRegistered(UniqueIdentifierAddAdvanceApplicationChannel))
+            return builder;
+
+        StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceApplicationChannel)}<{typeof(T).Name}>()."
+            $"{nameof(AddAdvanceApplicationChannel)}<{typeof(T).Name}>."
         );
 
         builder.Host.AddAdvanceApplicationChannel(applicationChannel.GetChannel(), applicationChannel.GetName());
-
-        FlagAssist.ApplicationChannelInjectionComplete = true;
-        FlagAssist.ApplicationChannelIsDefault = false;
-
-        return builder;
-    }
-
-    private static WebApplicationBuilder AddAdvanceDefaultApplicationChannel(
-        this WebApplicationBuilder builder
-    )
-    {
-        if (FlagAssist.ApplicationChannelInjectionComplete)
-            throw new Exception("UseAdvanceApplicationChannel disallow inject more than once");
-
-        StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceDefaultApplicationChannel)}()."
-        );
-
-        builder.Host.AddAdvanceDefaultApplicationChannel();
-
-        FlagAssist.ApplicationChannelInjectionComplete = true;
-        FlagAssist.ApplicationChannelIsDefault = true;
 
         return builder;
     }
@@ -228,8 +208,6 @@ public static class WebApplicationBuilderExtensions
 
         builder.AddAdvanceHangfire();
 
-        if (!FlagAssist.ApplicationChannelInjectionComplete) builder.AddAdvanceDefaultApplicationChannel();
-
         var app = builder.Build();
 
         LogAssist.SetLogger(app.Logger);
@@ -277,24 +255,6 @@ public static class WebApplicationBuilderExtensions
         if (!app.Environment.IsDevelopment())
             // app.UseExceptionHandler("/Error");
             app.UseHsts();
-
-        if (GeneralConfigAssist.GetRemoteLogSwitch())
-        {
-            if (FlagAssist.ApplicationChannelIsDefault)
-            {
-                StartupConfigMessageAssist.AddConfig(
-                    "ApplicationChannel use 0, suggest using builder.UseAdvanceApplicationChannel(int channel) with your Application, it make the data source easy to identify in the remote log."
-                );
-            }
-            else
-            {
-                var applicationChannel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
-
-                StartupConfigMessageAssist.AddConfig(
-                    $"ApplicationChannel use {applicationChannel.GetChannel()}."
-                );
-            }
-        }
 
         if (GeneralConfigAssist.GetHttpRedirectionHttpsSwitch())
         {

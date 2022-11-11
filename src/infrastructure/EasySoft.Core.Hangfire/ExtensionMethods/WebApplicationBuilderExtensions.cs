@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Hangfire.Assists;
+﻿using EasySoft.Core.Hangfire.Assists;
 using EasySoft.Core.Hangfire.ConfigAssist;
 using EasySoft.Core.Hangfire.Enums;
 using EasySoft.Core.Infrastructure.Assists;
@@ -22,10 +21,12 @@ public static class WebApplicationBuilderExtensions
         if (builder.HasRegistered(UniqueIdentifierAddSwaggerGen))
             return builder;
 
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         HangfireConfigAssist.Init();
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceHangfire)}()."
+            $"{nameof(AddAdvanceHangfire)}."
         );
 
         var hangfireSwitch = HangfireConfigAssist.GetSwitch();

@@ -16,8 +16,10 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceAutoFac)}()."
+            $"{nameof(AddAdvanceAutoFac)}."
         );
 
         builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -38,8 +40,10 @@ public static class WebApplicationBuilderExtensions
         Action<ContainerBuilder> action
     )
     {
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddExtraNormalInjection)}()."
+            $"{nameof(AddExtraNormalInjection)}."
         );
 
         if (action == null) throw new ArgumentNullException(nameof(action));
@@ -55,7 +59,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddControllerPropertiesAutowired)}()."
+            $"{nameof(AddControllerPropertiesAutowired)}."
         );
 
         if (assembly == null) throw new ArgumentNullException(nameof(assembly));

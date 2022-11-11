@@ -31,7 +31,7 @@ public static class WebApplicationBuilderExtensions
         RedisConfigAssist.Init();
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceEasyCaching)}()."
+            $"{nameof(AddAdvanceEasyCaching)}."
         );
 
         StartupDescriptionMessageAssist.AddPrompt(
@@ -66,7 +66,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceEasyCachingInterceptor)}()."
+            $"{nameof(AddAdvanceEasyCachingInterceptor)}."
         );
 
         builder.Host.AddAdvanceEasyCachingInterceptor(action);
@@ -97,7 +97,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceEasyCachingInMemory)}()."
+            $"{nameof(AddAdvanceEasyCachingInMemory)}."
         );
 
         //Important step for In-Memory Caching
@@ -116,7 +116,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceEasyCachingInMemoryOperatorInjection)}()."
+            $"{nameof(AddAdvanceEasyCachingInMemoryOperatorInjection)}."
         );
 
         builder.Host.AddAdvanceEasyCachingInMemoryOperatorInjection();
@@ -147,7 +147,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceEasyCachingRedis)}()."
+            $"{nameof(AddAdvanceEasyCachingRedis)}."
         );
 
         //Important step for In-Memory Caching
@@ -166,7 +166,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceEasyCachingRedisOperatorInjection)}()."
+            $"{nameof(AddAdvanceEasyCachingRedisOperatorInjection)}."
         );
 
         builder.Host.AddAdvanceEasyCachingRedisOperatorInjection();

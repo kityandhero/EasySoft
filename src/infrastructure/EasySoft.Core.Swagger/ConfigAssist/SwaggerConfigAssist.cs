@@ -2,6 +2,7 @@
 using EasySoft.Core.Config.Exceptions;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Swagger.ConfigCollection;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +32,9 @@ public static class SwaggerConfigAssist
 
     public static void Init()
     {
+        StartupDescriptionMessageAssist.AddExecute(
+            $"{nameof(SwaggerConfigAssist)}.{nameof(Init)}."
+        );
     }
 
     public static string GetConfigFileInfo()

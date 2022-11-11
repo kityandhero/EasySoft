@@ -21,7 +21,7 @@ public static class WebApplicationBuilderExtensions
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceRedLock)}()."
+            $"{nameof(AddAdvanceRedLock)}."
         );
 
         var options = new RedLockOptions();
