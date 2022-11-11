@@ -2,9 +2,6 @@
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using StackExchange.Profiling;
 
 namespace EasySoft.Core.MiniProfiler.ExtensionMethods;
 
@@ -28,8 +25,6 @@ public static class WebApplicationBuilderExtensions
 
             return builder;
         }
-
-        if (FlagAssist.GetMiniProfileSwitch()) return builder;
 
         StartupDescriptionMessageAssist.AddTraceDivider();
 
@@ -60,8 +55,6 @@ public static class WebApplicationBuilderExtensions
                     application => { application.UseMiniProfiler(); }
                 )
         );
-
-        FlagAssist.SetMiniProfileSwitchOpen();
 
         StartupDescriptionMessageAssist.AddPrompt(
             "You can add \"@using StackExchange.Profiling\" and \"@addTagHelper *, MiniProfiler.AspNetCore.Mvc\" to the _Layout.cshtml and add <mini-profiler /> to the target view to show analysis information."

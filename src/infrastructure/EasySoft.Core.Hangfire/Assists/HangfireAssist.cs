@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Hangfire.ConfigAssist;
+﻿using EasySoft.Core.Hangfire.ConfigAssist;
 using EasySoft.Core.Hangfire.Enums;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Exceptions;

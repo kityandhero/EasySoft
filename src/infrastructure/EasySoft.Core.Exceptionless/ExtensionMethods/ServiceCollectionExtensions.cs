@@ -1,6 +1,4 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
-using Exceptionless;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EasySoft.Core.Exceptionless.ExtensionMethods;
 

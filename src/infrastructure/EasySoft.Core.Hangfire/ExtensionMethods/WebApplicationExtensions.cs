@@ -1,13 +1,8 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Hangfire.ConfigAssist;
+﻿using EasySoft.Core.Hangfire.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Hangfire;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.Hangfire.ExtensionMethods;
 

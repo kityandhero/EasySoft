@@ -2,7 +2,6 @@
 using EasySoft.Core.Hangfire.ConfigCollection;
 using EasySoft.Core.Infrastructure.Controllers;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Core.Hangfire.Controllers;
 

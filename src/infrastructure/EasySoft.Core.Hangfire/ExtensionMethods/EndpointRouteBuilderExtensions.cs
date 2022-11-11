@@ -1,7 +1,5 @@
 ﻿using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
 
 namespace EasySoft.Core.Hangfire.ExtensionMethods;
 

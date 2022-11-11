@@ -2,6 +2,7 @@
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.PrepareStartWork.PrepareWorks;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,22 +12,19 @@ namespace EasySoft.Core.PrepareStartWork.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
-    // public static WebApplicationBuilder AddServerAddressesFeature(
-    //     this WebApplicationBuilder builder
-    // )
-    // {
-    //     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-    //     {
-    //         containerBuilder.RegisterType<ServerAddressesFeature>().As<IServerAddressesFeature>().SingleInstance();
-    //     });
-    //
-    //     return builder;
-    // }
+    private const string UniqueIdentifierAddAdvanceUrls = "3745f94a-8439-488f-a38c-c8f93dd79932";
+
+    private const string UniqueIdentifierAddCovertInjection = "1CE0086F-567F-4838-9611-55819A9A549B";
 
     public static WebApplicationBuilder AddAdvanceUrls(
         this WebApplicationBuilder builder
     )
     {
+        if (builder.HasRegistered(UniqueIdentifierAddAdvanceUrls))
+            return builder;
+
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceUrls)}()"
         );
@@ -66,15 +64,13 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        if (FlagAssist.CovertInjectionComplete)
-            throw new Exception("UseCovertInjection disallow inject more than once");
+        if (builder.HasRegistered(UniqueIdentifierAddCovertInjection))
+            return builder;
 
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
             containerBuilder.RegisterType<PrepareCovertStartWork>().As<IPrepareCovertStartWork>().SingleInstance();
         });
-
-        FlagAssist.CovertInjectionComplete = true;
 
         return builder;
     }

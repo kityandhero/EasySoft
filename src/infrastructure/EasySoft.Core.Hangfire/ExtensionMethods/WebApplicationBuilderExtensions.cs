@@ -5,10 +5,6 @@ using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.Exceptions;
-using Hangfire;
-using Hangfire.MemoryStorage;
-using Hangfire.SqlServer;
-using Microsoft.AspNetCore.Builder;
 
 namespace EasySoft.Core.Hangfire.ExtensionMethods;
 

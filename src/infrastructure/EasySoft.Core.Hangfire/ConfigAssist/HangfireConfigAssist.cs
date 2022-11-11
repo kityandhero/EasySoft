@@ -4,7 +4,6 @@ using EasySoft.Core.Config.Utils;
 using EasySoft.Core.Hangfire.ConfigCollection;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.Hangfire.ConfigAssist;
 

@@ -2,7 +2,6 @@
 using EasySoft.Core.DistributedLock.RedLock.Configure;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
-using Microsoft.AspNetCore.Builder;
 
 namespace EasySoft.Core.DistributedLock.RedLock.ExtensionMethods;
 

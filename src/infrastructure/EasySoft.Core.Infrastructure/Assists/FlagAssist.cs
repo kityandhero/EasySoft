@@ -5,11 +5,7 @@ public static class FlagAssist
     private static bool _applicationRunPerformed;
     private static bool _advanceStaticFileOptionsSwitch;
     private static bool _logDashboardSwitch;
-    private static bool _healthChecksSwitch;
     private static bool _auxiliarySwitch;
-    private static bool _miniProfileSwitch;
-
-    public static bool CovertInjectionComplete { get; set; }
 
     public static string TokenMode { get; set; }
 
@@ -36,11 +32,8 @@ public static class FlagAssist
         _applicationRunPerformed = false;
         _advanceStaticFileOptionsSwitch = false;
         _logDashboardSwitch = false;
-        _healthChecksSwitch = false;
         _auxiliarySwitch = false;
-        _miniProfileSwitch = false;
 
-        CovertInjectionComplete = false;
         TokenMode = "";
         EasyTokenMiddlewareModeSwitch = false;
         EasyTokenSecretOptionInjectionComplete = false;
@@ -91,16 +84,6 @@ public static class FlagAssist
         return _logDashboardSwitch;
     }
 
-    public static void SetHealthChecksSwitchOpen()
-    {
-        _healthChecksSwitch = true;
-    }
-
-    public static bool GetHealthChecksSwitch()
-    {
-        return _healthChecksSwitch;
-    }
-
     public static void SetActionMapSwitchOpen()
     {
         _auxiliarySwitch = true;
@@ -109,15 +92,5 @@ public static class FlagAssist
     public static bool GetDevelopAuxiliarySwitch()
     {
         return _auxiliarySwitch;
-    }
-
-    public static void SetMiniProfileSwitchOpen()
-    {
-        _miniProfileSwitch = true;
-    }
-
-    public static bool GetMiniProfileSwitch()
-    {
-        return _miniProfileSwitch;
     }
 }

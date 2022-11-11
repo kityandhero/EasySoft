@@ -1,7 +1,4 @@
 ﻿using EasySoft.Core.DistributedLock.RedLock.Interfaces;
-using Microsoft.Extensions.Logging;
-using RedLockNet.SERedis;
-using RedLockNet.SERedis.Configuration;
 
 namespace EasySoft.Core.DistributedLock.RedLock.Factories;
 

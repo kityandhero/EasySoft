@@ -1,21 +1,24 @@
 ﻿using EasySoft.Core.HealthChecks.Entities;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EasySoft.Core.HealthChecks.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
+    private const string UniqueIdentifierAddAdvanceHealthChecks = "53245823-9262-4b3d-a1ae-321f67cf04e0";
+
     public static WebApplicationBuilder AddAdvanceHealthChecks(
         this WebApplicationBuilder builder,
         IEnumerable<IAdvanceHealthCheck> healthCheckList
     )
     {
-        if (FlagAssist.GetHealthChecksSwitch()) return builder;
+        if (builder.HasRegistered(UniqueIdentifierAddAdvanceHealthChecks))
+            return builder;
+
+        StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceHealthChecks)}."
@@ -30,8 +33,6 @@ public static class WebApplicationBuilderExtensions
                 item.GetTags(),
                 item.GetTimeout()
             );
-
-        FlagAssist.SetHealthChecksSwitchOpen();
 
         builder.Services.AddHealthChecksUI(settings =>
         {

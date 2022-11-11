@@ -23,11 +23,11 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddTraceDivider();
 
-        SwaggerConfigAssist.Init();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceSwagger)}."
         );
+
+        SwaggerConfigAssist.Init();
 
         var swaggerSwitch = SwaggerConfigAssist.GetSwitch();
 
