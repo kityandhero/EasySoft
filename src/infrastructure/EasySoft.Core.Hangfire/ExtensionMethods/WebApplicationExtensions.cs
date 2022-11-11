@@ -20,7 +20,7 @@ public static class WebApplicationExtensions
         application.UseHangfireDashboard();
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"Young can access hangfire by {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/hangfire" : FlagAssist.StartupUrls.Select(o => $"{o}/hangfire").Join(" "))}."
+            $"Young can access hangfire dashboard by {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/hangfire" : FlagAssist.StartupUrls.Select(o => $"{o}/hangfire").Join(" "))}."
         );
 
         return application;

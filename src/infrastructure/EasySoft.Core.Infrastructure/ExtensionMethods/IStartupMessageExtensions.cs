@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Startup;
+﻿using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Logging;
@@ -17,10 +16,6 @@ public static class StartupMessageExtensions
 
     public static void Print(this ICollection<IStartupMessage> messageCollection)
     {
-        // ReSharper disable once RedundantAssignment
-        // ReSharper disable once EntityNameCapturedOnly.Local
-        var message = new StartupMessage();
-
         messageCollection.ForEach(o =>
         {
             var newLine = o.GetExtraNewLie();
