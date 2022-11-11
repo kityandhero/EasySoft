@@ -1,10 +1,4 @@
-﻿using System.Net.Sockets;
-using EasySoft.Core.Config.ConfigAssist;
-using Polly;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Exceptions;
-
-namespace EasySoft.Core.EventBus.RabbitMq;
+﻿namespace EasySoft.Core.EventBus.RabbitMq;
 
 public class RabbitMqConnection : IRabbitMqConnection
 {

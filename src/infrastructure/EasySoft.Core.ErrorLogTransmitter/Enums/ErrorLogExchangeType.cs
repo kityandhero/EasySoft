@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace EasySoft.Core.ErrorLogTransmitter.Enums;
+﻿namespace EasySoft.Core.ErrorLogTransmitter.Enums;
 
 public enum ErrorLogExchangeType
 {

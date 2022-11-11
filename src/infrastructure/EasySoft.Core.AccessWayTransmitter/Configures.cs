@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.Cap.Assists;
-
-namespace EasySoft.Core.AccessWayTransmitter;
+﻿namespace EasySoft.Core.AccessWayTransmitter;
 
 public static class Configures
 {

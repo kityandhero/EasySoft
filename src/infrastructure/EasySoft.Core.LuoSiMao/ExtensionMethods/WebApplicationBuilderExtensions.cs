@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.LuoSiMao.LuoSiMao;
-using Microsoft.AspNetCore.Builder;
+﻿using EasySoft.Core.LuoSiMao.LuoSiMao;
 
 namespace EasySoft.Core.LuoSiMao.ExtensionMethods;
 

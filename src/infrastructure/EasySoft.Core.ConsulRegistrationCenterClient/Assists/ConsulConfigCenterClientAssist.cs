@@ -1,7 +1,4 @@
-﻿using Consul;
-using EasySoft.Core.Config.ConfigAssist;
-
-namespace EasySoft.Core.ConsulRegistrationCenterClient.Assists;
+﻿namespace EasySoft.Core.ConsulRegistrationCenterClient.Assists;
 
 internal static class ConsulRegistrationCenterClientAssist
 {

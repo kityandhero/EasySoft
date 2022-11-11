@@ -1,5 +1,4 @@
-﻿using Autofac;
-using EasySoft.Core.AccessWayTransmitter.Producers;
+﻿using EasySoft.Core.AccessWayTransmitter.Producers;
 
 namespace EasySoft.Core.AccessWayTransmitter.ExtensionMethods;
 

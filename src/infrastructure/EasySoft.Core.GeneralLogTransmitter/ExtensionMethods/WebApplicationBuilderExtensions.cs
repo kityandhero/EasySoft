@@ -1,7 +1,4 @@
-﻿using Autofac;
-using EasySoft.Core.GeneralLogTransmitter.Producers;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
+﻿using EasySoft.Core.GeneralLogTransmitter.Producers;
 
 namespace EasySoft.Core.GeneralLogTransmitter.ExtensionMethods;
 

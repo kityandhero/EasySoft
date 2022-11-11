@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.DistributedLock.RedLock.Configure;
 using EasySoft.Core.DistributedLock.RedLock.Factories;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.DistributedLock.RedLock.Assist;
 

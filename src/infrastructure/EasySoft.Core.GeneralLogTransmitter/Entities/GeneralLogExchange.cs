@@ -1,7 +1,4 @@
-﻿using EasySoft.Core.ExchangeRegulation.Entities;
-using EasySoft.Core.ExchangeRegulation.Enums;
-using EasySoft.Core.ExchangeRegulation.ExtensionMethods;
-using EasySoft.Core.GeneralLogTransmitter.Enums;
+﻿using EasySoft.Core.GeneralLogTransmitter.Enums;
 using EasySoft.Core.GeneralLogTransmitter.ExtensionMethods;
 using EasySoft.Core.GeneralLogTransmitter.Interfaces;
 

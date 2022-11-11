@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
-
-namespace EasySoft.Core.Exceptionless.ExtensionMethods;
+﻿namespace EasySoft.Core.Exceptionless.ExtensionMethods;
 
 internal static class ServiceCollectionExtensions
 {

@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.AccessWayTransmitter.Assists;
-using Microsoft.AspNetCore.Builder;
 
 namespace EasySoft.Core.AccessWayTransmitter.ExtensionMethods;
 

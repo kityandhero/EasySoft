@@ -1,8 +1,4 @@
-﻿using Autofac;
-using EasySoft.Core.MinIO.Assists;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
-using Minio;
+﻿using EasySoft.Core.MinIO.Assists;
 
 namespace EasySoft.Core.MinIO.ExtensionMethods;
 

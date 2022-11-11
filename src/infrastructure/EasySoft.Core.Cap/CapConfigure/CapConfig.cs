@@ -1,10 +1,4 @@
-﻿using DotNetCore.CAP;
-using DotNetCore.CAP.Dashboard.NodeDiscovery;
-using DotNetCore.CAP.MongoDB;
-using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-
-namespace EasySoft.Core.Cap.CapConfigure;
+﻿namespace EasySoft.Core.Cap.CapConfigure;
 
 /// <summary>
 /// Cap 配置

@@ -1,6 +1,4 @@
-﻿using DotNetCore.CAP;
-
-namespace EasySoft.Core.EventBus.Cap;
+﻿namespace EasySoft.Core.EventBus.Cap;
 
 public sealed class CapPublisher : IEventPublisher
 {

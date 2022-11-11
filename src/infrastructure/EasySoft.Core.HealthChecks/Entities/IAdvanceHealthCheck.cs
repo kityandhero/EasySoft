@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
-
-namespace EasySoft.Core.HealthChecks.Entities;
+﻿namespace EasySoft.Core.HealthChecks.Entities;
 
 public interface IAdvanceHealthCheck
 {

@@ -1,10 +1,4 @@
-﻿using DotNetCore.CAP;
-using EasySoft.Core.Infrastructure.Assists;
-using Microsoft.AspNetCore.Builder;
-using SkyApm.Diagnostics.CAP;
-using SkyApm.Utilities.DependencyInjection;
-
-namespace EasySoft.Core.EventBus.ExtensionMethods;
+﻿namespace EasySoft.Core.EventBus.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {

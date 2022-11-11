@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-
-namespace EasySoft.Core.OpenTelemetry.ExtensionMethods;
+﻿namespace EasySoft.Core.OpenTelemetry.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {

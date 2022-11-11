@@ -1,7 +1,4 @@
-﻿using Autofac;
-using EasySoft.Core.LuoSiMao.LuoSiMao;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
+﻿using EasySoft.Core.LuoSiMao.LuoSiMao;
 
 namespace EasySoft.Core.LuoSiMao.ExtensionMethods;
 

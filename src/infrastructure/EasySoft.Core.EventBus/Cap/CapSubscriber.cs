@@ -1,7 +1,4 @@
-﻿using System.Linq.Expressions;
-using DotNetCore.CAP;
-
-namespace EasySoft.Core.EventBus.Cap;
+﻿namespace EasySoft.Core.EventBus.Cap;
 
 public class CapSubscriber : IEventSubscriber, ICapSubscribe
 {

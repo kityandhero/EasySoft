@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using EasySoft.Core.AccessWayTransmitter.Interfaces;
-using EasySoft.Core.ExchangeRegulation.Entities;
+﻿using EasySoft.Core.AccessWayTransmitter.Interfaces;
 
 namespace EasySoft.Core.AccessWayTransmitter.Entities;
 

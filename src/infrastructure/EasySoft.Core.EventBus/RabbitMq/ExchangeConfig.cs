@@ -1,6 +1,6 @@
 ﻿namespace EasySoft.Core.EventBus.RabbitMq;
 
-public class ExchageConfig
+public class ExchangeConfig
 {
     public string Name { get; set; } = string.Empty;
 

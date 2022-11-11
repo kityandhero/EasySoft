@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.ExchangeRegulation.Entities;
-using EasySoft.Core.SqlExecutionRecordTransmitter.Interfaces;
+﻿using EasySoft.Core.SqlExecutionRecordTransmitter.Interfaces;
 
 namespace EasySoft.Core.SqlExecutionRecordTransmitter.Entities;
 

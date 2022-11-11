@@ -1,7 +1,5 @@
-﻿using DotNetCore.CAP;
-using EasySoft.Core.AccessWayTransmitter.Entities;
+﻿using EasySoft.Core.AccessWayTransmitter.Entities;
 using EasySoft.Core.AccessWayTransmitter.Interfaces;
-using EasySoft.UtilityTools.Core.Channels;
 
 namespace EasySoft.Core.AccessWayTransmitter.Producers;
 

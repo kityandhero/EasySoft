@@ -1,9 +1,4 @@
-﻿using System.Text;
-using Microsoft.Extensions.Hosting;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-
-namespace EasySoft.Core.EventBus.RabbitMq;
+﻿namespace EasySoft.Core.EventBus.RabbitMq;
 
 public abstract class BaseRabbitMqConsumer : IHostedService
 {
@@ -106,7 +101,7 @@ public abstract class BaseRabbitMqConsumer : IHostedService
     /// 获取交互机列配置
     /// </summary>
     /// <returns></returns>
-    protected abstract ExchageConfig GetExchageConfig();
+    protected abstract ExchangeConfig GetExchageConfig();
 
     /// <summary>
     /// 获取路由keys

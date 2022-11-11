@@ -1,7 +1,4 @@
-﻿using Autofac;
-using Microsoft.AspNetCore.Builder;
-
-namespace EasySoft.Core.AccessWayTransmitter.ExtensionMethods;
+﻿namespace EasySoft.Core.AccessWayTransmitter.ExtensionMethods;
 
 internal static class ConfigureHostBuilderExtensions
 {

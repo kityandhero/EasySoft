@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.ExtensionMethods;
-
-namespace EasySoft.Core.EventBus.Trackers;
+﻿namespace EasySoft.Core.EventBus.Trackers;
 
 public sealed class MessageTrackerFactory
 {

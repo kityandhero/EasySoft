@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.Hangfire.ExtensionMethods;
 

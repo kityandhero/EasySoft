@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace EasySoft.Core.GeneralLogTransmitter.Enums;
+﻿namespace EasySoft.Core.GeneralLogTransmitter.Enums;
 
 public enum GeneralLogExchangeType
 {

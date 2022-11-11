@@ -1,11 +1,6 @@
-﻿using DotNetCore.CAP;
-using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.EventBus.Cap;
+﻿using EasySoft.Core.EventBus.Cap;
 using EasySoft.Core.EventBus.Cap.Filters;
 using EasySoft.Core.EventBus.RabbitMq;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EasySoft.Core.EventBus.ExtensionMethods;
 

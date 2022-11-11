@@ -1,9 +1,6 @@
-﻿using DotNetCore.CAP;
-using EasySoft.Core.ErrorLogTransmitter.Entities;
+﻿using EasySoft.Core.ErrorLogTransmitter.Entities;
 using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 using EasySoft.Core.ErrorLogTransmitter.Interfaces;
-using EasySoft.UtilityTools.Core.Channels;
-using EasySoft.UtilityTools.Standard.Entity;
 
 namespace EasySoft.Core.ErrorLogTransmitter.Producers;
 

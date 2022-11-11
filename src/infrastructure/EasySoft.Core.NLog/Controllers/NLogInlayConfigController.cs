@@ -1,7 +1,4 @@
-﻿using EasySoft.Core.Config.Utils;
-using EasySoft.Core.Infrastructure.Controllers;
-
-namespace EasySoft.Core.NLog.Controllers;
+﻿namespace EasySoft.Core.NLog.Controllers;
 
 public class NLogInlayConfigController : BasicController
 {

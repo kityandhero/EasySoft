@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
-        <ProjectReference Include="..\EasySoft.Dependence.Core\EasySoft.Dependence.Core.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
+        <ProjectReference Include="..\EasySoft.Dependence.Core\EasySoft.Dependence.Core.csproj" />
     </ItemGroup>
 
 </Project>

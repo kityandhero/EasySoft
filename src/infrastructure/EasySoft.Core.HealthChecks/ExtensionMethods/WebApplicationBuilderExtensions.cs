@@ -1,8 +1,4 @@
 ﻿using EasySoft.Core.HealthChecks.Entities;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Startup;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.HealthChecks.ExtensionMethods;
 

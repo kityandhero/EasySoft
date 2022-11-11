@@ -1,7 +1,5 @@
 ﻿using EasySoft.Core.Hangfire.ConfigAssist;
 using EasySoft.Core.Hangfire.ConfigCollection;
-using EasySoft.Core.Infrastructure.Controllers;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
 
 namespace EasySoft.Core.Hangfire.Controllers;
 

@@ -1,7 +1,4 @@
-﻿using Autofac;
-using EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
+﻿using EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
 
 namespace EasySoft.Core.SqlExecutionRecordTransmitter.ExtensionMethods;
 

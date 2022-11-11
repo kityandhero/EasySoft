@@ -1,7 +1,4 @@
-﻿using Grpc.Net.ClientFactory;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace EasySoft.Core.Grpc.ExtensionMethods;
+﻿namespace EasySoft.Core.Grpc.ExtensionMethods;
 
 public static class ServiceCollectionExtensions
 {

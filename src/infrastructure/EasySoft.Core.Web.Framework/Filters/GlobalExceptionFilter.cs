@@ -1,20 +1,4 @@
-﻿using EasySoft.Core.AutoFac.IocAssists;
-using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.ErrorLogTransmitter.Producers;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.UtilityTools.Core.Assists;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-using EasySoft.UtilityTools.Core.Results;
-using EasySoft.UtilityTools.Standard.Assists;
-using EasySoft.UtilityTools.Standard.Enums;
-using EasySoft.UtilityTools.Standard.Exceptions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
-namespace EasySoft.Core.Web.Framework.Filters;
+﻿namespace EasySoft.Core.Web.Framework.Filters;
 
 public class GlobalExceptionFilter : IExceptionFilter
 {

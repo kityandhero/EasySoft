@@ -1,7 +1,4 @@
-﻿using DotNetCore.CAP.Messages;
-using DotNetCore.CAP.Serialization;
-
-namespace EasySoft.Core.EventBus.Cap.Serialization;
+﻿namespace EasySoft.Core.EventBus.Cap.Serialization;
 
 public class DefaultBinaryFormatterSerializer : ISerializer
 {

@@ -1,9 +1,4 @@
-﻿using System.Text;
-using EasySoft.UtilityTools.Standard.Assists;
-using Polly;
-using RabbitMQ.Client;
-
-namespace EasySoft.Core.EventBus.RabbitMq;
+﻿namespace EasySoft.Core.EventBus.RabbitMq;
 
 public class RabbitMqProducer : IDisposable
 {

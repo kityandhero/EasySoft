@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.Cap.Assists;
-
-namespace EasySoft.Core.GeneralLogTransmitter;
+﻿namespace EasySoft.Core.GeneralLogTransmitter;
 
 public static class Configures
 {

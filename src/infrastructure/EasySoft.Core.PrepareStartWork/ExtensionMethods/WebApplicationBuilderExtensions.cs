@@ -1,12 +1,4 @@
-﻿using Autofac;
-using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.PrepareStartWork.PrepareWorks;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+﻿using EasySoft.Core.PrepareStartWork.PrepareWorks;
 
 namespace EasySoft.Core.PrepareStartWork.ExtensionMethods;
 

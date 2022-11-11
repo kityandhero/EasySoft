@@ -1,6 +1,4 @@
-﻿using RabbitMQ.Client;
-
-namespace EasySoft.Core.EventBus.RabbitMq;
+﻿namespace EasySoft.Core.EventBus.RabbitMq;
 
 public interface IRabbitMqConnection
 {

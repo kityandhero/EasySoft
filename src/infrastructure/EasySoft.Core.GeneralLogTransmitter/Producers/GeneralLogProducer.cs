@@ -1,10 +1,5 @@
-﻿using DotNetCore.CAP;
-using EasySoft.Core.ExchangeRegulation.Enums;
-using EasySoft.Core.ExchangeRegulation.ExtensionMethods;
-using EasySoft.Core.GeneralLogTransmitter.Entities;
+﻿using EasySoft.Core.GeneralLogTransmitter.Entities;
 using EasySoft.Core.GeneralLogTransmitter.Interfaces;
-using EasySoft.UtilityTools.Core.Channels;
-using Newtonsoft.Json;
 
 namespace EasySoft.Core.GeneralLogTransmitter.Producers;
 

@@ -1,8 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using Grpc.Net.ClientFactory;
-using Microsoft.AspNetCore.Builder;
-
-namespace EasySoft.Core.Grpc.ExtensionMethods;
+﻿namespace EasySoft.Core.Grpc.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {

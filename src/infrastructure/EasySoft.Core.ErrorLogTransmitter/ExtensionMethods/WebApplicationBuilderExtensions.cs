@@ -1,7 +1,5 @@
 ﻿using Autofac;
 using EasySoft.Core.ErrorLogTransmitter.Producers;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 

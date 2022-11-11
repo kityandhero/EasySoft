@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.Cap.Assists;
-
-namespace EasySoft.Core.SqlExecutionRecordTransmitter;
+﻿namespace EasySoft.Core.SqlExecutionRecordTransmitter;
 
 public static class Configures
 {

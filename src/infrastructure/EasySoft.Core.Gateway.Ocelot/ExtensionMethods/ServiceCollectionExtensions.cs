@@ -1,14 +1,4 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Startup;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Ocelot.DependencyInjection;
-using Ocelot.Middleware;
-using Ocelot.Provider.Consul;
-using Ocelot.Provider.Polly;
-
-namespace EasySoft.Core.Gateway.Ocelot.ExtensionMethods;
+﻿namespace EasySoft.Core.Gateway.Ocelot.ExtensionMethods;
 
 public static class ServiceCollectionExtensions
 {

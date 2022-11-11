@@ -1,12 +1,4 @@
-﻿using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace EasySoft.Core.Web.Framework.ExtensionMethods;
+﻿namespace EasySoft.Core.Web.Framework.ExtensionMethods;
 
 public static class HtmlHelperViewExtensions
 {
@@ -37,15 +29,9 @@ public static class HtmlHelperViewExtensions
         object? parameters = null
     )
     {
-        if (action == null)
-        {
-            throw new ArgumentNullException(nameof(action));
-        }
+        if (action == null) throw new ArgumentNullException(nameof(action));
 
-        if (controller == null)
-        {
-            throw new ArgumentNullException(nameof(controller));
-        }
+        if (controller == null) throw new ArgumentNullException(nameof(controller));
 
         var task = RenderActionAsync(helper, action, controller, area, parameters);
 
@@ -70,10 +56,7 @@ public static class HtmlHelperViewExtensions
         // creating new action invocation context
         var routeData = new RouteData();
 
-        foreach (var router in helper.ViewContext.RouteData.Routers)
-        {
-            routeData.PushState(router, null, null);
-        }
+        foreach (var router in helper.ViewContext.RouteData.Routers) routeData.PushState(router, null, null);
 
         routeData.PushState(null,
             new RouteValueDictionary(
@@ -92,10 +75,7 @@ public static class HtmlHelperViewExtensions
         var routeContext = new RouteContext(helper.ViewContext.HttpContext) { RouteData = routeData };
         var candidate = actionSelector.SelectCandidates(routeContext);
 
-        if (candidate == null)
-        {
-            throw new Exception("candidate disallow null");
-        }
+        if (candidate == null) throw new Exception("candidate disallow null");
 
         var actionDescriptor = actionSelector.SelectBestCandidate(routeContext, candidate);
 
@@ -106,10 +86,7 @@ public static class HtmlHelperViewExtensions
         {
             var newHttpContext = serviceProvider.GetRequiredService<IHttpContextFactory>()
                 .Create(helper.ViewContext.HttpContext.Features);
-            if (newHttpContext.Items.ContainsKey(typeof(IUrlHelper)))
-            {
-                newHttpContext.Items.Remove(typeof(IUrlHelper));
-            }
+            if (newHttpContext.Items.ContainsKey(typeof(IUrlHelper))) newHttpContext.Items.Remove(typeof(IUrlHelper));
 
             newHttpContext.Response.Body = new MemoryStream();
 
@@ -137,17 +114,12 @@ public static class HtmlHelperViewExtensions
         }
         finally
         {
-            if (originalActionContext != null)
-            {
-                actionContextAccessor.ActionContext = originalActionContext;
-            }
+            if (originalActionContext != null) actionContextAccessor.ActionContext = originalActionContext;
 
             httpContextAccessor.HttpContext = originalHttpContext;
 
             if (helper.ViewContext.HttpContext.Items.ContainsKey(typeof(IUrlHelper)))
-            {
                 helper.ViewContext.HttpContext.Items.Remove(typeof(IUrlHelper));
-            }
         }
     }
 }

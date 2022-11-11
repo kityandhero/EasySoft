@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace EasySoft.Core.ErrorLogTransmitter.Enums;
+﻿namespace EasySoft.Core.ErrorLogTransmitter.Enums;
 
 /// <summary>
 /// 重要程度

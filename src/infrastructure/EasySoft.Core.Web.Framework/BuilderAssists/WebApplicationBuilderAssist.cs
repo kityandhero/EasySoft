@@ -1,28 +1,5 @@
-﻿using EasySoft.Core.AgileConfigClient.ExtensionMethods;
-using EasySoft.Core.AutoFac.ExtensionMethods;
-using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Config.ExtensionMethods;
-using EasySoft.Core.Config.Utils;
-using EasySoft.Core.ConsulConfigCenterClient.ExtensionMethods;
-using EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;
-using EasySoft.Core.DynamicConfig.Assists;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Mapster.ExtensionMethods;
-using EasySoft.Core.NLog.Assists;
-using EasySoft.Core.NLog.ExtensionMethods;
-using EasySoft.Core.Gateway.Ocelot.ExtensionMethods;
-using EasySoft.Core.PrepareStartWork.ExtensionMethods;
-using EasySoft.Core.Web.Framework.ExtensionMethods;
-using EasySoft.UtilityTools.Core.Assists;
-using EasySoft.UtilityTools.Core.Channels;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-using EasySoft.UtilityTools.Standard.Enums;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using EasySoft.UtilityTools.Standard.Result;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
+﻿using EasySoft.Core.Web.Framework.ExtensionMethods;
 using NLog;
-using NLog.Extensions.Logging;
 
 namespace EasySoft.Core.Web.Framework.BuilderAssists;
 

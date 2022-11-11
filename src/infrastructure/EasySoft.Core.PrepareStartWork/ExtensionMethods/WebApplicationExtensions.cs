@@ -1,10 +1,4 @@
-﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.PrepareStartWork.PrepareWorks;
-using Microsoft.AspNetCore.Builder;
-using EasySoft.Core.Infrastructure.Startup;
-using Microsoft.Extensions.Logging;
+﻿using EasySoft.Core.PrepareStartWork.PrepareWorks;
 
 namespace EasySoft.Core.PrepareStartWork.ExtensionMethods;
 

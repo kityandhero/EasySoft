@@ -19,64 +19,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="configures\autofac.json" />
-      <Content Include="configures\autofac.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <None Remove="configures\businessConfig.json" />
-      <Content Include="configures\businessConfig.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <None Remove="configures\databaseConfig.json" />
-      <Content Include="configures\databaseConfig.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <None Remove="configures\developConfig.json" />
-      <Content Include="configures\developConfig.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <None Remove="configures\elasticSearchConfig.json" />
-      <Content Include="configures\elasticSearchConfig.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <None Remove="configures\generalConfig.json" />
-      <Content Include="configures\generalConfig.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <None Remove="configures\hangfireConfig.json" />
-      <Content Include="configures\hangfireConfig.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <None Remove="configures\jobConfig.json" />
-      <Content Include="configures\jobConfig.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="configures\logConfig.json" />
-      <None Remove="configures\maintainConfig.json" />
-      <Content Include="configures\maintainConfig.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="configures\messageQueueConfig.json" />
-      <None Remove="configures\mongoConfig.json" />
-      <Content Include="configures\mongoConfig.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <None Remove="configures\payCallbackConfig.json" />
-      <Content Include="configures\payCallbackConfig.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <None Remove="configures\redisConfig.json" />
-      <Content Include="configures\redisConfig.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <None Remove="configures\serviceConfig.json" />
-      <Content Include="configures\serviceConfig.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <None Remove="configures\swaggerConfig.json" />
-      <Content Include="configures\swaggerConfig.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
     </ItemGroup>
 
 </Project>

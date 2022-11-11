@@ -1,12 +1,4 @@
-﻿using System.Collections;
-using System.Dynamic;
-using EasySoft.UtilityTools.Core.Results;
-using EasySoft.UtilityTools.Standard.Assists;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Newtonsoft.Json.Linq;
-
-namespace EasySoft.Core.Web.Framework.Attributes;
+﻿namespace EasySoft.Core.Web.Framework.Attributes;
 
 public sealed class WebApiResultFilterAttribute : ActionFilterAttribute
 {
@@ -31,20 +23,13 @@ public sealed class WebApiResultFilterAttribute : ActionFilterAttribute
                     IEnumerable? list = result.Data as IList;
 
                     if (list != null)
-                    {
                         d.list = list;
-                    }
                     else
-                    {
                         d.data = result.Data;
-                    }
                 }
             }
 
-            if (result.ExtraData != null)
-            {
-                d.extra = result.ExtraData;
-            }
+            if (result.ExtraData != null) d.extra = result.ExtraData;
 
             context.Result = new JsonResult(
                 d,

@@ -1,7 +1,5 @@
-﻿using DotNetCore.CAP;
-using EasySoft.Core.SqlExecutionRecordTransmitter.Entities;
+﻿using EasySoft.Core.SqlExecutionRecordTransmitter.Entities;
 using EasySoft.Core.SqlExecutionRecordTransmitter.Interfaces;
-using EasySoft.UtilityTools.Core.Channels;
 
 namespace EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
 

@@ -1,12 +1,4 @@
-﻿using EasySoft.Core.AutoFac.IocAssists;
-using EasySoft.UtilityTools.Standard.Assists;
-using EasySoft.UtilityTools.Standard.Enums;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using EasySoft.UtilityTools.Standard.Result;
-using Minio;
-using Minio.Exceptions;
-
-namespace EasySoft.Core.MinIO.Assists;
+﻿namespace EasySoft.Core.MinIO.Assists;
 
 public static class MinioClientAssist
 {

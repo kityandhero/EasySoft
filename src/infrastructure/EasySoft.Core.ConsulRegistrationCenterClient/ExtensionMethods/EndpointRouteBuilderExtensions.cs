@@ -1,8 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
-
-namespace EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;
+﻿namespace EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;
 
 internal static class EndpointConventionBuilderExtensions
 {

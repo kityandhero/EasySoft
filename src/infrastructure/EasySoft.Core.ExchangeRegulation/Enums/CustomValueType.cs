@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace EasySoft.Core.ExchangeRegulation.Enums;
+﻿namespace EasySoft.Core.ExchangeRegulation.Enums;
 
 public enum CustomValueType
 {

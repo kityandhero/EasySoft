@@ -1,7 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-
-namespace EasySoft.Core.NLog.ExtensionMethods;
+﻿namespace EasySoft.Core.NLog.ExtensionMethods;
 
 public static class EndpointConventionBuilderExtensions
 {

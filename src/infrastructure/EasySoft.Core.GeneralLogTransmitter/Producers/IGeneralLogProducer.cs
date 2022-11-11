@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.ExchangeRegulation.Enums;
-using EasySoft.Core.GeneralLogTransmitter.Interfaces;
+﻿using EasySoft.Core.GeneralLogTransmitter.Interfaces;
 
 namespace EasySoft.Core.GeneralLogTransmitter.Producers;
 

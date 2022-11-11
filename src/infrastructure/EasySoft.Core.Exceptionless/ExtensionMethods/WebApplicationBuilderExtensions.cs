@@ -1,7 +1,4 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Startup;
-using FlagAssist = EasySoft.Core.Exceptionless.Assists.FlagAssist;
+﻿using FlagAssist = EasySoft.Core.Exceptionless.Assists.FlagAssist;
 
 namespace EasySoft.Core.Exceptionless.ExtensionMethods;
 
