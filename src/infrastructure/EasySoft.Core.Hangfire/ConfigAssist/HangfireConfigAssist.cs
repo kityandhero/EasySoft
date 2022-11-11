@@ -1,15 +1,14 @@
-﻿using EasySoft.Core.Config.ConfigCollection;
-using EasySoft.Core.Config.Exceptions;
+﻿using EasySoft.Core.Config.Exceptions;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
+using EasySoft.Core.Hangfire.ConfigCollection;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Configuration;
 
-namespace EasySoft.Core.Config.ConfigAssist;
+namespace EasySoft.Core.Hangfire.ConfigAssist;
 
 public static class HangfireConfigAssist
 {
-    // ReSharper disable once UnusedMember.Local
     private static readonly string ConfigFile = $"{nameof(HangfireConfig).ToLowerFirst()}.json";
 
     private static IConfiguration Configuration { get; set; }

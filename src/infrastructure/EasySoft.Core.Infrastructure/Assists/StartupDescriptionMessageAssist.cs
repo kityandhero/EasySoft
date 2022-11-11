@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Startup;
+using EasySoft.UtilityTools.Standard;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Logging;
 
@@ -8,11 +9,11 @@ namespace EasySoft.Core.Infrastructure.Assists;
 
 public static class StartupDescriptionMessageAssist
 {
-    private static readonly ConcurrentQueue<IStartupMessage> MessageCollection = new();
+    private static readonly IList<IStartupMessage> MessageCollection = new List<IStartupMessage>();
 
     public static void Add(IStartupMessage message)
     {
-        MessageCollection.Enqueue(message);
+        MessageCollection.Add(message);
     }
 
     private static void AddInformation(string message, string extra = "")
@@ -55,6 +56,11 @@ public static class StartupDescriptionMessageAssist
         );
     }
 
+    public static void AddTraceDivider()
+    {
+        AddTrace(ConstCollection.PromptMessageDivider);
+    }
+
     public static void AddPrompt(string message, string extra = "")
     {
         AddTrace($"DESC: {message}", extra);
@@ -74,7 +80,7 @@ public static class StartupDescriptionMessageAssist
             new StartupMessage()
                 .SetLevel(LogLevel.Trace)
                 .SetMessage(
-                    UtilityTools.Standard.ConstCollection.ApplicationStartMessageDescriptionDivider
+                    ConstCollection.ApplicationStartMessageDescriptionDivider
                 )
         );
 

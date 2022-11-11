@@ -8,6 +8,9 @@ namespace EasySoft.UtilityTools.Standard;
 /// </summary>
 public static class ConstCollection
 {
+    public const string PromptMessageDivider =
+        "-----------------------------------------------------------";
+
     public const string ApplicationStartConfigMessageDivider =
         "-----------------------------------------------------------";
 

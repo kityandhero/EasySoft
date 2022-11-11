@@ -1,12 +1,12 @@
 ﻿using System.Reflection;
-using EasySoft.Core.Config.ConfigCollection;
 using EasySoft.Core.Config.Exceptions;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
+using EasySoft.Core.Swagger.ConfigCollection;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Configuration;
 
-namespace EasySoft.Core.Config.ConfigAssist;
+namespace EasySoft.Core.Swagger.ConfigAssist;
 
 public static class SwaggerConfigAssist
 {

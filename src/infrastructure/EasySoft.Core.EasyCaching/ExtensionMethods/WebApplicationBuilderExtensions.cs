@@ -1,14 +1,19 @@
 ﻿using EasyCaching.Core;
 using EasyCaching.Core.Configurations;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.EasyCaching.ConfigAssist;
 using EasySoft.Core.EasyCaching.Enums;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 
 namespace EasySoft.Core.EasyCaching.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
+    private const string UniqueIdentifierAddAdvanceEasyCaching = "b73d0680-f482-4168-b752-6f33abb10c0f";
+
     /// <summary>
     /// 配置缓存模式
     /// </summary>
@@ -18,10 +23,32 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
+        if (builder.HasRegistered(UniqueIdentifierAddAdvanceEasyCaching))
+            return builder;
+
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
+        RedisConfigAssist.Init();
+
+        StartupDescriptionMessageAssist.AddExecute(
+            $"{nameof(AddAdvanceEasyCaching)}()."
+        );
+
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"CacheMode is {GeneralConfigAssist.GetCacheMode()}.",
+            GeneralConfigAssist.GetConfigFileInfo()
+        );
+
+        if (GeneralConfigAssist.GetCacheMode() == CacheModeCollection.Redis.ToString())
+            StartupDescriptionMessageAssist.AddPrompt(
+                $"{CacheModeCollection.Redis.ToString()} Connections: {RedisConfigAssist.GetConnectionCollection().Join("|")}.",
+                RedisConfigAssist.GetConfigFileInfo()
+            );
+
         var cacheMode = GeneralConfigAssist.GetCacheMode();
 
         if (cacheMode == CacheModeCollection.InMemory.ToString())
-            builder.AddAdvanceEasyCachingInMemory();
+            builder.AddAdvanceEasyCachingInMemoryMode();
         else if (cacheMode == CacheModeCollection.Redis.ToString())
             builder.AddAdvanceEasyCachingCsRedis();
         else
@@ -33,33 +60,29 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// Add the AspectCore interceptor.
     /// </summary>
-    private static WebApplicationBuilder AddEasyCachingInterceptor(
+    private static WebApplicationBuilder AddAdvanceEasyCachingInterceptor(
         this WebApplicationBuilder builder,
         Action<EasyCachingInterceptorOptions> action
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddEasyCachingInterceptor)}()."
+            $"{nameof(AddAdvanceEasyCachingInterceptor)}()."
         );
 
-        builder.Host.AddEasyCachingInterceptor(action);
+        builder.Host.AddAdvanceEasyCachingInterceptor(action);
 
         return builder;
     }
 
-    private static WebApplicationBuilder AddAdvanceEasyCachingInMemory(
+    private static WebApplicationBuilder AddAdvanceEasyCachingInMemoryMode(
         this WebApplicationBuilder builder
     )
     {
-        StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceEasyCachingInMemory)}()."
-        );
-
-        builder.AddEasyCachingInMemoryCaching()
-            .AddEasyCachingInterceptor(x =>
+        builder.AddAdvanceEasyCachingInMemory()
+            .AddAdvanceEasyCachingInterceptor(x =>
                 x.CacheProviderName = EasyCachingConstValue.DefaultInMemoryName
             )
-            .AddMemoryCacheOperatorInjection();
+            .AddAdvanceEasyCachingInMemoryOperatorInjection();
 
         return builder;
     }
@@ -69,16 +92,16 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    private static WebApplicationBuilder AddEasyCachingInMemoryCaching(
+    private static WebApplicationBuilder AddAdvanceEasyCachingInMemory(
         this WebApplicationBuilder builder
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddEasyCachingInMemoryCaching)}()."
+            $"{nameof(AddAdvanceEasyCachingInMemory)}()."
         );
 
         //Important step for In-Memory Caching
-        builder.Services.AddEasyCachingInMemoryCaching();
+        builder.Services.AddAdvanceEasyCachingInMemory();
 
         return builder;
     }
@@ -88,15 +111,15 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    private static WebApplicationBuilder AddMemoryCacheOperatorInjection(
+    private static WebApplicationBuilder AddAdvanceEasyCachingInMemoryOperatorInjection(
         this WebApplicationBuilder builder
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddMemoryCacheOperatorInjection)}()."
+            $"{nameof(AddAdvanceEasyCachingInMemoryOperatorInjection)}()."
         );
 
-        builder.Host.AddMemoryCacheOperatorInjection();
+        builder.Host.AddAdvanceEasyCachingInMemoryOperatorInjection();
 
         return builder;
     }
@@ -105,16 +128,11 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceEasyCachingCsRedis)}()."
-        );
-
-        //Important step for Redis Caching
-        builder.AddEasyCachingRedisCaching()
-            .AddEasyCachingInterceptor(x =>
+        builder.AddAdvanceEasyCachingRedis()
+            .AddAdvanceEasyCachingInterceptor(x =>
                 x.CacheProviderName = EasyCachingConstValue.DefaultRedisName
             )
-            .AddRedisCacheOperatorInjection();
+            .AddAdvanceEasyCachingRedisOperatorInjection();
 
         return builder;
     }
@@ -124,16 +142,16 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    private static WebApplicationBuilder AddEasyCachingRedisCaching(
+    private static WebApplicationBuilder AddAdvanceEasyCachingRedis(
         this WebApplicationBuilder builder
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddEasyCachingRedisCaching)}()."
+            $"{nameof(AddAdvanceEasyCachingRedis)}()."
         );
 
         //Important step for In-Memory Caching
-        builder.Services.AddEasyCachingRedisCaching();
+        builder.Services.AddAdvanceEasyCachingRedis();
 
         return builder;
     }
@@ -143,15 +161,15 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    private static WebApplicationBuilder AddRedisCacheOperatorInjection(
+    private static WebApplicationBuilder AddAdvanceEasyCachingRedisOperatorInjection(
         this WebApplicationBuilder builder
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddRedisCacheOperatorInjection)}()."
+            $"{nameof(AddAdvanceEasyCachingRedisOperatorInjection)}()."
         );
 
-        builder.Host.AddRedisCacheOperatorInjection();
+        builder.Host.AddAdvanceEasyCachingRedisOperatorInjection();
 
         return builder;
     }

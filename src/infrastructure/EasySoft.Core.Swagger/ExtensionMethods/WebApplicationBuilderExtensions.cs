@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
-using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
+using EasySoft.Core.Swagger.ConfigAssist;
 using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -20,6 +20,8 @@ public static class WebApplicationBuilderExtensions
     {
         if (builder.HasRegistered(UniqueIdentifierAddSwaggerGen))
             return builder;
+
+        SwaggerConfigAssist.Init();
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceSwagger)}()."

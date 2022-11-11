@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -29,6 +28,7 @@ public static class Tools
 
         var nlogDefaultConfigExceptionlessServerUrl = GeneralConfigAssist.GetExceptionlessServerUrl();
         var nlogDefaultConfigExceptionlessApiKey = GeneralConfigAssist.GetExceptionlessApiKey();
+        var nlogConsoleRepeatedFilterSwitch = GeneralConfigAssist.GetNlogConsoleRepeatedFilterSwitch();
 
         var debugRule = nlogDefaultConfigDebugToFileSwitch ? GetNlogDefaultDebugRuleConfig() : "";
         var debugTarget = nlogDefaultConfigDebugToFileSwitch ? GetNlogDefaultDebugTargetConfig() : "";
@@ -72,6 +72,10 @@ public static class Tools
             ? GetNlogWordHighlightingRules()
             : "";
 
+        var consoleFilters = new List<string>();
+
+        if (nlogConsoleRepeatedFilterSwitch) consoleFilters.Add(GetNlogConsoleFilterRepeated());
+
         mainConfig = mainConfig
             .Replace("###exceptionless-extensions###", exceptionlessExtensions)
             .Replace("###trace-target###", traceTarget)
@@ -82,7 +86,11 @@ public static class Tools
             .Replace("###exceptionless-rule###", exceptionlessRule)
             .Replace("###console-minLevel###", consoleMinLevel)
             .Replace("###messageLimit###", consoleMessageLimitSetting)
-            .Replace("###word-highlighting-rules###", nlogWordHighlightingRules);
+            .Replace("###word-highlighting-rules###", nlogWordHighlightingRules)
+            .Replace(
+                "###console-filters###",
+                consoleFilters.Any() ? consoleFilters.Join(",") : ""
+            );
 
         return mainConfig;
     }
@@ -130,7 +138,12 @@ public static class Tools
 
     public static string GetNlogWordHighlightingRules()
     {
-        return GetEmbeddedResourceFileContent("/nlog.wordHighlightingRules.txt");
+        return GetEmbeddedResourceFileContent("/nlog.console.word.highlighting.rules.txt");
+    }
+
+    public static string GetNlogConsoleFilterRepeated()
+    {
+        return GetEmbeddedResourceFileContent("/nlog.console.filter.repeated.txt");
     }
 
     private static string GetEmbeddedResourceFileContent(string path)

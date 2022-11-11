@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Config.ConfigCollection;
+﻿namespace EasySoft.Core.Swagger.ConfigCollection;
 
 public class SwaggerConfig
 {

@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.Config.ConfigInterface;
 
-namespace EasySoft.Core.Config.ConfigCollection;
+namespace EasySoft.Core.EasyCaching.ConfigCollection;
 
 public class RedisConfig : IConfig
 {

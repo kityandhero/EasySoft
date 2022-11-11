@@ -1,6 +1,6 @@
 ﻿using EasyCaching.CSRedis;
 using EasyCaching.InMemory;
-using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.EasyCaching.ConfigAssist;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasySoft.Core.EasyCaching.ExtensionMethods;
@@ -12,7 +12,7 @@ public static class ServerCollectionExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
-    public static IServiceCollection AddEasyCachingInMemoryCaching(
+    public static IServiceCollection AddAdvanceEasyCachingInMemory(
         this IServiceCollection services
     )
     {
@@ -33,7 +33,7 @@ public static class ServerCollectionExtensions
                         // enable deep clone when reading object from cache or not, default value is true.
                         EnableReadDeepClone = true,
                         // enable deep clone when writing object to cache or not, default valuee is false.
-                        EnableWriteDeepClone = false,
+                        EnableWriteDeepClone = false
                     };
                     // the max random second will be added to cache's expiration, default value is 120
                     config.MaxRdSecond = 120;
@@ -56,7 +56,7 @@ public static class ServerCollectionExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    public static IServiceCollection AddEasyCachingRedisCaching(
+    public static IServiceCollection AddAdvanceEasyCachingRedis(
         this IServiceCollection builder
     )
     {

@@ -1,9 +1,9 @@
-﻿using EasySoft.Core.Config.ConfigCollection;
+﻿using EasySoft.Core.EasyCaching.ConfigCollection;
 using EasySoft.Core.Infrastructure.Controllers;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EasySoft.Core.DevelopAuxiliary.Controllers;
+namespace EasySoft.Core.EasyCaching.Controllers;
 
 public class RedisConfigFileController : BasicController
 {

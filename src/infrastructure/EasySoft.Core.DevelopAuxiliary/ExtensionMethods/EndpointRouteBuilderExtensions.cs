@@ -55,16 +55,6 @@ public static class EndpointConventionBuilderExtensions
         ).WithDisplayName("GeneralConfigFile");
     }
 
-    internal static IEndpointConventionBuilder MapHangfireConfigFile(
-        this IEndpointRouteBuilder endpoints
-    )
-    {
-        return endpoints.MapControllerRoute(
-            "HangfireConfigFile",
-            "{controller=HangfireConfigFile}/{action=Index}"
-        ).WithDisplayName("HangfireConfigFile");
-    }
-
     internal static IEndpointConventionBuilder MapMongoConfigFile(
         this IEndpointRouteBuilder endpoints
     )
@@ -93,16 +83,6 @@ public static class EndpointConventionBuilderExtensions
             "RedisConfigFile",
             "{controller=RedisConfigFile}/{action=Index}"
         ).WithDisplayName("RedisConfigFile");
-    }
-
-    internal static IEndpointConventionBuilder MapSwaggerConfigFile(
-        this IEndpointRouteBuilder endpoints
-    )
-    {
-        return endpoints.MapControllerRoute(
-            "SwaggerConfigFile",
-            "{controller=SwaggerConfigFile}/{action=Index}"
-        ).WithDisplayName("SwaggerConfigFile");
     }
 
     internal static IEndpointConventionBuilder MapNLogInlayConfig(

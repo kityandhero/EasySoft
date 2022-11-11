@@ -1,6 +1,7 @@
 ﻿using System;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.UtilityTools.Core.Assists;
 
@@ -20,6 +21,13 @@ public static class EnvironmentAssist
         if (_environment == null) throw new Exception("environment has not set yet");
 
         return _environment;
+    }
+
+    public static bool IsDevelopment()
+    {
+        var environment = GetEnvironment();
+
+        return environment.IsDevelopment();
     }
 
     public static string GetEnvironmentAliasName()

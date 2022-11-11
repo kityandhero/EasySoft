@@ -124,10 +124,7 @@
         "writeTo": "own-console",
         "filterDefaultAction": "Log",
         "filters": {
-          "whenRepeated": {
-            "layout": "${message}",
-            "action": "Ignore"
-          }
+          ###console-filters###
         }
       }
     ]

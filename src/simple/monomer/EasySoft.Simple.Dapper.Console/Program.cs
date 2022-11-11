@@ -20,17 +20,11 @@ var serviceProvider = AutoFacConsoleAssist.CreateServiceProvider(services =>
         var cacheMode = GeneralConfigAssist.GetCacheMode();
 
         if (cacheMode == CacheModeCollection.InMemory.ToString())
-        {
-            services.AddEasyCachingInMemoryCaching();
-        }
+            services.AddAdvanceEasyCachingInMemory();
         else if (cacheMode == CacheModeCollection.Redis.ToString())
-        {
-            services.AddEasyCachingRedisCaching();
-        }
+            services.AddAdvanceEasyCachingRedis();
         else
-        {
             throw new Exception("not found available cache mode");
-        }
     },
     containerBuilder =>
     {
@@ -69,7 +63,4 @@ DapperElegantConfigurator.SetCacheOperator(AutofacAssist.Instance.Resolve<IAsync
 
 var author = EntityAssist.GetEntity<Author>(1);
 
-if (author != null)
-{
-    Console.WriteLine(JsonConvertAssist.Serialize(author));
-}
+if (author != null) Console.WriteLine(JsonConvertAssist.Serialize(author));

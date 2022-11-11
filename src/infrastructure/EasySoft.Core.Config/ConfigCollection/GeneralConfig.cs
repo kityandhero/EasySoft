@@ -132,6 +132,11 @@ public class GeneralConfig : IConfig
     /// </summary>
     public string NlogConsoleMessageLimit { get; set; }
 
+    /// <summary>
+    /// Nlog 控制台忽略重复输出, 默认不启用
+    /// </summary>
+    public string NlogConsoleRepeatedFilterSwitch { get; set; }
+
     public string MiniProFileSwitch { get; set; }
 
     public string WebRootPath { get; set; }
@@ -212,11 +217,10 @@ public class GeneralConfig : IConfig
 
         NlogDefaultConfigTraceToFileSwitch = "0";
         NlogDefaultConfigDebugToFileSwitch = "0";
-
         NlogDefaultConfigTraceToConsoleSwitch = "1";
         NlogDefaultConfigDebugToConsoleSwitch = "1";
-
         NlogConsoleMessageLimit = "0";
+        NlogConsoleRepeatedFilterSwitch = "0";
 
         MiniProFileSwitch = "0";
 

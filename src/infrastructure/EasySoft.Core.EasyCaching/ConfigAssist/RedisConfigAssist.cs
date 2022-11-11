@@ -1,11 +1,12 @@
-﻿using EasySoft.Core.Config.ConfigCollection;
-using EasySoft.Core.Config.Exceptions;
+﻿using EasySoft.Core.Config.Exceptions;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
+using EasySoft.Core.EasyCaching.ConfigCollection;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Configuration;
 
-namespace EasySoft.Core.Config.ConfigAssist;
+namespace EasySoft.Core.EasyCaching.ConfigAssist;
 
 public static class RedisConfigAssist
 {
@@ -30,6 +31,9 @@ public static class RedisConfigAssist
 
     public static void Init()
     {
+        StartupDescriptionMessageAssist.AddExecute(
+            $"{nameof(RedisConfigAssist)}.{nameof(Init)}()."
+        );
     }
 
     public static string GetConfigFileInfo()

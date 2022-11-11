@@ -7,6 +7,7 @@ using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Options;
 using EasySoft.Core.DevelopAuxiliary.ExtensionMethods;
+using EasySoft.Core.EasyCaching.ConfigAssist;
 using EasySoft.Core.EasyCaching.ExtensionMethods;
 using EasySoft.Core.EasyToken.ExtensionMethods;
 using EasySoft.Core.EntityFramework.ExtensionMethods;
@@ -260,14 +261,14 @@ public static class WebApplicationBuilderExtensions
 
             StartupConfigMessageAssist.AddConfig(
                 "ForwardedHeadersSwitch: enable.",
-                RedisConfigAssist.GetConfigFileInfo()
+                GeneralConfigAssist.GetConfigFileInfo()
             );
         }
         else
         {
             StartupConfigMessageAssist.AddConfig(
                 "ForwardedHeadersSwitch: disable.",
-                RedisConfigAssist.GetConfigFileInfo()
+                GeneralConfigAssist.GetConfigFileInfo()
             );
         }
 
@@ -276,17 +277,6 @@ public static class WebApplicationBuilderExtensions
         if (!app.Environment.IsDevelopment())
             // app.UseExceptionHandler("/Error");
             app.UseHsts();
-
-        StartupConfigMessageAssist.AddConfig(
-            $"CacheMode : {GeneralConfigAssist.GetCacheMode()}.",
-            GeneralConfigAssist.GetConfigFileInfo()
-        );
-
-        if (GeneralConfigAssist.GetCacheMode() == CacheModeCollection.Redis.ToString())
-            StartupConfigMessageAssist.AddConfig(
-                $"{CacheModeCollection.Redis.ToString()} Connections: {RedisConfigAssist.GetConnectionCollection().Join("|")}.",
-                RedisConfigAssist.GetConfigFileInfo()
-            );
 
         if (GeneralConfigAssist.GetRemoteLogSwitch())
         {

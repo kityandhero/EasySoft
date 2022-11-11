@@ -15,7 +15,7 @@ public static class ConfigureHostBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    internal static ConfigureHostBuilder AddMemoryCacheOperatorInjection(
+    internal static ConfigureHostBuilder AddAdvanceEasyCachingInMemoryOperatorInjection(
         this ConfigureHostBuilder builder
     )
     {
@@ -32,7 +32,7 @@ public static class ConfigureHostBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    internal static ConfigureHostBuilder AddRedisCacheOperatorInjection(
+    internal static ConfigureHostBuilder AddAdvanceEasyCachingRedisOperatorInjection(
         this ConfigureHostBuilder builder
     )
     {
@@ -50,7 +50,7 @@ public static class ConfigureHostBuilderExtensions
     /// <summary>
     /// Add the AspectCore interceptor.
     /// </summary>
-    internal static ConfigureHostBuilder AddEasyCachingInterceptor(
+    internal static ConfigureHostBuilder AddAdvanceEasyCachingInterceptor(
         this ConfigureHostBuilder builder,
         Action<EasyCachingInterceptorOptions> action
     )

@@ -632,11 +632,33 @@ public static class GeneralConfigAssist
 
         if (!v.IsInt(out var value))
             throw new ConfigErrorException(
-                $"请配置 NlogConsoleMessageLimit: {ConfigFile} -> NlogConsoleMessageLimit,请设置",
+                $"请配置 NlogConsoleMessageLimit: {ConfigFile} -> NlogConsoleMessageLimit, 请设置",
                 GetConfigFileInfo()
             );
 
         return value;
+    }
+
+    /// <summary>
+    /// 开关: Nlog 控制台忽略重复输出, 默认不启用
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static bool GetNlogConsoleRepeatedFilterSwitch()
+    {
+        if (GetNlogDefaultConfigTraceToConsoleSwitch()) return true;
+
+        var v = GetConfig().NlogConsoleRepeatedFilterSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+            throw new ConfigErrorException(
+                $"请配置 NlogConsoleRepeatedFilterSwitch: {ConfigFile} -> NlogConsoleRepeatedFilterSwitch, 请设置 0/1",
+                GetConfigFileInfo()
+            );
+
+        return value == 1;
     }
 
     public static bool GetMiniProFileSwitch()

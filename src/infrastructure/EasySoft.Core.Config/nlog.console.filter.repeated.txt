@@ -1,0 +1,4 @@
+"whenRepeated": {
+    "layout": "[${longDate}] ${uppercase:${level}:padding=-5:padCharacter= } ${message} ${exception:format=toString}",
+    "action": "Ignore"
+  }

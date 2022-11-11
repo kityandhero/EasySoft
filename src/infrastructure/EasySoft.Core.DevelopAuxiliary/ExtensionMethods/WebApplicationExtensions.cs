@@ -54,12 +54,6 @@ public static class WebApplicationExtensions
         ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
-                .SetAction(endpoints => { endpoints.MapHangfireConfigFile(); })
-        );
-
-        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
-            new ExtraAction<IEndpointRouteBuilder>()
-                .SetName("")
                 .SetAction(endpoints => { endpoints.MapMongoConfigFile(); })
         );
 
@@ -73,12 +67,6 @@ public static class WebApplicationExtensions
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapRedisConfigFile(); })
-        );
-
-        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
-            new ExtraAction<IEndpointRouteBuilder>()
-                .SetName("")
-                .SetAction(endpoints => { endpoints.MapSwaggerConfigFile(); })
         );
 
         ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
@@ -118,10 +106,6 @@ public static class WebApplicationExtensions
         );
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/HangfireConfigFile").Join(" ")} to get hangfireConfig template, display only in view development mode."
-        );
-
-        StartupDescriptionMessageAssist.AddPrompt(
             $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/MongoConfigFile").Join(" ")} to get mongoConfig template, display only in view development mode."
         );
 
@@ -131,10 +115,6 @@ public static class WebApplicationExtensions
 
         StartupDescriptionMessageAssist.AddPrompt(
             $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/RedisConfigFile").Join(" ")} to get redisConfig template, display only in view development mode."
-        );
-
-        StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/SwaggerConfigFile").Join(" ")} to get swaggerConfig template, display only in view development mode."
         );
 
         StartupDescriptionMessageAssist.AddPrompt(

@@ -16,7 +16,6 @@ internal class PrepareCovertStartWork : IPrepareCovertStartWork
         ConsulRegistrationCenterConfigAssist.Init();
         DevelopConfigAssist.Init();
         ElasticSearchConfigAssist.Init();
-        HangfireConfigAssist.Init();
         JobConfigAssist.Init();
         LogConfigAssist.Init();
         MaintainConfigAssist.Init();
@@ -24,8 +23,6 @@ internal class PrepareCovertStartWork : IPrepareCovertStartWork
         OcelotConfigAssist.Init();
         PayCallbackConfigAssist.Init();
         RabbitMQConfigAssist.Init();
-        RedisConfigAssist.Init();
         ServiceConfigAssist.Init();
-        SwaggerConfigAssist.Init();
     }
 }

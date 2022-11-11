@@ -40,7 +40,9 @@
         <None Remove="nlog.exceptionless-extensions.txt" />
         <EmbeddedResource Include="nlog.exceptionless-extensions.txt" />
         <None Remove="wordHighlightingRules.txt" />
-        <EmbeddedResource Include="nlog.wordHighlightingRules.txt" />
+        <EmbeddedResource Include="nlog.console.word.highlighting.rules.txt" />
+        <None Remove="nlog.console.filter.repeated.txt" />
+        <EmbeddedResource Include="nlog.console.filter.repeated.txt" />
     </ItemGroup>
     
 </Project>

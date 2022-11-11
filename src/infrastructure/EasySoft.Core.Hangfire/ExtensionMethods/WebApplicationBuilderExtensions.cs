@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Hangfire.Assists;
+using EasySoft.Core.Hangfire.ConfigAssist;
 using EasySoft.Core.Hangfire.Enums;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
@@ -20,6 +21,8 @@ public static class WebApplicationBuilderExtensions
     {
         if (builder.HasRegistered(UniqueIdentifierAddSwaggerGen))
             return builder;
+
+        HangfireConfigAssist.Init();
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceHangfire)}()."
