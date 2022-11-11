@@ -1,16 +1,66 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Startup;
+﻿using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.DevelopAuxiliary.ExtensionMethods;
 
 public static class WebApplicationExtensions
 {
+    private const string UniqueIdentifierUseAdvanceViewConfig = "556f1ead-72fd-44ea-a6ec-e3e4f061c228";
+
+    private const string UniqueIdentifierUseAdvanceActionMap = "c0632be6-5936-4d37-9c85-9282d1838b45";
+
     private const string UniqueIdentifierUseDevelopAuxiliary = "e84ad243-6571-4e74-aa77-02a3a8bb4ef1";
 
-    public static WebApplication UseDevelopAuxiliary(
+    public static WebApplication UseAdvanceViewConfig(
+        this WebApplication application
+    )
+    {
+        if (application.HasUsed(UniqueIdentifierUseAdvanceViewConfig))
+            return application;
+
+        if (!EnvironmentAssist.IsDevelopment()) return application;
+
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
+        StartupDescriptionMessageAssist.AddExecute(
+            $"{nameof(UseConfigureTemplate)}."
+        );
+
+        application.UseViewConfig(x => x.RenderPage());
+
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/viewConfig ").Join(" ")} to get info such as appSetting, display only in view development mode."
+        );
+
+        return application;
+    }
+
+    public static WebApplication UseAdvanceActionMap(
+        this WebApplication application
+    )
+    {
+        if (application.HasUsed(UniqueIdentifierUseAdvanceActionMap))
+            return application;
+
+        if (!EnvironmentAssist.IsDevelopment()) return application;
+
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
+        StartupDescriptionMessageAssist.AddExecute(
+            $"{nameof(UseAdvanceActionMap)}."
+        );
+
+        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
+            new ExtraAction<IEndpointRouteBuilder>()
+                .SetName("")
+                .SetAction(endpoints => { endpoints.MapActionMap(); })
+        );
+
+        return application;
+    }
+
+    public static WebApplication UseConfigureTemplate(
         this WebApplication application
     )
     {
@@ -19,18 +69,8 @@ public static class WebApplicationExtensions
 
         if (!EnvironmentAssist.IsDevelopment()) return application;
 
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
-        StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(UseDevelopAuxiliary)}."
-        );
-
-        application.UseViewConfig(x => x.RenderPage());
-
-        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
-            new ExtraAction<IEndpointRouteBuilder>()
-                .SetName("")
-                .SetAction(endpoints => { endpoints.MapActionMap(); })
+        StartupConfigMessageAssist.AddConfig(
+            $"UseConfigureTemplate: enabled."
         );
 
         ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
@@ -67,48 +107,6 @@ public static class WebApplicationExtensions
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapRabbitMQConfigFile(); })
-        );
-
-        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
-            new ExtraAction<IEndpointRouteBuilder>()
-                .SetName("")
-                .SetAction(endpoints => { endpoints.MapRedisConfigFile(); })
-        );
-
-        StartupConfigMessageAssist.AddConfig(
-            $"UseAuxiliary: enabled."
-        );
-
-        StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/viewConfig ").Join(" ")} to get info such as appSetting, display only in view development mode."
-        );
-
-        StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/ActionMap").Join(" ")} to get all action info, display only in view development mode."
-        );
-
-        StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/DatabaseConfigFile").Join(" ")} to get databaseConfig template, display only in view development mode."
-        );
-
-        StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/DevelopConfigFile").Join(" ")} to get developConfig template, display only in view development mode."
-        );
-
-        StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/ElasticSearchConfigFile").Join(" ")} to get elasticSearchConfig template, display only in view development mode."
-        );
-
-        StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/GeneralConfigFile").Join(" ")} to get generalConfig template, display only in view development mode."
-        );
-
-        StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/MongoConfigFile").Join(" ")} to get mongoConfig template, display only in view development mode."
-        );
-
-        StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/RabbitMQConfigFile").Join(" ")} to get rabbitMQConfig template, display only in view development mode."
         );
 
         return application;

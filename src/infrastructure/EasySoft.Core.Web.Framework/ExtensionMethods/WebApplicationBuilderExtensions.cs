@@ -399,12 +399,13 @@ public static class WebApplicationBuilderExtensions
             GeneralConfigAssist.GetConfigFileInfo()
         );
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
+        if (app.Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
 
-            app.UseDevelopAuxiliary();
-        }
+        app.UseAdvanceViewConfig();
+
+        app.UseAdvanceActionMap();
+
+        app.UseConfigureTemplate();
 
         WeaveApplicationExtraAction(app);
 

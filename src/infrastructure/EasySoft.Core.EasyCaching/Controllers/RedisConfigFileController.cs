@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.EasyCaching.ConfigCollection;
+﻿using EasySoft.Core.EasyCaching.ConfigAssist;
+using EasySoft.Core.EasyCaching.ConfigCollection;
 using EasySoft.Core.Infrastructure.Controllers;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,13 @@ public class RedisConfigFileController : BasicController
     {
         var data = new RedisConfig();
 
-        return this.Success(data, null, false);
+        return this.Success(
+            data,
+            new
+            {
+                ConfigureFileInfo = RedisConfigAssist.GetConfigFileInfo()
+            },
+            false
+        );
     }
 }
