@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.ExtensionMethods;
-
-namespace EasySoft.Core.PermissionVerification.Attributes
+﻿namespace EasySoft.Core.PermissionVerification.Attributes
 {
     /// <summary>
     /// 权限配置

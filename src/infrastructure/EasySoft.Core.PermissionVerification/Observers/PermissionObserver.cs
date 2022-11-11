@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.AuthenticationCore.Operators;
-
-namespace EasySoft.Core.PermissionVerification.Observers;
+﻿namespace EasySoft.Core.PermissionVerification.Observers;
 
 public abstract class PermissionObserver : PermissionObserverCore
 {

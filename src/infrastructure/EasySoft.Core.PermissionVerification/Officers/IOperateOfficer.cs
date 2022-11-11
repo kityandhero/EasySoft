@@ -1,8 +1,4 @@
-﻿using EasySoft.UtilityTools.Core.Results;
-using EasySoft.UtilityTools.Standard.Result;
-using Microsoft.AspNetCore.Http;
-
-namespace EasySoft.Core.PermissionVerification.Officers;
+﻿namespace EasySoft.Core.PermissionVerification.Officers;
 
 public interface IOperateOfficer
 {

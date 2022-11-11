@@ -1,8 +1,4 @@
-﻿using EasySoft.Core.AuthenticationCore.Operators;
-using EasySoft.UtilityTools.Standard.Competence;
-using EasySoft.UtilityTools.Standard.Result;
-
-namespace EasySoft.Core.PermissionVerification.Observers;
+﻿namespace EasySoft.Core.PermissionVerification.Observers;
 
 public interface IPermissionObserver
 {

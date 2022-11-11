@@ -1,9 +1,4 @@
-﻿using System.ComponentModel;
-using EasySoft.Core.PermissionVerification.Attributes;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-using EasySoft.UtilityTools.Core.Results;
-using EasySoft.UtilityTools.Standard.Result;
-using Microsoft.AspNetCore.Http;
+﻿using EasySoft.Core.PermissionVerification.Attributes;
 
 namespace EasySoft.Core.PermissionVerification.Officers;
 

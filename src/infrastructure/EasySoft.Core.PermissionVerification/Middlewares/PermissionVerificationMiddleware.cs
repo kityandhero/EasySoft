@@ -1,8 +1,5 @@
-﻿using EasySoft.Core.AutoFac.IocAssists;
-using EasySoft.Core.PermissionVerification.Attributes;
+﻿using EasySoft.Core.PermissionVerification.Attributes;
 using EasySoft.Core.PermissionVerification.Officers;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-using Microsoft.AspNetCore.Http;
 
 namespace EasySoft.Core.PermissionVerification.Middlewares;
 

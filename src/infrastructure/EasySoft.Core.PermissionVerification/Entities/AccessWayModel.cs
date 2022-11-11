@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace EasySoft.Core.PermissionVerification.Entities;
+﻿namespace EasySoft.Core.PermissionVerification.Entities;
 
 public class AccessWayModel
 {

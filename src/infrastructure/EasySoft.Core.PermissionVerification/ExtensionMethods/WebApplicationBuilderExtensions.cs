@@ -1,11 +1,7 @@
-﻿using Autofac;
-using EasySoft.Core.AccessWayTransmitter.ExtensionMethods;
-using EasySoft.Core.Infrastructure.Assists;
+﻿using EasySoft.Core.AccessWayTransmitter.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.Middlewares;
 using EasySoft.Core.PermissionVerification.Observers;
 using EasySoft.Core.PermissionVerification.Officers;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.PermissionVerification.ExtensionMethods;
 
