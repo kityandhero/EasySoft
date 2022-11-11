@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Config.ConfigCollection;
+using EasySoft.Core.Config.Exceptions;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -48,10 +49,7 @@ public static class ConsulRegistrationCenterConfigAssist
 
     public static IConfiguration GetConfiguration()
     {
-        if (Configuration == null)
-        {
-            throw new Exception("ConsulConfig has not been established.");
-        }
+        if (Configuration == null) throw new Exception("ConsulConfig has not been established.");
 
         return Configuration;
     }
@@ -78,11 +76,10 @@ public static class ConsulRegistrationCenterConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
-        {
-            throw new Exception(
-                $"You've enabled the registration Center setting and set it to Consul type, please continue config CenterAddress, it in {ConfigFile} -> CenterAddress"
+            throw new ConfigErrorException(
+                $"You've enabled the registration Center setting and set it to Consul type, please continue config CenterAddress, it in {ConfigFile} -> CenterAddress",
+                GetConfigFileInfo()
             );
-        }
 
         return v;
     }
@@ -94,11 +91,10 @@ public static class ConsulRegistrationCenterConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
-        {
-            throw new Exception(
-                $"请配置 ServiceName: {ConfigFile} -> ServiceName"
+            throw new ConfigErrorException(
+                $"请配置 ServiceName: {ConfigFile} -> ServiceName",
+                GetConfigFileInfo()
             );
-        }
 
         return v;
     }
@@ -110,11 +106,10 @@ public static class ConsulRegistrationCenterConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
-        {
-            throw new Exception(
-                $"请配置 ServiceIP: {ConfigFile} -> ServiceIP"
+            throw new ConfigErrorException(
+                $"请配置 ServiceIP: {ConfigFile} -> ServiceIP",
+                GetConfigFileInfo()
             );
-        }
 
         return v;
     }
@@ -126,11 +121,10 @@ public static class ConsulRegistrationCenterConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v) || !v.IsInt(out var value))
-        {
-            throw new Exception(
-                $"请配置 ServicePort: {ConfigFile} -> ServicePort"
+            throw new ConfigErrorException(
+                $"请配置 ServicePort: {ConfigFile} -> ServicePort",
+                GetConfigFileInfo()
             );
-        }
 
         return value;
     }
@@ -147,11 +141,10 @@ public static class ConsulRegistrationCenterConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v) || !v.IsInt(out var value))
-        {
-            throw new Exception(
-                $"请配置 DeregisterCriticalServiceAfter: {ConfigFile} -> DeregisterCriticalServiceAfter"
+            throw new ConfigErrorException(
+                $"请配置 DeregisterCriticalServiceAfter: {ConfigFile} -> DeregisterCriticalServiceAfter",
+                GetConfigFileInfo()
             );
-        }
 
         return value;
     }
@@ -168,11 +161,10 @@ public static class ConsulRegistrationCenterConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v) || !v.IsInt(out var value))
-        {
-            throw new Exception(
-                $"请配置 HealthCheckIntervalInSecond: {ConfigFile} -> HealthCheckIntervalInSecond"
+            throw new ConfigErrorException(
+                $"请配置 HealthCheckIntervalInSecond: {ConfigFile} -> HealthCheckIntervalInSecond",
+                GetConfigFileInfo()
             );
-        }
 
         return value;
     }
@@ -189,11 +181,10 @@ public static class ConsulRegistrationCenterConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v) || !v.IsInt(out var value))
-        {
-            throw new Exception(
-                $"请配置 Timeout: {ConfigFile} -> Timeout"
+            throw new ConfigErrorException(
+                $"请配置 Timeout: {ConfigFile} -> Timeout",
+                GetConfigFileInfo()
             );
-        }
 
         return value;
     }

@@ -8,7 +8,6 @@ namespace EasySoft.Core.Config.ConfigAssist;
 
 public static class ElasticSearchConfigAssist
 {
-    // ReSharper disable once UnusedMember.Local
     private static readonly string ConfigFile = $"{nameof(ElasticSearchConfig).ToLowerFirst()}.json";
 
     private static IConfiguration Configuration { get; set; }
@@ -32,6 +31,11 @@ public static class ElasticSearchConfigAssist
     {
     }
 
+    public static string GetConfigFileInfo()
+    {
+        return $"[{ConfigFile}](./configures/{ConfigFile})";
+    }
+
     private static ElasticSearchConfig GetConfig()
     {
         return ElasticSearchConfig.Instance;
@@ -44,10 +48,8 @@ public static class ElasticSearchConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt())
-        {
             throw new Exception("缺少ElasticSearchDataVersion配置（ElasticSearchDataVersion）"
             );
-        }
 
         return v.ToInt();
     }

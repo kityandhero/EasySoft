@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Config.ConfigCollection;
+using EasySoft.Core.Config.Exceptions;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -31,14 +32,14 @@ public static class RabbitMQConfigAssist
     {
     }
 
-    private static RabbitMQConfig GetConfig()
-    {
-        return RabbitMQConfig.Instance;
-    }
-
     public static string GetConfigFileInfo()
     {
         return $"[generalConfig.json](./configures/{ConfigFile})";
+    }
+
+    private static RabbitMQConfig GetConfig()
+    {
+        return RabbitMQConfig.Instance;
     }
 
     public static string GetHostName()
@@ -46,8 +47,9 @@ public static class RabbitMQConfigAssist
         var v = GetConfig().HostName.Remove(" ").Trim();
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new Exception(
-                $"请配置RabbitMQ消息队列HostName项: {ConfigFile} -> HostName"
+            throw new ConfigErrorException(
+                $"请配置RabbitMQ消息队列HostName项: {ConfigFile} -> HostName",
+                GetConfigFileInfo()
             );
 
         return v;
@@ -58,8 +60,9 @@ public static class RabbitMQConfigAssist
         var v = GetConfig().UserName.Remove(" ").Trim();
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new Exception(
-                $"请配置RabbitMQ消息队列UserName项: {ConfigFile} -> UserName"
+            throw new ConfigErrorException(
+                $"请配置RabbitMQ消息队列UserName项: {ConfigFile} -> UserName",
+                GetConfigFileInfo()
             );
 
         return v;
@@ -70,8 +73,9 @@ public static class RabbitMQConfigAssist
         var v = GetConfig().Password.Remove(" ").Trim();
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new Exception(
-                $"请配置RabbitMQ消息队列Password项: {ConfigFile} -> Password"
+            throw new ConfigErrorException(
+                $"请配置RabbitMQ消息队列Password项: {ConfigFile} -> Password",
+                GetConfigFileInfo()
             );
 
         return v;
@@ -82,8 +86,9 @@ public static class RabbitMQConfigAssist
         var v = GetConfig().VirtualHost.Remove(" ").Trim();
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new Exception(
-                $"请配置RabbitMQ消息队列VirtualHost项: {ConfigFile} -> VirtualHost"
+            throw new ConfigErrorException(
+                $"请配置RabbitMQ消息队列VirtualHost项: {ConfigFile} -> VirtualHost",
+                GetConfigFileInfo()
             );
 
         return v;
@@ -96,8 +101,9 @@ public static class RabbitMQConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "5672" : v;
 
         if (!v.IsInt(out var value) || value < 0)
-            throw new Exception(
-                $"请配置 Port: {ConfigFile} -> Port,请设置数字 value > 0"
+            throw new ConfigErrorException(
+                $"请配置 Port: {ConfigFile} -> Port,请设置数字 value > 0",
+                GetConfigFileInfo()
             );
 
         return value;
@@ -108,8 +114,9 @@ public static class RabbitMQConfigAssist
         var v = GetConfig().ConnectionTimeout.Remove(" ").Trim();
 
         if (!v.IsInt() || v.ToInt() < 0)
-            throw new Exception(
-                $"请配置RabbitMQ消息队列ConnectionTimeout项: {ConfigFile} -> ConnectionTimeout"
+            throw new ConfigErrorException(
+                $"请配置RabbitMQ消息队列ConnectionTimeout项: {ConfigFile} -> ConnectionTimeout",
+                GetConfigFileInfo()
             );
 
         return v.ToInt();

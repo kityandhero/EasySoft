@@ -8,7 +8,6 @@ namespace EasySoft.Core.Config.ConfigAssist;
 
 public static class ConsulConfigCenterConfigAssist
 {
-    // ReSharper disable once UnusedMember.Local
     private static readonly string ConfigFile = $"{nameof(ConsulConfigCenterConfig).ToLowerFirst()}.json";
 
     private static IConfiguration? Configuration { get; set; }
@@ -34,6 +33,11 @@ public static class ConsulConfigCenterConfigAssist
     {
     }
 
+    public static string GetConfigFileInfo()
+    {
+        return $"[{ConfigFile}](./configures/{ConfigFile})";
+    }
+
     public static IConfiguration SetConfiguration(IConfiguration configuration)
     {
         Configuration = configuration;
@@ -43,10 +47,7 @@ public static class ConsulConfigCenterConfigAssist
 
     public static IConfiguration GetConfiguration()
     {
-        if (Configuration == null)
-        {
-            throw new Exception("ConsulConfig has not been established.");
-        }
+        if (Configuration == null) throw new Exception("ConsulConfig has not been established.");
 
         return Configuration;
     }
@@ -73,11 +74,9 @@ public static class ConsulConfigCenterConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
-        {
             throw new Exception(
                 $"You've enabled the configuration Center setting and set it to Consul type, please continue config CenterAddress, it in {ConfigFile} -> CenterAddress"
             );
-        }
 
         return v;
     }

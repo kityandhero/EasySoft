@@ -8,7 +8,6 @@ namespace EasySoft.Core.Config.ConfigAssist;
 
 public static class PayCallbackConfigAssist
 {
-    // ReSharper disable once UnusedMember.Local
     private static readonly string ConfigFile = $"{nameof(PayCallbackConfig).ToLowerFirst()}.json";
 
     private static IConfiguration Configuration { get; set; }
@@ -32,6 +31,11 @@ public static class PayCallbackConfigAssist
     {
     }
 
+    public static string GetConfigFileInfo()
+    {
+        return $"[{ConfigFile}](./configures/{ConfigFile})";
+    }
+
     private static PayCallbackConfig GetConfig()
     {
         return PayCallbackConfig.Instance;
@@ -43,10 +47,7 @@ public static class PayCallbackConfigAssist
 
         v = v.Remove(" ").Trim();
 
-        if (string.IsNullOrWhiteSpace(v))
-        {
-            throw new Exception("缺少支付回调配置（PayCallbackHost）");
-        }
+        if (string.IsNullOrWhiteSpace(v)) throw new Exception("缺少支付回调配置（PayCallbackHost）");
 
         return v;
     }

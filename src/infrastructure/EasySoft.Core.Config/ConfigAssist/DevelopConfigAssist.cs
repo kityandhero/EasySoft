@@ -8,7 +8,6 @@ namespace EasySoft.Core.Config.ConfigAssist;
 
 public static class DevelopConfigAssist
 {
-    // ReSharper disable once UnusedMember.Local
     private static readonly string ConfigFile = $"{nameof(DevelopConfig).ToLowerFirst()}.json";
 
     private static IConfiguration Configuration { get; set; }
@@ -30,6 +29,11 @@ public static class DevelopConfigAssist
 
     public static void Init()
     {
+    }
+
+    public static string GetConfigFileInfo()
+    {
+        return $"[{ConfigFile}](./configures/{ConfigFile})";
     }
 
     private static DevelopConfig GetConfig()

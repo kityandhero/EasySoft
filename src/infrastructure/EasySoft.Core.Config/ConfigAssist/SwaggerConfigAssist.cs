@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using EasySoft.Core.Config.ConfigCollection;
+using EasySoft.Core.Config.Exceptions;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -9,7 +10,6 @@ namespace EasySoft.Core.Config.ConfigAssist;
 
 public static class SwaggerConfigAssist
 {
-    // ReSharper disable once UnusedMember.Local
     private static readonly string ConfigFile = $"{nameof(SwaggerConfig).ToLowerFirst()}.json";
 
     private static IConfiguration Configuration { get; set; }
@@ -50,8 +50,9 @@ public static class SwaggerConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt())
-            throw new Exception(
-                $"请配置Swagger Enable: {ConfigFile} -> Enable,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置Swagger Enable: {ConfigFile} -> Enable,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return v.ToInt() == 1;
@@ -61,7 +62,7 @@ public static class SwaggerConfigAssist
     {
         var v = GetConfig().Title;
 
-        v = (string.IsNullOrWhiteSpace(v) ? Assembly.GetEntryAssembly()?.GetName()?.Name : v) ?? "";
+        v = (string.IsNullOrWhiteSpace(v) ? Assembly.GetEntryAssembly()?.GetName().Name : v) ?? "";
 
         return v;
     }

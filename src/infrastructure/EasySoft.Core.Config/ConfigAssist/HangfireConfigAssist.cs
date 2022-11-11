@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Config.ConfigCollection;
+using EasySoft.Core.Config.Exceptions;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -49,8 +50,9 @@ public static class HangfireConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt())
-            throw new Exception(
-                $"请配置Hangfire Switch: {ConfigFile} -> Enable,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置Hangfire Switch: {ConfigFile} -> Enable,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return v.ToInt() == 1;
@@ -63,8 +65,9 @@ public static class HangfireConfigAssist
         v = v.Remove(" ").Trim();
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new Exception(
-                $"请配置Hangfire StorageType: {ConfigFile} -> StorageType"
+            throw new ConfigErrorException(
+                $"请配置Hangfire StorageType: {ConfigFile} -> StorageType",
+                GetConfigFileInfo()
             );
 
         return v;
@@ -77,8 +80,9 @@ public static class HangfireConfigAssist
         v = v.Remove(" ").Trim();
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new Exception(
-                $"请配置Hangfire StorageConnection: {ConfigFile} -> StorageConnection"
+            throw new ConfigErrorException(
+                $"请配置Hangfire StorageConnection: {ConfigFile} -> StorageConnection",
+                GetConfigFileInfo()
             );
 
         return v;

@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using EasySoft.Core.Config.Cap;
 using EasySoft.Core.Config.ConfigCollection;
+using EasySoft.Core.Config.Exceptions;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
 using EasySoft.Core.Infrastructure.Assists;
@@ -37,6 +38,11 @@ public static class GeneralConfigAssist
     {
     }
 
+    public static string GetConfigFileInfo()
+    {
+        return $"[{ConfigFile}](./configures/{ConfigFile})";
+    }
+
     public static IConfiguration GetConfiguration()
     {
         return Configuration;
@@ -50,11 +56,6 @@ public static class GeneralConfigAssist
     public static string GetValue(string key)
     {
         return Configuration.GetSection(key).Value;
-    }
-
-    public static string GetConfigFileInfo()
-    {
-        return $"[{ConfigFile}](./configures/{ConfigFile})";
     }
 
     public static bool GetRemoteLogSwitch()
@@ -126,8 +127,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "InMemory" : v;
 
         if (!v.In("InMemory", "Redis"))
-            throw new Exception(
-                $"请配置 CacheMode: {ConfigFile} -> CacheMode,请设置 InMemory/Redis"
+            throw new ConfigErrorException(
+                $"请配置 CacheMode: {ConfigFile} -> CacheMode,请设置 InMemory/Redis",
+                GetConfigFileInfo()
             );
 
         return v;
@@ -140,15 +142,17 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 AccessWayDetectSwitch: {ConfigFile} -> AccessWayDetectSwitch,请设置 0/1,开启后将在请求进入时校验持久数据存在性"
+            throw new ConfigErrorException(
+                $"请配置 AccessWayDetectSwitch: {ConfigFile} -> AccessWayDetectSwitch,请设置 0/1,开启后将在请求进入时校验持久数据存在性",
+                GetConfigFileInfo()
             );
 
         if (value != 1) return false;
 
         if (!FlagAssist.PermissionVerificationSwitch)
-            throw new Exception(
-                "AccessWayDetectSwitch work with UsePermissionVerification, if you do not use UsePermissionVerification, do not set it to enable"
+            throw new ConfigErrorException(
+                "AccessWayDetectSwitch work with UsePermissionVerification, if you do not use UsePermissionVerification, do not set it to enable",
+                GetConfigFileInfo()
             );
 
         return true;
@@ -161,8 +165,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 RemoteGeneralLogSwitch: {ConfigFile} -> RemoteGeneralLogSwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 RemoteGeneralLogSwitch: {ConfigFile} -> RemoteGeneralLogSwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -175,8 +180,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 RemoteErrorLogSwitch: {ConfigFile} -> RemoteErrorLogSwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 RemoteErrorLogSwitch: {ConfigFile} -> RemoteErrorLogSwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -189,8 +195,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 RemoteSqlExecutionRecordSwitch: {ConfigFile} -> RemoteSqlExecutionRecordSwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 RemoteSqlExecutionRecordSwitch: {ConfigFile} -> RemoteSqlExecutionRecordSwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -203,8 +210,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 UseStaticFiles: {ConfigFile} -> UseStaticFiles,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 UseStaticFiles: {ConfigFile} -> UseStaticFiles,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -217,8 +225,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 UseAuthentication: {ConfigFile} -> UseAuthentication,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 UseAuthentication: {ConfigFile} -> UseAuthentication,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -231,8 +240,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 UseAuthorization: {ConfigFile} -> UseAuthorization,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 UseAuthorization: {ConfigFile} -> UseAuthorization,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -245,8 +255,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 CorsSwitch: {ConfigFile} -> CorsSwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 CorsSwitch: {ConfigFile} -> CorsSwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -274,8 +285,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 ForwardedHeadersSwitch: {ConfigFile} -> ForwardedHeadersSwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 ForwardedHeadersSwitch: {ConfigFile} -> ForwardedHeadersSwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -294,7 +306,7 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
+            throw new ConfigErrorException(
                 $"请配置 TokenServerDumpSwitch: {ConfigFile} -> TokenServerDumpSwitch,请设置 0/1"
             );
 
@@ -312,7 +324,7 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
+            throw new ConfigErrorException(
                 $"请配置 TokenParseFromUrlSwitch: {ConfigFile} -> TokenParseFromUrlSwitch,请设置 0/1"
             );
 
@@ -330,7 +342,7 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
+            throw new ConfigErrorException(
                 $"请配置 TokenParseFromCookieSwitch: {ConfigFile} -> TokenParseFromCookieSwitch,请设置 0/1"
             );
 
@@ -349,7 +361,7 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "7200" : v;
 
         if (!v.IsInt(out var value) || value < 0)
-            throw new Exception(
+            throw new ConfigErrorException(
                 $"请配置 JsonWebTokenExpires: {ConfigFile} -> JsonWebTokenExpires,请设置数字 value > 0"
             );
 
@@ -378,7 +390,7 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value) || value < 0)
-            throw new Exception(
+            throw new ConfigErrorException(
                 $"请配置 JsonWebTokenClockSkew: {ConfigFile} -> JsonWebTokenClockSkew,请设置数字 value >= 0"
             );
 
@@ -394,7 +406,7 @@ public static class GeneralConfigAssist
         var v = GetConfig().JsonWebTokenValidIssuer.Remove(" ").Trim();
 
         if (string.IsNullOrEmpty(v))
-            throw new Exception(
+            throw new ConfigErrorException(
                 $"请配置 JsonWebTokenValidIssuer: {ConfigFile} -> JsonWebTokenValidIssuer,请设置颁发者"
             );
 
@@ -412,7 +424,7 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
+            throw new ConfigErrorException(
                 $"请配置 JsonWebTokenValidateIssuer: {ConfigFile} -> JsonWebTokenValidateIssuer,请设置 0/1"
             );
 
@@ -428,7 +440,7 @@ public static class GeneralConfigAssist
         var v = GetConfig().JsonWebTokenValidAudience.Remove(" ").Trim();
 
         if (string.IsNullOrEmpty(v))
-            throw new Exception(
+            throw new ConfigErrorException(
                 $"请配置 JsonWebTokenValidAudience: {ConfigFile} -> JsonWebTokenValidAudience,请设置访问群体"
             );
 
@@ -446,7 +458,7 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
+            throw new ConfigErrorException(
                 $"请配置 JsonWebTokenValidateAudience: {ConfigFile} -> JsonWebTokenValidateAudience, 请设置 0/1"
             );
 
@@ -462,7 +474,7 @@ public static class GeneralConfigAssist
         var v = GetConfig().JsonWebTokenIssuerSigningKey.Remove(" ").Trim();
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new Exception(
+            throw new ConfigErrorException(
                 $"请配置 JsonWebTokenIssuerSigningKey: {ConfigFile} -> JsonWebTokenIssuerSigningKey"
             );
 
@@ -480,7 +492,7 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
+            throw new ConfigErrorException(
                 $"请配置 JsonWebTokenValidateIssuerSigningKey: {ConfigFile} -> JsonWebTokenValidateIssuerSigningKey,请设置 0/1"
             );
 
@@ -498,7 +510,7 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
+            throw new ConfigErrorException(
                 $"请配置 JsonWebTokenValidateLifetime: {ConfigFile} -> JsonWebTokenValidateLifetime,请设置 0/1"
             );
 
@@ -521,8 +533,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 HttpRedirectionHttpsSwitch: {ConfigFile} -> HttpRedirectionHttpsSwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 HttpRedirectionHttpsSwitch: {ConfigFile} -> HttpRedirectionHttpsSwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -540,8 +553,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 NlogDefaultConfigTraceToFileSwitch: {ConfigFile} -> NlogDefaultConfigTraceToFileSwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 NlogDefaultConfigTraceToFileSwitch: {ConfigFile} -> NlogDefaultConfigTraceToFileSwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -559,8 +573,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 NlogDefaultConfigTraceToConsoleSwitch: {ConfigFile} -> NlogDefaultConfigTraceToConsoleSwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 NlogDefaultConfigTraceToConsoleSwitch: {ConfigFile} -> NlogDefaultConfigTraceToConsoleSwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -578,8 +593,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 NlogDefaultConfigDebugToFileSwitch: {ConfigFile} -> NlogDefaultConfigDebugToFileSwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 NlogDefaultConfigDebugToFileSwitch: {ConfigFile} -> NlogDefaultConfigDebugToFileSwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -600,8 +616,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 NlogDefaultConfigDebugToConsoleSwitch: {ConfigFile} -> NlogDefaultConfigDebugToConsoleSwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 NlogDefaultConfigDebugToConsoleSwitch: {ConfigFile} -> NlogDefaultConfigDebugToConsoleSwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -614,8 +631,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 NlogConsoleMessageLimit: {ConfigFile} -> NlogConsoleMessageLimit,请设置"
+            throw new ConfigErrorException(
+                $"请配置 NlogConsoleMessageLimit: {ConfigFile} -> NlogConsoleMessageLimit,请设置",
+                GetConfigFileInfo()
             );
 
         return value;
@@ -628,8 +646,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 MiniProFileSwitch: {ConfigFile} -> MiniProFileSwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 MiniProFileSwitch: {ConfigFile} -> MiniProFileSwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -665,8 +684,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "auto" : v;
 
         if (!v.In("0", "1", "auto"))
-            throw new Exception(
-                $"请配置 CapSwitch: {ConfigFile} -> CapSwitch,请设置 0/1/auto"
+            throw new ConfigErrorException(
+                $"请配置 CapSwitch: {ConfigFile} -> CapSwitch,请设置 0/1/auto",
+                GetConfigFileInfo()
             );
 
         if (v == 1.ToString()) return true;
@@ -717,8 +737,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 CapDashboardSwitch: {ConfigFile} -> CapDashboardSwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 CapDashboardSwitch: {ConfigFile} -> CapDashboardSwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -731,8 +752,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 CapDiscoverySwitch: {ConfigFile} -> CapDiscoverySwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 CapDiscoverySwitch: {ConfigFile} -> CapDiscoverySwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -745,8 +767,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 RegistrationCenterSwitch: {ConfigFile} -> RegistrationCenterSwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 RegistrationCenterSwitch: {ConfigFile} -> RegistrationCenterSwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -759,8 +782,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new Exception(
-                $"请配置 RegistrationCenterType: {ConfigFile} -> RegistrationCenterType,请设置 {RegistrationCenterType.Consul.ToString()}"
+            throw new ConfigErrorException(
+                $"请配置 RegistrationCenterType: {ConfigFile} -> RegistrationCenterType,请设置 {RegistrationCenterType.Consul.ToString()}",
+                GetConfigFileInfo()
             );
 
         return Enum.Parse<RegistrationCenterType>(v);
@@ -773,8 +797,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 ConfigCenterSwitch: {ConfigFile} -> ConfigCenterSwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 ConfigCenterSwitch: {ConfigFile} -> ConfigCenterSwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -787,8 +812,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new Exception(
-                $"请配置 ConfigCenterType: {ConfigFile} -> ConfigCenterType,请设置 {ConfigCenterType.AgileConfig.ToString()}/{ConfigCenterType.Consul.ToString()}"
+            throw new ConfigErrorException(
+                $"请配置 ConfigCenterType: {ConfigFile} -> ConfigCenterType,请设置 {ConfigCenterType.AgileConfig.ToString()}/{ConfigCenterType.Consul.ToString()}",
+                GetConfigFileInfo()
             );
 
         return Enum.Parse<ConfigCenterType>(v);
@@ -801,8 +827,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 GatewaySwitch: {ConfigFile} -> GatewaySwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 GatewaySwitch: {ConfigFile} -> GatewaySwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -815,8 +842,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new Exception(
-                $"请配置 GatewayType: {ConfigFile} -> GatewayType,请设置 {GatewayType.Ocelot.ToString()}"
+            throw new ConfigErrorException(
+                $"请配置 GatewayType: {ConfigFile} -> GatewayType,请设置 {GatewayType.Ocelot.ToString()}",
+                GetConfigFileInfo()
             );
 
         return Enum.Parse<GatewayType>(v);
@@ -829,8 +857,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 GatewayWithConsulSwitch: {ConfigFile} -> GatewayWithConsulSwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 GatewayWithConsulSwitch: {ConfigFile} -> GatewayWithConsulSwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -845,8 +874,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 GatewayConfigInConsulSwitch: {ConfigFile} -> GatewayConfigInConsulSwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 GatewayConfigInConsulSwitch: {ConfigFile} -> GatewayConfigInConsulSwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -859,8 +889,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
-            throw new Exception(
-                $"请配置 ExceptionlessSwitch: {ConfigFile} -> ExceptionlessSwitch,请设置 0/1"
+            throw new ConfigErrorException(
+                $"请配置 ExceptionlessSwitch: {ConfigFile} -> ExceptionlessSwitch,请设置 0/1",
+                GetConfigFileInfo()
             );
 
         return value == 1;
@@ -873,8 +904,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (GetExceptionlessSwitch() && string.IsNullOrWhiteSpace(v))
-            throw new Exception(
-                $"开启Exceptionless时, 请配置 ExceptionlessServerUrl: {ConfigFile} -> ExceptionlessServerUrl"
+            throw new ConfigErrorException(
+                $"开启Exceptionless时, 请配置 ExceptionlessServerUrl: {ConfigFile} -> ExceptionlessServerUrl",
+                GetConfigFileInfo()
             );
 
         return v;
@@ -887,8 +919,9 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (GetExceptionlessSwitch() && string.IsNullOrWhiteSpace(v))
-            throw new Exception(
-                $"开启Exceptionless时, 请配置 ExceptionlessApiKey: {ConfigFile} -> ExceptionlessApiKey"
+            throw new ConfigErrorException(
+                $"开启Exceptionless时, 请配置 ExceptionlessApiKey: {ConfigFile} -> ExceptionlessApiKey",
+                GetConfigFileInfo()
             );
 
         return v;

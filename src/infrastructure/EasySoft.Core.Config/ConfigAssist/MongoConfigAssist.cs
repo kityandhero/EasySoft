@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Config.ConfigCollection;
+using EasySoft.Core.Config.Exceptions;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -31,6 +32,11 @@ public static class MongoConfigAssist
     {
     }
 
+    public static string GetConfigFileInfo()
+    {
+        return $"[{ConfigFile}](./configures/{ConfigFile})";
+    }
+
     private static MongoConfig GetConfig()
     {
         return MongoConfig.Instance;
@@ -41,11 +47,10 @@ public static class MongoConfigAssist
         var v = GetConfig().Connection;
 
         if (string.IsNullOrWhiteSpace(v))
-        {
-            throw new Exception(
-                $"请配置Mongo Connection: {ConfigFile} -> Connection"
+            throw new ConfigErrorException(
+                $"请配置Mongo Connection: {ConfigFile} -> Connection",
+                GetConfigFileInfo()
             );
-        }
 
         return v;
     }
@@ -55,11 +60,10 @@ public static class MongoConfigAssist
         var v = GetConfig().Database;
 
         if (string.IsNullOrWhiteSpace(v))
-        {
-            throw new Exception(
-                $"请配置Mongo Database: {ConfigFile} -> Database"
+            throw new ConfigErrorException(
+                $"请配置Mongo Database: {ConfigFile} -> Database",
+                GetConfigFileInfo()
             );
-        }
 
         return v.Remove(" ").Trim();
     }
