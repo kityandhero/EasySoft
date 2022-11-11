@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.EntityFramework.Contexts.Basic;
 using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
-using EasySoft.Core.Infrastructure.Operations.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace EasySoft.Domain.Infrastructure.Core.Contexts;
