@@ -11,7 +11,7 @@ public static class EndpointConventionBuilderExtensions
         StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
-            nameof(MapActionMap)
+            $"{nameof(MapActionMap)}."
         );
 
         StartupDescriptionMessageAssist.AddPrompt(
@@ -31,7 +31,7 @@ public static class EndpointConventionBuilderExtensions
         StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
-            nameof(MapDatabaseConfigFile)
+            $"{nameof(MapDatabaseConfigFile)}."
         );
 
         StartupDescriptionMessageAssist.AddPrompt(
@@ -51,7 +51,7 @@ public static class EndpointConventionBuilderExtensions
         StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
-            nameof(MapDevelopConfigFile)
+            $"{nameof(MapDevelopConfigFile)}."
         );
 
         StartupDescriptionMessageAssist.AddPrompt(
@@ -71,7 +71,7 @@ public static class EndpointConventionBuilderExtensions
         StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
-            nameof(MapElasticSearchConfigFile)
+            $"{nameof(MapElasticSearchConfigFile)}."
         );
 
         StartupDescriptionMessageAssist.AddPrompt(
@@ -91,7 +91,7 @@ public static class EndpointConventionBuilderExtensions
         StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
-            nameof(MapGeneralConfigFile)
+            $"{nameof(MapGeneralConfigFile)}."
         );
 
         StartupDescriptionMessageAssist.AddPrompt(
@@ -111,7 +111,7 @@ public static class EndpointConventionBuilderExtensions
         StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
-            nameof(MapMongoConfigFile)
+            $"{nameof(MapMongoConfigFile)}."
         );
 
         StartupDescriptionMessageAssist.AddPrompt(
@@ -131,7 +131,7 @@ public static class EndpointConventionBuilderExtensions
         StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
-            nameof(MapRabbitMQConfigFile)
+            $"{nameof(MapRabbitMQConfigFile)}."
         );
 
         StartupDescriptionMessageAssist.AddPrompt(

@@ -117,18 +117,21 @@ public static class WebApplicationBuilderAssist
         if (!GeneralConfigAssist.GetRegistrationCenterSwitch())
         {
             StartupConfigMessageAssist.AddConfig(
-                "RegistrationCenterSwitch: disable."
+                "RegistrationCenterSwitch: disable.",
+                GeneralConfigAssist.GetConfigFileInfo()
             );
 
             return builder;
         }
 
         StartupConfigMessageAssist.AddConfig(
-            "RegistrationCenterSwitch: enable."
+            "RegistrationCenterSwitch: enable.",
+            GeneralConfigAssist.GetConfigFileInfo()
         );
 
         StartupConfigMessageAssist.AddConfig(
-            $"RegistrationCenterType: {GeneralConfigAssist.GetRegistrationCenterType()}."
+            $"RegistrationCenterType: {GeneralConfigAssist.GetRegistrationCenterType()}.",
+            GeneralConfigAssist.GetConfigFileInfo()
         );
 
         if (GeneralConfigAssist.GetRegistrationCenterType() == RegistrationCenterType.Consul)
@@ -153,11 +156,13 @@ public static class WebApplicationBuilderAssist
         if (GeneralConfigAssist.GetConfigCenterSwitch())
         {
             StartupConfigMessageAssist.AddConfig(
-                "ConfigCenterSwitch: enable."
+                "ConfigCenterSwitch: enable.",
+                GeneralConfigAssist.GetConfigFileInfo()
             );
 
             StartupConfigMessageAssist.AddConfig(
-                $"ConfigCenterType: {GeneralConfigAssist.GetConfigCenterType()}."
+                $"ConfigCenterType: {GeneralConfigAssist.GetConfigCenterType()}.",
+                GeneralConfigAssist.GetConfigFileInfo()
             );
 
             StartupDescriptionMessageAssist.AddPrompt(
@@ -220,14 +225,16 @@ public static class WebApplicationBuilderAssist
         if (!GeneralConfigAssist.GetGatewaySwitch())
         {
             StartupConfigMessageAssist.AddConfig(
-                "GatewaySwitch: disable."
+                "GatewaySwitch: disable.",
+                GeneralConfigAssist.GetConfigFileInfo()
             );
 
             return builder;
         }
 
         StartupConfigMessageAssist.AddConfig(
-            "GatewaySwitch: enable."
+            "GatewaySwitch: enable.",
+            GeneralConfigAssist.GetConfigFileInfo()
         );
 
         StartupConfigMessageAssist.AddConfig(

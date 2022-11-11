@@ -4,7 +4,6 @@ public static class FlagAssist
 {
     private static bool _applicationRunPerformed;
     private static bool _advanceStaticFileOptionsSwitch;
-    private static bool _logDashboardSwitch;
 
     public static string TokenMode { get; set; }
 
@@ -30,7 +29,6 @@ public static class FlagAssist
     {
         _applicationRunPerformed = false;
         _advanceStaticFileOptionsSwitch = false;
-        _logDashboardSwitch = false;
 
         TokenMode = "";
         EasyTokenMiddlewareModeSwitch = false;
@@ -70,15 +68,5 @@ public static class FlagAssist
     public static bool GetAdvanceStaticFileOptionsSwitch()
     {
         return _advanceStaticFileOptionsSwitch;
-    }
-
-    public static void SetLogDashboardSwitchOpen()
-    {
-        _logDashboardSwitch = true;
-    }
-
-    public static bool GetLogDashboardSwitch()
-    {
-        return _logDashboardSwitch;
     }
 }

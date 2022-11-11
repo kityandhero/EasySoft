@@ -1,9 +1,4 @@
-﻿using System.Reflection;
-using EasySoft.Core.Infrastructure.Controllers;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-using Microsoft.AspNetCore.Mvc.Controllers;
-
-namespace EasySoft.Core.DevelopAuxiliary.Controllers;
+﻿namespace EasySoft.Core.DevelopAuxiliary.Controllers;
 
 public sealed class ActionMapController : BasicController
 {

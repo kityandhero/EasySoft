@@ -18,6 +18,12 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
+        StartupDescriptionMessageAssist.AddExecute(
+            $"{nameof(UseAdvanceMapControllers)}."
+        );
+
         application.UseMvc();
 
         var startMessage = new StartupMessage()
@@ -34,7 +40,13 @@ public static class WebApplicationExtensions
 
             if (areaAdjust.Any())
             {
+                StartupConfigMessageAssist.AddTraceDivider();
+
                 StartupConfigMessageAssist.AddConfig(
+                    $"Areas: {ApplicationConfigurator.GetAllAreas().Join(",")}"
+                );
+
+                StartupDescriptionMessageAssist.AddPrompt(
                     $"Areas: {ApplicationConfigurator.GetAllAreas().Join(",")}"
                 );
 

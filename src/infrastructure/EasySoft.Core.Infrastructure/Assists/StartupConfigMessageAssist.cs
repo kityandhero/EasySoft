@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Startup;
+using EasySoft.UtilityTools.Standard;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.Infrastructure.Assists;
@@ -14,7 +15,7 @@ public static class StartupConfigMessageAssist
         MessageCollection.Enqueue(
             new StartupMessage()
                 .SetLevel(LogLevel.Trace)
-                .SetMessage(UtilityTools.Standard.ConstCollection.ApplicationStartConfigMessageDivider)
+                .SetMessage(ConstCollection.ApplicationStartConfigMessageDivider)
         );
 
         MessageCollection.Enqueue(
@@ -26,7 +27,7 @@ public static class StartupConfigMessageAssist
         MessageCollection.Enqueue(
             new StartupMessage()
                 .SetLevel(LogLevel.Trace)
-                .SetMessage(UtilityTools.Standard.ConstCollection.ApplicationStartConfigMessageDivider)
+                .SetMessage(ConstCollection.ApplicationStartConfigMessageDivider)
         );
     }
 
@@ -80,6 +81,11 @@ public static class StartupConfigMessageAssist
         AddInformation(message, extra);
     }
 
+    public static void AddTraceDivider(string divider = ConstCollection.PromptMessageDivider)
+    {
+        AddTrace(divider);
+    }
+
     public static void Print()
     {
         var list = MessageCollection.ToListFilterNullable()
@@ -89,7 +95,7 @@ public static class StartupConfigMessageAssist
             new StartupMessage()
                 .SetLevel(LogLevel.Trace)
                 .SetMessage(
-                    UtilityTools.Standard.ConstCollection.ApplicationStartMessageDivider
+                    ConstCollection.ApplicationStartMessageDivider
                 )
         );
 

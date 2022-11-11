@@ -13,7 +13,7 @@ internal static class EndpointConventionBuilderExtensions
         StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
-            nameof(MapConsulHealthCheck)
+            $"{nameof(MapConsulHealthCheck)}."
         );
 
         return endpoints.MapControllerRoute(

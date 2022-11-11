@@ -1,12 +1,9 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Startup;
-using LogDashboard;
-using Microsoft.AspNetCore.Builder;
-
-namespace EasySoft.Core.LogDashboard.ExtensionMethods;
+﻿namespace EasySoft.Core.LogDashboard.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
+    private const string UniqueIdentifierAddAdvanceLogDashboard = "fad8d668-1074-425f-9eb5-a3a57c87c7ea";
+
     /// <summary>
     /// 注入定制的静态文件配置，诸如任务将在应用启动时自动执行
     /// </summary>
@@ -16,11 +13,10 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        if (FlagAssist.GetLogDashboardSwitch()) return builder;
+        if (builder.HasRegistered(UniqueIdentifierAddAdvanceLogDashboard))
+            return builder;
 
         builder.Services.AddLogDashboard();
-
-        FlagAssist.SetLogDashboardSwitchOpen();
 
         ApplicationConfigurator.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()

@@ -262,13 +262,15 @@ public static class WebApplicationBuilderExtensions
             app.UseHttpsRedirection();
 
             StartupConfigMessageAssist.AddConfig(
-                "HttpRedirectionHttpsSwitch: enable."
+                "HttpRedirectionHttpsSwitch: enable.",
+                GeneralConfigAssist.GetConfigFileInfo()
             );
         }
         else
         {
             StartupConfigMessageAssist.AddConfig(
-                "HttpRedirectionHttpsSwitch: disabled."
+                "HttpRedirectionHttpsSwitch: disabled.",
+                GeneralConfigAssist.GetConfigFileInfo()
             );
         }
 
@@ -282,7 +284,8 @@ public static class WebApplicationBuilderExtensions
                 staticFileOptionsTypeName = AutofacAssist.Instance.Resolve<AdvanceStaticFileOptions>().GetType().Name;
 
             StartupConfigMessageAssist.AddConfig(
-                $"UseStaticFilesSwitch: enable, mode: {(FlagAssist.GetAdvanceStaticFileOptionsSwitch() ? $"custom, config class is \"{staticFileOptionsTypeName}\"" : "default")}."
+                $"UseStaticFilesSwitch: enable, mode: {(FlagAssist.GetAdvanceStaticFileOptionsSwitch() ? $"custom, config class is \"{staticFileOptionsTypeName}\"" : "default")}.",
+                GeneralConfigAssist.GetConfigFileInfo()
             );
         }
         else

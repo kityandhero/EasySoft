@@ -1,8 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Startup;
-using EasySoft.UtilityTools.Core.Assists;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-
-namespace EasySoft.Core.DevelopAuxiliary.ExtensionMethods;
+﻿namespace EasySoft.Core.DevelopAuxiliary.ExtensionMethods;
 
 public static class WebApplicationExtensions
 {
@@ -69,8 +65,10 @@ public static class WebApplicationExtensions
 
         if (!EnvironmentAssist.IsDevelopment()) return application;
 
-        StartupConfigMessageAssist.AddConfig(
-            $"UseConfigureTemplate: enabled."
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
+        StartupDescriptionMessageAssist.AddExecute(
+            $"{nameof(UseConfigureTemplate)}."
         );
 
         ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
