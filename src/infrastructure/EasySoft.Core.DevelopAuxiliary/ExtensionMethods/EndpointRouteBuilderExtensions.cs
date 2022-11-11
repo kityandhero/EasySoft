@@ -84,14 +84,4 @@ public static class EndpointConventionBuilderExtensions
             "{controller=RedisConfigFile}/{action=Index}"
         ).WithDisplayName("RedisConfigFile");
     }
-
-    internal static IEndpointConventionBuilder MapNLogInlayConfig(
-        this IEndpointRouteBuilder endpoints
-    )
-    {
-        return endpoints.MapControllerRoute(
-            "NLogInlayConfig",
-            "{controller=NLogInlayConfig}/{action=Index}"
-        ).WithDisplayName("NLogInlayConfig");
-    }
 }

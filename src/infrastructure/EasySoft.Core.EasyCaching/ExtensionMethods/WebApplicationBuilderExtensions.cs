@@ -2,8 +2,11 @@
 using EasySoft.Core.EasyCaching.ConfigAssist;
 using EasySoft.Core.EasyCaching.Enums;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Infrastructure.Startup;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
+using Microsoft.AspNetCore.Routing;
 
 namespace EasySoft.Core.EasyCaching.ExtensionMethods;
 
@@ -42,6 +45,13 @@ public static class WebApplicationBuilderExtensions
                 $"{CacheModeCollection.Redis.ToString()} Connections: {RedisConfigAssist.GetConnectionCollection().Join("|")}.",
                 RedisConfigAssist.GetConfigFileInfo()
             );
+
+            if (EnvironmentAssist.IsDevelopment())
+                ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
+                    new ExtraAction<IEndpointRouteBuilder>()
+                        .SetName("")
+                        .SetAction(endpoints => { endpoints.MapRedisConfigFile(); })
+                );
         }
 
         var cacheMode = GeneralConfigAssist.GetCacheMode();

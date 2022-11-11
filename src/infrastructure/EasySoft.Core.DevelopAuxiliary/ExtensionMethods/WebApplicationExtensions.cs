@@ -1,5 +1,7 @@
 ﻿using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
+using EasySoft.UtilityTools.Core.Assists;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
@@ -9,15 +11,22 @@ namespace EasySoft.Core.DevelopAuxiliary.ExtensionMethods;
 
 public static class WebApplicationExtensions
 {
+    private const string UniqueIdentifierUseDevelopAuxiliary = "e84ad243-6571-4e74-aa77-02a3a8bb4ef1";
+
     public static WebApplication UseDevelopAuxiliary(
         this WebApplication application
     )
     {
+        if (application.HasUsed(UniqueIdentifierUseDevelopAuxiliary))
+            return application;
+
+        if (!EnvironmentAssist.IsDevelopment()) return application;
+
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseDevelopAuxiliary)}."
         );
-
-        if (FlagAssist.GetDevelopAuxiliarySwitch()) return application;
 
         application.UseViewConfig(x => x.RenderPage());
 
@@ -69,14 +78,6 @@ public static class WebApplicationExtensions
                 .SetAction(endpoints => { endpoints.MapRedisConfigFile(); })
         );
 
-        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
-            new ExtraAction<IEndpointRouteBuilder>()
-                .SetName("")
-                .SetAction(endpoints => { endpoints.MapNLogInlayConfig(); })
-        );
-
-        FlagAssist.SetActionMapSwitchOpen();
-
         StartupConfigMessageAssist.AddConfig(
             $"UseAuxiliary: enabled."
         );
@@ -111,10 +112,6 @@ public static class WebApplicationExtensions
 
         StartupDescriptionMessageAssist.AddPrompt(
             $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/RabbitMQConfigFile").Join(" ")} to get rabbitMQConfig template, display only in view development mode."
-        );
-
-        StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/RedisConfigFile").Join(" ")} to get redisConfig template, display only in view development mode."
         );
 
         StartupDescriptionMessageAssist.AddPrompt(

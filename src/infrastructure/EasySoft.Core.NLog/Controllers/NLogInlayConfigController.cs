@@ -1,8 +1,7 @@
 ﻿using EasySoft.Core.Config.Utils;
 using EasySoft.Core.Infrastructure.Controllers;
-using Microsoft.AspNetCore.Mvc;
 
-namespace EasySoft.Core.DevelopAuxiliary.Controllers;
+namespace EasySoft.Core.NLog.Controllers;
 
 public class NLogInlayConfigController : BasicController
 {

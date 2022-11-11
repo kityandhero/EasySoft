@@ -1,6 +1,4 @@
-﻿using NLog;
-
-namespace EasySoft.Core.NLog.Assists;
+﻿namespace EasySoft.Core.NLog.Assists;
 
 public static class NLogAssist
 {
