@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Params;
-
-namespace EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
+﻿namespace EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
 
 public class RegisterDto : IApiParams
 {

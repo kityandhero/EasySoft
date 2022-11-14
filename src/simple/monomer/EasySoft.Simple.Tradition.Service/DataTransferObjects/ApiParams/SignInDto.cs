@@ -1,8 +1,4 @@
-﻿using System.ComponentModel;
-using EasySoft.UtilityTools.Standard.Attributes;
-using EasySoft.UtilityTools.Standard.Params;
-
-namespace EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
+﻿namespace EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
 
 public class SignInDto : IApiParams
 {
@@ -10,14 +6,14 @@ public class SignInDto : IApiParams
     /// 登录名
     /// </summary>
     [DisplayName("loginName")]
-    [Require]
+    [Required]
     public string LoginName { get; set; }
 
     /// <summary>
     /// 登陆密码
     /// </summary>
     [DisplayName("password")]
-    [Require]
+    [Required]
     public string Password { get; set; }
 
     public SignInDto()
