@@ -8,8 +8,6 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UsePrepareStartWork)}."
         );

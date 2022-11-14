@@ -15,8 +15,6 @@ public static class ApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceMapster)}."
         );

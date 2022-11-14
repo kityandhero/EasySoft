@@ -11,8 +11,6 @@ public static class WebApplicationBuilderExtensions
         if (builder.HasRegistered(UniqueIdentifierAddAdvanceNLog))
             return builder;
 
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         // NLog: Setup NLog for Dependency injection
         builder.Logging.ClearProviders();
 
@@ -54,8 +52,6 @@ public static class WebApplicationBuilderExtensions
     {
         if (builder.HasRegistered(UniqueIdentifierAddAdvanceNLog))
             return builder;
-
-        StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceNLog)}."

@@ -1,9 +1,12 @@
+using EasySoft.Core.Infrastructure.Configures;
 using EasySoft.Simple.Tradition.Common.Enums;
 using EasySoft.Simple.Tradition.Data.Contexts;
 using EasySoft.Simple.Tradition.Data.EntityConfigures;
 using EasySoft.Simple.Tradition.Management.WebApi.Security;
 using EasySoft.Simple.Tradition.Service.Services.Implementations;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
+
+AuxiliaryConfigure.PromptStartupExecuteMessage = false;
 
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableDetailedErrors = true;
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableSensitiveDataLogging = true;

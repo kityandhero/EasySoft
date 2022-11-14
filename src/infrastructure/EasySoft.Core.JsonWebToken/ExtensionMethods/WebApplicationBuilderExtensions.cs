@@ -46,8 +46,6 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceJsonWebToken)}<{typeof(TOperator).Name}>."
         );

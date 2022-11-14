@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
+﻿using EasySoft.Core.Infrastructure.Configures;
+using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Standard;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -66,6 +67,10 @@ public static class StartupDescriptionMessageAssist
 
     public static void AddExecute(string message, string extra = "", bool supplementRoundBracket = false)
     {
+        if (!AuxiliaryConfigure.PromptStartupExecuteMessage) return;
+
+        AddTraceDivider();
+
         AddTrace($"EXEC: {message}{(supplementRoundBracket ? "()" : "")}", extra);
     }
 

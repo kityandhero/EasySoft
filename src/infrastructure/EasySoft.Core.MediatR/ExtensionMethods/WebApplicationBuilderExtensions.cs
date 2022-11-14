@@ -7,8 +7,6 @@ public static class WebApplicationBuilderExtensions
         Assembly assembly
     )
     {
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceMediatR)}."
         );
@@ -23,8 +21,6 @@ public static class WebApplicationBuilderExtensions
         IEnumerable<Assembly> assemblies
     )
     {
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceMediatR)}."
         );

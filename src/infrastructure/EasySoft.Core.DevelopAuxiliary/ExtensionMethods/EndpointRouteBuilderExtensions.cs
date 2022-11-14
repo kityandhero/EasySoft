@@ -8,8 +8,6 @@ public static class EndpointConventionBuilderExtensions
         this IEndpointRouteBuilder endpoints
     )
     {
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(MapActionMap)}."
         );
@@ -30,8 +28,6 @@ public static class EndpointConventionBuilderExtensions
         this IEndpointRouteBuilder endpoints
     )
     {
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(MapDatabaseConfigFile)}."
         );
@@ -52,8 +48,6 @@ public static class EndpointConventionBuilderExtensions
         this IEndpointRouteBuilder endpoints
     )
     {
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(MapDevelopConfigFile)}."
         );
@@ -87,8 +81,6 @@ public static class EndpointConventionBuilderExtensions
         this IEndpointRouteBuilder endpoints
     )
     {
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(MapElasticSearchConfigFile)}."
         );
@@ -122,8 +114,6 @@ public static class EndpointConventionBuilderExtensions
         this IEndpointRouteBuilder endpoints
     )
     {
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(MapGeneralConfigFile)}."
         );
@@ -157,8 +147,6 @@ public static class EndpointConventionBuilderExtensions
         this IEndpointRouteBuilder endpoints
     )
     {
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(MapMongoConfigFile)}."
         );
@@ -192,8 +180,6 @@ public static class EndpointConventionBuilderExtensions
         this IEndpointRouteBuilder endpoints
     )
     {
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(MapRabbitMQConfigFile)}."
         );

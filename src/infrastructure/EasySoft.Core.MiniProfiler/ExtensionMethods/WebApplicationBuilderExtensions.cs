@@ -26,8 +26,6 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceMiniProfile)}."
         );

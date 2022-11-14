@@ -6,8 +6,6 @@ public static class EndpointConventionBuilderExtensions
         this IEndpointRouteBuilder endpoints
     )
     {
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(MapNLogInlayConfig)}."
         );

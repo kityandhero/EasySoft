@@ -15,8 +15,6 @@ public static class WebApplicationBuilderExtensions
         if (builder.HasRegistered(UniqueIdentifierAddAdvanceUrls))
             return builder;
 
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceUrls)}()"
         );

@@ -11,8 +11,6 @@ public static class WebApplicationBuilderExtensions
         if (builder.HasRegistered(UniqueIdentifierAddSwaggerGen))
             return builder;
 
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceSwagger)}."
         );

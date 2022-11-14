@@ -4,8 +4,6 @@ public static class WebApplicationExtensions
 {
     internal static WebApplication UseAdvanceLogDashboard(this WebApplication application)
     {
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseAdvanceLogDashboard)}."
         );

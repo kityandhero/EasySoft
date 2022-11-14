@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Web.Framework.Attributes;
+﻿using EasySoft.Core.Infrastructure.Configures;
+using EasySoft.Core.Web.Framework.Attributes;
 using EasySoft.Core.Web.Framework.Filters;
 
 namespace EasySoft.Core.Web.Framework.ExtensionMethods;
@@ -24,8 +25,6 @@ public static class WebApplicationBuilderExtensions
         if (builder.HasRegistered(UniqueIdentifierAddAdvanceApplicationChannel))
             return builder;
 
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceApplicationChannel)}."
         );
@@ -42,8 +41,6 @@ public static class WebApplicationBuilderExtensions
     {
         if (builder.HasRegistered(UniqueIdentifierAddAdvanceApplicationChannel))
             return builder;
-
-        StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceApplicationChannel)}<{typeof(T).Name}>."
@@ -430,6 +427,10 @@ public static class WebApplicationBuilderExtensions
         app.UseAutoEnsureCreated();
 
         StartupWarnMessageAssist.Print();
+
+        LogAssist.Hint(
+            AuxiliaryConfigure.BuildHintMessage().ToArray()
+        );
 
         return app;
     }

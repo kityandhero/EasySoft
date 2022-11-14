@@ -9,8 +9,6 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceAutoFac)}."
         );
@@ -33,8 +31,6 @@ public static class WebApplicationBuilderExtensions
         Action<ContainerBuilder> action
     )
     {
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddExtraNormalInjection)}."
         );

@@ -65,6 +65,8 @@ public static class StartupApplicationExtraActionMessageAssist
 
     public static void AddExecute(string message, string extra = "", bool supplementRoundBracket = false)
     {
+        AddTraceDivider();
+
         AddTrace($"EXEC: {message}{(supplementRoundBracket ? "()" : "")}", extra);
     }
 

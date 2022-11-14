@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.EasyCaching.ConfigAssist;
 using EasySoft.Core.EasyCaching.Enums;
+using EasySoft.Core.Infrastructure.Configures;
 
 namespace EasySoft.Core.EasyCaching.ExtensionMethods;
 
@@ -19,8 +20,6 @@ public static class WebApplicationBuilderExtensions
         if (builder.HasRegistered(UniqueIdentifierAddAdvanceEasyCaching))
             return builder;
 
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceEasyCaching)}."
         );
@@ -39,7 +38,7 @@ public static class WebApplicationBuilderExtensions
                 RedisConfigAssist.GetConfigFileInfo()
             );
 
-            if (EnvironmentAssist.IsDevelopment())
+            if (EnvironmentAssist.IsDevelopment() && AuxiliaryConfigure.PromptConfigFileInfo)
                 ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
                     new ExtraAction<IEndpointRouteBuilder>()
                         .SetName("")

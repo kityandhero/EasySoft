@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.DevelopAuxiliary.ExtensionMethods;
+﻿using EasySoft.Core.Infrastructure.Configures;
+
+namespace EasySoft.Core.DevelopAuxiliary.ExtensionMethods;
 
 public static class WebApplicationExtensions
 {
@@ -16,8 +18,6 @@ public static class WebApplicationExtensions
             return application;
 
         if (!EnvironmentAssist.IsDevelopment()) return application;
-
-        StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseAdvanceViewConfig)}."
@@ -41,8 +41,6 @@ public static class WebApplicationExtensions
 
         if (!EnvironmentAssist.IsDevelopment()) return application;
 
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseAdvanceActionMap)}."
         );
@@ -60,12 +58,12 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
+        if (!AuxiliaryConfigure.PromptConfigFileInfo) return application;
+
         if (application.HasUsed(UniqueIdentifierUseDevelopAuxiliary))
             return application;
 
         if (!EnvironmentAssist.IsDevelopment()) return application;
-
-        StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseConfigureTemplate)}."

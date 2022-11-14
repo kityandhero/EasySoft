@@ -18,8 +18,6 @@ public static class WebApplicationBuilderExtensions
         bool middlewareMode = true
     ) where TPermissionObserver : IPermissionObserver
     {
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddPermissionVerification)}<{typeof(TPermissionObserver).Name}>."
         );

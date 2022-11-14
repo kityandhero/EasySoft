@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Swagger.ConfigAssist;
+﻿using EasySoft.Core.Infrastructure.Configures;
+using EasySoft.Core.Swagger.ConfigAssist;
 
 namespace EasySoft.Core.Swagger.ExtensionMethods;
 
@@ -7,8 +8,6 @@ public static class WebApplicationExtensions
     public static WebApplication UseAdvanceSwagger(this WebApplication application)
     {
         if (!SwaggerConfigAssist.GetSwitch()) return application;
-
-        StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseAdvanceSwagger)}."
@@ -22,7 +21,7 @@ public static class WebApplicationExtensions
             $"You can access swagger api document by {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/swagger/index.html" : FlagAssist.StartupUrls.Select(o => $"{o}/swagger/index.html").Join(" "))}."
         );
 
-        if (EnvironmentAssist.IsDevelopment())
+        if (EnvironmentAssist.IsDevelopment() && AuxiliaryConfigure.PromptConfigFileInfo)
             ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
                 new ExtraAction<IEndpointRouteBuilder>()
                     .SetName("")

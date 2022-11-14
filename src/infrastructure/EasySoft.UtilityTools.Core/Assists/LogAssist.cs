@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.Extensions.Logging;
@@ -215,11 +216,14 @@ public static class LogAssist
     /// <summary>
     /// 记录调试时的配置信息
     /// </summary>
-    public static void Hint(string? log)
+    public static void Hint(params string[] logs)
     {
-        if (string.IsNullOrWhiteSpace(log)) return;
+        if (!logs.Any()) return;
 
-        GetLogger().LogTrace("HINT: {Log}", log.Trim());
+        logs.ForEach(log =>
+        {
+            if (!string.IsNullOrWhiteSpace(log)) GetLogger().LogTrace("HINT: {Log}", log.Trim());
+        });
     }
 
     #endregion

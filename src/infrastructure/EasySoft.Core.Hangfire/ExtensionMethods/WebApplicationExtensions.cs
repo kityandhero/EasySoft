@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Hangfire.ConfigAssist;
+using EasySoft.Core.Infrastructure.Configures;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.Hangfire.ExtensionMethods;
@@ -8,8 +9,6 @@ public static class WebApplicationExtensions
     public static WebApplication UseAdvanceHangfire(this WebApplication application)
     {
         if (!HangfireConfigAssist.GetSwitch()) return application;
-
-        StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseAdvanceHangfire)}."
@@ -22,7 +21,7 @@ public static class WebApplicationExtensions
             $"Young can access hangfire dashboard by {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/hangfire" : FlagAssist.StartupUrls.Select(o => $"{o}/hangfire").Join(" "))}."
         );
 
-        if (EnvironmentAssist.IsDevelopment())
+        if (EnvironmentAssist.IsDevelopment() && AuxiliaryConfigure.PromptConfigFileInfo)
             ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
                 new ExtraAction<IEndpointRouteBuilder>()
                     .SetName("")
