@@ -2,6 +2,8 @@
 using EasySoft.Core.Data.Transactions;
 using EasySoft.Core.EntityFramework.EntityFactories;
 using EasySoft.Simple.Tradition.Data.Entities;
+using EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
+using EasySoft.Simple.Tradition.Service.ExtensionMethods;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -148,24 +150,24 @@ public class UserService : IUserService
         }
     }
 
-    public async Task<ExecutiveResult<User>> SignInAsync(string loginName, string password)
+    public async Task<ExecutiveResult<UserDto>> SignInAsync(SignInDto signInDto)
     {
-        if (string.IsNullOrWhiteSpace(loginName))
-            return new ExecutiveResult<User>(ReturnCode.ParamError.ToMessage("登录名不能为空白"));
+        if (string.IsNullOrWhiteSpace(signInDto.LoginName))
+            return new ExecutiveResult<UserDto>(ReturnCode.ParamError.ToMessage("登录名不能为空白"));
 
-        if (string.IsNullOrWhiteSpace(password))
-            return new ExecutiveResult<User>(ReturnCode.ParamError.ToMessage("密码不能为空白"));
+        if (string.IsNullOrWhiteSpace(signInDto.Password))
+            return new ExecutiveResult<UserDto>(ReturnCode.ParamError.ToMessage("密码不能为空白"));
 
         var result = await _userRepository.GetAsync(
-            o => o.LoginName == loginName && o.Password == password.ToMd5()
+            o => o.LoginName == signInDto.LoginName && o.Password == signInDto.Password.ToMd5()
         );
 
-        if (result.Success)
-            return new ExecutiveResult<User>(ReturnCode.Ok)
+        if (result.Success && result.Data != null)
+            return new ExecutiveResult<UserDto>(ReturnCode.Ok)
             {
-                Data = result.Data
+                Data = result.Data.ToUserDto()
             };
 
-        return new ExecutiveResult<User>(result.Code);
+        return new ExecutiveResult<UserDto>(result.Code);
     }
 }

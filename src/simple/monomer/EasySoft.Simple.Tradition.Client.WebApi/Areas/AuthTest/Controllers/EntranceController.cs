@@ -1,7 +1,7 @@
 ﻿using EasySoft.Core.AuthenticationCore.Attributes;
 using EasySoft.Core.AuthenticationCore.ExtensionMethods;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.Attributes;
+using EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
@@ -49,17 +49,16 @@ public class EntranceController : AreaControllerCore
     /// <summary>
     /// SignIn
     /// </summary>
-    /// <param name="loginName"></param>
-    /// <param name="password"></param>
+    /// <param name="signInDto"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<IActionResult> SignIn(string loginName, string password)
+    public async Task<IActionResult> SignIn([FromBody] SignInDto signInDto)
     {
-        var result = await _userService.SignInAsync(loginName, password);
+        var result = await _userService.SignInAsync(signInDto);
 
         if (!result.Success) return Content(result.Message);
 
-        var token = result.Data?.Id.ToToken();
+        var token = result.Data?.UserId.ToToken();
 
         if (token != null) this.SetCookie(GeneralConfigAssist.GetTokenName(), token);
 

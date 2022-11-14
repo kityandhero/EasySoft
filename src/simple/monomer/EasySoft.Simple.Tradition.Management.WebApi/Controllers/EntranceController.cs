@@ -1,4 +1,5 @@
 ﻿using EasySoft.Simple.Tradition.Management.WebApi.Common;
+using EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 
 namespace EasySoft.Simple.Tradition.Management.WebApi.Controllers;
@@ -23,20 +24,18 @@ public class EntranceController : ControllerCore
     /// <summary>
     /// 登录
     /// </summary>
-    /// <param name="loginName"></param>
-    /// <param name="password"></param>
+    /// <param name="signInDto"></param>
     /// <returns></returns>
     [HttpPost("signIn", Name = "SignIn")]
-    public async Task<IActionResult> SignIn(string loginName, string password)
+    public async Task<IActionResult> SignIn(SignInDto signInDto)
     {
-        var result = await _userService.SignInAsync(loginName, password);
+        var result = await _userService.SignInAsync(signInDto);
 
-        if (!result.Success) return Content(result.Message);
-
-        var token = result.Data?.Id.ToToken();
-
-        if (token != null) this.SetCookie(GeneralConfigAssist.GetTokenName(), token);
-
-        return Content("sign in success");
+        return this.WrapperExecutiveResult(
+            result,
+            o => new
+            {
+                token = o.UserId.ToToken()
+            });
     }
 }

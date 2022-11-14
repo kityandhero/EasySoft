@@ -57,6 +57,20 @@ public static class ControllerBaseExtensions
             : controller.Success(keyToLower ? result.Data.ToExpandoObject() : result.Data);
     }
 
+    public static ActionResult WrapperExecutiveResult<T>(
+        this ControllerBase controller,
+        ExecutiveResult<T> result,
+        Func<T, object> dataHandler,
+        object? extra = null
+    )
+    {
+        var data = result.Data != null ? dataHandler(result.Data) : null;
+
+        return !result.Success
+            ? controller.Fail(result.Code)
+            : controller.Success(data, extra, false);
+    }
+
     /// <summary>
     /// Data
     /// </summary>

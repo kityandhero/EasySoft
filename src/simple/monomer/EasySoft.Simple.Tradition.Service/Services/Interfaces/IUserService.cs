@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.Data.Attributes;
 using EasySoft.Core.Infrastructure.Services;
 using EasySoft.Simple.Tradition.Data.Entities;
+using EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
 using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.Simple.Tradition.Service.Services.Interfaces;
@@ -12,5 +13,5 @@ public interface IUserService : IBusinessService
     [UnitOfWork]
     public Task<ExecutiveResult> RegisterMultiAsync(Dictionary<string, string> namePassword);
 
-    public Task<ExecutiveResult<User>> SignInAsync(string loginName, string password);
+    public Task<ExecutiveResult<UserDto>> SignInAsync(SignInDto signInDto);
 }

@@ -45,25 +45,28 @@ public static class WebApplicationBuilderExtensions
 
             if (Uri.TryCreate(contactUrl, UriKind.Absolute, out var contactUri)) openApiContact.Url = contactUri;
 
-            var openApiLicense = new OpenApiLicense()
+            var openApiInfo = new OpenApiInfo
             {
-                Name = SwaggerConfigAssist.GetLicenseName()
+                Title = SwaggerConfigAssist.GetTitle(),
+                Description = SwaggerConfigAssist.GetDescription(),
+                Version = SwaggerConfigAssist.GetVersion(),
+                Contact = openApiContact
             };
 
-            var licenseUrl = SwaggerConfigAssist.GetLicenseUrl();
+            if (Uri.TryCreate(SwaggerConfigAssist.GetLicenseUrl(), UriKind.Absolute, out var licenseUri))
+            {
+                var openApiLicense = new OpenApiLicense
+                {
+                    Name = SwaggerConfigAssist.GetLicenseName(),
+                    Url = licenseUri
+                };
 
-            if (Uri.TryCreate(licenseUrl, UriKind.Absolute, out var licenseUri)) openApiLicense.Url = licenseUri;
+                openApiInfo.License = openApiLicense;
+            }
 
             c.SwaggerDoc(
                 "v1",
-                new OpenApiInfo
-                {
-                    Title = SwaggerConfigAssist.GetTitle(),
-                    Description = SwaggerConfigAssist.GetDescription(),
-                    Version = SwaggerConfigAssist.GetVersion(),
-                    Contact = openApiContact,
-                    License = openApiLicense
-                }
+                openApiInfo
             );
 
             var openApiServerUrl = SwaggerConfigAssist.GetOpenApiServerUrl();
