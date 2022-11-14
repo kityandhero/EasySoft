@@ -20,7 +20,7 @@ public static class WebApplicationExtensions
         StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(UseConfigureTemplate)}."
+            $"{nameof(UseAdvanceViewConfig)}."
         );
 
         application.UseViewConfig(x => x.RenderPage());

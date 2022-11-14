@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "EasySoft.Simple.Tradition.Application": {
+    "EasySoft.Simple.Tradition.Client.WebApi": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

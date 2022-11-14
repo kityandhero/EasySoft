@@ -1,8 +1,4 @@
-﻿using EasySoft.Core.AuthenticationCore.Operators;
-using EasySoft.Core.PermissionVerification.Observers;
-using EasySoft.UtilityTools.Standard.Competence;
-
-namespace EasySoft.Simple.Tradition.Client.WebApi.Security;
+﻿namespace EasySoft.Simple.Tradition.Client.WebApi.Security;
 
 /// <summary>
 /// ApplicationPermissionObserver

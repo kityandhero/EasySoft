@@ -8,6 +8,8 @@ public static class WebApplicationExtensions
     {
         if (!SwaggerConfigAssist.GetSwitch()) return application;
 
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseAdvanceSwagger)}."
         );

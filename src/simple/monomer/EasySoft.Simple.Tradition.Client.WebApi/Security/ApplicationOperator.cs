@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.AuthenticationCore.Operators;
-
-namespace EasySoft.Simple.Tradition.Client.WebApi.Security;
+﻿namespace EasySoft.Simple.Tradition.Client.WebApi.Security;
 
 /// <summary>
 /// ApplicationOperator

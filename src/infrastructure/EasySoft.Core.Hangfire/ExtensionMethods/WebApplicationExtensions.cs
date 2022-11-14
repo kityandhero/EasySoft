@@ -9,6 +9,8 @@ public static class WebApplicationExtensions
     {
         if (!HangfireConfigAssist.GetSwitch()) return application;
 
+        StartupDescriptionMessageAssist.AddTraceDivider();
+
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseAdvanceHangfire)}."
         );

@@ -17,5 +17,9 @@ public class PostConfig : BaseEntityTypeConfiguration<Post>
             .HasMaxLength(200)
             .HasDefaultValue(string.Empty)
             .HasComment("帖子标题");
+        
+        builder.HasOne(x => x.Blog)
+            .WithMany(c => c.Posts)
+            .HasForeignKey(x => x.BlogId);
     }
 }

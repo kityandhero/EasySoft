@@ -1,20 +1,9 @@
-using EasySoft.Core.AgileConfigClient.Assists;
-using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Data.ExtensionMethods;
-using EasySoft.Core.EntityFramework.SqlServer.Extensions;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Startup;
-using EasySoft.Core.JsonWebToken.ExtensionMethods;
-using EasySoft.Core.PermissionVerification.ExtensionMethods;
-using EasySoft.Core.Web.Framework.BuilderAssists;
-using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.Simple.Tradition.Client.WebApi.Security;
 using EasySoft.Simple.Tradition.Common.Enums;
 using EasySoft.Simple.Tradition.Data.Contexts;
 using EasySoft.Simple.Tradition.Data.EntityConfigures;
 using EasySoft.Simple.Tradition.Service.Services.Implementations;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableDetailedErrors = true;
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableSensitiveDataLogging = true;
@@ -66,11 +55,6 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
             applicationBuilder.AddPermissionVerification<ApplicationPermissionObserver>();
         })
 );
-
-AgileConfigClientActionAssist.ActionAgileConfigChanged = _ =>
-{
-    // LogAssist.Info("config changed");
-};
 
 var app = WebApplicationBuilderAssist
     .CreateBuilder(

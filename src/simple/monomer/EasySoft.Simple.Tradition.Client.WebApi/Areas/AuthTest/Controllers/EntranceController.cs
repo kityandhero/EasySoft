@@ -1,9 +1,7 @@
 ﻿using EasySoft.Core.AuthenticationCore.Attributes;
 using EasySoft.Core.AuthenticationCore.ExtensionMethods;
-using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.Attributes;
-using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;

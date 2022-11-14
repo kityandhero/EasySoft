@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.Web.Framework.Controllers;
-
-namespace EasySoft.Simple.Tradition.Client.WebApi.Common;
+﻿namespace EasySoft.Simple.Tradition.Client.WebApi.Common;
 
 /// <summary>
 /// ControllerCore
