@@ -16,12 +16,5 @@
   "NlogDefaultConfigTraceToConsoleSwitch": "1",
   "NlogDefaultConfigDebugToConsoleSwitch": "1",
   "CapDashboardSwitch": "1",
-  "CapDiscoverySwitch": "0",
-  "RegistrationCenterSwitch": "1",
-  "RegistrationCenterType": "Consul",
-  "ConfigCenterSwitch": "1",
-  "ConfigCenterType": "Consul",
-  "ExceptionlessSwitch": "1",
-  "ExceptionlessServerUrl": "http://host.docker.internal:5000",
-  "ExceptionlessApiKey": "TyJSLx8tiv2LXPhLQ61puThgWzYDuIOLgzTGoE0u"
+  "CapDiscoverySwitch": "0"
 }
