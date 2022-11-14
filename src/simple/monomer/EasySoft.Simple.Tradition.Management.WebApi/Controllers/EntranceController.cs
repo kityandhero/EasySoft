@@ -4,8 +4,9 @@ using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 namespace EasySoft.Simple.Tradition.Management.WebApi.Controllers;
 
 /// <summary>
-/// EntranceController
+/// 应用入口
 /// </summary>
+[Route("entrance")]
 public class EntranceController : ControllerCore
 {
     private readonly IUserService _userService;
@@ -20,12 +21,12 @@ public class EntranceController : ControllerCore
     }
 
     /// <summary>
-    /// SignIn
+    /// 登录
     /// </summary>
     /// <param name="loginName"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    [HttpPost]
+    [HttpPost("signIn", Name = "SignIn")]
     public async Task<IActionResult> SignIn(string loginName, string password)
     {
         var result = await _userService.SignInAsync(loginName, password);
