@@ -1,13 +1,30 @@
 ﻿using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.JsonWebToken.Middlewares;
 using EasySoft.Core.JsonWebToken.Assists;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 
 namespace EasySoft.Core.JsonWebToken.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
+    private const string UniqueIdentifierAddAdvanceJsonWebToken = "63fdf92c-827d-45f8-a38e-36c6015aa14f";
+
     /// <summary>
-    /// 配置操作者验证以及操作权限验证    
+    /// 配置操作者验证    
+    /// </summary> 
+    /// <param name="builder"></param>
+    /// <param name="middlewareMode"></param>
+    /// <returns></returns>
+    public static WebApplicationBuilder AddAdvanceJsonWebToken(
+        this WebApplicationBuilder builder,
+        bool middlewareMode = true
+    )
+    {
+        return builder.AddAdvanceJsonWebToken<DefaultActualOperator>(middlewareMode);
+    }
+
+    /// <summary>
+    /// 配置操作者验证    
     /// </summary> 
     /// <param name="builder"></param>
     /// <param name="middlewareMode"></param>
@@ -17,13 +34,19 @@ public static class WebApplicationBuilderExtensions
         bool middlewareMode = true
     ) where TOperator : ActualOperator
     {
-        StartupDescriptionMessageAssist.AddTraceDivider();
-
         if (!string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
             throw new Exception("token mode disallow use more than one");
 
-        if (FlagAssist.JsonWebTokenConfigComplete)
-            throw new Exception("UseAdvanceJsonWebToken disallow inject more than once");
+        if (builder.HasRegistered(UniqueIdentifierAddAdvanceJsonWebToken))
+        {
+            StartupWarnMessageAssist.AddWarning(
+                $"{nameof(AddAdvanceJsonWebToken)} should be executed only once, please check it."
+            );
+
+            return builder;
+        }
+
+        StartupDescriptionMessageAssist.AddTraceDivider();
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceJsonWebToken)}<{typeof(TOperator).Name}>."
@@ -42,8 +65,6 @@ public static class WebApplicationBuilderExtensions
 
             FlagAssist.JsonWebTokenMiddlewareModeSwitch = true;
         }
-
-        FlagAssist.JsonWebTokenConfigComplete = true;
 
         FlagAssist.TokenMode = ConstCollection.JsonWebToken;
 

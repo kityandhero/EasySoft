@@ -1,33 +1,56 @@
 ﻿using EasySoft.Core.EasyToken.AccessControl;
 using EasySoft.Core.EasyToken.Middlewares;
+using EasySoft.UtilityTools.Core.ExtensionMethods;
 
 namespace EasySoft.Core.EasyToken.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
+    private const string UniqueIdentifierAddEasyToken = "3ab223f0-d18f-44e9-9f01-82bbc5186ad0";
+
+    /// <summary>
+    /// 配置操作者验证    
+    /// </summary> 
+    /// <param name="builder"></param>
+    /// <param name="middlewareMode"></param>
+    /// <returns></returns>
+    public static WebApplicationBuilder AddEasyToken<TTokenSecretOptions>(
+        this WebApplicationBuilder builder,
+        bool middlewareMode = true
+    ) where TTokenSecretOptions : ITokenSecretOptions
+    {
+        return builder.AddEasyToken<TTokenSecretOptions, DefaultActualOperator>(middlewareMode);
+    }
+
     /// <summary>
     /// 配置操作者验证以及操作权限验证    
     /// </summary> 
     /// <param name="builder"></param>
     /// <param name="middlewareMode">使用中间件模式</param>
     /// <returns></returns>
-    public static WebApplicationBuilder UseEasyToken<TTokenSecretOptions, TOperator>(
+    public static WebApplicationBuilder AddEasyToken<TTokenSecretOptions, TOperator>(
         this WebApplicationBuilder builder,
         bool middlewareMode = true
     ) where TOperator : ActualOperator where TTokenSecretOptions : ITokenSecretOptions
     {
         if (!string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
-            throw new Exception("token mode disallow use more than one");
+            throw new Exception("token mode disallow set more than one");
 
-        if (FlagAssist.EasyTokenConfigComplete)
-            throw new Exception("UseEasyToken<TTokenSecretOptions, TOperator> disallow inject more than once");
+        if (builder.HasRegistered(UniqueIdentifierAddEasyToken))
+        {
+            StartupWarnMessageAssist.AddWarning(
+                $"{nameof(AddEasyToken)} should be executed only once, please check it."
+            );
+
+            return builder;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(UseEasyToken)}<{typeof(TTokenSecretOptions).Name},{typeof(TOperator).Name}>."
+            $"{nameof(AddEasyToken)}<{typeof(TTokenSecretOptions).Name},{typeof(TOperator).Name}>."
         );
 
-        builder.UseTokenSecretOptionsInjection<TTokenSecretOptions>()
-            .UseTokenSecretInjection<TokenSecret>()
+        builder.AddTokenSecretOptionsInjection<TTokenSecretOptions>()
+            .AddTokenSecretInjection<TokenSecret>()
             .AddOperator<TOperator>();
 
         if (middlewareMode)
@@ -36,8 +59,6 @@ public static class WebApplicationBuilderExtensions
 
             FlagAssist.EasyTokenMiddlewareModeSwitch = true;
         }
-
-        FlagAssist.EasyTokenConfigComplete = true;
 
         FlagAssist.TokenMode = ConstCollection.EasyToken;
 
@@ -55,22 +76,31 @@ public static class WebApplicationBuilderExtensions
     /// <param name="builder"></param>
     /// <param name="middlewareMode"></param>
     /// <returns></returns>
-    public static WebApplicationBuilder UseEasyToken<TTokenSecretOptions, TTokenSecret, TOperator>(
+    public static WebApplicationBuilder AddEasyToken<TTokenSecretOptions, TTokenSecret, TOperator>(
         this WebApplicationBuilder builder,
         bool middlewareMode = true
     ) where TOperator : ActualOperator
         where TTokenSecretOptions : ITokenSecretOptions
         where TTokenSecret : ITokenSecret
     {
-        if (FlagAssist.EasyTokenConfigComplete)
-            throw new Exception("UseEasyToken<TTokenSecretOptions, TOperator> disallow inject more than once");
+        if (!string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
+            throw new Exception("token mode disallow set more than one");
+
+        if (builder.HasRegistered(UniqueIdentifierAddEasyToken))
+        {
+            StartupWarnMessageAssist.AddWarning(
+                $"{nameof(AddEasyToken)} should be executed only once, please check it."
+            );
+
+            return builder;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(UseEasyToken)}<{typeof(TTokenSecretOptions).Name},{typeof(TTokenSecret).Name},{typeof(TOperator).Name}>."
+            $"{nameof(AddEasyToken)}<{typeof(TTokenSecretOptions).Name},{typeof(TTokenSecret).Name},{typeof(TOperator).Name}>."
         );
 
-        builder.UseTokenSecretOptionsInjection<TTokenSecretOptions>()
-            .UseTokenSecretInjection<TTokenSecret>()
+        builder.AddTokenSecretOptionsInjection<TTokenSecretOptions>()
+            .AddTokenSecretInjection<TTokenSecret>()
             .AddOperator<TOperator>();
 
         if (middlewareMode)
@@ -79,8 +109,6 @@ public static class WebApplicationBuilderExtensions
 
             FlagAssist.EasyTokenMiddlewareModeSwitch = true;
         }
-
-        FlagAssist.EasyTokenConfigComplete = true;
 
         return builder;
     }
@@ -91,7 +119,7 @@ public static class WebApplicationBuilderExtensions
     /// <param name="builder"></param>
     /// <typeparam name="T"></typeparam>  
     /// <returns></returns>
-    private static WebApplicationBuilder UseTokenSecretOptionsInjection<T>(
+    private static WebApplicationBuilder AddTokenSecretOptionsInjection<T>(
         this WebApplicationBuilder builder
     ) where T : ITokenSecretOptions
     {
@@ -99,7 +127,7 @@ public static class WebApplicationBuilderExtensions
             throw new Exception("UseTokenSecretOptionsInjection<T> disallow inject more than once");
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(UseTokenSecretOptionsInjection)}<{typeof(T).Name}>."
+            $"{nameof(AddTokenSecretOptionsInjection)}<{typeof(T).Name}>."
         );
 
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
@@ -118,7 +146,7 @@ public static class WebApplicationBuilderExtensions
     /// <param name="builder"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    private static WebApplicationBuilder UseTokenSecretInjection<T>(
+    private static WebApplicationBuilder AddTokenSecretInjection<T>(
         this WebApplicationBuilder builder
     ) where T : ITokenSecret
     {
@@ -126,7 +154,7 @@ public static class WebApplicationBuilderExtensions
             throw new Exception("UseTokenSecretInjection<T> disallow inject more than once");
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(UseTokenSecretInjection)}<{typeof(T).Name}>."
+            $"{nameof(AddTokenSecretInjection)}<{typeof(T).Name}>."
         );
 
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>

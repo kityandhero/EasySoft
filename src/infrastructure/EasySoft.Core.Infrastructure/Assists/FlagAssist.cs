@@ -13,10 +13,6 @@ public static class FlagAssist
 
     public static bool EasyTokenSecretInjectionComplete { get; set; }
 
-    public static bool EasyTokenConfigComplete { get; set; }
-
-    public static bool JsonWebTokenConfigComplete { get; set; }
-
     public static bool JsonWebTokenMiddlewareModeSwitch { get; set; }
 
     public static bool PermissionVerificationSwitch { get; set; }
@@ -34,8 +30,6 @@ public static class FlagAssist
         EasyTokenMiddlewareModeSwitch = false;
         EasyTokenSecretOptionInjectionComplete = false;
         EasyTokenSecretInjectionComplete = false;
-        EasyTokenConfigComplete = false;
-        JsonWebTokenConfigComplete = false;
         JsonWebTokenMiddlewareModeSwitch = false;
         PermissionVerificationSwitch = false;
         PermissionVerificationMiddlewareModeSwitch = false;

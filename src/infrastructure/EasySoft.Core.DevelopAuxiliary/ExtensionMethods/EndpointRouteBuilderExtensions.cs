@@ -58,14 +58,27 @@ public static class EndpointConventionBuilderExtensions
             $"{nameof(MapDevelopConfigFile)}."
         );
 
+        const string routeTemplate = "developConfigAuxiliary/getTemplate";
+
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get developConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/DevelopConfigFile").Join(" ")}{Info}."
+            $"You can get developConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
         endpoints.MapControllerRoute(
-            "DevelopConfigFile",
-            "{controller=DevelopConfigAuxiliary}/{action=Index}"
-        ).WithDisplayName("DevelopConfigFile");
+            routeTemplate,
+            "{controller=DevelopConfigAuxiliary}/{action=GetTemplate}"
+        );
+
+        const string routeCurrent = "developConfigAuxiliary/getCurrent";
+
+        endpoints.MapControllerRoute(
+            routeCurrent,
+            "{controller=DevelopConfigAuxiliary}/{action=GetCurrent}"
+        );
+
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"You can get developConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
+        );
 
         return endpoints;
     }

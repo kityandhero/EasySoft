@@ -429,6 +429,8 @@ public static class WebApplicationBuilderExtensions
 
         app.UseAutoEnsureCreated();
 
+        StartupWarnMessageAssist.Print();
+
         return app;
     }
 
