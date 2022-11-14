@@ -4,7 +4,9 @@ namespace EasySoft.Core.Hangfire.ExtensionMethods;
 
 public static class EndpointConventionBuilderExtensions
 {
-    internal static IEndpointConventionBuilder MapHangfireConfigFile(
+    private const string Info = ", it only can access in development mode";
+
+    internal static IEndpointRouteBuilder MapHangfireConfigFile(
         this IEndpointRouteBuilder endpoints
     )
     {
@@ -14,13 +16,28 @@ public static class EndpointConventionBuilderExtensions
             $"{nameof(MapHangfireConfigFile)}."
         );
 
+        const string routeTemplate = "hangfireConfigAuxiliary/getTemplate";
+
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get hangfireConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/HangfireConfigFile").Join(" ")}, it only can access in development mode."
+            $"You can get hangfireConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
-        return endpoints.MapControllerRoute(
-            "HangfireConfigFile",
-            "{controller=HangfireConfigFile}/{action=Index}"
-        ).WithDisplayName("HangfireConfigFile");
+        endpoints.MapControllerRoute(
+            routeTemplate,
+            "{controller=HangfireConfigAuxiliary}/{action=GetTemplate}"
+        );
+
+        const string routeCurrent = "hangfireConfigAuxiliary/getCurrent";
+
+        endpoints.MapControllerRoute(
+            routeCurrent,
+            "{controller=HangfireConfigAuxiliary}/{action=GetCurrent}"
+        );
+
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"You can get hangfireConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
+        );
+
+        return endpoints;
     }
 }

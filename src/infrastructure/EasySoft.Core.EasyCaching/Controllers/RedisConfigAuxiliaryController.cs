@@ -4,9 +4,9 @@ using EasySoft.Core.Infrastructure.Controllers;
 
 namespace EasySoft.Core.EasyCaching.Controllers;
 
-public class RedisConfigFileController : BasicController
+public class RedisConfigAuxiliaryController : BasicController
 {
-    public IActionResult Index()
+    public IActionResult GetTemplate()
     {
         var data = new RedisConfig();
 
@@ -18,5 +18,10 @@ public class RedisConfigFileController : BasicController
             },
             false
         );
+    }
+
+    public async Task<IActionResult> GetCurrent()
+    {
+        return Content(await RedisConfigAssist.GetConfigFileContent());
     }
 }

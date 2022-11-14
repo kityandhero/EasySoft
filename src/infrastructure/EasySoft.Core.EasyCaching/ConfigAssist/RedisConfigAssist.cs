@@ -6,17 +6,19 @@ public static class RedisConfigAssist
 {
     private static readonly string ConfigFile = $"{nameof(RedisConfig).ToLowerFirst()}.json";
 
+    private static readonly string FilePath;
+
     private static IConfiguration Configuration { get; set; }
 
     static RedisConfigAssist()
     {
         var directory = Tools.GetConfigureDirectory();
 
-        var filePath = $"{directory}{nameof(RedisConfig).ToLowerFirst()}.json";
+        FilePath = $"{directory}{nameof(RedisConfig).ToLowerFirst()}.json";
 
         var builder = new ConfigurationBuilder();
 
-        builder.AddMultiJsonFile(filePath);
+        builder.AddMultiJsonFile(FilePath);
 
         Configuration = builder.Build();
 
@@ -28,6 +30,18 @@ public static class RedisConfigAssist
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(RedisConfigAssist)}.{nameof(Init)}."
         );
+    }
+
+    public static string GetConfigFilePath()
+    {
+        return FilePath;
+    }
+
+    public static async Task<string> GetConfigFileContent()
+    {
+        var content = await FilePath.ReadFile();
+
+        return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
     public static string GetConfigFileInfo()

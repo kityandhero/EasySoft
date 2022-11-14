@@ -10,17 +10,19 @@ public static class DatabaseConfigAssist
 {
     private static readonly string ConfigFile = $"{nameof(DatabaseConfig).ToLowerFirst()}.json";
 
+    private static readonly string FilePath;
+
     private static IConfiguration Configuration { get; set; }
 
     static DatabaseConfigAssist()
     {
         var directory = Tools.GetConfigureDirectory();
 
-        var filePath = $"{directory}{ConfigFile}";
+        FilePath = $"{directory}{ConfigFile}";
 
         var builder = new ConfigurationBuilder();
 
-        builder.AddMultiJsonFile(filePath);
+        builder.AddMultiJsonFile(FilePath);
 
         Configuration = builder.Build();
 
@@ -29,6 +31,18 @@ public static class DatabaseConfigAssist
 
     public static void Init()
     {
+    }
+
+    public static string GetConfigFilePath()
+    {
+        return FilePath;
+    }
+
+    public static async Task<string> GetConfigFileContent()
+    {
+        var content = await FilePath.ReadFile();
+
+        return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
     public static string GetConfigFileInfo()

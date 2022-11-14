@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Swagger.ConfigCollection;
+using EasySoft.UtilityTools.Standard.Assists;
 
 namespace EasySoft.Core.Swagger.ConfigAssist;
 
@@ -6,17 +7,19 @@ public static class SwaggerConfigAssist
 {
     private static readonly string ConfigFile = $"{nameof(SwaggerConfig).ToLowerFirst()}.json";
 
+    private static readonly string FilePath;
+
     private static IConfiguration Configuration { get; set; }
 
     static SwaggerConfigAssist()
     {
         var directory = Tools.GetConfigureDirectory();
 
-        var filePath = $"{directory}{nameof(SwaggerConfig).ToLowerFirst()}.json";
+        FilePath = $"{directory}{nameof(SwaggerConfig).ToLowerFirst()}.json";
 
         var builder = new ConfigurationBuilder();
 
-        builder.AddMultiJsonFile(filePath);
+        builder.AddMultiJsonFile(FilePath);
 
         Configuration = builder.Build();
 
@@ -28,6 +31,18 @@ public static class SwaggerConfigAssist
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(SwaggerConfigAssist)}.{nameof(Init)}."
         );
+    }
+
+    public static string GetConfigFilePath()
+    {
+        return FilePath;
+    }
+
+    public static async Task<string> GetConfigFileContent()
+    {
+        var content = await FilePath.ReadFile();
+
+        return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
     public static string GetConfigFileInfo()

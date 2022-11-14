@@ -2,7 +2,9 @@
 
 public static class EndpointConventionBuilderExtensions
 {
-    internal static IEndpointConventionBuilder MapRedisConfigFile(
+    private const string Info = ", it only can access in development mode";
+
+    internal static IEndpointRouteBuilder MapRedisConfigFile(
         this IEndpointRouteBuilder endpoints
     )
     {
@@ -12,13 +14,28 @@ public static class EndpointConventionBuilderExtensions
             $"{nameof(MapRedisConfigFile)}."
         );
 
+        const string routeTemplate = "redisConfigAuxiliary/getTemplate";
+
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get redisConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/RedisConfigFile").Join(" ")}, it only can access in development mode."
+            $"You can get redisConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
-        return endpoints.MapControllerRoute(
-            "RedisConfigFile",
-            "{controller=RedisConfigFile}/{action=Index}"
-        ).WithDisplayName("RedisConfigFile");
+        endpoints.MapControllerRoute(
+            routeTemplate,
+            "{controller=RedisConfigAuxiliary}/{action=GetTemplate}"
+        );
+
+        const string routeCurrent = "redisConfigAuxiliary/getCurrent";
+
+        endpoints.MapControllerRoute(
+            routeCurrent,
+            "{controller=RedisConfigAuxiliary}/{action=GetCurrent}"
+        );
+
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"You can get redisConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
+        );
+
+        return endpoints;
     }
 }

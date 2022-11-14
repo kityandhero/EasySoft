@@ -11,6 +11,8 @@ public static class ConsulRegistrationCenterConfigAssist
     // ReSharper disable once UnusedMember.Local
     private static readonly string ConfigFile = $"{nameof(ConsulRegistrationCenterConfig).ToLowerFirst()}.json";
 
+    private static readonly string FilePath;
+
     private static IConfiguration? Configuration { get; set; }
 
     private static IConfiguration ConsulConfiguration { get; set; }
@@ -19,11 +21,11 @@ public static class ConsulRegistrationCenterConfigAssist
     {
         var directory = Tools.GetConfigureDirectory();
 
-        var filePath = $"{directory}{nameof(ConsulRegistrationCenterConfig).ToLowerFirst()}.json";
+        FilePath = $"{directory}{nameof(ConsulRegistrationCenterConfig).ToLowerFirst()}.json";
 
         var builder = new ConfigurationBuilder();
 
-        builder.AddMultiJsonFile(filePath);
+        builder.AddMultiJsonFile(FilePath);
 
         ConsulConfiguration = builder.Build();
 
@@ -32,6 +34,18 @@ public static class ConsulRegistrationCenterConfigAssist
 
     public static void Init()
     {
+    }
+
+    public static string GetConfigFilePath()
+    {
+        return FilePath;
+    }
+
+    public static async Task<string> GetConfigFileContent()
+    {
+        var content = await FilePath.ReadFile();
+
+        return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
     public static string GetConfigFileInfo()

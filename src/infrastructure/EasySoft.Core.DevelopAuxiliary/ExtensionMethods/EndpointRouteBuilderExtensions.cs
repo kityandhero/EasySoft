@@ -4,7 +4,7 @@ public static class EndpointConventionBuilderExtensions
 {
     private const string Info = ", it only can access in development mode";
 
-    internal static IEndpointConventionBuilder MapActionMap(
+    internal static IEndpointRouteBuilder MapActionMap(
         this IEndpointRouteBuilder endpoints
     )
     {
@@ -18,13 +18,15 @@ public static class EndpointConventionBuilderExtensions
             $"You can get action map by access {FlagAssist.StartupUrls.Select(o => $"{o}/ActionMap").Join(" ")}{Info}."
         );
 
-        return endpoints.MapControllerRoute(
+        endpoints.MapControllerRoute(
             "ActionMap",
             "{controller=ActionMap}/{action=Index}"
         ).WithDisplayName("ActionMap");
+
+        return endpoints;
     }
 
-    internal static IEndpointConventionBuilder MapDatabaseConfigFile(
+    internal static IEndpointRouteBuilder MapDatabaseConfigFile(
         this IEndpointRouteBuilder endpoints
     )
     {
@@ -38,13 +40,15 @@ public static class EndpointConventionBuilderExtensions
             $"You can get databaseConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/DatabaseConfigFile").Join(" ")}{Info}."
         );
 
-        return endpoints.MapControllerRoute(
+        endpoints.MapControllerRoute(
             "DatabaseConfigFile",
-            "{controller=DatabaseConfigFile}/{action=Index}"
+            "{controller=DatabaseConfigAuxiliary}/{action=Index}"
         ).WithDisplayName("DatabaseConfigFile");
+
+        return endpoints;
     }
 
-    internal static IEndpointConventionBuilder MapDevelopConfigFile(
+    internal static IEndpointRouteBuilder MapDevelopConfigFile(
         this IEndpointRouteBuilder endpoints
     )
     {
@@ -58,13 +62,15 @@ public static class EndpointConventionBuilderExtensions
             $"You can get developConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/DevelopConfigFile").Join(" ")}{Info}."
         );
 
-        return endpoints.MapControllerRoute(
+        endpoints.MapControllerRoute(
             "DevelopConfigFile",
-            "{controller=DevelopConfigFile}/{action=Index}"
+            "{controller=DevelopConfigAuxiliary}/{action=Index}"
         ).WithDisplayName("DevelopConfigFile");
+
+        return endpoints;
     }
 
-    internal static IEndpointConventionBuilder MapElasticSearchConfigFile(
+    internal static IEndpointRouteBuilder MapElasticSearchConfigFile(
         this IEndpointRouteBuilder endpoints
     )
     {
@@ -74,17 +80,32 @@ public static class EndpointConventionBuilderExtensions
             $"{nameof(MapElasticSearchConfigFile)}."
         );
 
+        const string routeTemplate = "elasticSearchConfigAuxiliary/getTemplate";
+
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get elasticSearchConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/ElasticSearchConfigFile").Join(" ")}{Info}."
+            $"You can get elasticSearchConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
-        return endpoints.MapControllerRoute(
-            "ElasticSearchConfigFile",
-            "{controller=ElasticSearchConfigFile}/{action=Index}"
-        ).WithDisplayName("ElasticSearchConfigFile");
+        endpoints.MapControllerRoute(
+            routeTemplate,
+            "{controller=ElasticSearchConfigAuxiliary}/{action=GetTemplate}"
+        );
+
+        const string routeCurrent = "elasticSearchConfigAuxiliary/getCurrent";
+
+        endpoints.MapControllerRoute(
+            routeCurrent,
+            "{controller=ElasticSearchConfigAuxiliary}/{action=GetCurrent}"
+        );
+
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"You can get elasticSearchConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
+        );
+
+        return endpoints;
     }
 
-    internal static IEndpointConventionBuilder MapGeneralConfigFile(
+    internal static IEndpointRouteBuilder MapGeneralConfigFile(
         this IEndpointRouteBuilder endpoints
     )
     {
@@ -94,17 +115,32 @@ public static class EndpointConventionBuilderExtensions
             $"{nameof(MapGeneralConfigFile)}."
         );
 
-        StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get generalConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/GeneralConfigFile").Join(" ")}{Info}."
+        const string routeTemplate = "generalConfigAuxiliary/getTemplate";
+
+        endpoints.MapControllerRoute(
+            routeTemplate,
+            "{controller=GeneralConfigAuxiliary}/{action=GetTemplate}"
         );
 
-        return endpoints.MapControllerRoute(
-            "GeneralConfigFile",
-            "{controller=GeneralConfigFile}/{action=Index}"
-        ).WithDisplayName("GeneralConfigFile");
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"You can get generalConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
+        );
+
+        const string routeCurrent = "generalConfigAuxiliary/getCurrent";
+
+        endpoints.MapControllerRoute(
+            routeCurrent,
+            "{controller=GeneralConfigAuxiliary}/{action=GetCurrent}"
+        );
+
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"You can get generalConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
+        );
+
+        return endpoints;
     }
 
-    internal static IEndpointConventionBuilder MapMongoConfigFile(
+    internal static IEndpointRouteBuilder MapMongoConfigFile(
         this IEndpointRouteBuilder endpoints
     )
     {
@@ -114,17 +150,32 @@ public static class EndpointConventionBuilderExtensions
             $"{nameof(MapMongoConfigFile)}."
         );
 
+        const string routeTemplate = "mongoConfigAuxiliary/getTemplate";
+
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get mongoConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/MongoConfigFile").Join(" ")}{Info}."
+            $"You can get mongoConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
-        return endpoints.MapControllerRoute(
-            "MongoConfigFile",
-            "{controller=MongoConfigFile}/{action=Index}"
-        ).WithDisplayName("MongoConfigFile");
+        endpoints.MapControllerRoute(
+            routeTemplate,
+            "{controller=MongoConfigAuxiliary}/{action=GetTemplate}"
+        );
+
+        const string routeCurrent = "elasticSearchConfigAuxiliary/getCurrent";
+
+        endpoints.MapControllerRoute(
+            routeCurrent,
+            "{controller=MongoConfigAuxiliary}/{action=GetCurrent}"
+        );
+
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"You can get mongoConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
+        );
+
+        return endpoints;
     }
 
-    internal static IEndpointConventionBuilder MapRabbitMQConfigFile(
+    internal static IEndpointRouteBuilder MapRabbitMQConfigFile(
         this IEndpointRouteBuilder endpoints
     )
     {
@@ -134,13 +185,28 @@ public static class EndpointConventionBuilderExtensions
             $"{nameof(MapRabbitMQConfigFile)}."
         );
 
+        const string routeTemplate = "rabbitMQConfigAuxiliary/getTemplate";
+
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get rabbitMQConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/RabbitMQConfigFile").Join(" ")}{Info}."
+            $"You can get rabbitMQConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
-        return endpoints.MapControllerRoute(
-            "RabbitMQConfigFile",
-            "{controller=RabbitMQConfigFile}/{action=Index}"
-        ).WithDisplayName("RabbitMQConfigFile");
+        endpoints.MapControllerRoute(
+            routeTemplate,
+            "{controller=RabbitMQConfigAuxiliary}/{action=GetTemplate}"
+        );
+
+        const string routeCurrent = "rabbitMQConfigAuxiliary/getCurrent";
+
+        endpoints.MapControllerRoute(
+            routeCurrent,
+            "{controller=RabbitMQConfigAuxiliary}/{action=GetCurrent}"
+        );
+
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"You can get rabbitMQConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
+        );
+
+        return endpoints;
     }
 }

@@ -3,9 +3,9 @@ using EasySoft.Core.Hangfire.ConfigCollection;
 
 namespace EasySoft.Core.Hangfire.Controllers;
 
-public class HangfireConfigFileController : BasicController
+public class HangfireConfigAuxiliaryController : BasicController
 {
-    public IActionResult Index()
+    public IActionResult GetTemplate()
     {
         var data = new HangfireConfig();
 
@@ -17,5 +17,10 @@ public class HangfireConfigFileController : BasicController
             },
             false
         );
+    }
+
+    public async Task<IActionResult> GetCurrent()
+    {
+        return Content(await HangfireConfigAssist.GetConfigFileContent());
     }
 }

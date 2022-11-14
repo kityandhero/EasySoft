@@ -2,7 +2,9 @@
 
 public static class EndpointConventionBuilderExtensions
 {
-    internal static IEndpointConventionBuilder MapSwaggerConfigFile(
+    private const string Info = ", it only can access in development mode";
+
+    internal static IEndpointRouteBuilder MapSwaggerConfigFile(
         this IEndpointRouteBuilder endpoints
     )
     {
@@ -12,13 +14,28 @@ public static class EndpointConventionBuilderExtensions
             $"{nameof(MapSwaggerConfigFile)}."
         );
 
+        const string routeTemplate = "swaggerConfigAuxiliary/getTemplate";
+
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get swaggerConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/SwaggerConfigFile").Join(" ")}, it only can access in development mode."
+            $"You can get swaggerConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
-        return endpoints.MapControllerRoute(
-            "SwaggerConfigFile",
-            "{controller=SwaggerConfigFile}/{action=Index}"
-        ).WithDisplayName("SwaggerConfigFile");
+        endpoints.MapControllerRoute(
+            routeTemplate,
+            "{controller=SwaggerConfigAuxiliary}/{action=GetTemplate}"
+        );
+
+        const string routeCurrent = "swaggerConfigAuxiliary/getCurrent";
+
+        endpoints.MapControllerRoute(
+            routeCurrent,
+            "{controller=SwaggerConfigAuxiliary}/{action=GetCurrent}"
+        );
+
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"You can get swaggerConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
+        );
+
+        return endpoints;
     }
 }

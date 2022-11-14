@@ -10,17 +10,19 @@ public static class JobConfigAssist
 {
     private static readonly string ConfigFile = $"{nameof(JobConfig).ToLowerFirst()}.json";
 
+    private static readonly string FilePath;
+
     private static IConfiguration Configuration { get; set; }
 
     static JobConfigAssist()
     {
         var directory = Tools.GetConfigureDirectory();
 
-        var filePath = $"{directory}{nameof(JobConfig).ToLowerFirst()}.json";
+        FilePath = $"{directory}{nameof(JobConfig).ToLowerFirst()}.json";
 
         var builder = new ConfigurationBuilder();
 
-        builder.AddMultiJsonFile(filePath);
+        builder.AddMultiJsonFile(FilePath);
 
         Configuration = builder.Build();
 
@@ -29,6 +31,18 @@ public static class JobConfigAssist
 
     public static void Init()
     {
+    }
+
+    public static string GetConfigFilePath()
+    {
+        return FilePath;
+    }
+
+    public static async Task<string> GetConfigFileContent()
+    {
+        var content = await FilePath.ReadFile();
+
+        return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
     public static string GetConfigFileInfo()

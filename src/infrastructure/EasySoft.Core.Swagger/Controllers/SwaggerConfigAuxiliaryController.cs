@@ -3,9 +3,9 @@ using EasySoft.Core.Swagger.ConfigCollection;
 
 namespace EasySoft.Core.Swagger.Controllers;
 
-public class SwaggerConfigFileController : BasicController
+public class SwaggerConfigAuxiliaryController : BasicController
 {
-    public IActionResult Index()
+    public IActionResult GetTemplate()
     {
         var data = new SwaggerConfig();
 
@@ -17,5 +17,10 @@ public class SwaggerConfigFileController : BasicController
             },
             false
         );
+    }
+
+    public async Task<IActionResult> GetCurrent()
+    {
+        return Content(await SwaggerConfigAssist.GetConfigFileContent());
     }
 }

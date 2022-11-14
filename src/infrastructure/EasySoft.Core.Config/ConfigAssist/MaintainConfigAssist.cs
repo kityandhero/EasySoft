@@ -9,17 +9,19 @@ public static class MaintainConfigAssist
 {
     private static readonly string ConfigFile = $"{nameof(MaintainConfig).ToLowerFirst()}.json";
 
+    private static readonly string FilePath;
+
     private static IConfiguration Configuration { get; set; }
 
     static MaintainConfigAssist()
     {
         var directory = Tools.GetConfigureDirectory();
 
-        var filePath = $"{directory}{nameof(MaintainConfig).ToLowerFirst()}.json";
+        FilePath = $"{directory}{nameof(MaintainConfig).ToLowerFirst()}.json";
 
         var builder = new ConfigurationBuilder();
 
-        builder.AddMultiJsonFile(filePath);
+        builder.AddMultiJsonFile(FilePath);
 
         Configuration = builder.Build();
 
@@ -28,6 +30,18 @@ public static class MaintainConfigAssist
 
     public static void Init()
     {
+    }
+
+    public static string GetConfigFilePath()
+    {
+        return FilePath;
+    }
+
+    public static async Task<string> GetConfigFileContent()
+    {
+        var content = await FilePath.ReadFile();
+
+        return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
     public static string GetConfigFileInfo()
