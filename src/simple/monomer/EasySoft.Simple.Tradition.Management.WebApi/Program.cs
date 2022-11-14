@@ -6,6 +6,7 @@ using EasySoft.Core.EntityFramework.SqlServer.Extensions;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
+using EasySoft.Core.PermissionVerification.ExtensionMethods;
 using EasySoft.Core.Web.Framework.BuilderAssists;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.Simple.Tradition.Common.Enums;
@@ -69,7 +70,13 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
     // applicationBuilder => { applicationBuilder.AddStaticFileOptionsInjection<CustomStaticFileOptions>(); },
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddAdvanceJsonWebToken")
-        .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceJsonWebToken<ApplicationOperator>(); })
+        .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceJsonWebToken<ApplicationOperator>(); }),
+    new ExtraAction<WebApplicationBuilder>()
+        .SetName("AddPermissionVerification")
+        .SetAction(applicationBuilder =>
+        {
+            applicationBuilder.AddPermissionVerification<ApplicationPermissionObserver>();
+        })
 );
 
 ApplicationConfigurator.AddAreas("AuthTest", "DataTest");

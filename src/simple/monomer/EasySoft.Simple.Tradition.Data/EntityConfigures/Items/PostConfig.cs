@@ -17,5 +17,9 @@ public class PostConfig : BaseEntityTypeConfiguration<Post>
             .HasColumnType(DatabaseConstant.Nvarchar)
             .HasMaxLength(200)
             .HasDefaultValue(string.Empty);
+
+        builder.HasOne(x => x.Blog)
+            .WithMany(c => c.Posts)
+            .HasForeignKey(x => x.BlogId);
     }
 }

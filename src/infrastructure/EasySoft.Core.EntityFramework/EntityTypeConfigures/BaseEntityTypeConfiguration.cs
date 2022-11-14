@@ -49,8 +49,7 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
         builder.Property(x => x.Id).HasColumnOrder(1)
             .HasColumnName(DatabaseConstant.KeyName)
             .ValueGeneratedNever()
-            .HasValueGenerator<IdentifierGenerator>()
-            .HasDefaultValue(0);
+            .HasValueGenerator<IdentifierGenerator>();
     }
 
     protected virtual void ConfigureColumn(EntityTypeBuilder<TEntity> builder, Type entityType)
