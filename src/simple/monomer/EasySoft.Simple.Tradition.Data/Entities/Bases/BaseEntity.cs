@@ -4,8 +4,4 @@ namespace EasySoft.Simple.Tradition.Data.Entities.Bases;
 
 public abstract class BaseEntity : Entity
 {
-    // [Key]
-    // [Column("id")]
-    // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    // public override long Id { get; set; }
 }
