@@ -40,7 +40,7 @@ public static class DatabaseConfigAssist
 
     public static async Task<string> GetConfigFileContent()
     {
-        var content = await FilePath.ReadFile();
+        var content = await GetConfigFilePath().ReadFile();
 
         return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }

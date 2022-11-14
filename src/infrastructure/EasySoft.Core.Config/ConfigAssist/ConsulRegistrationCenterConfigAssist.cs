@@ -43,7 +43,7 @@ public static class ConsulRegistrationCenterConfigAssist
 
     public static async Task<string> GetConfigFileContent()
     {
-        var content = await FilePath.ReadFile();
+        var content = await GetConfigFilePath().ReadFile();
 
         return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
