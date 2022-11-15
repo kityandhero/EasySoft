@@ -1,4 +1,6 @@
 ﻿using EasySoft.Core.Swagger.ConfigAssist;
+using EasySoft.Core.Swagger.Configures;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace EasySoft.Core.Swagger.ExtensionMethods;
 
@@ -6,7 +8,10 @@ public static class WebApplicationBuilderExtensions
 {
     private const string UniqueIdentifierAddSwaggerGen = "59a8a837-eb19-4f97-8bcf-832a1370afc8";
 
-    public static WebApplicationBuilder AddAdvanceSwagger(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddAdvanceSwagger(
+        this WebApplicationBuilder builder,
+        Action<SwaggerGenOptions>? setupAction = null
+    )
     {
         if (builder.HasRegistered(UniqueIdentifierAddSwaggerGen))
             return builder;
@@ -109,7 +114,15 @@ public static class WebApplicationBuilderExtensions
                         $"The swagger include xml comments file is not exist."
                     );
             }
+
+            if (SwaggerConfigure.DescribeAllParametersInCamelCase) c.DescribeAllParametersInCamelCase();
+
+            setupAction?.Invoke(c);
         });
+
+        if (SwaggerConfigure.UseNewtonsoft)
+            // explicit opt-in - needs to be placed after AddSwaggerGen()
+            builder.Services.AddSwaggerGenNewtonsoftSupport();
 
         ApplicationConfigurator.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()

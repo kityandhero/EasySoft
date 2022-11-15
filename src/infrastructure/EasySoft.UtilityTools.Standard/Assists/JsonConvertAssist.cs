@@ -4,6 +4,7 @@ using System.Linq;
 using EasySoft.UtilityTools.Standard.JsonConverters;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace EasySoft.UtilityTools.Standard.Assists;
 
@@ -14,30 +15,41 @@ public static class JsonConvertAssist
         return CreateJsonSerializerSettings(camelCase, Array.Empty<JsonConverter>());
     }
 
+    public static JsonSerializerSettings AdjustJsonSerializerSettings(
+        JsonSerializerSettings serializerSettings,
+        Action<JsonSerializerSettings>? action = null
+    )
+    {
+        serializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        serializerSettings.NullValueHandling = NullValueHandling.Include;
+        serializerSettings.Formatting = Formatting.Indented;
+        serializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
+        serializerSettings.DateFormatHandling = DateFormatHandling.MicrosoftDateFormat;
+        serializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+        serializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+        action?.Invoke(serializerSettings);
+
+        serializerSettings.Converters.Add(new LongConverter());
+
+        return serializerSettings;
+    }
+
     public static JsonSerializerSettings CreateJsonSerializerSettings(
         bool camelCase = true,
         params JsonConverter[] converters
     )
     {
-        var converterAdjust = converters.ToList();
+        var serializerSettings = new JsonSerializerSettings();
 
-        converterAdjust.Add(new LongConverter());
-
-        var setting = new JsonSerializerSettings
+        return AdjustJsonSerializerSettings(serializerSettings, o =>
         {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            NullValueHandling = NullValueHandling.Include,
-            Formatting = Formatting.Indented,
-            DateTimeZoneHandling = DateTimeZoneHandling.Local,
-            DateFormatHandling = DateFormatHandling.MicrosoftDateFormat,
-            DateFormatString = "yyyy-MM-dd HH:mm:ss",
-            Converters = converterAdjust
-        };
+            if (converters.Any())
+                converters.ToList().ForEach(c => { o.Converters.Add(c); });
 
-        if (camelCase)
-            setting.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
-
-        return setting;
+            if (!camelCase)
+                o.ContractResolver = null;
+        });
     }
 
     public static T? DeserializeObject<T>(string data)

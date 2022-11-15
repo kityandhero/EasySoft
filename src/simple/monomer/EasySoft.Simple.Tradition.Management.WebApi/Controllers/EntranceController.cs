@@ -26,7 +26,8 @@ public class EntranceController : ControllerCore
     /// </summary>
     /// <param name="signInDto"></param>
     /// <returns></returns>
-    [HttpPost("signIn", Name = "SignIn")]
+    [Route("signIn")]
+    [HttpPost]
     public async Task<IActionResult> SignIn(SignInDto signInDto)
     {
         var result = await _userService.SignInAsync(signInDto);

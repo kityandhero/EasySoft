@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Infrastructure.Configures;
+using EasySoft.Core.Swagger.Configures;
 using EasySoft.Core.Web.Framework.Attributes;
 using EasySoft.Core.Web.Framework.Filters;
 
@@ -71,6 +72,11 @@ public static class WebApplicationBuilderExtensions
             o.AssumeDefaultVersionWhenUnspecified = true;
         });
 
+        builder.Services.AddControllers().AddNewtonsoftJson(options =>
+        {
+            JsonConvertAssist.AdjustJsonSerializerSettings(options.SerializerSettings);
+        });
+
         // AddMvc 最为全面， 涵盖 AddControllers 等的全部功能
         builder.Services.AddMvc(
                 option =>
@@ -106,17 +112,7 @@ public static class WebApplicationBuilderExtensions
             // 通过AddControllersAsServices方法，将控制器交给 autofac 容器来处理，可以使“属性注入”
             .AddControllersAsServices()
             .AddNewtonsoftJson(
-                options =>
-                {
-                    //序列化时key为驼峰样式
-                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
-                    options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
-                    options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-
-                    //忽略循环引用
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                }
+                options => { JsonConvertAssist.AdjustJsonSerializerSettings(options.SerializerSettings); }
             );
 
         // builder.Services.AddSingleton<IHostEnvironment, HostingEnvironment>();
@@ -430,6 +426,10 @@ public static class WebApplicationBuilderExtensions
 
         LogAssist.Hint(
             AuxiliaryConfigure.BuildHintMessage().ToArray()
+        );
+
+        LogAssist.Hint(
+            SwaggerConfigure.BuildHintMessage().ToArray()
         );
 
         return app;

@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.Infrastructure.Configures;
 using EasySoft.Core.Swagger.ConfigAssist;
+using EasySoft.Core.Swagger.Configures;
 
 namespace EasySoft.Core.Swagger.ExtensionMethods;
 
