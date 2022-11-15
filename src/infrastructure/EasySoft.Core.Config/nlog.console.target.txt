@@ -27,4 +27,4 @@
             }
           ],
           ###word-highlighting-rules###
-          "layout": "[${longDate}] ${uppercase:${level}:padding=-5:padCharacter= } ${message} ${exception:format=toString}"
+          "layout": "[${longDate:UniversalTime=false}] ${uppercase:${level}:padding=-5:padCharacter= } ${message} ${exception:format=toString}"
