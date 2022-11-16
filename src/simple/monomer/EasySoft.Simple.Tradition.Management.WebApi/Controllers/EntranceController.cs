@@ -83,10 +83,14 @@ public class EntranceController : ControllerCore
     [HttpPost]
     public ApiResult<UserDto, UserDto> Test2()
     {
-        return new ApiResult<UserDto, UserDto>(ReturnCode.Ok)
+        var result = new ApiResult<UserDto, UserDto>(ReturnCode.Ok)
         {
             Data = new UserDto(),
             ExtraData = new UserDto()
         };
+
+        // result.SetCamelCase(false);
+
+        return result;
     }
 }
