@@ -19,7 +19,7 @@ public enum ApplicationChannelCollection
     /// OneService
     /// </summary>
     [Description("OneService")]
-    OneService = 20,
+    OneService = 20
 }
 
 /// <summary>
@@ -44,7 +44,7 @@ public static class ApplicationChannelCollectionExtensions
     /// <returns></returns>
     public static string GetDescription(this ApplicationChannelCollection source)
     {
-        var descriptionAttribute = source.GetAttribute<DescriptionAttribute>();
+        var descriptionAttribute = source.GetCustomAttribute<DescriptionAttribute>();
 
         return descriptionAttribute == null ? "" : descriptionAttribute.Description;
     }

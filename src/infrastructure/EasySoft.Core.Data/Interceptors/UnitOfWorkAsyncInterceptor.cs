@@ -22,7 +22,7 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
     /// <exception cref="NotImplementedException"></exception>
     public void InterceptSynchronous(IInvocation invocation)
     {
-        var attribute = GetAttribute(invocation);
+        var attribute = GetCustomAttribute(invocation);
 
         if (attribute == null)
         {
@@ -45,7 +45,7 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
     /// <exception cref="NotImplementedException"></exception>
     public void InterceptAsynchronous(IInvocation invocation)
     {
-        var attribute = GetAttribute(invocation);
+        var attribute = GetCustomAttribute(invocation);
 
         invocation.ReturnValue = attribute is null
             ? InternalInterceptAsynchronousWithoutUnitOfWork(invocation)
@@ -60,7 +60,7 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
     /// <exception cref="NotImplementedException"></exception>
     public void InterceptAsynchronous<TResult>(IInvocation invocation)
     {
-        var attribute = GetAttribute(invocation);
+        var attribute = GetCustomAttribute(invocation);
 
         invocation.ReturnValue = attribute is null
             ? InternalInterceptAsynchronousWithoutUnitOfWork<TResult>(invocation)
@@ -221,8 +221,8 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
     ///     获取拦截器 attribute
     /// </summary>
     /// <param name="invocation"></param>
-    /// <returns></returns>
-    private UnitOfWorkAttribute? GetAttribute(IInvocation invocation)
+    /// <returns></returns>  
+    private static UnitOfWorkAttribute? GetCustomAttribute(IInvocation invocation)
     {
         var methodInfo = invocation.Method ?? invocation.MethodInvocationTarget;
         var attribute = methodInfo.GetCustomAttribute<UnitOfWorkAttribute>();

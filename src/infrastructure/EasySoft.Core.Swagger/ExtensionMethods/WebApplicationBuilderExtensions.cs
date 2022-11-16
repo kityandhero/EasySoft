@@ -124,6 +124,8 @@ public static class WebApplicationBuilderExtensions
 
             #endregion
 
+            // c.CustomSchemaIds();
+
             if (SwaggerConfigure.DescribeAllParametersInCamelCase) c.DescribeAllParametersInCamelCase();
 
             setupAction?.Invoke(c);

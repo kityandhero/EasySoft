@@ -72,11 +72,6 @@ public static class WebApplicationBuilderExtensions
             o.AssumeDefaultVersionWhenUnspecified = true;
         });
 
-        builder.Services.AddControllers().AddNewtonsoftJson(options =>
-        {
-            JsonConvertAssist.AdjustJsonSerializerSettings(options.SerializerSettings);
-        });
-
         // AddMvc 最为全面， 涵盖 AddControllers 等的全部功能
         builder.Services.AddMvc(
                 option =>

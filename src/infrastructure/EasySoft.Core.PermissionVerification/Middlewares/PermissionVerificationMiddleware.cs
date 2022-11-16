@@ -7,7 +7,7 @@ public class PermissionVerificationMiddleware : IMiddleware
 {
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
-        var guidTagAttribute = context.TryGetAttribute<GuidTagAttribute>();
+        var guidTagAttribute = context.TryGetMetadata<GuidTagAttribute>();
 
         if (guidTagAttribute == null)
         {
@@ -26,10 +26,7 @@ public class PermissionVerificationMiddleware : IMiddleware
         }
         else
         {
-            if (result.Data != null)
-            {
-                await context.Response.WriteObjectAsJsonAsync(result.Data.ToExpandoObject());
-            }
+            if (result.Data != null) await context.Response.WriteObjectAsJsonAsync(result.Data.ToExpandoObject());
         }
     }
 }

@@ -29,9 +29,9 @@ public class EntranceController : ControllerCore
     /// <returns></returns>
     [Route("signIn")]
     [HttpPost]
-    // [ProducesResponseType(typeof(IApiResult), 200)]
+    [ProducesResponseType(typeof(IApiResult), StatusCodes.Status200OK)]
     // [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
-    // [ProducesResponseType(500)]
+    [ProducesResponseType(500)]
     public async Task<IApiResult> SignIn(SignInDto signInDto)
     {
         var result = await _userService.SignInAsync(signInDto);

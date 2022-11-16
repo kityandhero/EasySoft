@@ -8,8 +8,18 @@ using EasySoft.UtilityTools.Standard.Attributes;
 
 namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
+/// <summary>
+/// TypeExtensions
+/// </summary>
 public static class TypeExtensions
 {
+    /// <summary>
+    /// GetKeyValueDefinitionAttribute
+    /// </summary>
+    /// <param name="t"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static KeyValueDefinitionAttribute GetKeyValueDefinitionAttribute<T>(this T t) where T : struct
     {
         var type = t.GetType();
@@ -18,7 +28,7 @@ public static class TypeExtensions
 
         if (fieldInfo == null) throw new Exception("未找到KeyValueDefinitionAttribute");
 
-        var keyValueDefinitionAttribute = fieldInfo.GetAttribute<KeyValueDefinitionAttribute>(
+        var keyValueDefinitionAttribute = fieldInfo.GetCustomAttribute<KeyValueDefinitionAttribute>(
             "",
             false,
             MemberTypes.Field
@@ -51,13 +61,13 @@ public static class TypeExtensions
     /// <param name="source">调用源</param>
     /// <param name="nameFilter">筛选名称</param>
     /// <returns></returns>
-    public static T? GetAttribute<T>(this Enum source, string nameFilter = "") where T : class
+    public static T? GetCustomAttribute<T>(this Enum source, string nameFilter = "") where T : class
     {
         var field = source.GetType().GetField(source.ToString());
 
         if (field == null) throw new Exception("field not allow null");
 
-        return field.GetAttribute<T>(nameFilter, false, MemberTypes.Field);
+        return field.GetCustomAttribute<T>(nameFilter, false, MemberTypes.Field);
     }
 
     /// <summary>
@@ -66,19 +76,26 @@ public static class TypeExtensions
     /// <param name="source">调用源</param>
     /// <param name="nameFilter">筛选名称</param>
     /// <returns></returns>
-    public static List<object> GetAttribute(this Enum source, string nameFilter = "")
+    public static List<object> GetCustomAttribute(this Enum source, string nameFilter = "")
     {
         var field = source.GetType().GetField(source.ToString());
 
         if (field == null) throw new Exception("field not allow null");
 
-        return field.GetAttribute(nameFilter, false, MemberTypes.Field);
+        return field.GetCustomAttribute(nameFilter, false, MemberTypes.Field);
     }
 
     #endregion
 
     #region Object
 
+    /// <summary>
+    /// GetClassName
+    /// </summary>
+    /// <param name="o"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static string GetClassName<T>(this T o)
     {
         if (o == null) throw new Exception("o not allow null");
@@ -111,7 +128,7 @@ public static class TypeExtensions
     ) where T : class
     {
         var result = default(T);
-        var list = source.GetAttribute(nameFilter, inherit, memberTypes);
+        var list = source.GetCustomAttribute(nameFilter, inherit, memberTypes);
 
         foreach (var attr in list.Where(attr => attr.GetType().FullName == typeof(T).FullName)) result = (T)attr;
 
@@ -127,7 +144,7 @@ public static class TypeExtensions
     /// <param name="inherit">继承</param>
     /// <param name="memberTypes">成员类型</param>
     /// <returns></returns>
-    public static T? TryGetAttribute<T>(
+    public static T? TryGetCustomAttribute<T>(
         this object source,
         string nameFilter = "",
         bool inherit = false,
@@ -135,7 +152,7 @@ public static class TypeExtensions
     ) where T : class
     {
         var result = default(T);
-        var list = source.GetAttribute(nameFilter, inherit, memberTypes);
+        var list = source.GetCustomAttribute(nameFilter, inherit, memberTypes);
 
         foreach (var attr in list.Where(attr => attr.GetType().FullName == typeof(T).FullName)) result = (T)attr;
 
@@ -151,7 +168,7 @@ public static class TypeExtensions
     /// <param name="inherit">继承</param>
     /// <param name="memberTypes">成员类型</param>
     /// <returns></returns>
-    public static T? GetAttribute<T>(
+    public static T? GetCustomAttribute<T>(
         this object source,
         string nameFilter = "",
         bool inherit = false,
@@ -159,7 +176,7 @@ public static class TypeExtensions
     ) where T : class
     {
         var result = default(T);
-        var list = source.GetAttribute(nameFilter, inherit, memberTypes);
+        var list = source.GetCustomAttribute(nameFilter, inherit, memberTypes);
 
         foreach (var attr in list.Where(attr => attr.GetType().FullName == typeof(T).FullName)) result = (T)attr;
 
@@ -174,7 +191,7 @@ public static class TypeExtensions
     /// <param name="inherit">继承</param>
     /// <param name="memberTypes">成员类型</param>
     /// <returns></returns>
-    public static List<object> GetAttribute(
+    public static List<object> GetCustomAttribute(
         this object source,
         string nameFilter = "",
         bool inherit = false,
@@ -245,6 +262,11 @@ public static class TypeExtensions
 
     #endregion
 
+    /// <summary>
+    /// GetGenericTypeName
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public static string GetGenericTypeName(this Type type)
     {
         string typeName;
@@ -263,14 +285,24 @@ public static class TypeExtensions
         return typeName;
     }
 
+    /// <summary>
+    /// GetGenericTypeName
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
     public static string GetGenericTypeName(this object target)
     {
         return target.GetType().GetGenericTypeName();
     }
 
+    /// <summary>
+    /// GetDescriptionAttributeText
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
     public static string GetDescriptionAttributeText(this object target)
     {
-        var descriptionAttribute = target.GetAttribute<DescriptionAttribute>();
+        var descriptionAttribute = target.GetCustomAttribute<DescriptionAttribute>();
 
         return descriptionAttribute == null ? "" : descriptionAttribute.Description;
     }

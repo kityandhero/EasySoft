@@ -7,7 +7,7 @@ public class JsonWebTokenMiddleware : IMiddleware
 {
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
-        var operatorAttribute = context.TryGetAttribute<OperatorAttribute>();
+        var operatorAttribute = context.TryGetMetadata<OperatorAttribute>();
 
         if (operatorAttribute == null)
         {

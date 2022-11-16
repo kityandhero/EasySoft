@@ -141,7 +141,7 @@ public static class StringExtensions
 
             if (fieldInfo == null) continue;
 
-            var keyValueDefinitionAttribute = fieldInfo.GetAttribute<KeyValueDefinitionAttribute>(
+            var keyValueDefinitionAttribute = fieldInfo.GetCustomAttribute<KeyValueDefinitionAttribute>(
                 "",
                 false,
                 MemberTypes.Field

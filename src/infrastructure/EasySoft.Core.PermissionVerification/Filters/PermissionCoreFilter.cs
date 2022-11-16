@@ -7,28 +7,19 @@ public abstract class PermissionCoreFilter : OperateOfficerCore, IPermissionFilt
 {
     public void AdjustAccessPermission(ActionExecutingContext filterContext)
     {
-        if (filterContext.ActionDescriptor is not ControllerActionDescriptor actionDescriptor)
-        {
-            return;
-        }
+        if (filterContext.ActionDescriptor is not ControllerActionDescriptor actionDescriptor) return;
 
-        var guidTagAttribute = actionDescriptor.MethodInfo.TryGetAttribute<GuidTagAttribute>();
+        var guidTagAttribute = actionDescriptor.MethodInfo.TryGetCustomAttribute<GuidTagAttribute>();
 
-        if (guidTagAttribute == null)
-        {
-            return;
-        }
+        if (guidTagAttribute == null) return;
 
-        if (string.IsNullOrWhiteSpace(guidTagAttribute.GuidTag))
-        {
-            return;
-        }
+        if (string.IsNullOrWhiteSpace(guidTagAttribute.GuidTag)) return;
 
         AccessPermission.Url = filterContext.HttpContext.Request.GetUrl();
         AccessPermission.Path = filterContext.HttpContext.Request.GetAbsolutePath();
 
-        var descriptionAttribute = filterContext.ActionDescriptor.TryGetAttribute<DescriptionAttribute>();
-        var competenceConfig = filterContext.ActionDescriptor.TryGetAttribute<CompetenceConfigAttribute>();
+        var descriptionAttribute = filterContext.ActionDescriptor.TryGetCustomAttribute<DescriptionAttribute>();
+        var competenceConfig = filterContext.ActionDescriptor.TryGetCustomAttribute<CompetenceConfigAttribute>();
 
         AccessPermission.Name = descriptionAttribute?.Description ?? AccessPermission.Path;
         AccessPermission.Competence = competenceConfig?.ToString() ?? "";
@@ -42,10 +33,7 @@ public abstract class PermissionCoreFilter : OperateOfficerCore, IPermissionFilt
 
         var result = TryVerification();
 
-        if (!result.Success)
-        {
-            context.Result = result.Data;
-        }
+        if (!result.Success) context.Result = result.Data;
     }
 
     public void OnActionExecuting(ActionExecutingContext context)

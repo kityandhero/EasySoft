@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Enums;
 using EasySoft.Core.Sql.Interfaces;
+using TypeExtensions = EasySoft.UtilityTools.Standard.ExtensionMethods.TypeExtensions;
 
 namespace EasySoft.Core.Sql.Assists;
 
@@ -380,7 +381,7 @@ public static class TransferAssist
 
     public static string GetColumnName(PropertyInfo propertyInfo)
     {
-        var columnAttribute = propertyInfo.GetAttribute<ColumnAttribute>();
+        var columnAttribute = TypeExtensions.GetCustomAttribute<ColumnAttribute>(propertyInfo);
 
         if (columnAttribute == null) return propertyInfo.Name;
 

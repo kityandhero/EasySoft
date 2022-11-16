@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 
+/// <summary>
+/// HttpContextExtensions
+/// </summary>
 public static class HttpContextExtensions
 {
     /// <summary>
@@ -26,6 +29,11 @@ public static class HttpContextExtensions
         return ip;
     }
 
+    /// <summary>
+    /// GetClientIP
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
     public static string GetClientIP(this HttpContext context)
     {
         var ip = context.Request.Headers["Cdn-Src-Ip"].FirstOrDefault();
@@ -50,16 +58,31 @@ public static class HttpContextExtensions
         return ip;
     }
 
+    /// <summary>
+    /// GetFiles
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
     public static IFormFileCollection GetFiles(this HttpContext context)
     {
         return context.Request.GetFiles();
     }
 
+    /// <summary>
+    /// GetFiles
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public static IFormFileCollection GetFiles(this HttpRequest request)
     {
         return request.HasFormContentType ? request.Form.Files : new FormFileCollection();
     }
 
+    /// <summary>
+    /// SaveAs
+    /// </summary>
+    /// <param name="file"></param>
+    /// <param name="path"></param>
     public static void SaveAs(this IFormFile file, string path)
     {
         using (var fs = new FileStream(path, FileMode.CreateNew))
@@ -70,7 +93,13 @@ public static class HttpContextExtensions
         }
     }
 
-    public static T? TryGetAttribute<T>(this HttpContext context) where T : class
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static T? TryGetMetadata<T>(this HttpContext context) where T : class
     {
         var endpoint = context.GetEndpoint();
 
@@ -78,21 +107,45 @@ public static class HttpContextExtensions
         return endpoint?.Metadata.GetMetadata<T>();
     }
 
+    /// <summary>
+    /// BuildRequestInfo
+    /// </summary>
+    /// <param name="httpContext"></param>
+    /// <returns></returns>
     public static RequestInfo BuildRequestInfo(this HttpContext httpContext)
     {
         return httpContext.Request.BuildRequestInfo();
     }
 
+    /// <summary>
+    /// GetCookie
+    /// </summary>
+    /// <param name="httpContext"></param>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public static string GetCookie(this HttpContext httpContext, string key)
     {
         return httpContext.Request.Cookies[key] ?? "";
     }
 
+    /// <summary>
+    /// SetCookie
+    /// </summary>
+    /// <param name="httpContext"></param>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
     public static void SetCookie(this HttpContext httpContext, string key, string value)
     {
         httpContext.SetCookie(key, value, new CookieOptions());
     }
 
+    /// <summary>
+    /// SetCookie
+    /// </summary>
+    /// <param name="httpContext"></param>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    /// <param name="options"></param>
     public static void SetCookie(this HttpContext httpContext, string key, string value, CookieOptions options)
     {
         httpContext.Response.Cookies.Append(key, value, options);

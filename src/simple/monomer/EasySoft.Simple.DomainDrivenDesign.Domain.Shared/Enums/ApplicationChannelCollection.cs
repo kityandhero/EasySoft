@@ -49,7 +49,7 @@ public static class ApplicationChannelCollectionExtensions
     /// <returns></returns>
     public static string GetDescription(this ApplicationChannelCollection source)
     {
-        var descriptionAttribute = source.GetAttribute<DescriptionAttribute>();
+        var descriptionAttribute = source.GetCustomAttribute<DescriptionAttribute>();
 
         return descriptionAttribute == null ? "" : descriptionAttribute.Description;
     }
