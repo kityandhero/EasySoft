@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
 
+/// <summary>
+/// RegisterDto
+/// </summary>
 public class RegisterDto : IApiParams
 {
     /// <summary>
@@ -12,6 +15,9 @@ public class RegisterDto : IApiParams
     /// </summary>
     public string Password { get; set; }
 
+    /// <summary>
+    /// RegisterDto
+    /// </summary>
     public RegisterDto()
     {
         LoginName = string.Empty;

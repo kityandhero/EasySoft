@@ -1,16 +1,13 @@
-﻿using EasySoft.Core.Data.Repositories;
-using EasySoft.Core.Data.Transactions;
-using EasySoft.Core.EntityFramework.EntityFactories;
-using EasySoft.Simple.Tradition.Data.Entities;
+﻿using EasySoft.Simple.Tradition.Data.Entities;
 using EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
 using EasySoft.Simple.Tradition.Service.ExtensionMethods;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
-using EasySoft.UtilityTools.Standard.Enums;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.Simple.Tradition.Service.Services.Implementations;
 
+/// <summary>
+/// UserService
+/// </summary>
 public class UserService : IUserService
 {
     private readonly IUnitOfWork _unitOfWork;
@@ -21,6 +18,13 @@ public class UserService : IUserService
 
     private readonly IRepository<Blog> _blogRepository;
 
+    /// <summary>
+    /// UserService
+    /// </summary>
+    /// <param name="unitOfWork"></param>
+    /// <param name="userRepository"></param>
+    /// <param name="customerRepository"></param>
+    /// <param name="blogRepository"></param>
     public UserService(
         IUnitOfWork unitOfWork,
         IRepository<User> userRepository,
@@ -34,6 +38,13 @@ public class UserService : IUserService
         _blogRepository = blogRepository;
     }
 
+    /// <summary>
+    /// RegisterAsync
+    /// </summary>
+    /// <param name="loginName"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<ExecutiveResult<User>> RegisterAsync(string loginName, string password)
     {
         if (string.IsNullOrWhiteSpace(loginName))
@@ -91,6 +102,12 @@ public class UserService : IUserService
         }
     }
 
+    /// <summary>
+    /// RegisterMultiAsync
+    /// </summary>
+    /// <param name="namePassword"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<ExecutiveResult> RegisterMultiAsync(Dictionary<string, string> namePassword)
     {
         if (namePassword.Count <= 0) return new ExecutiveResult(ReturnCode.NoChange.ToMessage("无可添加数据"));
@@ -150,6 +167,11 @@ public class UserService : IUserService
         }
     }
 
+    /// <summary>
+    /// SignInAsync
+    /// </summary>
+    /// <param name="signInDto"></param>
+    /// <returns></returns>
     public async Task<ExecutiveResult<UserDto>> SignInAsync(SignInDto signInDto)
     {
         if (string.IsNullOrWhiteSpace(signInDto.LoginName))

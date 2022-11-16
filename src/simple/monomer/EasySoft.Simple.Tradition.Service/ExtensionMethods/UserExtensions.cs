@@ -4,8 +4,16 @@ using Mapster;
 
 namespace EasySoft.Simple.Tradition.Service.ExtensionMethods;
 
+/// <summary>
+/// UserExtensions
+/// </summary>
 public static class UserExtensions
 {
+    /// <summary>
+    /// ToUserDto
+    /// </summary>
+    /// <param name="customer"></param>
+    /// <returns></returns>
     public static UserDto ToUserDto(this User customer)
     {
         var typeAdapterConfig = new TypeAdapterConfig();
