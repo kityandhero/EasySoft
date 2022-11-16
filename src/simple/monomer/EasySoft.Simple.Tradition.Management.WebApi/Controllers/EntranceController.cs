@@ -63,16 +63,31 @@ public class EntranceController : ControllerCore
     }
 
     /// <summary>
-    /// Test
+    /// Test1
     /// </summary>
     /// <returns></returns>
-    [Route("test")]
+    [Route("test1")]
     [HttpPost]
-    public IApiResult<UserDto> Test()
+    public IApiResult<UserDto> Test1()
     {
         return new ApiResult<UserDto>(ReturnCode.Ok)
         {
             Data = new UserDto()
+        };
+    }
+
+    /// <summary>
+    /// Test2
+    /// </summary>
+    /// <returns></returns>
+    [Route("test2")]
+    [HttpPost]
+    public IApiResult<UserDto, UserDto> Test2()
+    {
+        return new ApiResult<UserDto, UserDto>(ReturnCode.Ok)
+        {
+            Data = new UserDto(),
+            ExtraData = new UserDto()
         };
     }
 }

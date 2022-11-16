@@ -11,7 +11,7 @@ public class UserDto
     public int UserId { get; set; }
 
     /// <summary>
-    /// Alias
+    /// 昵称
     /// </summary>
     public string Alias { get; set; }
 
