@@ -3,8 +3,16 @@ using EasySoft.UtilityTools.Standard.Assists;
 
 namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 
+/// <summary>
+/// ApiResultExtensions
+/// </summary>
 public static class ApiResultExtensions
 {
+    /// <summary>
+    /// ToExpandoObject
+    /// </summary>
+    /// <param name="result"></param>
+    /// <returns></returns>
     public static object ToExpandoObject(this ApiResult result)
     {
         dynamic data = new ExpandoObject();
@@ -35,6 +43,11 @@ public static class ApiResultExtensions
         return data;
     }
 
+    /// <summary>
+    /// SerializeAndKeyToLower
+    /// </summary>
+    /// <param name="result"></param>
+    /// <returns></returns>
     public static string SerializeAndKeyToLower(this ApiResult result)
     {
         return JsonConvertAssist.SerializeAndKeyToLower(result.ToExpandoObject());

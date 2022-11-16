@@ -13,7 +13,13 @@ public static class TreatAssist
     /// </summary>
     public static ISecurity Security => new Security();
 
+    /// <summary>
+    /// Hash
+    /// </summary>
     public static IHashGenerator Hash => new HashGenerator();
 
+    /// <summary>
+    /// Accessor
+    /// </summary>
     public static IAccessor Accessor => new Accessor();
 }

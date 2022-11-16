@@ -5,6 +5,9 @@ using EasySoft.UtilityTools.Standard.Mime;
 
 namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 
+/// <summary>
+/// HttpRequestExtensions
+/// </summary>
 public static class HttpRequestExtensions
 {
     /// <summary>
@@ -108,21 +111,41 @@ public static class HttpRequestExtensions
         return result;
     }
 
+    /// <summary>
+    /// GetHost
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public static string GetHost(this HttpRequest request)
     {
         return request.Host.Value;
     }
 
+    /// <summary>
+    /// GetUrl
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public static string GetUrl(this HttpRequest request)
     {
         return request.GetDisplayUrl();
     }
 
+    /// <summary>
+    /// GetAbsolutePath
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public static string GetAbsolutePath(this HttpRequest request)
     {
         return $"{request.PathBase}{request.Path}";
     }
 
+    /// <summary>
+    /// BuildRequestInfo
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public static RequestInfo BuildRequestInfo(this HttpRequest request)
     {
         var requestInfo = new RequestInfo
@@ -138,6 +161,12 @@ public static class HttpRequestExtensions
         return requestInfo;
     }
 
+    /// <summary>
+    /// GetCookie
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public static string GetCookie(this HttpRequest request, string key)
     {
         return request.Cookies[key] ?? "";

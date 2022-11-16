@@ -2,8 +2,16 @@
 
 namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 
+/// <summary>
+/// CaptchaExtensions
+/// </summary>
 public static class CaptchaExtensions
 {
+    /// <summary>
+    /// GetFileResult
+    /// </summary>
+    /// <param name="captcha"></param>
+    /// <returns></returns>
     public static IActionResult GetFileResult(this Captcha captcha)
     {
         var bytes = captcha.GetCaptcha();
