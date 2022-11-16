@@ -93,4 +93,15 @@ public class EntranceController : ControllerCore
 
         return result;
     }
+
+    /// <summary>
+    /// Test3
+    /// </summary>
+    /// <returns></returns>
+    [Route("test3")]
+    [HttpPost]
+    public IActionResult Test3()
+    {
+        return Content("success");
+    }
 }
