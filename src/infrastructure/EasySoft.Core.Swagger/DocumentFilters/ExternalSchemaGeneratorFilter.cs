@@ -16,6 +16,8 @@ public sealed class ExternalSchemaGeneratorFilter : IDocumentFilter
     {
         var schemaTypes = SwaggerConfigure.ExternalSchemaType.ToList();
 
+        schemaTypes.AddRange(SwaggerConfigure.RuntimeSchemaType);
+
         schemaTypes.Add(typeof(IApiResult));
         schemaTypes.Add(typeof(ApiResult));
 

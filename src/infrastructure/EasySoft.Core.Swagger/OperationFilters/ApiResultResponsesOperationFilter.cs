@@ -16,26 +16,73 @@ public class ApiResultResponsesOperationFilter : IOperationFilter
     {
         SwaggerConfigure.GeneralParameters.ForEach(o => { operation.Parameters.Add(o); });
 
-        var type = context.MethodInfo.ReturnType;
-
-        if (type.IsGenericType)
-        {
-            var arguments = type.GetGenericArguments();
-
-            if (arguments.Length == 1) type = arguments[0];
-        }
-
         var supplementApiResult = false;
 
-        if (typeof(IApiResult).IsAssignableFrom(type))
-        {
-            var producesResponseTypeAttributes = context.MethodInfo.DeclaringType?
-                .GetCustomAttributes(true)
-                .Union(context.MethodInfo.GetCustomAttributes(true))
-                .OfType<ProducesResponseTypeAttribute>();
+        var producesResponseTypeAttributes = context.MethodInfo.DeclaringType?
+            .GetCustomAttributes(true)
+            .Union(context.MethodInfo.GetCustomAttributes(true))
+            .OfType<ProducesResponseTypeAttribute>()
+            .ToList();
 
-            if (producesResponseTypeAttributes == null || !producesResponseTypeAttributes.Any())
+        var useTypeGeneric = false;
+        Type? type = null;
+        Type? typeGeneric = null;
+
+        if (producesResponseTypeAttributes == null || !producesResponseTypeAttributes.Any())
+        {
+            type = context.MethodInfo.ReturnType;
+
+            if (typeof(Task).IsAssignableFrom(type) && type.IsGenericType)
+            {
+                var arguments = type.GetGenericArguments();
+
+                if (arguments.Length == 1) type = arguments[0];
+            }
+
+            if (type.IsGenericType)
+            {
+                typeGeneric = type;
+                type = type.GetGenericTypeDefinition();
+            }
+
+            if (typeof(IApiResult).IsAssignableFrom(type))
                 supplementApiResult = true;
+
+            if (!supplementApiResult && typeof(IApiResult<>).IsAssignableFrom(type))
+            {
+                useTypeGeneric = true;
+                supplementApiResult = true;
+            }
+
+            if (!supplementApiResult && typeof(IApiResult<,>).IsAssignableFrom(type))
+            {
+                useTypeGeneric = true;
+                supplementApiResult = true;
+            }
+
+            if (typeof(ApiResult).IsAssignableFrom(type))
+                supplementApiResult = true;
+
+            if (!supplementApiResult && typeof(ApiResult<>).IsAssignableFrom(type))
+            {
+                useTypeGeneric = true;
+                supplementApiResult = true;
+            }
+
+            if (!supplementApiResult && typeof(ApiResult<,>).IsAssignableFrom(type))
+            {
+                useTypeGeneric = true;
+                supplementApiResult = true;
+            }
+
+            if (supplementApiResult)
+                if (type.FullName != typeof(IApiResult).FullName && type.FullName != typeof(ApiResult).FullName)
+                {
+                    if (useTypeGeneric)
+                        SwaggerConfigure.RuntimeSchemaType.Add(typeGeneric);
+                    else
+                        SwaggerConfigure.RuntimeSchemaType.Add(type);
+                }
         }
 
         var abnormalResponseCollection = SwaggerConfigure.AbnormalResponseCollection;
@@ -43,7 +90,7 @@ public class ApiResultResponsesOperationFilter : IOperationFilter
         if (!abnormalResponseCollection.Keys.Contains(StatusCodes.Status500InternalServerError.ToString()))
             abnormalResponseCollection.Add(new KeyValuePair<string, OpenApiResponse>(
                 StatusCodes.Status500InternalServerError.ToString(),
-                new OpenApiResponse()
+                new OpenApiResponse
                 {
                     Description = "Internal Server Error"
                 }
@@ -65,16 +112,14 @@ public class ApiResultResponsesOperationFilter : IOperationFilter
 
             if (!supplementApiResult) return;
 
-            var openApiMediaType = new OpenApiMediaType()
+            if (type == null) return;
+
+            var openApiMediaType = new OpenApiMediaType
             {
-                Schema = new OpenApiSchema()
-                {
-                    Reference = new OpenApiReference()
-                    {
-                        Type = ReferenceType.Schema,
-                        Id = nameof(IApiResult)
-                    }
-                }
+                Schema = context.SchemaGenerator.GenerateSchema(
+                    useTypeGeneric ? typeGeneric : type,
+                    context.SchemaRepository
+                )
             };
 
             o.Value.Content.Add(MimeCollection.TextPlain.ContentType, openApiMediaType);

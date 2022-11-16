@@ -43,6 +43,48 @@ public class ApiResult : ApiResult<object, object>, IApiResult
     ) : base(code, success, message, data, extraData)
     {
     }
+}  
+
+/// <summary>
+/// ApiResult
+/// </summary>
+public class ApiResult<TData> : ApiResult<TData,object>, IApiResult<TData>
+{
+    /// <summary>
+    /// CustomDataResult
+    /// </summary>
+    /// <param name="code"></param>
+    /// <param name="success"></param>
+    /// <param name="message"></param>
+    /// <param name="data"></param>
+    /// <param name="extraData"></param>
+    public ApiResult(
+        ReturnCode code = ReturnCode.Ok,
+        bool success = true,
+        string message = "success",
+        TData? data = default,
+        object? extraData = default
+    ) : base(code, success, message, data, extraData)
+    {
+    }
+
+    /// <summary>
+    /// CustomDataResult
+    /// </summary>
+    /// <param name="code"></param>
+    /// <param name="success"></param>
+    /// <param name="message"></param>
+    /// <param name="data"></param>
+    /// <param name="extraData"></param>
+    public ApiResult(
+        int code = 200,
+        bool success = true,
+        string message = "success",
+        TData? data = default,
+        object? extraData = default
+    ) : base(code, success, message, data, extraData)
+    {
+    }
 }
 
 /// <summary>

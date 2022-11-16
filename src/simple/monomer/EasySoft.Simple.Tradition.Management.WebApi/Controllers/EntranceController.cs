@@ -1,6 +1,7 @@
 ﻿using EasySoft.Simple.Tradition.Management.WebApi.Common;
 using EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
+using EasySoft.UtilityTools.Standard.Enums;
 
 namespace EasySoft.Simple.Tradition.Management.WebApi.Controllers;
 
@@ -59,5 +60,19 @@ public class EntranceController : ControllerCore
             {
                 token = o.UserId.ToToken()
             });
+    }
+
+    /// <summary>
+    /// Test
+    /// </summary>
+    /// <returns></returns>
+    [Route("test")]
+    [HttpPost]
+    public IApiResult<UserDto> Test()
+    {
+        return new ApiResult<UserDto>(ReturnCode.Ok)
+        {
+            Data = new UserDto()
+        };
     }
 }

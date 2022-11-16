@@ -10,6 +10,13 @@ public interface IApiResult : IApiResult<object, object>
 }
 
 /// <summary>
+/// IApiResult
+/// </summary>
+public interface IApiResult<TData> : IApiResult<TData, object>
+{
+}
+
+/// <summary>
 /// 
 /// </summary>
 /// <typeparam name="TData"></typeparam>

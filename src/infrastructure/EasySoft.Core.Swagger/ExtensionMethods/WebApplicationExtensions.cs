@@ -38,6 +38,11 @@ public static class WebApplicationExtensions
         return application;
     }
 
+    /// <summary>
+    /// UseAdvanceKnife4UI
+    /// </summary>
+    /// <param name="application"></param>
+    /// <returns></returns>
     public static WebApplication UseAdvanceKnife4UI(this WebApplication application)
     {
         if (!SwaggerConfigAssist.GetSwitch()) return application;
