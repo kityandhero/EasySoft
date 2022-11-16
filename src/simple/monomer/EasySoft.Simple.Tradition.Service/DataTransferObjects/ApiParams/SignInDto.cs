@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
 
+/// <summary>
+/// SignInDto
+/// </summary>
 public class SignInDto : IApiParams
 {
     /// <summary>
@@ -14,6 +17,9 @@ public class SignInDto : IApiParams
     [Required]
     public string Password { get; set; }
 
+    /// <summary>
+    /// SignInDto
+    /// </summary>
     public SignInDto()
     {
         LoginName = string.Empty;

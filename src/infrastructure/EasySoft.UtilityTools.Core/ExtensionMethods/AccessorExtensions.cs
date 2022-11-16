@@ -12,6 +12,11 @@ public static class AccessorExtensions
     private static Func<object, object>? _holderAccessor;
     private static Func<object, HttpContext>? _httpContextAccessor;
 
+    /// <summary>
+    /// GetCurrentHttpContext
+    /// </summary>
+    /// <param name="_"></param>
+    /// <returns></returns>
     public static HttpContext? GetCurrentHttpContext(this IAccessor _)
     {
         var asyncLocal = (_asyncLocalAccessor ??= CreateAsyncLocalAccessor())?.Invoke();
