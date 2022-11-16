@@ -1,12 +1,52 @@
 using EasySoft.Core.Infrastructure.Configures;
+using EasySoft.Core.Swagger.Configures;
 using EasySoft.Simple.Tradition.Common.Enums;
 using EasySoft.Simple.Tradition.Data.Contexts;
 using EasySoft.Simple.Tradition.Data.EntityConfigures;
 using EasySoft.Simple.Tradition.Management.WebApi.Security;
 using EasySoft.Simple.Tradition.Service.Services.Implementations;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
+using Masuit.Tools;
+using Microsoft.OpenApi.Models;
 
 AuxiliaryConfigure.PromptStartupExecuteMessage = false;
+
+SwaggerConfigure.GeneralParameters.AddRange(new OpenApiParameter()
+    {
+        Name = "headerParam",
+        Description = "全局 Header 参数",
+        Required = true,
+        In = ParameterLocation.Header
+    },
+    new OpenApiParameter()
+    {
+        Name = "queryParam",
+        Description = "全局 Query 参数",
+        Required = false,
+        In = ParameterLocation.Query
+    }, new OpenApiParameter()
+    {
+        Name = "cookieParam",
+        Description = "全局 Cookie 参数",
+        Required = false,
+        In = ParameterLocation.Cookie
+    }, new OpenApiParameter()
+    {
+        Name = "pathParam",
+        Description = "全局 Path 参数",
+        Required = false,
+        In = ParameterLocation.Path
+    });
+
+SwaggerConfigure.GeneralResponseHeaders.Add(
+    new KeyValuePair<string, OpenApiHeader>(
+        "responseHeader1",
+        new OpenApiHeader()
+        {
+            Description = "common header"
+        }
+    )
+);
 
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableDetailedErrors = true;
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableSensitiveDataLogging = true;

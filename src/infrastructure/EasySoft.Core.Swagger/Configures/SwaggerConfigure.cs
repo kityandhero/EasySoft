@@ -11,17 +11,44 @@ public static class SwaggerConfigure
     public static bool DescribeAllParametersInCamelCase { get; set; }
 
     /// <summary>
+    /// EnableAnnotations
+    /// </summary>
+    public static bool EnableAnnotations { get; set; }
+
+    /// <summary>
     /// 输出配置文件信息
     /// </summary>
     public static bool UseNewtonsoft { get; set; }
 
+    /// <summary>
+    /// ExternalSchemaType
+    /// </summary>
+    public static ICollection<Type> ExternalSchemaType { get; }
+
+    /// <summary>
+    /// 全局参数
+    /// </summary>
+    public static ICollection<OpenApiParameter> GeneralParameters { get; }
+
+    /// <summary>
+    /// GeneralResponseHeaders
+    /// </summary>
+    public static IDictionary<string, OpenApiHeader> GeneralResponseHeaders { get; }
+
     static SwaggerConfigure()
     {
         DescribeAllParametersInCamelCase = true;
-
+        EnableAnnotations = true;
         UseNewtonsoft = true;
+        ExternalSchemaType = new List<Type>() { typeof(IApiResult), typeof(ApiResult) };
+        GeneralParameters = new List<OpenApiParameter>();
+        GeneralResponseHeaders = new Dictionary<string, OpenApiHeader>();
     }
 
+    /// <summary>
+    /// BuildHintMessage
+    /// </summary>
+    /// <returns></returns>
     public static IEnumerable<string> BuildHintMessage()
     {
         return new[]

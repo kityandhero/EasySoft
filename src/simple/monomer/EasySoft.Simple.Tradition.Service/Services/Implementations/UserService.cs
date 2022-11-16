@@ -41,22 +41,21 @@ public class UserService : IUserService
     /// <summary>
     /// RegisterAsync
     /// </summary>
-    /// <param name="loginName"></param>
-    /// <param name="password"></param>
+    /// <param name="registerDto"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public async Task<ExecutiveResult<User>> RegisterAsync(string loginName, string password)
+    public async Task<ExecutiveResult<UserDto>> RegisterAsync(RegisterDto registerDto)
     {
-        if (string.IsNullOrWhiteSpace(loginName))
-            return new ExecutiveResult<User>(ReturnCode.ParamError.ToMessage("登陆名不能为空白"));
+        if (string.IsNullOrWhiteSpace(registerDto.LoginName))
+            return new ExecutiveResult<UserDto>(ReturnCode.ParamError.ToMessage("登陆名不能为空白"));
 
-        if (string.IsNullOrWhiteSpace(password))
-            return new ExecutiveResult<User>(ReturnCode.ParamError.ToMessage("密码不能为空白"));
+        if (string.IsNullOrWhiteSpace(registerDto.Password))
+            return new ExecutiveResult<UserDto>(ReturnCode.ParamError.ToMessage("密码不能为空白"));
 
-        var result = await _userRepository.ExistAsync(o => o.LoginName == loginName);
+        var result = await _userRepository.ExistAsync(o => o.LoginName == registerDto.LoginName);
 
         if (result.Success)
-            return new ExecutiveResult<User>(ReturnCode.NoChange.ToMessage("登录名已存在"));
+            return new ExecutiveResult<UserDto>(ReturnCode.NoChange.ToMessage("登录名已存在"));
 
         try
         {
@@ -64,8 +63,8 @@ public class UserService : IUserService
             var customer = EntityFactory.Create<Customer>();
             var blog = EntityFactory.Create<Blog>();
 
-            user.LoginName = loginName;
-            user.Password = password.ToMd5();
+            user.LoginName = registerDto.LoginName;
+            user.Password = registerDto.Password.ToMd5();
 
             customer.UserId = user.Id;
 
@@ -88,13 +87,16 @@ public class UserService : IUserService
 
             await _unitOfWork.CommitAsync();
 
-            return resultAddUser;
+            return new ExecutiveResult<UserDto>(ReturnCode.Ok)
+            {
+                Data = resultAddUser.Data?.ToUserDto()
+            };
         }
         catch (Exception ex)
         {
             await _unitOfWork.RollbackAsync();
 
-            return new ExecutiveResult<User>(ReturnMessage.Exception.ToMessage(ex.Message));
+            return new ExecutiveResult<UserDto>(ReturnMessage.Exception.ToMessage(ex.Message));
         }
         finally
         {

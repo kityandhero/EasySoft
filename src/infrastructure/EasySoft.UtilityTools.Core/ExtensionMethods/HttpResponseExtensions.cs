@@ -23,7 +23,7 @@ public static class HttpResponseExtensions
     {
         if (response == null) throw new ArgumentNullException(nameof(response));
 
-        response.ContentType = MimeCollection.Json.ContentType;
+        response.ContentType = MimeCollection.ApplicationJson.ContentType;
 
         if (value != null)
         {
@@ -46,7 +46,7 @@ public static class HttpResponseExtensions
     {
         if (response == null) throw new ArgumentNullException(nameof(response));
 
-        response.ContentType = MimeCollection.Json.ContentType;
+        response.ContentType = MimeCollection.ApplicationJson.ContentType;
 
         await using var streamWriter = new StreamWriter(response.Body);
 

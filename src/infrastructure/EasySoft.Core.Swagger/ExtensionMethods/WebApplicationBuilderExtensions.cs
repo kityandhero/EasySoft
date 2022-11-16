@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.Swagger.ConfigAssist;
 using EasySoft.Core.Swagger.Configures;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using EasySoft.Core.Swagger.DocumentFilters;
+using EasySoft.Core.Swagger.OperationFilters;
 
 namespace EasySoft.Core.Swagger.ExtensionMethods;
 
@@ -97,6 +98,27 @@ public static class WebApplicationBuilderExtensions
                 return controllerAction?.ControllerName + "-" + controllerAction?.ActionName;
             });
 
+            c.OperationFilter<ApiResultResponsesOperationFilter>();
+
+            if (SwaggerConfigure.DescribeAllParametersInCamelCase) c.EnableAnnotations();
+
+            if (SwaggerConfigure.DescribeAllParametersInCamelCase) c.DescribeAllParametersInCamelCase();
+
+            //
+            // c.SchemaGeneratorOptions.CustomTypeMappings.Add(typeof(IApiResult), () =>
+            // {
+            //     return new OpenApiSchema()
+            //     {
+            //         Reference = new OpenApiReference()
+            //         {
+            //             Type = ReferenceType.Schema,
+            //             Id = nameof(IApiResult)
+            //         }
+            //     };
+            // });
+
+            c.DocumentFilter<ExternalSchemaGeneratorFilter>();
+
             #region IncludeXmlComments
 
             var assemblyNames = new List<string>
@@ -123,10 +145,6 @@ public static class WebApplicationBuilderExtensions
                 });
 
             #endregion
-
-            // c.CustomSchemaIds();
-
-            if (SwaggerConfigure.DescribeAllParametersInCamelCase) c.DescribeAllParametersInCamelCase();
 
             setupAction?.Invoke(c);
         });

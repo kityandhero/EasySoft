@@ -67,7 +67,7 @@ public static class HttpRequestExtensions
 
         var contentType = request.ContentType;
 
-        if (contentType == null || !contentType.Contains(MimeCollection.Json.ContentType)) return result;
+        if (contentType == null || !contentType.Contains(MimeCollection.ApplicationJson.ContentType)) return result;
 
         //操作Request.Body之前加上EnableBuffering即可
         request.EnableBuffering();

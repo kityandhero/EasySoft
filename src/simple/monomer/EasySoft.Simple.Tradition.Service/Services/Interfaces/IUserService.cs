@@ -11,10 +11,9 @@ public interface IUserService : IBusinessService
     /// <summary>
     /// RegisterAsync
     /// </summary>
-    /// <param name="loginName"></param>
-    /// <param name="password"></param>
+    /// <param name="registerDto"></param>
     /// <returns></returns>
-    public Task<ExecutiveResult<User>> RegisterAsync(string loginName, string password);
+    public Task<ExecutiveResult<UserDto>> RegisterAsync(RegisterDto registerDto);
 
     /// <summary>
     /// RegisterMultiAsync

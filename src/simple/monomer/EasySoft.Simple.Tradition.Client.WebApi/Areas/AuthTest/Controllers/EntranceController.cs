@@ -31,7 +31,11 @@ public class EntranceController : AreaControllerCore
     [HttpGet]
     public async Task<IActionResult> Register()
     {
-        var result = await _userService.RegisterAsync("test", "123456");
+        var result = await _userService.RegisterAsync(new RegisterDto()
+        {
+            LoginName = "test",
+            Password = "123456"
+        });
 
         return this.WrapperExecutiveResult(result);
     }

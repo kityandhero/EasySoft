@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Standard.Enums;
+﻿using System.ComponentModel;
+using EasySoft.UtilityTools.Standard.Enums;
 
 namespace EasySoft.UtilityTools.Core.Results;
 
@@ -12,26 +13,31 @@ public class ApiResult : ActionResult, IApiResult
     /// <summary>
     /// 返回码
     /// </summary>
+    [Description("返回码")]
     public int Code { get; set; }
 
     /// <summary>
     /// 是否成功
     /// </summary>
+    [Description("是否成功")]
     public bool Success { get; set; }
 
     /// <summary>
     /// 消息文本
     /// </summary>
+    [Description("消息文本")]
     public string Message { get; set; }
 
     /// <summary>
     /// 主要数据
     /// </summary>
+    [Description("主要数据")]
     public object? Data { get; set; }
 
     /// <summary>
     /// 扩展数据
     /// </summary>
+    [Description("扩展数据")]
     public object? ExtraData { get; set; }
 
     // /// <summary>

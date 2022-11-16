@@ -29,11 +29,30 @@ public class EntranceController : ControllerCore
     /// <returns></returns>
     [Route("signIn")]
     [HttpPost]
-    [ProducesResponseType(typeof(IApiResult), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    // [ProducesResponseType(typeof(IApiResult), StatusCodes.Status200OK)]
+    // [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IApiResult> SignIn(SignInDto signInDto)
     {
         var result = await _userService.SignInAsync(signInDto);
+
+        return this.WrapperExecutiveResult(
+            result,
+            o => new
+            {
+                token = o.UserId.ToToken()
+            });
+    }
+
+    /// <summary>
+    /// 注册
+    /// </summary>
+    /// <param name="registerDto"></param>
+    /// <returns></returns>
+    [Route("register")]
+    [HttpPost]
+    public async Task<IApiResult> Register(RegisterDto registerDto)
+    {
+        var result = await _userService.RegisterAsync(registerDto);
 
         return this.WrapperExecutiveResult(
             result,

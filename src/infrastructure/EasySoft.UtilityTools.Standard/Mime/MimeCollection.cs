@@ -1244,11 +1244,22 @@ public class MimeCollection
     /// <summary>
     /// Json mime：.js=application/json
     /// </summary>
-    public static MimeModel Json => new()
+    public static MimeModel ApplicationJson => new()
     {
         Name = "Json",
         Extension = ".js",
         ContentType = "application/json",
+        Alias = new List<string>()
+    };
+
+    /// <summary>
+    /// Json mime：.js=application/json
+    /// </summary>
+    public static MimeModel TextJson => new()
+    {
+        Name = "Json",
+        Extension = ".js",
+        ContentType = "text/json",
         Alias = new List<string>()
     };
 
@@ -2912,7 +2923,7 @@ public class MimeCollection
     /// <summary>
     /// Txt mime：.txt=text/plain
     /// </summary>
-    public static MimeModel Txt => new()
+    public static MimeModel TextPlain => new()
     {
         Name = "Txt",
         Extension = ".txt",
