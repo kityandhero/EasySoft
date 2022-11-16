@@ -1,6 +1,4 @@
 ﻿using EasySoft.Core.Swagger.Configures;
-using EasySoft.UtilityTools.Standard.Mime;
-using Microsoft.AspNetCore.Http;
 
 namespace EasySoft.Core.Swagger.OperationFilters;
 

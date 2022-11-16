@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.Core.Swagger.ExtensionMethods;
 
+/// <summary>
+/// EndpointConventionBuilderExtensions
+/// </summary>
 public static class EndpointConventionBuilderExtensions
 {
     private const string Info = ", it only can access in development mode";

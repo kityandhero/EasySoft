@@ -11,26 +11,26 @@ AuxiliaryConfigure.PromptStartupExecuteMessage = false;
 
 SwaggerConfigure.ExternalSchemaType.Add(typeof(Task<ApiResult>));
 
-SwaggerConfigure.GeneralParameters.AddRange(new OpenApiParameter()
+SwaggerConfigure.GeneralParameters.AddRange(new OpenApiParameter
     {
         Name = "headerParam",
         Description = "全局 Header 参数",
         Required = true,
         In = ParameterLocation.Header
     },
-    new OpenApiParameter()
+    new OpenApiParameter
     {
         Name = "queryParam",
         Description = "全局 Query 参数",
         Required = false,
         In = ParameterLocation.Query
-    }, new OpenApiParameter()
+    }, new OpenApiParameter
     {
         Name = "cookieParam",
         Description = "全局 Cookie 参数",
         Required = false,
         In = ParameterLocation.Cookie
-    }, new OpenApiParameter()
+    }, new OpenApiParameter
     {
         Name = "pathParam",
         Description = "全局 Path 参数",
@@ -41,7 +41,7 @@ SwaggerConfigure.GeneralParameters.AddRange(new OpenApiParameter()
 SwaggerConfigure.GeneralResponseHeaders.Add(
     new KeyValuePair<string, OpenApiHeader>(
         "responseHeader1",
-        new OpenApiHeader()
+        new OpenApiHeader
         {
             Description = "common header"
         }

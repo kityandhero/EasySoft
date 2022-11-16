@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using EasySoft.Core.Swagger.Configures;
+﻿using EasySoft.Core.Swagger.Configures;
 
 namespace EasySoft.Core.Swagger.DocumentFilters;
 

@@ -3,6 +3,9 @@ using EasySoft.UtilityTools.Standard.Assists;
 
 namespace EasySoft.Core.Swagger.ConfigAssist;
 
+/// <summary>
+/// SwaggerConfigAssist
+/// </summary>
 public static class SwaggerConfigAssist
 {
     private static readonly string ConfigFile = $"{nameof(SwaggerConfig).ToLowerFirst()}.json";
@@ -26,6 +29,9 @@ public static class SwaggerConfigAssist
         Configuration.Bind(SwaggerConfig.Instance);
     }
 
+    /// <summary>
+    /// Init
+    /// </summary>
     public static void Init()
     {
         StartupDescriptionMessageAssist.AddExecute(
@@ -33,11 +39,19 @@ public static class SwaggerConfigAssist
         );
     }
 
+    /// <summary>
+    /// GetConfigFilePath
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFilePath()
     {
         return FilePath;
     }
 
+    /// <summary>
+    /// GetConfigFileContent
+    /// </summary>
+    /// <returns></returns>
     public static async Task<string> GetConfigFileContent()
     {
         var content = await GetConfigFilePath().ReadFile();
@@ -45,6 +59,10 @@ public static class SwaggerConfigAssist
         return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
+    /// <summary>
+    /// GetConfigFileInfo
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFileInfo()
     {
         return $"[{ConfigFile}](./configures/{ConfigFile})";
@@ -55,6 +73,11 @@ public static class SwaggerConfigAssist
         return SwaggerConfig.Instance;
     }
 
+    /// <summary>
+    /// GetSwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetSwitch()
     {
         var v = GetConfig().Switch;
@@ -70,6 +93,10 @@ public static class SwaggerConfigAssist
         return v.ToInt() == 1;
     }
 
+    /// <summary>
+    /// GetTitle
+    /// </summary>
+    /// <returns></returns>
     public static string GetTitle()
     {
         var v = GetConfig().Title;
@@ -79,6 +106,10 @@ public static class SwaggerConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetDescription
+    /// </summary>
+    /// <returns></returns>
     public static string GetDescription()
     {
         var v = GetConfig().Description;
@@ -88,6 +119,10 @@ public static class SwaggerConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetVersion
+    /// </summary>
+    /// <returns></returns>
     public static string GetVersion()
     {
         var v = GetConfig().Version;
@@ -97,6 +132,10 @@ public static class SwaggerConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetContactName
+    /// </summary>
+    /// <returns></returns>
     public static string GetContactName()
     {
         var v = GetConfig().ContactName;
@@ -106,6 +145,10 @@ public static class SwaggerConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetContactEmail
+    /// </summary>
+    /// <returns></returns>
     public static string GetContactEmail()
     {
         var v = GetConfig().ContactEmail;
@@ -115,6 +158,10 @@ public static class SwaggerConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetContactUrl
+    /// </summary>
+    /// <returns></returns>
     public static string GetContactUrl()
     {
         var v = GetConfig().ContactUrl;
@@ -124,6 +171,10 @@ public static class SwaggerConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetLicenseName
+    /// </summary>
+    /// <returns></returns>
     public static string GetLicenseName()
     {
         var v = GetConfig().LicenseName;
@@ -133,6 +184,10 @@ public static class SwaggerConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetLicenseUrl
+    /// </summary>
+    /// <returns></returns>
     public static string GetLicenseUrl()
     {
         var v = GetConfig().LicenseUrl;
@@ -142,6 +197,10 @@ public static class SwaggerConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetOpenApiServerUrl
+    /// </summary>
+    /// <returns></returns>
     public static string GetOpenApiServerUrl()
     {
         var v = GetConfig().OpenApiServerUrl;
@@ -151,6 +210,10 @@ public static class SwaggerConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetOpenApiServerDescription
+    /// </summary>
+    /// <returns></returns>
     public static string GetOpenApiServerDescription()
     {
         var v = GetConfig().OpenApiServerDescription;

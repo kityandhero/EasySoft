@@ -5,10 +5,19 @@ using EasySoft.Core.Swagger.OperationFilters;
 
 namespace EasySoft.Core.Swagger.ExtensionMethods;
 
+/// <summary>
+/// WebApplicationBuilderExtensions
+/// </summary>
 public static class WebApplicationBuilderExtensions
 {
     private const string UniqueIdentifierAddSwaggerGen = "59a8a837-eb19-4f97-8bcf-832a1370afc8";
 
+    /// <summary>
+    /// AddAdvanceSwagger
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="setupAction"></param>
+    /// <returns></returns>
     public static WebApplicationBuilder AddAdvanceSwagger(
         this WebApplicationBuilder builder,
         Action<SwaggerGenOptions>? setupAction = null
@@ -98,26 +107,13 @@ public static class WebApplicationBuilderExtensions
                 return controllerAction?.ControllerName + "-" + controllerAction?.ActionName;
             });
 
+            c.DocumentFilter<ExternalSchemaGeneratorFilter>();
+
             c.OperationFilter<ApiResultResponsesOperationFilter>();
 
             if (SwaggerConfigure.DescribeAllParametersInCamelCase) c.EnableAnnotations();
 
             if (SwaggerConfigure.DescribeAllParametersInCamelCase) c.DescribeAllParametersInCamelCase();
-
-            //
-            // c.SchemaGeneratorOptions.CustomTypeMappings.Add(typeof(IApiResult), () =>
-            // {
-            //     return new OpenApiSchema()
-            //     {
-            //         Reference = new OpenApiReference()
-            //         {
-            //             Type = ReferenceType.Schema,
-            //             Id = nameof(IApiResult)
-            //         }
-            //     };
-            // });
-
-            c.DocumentFilter<ExternalSchemaGeneratorFilter>();
 
             #region IncludeXmlComments
 

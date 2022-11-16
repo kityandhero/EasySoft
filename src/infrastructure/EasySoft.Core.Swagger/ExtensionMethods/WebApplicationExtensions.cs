@@ -1,11 +1,17 @@
-﻿using EasySoft.Core.Infrastructure.Configures;
-using EasySoft.Core.Swagger.ConfigAssist;
-using EasySoft.Core.Swagger.Configures;
+﻿using EasySoft.Core.Swagger.ConfigAssist;
 
 namespace EasySoft.Core.Swagger.ExtensionMethods;
 
+/// <summary>
+/// WebApplicationExtensions
+/// </summary>
 public static class WebApplicationExtensions
 {
+    /// <summary>
+    /// UseAdvanceSwagger
+    /// </summary>
+    /// <param name="application"></param>
+    /// <returns></returns>
     public static WebApplication UseAdvanceSwagger(this WebApplication application)
     {
         if (!SwaggerConfigAssist.GetSwitch()) return application;
