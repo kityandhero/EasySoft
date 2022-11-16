@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-
-namespace EasySoft.UtilityTools.Core.ExtensionMethods;
+﻿namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 
 public static class WebHostEnvironmentExtensions
 {

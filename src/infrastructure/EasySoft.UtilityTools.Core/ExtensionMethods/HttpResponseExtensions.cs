@@ -1,8 +1,6 @@
-﻿using System.IO;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Mime;
-using Microsoft.AspNetCore.Http;
 
 namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 

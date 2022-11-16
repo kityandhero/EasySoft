@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-
-namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 public static class ByteExtensions
 {
@@ -17,10 +14,7 @@ public static class ByteExtensions
     /// <returns>The equivalent byte array in a base 64 string</returns>
     public static string ToString(this byte[] input, Base64FormattingOptions options, int index = 0, int count = -1)
     {
-        if (count == -1)
-        {
-            count = input.Length - index;
-        }
+        if (count == -1) count = input.Length - index;
 
         return Convert.ToBase64String(input, index, count, options);
     }
@@ -35,10 +29,7 @@ public static class ByteExtensions
     /// <returns>string of the byte array</returns>
     public static string ToString(this byte[] input, Encoding encodingUsing, int index = 0, int count = -1)
     {
-        if (count == -1)
-        {
-            count = input.Length - index;
-        }
+        if (count == -1) count = input.Length - index;
 
         return encodingUsing.Check(new UTF8Encoding())?.GetString(input, index, count) ?? "";
     }

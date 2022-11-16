@@ -1,5 +1,4 @@
 ﻿using System.Security.Cryptography;
-using System.Text;
 using EasySoft.UtilityTools.Core.Enums;
 using EasySoft.UtilityTools.Core.Securities.Interfaces;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;

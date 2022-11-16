@@ -1,15 +1,12 @@
-﻿using System;
+﻿namespace EasySoft.UtilityTools.Standard.Exceptions;
 
-namespace EasySoft.UtilityTools.Standard.Exceptions
+public class IgnoreException : Exception
 {
-    public class IgnoreException : Exception
+    public IgnoreException() : this("")
     {
-        public IgnoreException() : this("")
-        {
-        }
+    }
 
-        public IgnoreException(string message) : base(message)
-        {
-        }
+    public IgnoreException(string message) : base(message)
+    {
     }
 }

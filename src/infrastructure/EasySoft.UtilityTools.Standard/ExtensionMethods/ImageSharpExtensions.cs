@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using SixLabors.ImageSharp;
+﻿using System.Threading.Tasks;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Processing;
 
@@ -15,10 +12,7 @@ public static class ImageSharpExtensions
 {
     public static void Resize(this string uri, Stream stream, int width, int height, IImageFormat format)
     {
-        if (string.IsNullOrWhiteSpace(uri))
-        {
-            throw new Exception("mutate image uri disallow null or empty");
-        }
+        if (string.IsNullOrWhiteSpace(uri)) throw new Exception("mutate image uri disallow null or empty");
 
         using var image = Image.Load(uri);
 
@@ -29,10 +23,7 @@ public static class ImageSharpExtensions
 
     public static async Task ResizeAsync(this string uri, Stream stream, int width, int height, IImageFormat format)
     {
-        if (string.IsNullOrWhiteSpace(uri))
-        {
-            throw new Exception("mutate image uri disallow null or empty");
-        }
+        if (string.IsNullOrWhiteSpace(uri)) throw new Exception("mutate image uri disallow null or empty");
 
         using var image = await Image.LoadAsync(uri);
 

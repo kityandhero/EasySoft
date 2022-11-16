@@ -21,109 +21,81 @@ THE SOFTWARE.*/
 
 #region Usings
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
 #endregion
 
-namespace EasySoft.UtilityTools.Standard.Comparison
+namespace EasySoft.UtilityTools.Standard.Comparison;
+
+/// <summary>
+/// Generic equality comparer
+/// 泛型相等比较
+/// </summary>
+/// <typeparam name="T">
+/// Data type
+/// 类型
+/// </typeparam>
+public class GenericEqualityComparer<T> : IEqualityComparer<T>
 {
+    #region Functions
+
     /// <summary>
-    /// Generic equality comparer
-    /// 泛型相等比较
+    /// Determines if the two items are equal
+    ///  确定是否将指定的实例视为相等
     /// </summary>
-    /// <typeparam name="T">
-    /// Data type
-    /// 类型
-    /// </typeparam>
-    public class GenericEqualityComparer<T> : IEqualityComparer<T>
+    /// <param name="x">Object 1</param>
+    /// <param name="y">Object 2</param>
+    /// <returns>
+    /// True if they are, false otherwise
+    /// 相等返回true,否则返回false
+    /// </returns>
+    public bool Equals(T? x, T y)
     {
-        #region Functions
-
-        /// <summary>
-        /// Determines if the two items are equal
-        ///  确定是否将指定的实例视为相等
-        /// </summary>
-        /// <param name="x">Object 1</param>
-        /// <param name="y">Object 2</param>
-        /// <returns>
-        /// True if they are, false otherwise
-        /// 相等返回true,否则返回false
-        /// </returns>
-        public bool Equals(T? x, T y)
+        if (!typeof(T).IsValueType
+            || (typeof(T).IsGenericType
+                && typeof(T).GetGenericTypeDefinition().IsAssignableFrom(typeof(Nullable<>))))
         {
-            if (!typeof(T).IsValueType
-                || (typeof(T).IsGenericType
-                    && typeof(T).GetGenericTypeDefinition().IsAssignableFrom(typeof(Nullable<>))))
-            {
-                if (object.Equals(x, default(T)))
-                {
-                    return object.Equals(y, default(T));
-                }
+            if (object.Equals(x, default(T))) return object.Equals(y, default(T));
 
-                if (object.Equals(y, default(T)))
-                {
+            if (object.Equals(y, default(T))) return false;
+        }
+
+        if (x?.GetType() != y?.GetType()) return false;
+
+        if (x is IEnumerable enumerableX && y is IEnumerable enumerableY)
+        {
+            var comparer = new GenericEqualityComparer<object>();
+            var xEnumerator = enumerableX.GetEnumerator();
+            var yEnumerator = enumerableY.GetEnumerator();
+            while (true)
+            {
+                var xFinished = !xEnumerator.MoveNext();
+                var yFinished = !yEnumerator.MoveNext();
+
+                if (xFinished || yFinished) return xFinished & yFinished;
+
+                if (yEnumerator.Current != null && !comparer.Equals(xEnumerator.Current, yEnumerator.Current))
                     return false;
-                }
             }
-
-            if (x?.GetType() != y?.GetType())
-            {
-                return false;
-            }
-
-            if (x is IEnumerable enumerableX && y is IEnumerable enumerableY)
-            {
-                var comparer = new GenericEqualityComparer<object>();
-                var xEnumerator = enumerableX.GetEnumerator();
-                var yEnumerator = enumerableY.GetEnumerator();
-                while (true)
-                {
-                    var xFinished = !xEnumerator.MoveNext();
-                    var yFinished = !yEnumerator.MoveNext();
-
-                    if (xFinished || yFinished)
-                    {
-                        return xFinished & yFinished;
-                    }
-
-                    if (yEnumerator.Current != null && !comparer.Equals(xEnumerator.Current, yEnumerator.Current))
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            if (x is IEqualityComparer<T> tempEquality)
-            {
-                return tempEquality.Equals(y);
-            }
-
-            if (x is IComparable<T> tempComparable)
-            {
-                return tempComparable.CompareTo(y) == 0;
-            }
-
-            if (x is IComparable tempComparable2)
-            {
-                return tempComparable2.CompareTo(y) == 0;
-            }
-
-            return x != null && x.Equals(y);
         }
 
-        /// <summary>
-        /// Get hash code
-        /// 用作特定类型的哈希函数。
-        /// </summary>
-        /// <param name="obj">Object to get the hash code of</param>
-        /// <returns>The object's hash code</returns>
-        public int GetHashCode(T obj)
-        {
-            return obj!.GetHashCode();
-        }
+        if (x is IEqualityComparer<T> tempEquality) return tempEquality.Equals(y);
 
-        #endregion
+        if (x is IComparable<T> tempComparable) return tempComparable.CompareTo(y) == 0;
+
+        if (x is IComparable tempComparable2) return tempComparable2.CompareTo(y) == 0;
+
+        return x != null && x.Equals(y);
     }
+
+    /// <summary>
+    /// Get hash code
+    /// 用作特定类型的哈希函数。
+    /// </summary>
+    /// <param name="obj">Object to get the hash code of</param>
+    /// <returns>The object's hash code</returns>
+    public int GetHashCode(T obj)
+    {
+        return obj!.GetHashCode();
+    }
+
+    #endregion
 }

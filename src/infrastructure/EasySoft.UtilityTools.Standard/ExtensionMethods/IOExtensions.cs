@@ -1,9 +1,5 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Security;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EasySoft.UtilityTools.Standard.ExtensionMethods;

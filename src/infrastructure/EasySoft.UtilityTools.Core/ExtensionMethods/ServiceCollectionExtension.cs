@@ -1,9 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using EasySoft.UtilityTools.Core.Interfaces;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 

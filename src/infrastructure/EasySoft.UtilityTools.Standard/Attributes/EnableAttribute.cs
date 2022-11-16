@@ -1,8 +1,5 @@
-﻿using System;
+﻿namespace EasySoft.UtilityTools.Standard.Attributes;
 
-namespace EasySoft.UtilityTools.Standard.Attributes
+public class EnableAttribute : Attribute
 {
-    public class EnableAttribute : Attribute
-    {
-    }
 }

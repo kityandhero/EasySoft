@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using EasySoft.UtilityTools.Standard.Comparison;
+﻿using EasySoft.UtilityTools.Standard.Comparison;
 
 namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
@@ -52,15 +50,9 @@ public static class ComparableExtensions
     {
         var comparerAdjust = comparer ?? new GenericComparer<T>();
 
-        if (comparerAdjust.Compare(max, value) < 0)
-        {
-            return max;
-        }
+        if (comparerAdjust.Compare(max, value) < 0) return max;
 
-        if (comparerAdjust.Compare(value, min) < 0)
-        {
-            return min;
-        }
+        if (comparerAdjust.Compare(value, min) < 0) return min;
 
         return value;
     }

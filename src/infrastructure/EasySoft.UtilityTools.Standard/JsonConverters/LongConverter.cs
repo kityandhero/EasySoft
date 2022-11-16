@@ -1,91 +1,85 @@
-﻿using System;
-using Newtonsoft.Json;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
-namespace EasySoft.UtilityTools.Standard.JsonConverters
+namespace EasySoft.UtilityTools.Standard.JsonConverters;
+
+public class LongConverter : JsonConverter
 {
-    public class LongConverter : JsonConverter
+    /// <summary>
+    /// WriteJson
+    /// </summary>
+    /// <param name="writer"></param>
+    /// <param name="value"></param>
+    /// <param name="serializer"></param>
+    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
     {
-        /// <summary>
-        /// WriteJson
-        /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="value"></param>
-        /// <param name="serializer"></param>
-        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+        var valueAdjust = value ?? new object();
+
+        var typeCode = Type.GetTypeCode(valueAdjust.GetType());
+
+        if (typeCode == TypeCode.Int64)
         {
-            var valueAdjust = value ?? new object();
+            var v = Convert.ToInt64(valueAdjust);
 
-            var typeCode = Type.GetTypeCode(valueAdjust.GetType());
-
-            if (typeCode == TypeCode.Int64)
+            if (v is > int.MaxValue or < int.MinValue)
             {
-                var v = Convert.ToInt64(valueAdjust);
+                writer.WriteValue(valueAdjust.ToString());
 
-                if (v is > int.MaxValue or < int.MinValue)
-                {
-                    writer.WriteValue(valueAdjust.ToString());
-
-                    return;
-                }
+                return;
             }
-            else if (typeCode == TypeCode.UInt64)
+        }
+        else if (typeCode == TypeCode.UInt64)
+        {
+            var v = Convert.ToUInt64(valueAdjust);
+
+            if (v > uint.MaxValue)
             {
-                var v = Convert.ToUInt64(valueAdjust);
+                writer.WriteValue(valueAdjust.ToString());
 
-                if (v > uint.MaxValue)
-                {
-                    writer.WriteValue(valueAdjust.ToString());
-
-                    return;
-                }
+                return;
             }
-
-            writer.WriteValue(valueAdjust);
         }
 
-        /// <summary>
-        /// ReadJson
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <param name="objectType"></param>
-        /// <param name="existingValue"></param>
-        /// <param name="serializer"></param>
-        /// <returns></returns>
-        public override object? ReadJson(
-            JsonReader reader,
-            Type objectType,
-            object? existingValue,
-            JsonSerializer serializer
-        )
+        writer.WriteValue(valueAdjust);
+    }
+
+    /// <summary>
+    /// ReadJson
+    /// </summary>
+    /// <param name="reader"></param>
+    /// <param name="objectType"></param>
+    /// <param name="existingValue"></param>
+    /// <param name="serializer"></param>
+    /// <returns></returns>
+    public override object? ReadJson(
+        JsonReader reader,
+        Type objectType,
+        object? existingValue,
+        JsonSerializer serializer
+    )
+    {
+        if (reader.Value is string v) return v.ToLong();
+
+        return reader.Value;
+    }
+
+    /// <summary>
+    /// CanConvert
+    /// </summary>
+    /// <param name="objectType"></param>
+    /// <returns></returns>
+    public override bool CanConvert(Type objectType)
+    {
+        // 只处理long和ulong两种类型的数据
+        switch (objectType.FullName)
         {
-            if (reader.Value is string v)
-            {
-                return v.ToLong();
-            }
+            case "System.Int64":
+                return true;
 
-            return reader.Value;
-        }
+            case "System.UInt64":
+                return true;
 
-        /// <summary>
-        /// CanConvert
-        /// </summary>
-        /// <param name="objectType"></param>
-        /// <returns></returns>
-        public override bool CanConvert(Type objectType)
-        {
-            // 只处理long和ulong两种类型的数据
-            switch (objectType.FullName)
-            {
-                case "System.Int64":
-                    return true;
-
-                case "System.UInt64":
-                    return true;
-
-                default:
-                    return false;
-            }
+            default:
+                return false;
         }
     }
 }

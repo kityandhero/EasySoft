@@ -21,57 +21,50 @@ THE SOFTWARE.*/
 
 #region Usings
 
-using System;
-using System.Collections.Generic;
-
 #endregion
 
-namespace EasySoft.UtilityTools.Standard.Comparison
+namespace EasySoft.UtilityTools.Standard.Comparison;
+
+/// <summary>
+/// Generic IComparable class
+/// 泛型类
+/// </summary>
+/// <typeparam name="T">
+/// Data type
+/// 类型
+/// </typeparam>
+public class GenericComparer<T> : IComparer<T> where T : IComparable
 {
+    #region Functions
+
     /// <summary>
-    /// Generic IComparable class
-    /// 泛型类
+    /// Compares the two objects
+    /// 比较
     /// </summary>
-    /// <typeparam name="T">
-    /// Data type
-    /// 类型
-    /// </typeparam>
-    public class GenericComparer<T> : IComparer<T> where T : IComparable
+    /// <param name="x">Object 1</param>
+    /// <param name="y">Object 2</param>
+    /// <returns>
+    /// 0 if they're equal, any other value they are not
+    /// 相等返回0，否则返回-1  
+    /// </returns>
+    public int Compare(T? x, T? y)
     {
-        #region Functions
-
-        /// <summary>
-        /// Compares the two objects
-        /// 比较
-        /// </summary>
-        /// <param name="x">Object 1</param>
-        /// <param name="y">Object 2</param>
-        /// <returns>
-        /// 0 if they're equal, any other value they are not
-        /// 相等返回0，否则返回-1  
-        /// </returns>
-        public int Compare(T? x, T? y)
+        if (!typeof(T).IsValueType
+            || (typeof(T).IsGenericType
+                && typeof(T).GetGenericTypeDefinition().IsAssignableFrom(typeof(Nullable<>))))
         {
-            if (!typeof(T).IsValueType
-                || (typeof(T).IsGenericType
-                    && typeof(T).GetGenericTypeDefinition().IsAssignableFrom(typeof(Nullable<>))))
-            {
-                if (Equals(x, default(T)))
-                    return Equals(y, default(T)) ? 0 : -1;
-                if (Equals(y, default(T)))
-                    return -1;
-            }
-
-            if (x?.GetType() != y?.GetType())
-            {
+            if (Equals(x, default(T)))
+                return Equals(y, default(T)) ? 0 : -1;
+            if (Equals(y, default(T)))
                 return -1;
-            }
-
-            var tempComparable = x as IComparable<T>;
-
-            return (y != null ? tempComparable?.CompareTo(y) : x!.CompareTo(y)) ?? x!.CompareTo(y);
         }
 
-        #endregion
+        if (x?.GetType() != y?.GetType()) return -1;
+
+        var tempComparable = x as IComparable<T>;
+
+        return (y != null ? tempComparable?.CompareTo(y) : x!.CompareTo(y)) ?? x!.CompareTo(y);
     }
+
+    #endregion
 }

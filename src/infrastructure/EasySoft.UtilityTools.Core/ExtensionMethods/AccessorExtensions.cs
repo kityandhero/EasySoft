@@ -1,7 +1,5 @@
 ﻿using System.Linq.Expressions;
-using System.Threading;
 using EasySoft.UtilityTools.Core.Securities.Interfaces;
-using Microsoft.AspNetCore.Http;
 
 namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 

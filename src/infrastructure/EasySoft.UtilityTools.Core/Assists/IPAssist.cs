@@ -1,14 +1,5 @@
-﻿using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.Enums;
-using Microsoft.AspNetCore.Http;
 
 namespace EasySoft.UtilityTools.Core.Assists;
 

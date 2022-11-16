@@ -19,88 +19,74 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.*/
 
-using System;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
 using EasySoft.UtilityTools.Standard.Assists;
 
-namespace EasySoft.UtilityTools.Standard.ExtensionMethods
+namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
+
+/// <summary>
+/// Extensions for NameValueCollection
+/// </summary>
+public static class NameValueCollectionExtensions
 {
     /// <summary>
-    /// Extensions for NameValueCollection
+    /// ToJson 将NameValueCollection按照"键":"值"的形式构建成Json字符串
     /// </summary>
-    public static class NameValueCollectionExtensions
+    /// <param name="nvc"></param>
+    /// <returns></returns>
+    public static string ToJson(this NameValueCollection nvc)
     {
-        /// <summary>
-        /// ToJson 将NameValueCollection按照"键":"值"的形式构建成Json字符串
-        /// </summary>
-        /// <param name="nvc"></param>
-        /// <returns></returns>
-        public static string ToJson(this NameValueCollection nvc)
+        return ConvertAssist.NameValueCollectionToJson(nvc);
+    }
+
+    /// <summary>
+    /// 判断两个NameValueCollection的内容是否相同
+    /// </summary>
+    /// <param name="nvc1"></param>
+    /// <param name="nvc2"></param>
+    /// <returns></returns>
+    public static bool ContentEqual(this NameValueCollection nvc1, NameValueCollection nvc2)
+    {
+        return nvc1.AllKeys.OrderBy(key => key).SequenceEqual(nvc2.AllKeys.OrderBy(key => key)) &&
+               nvc1.AllKeys.All(key => nvc1[key] == nvc2[key]);
+    }
+
+    /// <summary>
+    /// 合并
+    /// </summary>
+    /// <param name="nv">    </param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public static NameValueCollection Merge(this NameValueCollection nv, NameValueCollection target)
+    {
+        foreach (var key in target.AllKeys) nv[key] = target[key];
+
+        return nv;
+    }
+
+    /// <summary>
+    /// Converts the NameValueCollection to a query string
+    /// </summary>
+    /// <param name="source">Input</param>
+    /// <returns>The NameValueCollection expressed as a string</returns>
+    public static string ToQueryString(this NameValueCollection source)
+    {
+        if (source.IsNull()) throw new ArgumentNullException(nameof(source));
+
+        if (source.Count <= 0) return "";
+
+        var builder = new StringBuilder();
+
+        builder.Append('?');
+
+        var splitter = "";
+
+        foreach (string key in source.Keys)
         {
-            return ConvertAssist.NameValueCollectionToJson(nvc);
+            builder.Append(splitter).Append($"{key.UrlEncode()}={source[key].UrlEncode()}");
+
+            splitter = "&";
         }
 
-        /// <summary>
-        /// 判断两个NameValueCollection的内容是否相同
-        /// </summary>
-        /// <param name="nvc1"></param>
-        /// <param name="nvc2"></param>
-        /// <returns></returns>
-        public static bool ContentEqual(this NameValueCollection nvc1, NameValueCollection nvc2)
-        {
-            return nvc1.AllKeys.OrderBy(key => key).SequenceEqual(nvc2.AllKeys.OrderBy(key => key)) &&
-                   nvc1.AllKeys.All(key => nvc1[key] == nvc2[key]);
-        }
-
-        /// <summary>
-        /// 合并
-        /// </summary>
-        /// <param name="nv">    </param>
-        /// <param name="target"></param>
-        /// <returns></returns>
-        public static NameValueCollection Merge(this NameValueCollection nv, NameValueCollection target)
-        {
-            foreach (var key in target.AllKeys)
-            {
-                nv[key] = target[key];
-            }
-
-            return nv;
-        }
-
-        /// <summary>
-        /// Converts the NameValueCollection to a query string
-        /// </summary>
-        /// <param name="source">Input</param>
-        /// <returns>The NameValueCollection expressed as a string</returns>
-        public static string ToQueryString(this NameValueCollection source)
-        {
-            if (source.IsNull())
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-
-            if (source.Count <= 0)
-            {
-                return "";
-            }
-
-            var builder = new StringBuilder();
-
-            builder.Append('?');
-
-            var splitter = "";
-
-            foreach (string key in source.Keys)
-            {
-                builder.Append(splitter).Append($"{key.UrlEncode()}={source[key].UrlEncode()}");
-
-                splitter = "&";
-            }
-
-            return builder.ToString();
-        }
+        return builder.ToString();
     }
 }

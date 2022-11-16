@@ -8,6 +8,9 @@ namespace EasySoft.UtilityTools.Core.Assists;
 /// </summary>
 public static class TreatAssist
 {
+    /// <summary>
+    /// Security
+    /// </summary>
     public static ISecurity Security => new Security();
 
     public static IHashGenerator Hash => new HashGenerator();

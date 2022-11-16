@@ -19,85 +19,75 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.*/
 
-using System;
-using System.IO;
-using System.Text;
 using System.Xml.Serialization;
 using EasySoft.UtilityTools.Standard.Serializers.Interfaces;
 
-namespace EasySoft.UtilityTools.Standard.Serializers
+namespace EasySoft.UtilityTools.Standard.Serializers;
+
+/// <summary>
+/// XML serializer
+/// </summary>
+public sealed class XMLSerializer : ISerializer<string>
 {
+    #region Constructor
+
     /// <summary>
-    /// XML serializer
+    /// Constructor
     /// </summary>
-    public sealed class XMLSerializer : ISerializer<string>
+    /// <param name="encoding">Encoding that the serializer should use (defaults to ASCII)</param>
+    public XMLSerializer(Encoding? encoding = null)
     {
-        #region Constructor
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="encoding">Encoding that the serializer should use (defaults to ASCII)</param>
-        public XMLSerializer(Encoding? encoding = null)
-        {
-            EncodingUsing = encoding ?? new ASCIIEncoding();
-        }
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Encoding that the serializer should use
-        /// </summary>
-        public Encoding EncodingUsing { get; set; }
-
-        #endregion
-
-        #region Functions
-
-        /// <summary>
-        /// Serializes the object
-        /// </summary>
-        /// <param name="data">Object to serialize</param>
-        /// <returns>The serialized object</returns>
-        public string Serialize(object data)
-        {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
-
-            using var stream = new MemoryStream();
-
-            var serializer = new XmlSerializer(data.GetType());
-
-            serializer.Serialize(stream, data);
-            stream.Flush();
-
-            return EncodingUsing.GetString(stream.GetBuffer(), 0, (int)stream.Position);
-        }
-
-        /// <summary>
-        /// Deserializes the data
-        /// </summary>
-        /// <param name="objectType">Object type</param>
-        /// <param name="data">Data to deserialize</param>
-        /// <returns>The resulting object</returns>
-        public object? Deserialize(string data, Type objectType)
-        {
-            if (string.IsNullOrEmpty(data))
-            {
-                throw new Exception("data disallow null");
-            }
-
-            using var stream = new MemoryStream(EncodingUsing.GetBytes(data));
-
-            var serializer = new XmlSerializer(objectType);
-
-            return serializer.Deserialize(stream);
-        }
-
-        #endregion
+        EncodingUsing = encoding ?? new ASCIIEncoding();
     }
+
+    #endregion
+
+    #region Properties
+
+    /// <summary>
+    /// Encoding that the serializer should use
+    /// </summary>
+    public Encoding EncodingUsing { get; set; }
+
+    #endregion
+
+    #region Functions
+
+    /// <summary>
+    /// Serializes the object
+    /// </summary>
+    /// <param name="data">Object to serialize</param>
+    /// <returns>The serialized object</returns>
+    public string Serialize(object data)
+    {
+        if (data == null) throw new ArgumentNullException(nameof(data));
+
+        using var stream = new MemoryStream();
+
+        var serializer = new XmlSerializer(data.GetType());
+
+        serializer.Serialize(stream, data);
+        stream.Flush();
+
+        return EncodingUsing.GetString(stream.GetBuffer(), 0, (int)stream.Position);
+    }
+
+    /// <summary>
+    /// Deserializes the data
+    /// </summary>
+    /// <param name="objectType">Object type</param>
+    /// <param name="data">Data to deserialize</param>
+    /// <returns>The resulting object</returns>
+    public object? Deserialize(string data, Type objectType)
+    {
+        if (string.IsNullOrEmpty(data)) throw new Exception("data disallow null");
+
+        using var stream = new MemoryStream(EncodingUsing.GetBytes(data));
+
+        var serializer = new XmlSerializer(objectType);
+
+        return serializer.Deserialize(stream);
+    }
+
+    #endregion
 }

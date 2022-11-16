@@ -1,8 +1,5 @@
-﻿using System.Text.Json;
-using System.Threading;
-using EasySoft.UtilityTools.Core.ConfigurationFileParsers;
+﻿using EasySoft.UtilityTools.Core.ConfigurationFileParsers;
 using EasySoft.UtilityTools.Core.ConfigurationSources;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 
 namespace EasySoft.UtilityTools.Core.ConfigurationProviders;

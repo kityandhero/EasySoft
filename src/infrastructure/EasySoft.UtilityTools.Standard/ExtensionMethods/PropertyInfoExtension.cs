@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Reflection;
-
-namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 public static class PropertyInfoExtension
 {

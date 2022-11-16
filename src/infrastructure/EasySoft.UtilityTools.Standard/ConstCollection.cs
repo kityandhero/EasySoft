@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-
-namespace EasySoft.UtilityTools.Standard;
+﻿namespace EasySoft.UtilityTools.Standard;
 
 /// <summary>
 /// 常量集合

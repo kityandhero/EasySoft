@@ -1,13 +1,19 @@
 ﻿using EasySoft.UtilityTools.Core.ExtensionMethods;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.UtilityTools.Core.Assists;
 
+/// <summary>
+/// EnvironmentAssist
+/// </summary>
 public static class EnvironmentAssist
 {
     private static IWebHostEnvironment? _environment;
 
+    /// <summary>
+    /// SetEnvironment
+    /// </summary>
+    /// <param name="environment"></param>
+    /// <exception cref="Exception"></exception>
     public static void SetEnvironment(IWebHostEnvironment? environment)
     {
         if (_environment != null) throw new Exception("environment has been set, it disallow set more than once.");
@@ -15,6 +21,11 @@ public static class EnvironmentAssist
         _environment = environment;
     }
 
+    /// <summary>
+    /// GetEnvironment
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static IWebHostEnvironment GetEnvironment()
     {
         if (_environment == null) throw new Exception("environment has not set yet");
@@ -22,6 +33,10 @@ public static class EnvironmentAssist
         return _environment;
     }
 
+    /// <summary>
+    /// IsDevelopment
+    /// </summary>
+    /// <returns></returns>
     public static bool IsDevelopment()
     {
         var environment = GetEnvironment();
@@ -29,6 +44,10 @@ public static class EnvironmentAssist
         return environment.IsDevelopment();
     }
 
+    /// <summary>
+    /// GetEnvironmentAliasName
+    /// </summary>
+    /// <returns></returns>
     public static string GetEnvironmentAliasName()
     {
         var environment = GetEnvironment();

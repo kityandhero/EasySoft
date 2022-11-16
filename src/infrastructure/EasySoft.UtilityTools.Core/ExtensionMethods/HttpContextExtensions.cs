@@ -1,6 +1,4 @@
-﻿using System.IO;
-using EasySoft.UtilityTools.Standard.Entity;
-using Microsoft.AspNetCore.Http;
+﻿using EasySoft.UtilityTools.Standard.Entity;
 
 namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 

@@ -1,42 +1,64 @@
-﻿using System;
-using System.ComponentModel;
+﻿namespace EasySoft.UtilityTools.Standard.Attributes;
 
-namespace EasySoft.UtilityTools.Standard.Attributes
+[AttributeUsage(AttributeTargets.All)]
+public sealed class MaxValueAttribute : Attribute
 {
-    [AttributeUsage(AttributeTargets.All)]
-    public sealed class MaxValueAttribute: Attribute
+    public object Value { get; } = null!;
+
+    public MaxValueAttribute(Type type, string value)
     {
-      
-        public object Value { get; } = null!;
-
-        public MaxValueAttribute(Type type, string value)
+        try
         {
-            try
-            {
-                this.Value = TypeDescriptor.GetConverter(type).ConvertFromInvariantString(value)!;
-            }
-            catch
-            {
-                // ignored
-            }
+            Value = TypeDescriptor.GetConverter(type).ConvertFromInvariantString(value)!;
         }
+        catch
+        {
+            // ignored
+        }
+    }
 
-        public MaxValueAttribute(byte value) => this.Value = value;
+    public MaxValueAttribute(byte value)
+    {
+        Value = value;
+    }
 
-        public MaxValueAttribute(short value) => this.Value = value;
+    public MaxValueAttribute(short value)
+    {
+        Value = value;
+    }
 
-        public MaxValueAttribute(int value) => this.Value = value;
+    public MaxValueAttribute(int value)
+    {
+        Value = value;
+    }
 
-        public MaxValueAttribute(long value) => this.Value = value;
+    public MaxValueAttribute(long value)
+    {
+        Value = value;
+    }
 
-        public MaxValueAttribute(float value) => this.Value = value;
+    public MaxValueAttribute(float value)
+    {
+        Value = value;
+    }
 
-        public MaxValueAttribute(double value) => this.Value = value;
+    public MaxValueAttribute(double value)
+    {
+        Value = value;
+    }
 
-        public MaxValueAttribute(bool value) => this.Value = value;
+    public MaxValueAttribute(bool value)
+    {
+        Value = value;
+    }
 
-        public MaxValueAttribute(string value) => this.Value = value;
+    public MaxValueAttribute(string value)
+    {
+        Value = value;
+    }
 
-        public MaxValueAttribute(object value) => this.Value = value;
+    public MaxValueAttribute(object value)
+    {
+        Value = value;
     }
 }

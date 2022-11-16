@@ -1,5 +1,4 @@
-﻿using System;
-using EasySoft.UtilityTools.Standard.Media.Image;
+﻿using EasySoft.UtilityTools.Standard.Media.Image;
 using EasySoft.UtilityTools.Standard.Securities.Encryption;
 
 namespace EasySoft.UtilityTools.Standard;

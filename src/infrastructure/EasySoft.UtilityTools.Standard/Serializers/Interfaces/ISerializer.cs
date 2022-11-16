@@ -19,29 +19,26 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.*/
 
-using System;
+namespace EasySoft.UtilityTools.Standard.Serializers.Interfaces;
 
-namespace EasySoft.UtilityTools.Standard.Serializers.Interfaces
+/// <summary>
+/// Serializer interface
+/// </summary>
+/// <typeparam name="T">Type that the object is serialized to/from</typeparam>
+public interface ISerializer<T>
 {
     /// <summary>
-    /// Serializer interface
+    /// Serializes the object
     /// </summary>
-    /// <typeparam name="T">Type that the object is serialized to/from</typeparam>
-    public interface ISerializer<T>
-    {
-        /// <summary>
-        /// Serializes the object
-        /// </summary>
-        /// <param name="data">Object to serialize</param>
-        /// <returns>The serialized object</returns>
-        T Serialize(object data);
+    /// <param name="data">Object to serialize</param>
+    /// <returns>The serialized object</returns>
+    T Serialize(object data);
 
-        /// <summary>
-        /// Deserializes the data
-        /// </summary>
-        /// <param name="objectType">Object type</param>
-        /// <param name="data">Data to deserialize</param>
-        /// <returns>The resulting object</returns>
-        object? Deserialize(T data, Type objectType);
-    }
+    /// <summary>
+    /// Deserializes the data
+    /// </summary>
+    /// <param name="objectType">Object type</param>
+    /// <param name="data">Data to deserialize</param>
+    /// <returns>The resulting object</returns>
+    object? Deserialize(T data, Type objectType);
 }

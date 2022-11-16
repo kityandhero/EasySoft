@@ -1,15 +1,12 @@
-﻿using System;
+﻿namespace EasySoft.UtilityTools.Standard.Exceptions;
 
-namespace EasySoft.UtilityTools.Standard.Exceptions
+public class TokenException : Exception
 {
-    public class TokenException : Exception
+    public TokenException() : this("")
     {
-        public TokenException() : this("")
-        {
-        }
+    }
 
-        public TokenException(string message) : base(message)
-        {
-        }
+    public TokenException(string message) : base(message)
+    {
     }
 }

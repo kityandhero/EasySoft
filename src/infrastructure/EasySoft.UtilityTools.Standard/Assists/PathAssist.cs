@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace EasySoft.UtilityTools.Standard.Assists;
+﻿namespace EasySoft.UtilityTools.Standard.Assists;
 
 public static class PathAssist
 {

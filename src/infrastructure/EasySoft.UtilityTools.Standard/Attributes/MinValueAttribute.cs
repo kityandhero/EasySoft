@@ -1,41 +1,64 @@
-﻿using System;
-using System.ComponentModel;
+﻿namespace EasySoft.UtilityTools.Standard.Attributes;
 
-namespace EasySoft.UtilityTools.Standard.Attributes
+[AttributeUsage(AttributeTargets.All)]
+public sealed class MinValueAttribute : Attribute
 {
-    [AttributeUsage(AttributeTargets.All)]
-    public sealed class MinValueAttribute : Attribute
+    public object Value { get; } = null!;
+
+    public MinValueAttribute(Type type, string value)
     {
-        public object Value { get; } = null!;
-
-        public MinValueAttribute(Type type, string value)
+        try
         {
-            try
-            {
-                Value = TypeDescriptor.GetConverter(type).ConvertFromInvariantString(value)!;
-            }
-            catch
-            {
-                // ignored
-            }
+            Value = TypeDescriptor.GetConverter(type).ConvertFromInvariantString(value)!;
         }
+        catch
+        {
+            // ignored
+        }
+    }
 
-        public MinValueAttribute(byte value) => Value = value;
+    public MinValueAttribute(byte value)
+    {
+        Value = value;
+    }
 
-        public MinValueAttribute(short value) => Value = value;
+    public MinValueAttribute(short value)
+    {
+        Value = value;
+    }
 
-        public MinValueAttribute(int value) => Value = value;
+    public MinValueAttribute(int value)
+    {
+        Value = value;
+    }
 
-        public MinValueAttribute(long value) => Value = value;
+    public MinValueAttribute(long value)
+    {
+        Value = value;
+    }
 
-        public MinValueAttribute(float value) => Value = value;
+    public MinValueAttribute(float value)
+    {
+        Value = value;
+    }
 
-        public MinValueAttribute(double value) => Value = value;
+    public MinValueAttribute(double value)
+    {
+        Value = value;
+    }
 
-        public MinValueAttribute(bool value) => Value = value;
+    public MinValueAttribute(bool value)
+    {
+        Value = value;
+    }
 
-        public MinValueAttribute(string value) => Value = value;
+    public MinValueAttribute(string value)
+    {
+        Value = value;
+    }
 
-        public MinValueAttribute(object value) => Value = value;
+    public MinValueAttribute(object value)
+    {
+        Value = value;
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Dynamic;
-using EasySoft.UtilityTools.Standard.Assists;
-using Newtonsoft.Json.Linq;
+﻿using EasySoft.UtilityTools.Standard.Assists;
 
 namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
@@ -18,23 +13,18 @@ public static class JObjectExtension
     /// <typeparam name="T">目标类型</typeparam>
     public static T CopyValueTo<T>(this JObject source, T target, bool ignoreCase = false)
     {
-        if (target == null)
-        {
-            throw new Exception("target disallow null");
-        }
+        if (target == null) throw new Exception("target disallow null");
 
         var targetProperties = target.GetType().GetProperties();
 
         var stop = source.First;
 
         foreach (var tp in targetProperties)
-        {
             do
             {
                 var c = ignoreCase ? tp.Name.ToLower().Equals(stop?.Path.ToLower()) : tp.Name.Equals(stop?.Path);
 
                 if (c)
-                {
                     if (stop?.Value<JProperty>()?.Value is JValue v)
                     {
                         var jsonValue = v.Value;
@@ -43,16 +33,11 @@ public static class JObjectExtension
 
                         tp.SetValue(target, realValue, null);
                     }
-                }
 
                 stop = stop?.Next;
 
-                if (stop == null)
-                {
-                    break;
-                }
+                if (stop == null) break;
             } while (stop != source.Last);
-        }
 
         return target;
     }

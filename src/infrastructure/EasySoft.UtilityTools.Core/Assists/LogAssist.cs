@@ -1,13 +1,20 @@
 ﻿using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Microsoft.Extensions.Logging;
 
 namespace EasySoft.UtilityTools.Core.Assists;
 
+/// <summary>
+/// LogAssist
+/// </summary>
 public static class LogAssist
 {
     private static ILogger? _logger;
 
+    /// <summary>
+    /// SetLogger
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <exception cref="Exception"></exception>
     public static void SetLogger(ILogger logger)
     {
         if (_logger != null) throw new Exception("logger has been set, it disallow set more than once.");
@@ -17,6 +24,11 @@ public static class LogAssist
 
     #region string
 
+    /// <summary>
+    /// GetLogger
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static ILogger GetLogger()
     {
         if (_logger == null) throw new Exception("logger has not set yet");

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
@@ -24,10 +23,7 @@ public class DecimalExtensions
         var str4 = ((long)(num * 100)).ToString(CultureInfo.InvariantCulture);
         var j = str4.Length;
 
-        if (j > 15)
-        {
-            return "溢出";
-        }
+        if (j > 15) return "溢出";
 
         str2 = str2.Substring(15 - j); //取出对应位数的str2的值。如：200.55,j为5所以str2=佰拾元角分 
 
@@ -38,7 +34,7 @@ public class DecimalExtensions
             var temp = Convert.ToInt32(str3); //从原num值中取出的值 
             string ch1; //数字的汉语读法 
 
-            if (i != (j - 3) && i != (j - 7) && i != (j - 11) && i != (j - 15))
+            if (i != j - 3 && i != j - 7 && i != j - 11 && i != j - 15)
             {
                 //当所取位数不为元、万、亿、万亿上的数字时 
                 if (str3 == "0")
@@ -51,7 +47,7 @@ public class DecimalExtensions
                 {
                     if (str3 != "0" && zero != 0)
                     {
-                        ch1 = $"零{(str1.AsSpan(temp * 1, 1).ToString())}";
+                        ch1 = $"零{str1.AsSpan(temp * 1, 1).ToString()}";
                         ch2 = str2.Substring(i, 1);
                         zero = 0;
                     }
@@ -106,25 +102,18 @@ public class DecimalExtensions
                 }
             }
 
-            if (i == (j - 11) || i == (j - 3))
-            {
+            if (i == j - 11 || i == j - 3)
                 //如果该位是亿位或元位，则必须写上 
                 ch2 = str2.Substring(i, 1);
-            }
 
             str5 = str5 + ch1 + ch2;
 
             if (i == j - 1 && str3 == "0")
-            {
                 //最后一位（分）为0时，加上“整” 
                 str5 = str5 + '整';
-            }
         }
 
-        if (num == 0)
-        {
-            str5 = "零元整";
-        }
+        if (num == 0) str5 = "零元整";
 
         return str5;
     }
