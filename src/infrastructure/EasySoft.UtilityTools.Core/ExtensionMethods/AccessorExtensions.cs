@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using EasySoft.UtilityTools.Core.Securities.Interfaces;
+﻿using EasySoft.UtilityTools.Core.Securities.Interfaces;
 
 namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 

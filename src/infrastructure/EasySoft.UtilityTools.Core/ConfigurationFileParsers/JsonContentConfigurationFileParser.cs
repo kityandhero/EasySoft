@@ -1,7 +1,4 @@
-﻿using System.Text.Json;
-using Microsoft.Extensions.Configuration;
-
-namespace EasySoft.UtilityTools.Core.ConfigurationFileParsers;
+﻿namespace EasySoft.UtilityTools.Core.ConfigurationFileParsers;
 
 internal class JsonContentConfigurationFileParser
 {

@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks;
-using EasySoft.UtilityTools.Standard.Assists;
+﻿using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Mime;
 
 namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 
+/// <summary>
+/// HttpResponseExtensions
+/// </summary>
 public static class HttpResponseExtensions
 {
     /// <summary>
@@ -31,6 +33,12 @@ public static class HttpResponseExtensions
         }
     }
 
+    /// <summary>
+    /// WriteObjectAsJsonAsync
+    /// </summary>
+    /// <param name="response"></param>
+    /// <param name="value"></param>
+    /// <exception cref="ArgumentNullException"></exception>
     public static async Task WriteObjectAsJsonAsync(
         this HttpResponse response,
         object value
@@ -45,11 +53,24 @@ public static class HttpResponseExtensions
         await streamWriter.WriteAsync(JsonConvertAssist.SerializeAndKeyToLower(value));
     }
 
+    /// <summary>
+    /// SetCookie
+    /// </summary>
+    /// <param name="response"></param>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
     public static void SetCookie(this HttpResponse response, string key, string value)
     {
         response.SetCookie(key, value, new CookieOptions());
     }
 
+    /// <summary>
+    /// SetCookie
+    /// </summary>
+    /// <param name="response"></param>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    /// <param name="options"></param>
     public static void SetCookie(this HttpResponse response, string key, string value, CookieOptions options)
     {
         response.Cookies.Append(key, value, options);

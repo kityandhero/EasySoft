@@ -1,10 +1,20 @@
 ﻿using EasySoft.UtilityTools.Core.ConfigurationSources;
-using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 
+/// <summary>
+/// JsonConfigurationExtensions
+/// </summary>
 public static class JsonConfigurationExtensions
 {
+    /// <summary>
+    /// AddJsonContent
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="jsonContent"></param>
+    /// <param name="jsonSource"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static IConfigurationBuilder AddJsonContent(
         this IConfigurationBuilder builder,
         string jsonContent,

@@ -1,15 +1,25 @@
 ﻿using EasySoft.UtilityTools.Core.ConfigurationFileParsers;
 using EasySoft.UtilityTools.Core.ConfigurationSources;
-using Microsoft.Extensions.Primitives;
 
 namespace EasySoft.UtilityTools.Core.ConfigurationProviders;
 
+/// <summary>
+/// JsonContentConfigurationProvider
+/// </summary>
 public class JsonContentConfigurationProvider : ConfigurationProvider, IDisposable
 {
     private readonly IDisposable? _changeTokenRegistration;
 
+    /// <summary>
+    /// Source
+    /// </summary>
     public JsonContentConfigurationSource Source { get; }
 
+    /// <summary>
+    /// JsonContentConfigurationProvider
+    /// </summary>
+    /// <param name="source"></param>
+    /// <exception cref="ArgumentNullException"></exception>
     public JsonContentConfigurationProvider(JsonContentConfigurationSource source)
     {
         Source = source ?? throw new ArgumentNullException(nameof(source));
@@ -39,6 +49,10 @@ public class JsonContentConfigurationProvider : ConfigurationProvider, IDisposab
         Source.PrepareRefresh();
     }
 
+    /// <summary>
+    /// Load
+    /// </summary>
+    /// <exception cref="FormatException"></exception>
     public override void Load()
     {
         try
@@ -57,6 +71,9 @@ public class JsonContentConfigurationProvider : ConfigurationProvider, IDisposab
         }
     }
 
+    /// <summary>
+    /// Dispose
+    /// </summary>
     public void Dispose()
     {
         _changeTokenRegistration?.Dispose();

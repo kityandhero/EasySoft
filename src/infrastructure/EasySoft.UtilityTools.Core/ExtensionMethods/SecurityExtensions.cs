@@ -4,6 +4,9 @@ using EasySoft.UtilityTools.Core.Securities.Interfaces;
 
 namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 
+/// <summary>
+/// SecurityExtensions
+/// </summary>
 public static class SecurityExtensions
 {
     /// <summary>

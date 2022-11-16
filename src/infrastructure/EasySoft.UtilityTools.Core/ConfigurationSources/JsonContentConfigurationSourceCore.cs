@@ -1,9 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿namespace EasySoft.UtilityTools.Core.ConfigurationSources;
 
-namespace EasySoft.UtilityTools.Core.ConfigurationSources;
-
+/// <summary>
+/// JsonContentConfigurationSourceCore
+/// </summary>
 public abstract class JsonContentConfigurationSourceCore : IConfigurationSource
 {
+    /// <summary>
+    /// JsonContentConfigurationSourceCore
+    /// </summary>
     protected JsonContentConfigurationSourceCore()
     {
         ReloadOnChange = false;
@@ -21,5 +25,10 @@ public abstract class JsonContentConfigurationSourceCore : IConfigurationSource
     /// </summary>
     public int ReloadDelay { get; set; }
 
+    /// <summary>
+    /// Build
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
     public abstract IConfigurationProvider Build(IConfigurationBuilder builder);
 }

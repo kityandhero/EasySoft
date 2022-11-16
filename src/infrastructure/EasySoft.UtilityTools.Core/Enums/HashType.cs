@@ -1,5 +1,8 @@
 namespace EasySoft.UtilityTools.Core.Enums;
 
+/// <summary>
+/// HashType
+/// </summary>
 public enum HashType
 {
     /// <summary>

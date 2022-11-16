@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Dynamic;
-using EasySoft.UtilityTools.Core.Results;
+﻿using EasySoft.UtilityTools.Core.Results;
 using EasySoft.UtilityTools.Standard.Assists;
-using Newtonsoft.Json.Linq;
 
 namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 
@@ -27,20 +24,13 @@ public static class ApiResultExtensions
                 IEnumerable? list = result.Data as IList;
 
                 if (list != null)
-                {
                     data.list = list;
-                }
                 else
-                {
                     data.data = result.Data;
-                }
             }
         }
 
-        if (result.ExtraData != null)
-        {
-            data.extra = result.ExtraData;
-        }
+        if (result.ExtraData != null) data.extra = result.ExtraData;
 
         return data;
     }

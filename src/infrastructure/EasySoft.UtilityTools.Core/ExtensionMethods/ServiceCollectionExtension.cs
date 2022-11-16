@@ -1,19 +1,31 @@
-﻿using System.Collections.Concurrent;
-using EasySoft.UtilityTools.Core.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+﻿using EasySoft.UtilityTools.Core.Interfaces;
 
 namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 
+/// <summary>
+/// ServiceCollectionExtension
+/// </summary>
 public static class ServiceCollectionExtension
 {
     private static readonly ConcurrentDictionary<string, char> RegisteredModels = new();
 
+    /// <summary>
+    /// HasRegistered
+    /// </summary>
+    /// <param name="_"></param>
+    /// <param name="modelName"></param>
+    /// <returns></returns>
     public static bool HasRegistered(this IServiceCollection _, string modelName)
     {
         return !RegisteredModels.TryAdd(modelName.ToLower(), '1');
     }
 
+    /// <summary>
+    /// ReplaceConfiguration
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    /// <returns></returns>
     public static IServiceCollection ReplaceConfiguration(
         this IServiceCollection services,
         IConfiguration configuration
@@ -22,6 +34,11 @@ public static class ServiceCollectionExtension
         return services.Replace(ServiceDescriptor.Singleton(configuration));
     }
 
+    /// <summary>
+    /// GetConfiguration
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static IConfiguration GetConfiguration(this IServiceCollection services)
     {
         var hostBuilderContext = services.GetSingletonInstanceOrNull<HostBuilderContext>();
@@ -32,6 +49,11 @@ public static class ServiceCollectionExtension
         return services.GetSingletonInstance<IConfiguration>();
     }
 
+    /// <summary>
+    /// GetWebApiRegistrar
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static IDependencyRegistrar GetWebApiRegistrar(this IServiceCollection services)
     {
         return services.GetSingletonInstance<IDependencyRegistrar>();

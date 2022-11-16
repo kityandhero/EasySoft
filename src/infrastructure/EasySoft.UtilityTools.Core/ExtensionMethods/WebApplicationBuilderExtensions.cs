@@ -1,12 +1,18 @@
-﻿using System.Collections.Concurrent;
-using Microsoft.AspNetCore.Builder;
+﻿namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 
-namespace EasySoft.UtilityTools.Core.ExtensionMethods;
-
+/// <summary>
+/// WebApplicationBuilderExtensions
+/// </summary>
 public static class WebApplicationBuilderExtensions
 {
     private static readonly ConcurrentDictionary<string, char> RegisteredModels = new();
 
+    /// <summary>
+    /// HasRegistered
+    /// </summary>
+    /// <param name="_"></param>
+    /// <param name="modelName"></param>
+    /// <returns></returns>
     public static bool HasRegistered(this WebApplicationBuilder _, string modelName)
     {
         return !RegisteredModels.TryAdd(modelName.ToLower(), '1');

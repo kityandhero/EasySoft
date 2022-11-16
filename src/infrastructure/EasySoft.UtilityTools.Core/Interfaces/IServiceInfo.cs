@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.UtilityTools.Core.Interfaces;
 
+/// <summary>
+/// IServiceInfo
+/// </summary>
 public interface IServiceInfo
 {
     /// <summary>
@@ -22,6 +25,9 @@ public interface IServiceInfo
     /// </summary>
     public string ShortName { get; }
 
+    /// <summary>
+    /// Version
+    /// </summary>
     public string Version { get; }
 
     /// <summary>

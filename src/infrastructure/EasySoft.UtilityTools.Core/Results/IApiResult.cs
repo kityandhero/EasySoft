@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace EasySoft.UtilityTools.Core.Results;
+﻿namespace EasySoft.UtilityTools.Core.Results;
 
 /// <summary>
 /// IApiResult
