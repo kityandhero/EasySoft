@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 
@@ -16,23 +14,23 @@ internal class JsonContentConfigurationFileParser
 
     private readonly Stack<string> _paths = new();
 
-    public static IDictionary<string, string> Parse(string input) =>
-        new JsonContentConfigurationFileParser().ParseString(input);
+    public static IDictionary<string, string> Parse(string input)
+    {
+        return new JsonContentConfigurationFileParser().ParseString(input);
+    }
 
     private IDictionary<string, string> ParseString(string input)
     {
         var jsonDocumentOptions = new JsonDocumentOptions
         {
             CommentHandling = JsonCommentHandling.Skip,
-            AllowTrailingCommas = true,
+            AllowTrailingCommas = true
         };
 
         using (var doc = JsonDocument.Parse(input, jsonDocumentOptions))
         {
             if (doc.RootElement.ValueKind != JsonValueKind.Object)
-            {
                 throw new FormatException("ValueKind not equal JsonValueKind.Object");
-            }
 
             VisitElement(doc.RootElement);
         }
@@ -52,10 +50,7 @@ internal class JsonContentConfigurationFileParser
             ExitContext();
         }
 
-        if (isEmpty && _paths.Count > 0)
-        {
-            _data[_paths.Peek()] = "";
-        }
+        if (isEmpty && _paths.Count > 0) _data[_paths.Peek()] = "";
     }
 
     private void VisitValue(JsonElement value)
@@ -86,10 +81,7 @@ internal class JsonContentConfigurationFileParser
             case JsonValueKind.False:
             case JsonValueKind.Null:
                 var key = _paths.Peek();
-                if (_data.ContainsKey(key))
-                {
-                    throw new FormatException("Error_KeyIsDuplicated, key");
-                }
+                if (_data.ContainsKey(key)) throw new FormatException("Error_KeyIsDuplicated, key");
 
                 _data[key] = value.ToString();
                 break;
@@ -99,8 +91,13 @@ internal class JsonContentConfigurationFileParser
         }
     }
 
-    private void EnterContext(string context) =>
+    private void EnterContext(string context)
+    {
         _paths.Push(_paths.Count > 0 ? _paths.Peek() + ConfigurationPath.KeyDelimiter + context : context);
+    }
 
-    private void ExitContext() => _paths.Pop();
+    private void ExitContext()
+    {
+        _paths.Pop();
+    }
 }

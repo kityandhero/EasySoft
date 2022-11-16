@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 using System.Dynamic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -15,9 +13,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.UtilityTools.Core.ExtensionMethods;
 
+/// <summary>
+/// ControllerBaseExtensions
+/// </summary>
 public static class ControllerBaseExtensions
 {
-    public static ActionResult WrapperExecutiveResult(
+    /// <summary>
+    /// Wrapper ExecutiveResult
+    /// </summary>
+    /// <param name="controller"></param>
+    /// <param name="result"></param>
+    /// <returns></returns>
+    public static IApiResult WrapperExecutiveResult(
         this ControllerBase controller,
         ExecutiveResult result
     )
@@ -30,7 +37,13 @@ public static class ControllerBaseExtensions
         });
     }
 
-    public static ActionResult WrapperExecutiveResult(
+    /// <summary>
+    /// Wrapper ExecutiveResult
+    /// </summary>
+    /// <param name="controller"></param>
+    /// <param name="result"></param>
+    /// <returns></returns>
+    public static IApiResult WrapperExecutiveResult(
         this ControllerBase controller,
         ExecutiveResult<object> result
     )
@@ -38,7 +51,13 @@ public static class ControllerBaseExtensions
         return !result.Success ? controller.Fail(result.Code) : controller.Success(result.Data);
     }
 
-    public static ActionResult WrapperExecutiveResult(
+    /// <summary>
+    /// Wrapper ExecutiveResult
+    /// </summary>
+    /// <param name="controller"></param>
+    /// <param name="result"></param>
+    /// <returns></returns>
+    public static IApiResult WrapperExecutiveResult(
         this ControllerBase controller,
         ExecutiveResult<ExpandoObject> result
     )
@@ -46,7 +65,15 @@ public static class ControllerBaseExtensions
         return !result.Success ? controller.Fail(result.Code) : controller.Success(result.Data);
     }
 
-    public static ActionResult WrapperExecutiveResult<T>(
+    /// <summary>
+    /// Wrapper ExecutiveResult
+    /// </summary>
+    /// <param name="controller"></param>
+    /// <param name="result"></param>
+    /// <param name="keyToLower"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static IApiResult WrapperExecutiveResult<T>(
         this ControllerBase controller,
         ExecutiveResult<T> result,
         bool keyToLower = true
@@ -57,7 +84,16 @@ public static class ControllerBaseExtensions
             : controller.Success(keyToLower ? result.Data.ToExpandoObject() : result.Data);
     }
 
-    public static ActionResult WrapperExecutiveResult<T>(
+    /// <summary>
+    /// Wrapper ExecutiveResult
+    /// </summary>
+    /// <param name="controller"></param>
+    /// <param name="result"></param>
+    /// <param name="dataHandler"></param>
+    /// <param name="extra"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static IApiResult WrapperExecutiveResult<T>(
         this ControllerBase controller,
         ExecutiveResult<T> result,
         Func<T, object> dataHandler,
@@ -74,7 +110,7 @@ public static class ControllerBaseExtensions
     /// <summary>
     /// Data
     /// </summary>
-    private static ActionResult Data(
+    private static IApiResult Data(
         this ControllerBase controller,
         ReturnCode code = ReturnCode.Ok,
         bool success = true,
@@ -84,10 +120,9 @@ public static class ControllerBaseExtensions
         bool camelCase = true
     )
     {
-        var result = new ApiResult(code, success, message, data, extraData)
-        {
-            CamelCase = camelCase
-        };
+        var result = new ApiResult(code, success, message, data, extraData);
+
+        result.SetCamelCase(camelCase);
 
         return result;
     }
@@ -95,7 +130,7 @@ public static class ControllerBaseExtensions
     /// <summary>
     /// Success
     /// </summary>
-    public static ActionResult Success(
+    public static IApiResult Success(
         this ControllerBase controller,
         object? data = null,
         object? extraData = null,
@@ -108,7 +143,7 @@ public static class ControllerBaseExtensions
     /// <summary>
     /// Fail
     /// </summary>
-    public static ActionResult Fail(
+    public static IApiResult Fail(
         this ControllerBase controller,
         ReturnCode code,
         string message = "",
@@ -121,7 +156,15 @@ public static class ControllerBaseExtensions
         return controller.Data(code, false, messageAdjust, data, extraData);
     }
 
-    public static ActionResult Fail(
+    /// <summary>
+    /// Fail
+    /// </summary>
+    /// <param name="controller"></param>
+    /// <param name="returnMessage"></param>
+    /// <param name="data"></param>
+    /// <param name="extraData"></param>
+    /// <returns></returns>
+    public static IApiResult Fail(
         this ControllerBase controller,
         ReturnMessage returnMessage,
         object? data = null,
@@ -138,7 +181,7 @@ public static class ControllerBaseExtensions
     /// <param name="list">      数据列表</param>
     /// <param name="extraData"> 额外数据</param>
     /// <param name="camelCase"></param>
-    public static ActionResult PagedData(
+    public static IApiResult PagedData(
         this ControllerBase controller,
         List<object> list,
         object? extraData = null,
@@ -158,7 +201,7 @@ public static class ControllerBaseExtensions
     /// <param name="total">     总数据数</param>
     /// <param name="other">     </param>
     /// <param name="camelCase"></param>
-    public static ActionResult PagedData(
+    public static IApiResult PagedData(
         this ControllerBase controller,
         List<object> list,
         int pageNo,
@@ -453,6 +496,11 @@ public static class ControllerBaseExtensions
         if (error != null) throw new ParamException(param1, true, new string[] { error });
     }
 
+    /// <summary>
+    /// Get Host
+    /// </summary>
+    /// <param name="c"></param>
+    /// <returns></returns>
     public static string GetHost(this ControllerBase c)
     {
         return c.Request.GetHost();
@@ -495,6 +543,12 @@ public static class ControllerBaseExtensions
         return names.Contains(name);
     }
 
+    /// <summary>
+    /// Get Param Value 
+    /// </summary>
+    /// <param name="controller"></param>
+    /// <param name="param"></param>
+    /// <returns></returns>
     public static async Task<string> GetParamValueAsync(this ControllerBase controller, string param)
     {
         var request = controller.Request;
@@ -508,21 +562,45 @@ public static class ControllerBaseExtensions
         return result ?? "";
     }
 
+    /// <summary>
+    /// Build Request Info
+    /// </summary>
+    /// <param name="controller"></param>
+    /// <returns></returns>
     public static RequestInfo BuildRequestInfo(this ControllerBase controller)
     {
         return controller.HttpContext.BuildRequestInfo();
     }
 
+    /// <summary>
+    /// Get Cookie
+    /// </summary>
+    /// <param name="controller"></param>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public static string GetCookie(this ControllerBase controller, string key)
     {
         return controller.HttpContext.Request.Cookies[key] ?? "";
     }
 
+    /// <summary>
+    /// Set Cookie
+    /// </summary>
+    /// <param name="controller"></param>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
     public static void SetCookie(this ControllerBase controller, string key, string value)
     {
         controller.HttpContext.SetCookie(key, value, new CookieOptions());
     }
 
+    /// <summary>
+    /// Set Cookie
+    /// </summary>
+    /// <param name="controller"></param>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    /// <param name="options"></param>
     public static void SetCookie(this ControllerBase controller, string key, string value, CookieOptions options)
     {
         controller.HttpContext.Response.Cookies.Append(key, value, options);

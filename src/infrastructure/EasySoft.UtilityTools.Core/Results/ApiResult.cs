@@ -1,92 +1,109 @@
 ﻿using EasySoft.UtilityTools.Standard.Enums;
-using EasySoft.UtilityTools.Standard.Mime;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EasySoft.UtilityTools.Core.Results
+namespace EasySoft.UtilityTools.Core.Results;
+
+/// <summary>
+/// CustomDataResult
+/// </summary>
+public class ApiResult : ActionResult, IApiResult
 {
+    private bool _camelCase = true;
+
+    /// <summary>
+    /// 返回码
+    /// </summary>
+    public int Code { get; set; }
+
+    /// <summary>
+    /// 是否成功
+    /// </summary>
+    public bool Success { get; set; }
+
+    /// <summary>
+    /// 消息文本
+    /// </summary>
+    public string Message { get; set; }
+
+    /// <summary>
+    /// 主要数据
+    /// </summary>
+    public object? Data { get; set; }
+
+    /// <summary>
+    /// 扩展数据
+    /// </summary>
+    public object? ExtraData { get; set; }
+
+    // /// <summary>
+    // /// application/json
+    // /// </summary>
+    // public string ContentType => MimeCollection.Json.ContentType;
+
     /// <summary>
     /// CustomDataResult
     /// </summary>
-    public class ApiResult : ActionResult
+    /// <param name="code"></param>
+    /// <param name="success"></param>
+    /// <param name="message"></param>
+    /// <param name="data"></param>
+    /// <param name="extraData"></param>
+    public ApiResult(
+        ReturnCode code = ReturnCode.Ok,
+        bool success = true,
+        string message = "success",
+        object? data = null,
+        object? extraData = null
+    )
     {
-        public bool CamelCase { get; set; }
+        Code = code.ToInt();
+        Success = success;
+        Message = message;
+        Data = data;
+        ExtraData = extraData;
+    }
 
-        /// <summary>
-        /// 返回码
-        /// </summary>
-        public int Code { get; set; }
+    /// <summary>
+    /// CustomDataResult
+    /// </summary>
+    /// <param name="code"></param>
+    /// <param name="success"></param>
+    /// <param name="message"></param>
+    /// <param name="data"></param>
+    /// <param name="extraData"></param>
+    public ApiResult(
+        int code = 200,
+        bool success = true,
+        string message = "success",
+        object? data = null,
+        object? extraData = null
+    )
+    {
+        Code = code;
+        Success = success;
+        Message = message;
+        Data = data;
+        ExtraData = extraData;
+    }
 
-        /// <summary>
-        /// 是否成功
-        /// </summary>
-        public bool Success { get; set; }
+    /// <summary>
+    /// set camelCase
+    /// </summary>
+    /// <param name="camelCase"></param>
+    /// <returns></returns>
+    public ApiResult SetCamelCase(bool camelCase)
+    {
+        _camelCase = camelCase;
 
-        /// <summary>
-        /// 消息文本
-        /// </summary>
-        public string Message { get; set; }
+        return this;
+    }
 
-        /// <summary>
-        /// 主要数据
-        /// </summary>
-        public object? Data { get; set; }
-
-        /// <summary>
-        /// 扩展数据
-        /// </summary>
-        public object? ExtraData { get; set; }
-
-        /// <summary>
-        /// application/json
-        /// </summary>
-        public string ContentType => MimeCollection.Json.ContentType;
-
-        /// <summary>
-        /// CustomDataResult
-        /// </summary>
-        /// <param name="code"></param>
-        /// <param name="success"></param>
-        /// <param name="message"></param>
-        /// <param name="data"></param>
-        /// <param name="extraData"></param>
-        public ApiResult(
-            ReturnCode code = ReturnCode.Ok,
-            bool success = true,
-            string message = "success",
-            object? data = null,
-            object? extraData = null
-        )
-        {
-            CamelCase = true;
-            Code = code.ToInt();
-            Success = success;
-            Message = message;
-            Data = data;
-            ExtraData = extraData;
-        }
-
-        /// <summary>
-        /// CustomDataResult
-        /// </summary>
-        /// <param name="code"></param>
-        /// <param name="success"></param>
-        /// <param name="message"></param>
-        /// <param name="data"></param>
-        /// <param name="extraData"></param>
-        public ApiResult(
-            int code = 200,
-            bool success = true,
-            string message = "success",
-            object? data = null,
-            object? extraData = null
-        )
-        {
-            CamelCase = true;
-            Code = code;
-            Success = success;
-            Message = message;
-            Data = data;
-            ExtraData = extraData;
-        }
+    /// <summary>
+    /// 获取是否使用 camelCase
+    /// </summary>
+    /// <returns></returns>
+    public bool GetCamelCase()
+    {
+        return _camelCase;
     }
 }

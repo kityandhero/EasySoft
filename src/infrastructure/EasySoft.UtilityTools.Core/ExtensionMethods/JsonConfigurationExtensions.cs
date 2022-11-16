@@ -1,5 +1,4 @@
-﻿using System;
-using EasySoft.UtilityTools.Core.ConfigurationSources;
+﻿using EasySoft.UtilityTools.Core.ConfigurationSources;
 using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.UtilityTools.Core.ExtensionMethods;
@@ -39,15 +38,9 @@ public static class JsonConfigurationExtensions
         string jsonContent
     )
     {
-        if (builder == null)
-        {
-            throw new ArgumentNullException(nameof(builder));
-        }
+        if (builder == null) throw new ArgumentNullException(nameof(builder));
 
-        if (string.IsNullOrEmpty(jsonContent))
-        {
-            throw new Exception("json content disallow empty");
-        }
+        if (string.IsNullOrEmpty(jsonContent)) throw new Exception("json content disallow empty");
 
         return builder.AddJsonContent(s =>
         {
@@ -68,10 +61,7 @@ public static class JsonConfigurationExtensions
         Action<JsonContentConfigurationSource> configureSource
     )
     {
-        if (builder.Sources.Count > 1)
-        {
-            throw new Exception("AddJsonContent disallow more than one configure source");
-        }
+        if (builder.Sources.Count > 1) throw new Exception("AddJsonContent disallow more than one configure source");
 
         return builder.Add(configureSource);
     }

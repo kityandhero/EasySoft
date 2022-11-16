@@ -1,5 +1,4 @@
-﻿using System;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Core.ExtensionMethods;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 

@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Linq;
 using EasySoft.UtilityTools.Standard.Entity;
 using Microsoft.AspNetCore.Http;
 
@@ -14,24 +13,15 @@ public static class HttpContextExtensions
     {
         var ip = httpContext.Request.Headers["Cdn-Src-Ip"].FirstOrDefault();
 
-        if (!string.IsNullOrEmpty(ip))
-        {
-            return IpReplace(ip);
-        }
+        if (!string.IsNullOrEmpty(ip)) return IpReplace(ip);
 
         ip = httpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
 
-        if (!string.IsNullOrEmpty(ip))
-        {
-            return IpReplace(ip);
-        }
+        if (!string.IsNullOrEmpty(ip)) return IpReplace(ip);
 
         ip = httpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString() ?? "";
 
-        if (ip == "::1")
-        {
-            ip = "127.0.0.1";
-        }
+        if (ip == "::1") ip = "127.0.0.1";
 
         return ip;
     }
@@ -51,14 +41,11 @@ public static class HttpContextExtensions
         return IpReplace(ip);
     }
 
-    static string IpReplace(string ip)
+    private static string IpReplace(string ip)
     {
         //::ffff:
         //::ffff:192.168.2.131 这种IP处理
-        if (ip.Contains("::ffff:"))
-        {
-            ip = ip.Replace("::ffff:", "");
-        }
+        if (ip.Contains("::ffff:")) ip = ip.Replace("::ffff:", "");
 
         return ip;
     }

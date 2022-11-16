@@ -97,23 +97,32 @@ public static class WebApplicationBuilderExtensions
                 return controllerAction?.ControllerName + "-" + controllerAction?.ActionName;
             });
 
-            var entryAssemblyName = Assembly.GetEntryAssembly()?.GetName().Name;
+            #region IncludeXmlComments
 
-            if (!string.IsNullOrWhiteSpace(entryAssemblyName))
+            var assemblyNames = new List<string>
             {
-                var filePath = Path.Combine(AppContext.BaseDirectory, $"{entryAssemblyName}.xml");
+                Assembly.GetEntryAssembly()?.GetName().Name ?? ""
+            };
 
-                LogAssist.Prompt(
-                    $"The swagger include xml comments file is {filePath}."
-                );
+            Assembly.GetEntryAssembly()?.GetReferencedAssemblies().ForEach(o => { assemblyNames.Add(o.Name ?? ""); });
 
-                if (filePath.ExistFile())
-                    c.IncludeXmlComments(filePath, true);
-                else
-                    LogAssist.Warning(
-                        $"The swagger include xml comments file is not exist."
+            var assemblyNameAdjust = assemblyNames.ToListFilterNullOrWhiteSpace().Distinct().ToList();
+
+            if (assemblyNameAdjust.Any())
+                assemblyNameAdjust.ForEach(o =>
+                {
+                    var filePath = Path.Combine(AppContext.BaseDirectory, $"{o}.xml");
+
+                    if (!filePath.ExistFile()) return;
+
+                    LogAssist.Prompt(
+                        $"The swagger include xml comments file: {filePath}."
                     );
-            }
+
+                    c.IncludeXmlComments(filePath, true);
+                });
+
+            #endregion
 
             if (SwaggerConfigure.DescribeAllParametersInCamelCase) c.DescribeAllParametersInCamelCase();
 

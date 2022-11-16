@@ -1,7 +1,4 @@
-﻿using EasySoft.UtilityTools.Core.ExtensionMethods;
-using Microsoft.AspNetCore.Mvc;
-
-namespace EasySoft.Simple.Single.Application.Areas.AreaTest.Controllers;
+﻿namespace EasySoft.Simple.Single.Application.Areas.AreaTest.Controllers;
 
 /// <summary>
 /// AreaTestController
@@ -15,7 +12,7 @@ public class AreaTestController : AreaControllerCore
     /// DoTest
     /// </summary>
     /// <returns></returns>
-    public ActionResult DoTest()
+    public IApiResult DoTest()
     {
         var a = this.ParamAsync("a", 0);
 

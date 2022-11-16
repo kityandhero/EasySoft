@@ -91,6 +91,18 @@ public static class TypeExtensions
     /// </summary>
     /// <typeparam name="T">目标类型</typeparam>
     /// <returns></returns>
+    public static bool ExistAttribute<T>(
+        this object source
+    ) where T : class
+    {
+        return source.ContainAttribute<T>();
+    }
+
+    /// <summary>
+    /// 判断是否包含该类型特性
+    /// </summary>
+    /// <typeparam name="T">目标类型</typeparam>
+    /// <returns></returns>
     public static bool ContainAttribute<T>(
         this object source,
         string nameFilter = "",

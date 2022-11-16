@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Threading;
 using EasySoft.UtilityTools.Core.ConfigurationFileParsers;
 using EasySoft.UtilityTools.Core.ConfigurationSources;
@@ -21,7 +20,6 @@ public class JsonContentConfigurationProvider : ConfigurationProvider, IDisposab
         Source.OnJsonContentChanged += TriggerWhenJsonContentChanged;
 
         if (Source.ReloadOnChange)
-        {
             _changeTokenRegistration = ChangeToken.OnChange(
                 () =>
                 {
@@ -37,7 +35,6 @@ public class JsonContentConfigurationProvider : ConfigurationProvider, IDisposab
 
                     OnReload();
                 });
-        }
     }
 
     private void TriggerWhenJsonContentChanged()

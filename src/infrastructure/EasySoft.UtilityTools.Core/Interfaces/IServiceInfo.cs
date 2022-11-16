@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace EasySoft.UtilityTools.Core.Interfaces;
+﻿namespace EasySoft.UtilityTools.Core.Interfaces;
 
 public interface IServiceInfo
 {

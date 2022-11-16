@@ -1,7 +1,7 @@
 ﻿namespace EasySoft.Core.Swagger.Configures;
 
 /// <summary>
-/// 开发助手配置
+/// SwaggerC 配置
 /// </summary>
 public static class SwaggerConfigure
 {
@@ -17,7 +17,7 @@ public static class SwaggerConfigure
 
     static SwaggerConfigure()
     {
-        DescribeAllParametersInCamelCase = false;
+        DescribeAllParametersInCamelCase = true;
 
         UseNewtonsoft = true;
     }

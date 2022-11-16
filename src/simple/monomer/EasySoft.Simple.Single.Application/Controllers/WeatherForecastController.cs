@@ -1,8 +1,6 @@
 using System.ComponentModel;
 using Asp.Versioning;
 using EasySoft.Simple.Single.Application.Common;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-using EasySoft.UtilityTools.Core.Results;
 using Microsoft.AspNetCore.Mvc;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
@@ -71,7 +69,7 @@ public class WeatherForecastController : ControllerCore
     /// </summary>
     /// <returns></returns>
     [HttpGet("get3", Name = "GetWeatherForecast3")]
-    public ActionResult Get3()
+    public IApiResult Get3()
     {
         var a = this.ParamAsync("a");
 
@@ -91,7 +89,7 @@ public class WeatherForecastController : ControllerCore
     /// </summary>
     /// <returns></returns>
     [HttpGet("get4", Name = "GetWeatherForecast4")]
-    public ActionResult Get4()
+    public IApiResult Get4()
     {
         var a = this.ParamAsync("a", 0);
 

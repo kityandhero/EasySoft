@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.CacheCore.interfaces;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Simple.Single.Application.Models;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 

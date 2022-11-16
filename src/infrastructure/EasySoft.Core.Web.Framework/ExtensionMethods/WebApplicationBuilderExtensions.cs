@@ -418,12 +418,6 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.Print();
 
-        app.UseAutoMigrate();
-
-        app.UseAutoEnsureCreated();
-
-        StartupWarnMessageAssist.Print();
-
         LogAssist.Hint(
             AuxiliaryConfigure.BuildHintMessage().ToArray()
         );
@@ -431,6 +425,12 @@ public static class WebApplicationBuilderExtensions
         LogAssist.Hint(
             SwaggerConfigure.BuildHintMessage().ToArray()
         );
+
+        app.UseAutoMigrate();
+
+        app.UseAutoEnsureCreated();
+
+        StartupWarnMessageAssist.Print();
 
         return app;
     }

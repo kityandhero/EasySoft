@@ -1,11 +1,12 @@
 ﻿using EasySoft.Core.Swagger.ConfigAssist;
 using EasySoft.Core.Swagger.ConfigCollection;
+using EasySoft.UtilityTools.Core.Results;
 
 namespace EasySoft.Core.Swagger.Controllers;
 
 public class SwaggerConfigAuxiliaryController : BasicController
 {
-    public IActionResult GetTemplate()
+    public IApiResult GetTemplate()
     {
         var data = new SwaggerConfig();
 

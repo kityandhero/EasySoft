@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Mime;
@@ -22,10 +21,7 @@ public static class HttpResponseExtensions
         TValue value
     )
     {
-        if (response == null)
-        {
-            throw new ArgumentNullException(nameof(response));
-        }
+        if (response == null) throw new ArgumentNullException(nameof(response));
 
         response.ContentType = MimeCollection.Json.ContentType;
 
@@ -42,10 +38,7 @@ public static class HttpResponseExtensions
         object value
     )
     {
-        if (response == null)
-        {
-            throw new ArgumentNullException(nameof(response));
-        }
+        if (response == null) throw new ArgumentNullException(nameof(response));
 
         response.ContentType = MimeCollection.Json.ContentType;
 

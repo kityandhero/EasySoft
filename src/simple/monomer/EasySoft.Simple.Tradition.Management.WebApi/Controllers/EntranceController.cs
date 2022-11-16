@@ -1,6 +1,7 @@
 ﻿using EasySoft.Simple.Tradition.Management.WebApi.Common;
 using EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
+using EasySoft.UtilityTools.Core.Results;
 
 namespace EasySoft.Simple.Tradition.Management.WebApi.Controllers;
 
@@ -28,7 +29,10 @@ public class EntranceController : ControllerCore
     /// <returns></returns>
     [Route("signIn")]
     [HttpPost]
-    public async Task<IActionResult> SignIn(SignInDto signInDto)
+    // [ProducesResponseType(typeof(IApiResult), 200)]
+    // [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
+    // [ProducesResponseType(500)]
+    public async Task<IApiResult> SignIn(SignInDto signInDto)
     {
         var result = await _userService.SignInAsync(signInDto);
 

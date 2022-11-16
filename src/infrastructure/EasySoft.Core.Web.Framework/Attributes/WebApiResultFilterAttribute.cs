@@ -33,7 +33,7 @@ public sealed class WebApiResultFilterAttribute : ActionFilterAttribute
 
             context.Result = new JsonResult(
                 d,
-                JsonConvertAssist.CreateJsonSerializerSettings(result.CamelCase)
+                JsonConvertAssist.CreateJsonSerializerSettings(result.GetCamelCase())
             );
         }
         else
