@@ -43,12 +43,12 @@ public class ApiResult : ApiResult<object, object>, IApiResult
     ) : base(code, success, message, data, extraData)
     {
     }
-}  
+}
 
 /// <summary>
 /// ApiResult
 /// </summary>
-public class ApiResult<TData> : ApiResult<TData,object>, IApiResult<TData>
+public class ApiResult<TData> : ApiResult<TData, object>, IApiResult<TData>
 {
     /// <summary>
     /// CustomDataResult
@@ -169,11 +169,6 @@ public class ApiResult<TData, TExtraData> : ActionResult, IApiResult<TData, TExt
         Data = data;
         ExtraData = extraData;
     }
-
-    // protected ApiResult()
-    // {
-    //     throw new NotImplementedException();
-    // }
 
     /// <summary>
     /// set camelCase

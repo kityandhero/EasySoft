@@ -19,6 +19,7 @@ global using EasySoft.Core.Web.Framework.ExtensionMethods;
 global using EasySoft.UtilityTools.Core.ExtensionMethods;
 global using EasySoft.UtilityTools.Core.Results;
 global using EasySoft.UtilityTools.Standard.Competence;
+global using EasySoft.UtilityTools.Standard.Enums;
 global using Masuit.Tools;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;

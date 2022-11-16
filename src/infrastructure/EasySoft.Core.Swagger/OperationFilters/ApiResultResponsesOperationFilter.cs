@@ -74,15 +74,6 @@ public class ApiResultResponsesOperationFilter : IOperationFilter
                 useTypeGeneric = true;
                 supplementApiResult = true;
             }
-
-            if (supplementApiResult)
-                if (type.FullName != typeof(IApiResult).FullName && type.FullName != typeof(ApiResult).FullName)
-                {
-                    if (useTypeGeneric)
-                        SwaggerConfigure.RuntimeSchemaType.Add(typeGeneric);
-                    else
-                        SwaggerConfigure.RuntimeSchemaType.Add(type);
-                }
         }
 
         var abnormalResponseCollection = SwaggerConfigure.AbnormalResponseCollection;

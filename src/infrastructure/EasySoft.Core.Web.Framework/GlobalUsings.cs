@@ -51,6 +51,7 @@ global using EasySoft.UtilityTools.Standard.Enums;
 global using EasySoft.UtilityTools.Standard.Exceptions;
 global using EasySoft.UtilityTools.Standard.ExtensionMethods;
 global using EasySoft.UtilityTools.Standard.Result;
+global using Masuit.Tools.Reflection;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Hosting;
 global using Microsoft.AspNetCore.Html;

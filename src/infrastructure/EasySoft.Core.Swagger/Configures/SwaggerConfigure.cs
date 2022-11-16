@@ -26,11 +26,6 @@ public static class SwaggerConfigure
     public static ICollection<Type> ExternalSchemaType { get; }
 
     /// <summary>
-    /// RuntimeSchemaType
-    /// </summary>
-    internal static ISet<Type> RuntimeSchemaType { get; }
-
-    /// <summary>
     /// 全局参数
     /// </summary>
     public static ICollection<OpenApiParameter> GeneralParameters { get; }
@@ -51,7 +46,6 @@ public static class SwaggerConfigure
         EnableAnnotations = true;
         UseNewtonsoft = true;
         ExternalSchemaType = new List<Type>();
-        RuntimeSchemaType = new HashSet<Type>();
         GeneralParameters = new List<OpenApiParameter>();
         GeneralResponseHeaders = new Dictionary<string, OpenApiHeader>();
         AbnormalResponseCollection = new Dictionary<string, OpenApiResponse>();

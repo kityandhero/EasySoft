@@ -1,7 +1,6 @@
 ﻿using EasySoft.Simple.Tradition.Management.WebApi.Common;
 using EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
-using EasySoft.UtilityTools.Standard.Enums;
 
 namespace EasySoft.Simple.Tradition.Management.WebApi.Controllers;
 
@@ -82,7 +81,7 @@ public class EntranceController : ControllerCore
     /// <returns></returns>
     [Route("test2")]
     [HttpPost]
-    public IApiResult<UserDto, UserDto> Test2()
+    public ApiResult<UserDto, UserDto> Test2()
     {
         return new ApiResult<UserDto, UserDto>(ReturnCode.Ok)
         {
