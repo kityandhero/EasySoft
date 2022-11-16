@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.Infrastructure.Configures;
 using EasySoft.Core.Swagger.Configures;
+using EasySoft.Core.Swagger.ModelConventions;
 using EasySoft.Core.Web.Framework.Attributes;
 using EasySoft.Core.Web.Framework.Filters;
 
@@ -77,6 +78,8 @@ public static class WebApplicationBuilderExtensions
                 option =>
                 {
                     option.EnableEndpointRouting = false;
+
+                    option.Conventions.Add(new ApiExplorerGroupPerVersionConvention());
 
                     if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.EasyToken &&
                         !FlagAssist.EasyTokenMiddlewareModeSwitch)
