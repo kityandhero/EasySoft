@@ -35,14 +35,20 @@ public static class SwaggerConfigure
     /// </summary>
     public static IDictionary<string, OpenApiHeader> GeneralResponseHeaders { get; }
 
+    /// <summary>
+    /// AbnormalResponseCollection
+    /// </summary>
+    public static IDictionary<string, OpenApiResponse> AbnormalResponseCollection { get; }
+
     static SwaggerConfigure()
     {
         DescribeAllParametersInCamelCase = true;
         EnableAnnotations = true;
         UseNewtonsoft = true;
-        ExternalSchemaType = new List<Type>() { typeof(IApiResult), typeof(ApiResult) };
+        ExternalSchemaType = new List<Type>();
         GeneralParameters = new List<OpenApiParameter>();
         GeneralResponseHeaders = new Dictionary<string, OpenApiHeader>();
+        AbnormalResponseCollection = new Dictionary<string, OpenApiResponse>();
     }
 
     /// <summary>

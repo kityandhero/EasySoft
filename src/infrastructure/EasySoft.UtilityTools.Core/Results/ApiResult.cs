@@ -4,9 +4,51 @@ using EasySoft.UtilityTools.Standard.Enums;
 namespace EasySoft.UtilityTools.Core.Results;
 
 /// <summary>
+/// ApiResult
+/// </summary>
+public class ApiResult : ApiResult<object, object>, IApiResult
+{
+    /// <summary>
+    /// CustomDataResult
+    /// </summary>
+    /// <param name="code"></param>
+    /// <param name="success"></param>
+    /// <param name="message"></param>
+    /// <param name="data"></param>
+    /// <param name="extraData"></param>
+    public ApiResult(
+        ReturnCode code = ReturnCode.Ok,
+        bool success = true,
+        string message = "success",
+        object? data = default,
+        object? extraData = default
+    ) : base(code, success, message, data, extraData)
+    {
+    }
+
+    /// <summary>
+    /// CustomDataResult
+    /// </summary>
+    /// <param name="code"></param>
+    /// <param name="success"></param>
+    /// <param name="message"></param>
+    /// <param name="data"></param>
+    /// <param name="extraData"></param>
+    public ApiResult(
+        int code = 200,
+        bool success = true,
+        string message = "success",
+        object? data = default,
+        object? extraData = default
+    ) : base(code, success, message, data, extraData)
+    {
+    }
+}
+
+/// <summary>
 /// CustomDataResult
 /// </summary>
-public class ApiResult : ActionResult, IApiResult
+public class ApiResult<TData, TExtraData> : ActionResult, IApiResult<TData, TExtraData>
 {
     private bool _camelCase = true;
 
@@ -32,18 +74,13 @@ public class ApiResult : ActionResult, IApiResult
     /// 主要数据
     /// </summary>
     [Description("主要数据")]
-    public object? Data { get; set; }
+    public TData? Data { get; set; }
 
     /// <summary>
     /// 扩展数据
     /// </summary>
     [Description("扩展数据")]
-    public object? ExtraData { get; set; }
-
-    // /// <summary>
-    // /// application/json
-    // /// </summary>
-    // public string ContentType => MimeCollection.Json.ContentType;
+    public TExtraData? ExtraData { get; set; }
 
     /// <summary>
     /// CustomDataResult
@@ -57,8 +94,8 @@ public class ApiResult : ActionResult, IApiResult
         ReturnCode code = ReturnCode.Ok,
         bool success = true,
         string message = "success",
-        object? data = null,
-        object? extraData = null
+        TData? data = default,
+        TExtraData? extraData = default
     )
     {
         Code = code.ToInt();
@@ -80,8 +117,8 @@ public class ApiResult : ActionResult, IApiResult
         int code = 200,
         bool success = true,
         string message = "success",
-        object? data = null,
-        object? extraData = null
+        TData? data = default,
+        TExtraData? extraData = default
     )
     {
         Code = code;
@@ -91,16 +128,19 @@ public class ApiResult : ActionResult, IApiResult
         ExtraData = extraData;
     }
 
+    // protected ApiResult()
+    // {
+    //     throw new NotImplementedException();
+    // }
+
     /// <summary>
     /// set camelCase
     /// </summary>
     /// <param name="camelCase"></param>
     /// <returns></returns>
-    public ApiResult SetCamelCase(bool camelCase)
+    public void SetCamelCase(bool camelCase)
     {
         _camelCase = camelCase;
-
-        return this;
     }
 
     /// <summary>

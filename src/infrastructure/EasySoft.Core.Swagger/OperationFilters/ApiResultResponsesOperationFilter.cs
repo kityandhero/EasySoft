@@ -40,32 +40,50 @@ public class ApiResultResponsesOperationFilter : IOperationFilter
                 supplementApiResult = true;
         }
 
+        var abnormalResponseCollection = SwaggerConfigure.AbnormalResponseCollection;
+
+        if (!abnormalResponseCollection.Keys.Contains(StatusCodes.Status500InternalServerError.ToString()))
+            abnormalResponseCollection.Add(new KeyValuePair<string, OpenApiResponse>(
+                StatusCodes.Status500InternalServerError.ToString(),
+                new OpenApiResponse()
+                {
+                    Description = "Internal Server Error"
+                }
+            ));
+
+        abnormalResponseCollection.ForEach(o =>
+        {
+            if (o.Key == StatusCodes.Status200OK.ToString()) return;
+
+            if (!operation.Responses.Keys.Contains(o.Key))
+                operation.Responses.Add(o);
+        });
+
         operation.Responses.ForEach(o =>
         {
             if (o.Key != StatusCodes.Status200OK.ToString()) return;
 
             SwaggerConfigure.GeneralResponseHeaders.ForEach(one => { o.Value.Headers.Add(one.Key, one.Value); });
 
-            if (supplementApiResult)
+            if (!supplementApiResult) return;
+
+            var openApiMediaType = new OpenApiMediaType()
             {
-                var openApiMediaType = new OpenApiMediaType()
+                Schema = new OpenApiSchema()
                 {
-                    Schema = new OpenApiSchema()
+                    Reference = new OpenApiReference()
                     {
-                        Reference = new OpenApiReference()
-                        {
-                            Type = ReferenceType.Schema,
-                            Id = nameof(IApiResult)
-                        }
+                        Type = ReferenceType.Schema,
+                        Id = nameof(IApiResult)
                     }
-                };
+                }
+            };
 
-                o.Value.Content.Add(MimeCollection.TextPlain.ContentType, openApiMediaType);
+            o.Value.Content.Add(MimeCollection.TextPlain.ContentType, openApiMediaType);
 
-                o.Value.Content.Add(MimeCollection.ApplicationJson.ContentType, openApiMediaType);
+            o.Value.Content.Add(MimeCollection.ApplicationJson.ContentType, openApiMediaType);
 
-                o.Value.Content.Add(MimeCollection.TextJson.ContentType, openApiMediaType);
-            }
+            o.Value.Content.Add(MimeCollection.TextJson.ContentType, openApiMediaType);
         });
     }
 }

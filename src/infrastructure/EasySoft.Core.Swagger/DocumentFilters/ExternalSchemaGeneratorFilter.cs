@@ -15,7 +15,12 @@ public sealed class ExternalSchemaGeneratorFilter : IDocumentFilter
     /// <param name="context"></param>
     public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
     {
-        SwaggerConfigure.ExternalSchemaType.ForEach(o =>
+        var schemaTypes = SwaggerConfigure.ExternalSchemaType.ToList();
+
+        schemaTypes.Add(typeof(IApiResult));
+        schemaTypes.Add(typeof(ApiResult));
+
+        schemaTypes.ForEach(o =>
         {
             if (!swaggerDoc.Components.Schemas.Keys.Contains(o.Name))
                 context.SchemaGenerator.GenerateSchema(o, context.SchemaRepository);

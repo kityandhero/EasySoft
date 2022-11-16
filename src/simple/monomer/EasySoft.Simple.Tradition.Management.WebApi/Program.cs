@@ -6,10 +6,10 @@ using EasySoft.Simple.Tradition.Data.EntityConfigures;
 using EasySoft.Simple.Tradition.Management.WebApi.Security;
 using EasySoft.Simple.Tradition.Service.Services.Implementations;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
-using Masuit.Tools;
-using Microsoft.OpenApi.Models;
 
 AuxiliaryConfigure.PromptStartupExecuteMessage = false;
+
+SwaggerConfigure.ExternalSchemaType.Add(typeof(Task<ApiResult>));
 
 SwaggerConfigure.GeneralParameters.AddRange(new OpenApiParameter()
     {

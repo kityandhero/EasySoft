@@ -5,7 +5,16 @@ namespace EasySoft.UtilityTools.Core.Results;
 /// <summary>
 /// IApiResult
 /// </summary>
-public interface IApiResult : IActionResult
+public interface IApiResult : IApiResult<object, object>
+{
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="TData"></typeparam>
+/// <typeparam name="TExtraData"></typeparam>
+public interface IApiResult<TData, TExtraData> : IActionResult
 {
     /// <summary>
     /// 返回码
@@ -29,20 +38,20 @@ public interface IApiResult : IActionResult
     /// 主要数据
     /// </summary>
     [Description("主要数据")]
-    object? Data { get; set; }
+    TData? Data { get; set; }
 
     /// <summary>
     /// 扩展数据
     /// </summary>
     [Description("扩展数据")]
-    object? ExtraData { get; set; }
+    TExtraData? ExtraData { get; set; }
 
     /// <summary>
     /// Set CamelCase
     /// </summary>
     /// <param name="camelCase"></param>
     /// <returns></returns>
-    ApiResult SetCamelCase(bool camelCase);
+    void SetCamelCase(bool camelCase);
 
     /// <summary>
     /// Get CamelCase

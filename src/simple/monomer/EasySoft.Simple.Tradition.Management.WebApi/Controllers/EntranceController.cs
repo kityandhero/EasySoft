@@ -1,7 +1,6 @@
 ﻿using EasySoft.Simple.Tradition.Management.WebApi.Common;
 using EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
-using EasySoft.UtilityTools.Core.Results;
 
 namespace EasySoft.Simple.Tradition.Management.WebApi.Controllers;
 
