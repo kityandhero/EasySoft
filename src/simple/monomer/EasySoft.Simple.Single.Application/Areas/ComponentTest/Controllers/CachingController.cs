@@ -2,7 +2,6 @@
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Simple.Single.Application.Models;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 

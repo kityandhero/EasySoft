@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
+﻿namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 
 /// <summary>
 /// RemoteErrorLogController

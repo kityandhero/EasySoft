@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.EasyToken.AccessControl;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Simple.Single.Application.Areas.AuthTest.Controllers;
 

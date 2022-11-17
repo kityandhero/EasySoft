@@ -1,6 +1,5 @@
 ﻿using System.Text.Encodings.Web;
 using EasySoft.Simple.Single.Application.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 

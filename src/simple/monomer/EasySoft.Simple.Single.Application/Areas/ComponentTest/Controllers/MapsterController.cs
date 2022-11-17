@@ -2,7 +2,6 @@
 using EasySoft.Simple.Single.Application.DataTransfer;
 using Mapster;
 using MapsterMapper;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 

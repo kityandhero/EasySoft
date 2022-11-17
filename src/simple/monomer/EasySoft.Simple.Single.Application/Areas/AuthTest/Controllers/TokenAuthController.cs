@@ -5,7 +5,6 @@ using EasySoft.Core.DynamicConfig.Assists;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.PermissionVerification.Attributes;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Simple.Single.Application.Areas.AuthTest.Controllers;
 

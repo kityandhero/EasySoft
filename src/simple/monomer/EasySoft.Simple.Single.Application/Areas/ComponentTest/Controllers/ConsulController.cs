@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using EasySoft.Core.ConsulConfigCenterClient.Assists;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 

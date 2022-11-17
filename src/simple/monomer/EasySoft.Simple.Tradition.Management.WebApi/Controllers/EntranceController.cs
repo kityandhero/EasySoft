@@ -60,48 +60,4 @@ public class EntranceController : ControllerCore
                 token = o.UserId.ToToken()
             });
     }
-
-    /// <summary>
-    /// Test1
-    /// </summary>
-    /// <returns></returns>
-    [Route("test1")]
-    [HttpPost]
-    public IApiResult<UserDto> Test1()
-    {
-        return new ApiResult<UserDto>(ReturnCode.Ok)
-        {
-            Data = new UserDto()
-        };
-    }
-
-    /// <summary>
-    /// Test2
-    /// </summary>
-    /// <returns></returns>
-    [Route("test2")]
-    [HttpPost]
-    public ApiResult<UserDto, UserDto> Test2()
-    {
-        var result = new ApiResult<UserDto, UserDto>(ReturnCode.Ok)
-        {
-            Data = new UserDto(),
-            ExtraData = new UserDto()
-        };
-
-        // result.SetCamelCase(false);
-
-        return result;
-    }
-
-    /// <summary>
-    /// Test3
-    /// </summary>
-    /// <returns></returns>
-    [Route("test3")]
-    [HttpPost]
-    public IActionResult Test3()
-    {
-        return Content("success");
-    }
 }
