@@ -95,7 +95,7 @@ public static class WebApplicationBuilderExtensions
                         option.Filters.Add<PermissionFilter>();
 
                     // 设置及接口数据返回格式
-                    option.Filters.Add<WebApiResultFilterAttribute>();
+                    option.Filters.Add<ApiResultFilterAttribute>();
 
                     // 设置全局异常过滤器
                     option.Filters.Add<GlobalExceptionFilter>();

@@ -6,6 +6,9 @@ using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.Infrastructure.Assists;
 
+/// <summary>
+/// StartupConfigMessageAssist
+/// </summary>
 public static class StartupConfigMessageAssist
 {
     private static readonly ConcurrentQueue<IStartupMessage> MessageCollection = new();
@@ -76,16 +79,28 @@ public static class StartupConfigMessageAssist
         );
     }
 
+    /// <summary>
+    /// AddConfig
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="extra"></param>
     public static void AddConfig(string message, string extra = "")
     {
         AddInformation(message, extra);
     }
 
+    /// <summary>
+    /// AddTraceDivider
+    /// </summary>
+    /// <param name="divider"></param>
     public static void AddTraceDivider(string divider = ConstCollection.PromptMessageDivider)
     {
         AddTrace(divider);
     }
 
+    /// <summary>
+    /// Print
+    /// </summary>
     public static void Print()
     {
         var list = MessageCollection.ToListFilterNullable()

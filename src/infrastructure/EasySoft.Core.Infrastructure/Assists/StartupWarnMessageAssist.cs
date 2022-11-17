@@ -1,11 +1,13 @@
 ﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Startup;
-using EasySoft.UtilityTools.Standard;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.Infrastructure.Assists;
 
-public class StartupWarnMessageAssist
+/// <summary>
+/// StartupWarnMessageAssist
+/// </summary>
+public static class StartupWarnMessageAssist
 {
     private static readonly IList<IStartupMessage> MessageCollection = new List<IStartupMessage>();
 
@@ -14,6 +16,11 @@ public class StartupWarnMessageAssist
         MessageCollection.Add(message);
     }
 
+    /// <summary>
+    /// AddWarning
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="extra"></param>
     public static void AddWarning(string message, string extra = "")
     {
         Add(
@@ -24,6 +31,9 @@ public class StartupWarnMessageAssist
         );
     }
 
+    /// <summary>
+    /// Print
+    /// </summary>
     public static void Print()
     {
         var list = MessageCollection.ToListFilterNullable().ToList();

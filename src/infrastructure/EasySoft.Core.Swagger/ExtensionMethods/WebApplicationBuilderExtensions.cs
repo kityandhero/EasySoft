@@ -98,6 +98,26 @@ public static class WebApplicationBuilderExtensions
                 Url = openApiServerUrl
             };
 
+            #region Security
+
+            if (!string.IsNullOrWhiteSpace(SwaggerConfigure.SecurityScheme.Key) &&
+                SwaggerConfigure.SecurityScheme.Value != null)
+            {
+                c.AddSecurityDefinition(
+                    SwaggerConfigure.SecurityScheme.Key,
+                    SwaggerConfigure.SecurityScheme.Value
+                );
+
+                if (SwaggerConfigure.GlobalSecuritySwitch)
+                    //注册全局认证（所有的接口都可以使用认证）
+                    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                    {
+                        [SwaggerConfigure.SecurityScheme.Value] = Array.Empty<string>()
+                    });
+            }
+
+            #endregion
+
             c.AddServer(openApiServer);
 
             c.CustomOperationIds(apiDesc =>

@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.Swagger.Configures;
+﻿using EasySoft.Core.Swagger.ConfigAssist;
+
+namespace EasySoft.Core.Swagger.Configures;
 
 /// <summary>
 /// SwaggerC 配置
@@ -45,6 +47,16 @@ public static class SwaggerConfigure
     /// </summary>
     public static IDictionary<string, Func<string, string, bool>> IgnoreRoutesAssemblyFilters { get; }
 
+    /// <summary>
+    /// SecurityScheme, 配置认证模式, 默认不配置
+    /// </summary>
+    public static KeyValuePair<string, OpenApiSecurityScheme?> SecurityScheme { get; set; }
+
+    /// <summary>
+    /// Global Security Switch
+    /// </summary>
+    public static bool GlobalSecuritySwitch { get; set; }
+
     static SwaggerConfigure()
     {
         DescribeAllParametersInCamelCase = true;
@@ -55,6 +67,8 @@ public static class SwaggerConfigure
         GeneralResponseHeaders = new Dictionary<string, OpenApiHeader>();
         AbnormalResponseCollection = new Dictionary<string, OpenApiResponse>();
         IgnoreRoutesAssemblyFilters = new Dictionary<string, Func<string, string, bool>>();
+        SecurityScheme = new KeyValuePair<string, OpenApiSecurityScheme?>("", null);
+        GlobalSecuritySwitch = false;
     }
 
     /// <summary>
@@ -63,9 +77,12 @@ public static class SwaggerConfigure
     /// <returns></returns>
     public static IEnumerable<string> BuildHintMessage()
     {
+        if (!EnvironmentAssist.IsDevelopment() || !SwaggerConfigAssist.GetSwitch()) return Array.Empty<string>();
+
         return new[]
         {
             $"{typeof(SwaggerConfigure).FullName}.{nameof(DescribeAllParametersInCamelCase)} is {DescribeAllParametersInCamelCase}.",
+            $"{typeof(SwaggerConfigure).FullName}.{nameof(EnableAnnotations)} is {EnableAnnotations}.",
             $"{typeof(SwaggerConfigure).FullName}.{nameof(UseNewtonsoft)} is {UseNewtonsoft}."
         };
     }

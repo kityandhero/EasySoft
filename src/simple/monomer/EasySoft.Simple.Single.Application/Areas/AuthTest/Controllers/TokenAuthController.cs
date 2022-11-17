@@ -4,7 +4,6 @@ using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.DynamicConfig.Assists;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.PermissionVerification.Attributes;
-using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,6 +1,9 @@
 ﻿namespace EasySoft.Core.Web.Framework.Filters;
 
-public class GlobalExceptionFilter : IExceptionFilter
+/// <summary>
+/// GlobalExceptionFilter
+/// </summary>
+public abstract class GlobalExceptionFilter : IExceptionFilter
 {
     private readonly IWebHostEnvironment _hostEnvironment;
 

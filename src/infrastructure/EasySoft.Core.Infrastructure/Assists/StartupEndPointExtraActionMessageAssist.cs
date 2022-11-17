@@ -3,6 +3,9 @@ using EasySoft.Core.Infrastructure.Startup;
 
 namespace EasySoft.Core.Infrastructure.Assists;
 
+/// <summary>
+/// StartupEndPointExtraActionMessageAssist
+/// </summary>
 public static class StartupEndPointExtraActionMessageAssist
 {
     private static readonly List<IStartupMessage> MessageCollection = new();
@@ -52,6 +55,9 @@ public static class StartupEndPointExtraActionMessageAssist
         );
     }
 
+    /// <summary>
+    /// Print
+    /// </summary>
     public static void Print()
     {
         MessageCollection.Print();

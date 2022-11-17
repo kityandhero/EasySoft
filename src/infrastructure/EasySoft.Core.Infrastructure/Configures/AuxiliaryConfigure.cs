@@ -22,6 +22,10 @@ public static class AuxiliaryConfigure
         PromptConfigFileInfo = false;
     }
 
+    /// <summary>
+    /// BuildHintMessage
+    /// </summary>
+    /// <returns></returns>
     public static IEnumerable<string> BuildHintMessage()
     {
         return new[]

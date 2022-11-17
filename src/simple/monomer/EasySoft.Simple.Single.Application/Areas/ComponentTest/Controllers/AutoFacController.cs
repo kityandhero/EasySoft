@@ -1,6 +1,6 @@
-﻿using AutoFacTest.Interfaces;
-using EasySoft.Core.AutoFac.Attributes;
+﻿using EasySoft.Core.AutoFac.Attributes;
 using EasySoft.Core.AutoFac.IocAssists;
+using EasySoft.Simple.Single.Application.Common;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
@@ -14,15 +14,15 @@ public class AutoFacController : AreaControllerCore
     /// SimpleAutowired
     /// </summary>
     [Autowired]
-    private ISimple? SimpleAutowired { get; set; }
+    private ISimpleDependencyInjection? SimpleAutowired { get; set; }
 
-    private readonly ISimple _simple;
+    private readonly ISimpleDependencyInjection _simple;
 
     /// <summary>
     /// AutoFacController
     /// </summary>
     /// <param name="simple"></param>
-    public AutoFacController(ISimple simple)
+    public AutoFacController(ISimpleDependencyInjection simple)
     {
         _simple = simple;
     }
@@ -47,7 +47,7 @@ public class AutoFacController : AreaControllerCore
     /// <returns></returns>
     public IActionResult TestCustom()
     {
-        var simple = AutofacAssist.Instance.Resolve<ISimple>();
+        var simple = AutofacAssist.Instance.Resolve<ISimpleDependencyInjection>();
 
         return this.Success(new
         {

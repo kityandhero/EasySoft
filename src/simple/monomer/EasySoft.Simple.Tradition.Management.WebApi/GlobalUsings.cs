@@ -8,6 +8,7 @@ global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.Data.ExtensionMethods;
 global using EasySoft.Core.EntityFramework.SqlServer.Extensions;
 global using EasySoft.Core.Infrastructure.Assists;
+global using EasySoft.Core.Infrastructure.Configures;
 global using EasySoft.Core.Infrastructure.Startup;
 global using EasySoft.Core.JsonWebToken.ExtensionMethods;
 global using EasySoft.Core.PermissionVerification.Attributes;

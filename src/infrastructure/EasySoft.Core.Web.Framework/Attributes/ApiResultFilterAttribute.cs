@@ -1,6 +1,6 @@
 ﻿namespace EasySoft.Core.Web.Framework.Attributes;
 
-public sealed class WebApiResultFilterAttribute : ActionFilterAttribute
+public sealed class ApiResultFilterAttribute : ActionFilterAttribute
 {
     public override void OnResultExecuting(ResultExecutingContext context)
     {
