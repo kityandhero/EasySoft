@@ -2,8 +2,16 @@
 
 namespace EasySoft.Core.PermissionVerification.ExtensionMethods;
 
+/// <summary>
+/// ApplicationBuilderExtensions
+/// </summary>
 public static class ApplicationBuilderExtensions
 {
+    /// <summary>
+    /// UsePermissionVerificationMiddleware
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
     public static IApplicationBuilder UsePermissionVerificationMiddleware(
         this IApplicationBuilder builder
     )

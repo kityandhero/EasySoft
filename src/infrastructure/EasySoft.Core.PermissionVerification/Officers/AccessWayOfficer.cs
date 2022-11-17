@@ -3,12 +3,21 @@ using EasySoft.Core.PermissionVerification.Entities;
 
 namespace EasySoft.Core.PermissionVerification.Officers;
 
+/// <summary>
+/// AccessWayOfficer
+/// </summary>
 public abstract class AccessWayOfficer : OfficerCore
 {
     private IApplicationChannel Channel { get; }
 
+    /// <summary>
+    /// AccessPermission
+    /// </summary>
     protected readonly AccessPermission AccessPermission;
 
+    /// <summary>
+    /// AccessWayOfficer
+    /// </summary>
     protected AccessWayOfficer()
     {
         AccessPermission = new AccessPermission();
@@ -20,22 +29,23 @@ public abstract class AccessWayOfficer : OfficerCore
         return Channel.GetChannel();
     }
 
+    /// <summary>
+    /// GetChannelName
+    /// </summary>
+    /// <returns></returns>
     protected string GetChannelName()
     {
         return Channel.GetName();
     }
 
+    /// <summary>
+    /// CollectAccessWay
+    /// </summary>
     protected void CollectAccessWay()
     {
-        if (!GeneralConfigAssist.GetAccessWayDetectSwitch())
-        {
-            return;
-        }
+        if (!GeneralConfigAssist.GetAccessWayDetectSwitch()) return;
 
-        if (string.IsNullOrWhiteSpace(AccessPermission.GuidTag))
-        {
-            return;
-        }
+        if (string.IsNullOrWhiteSpace(AccessPermission.GuidTag)) return;
 
         var channel = GetChannel();
 
@@ -62,9 +72,7 @@ public abstract class AccessWayOfficer : OfficerCore
             if (accessWay.Name == AccessPermission.Name && accessWay.RelativePath == AccessPermission.Path &&
                 accessWay.Expand == AccessPermission.Competence &&
                 accessWay.Channel == channel)
-            {
                 return;
-            }
 
             AutofacAssist.Instance.Resolve<IAccessWayProducer>().Send(
                 AccessPermission.GuidTag,

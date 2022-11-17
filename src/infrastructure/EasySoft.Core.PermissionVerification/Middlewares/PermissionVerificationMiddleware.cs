@@ -3,17 +3,30 @@ using EasySoft.Core.PermissionVerification.Officers;
 
 namespace EasySoft.Core.PermissionVerification.Middlewares;
 
+/// <summary>
+/// PermissionVerificationMiddleware
+/// </summary>
 public class PermissionVerificationMiddleware : IMiddleware
 {
     private readonly ILoggerFactory _loggerFactory;
     private readonly IWebHostEnvironment _hostEnvironment;
 
+    /// <summary>
+    /// PermissionVerificationMiddleware
+    /// </summary>
+    /// <param name="loggerFactory"></param>
+    /// <param name="environment"></param>
     public PermissionVerificationMiddleware(ILoggerFactory loggerFactory, IWebHostEnvironment environment)
     {
         _loggerFactory = loggerFactory;
         _hostEnvironment = environment;
     }
 
+    /// <summary>
+    /// InvokeAsync
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="next"></param>
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         var logger = _loggerFactory.CreateLogger<PermissionVerificationMiddleware>();

@@ -5,6 +5,9 @@ using EasySoft.Core.PermissionVerification.Officers;
 
 namespace EasySoft.Core.PermissionVerification.ExtensionMethods;
 
+/// <summary>
+/// WebApplicationBuilderExtensions
+/// </summary>
 public static class WebApplicationBuilderExtensions
 {
     /// <summary>

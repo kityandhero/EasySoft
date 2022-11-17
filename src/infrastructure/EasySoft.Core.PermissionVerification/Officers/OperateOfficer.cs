@@ -2,8 +2,15 @@
 
 namespace EasySoft.Core.PermissionVerification.Officers;
 
+/// <summary>
+/// OperateOfficer
+/// </summary>
 public class OperateOfficer : OperateOfficerCore, IOperateOfficer
 {
+    /// <summary>
+    /// AdjustAccessPermission
+    /// </summary>
+    /// <param name="httpContext"></param>
     public void AdjustAccessPermission(HttpContext httpContext)
     {
         var guidTagAttribute = httpContext.TryGetMetadata<GuidTagAttribute>();
@@ -23,6 +30,11 @@ public class OperateOfficer : OperateOfficerCore, IOperateOfficer
         AccessPermission.GuidTag = guidTagAttribute.GuidTag;
     }
 
+    /// <summary>
+    /// DoVerification
+    /// </summary>
+    /// <param name="httpContext"></param>
+    /// <returns></returns>
     [Description("验证登录凭证以及操作权限")]
     public ExecutiveResult<ApiResult> DoVerification(HttpContext httpContext)
     {

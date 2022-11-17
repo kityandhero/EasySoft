@@ -3,8 +3,15 @@ using EasySoft.Core.PermissionVerification.Officers;
 
 namespace EasySoft.Core.PermissionVerification.Filters;
 
+/// <summary>
+/// PermissionCoreFilter
+/// </summary>
 public abstract class PermissionCoreFilter : OperateOfficerCore, IPermissionFilter
 {
+    /// <summary>
+    /// AdjustAccessPermission
+    /// </summary>
+    /// <param name="filterContext"></param>
     public void AdjustAccessPermission(ActionExecutingContext filterContext)
     {
         if (filterContext.ActionDescriptor is not ControllerActionDescriptor actionDescriptor) return;
@@ -36,11 +43,19 @@ public abstract class PermissionCoreFilter : OperateOfficerCore, IPermissionFilt
         if (!result.Success) context.Result = result.Data;
     }
 
+    /// <summary>
+    /// OnActionExecuting
+    /// </summary>
+    /// <param name="context"></param>
     public void OnActionExecuting(ActionExecutingContext context)
     {
         OnVerification(context);
     }
 
+    /// <summary>
+    /// OnActionExecuted
+    /// </summary>
+    /// <param name="context"></param>
     public void OnActionExecuted(ActionExecutedContext context)
     {
     }

@@ -2,10 +2,16 @@
 
 namespace EasySoft.Core.PermissionVerification.Officers;
 
+/// <summary>
+/// OperateOfficerCore
+/// </summary>
 public abstract class OperateOfficerCore : AccessWayOfficer
 {
     private readonly IActualOperator _actualOperator;
 
+    /// <summary>
+    /// OperateOfficerCore
+    /// </summary>
     protected OperateOfficerCore()
     {
         _actualOperator = AutofacAssist.Instance.Resolve<IActualOperator>();
@@ -18,17 +24,17 @@ public abstract class OperateOfficerCore : AccessWayOfficer
         return _actualOperator;
     }
 
+    /// <summary>
+    /// GetPermissionObserver
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     protected IPermissionObserver GetPermissionObserver()
     {
         if (!AutofacAssist.Instance.IsRegistered<IPermissionObserver>())
-        {
             throw new Exception("IPermissionObserver is not injected");
-        }
 
-        if (_permissionObserver == null)
-        {
-            throw new Exception("PermissionObserver has not set");
-        }
+        if (_permissionObserver == null) throw new Exception("PermissionObserver has not set");
 
         return _permissionObserver;
     }
@@ -47,25 +53,21 @@ public abstract class OperateOfficerCore : AccessWayOfficer
         var applicationOperator = GetOperator();
 
         if (applicationOperator.IsAnonymous())
-        {
             return new ExecutiveResult(
                 ReturnCode.NoPermission.ToMessage("匿名用户不支持鉴权, 请修复程序（配置登录验证）")
             );
-        }
 
-        if (string.IsNullOrWhiteSpace(AccessPermission.GuidTag))
-        {
-            return new ExecutiveResult(ReturnCode.Ok);
-        }
+        if (string.IsNullOrWhiteSpace(AccessPermission.GuidTag)) return new ExecutiveResult(ReturnCode.Ok);
 
-        if (_permissionObserver == null)
-        {
-            throw new Exception("PermissionObserver has not set");
-        }
+        if (_permissionObserver == null) throw new Exception("PermissionObserver has not set");
 
         return _permissionObserver.CheckAccessPermission(AccessPermission.GuidTag);
     }
 
+    /// <summary>
+    /// TryVerification
+    /// </summary>
+    /// <returns></returns>
     protected ExecutiveResult<ApiResult> TryVerification()
     {
         CollectAccessWay();
@@ -74,10 +76,7 @@ public abstract class OperateOfficerCore : AccessWayOfficer
 
         var result = CheckAccessPermission();
 
-        if (result.Success)
-        {
-            return new ExecutiveResult<ApiResult>(ReturnCode.Ok);
-        }
+        if (result.Success) return new ExecutiveResult<ApiResult>(ReturnCode.Ok);
 
         var apiResultNoAccessPermission = new ApiResult(
             ReturnCode.NoPermission.ToInt(),
