@@ -384,22 +384,6 @@ public static class WebApplicationBuilderExtensions
             $"Application start completed{(!FlagAssist.StartupUrls.Any() ? "." : $" at {FlagAssist.StartupUrls.Join(" ")}.")}"
         );
 
-        // StartupConfigMessageAssist.Add(
-        //     new StartupMessage()
-        //         .SetLevel(LogLevel.Information)
-        //         .SetMessage(
-        //             UtilityTools.Standard.ConstCollection.ApplicationStartMessageDivider
-        //         )
-        // );
-        //
-        // StartupDescriptionMessageAssist.Add(
-        //     new StartupMessage()
-        //         .SetLevel(LogLevel.Information)
-        //         .SetMessage(
-        //             UtilityTools.Standard.ConstCollection.ApplicationStartMessageDivider
-        //         )
-        // );
-
         StartupBuilderExtraActionMessageAssist.Print();
 
         StartupApplicationExtraActionMessageAssist.Print();

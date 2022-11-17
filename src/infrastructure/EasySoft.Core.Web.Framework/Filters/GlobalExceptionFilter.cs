@@ -3,7 +3,7 @@
 /// <summary>
 /// GlobalExceptionFilter
 /// </summary>
-public abstract class GlobalExceptionFilter : IExceptionFilter
+public class GlobalExceptionFilter : IExceptionFilter
 {
     private readonly IWebHostEnvironment _hostEnvironment;
 
