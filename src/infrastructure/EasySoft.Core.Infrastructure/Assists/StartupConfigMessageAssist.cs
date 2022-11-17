@@ -1,7 +1,5 @@
-﻿using System.Collections.Concurrent;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
+﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Startup;
-using EasySoft.UtilityTools.Standard;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.Infrastructure.Assists;
@@ -11,23 +9,23 @@ namespace EasySoft.Core.Infrastructure.Assists;
 /// </summary>
 public static class StartupConfigMessageAssist
 {
-    private static readonly ConcurrentQueue<IStartupMessage> MessageCollection = new();
+    private static readonly IList<IStartupMessage> MessageCollection = new List<IStartupMessage>();
 
     static StartupConfigMessageAssist()
     {
-        MessageCollection.Enqueue(
+        MessageCollection.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Trace)
                 .SetMessage(ConstCollection.ApplicationStartConfigMessageDivider)
         );
 
-        MessageCollection.Enqueue(
+        MessageCollection.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Information)
                 .SetMessage("Application prepare to start, please wait a moment....")
         );
 
-        MessageCollection.Enqueue(
+        MessageCollection.Add(
             new StartupMessage()
                 .SetLevel(LogLevel.Trace)
                 .SetMessage(ConstCollection.ApplicationStartConfigMessageDivider)
@@ -36,7 +34,7 @@ public static class StartupConfigMessageAssist
 
     private static void Add(IStartupMessage message)
     {
-        MessageCollection.Enqueue(message);
+        MessageCollection.Add(message);
     }
 
     private static void AddInformation(string message, string extra = "")

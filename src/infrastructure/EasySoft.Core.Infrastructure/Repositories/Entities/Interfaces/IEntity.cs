@@ -13,5 +13,8 @@ public interface IEntity : IEntity<long>
 /// <typeparam name="TKey"></typeparam>
 public interface IEntity<TKey>
 {
+    /// <summary>
+    /// Id
+    /// </summary>
     TKey Id { get; set; }
 }

@@ -19,7 +19,7 @@ var app = WebApplicationBuilderAssist
 //     context.Database.EnsureCreated();
 // }
 
-app.MapGet("/", () => "Hello World!");
+// app.MapGet("/", () => "Hello World!");
 
 // SignalR
 app.MapHub<ChatHub>("/chatHub");

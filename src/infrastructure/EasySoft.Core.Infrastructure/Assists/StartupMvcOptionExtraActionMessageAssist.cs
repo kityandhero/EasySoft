@@ -10,6 +10,10 @@ public static class StartupMvcOptionExtraActionMessageAssist
 {
     private static readonly List<IStartupMessage> MessageCollection = new();
 
+    /// <summary>
+    /// Add
+    /// </summary>
+    /// <param name="message"></param>
     public static void Add(IStartupMessage message)
     {
         MessageCollection.Add(message);

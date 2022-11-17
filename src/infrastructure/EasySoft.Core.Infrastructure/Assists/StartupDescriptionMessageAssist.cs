@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.Infrastructure.Configures;
 using EasySoft.Core.Infrastructure.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Startup;
-using EasySoft.UtilityTools.Standard;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.Infrastructure.Assists;
@@ -13,6 +12,10 @@ public static class StartupDescriptionMessageAssist
 {
     private static readonly IList<IStartupMessage> MessageCollection = new List<IStartupMessage>();
 
+    /// <summary>
+    /// Add
+    /// </summary>
+    /// <param name="message"></param>
     public static void Add(IStartupMessage message)
     {
         MessageCollection.Add(message);
