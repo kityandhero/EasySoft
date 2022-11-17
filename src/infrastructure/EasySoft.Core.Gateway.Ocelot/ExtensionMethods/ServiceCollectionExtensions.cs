@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.Gateway.Ocelot.ExtensionMethods;
+﻿using EasySoft.Core.Gateway.Ocelot.ConfigAssist;
+
+namespace EasySoft.Core.Gateway.Ocelot.ExtensionMethods;
 
 public static class ServiceCollectionExtensions
 {

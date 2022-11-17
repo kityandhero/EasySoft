@@ -19,7 +19,6 @@ internal class PrepareCovertStartWork : IPrepareCovertStartWork
         LogConfigAssist.Init();
         MaintainConfigAssist.Init();
         MongoConfigAssist.Init();
-        OcelotConfigAssist.Init();
         PayCallbackConfigAssist.Init();
         RabbitMQConfigAssist.Init();
         ServiceConfigAssist.Init();

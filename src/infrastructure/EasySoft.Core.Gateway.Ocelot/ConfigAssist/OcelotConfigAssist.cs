@@ -1,9 +1,6 @@
-﻿using EasySoft.Core.Config.ConfigCollection;
-using EasySoft.Core.Config.ExtensionMethods;
-using EasySoft.Core.Config.Utils;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿using EasySoft.Core.Gateway.Ocelot.ConfigCollection;
 
-namespace EasySoft.Core.Config.ConfigAssist;
+namespace EasySoft.Core.Gateway.Ocelot.ConfigAssist;
 
 public static class OcelotConfigAssist
 {
