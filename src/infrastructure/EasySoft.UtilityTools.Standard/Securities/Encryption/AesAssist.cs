@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-
-namespace EasySoft.UtilityTools.Standard.Securities.Encryption;
+﻿namespace EasySoft.UtilityTools.Standard.Securities.Encryption;
 
 /// <summary>
 /// AesAssist

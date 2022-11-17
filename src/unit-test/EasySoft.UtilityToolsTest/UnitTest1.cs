@@ -1,17 +1,8 @@
-using NUnit.Framework;
-using EasySoft.UtilityTools.Standard.Assists;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-
 namespace EasySoft.UtilityToolsTest;
 
 public class Tests
 {
-    [SetUp]
-    public void Setup()
-    {
-    }
-
-    [Test]
+    [Fact]
     public void TestGetRCode()
     {
         var value = QrCodeAssist.GetRCode(
@@ -20,7 +11,5 @@ public class Tests
         );
 
         "D:\\qrcodeTest.txt".WriteFile(value);
-
-        Assert.Pass();
     }
 }

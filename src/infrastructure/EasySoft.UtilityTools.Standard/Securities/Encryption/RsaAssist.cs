@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography;
-using RSAExtensions;
+﻿using RSAExtensions;
 
 namespace EasySoft.UtilityTools.Standard.Securities.Encryption;
 

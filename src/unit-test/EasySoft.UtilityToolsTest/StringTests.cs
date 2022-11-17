@@ -1,8 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Shouldly;
-using Xunit;
-
-namespace EasySoft.UtilityToolsTest;
+﻿namespace EasySoft.UtilityToolsTest;
 
 public class StringTests
 {

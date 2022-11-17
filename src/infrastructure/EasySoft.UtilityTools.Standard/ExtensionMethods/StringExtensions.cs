@@ -8,6 +8,9 @@ using EasySoft.UtilityTools.Standard.Securities.Encryption;
 
 namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
+/// <summary>
+/// StringExtensions
+/// </summary>
 public static class StringExtensions
 {
     #region In
@@ -66,6 +69,62 @@ public static class StringExtensions
 
     #endregion
 
+    #region Sha1
+
+    /// <summary>
+    /// Sha1 加密
+    /// </summary>
+    /// <param name="source"></param>
+    /// <returns></returns>
+    public static string ToSha1(this string source)
+    {
+        return HashAssist.ToSha1(source);
+    }
+
+    #endregion
+
+    #region Sha256
+
+    /// <summary>
+    /// Sha256 加密
+    /// </summary>
+    /// <param name="source"></param>
+    /// <returns></returns>
+    public static string ToSha256(this string source)
+    {
+        return HashAssist.ToSha256(source);
+    }
+
+    #endregion
+
+    #region Sha384
+
+    /// <summary>
+    /// Sha384 加密
+    /// </summary>
+    /// <param name="source"></param>
+    /// <returns></returns>
+    public static string ToSha384(this string source)
+    {
+        return HashAssist.ToSha384(source);
+    }
+
+    #endregion
+
+    #region Sha512
+
+    /// <summary>
+    /// Sha512 加密
+    /// </summary>
+    /// <param name="source"></param>
+    /// <returns></returns>
+    public static string ToSha512(this string source)
+    {
+        return HashAssist.ToSha512(source);
+    }
+
+    #endregion
+
     #region CutOut
 
     /// <summary>
@@ -97,6 +156,13 @@ public static class StringExtensions
 
     #endregion CutOut
 
+    /// <summary>
+    /// CheckNameInEnum
+    /// </summary>
+    /// <param name="v"></param>
+    /// <param name="excludeItems"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static bool CheckNameInEnum<T>(this string v, params T[] excludeItems) where T : struct
     {
         if (excludeItems.Length <= 0)
@@ -115,6 +181,13 @@ public static class StringExtensions
         }
     }
 
+    /// <summary>
+    /// GetEnumByKeyValueDefinitionTag
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static T GetEnumByKeyValueDefinitionTag<T>(this string tag) where T : struct
     {
         if (string.IsNullOrWhiteSpace(tag)) throw new Exception("无效的Tag值");
@@ -786,6 +859,11 @@ public static class StringExtensions
 
     #region ToCamelCase
 
+    /// <summary>
+    /// ToCamelCase
+    /// </summary>
+    /// <param name="source"></param>
+    /// <returns></returns>
     public static string ToCamelCase(this string source)
     {
         if (string.IsNullOrWhiteSpace(source)) return source;
@@ -807,6 +885,11 @@ public static class StringExtensions
 
     #region ToSnakeCase
 
+    /// <summary>
+    /// ToSnakeCase
+    /// </summary>
+    /// <param name="source"></param>
+    /// <returns></returns>
     public static string ToSnakeCase(this string source)
     {
         if (string.IsNullOrWhiteSpace(source)) return source;
@@ -921,6 +1004,12 @@ public static class StringExtensions
 
     #region GetBytes
 
+    /// <summary>
+    /// GetBytes
+    /// </summary>
+    /// <param name="str"></param>
+    /// <param name="encoding"></param>
+    /// <returns></returns>
     public static byte[] GetBytes(this string str, Encoding encoding)
     {
         return encoding.GetBytes(str);
