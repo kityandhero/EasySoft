@@ -1,12 +1,27 @@
 ﻿using EasySoft.Core.JsonWebToken.Assists;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.JsonWebToken.Middlewares;
 
 public class JsonWebTokenMiddleware : IMiddleware
 {
+    private readonly ILoggerFactory _loggerFactory;
+    private readonly IWebHostEnvironment _hostEnvironment;
+
+    public JsonWebTokenMiddleware(ILoggerFactory loggerFactory, IWebHostEnvironment environment)
+    {
+        _loggerFactory = loggerFactory;
+        _hostEnvironment = environment;
+    }
+
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
+        var logger = _loggerFactory.CreateLogger<JsonWebTokenMiddleware>();
+
+        logger.LogMiddlewareInvokeAsyncBefore<JsonWebTokenMiddleware>(_hostEnvironment);
+
         var operatorAttribute = context.TryGetMetadata<OperatorAttribute>();
 
         if (operatorAttribute == null)
@@ -15,6 +30,8 @@ public class JsonWebTokenMiddleware : IMiddleware
 
             return;
         }
+
+        logger.LogMiddlewareInvokeAsyncAfter<JsonWebTokenMiddleware>(_hostEnvironment);
 
         var token = await context.GetTokenAsync(GeneralConfigAssist.GetTokenName());
 

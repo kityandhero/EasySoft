@@ -1,5 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Assists;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Core.ExtensionMethods;
 
 namespace EasySoft.UtilityTools.Core.Assists;
 
@@ -36,6 +35,10 @@ public static class LogAssist
         return _logger;
     }
 
+    #region Common
+
+    #region Info
+
     /// <summary>
     /// 记录一般信息
     /// </summary>
@@ -43,17 +46,15 @@ public static class LogAssist
     {
         if (string.IsNullOrWhiteSpace(log)) return;
 
-        GetLogger().LogInformation("{Log}", log.Trim());
+        GetLogger().LogAdvanceInfo(log);
     }
-
-    #region Common
 
     /// <summary>
     /// 记录一般信息集合 【输出多条】
     /// </summary>
     public static void Info(params string?[] logs)
     {
-        Info(logs.ToList());
+        GetLogger().LogAdvanceInfo(logs);
     }
 
     /// <summary>
@@ -61,43 +62,47 @@ public static class LogAssist
     /// </summary>
     public static void Info(IEnumerable<string?> logs)
     {
-        logs.ToListFilterNullOrWhiteSpace().ForEach(Info);
+        GetLogger().LogAdvanceInfo(logs);
     }
+
+    #endregion
+
+    #region Debug
 
     /// <summary>
     /// 记录调试信息
     /// </summary>
     public static void Debug(string? log)
     {
-        if (string.IsNullOrWhiteSpace(log)) return;
-
-        GetLogger().LogDebug("{Log}", log.Trim());
+        GetLogger().LogAdvanceDebug(log);
     }
 
     /// <summary>
-    /// 记录一般信息集合 【输出多条】
+    /// 记录调试信息集合 【输出多条】
     /// </summary>
     public static void Debug(params string?[] logs)
     {
-        Debug(logs.ToList());
+        GetLogger().LogAdvanceDebug(logs);
     }
 
     /// <summary>
-    /// 记录一般信息集合 【输出多条】
+    /// 记录调试信息集合 【输出多条】
     /// </summary>
     public static void Debug(IEnumerable<string?> logs)
     {
-        logs.ToListFilterNullOrWhiteSpace().ForEach(Debug);
+        GetLogger().LogAdvanceDebug(logs);
     }
+
+    #endregion
+
+    #region Critical
 
     /// <summary>
     /// 记录重要信息
     /// </summary>
     public static void Critical(string? log)
     {
-        if (string.IsNullOrWhiteSpace(log)) return;
-
-        GetLogger().LogCritical("{Log}", log.Trim());
+        GetLogger().LogAdvanceCritical(log);
     }
 
     /// <summary>
@@ -105,7 +110,7 @@ public static class LogAssist
     /// </summary>
     public static void Critical(params string?[] logs)
     {
-        Critical(logs.ToList());
+        GetLogger().LogAdvanceCritical(logs);
     }
 
     /// <summary>
@@ -113,17 +118,19 @@ public static class LogAssist
     /// </summary>
     public static void Critical(IEnumerable<string?> logs)
     {
-        logs.ToListFilterNullOrWhiteSpace().ForEach(Critical);
+        GetLogger().LogAdvanceCritical(logs);
     }
+
+    #endregion
+
+    #region Warning
 
     /// <summary>
     /// 记录警告信息
     /// </summary>
     public static void Warning(string? log)
     {
-        if (string.IsNullOrWhiteSpace(log)) return;
-
-        GetLogger().LogWarning("{Log}", log.Trim());
+        GetLogger().LogAdvanceWarning(log);
     }
 
     /// <summary>
@@ -131,7 +138,7 @@ public static class LogAssist
     /// </summary>
     public static void Warning(params string?[] logs)
     {
-        Warning(logs.ToList());
+        GetLogger().LogAdvanceWarning(logs);
     }
 
     /// <summary>
@@ -139,17 +146,19 @@ public static class LogAssist
     /// </summary>
     public static void Warning(IEnumerable<string?> logs)
     {
-        logs.ToListFilterNullOrWhiteSpace().ForEach(Warning);
+        GetLogger().LogAdvanceWarning(logs);
     }
+
+    #endregion
+
+    #region Trace
 
     /// <summary>
     /// 记录跟踪信息
     /// </summary>
     public static void Trace(string? log)
     {
-        if (string.IsNullOrWhiteSpace(log)) return;
-
-        GetLogger().LogTrace("{Log}", log.Trim());
+        GetLogger().LogAdvanceTrace(log);
     }
 
     /// <summary>
@@ -157,7 +166,7 @@ public static class LogAssist
     /// </summary>
     public static void Trace(params string?[] logs)
     {
-        Trace(logs.ToList());
+        GetLogger().LogAdvanceTrace(logs);
     }
 
     /// <summary>
@@ -165,17 +174,17 @@ public static class LogAssist
     /// </summary>
     public static void Trace(IEnumerable<string?> logs)
     {
-        logs.ToListFilterNullOrWhiteSpace().ForEach(Trace);
+        GetLogger().LogAdvanceTrace(logs);
     }
+
+    #endregion
 
     /// <summary>
     /// 记录错误信息
     /// </summary>
     public static void Error(string? log)
     {
-        if (string.IsNullOrWhiteSpace(log)) return;
-
-        GetLogger().LogError("{Log}", log.Trim());
+        GetLogger().LogAdvanceError(log);
     }
 
     /// <summary>
@@ -183,7 +192,7 @@ public static class LogAssist
     /// </summary>
     public static void Error(params string?[] logs)
     {
-        Error(logs.ToList());
+        GetLogger().LogAdvanceError(logs);
     }
 
     /// <summary>
@@ -191,7 +200,7 @@ public static class LogAssist
     /// </summary>
     public static void Error(IEnumerable<string?> logs)
     {
-        logs.ToListFilterNullOrWhiteSpace().ForEach(Error);
+        GetLogger().LogAdvanceError(logs);
     }
 
     #endregion
@@ -203,13 +212,7 @@ public static class LogAssist
     /// </summary>
     public static void Execute(string? log, bool supplementRoundBracket = false)
     {
-        if (string.IsNullOrWhiteSpace(log)) return;
-
-        GetLogger().LogTrace(
-            "EXEC: {Log}{Bracket}",
-            log.Trim(),
-            supplementRoundBracket ? "()" : ""
-        );
+        GetLogger().LogAdvanceExecute(log, supplementRoundBracket);
     }
 
     /// <summary>
@@ -217,9 +220,7 @@ public static class LogAssist
     /// </summary>
     public static void Prompt(string? log)
     {
-        if (string.IsNullOrWhiteSpace(log)) return;
-
-        GetLogger().LogTrace("DESC: {Log}", log.Trim());
+        GetLogger().LogAdvancePrompt(log);
     }
 
     /// <summary>
@@ -227,12 +228,7 @@ public static class LogAssist
     /// </summary>
     public static void Hint(params string[] logs)
     {
-        if (!logs.Any()) return;
-
-        logs.ForEach(log =>
-        {
-            if (!string.IsNullOrWhiteSpace(log)) GetLogger().LogTrace("HINT: {Log}", log.Trim());
-        });
+        GetLogger().LogAdvanceHint(logs);
     }
 
     #endregion
@@ -246,13 +242,7 @@ public static class LogAssist
     /// </summary>
     public static void InfoData(object? log, string prefix = "")
     {
-        if (log == null) return;
-
-        GetLogger().LogInformation(
-            "{Prefix}{Log}",
-            prefix,
-            JsonConvertAssist.Serialize(log)
-        );
+        GetLogger().InfoData(log, prefix);
     }
 
     /// <summary>
@@ -260,7 +250,7 @@ public static class LogAssist
     /// </summary>
     public static void InfoData(IEnumerable<object> logs)
     {
-        logs.ToListFilterNullable().ForEach(log => { InfoData(log); });
+        GetLogger().InfoData(logs);
     }
 
     /// <summary>
@@ -268,13 +258,7 @@ public static class LogAssist
     /// </summary>
     public static void DebugData(object? log, string prefix = "")
     {
-        if (log == null) return;
-
-        GetLogger().LogDebug(
-            "{Prefix}{Log}",
-            prefix,
-            JsonConvertAssist.Serialize(log)
-        );
+        GetLogger().DebugData(log, prefix);
     }
 
     /// <summary>
@@ -282,7 +266,7 @@ public static class LogAssist
     /// </summary>
     public static void DebugData(IEnumerable<object> logs)
     {
-        logs.ToListFilterNullable().ForEach(log => { DebugData(log); });
+        GetLogger().DebugData(logs);
     }
 
     /// <summary>
@@ -290,13 +274,7 @@ public static class LogAssist
     /// </summary>
     public static void CriticalData(object? log, string prefix = "")
     {
-        if (log == null) return;
-
-        GetLogger().LogCritical(
-            "{Prefix}{Log}",
-            prefix,
-            JsonConvertAssist.Serialize(log)
-        );
+        GetLogger().CriticalData(log, prefix);
     }
 
     /// <summary>
@@ -304,7 +282,7 @@ public static class LogAssist
     /// </summary>
     public static void CriticalData(IEnumerable<object> logs)
     {
-        logs.ToListFilterNullable().ForEach(log => { CriticalData(log); });
+        GetLogger().CriticalData(logs);
     }
 
     /// <summary>
@@ -312,13 +290,7 @@ public static class LogAssist
     /// </summary>
     public static void WarningData(object? log, string prefix = "")
     {
-        if (log == null) return;
-
-        GetLogger().LogWarning(
-            "{Prefix}{Log}",
-            prefix,
-            JsonConvertAssist.Serialize(log)
-        );
+        GetLogger().WarningData(log, prefix);
     }
 
     /// <summary>
@@ -326,7 +298,7 @@ public static class LogAssist
     /// </summary>
     public static void WarningData(IEnumerable<object> logs)
     {
-        logs.ToListFilterNullable().ForEach(log => { WarningData(log); });
+        GetLogger().WarningData(logs);
     }
 
     /// <summary>
@@ -334,13 +306,7 @@ public static class LogAssist
     /// </summary>
     public static void TraceData(object? log, string prefix = "")
     {
-        if (log == null) return;
-
-        GetLogger().LogTrace(
-            "{Prefix}{Log}",
-            prefix,
-            JsonConvertAssist.Serialize(log)
-        );
+        GetLogger().TraceData(log, prefix);
     }
 
     /// <summary>
@@ -348,7 +314,7 @@ public static class LogAssist
     /// </summary>
     public static void TraceData(IEnumerable<object> logs)
     {
-        logs.ToListFilterNullable().ForEach(log => { TraceData(log); });
+        GetLogger().TraceData(logs);
     }
 
     /// <summary>
@@ -356,13 +322,7 @@ public static class LogAssist
     /// </summary>
     public static void ErrorData(object? log, string prefix = "")
     {
-        if (log == null) return;
-
-        GetLogger().LogError(
-            "{Prefix}{Log}",
-            prefix,
-            JsonConvertAssist.Serialize(log)
-        );
+        GetLogger().ErrorData(log, prefix);
     }
 
     /// <summary>
@@ -370,7 +330,7 @@ public static class LogAssist
     /// </summary>
     public static void ErrorData(IEnumerable<object> logs)
     {
-        logs.ToListFilterNullable().ForEach(log => { ErrorData(log); });
+        GetLogger().ErrorData(logs);
     }
 
     #endregion

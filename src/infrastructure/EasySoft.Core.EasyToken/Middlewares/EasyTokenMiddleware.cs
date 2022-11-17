@@ -1,12 +1,27 @@
 ﻿using EasySoft.Core.EasyToken.AccessControl;
 using EasySoft.UtilityTools.Core.ExtensionMethods;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.EasyToken.Middlewares;
 
 public class EasyTokenMiddleware : IMiddleware
 {
+    private readonly ILoggerFactory _loggerFactory;
+    private readonly IWebHostEnvironment _hostEnvironment;
+
+    public EasyTokenMiddleware(ILoggerFactory loggerFactory, IWebHostEnvironment environment)
+    {
+        _loggerFactory = loggerFactory;
+        _hostEnvironment = environment;
+    }
+
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
+        var logger = _loggerFactory.CreateLogger<EasyTokenMiddleware>();
+
+        logger.LogMiddlewareInvokeAsyncBefore<EasyTokenMiddleware>(_hostEnvironment);
+
         var operatorAttribute = context.TryGetMetadata<OperatorAttribute>();
 
         if (operatorAttribute == null)
@@ -15,6 +30,8 @@ public class EasyTokenMiddleware : IMiddleware
 
             return;
         }
+
+        logger.LogMiddlewareInvokeAsyncAfter<EasyTokenMiddleware>(_hostEnvironment);
 
         var token = await context.GetTokenAsync(GeneralConfigAssist.GetTokenName());
 

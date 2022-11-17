@@ -16,13 +16,7 @@ public static class WebApplicationBuilderAssist
         string[] args
     ) where TStartUpConfigure : IStartUpConfigure
     {
-        StartUpConfigureInit<TStartUpConfigure>();
-
-        StartupDescriptionMessageAssist.AddPrompt(
-            "ApplicationChannel use default, suggest using CreateBuilder(IApplicationChannel applicationChannel,string[] args) with your Application, it make the data source easy to identify in the remote log."
-        );
-
-        var builder = CreateBuilder(
+        var builder = CreateBuilder<TStartUpConfigure>(
             new ApplicationChannel()
                 .SetChannel(ApplicationChannel.DefaultChannel)
                 .SetName(ApplicationChannel.DefaultName),
@@ -45,12 +39,6 @@ public static class WebApplicationBuilderAssist
         string[] args
     ) where TStartUpConfigure : IStartUpConfigure
     {
-        StartUpConfigureInit<TStartUpConfigure>();
-
-        StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(CreateBuilder)}<{typeof(TStartUpConfigure).Name}>."
-        );
-
         var builder = WebApplication.CreateBuilder(new WebApplicationOptions
         {
             Args = args,
@@ -60,6 +48,12 @@ public static class WebApplicationBuilderAssist
         EnvironmentAssist.SetEnvironment(builder.Environment);
 
         GeneralConfigAssist.Init();
+
+        StartUpConfigureInit<TStartUpConfigure>();
+
+        StartupDescriptionMessageAssist.AddExecute(
+            $"{nameof(CreateBuilder)}<{typeof(TStartUpConfigure).Name}>."
+        );
 
         builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
         {

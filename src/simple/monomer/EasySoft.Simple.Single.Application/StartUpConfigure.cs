@@ -3,6 +3,7 @@ using Asp.Versioning;
 using Autofac;
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.AutoFac.ExtensionMethods;
+using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Configures;
 using EasySoft.Core.Infrastructure.Startup;
@@ -71,6 +72,17 @@ public class StartUpConfigure : IStartUpConfigure
                     Description = "common header"
                 }
             )
+        );
+
+        SwaggerConfigure.SecurityScheme = new KeyValuePair<string, OpenApiSecurityScheme?>(
+            GeneralConfigAssist.GetTokenName(),
+            new OpenApiSecurityScheme
+            {
+                Description = "Cookie认证",
+                Name = "Cookies",
+                In = ParameterLocation.Cookie,
+                Type = SecuritySchemeType.ApiKey
+            }
         );
 
         Core.EntityFramework.Configures.ContextConfigure.EnableDetailedErrors = true;

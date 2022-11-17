@@ -5,8 +5,21 @@ namespace EasySoft.Core.PermissionVerification.Middlewares;
 
 public class PermissionVerificationMiddleware : IMiddleware
 {
+    private readonly ILoggerFactory _loggerFactory;
+    private readonly IWebHostEnvironment _hostEnvironment;
+
+    public PermissionVerificationMiddleware(ILoggerFactory loggerFactory, IWebHostEnvironment environment)
+    {
+        _loggerFactory = loggerFactory;
+        _hostEnvironment = environment;
+    }
+
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
+        var logger = _loggerFactory.CreateLogger<PermissionVerificationMiddleware>();
+
+        logger.LogMiddlewareInvokeAsyncBefore<PermissionVerificationMiddleware>(_hostEnvironment);
+
         var guidTagAttribute = context.TryGetMetadata<GuidTagAttribute>();
 
         if (guidTagAttribute == null)
@@ -15,6 +28,8 @@ public class PermissionVerificationMiddleware : IMiddleware
 
             return;
         }
+
+        logger.LogMiddlewareInvokeAsyncAfter<PermissionVerificationMiddleware>(_hostEnvironment);
 
         var operateOfficer = AutofacAssist.Instance.Resolve<IOperateOfficer>();
 

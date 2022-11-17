@@ -2,6 +2,9 @@
 
 namespace EasySoft.UtilityTools.Standard.Result;
 
+/// <summary>
+/// BaseExecutiveResult
+/// </summary>
 public abstract class BaseExecutiveResult
 {
     /// <summary>
