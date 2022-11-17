@@ -1,6 +1,7 @@
-﻿using EasySoft.UtilityTools.Standard.Assists;
+﻿using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.Config.ConfigCollection;
 
-namespace EasySoft.Core.DevelopAuxiliary.Controllers;
+namespace EasySoft.Core.Config.Controllers;
 
 public class DevelopConfigAuxiliaryController : BasicController
 {

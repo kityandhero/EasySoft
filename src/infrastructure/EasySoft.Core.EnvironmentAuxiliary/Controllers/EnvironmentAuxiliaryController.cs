@@ -1,7 +1,25 @@
-﻿namespace EasySoft.Core.DevelopAuxiliary.Controllers;
+﻿namespace EasySoft.Core.EnvironmentAuxiliary.Controllers;
 
 public sealed class EnvironmentAuxiliaryController : BasicController
 {
+    public IActionResult AssemblyMap()
+    {
+        var controllerFeature = new ControllerFeature();
+
+        var applicationPartManager = ApplicationPartManagerAssist.GetApplicationPartManager();
+
+        var loadAssemblies = new List<string>();
+
+        applicationPartManager.PopulateFeature(controllerFeature);
+
+        applicationPartManager.ApplicationParts.ForEach(o => { loadAssemblies.Add(o.Name); });
+
+        return this.Success(new
+        {
+            loadAssemblies
+        });
+    }
+
     public IActionResult ActionMap()
     {
         var controllerFeature = new ControllerFeature();

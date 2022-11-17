@@ -17,7 +17,7 @@ global using EasySoft.Core.Config.Options;
 global using EasySoft.Core.Config.Utils;
 global using EasySoft.Core.ConsulConfigCenterClient.ExtensionMethods;
 global using EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;
-global using EasySoft.Core.DevelopAuxiliary.ExtensionMethods;
+global using EasySoft.Core.EnvironmentAuxiliary.ExtensionMethods;
 global using EasySoft.Core.DynamicConfig.Assists;
 global using EasySoft.Core.EasyCaching.ExtensionMethods;
 global using EasySoft.Core.EasyToken.ExtensionMethods;

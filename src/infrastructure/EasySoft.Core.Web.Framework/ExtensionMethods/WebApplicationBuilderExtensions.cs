@@ -353,11 +353,7 @@ public static class WebApplicationBuilderExtensions
 
         if (app.Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
 
-        app.UseAdvanceViewConfig();
-
-        app.UseAdvanceActionMap();
-
-        app.UseConfigureTemplate();
+        app.UseAdvanceEnvironmentAuxiliary();
 
         WeaveApplicationExtraAction(app);
 

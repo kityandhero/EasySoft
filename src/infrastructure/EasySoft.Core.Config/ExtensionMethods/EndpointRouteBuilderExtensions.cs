@@ -1,30 +1,10 @@
-﻿namespace EasySoft.Core.DevelopAuxiliary.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Standard.ExtensionMethods;
+
+namespace EasySoft.Core.Config.ExtensionMethods;
 
 public static class EndpointConventionBuilderExtensions
 {
     private const string Info = ", it only can access in development mode";
-
-    internal static IEndpointRouteBuilder MapActionMap(
-        this IEndpointRouteBuilder endpoints
-    )
-    {
-        StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(MapActionMap)}."
-        );
-
-        const string routeTemplate = "environmentAuxiliary/actionMap";
-
-        StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get action map by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
-        );
-
-        endpoints.MapControllerRoute(
-            routeTemplate,
-            "{controller=EnvironmentAuxiliary}/{action=ActionMap}"
-        );
-
-        return endpoints;
-    }
 
     internal static IEndpointRouteBuilder MapDatabaseConfigFile(
         this IEndpointRouteBuilder endpoints

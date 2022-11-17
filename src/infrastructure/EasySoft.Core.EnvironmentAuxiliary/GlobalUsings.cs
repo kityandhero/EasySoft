@@ -1,8 +1,6 @@
 ﻿// Global using directives
 
 global using System.Reflection;
-global using EasySoft.Core.Config.ConfigAssist;
-global using EasySoft.Core.Config.ConfigCollection;
 global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.Core.Infrastructure.Controllers;
 global using EasySoft.Core.Infrastructure.Startup;

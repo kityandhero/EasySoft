@@ -109,7 +109,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.LogDashboard"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "auxiliary", "auxiliary", "{3C2BF92B-CDEF-4ED2-AC2A-D5AED27710E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.DevelopAuxiliary", "infrastructure\EasySoft.Core.DevelopAuxiliary\EasySoft.Core.DevelopAuxiliary.csproj", "{2851A520-E033-4ECB-BC2A-D93B84707E0C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.EnvironmentAuxiliary", "infrastructure\EasySoft.Core.EnvironmentAuxiliary\EasySoft.Core.EnvironmentAuxiliary.csproj", "{2851A520-E033-4ECB-BC2A-D93B84707E0C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Gateway.Envoy", "distribution\getway\EasySoft.Core.Gateway.Envoy\EasySoft.Core.Gateway.Envoy.csproj", "{2A8E951B-7D32-4F5E-BE7C-0FC6DC7EC0DC}"
 EndProject
