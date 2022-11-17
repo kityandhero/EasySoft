@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
 
+/// <summary>
+/// IConcurrency
+/// </summary>
 public interface IConcurrency
 {
     /// <summary>

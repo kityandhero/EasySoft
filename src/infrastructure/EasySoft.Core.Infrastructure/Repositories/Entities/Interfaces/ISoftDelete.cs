@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
 
+/// <summary>
+/// ISoftDelete
+/// </summary>
 public interface ISoftDelete
 {
     /// <summary>

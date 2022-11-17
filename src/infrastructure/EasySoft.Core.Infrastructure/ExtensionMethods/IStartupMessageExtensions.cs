@@ -4,8 +4,16 @@ using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.Infrastructure.ExtensionMethods;
 
+/// <summary>
+/// StartupMessageExtensions
+/// </summary>
 public static class StartupMessageExtensions
 {
+    /// <summary>
+    /// BuildMessage
+    /// </summary>
+    /// <param name="startupMessage"></param>
+    /// <returns></returns>
     public static string BuildMessage(this IStartupMessage startupMessage)
     {
         return new[] { startupMessage.GetMessage(), startupMessage.GetExtra() }
@@ -13,6 +21,10 @@ public static class StartupMessageExtensions
             .Join(" ");
     }
 
+    /// <summary>
+    /// Print
+    /// </summary>
+    /// <param name="messageCollection"></param>
     public static void Print(this ICollection<IStartupMessage> messageCollection)
     {
         messageCollection.ForEach(o =>

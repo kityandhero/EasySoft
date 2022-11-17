@@ -34,6 +34,9 @@ public abstract class BaseOperatorContext : IOperatorContext
     /// </summary>
     public string RemoteIpAddress { get; set; }
 
+    /// <summary>
+    /// BaseOperatorContext
+    /// </summary>
     protected BaseOperatorContext()
     {
         Id = 0;
@@ -43,8 +46,16 @@ public abstract class BaseOperatorContext : IOperatorContext
         RemoteIpAddress = string.Empty;
     }
 
+    /// <summary>
+    /// InitializeOperator
+    /// </summary>
+    /// <returns></returns>
     protected abstract IOperator InitializeOperator();
 
+    /// <summary>
+    /// GetOperator
+    /// </summary>
+    /// <returns></returns>
     public IOperator GetOperator()
     {
         var o = InitializeOperator();

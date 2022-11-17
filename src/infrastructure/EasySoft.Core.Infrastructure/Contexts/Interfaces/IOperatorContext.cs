@@ -32,5 +32,9 @@ public interface IOperatorContext
     /// </summary>
     public string RemoteIpAddress { get; set; }
 
+    /// <summary>
+    /// GetOperator
+    /// </summary>
+    /// <returns></returns>
     IOperator GetOperator();
 }

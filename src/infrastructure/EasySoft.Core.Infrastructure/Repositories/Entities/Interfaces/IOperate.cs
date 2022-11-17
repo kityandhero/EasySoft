@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
 
+/// <summary>
+/// IOperate
+/// </summary>
 public interface IOperate
 {
     /// <summary>

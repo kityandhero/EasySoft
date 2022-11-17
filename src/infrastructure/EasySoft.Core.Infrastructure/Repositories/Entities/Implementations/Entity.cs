@@ -3,6 +3,9 @@ using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
 
 namespace EasySoft.Core.Infrastructure.Repositories.Entities.Implementations;
 
+/// <summary>
+/// Entity
+/// </summary>
 public abstract class Entity : IEntity<long>
 {
     /// <summary>
