@@ -1,8 +1,8 @@
 ﻿namespace EasySoft.Core.DevelopAuxiliary.Controllers;
 
-public sealed class ActionMapController : BasicController
+public sealed class EnvironmentAuxiliaryController : BasicController
 {
-    public IActionResult Index()
+    public IActionResult ActionMap()
     {
         var controllerFeature = new ControllerFeature();
 

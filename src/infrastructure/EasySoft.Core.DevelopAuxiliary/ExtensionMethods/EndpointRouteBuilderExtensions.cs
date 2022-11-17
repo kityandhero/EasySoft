@@ -12,14 +12,16 @@ public static class EndpointConventionBuilderExtensions
             $"{nameof(MapActionMap)}."
         );
 
+        const string routeTemplate = "environmentAuxiliary/actionMap";
+
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get action map by access {FlagAssist.StartupUrls.Select(o => $"{o}/ActionMap").Join(" ")}{Info}."
+            $"You can get action map by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
         endpoints.MapControllerRoute(
-            "ActionMap",
-            "{controller=ActionMap}/{action=Index}"
-        ).WithDisplayName("ActionMap");
+            routeTemplate,
+            "{controller=EnvironmentAuxiliary}/{action=ActionMap}"
+        );
 
         return endpoints;
     }
