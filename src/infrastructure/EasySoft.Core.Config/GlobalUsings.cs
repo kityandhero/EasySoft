@@ -1,6 +1,7 @@
 ﻿// Global using directives
 
 global using System.Reflection;
+global using System.Text;
 global using Autofac;
 global using Autofac.Extensions.DependencyInjection;
 global using EasySoft.Core.Infrastructure.Assists;

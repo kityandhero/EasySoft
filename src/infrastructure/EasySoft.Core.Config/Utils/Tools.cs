@@ -132,42 +132,42 @@ public static class Tools
         return GetEmbeddedResourceFileContent("/nlog.trace.target.txt");
     }
 
-    public static string GetNlogDefaultExceptionlessExtensionsConfig()
+    private static string GetNlogDefaultExceptionlessExtensionsConfig()
     {
         return GetEmbeddedResourceFileContent("/nlog.exceptionless-extensions.txt");
     }
 
-    public static string GetNlogDefaultExceptionlessRuleConfig()
+    private static string GetNlogDefaultExceptionlessRuleConfig()
     {
         return GetEmbeddedResourceFileContent("/nlog.exceptionless.rule.txt");
     }
 
-    public static string GetNlogDefaultExceptionlessTargetConfig()
+    private static string GetNlogDefaultExceptionlessTargetConfig()
     {
         return GetEmbeddedResourceFileContent("/nlog.exceptionless.target.txt");
     }
 
-    public static string GetNlogWordHighlightingRules()
+    private static string GetNlogWordHighlightingRules()
     {
         return GetEmbeddedResourceFileContent("/nlog.console.word.highlighting.rules.txt");
     }
 
-    public static string GetNlogConsoleFilter()
+    private static string GetNlogConsoleFilter()
     {
         return GetEmbeddedResourceFileContent("/nlog.console.filter.txt");
     }
 
-    public static string GetNlogConsoleFilterRepeated()
+    private static string GetNlogConsoleFilterRepeated()
     {
         return GetEmbeddedResourceFileContent("/nlog.console.filter.repeated.txt");
     }
 
-    public static string GetNlogConsoleLimitingWrapper()
+    private static string GetNlogConsoleLimitingWrapper()
     {
         return GetEmbeddedResourceFileContent("/nlog.console.limiting.wrapper.txt");
     }
 
-    public static string GetNlogConsoleTarget()
+    private static string GetNlogConsoleTarget()
     {
         return GetEmbeddedResourceFileContent("/nlog.console.target.txt");
     }
@@ -181,6 +181,6 @@ public static class Tools
 
         var f = personEmbeddedFileProvider.GetFileInfo(path);
 
-        return f.CreateReadStream().ReadAll();
+        return f.CreateReadStream().ReadAll(new UTF8Encoding(false));
     }
 }
