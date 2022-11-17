@@ -18,6 +18,7 @@ global using IGeekFan.AspNetCore.Knife4jUI;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Mvc.ApplicationModels;
 global using Microsoft.AspNetCore.Mvc.Controllers;
 global using Microsoft.AspNetCore.Routing;
 global using Microsoft.Extensions.Configuration;

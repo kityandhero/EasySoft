@@ -14,14 +14,27 @@ public static class EndpointConventionBuilderExtensions
             $"{nameof(MapDatabaseConfigFile)}."
         );
 
+        const string routeTemplate = "databaseConfigAuxiliary/getTemplate";
+
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get databaseConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/DatabaseConfigFile").Join(" ")}{Info}."
+            $"You can get databaseConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
         endpoints.MapControllerRoute(
             "DatabaseConfigFile",
-            "{controller=DatabaseConfigAuxiliary}/{action=Index}"
-        ).WithDisplayName("DatabaseConfigFile");
+            "{controller=DatabaseConfigAuxiliary}/{action=GetTemplate}"
+        );
+
+        const string routeCurrent = "databaseConfigAuxiliary/getCurrent";
+
+        endpoints.MapControllerRoute(
+            routeCurrent,
+            "{controller=DatabaseConfigAuxiliary}/{action=GetCurrent}"
+        );
+
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"You can get databaseConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
+        );
 
         return endpoints;
     }

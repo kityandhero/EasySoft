@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Web.Framework.Attributes;
+﻿using EasySoft.Core.Swagger.ModelConventions;
+using EasySoft.Core.Web.Framework.Attributes;
 using EasySoft.Core.Web.Framework.Filters;
 
 namespace EasySoft.Core.Web.Framework.ExtensionMethods;
@@ -75,6 +76,8 @@ public static class WebApplicationBuilderExtensions
                 option =>
                 {
                     option.EnableEndpointRouting = false;
+
+                    option.Conventions.Add(new IgnoreActionModelConvention());
 
                     if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.EasyToken &&
                         !FlagAssist.EasyTokenMiddlewareModeSwitch)
@@ -354,6 +357,8 @@ public static class WebApplicationBuilderExtensions
         if (app.Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
 
         app.UseAdvanceEnvironmentAuxiliary();
+
+        app.UseConfigureTemplate();
 
         WeaveApplicationExtraAction(app);
 

@@ -8,6 +8,7 @@ using EasySoft.Simple.Tradition.Service.Services.Implementations;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 
 AuxiliaryConfigure.PromptStartupExecuteMessage = false;
+AuxiliaryConfigure.PromptConfigFileInfo = true;
 
 SwaggerConfigure.ExternalSchemaType.Add(typeof(Task<ApiResult>));
 

@@ -40,6 +40,11 @@ public static class SwaggerConfigure
     /// </summary>
     public static IDictionary<string, OpenApiResponse> AbnormalResponseCollection { get; }
 
+    /// <summary>
+    /// IgnoreRoutes
+    /// </summary>
+    public static IDictionary<string, Func<string, string, bool>> IgnoreRoutesAssemblyFilters { get; }
+
     static SwaggerConfigure()
     {
         DescribeAllParametersInCamelCase = true;
@@ -49,6 +54,7 @@ public static class SwaggerConfigure
         GeneralParameters = new List<OpenApiParameter>();
         GeneralResponseHeaders = new Dictionary<string, OpenApiHeader>();
         AbnormalResponseCollection = new Dictionary<string, OpenApiResponse>();
+        IgnoreRoutesAssemblyFilters = new Dictionary<string, Func<string, string, bool>>();
     }
 
     /// <summary>
