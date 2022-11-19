@@ -11,6 +11,12 @@ public class GeneralConfig : IConfig
 
     public string Urls { get; set; }
 
+    #region Compression
+
+    public string CompressionSwitch { get; set; }
+
+    #endregion
+
     #region Token
 
     /// <summary>
@@ -95,9 +101,13 @@ public class GeneralConfig : IConfig
 
     public string UseAuthorization { get; set; }
 
+    #region Cors
+
     public string CorsSwitch { get; set; }
 
     public string CorsPolicies { get; set; }
+
+    #endregion
 
     public string HttpRedirectionHttpsSwitch { get; set; }
 
@@ -186,6 +196,8 @@ public class GeneralConfig : IConfig
         CacheMode = CacheModeCollection.InMemory.ToString();
 
         Urls = "";
+
+        CompressionSwitch = "0";
 
         AccessWayDetectSwitch = "0";
         RemoteGeneralLogSwitch = "0";

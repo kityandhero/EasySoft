@@ -66,14 +66,14 @@ public static class GeneralConfigAssist
         return Configuration.GetSection(key).Value;
     }
 
-    public static bool GetRemoteLogSwitch()
-    {
-        return GetRemoteErrorLogSwitch() || GetRemoteGeneralLogSwitch();
-    }
-
     private static GeneralConfig GetConfig()
     {
         return GeneralConfig.Instance;
+    }
+
+    public static bool GetRemoteLogSwitch()
+    {
+        return GetRemoteErrorLogSwitch() || GetRemoteGeneralLogSwitch();
     }
 
     public static string GetId()
@@ -126,6 +126,21 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         return v;
+    }
+
+    public static bool GetCompressionSwitch()
+    {
+        var v = GetConfig().CompressionSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+            throw new ConfigErrorException(
+                $"请配置 CompressionSwitch: {ConfigFile} -> CompressionSwitch,请设置 0/1",
+                GetConfigFileInfo()
+            );
+
+        return value == 1;
     }
 
     public static string GetCacheMode()

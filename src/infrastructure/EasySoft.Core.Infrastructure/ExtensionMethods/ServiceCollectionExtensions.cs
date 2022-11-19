@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.Infrastructure.ExtensionMethods;
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace EasySoft.Core.Infrastructure.ExtensionMethods;
 
 /// <summary>
 /// ServiceCollectionExtensions

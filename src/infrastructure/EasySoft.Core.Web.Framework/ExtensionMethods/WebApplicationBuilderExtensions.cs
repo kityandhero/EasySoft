@@ -59,6 +59,23 @@ public static class WebApplicationBuilderExtensions
 
         builder.AddAdvanceExceptionless();
 
+        if (GeneralConfigAssist.GetCompressionSwitch())
+        {
+            StartupConfigMessageAssist.AddConfig(
+                "CompressionSwitch: enable.",
+                GeneralConfigAssist.GetConfigFileInfo()
+            );
+
+            builder.Services.AddAdvanceResponseCompression();
+        }
+        else
+        {
+            StartupConfigMessageAssist.AddConfig(
+                "CompressionSwitch: disable.",
+                GeneralConfigAssist.GetConfigFileInfo()
+            );
+        }
+
         builder.Services.AddRouting(o => { o.LowercaseUrls = true; });
 
         builder.Services.AddApiVersioning(o =>
