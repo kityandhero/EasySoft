@@ -1,0 +1,15 @@
+﻿version: "3"
+
+services:
+  application_docker_deploy:
+    #    image: application_docker_deploy:dev
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: application_docker_deploy
+    restart: always
+    network_mode: bridge
+    ports:
+      - "8445:80"
+#    volumes:
+#      - ./envoy.yaml:/etc/envoy/envoy.yaml

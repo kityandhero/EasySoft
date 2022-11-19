@@ -15,11 +15,26 @@ public static class ServiceCollectionExtensions
     {
         services.AddResponseCompression();
 
+        StartupDescriptionMessageAssist.AddExecute(
+            $"AddResponseCompression"
+        );
+
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"Response use compression"
+        );
+
         ApplicationConfigurator.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(
-                    application => { application.UseResponseCompression(); }
+                    application =>
+                    {
+                        application.UseResponseCompression();
+
+                        StartupDescriptionMessageAssist.AddExecute(
+                            $"UseResponseCompression"
+                        );
+                    }
                 )
         );
 

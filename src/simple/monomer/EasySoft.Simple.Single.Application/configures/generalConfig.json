@@ -1,6 +1,7 @@
 {
   "Urls": "8846",
   "HttpRedirectionHttpsSwitch": "0",
+  "CompressionSwitch": "1",
   "CorsEnable": "1",
   "CorsPolicies": "*",
   "MiniProFileSwitch": "1",

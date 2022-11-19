@@ -18,6 +18,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit-test", "unit-test", "{8D7FB3F6-1038-4974-A787-044646C716C1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3A5000A7-B37E-4A5D-8668-82E7E2681993}"
+	ProjectSection(SolutionItems) = preProject
+		test\Dockerfile = test\Dockerfile
+		test\.dockerignore = test\.dockerignore
+		test\docker.build.ps1 = test\docker.build.ps1
+		test\docker-compose.yaml = test\docker-compose.yaml
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasySoft.UtilityToolsTest", "unit-test\EasySoft.UtilityToolsTest\EasySoft.UtilityToolsTest.csproj", "{FBEC59EB-4317-4334-92A8-9641B2BEC619}"
 EndProject
@@ -346,6 +352,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "applications", "applications", "{CBBEC6B1-3381-438E-89AD-3B7820EDFA67}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Simple.Tradition.Common", "simple\monomer\EasySoft.Simple.Tradition.Common\EasySoft.Simple.Tradition.Common.csproj", "{78C08D4A-57B1-4A00-81B5-DF9D1BD887B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker deploy  Docker 部署", "docker deploy  Docker 部署", "{49D48343-AA2A-4627-B2D5-F9B66275A996}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationDockerDeploy", "test\ApplicationDockerDeploy\ApplicationDockerDeploy.csproj", "{134C3BEC-8413-4A97-8906-722B15A05437}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -785,6 +795,10 @@ Global
 		{78C08D4A-57B1-4A00-81B5-DF9D1BD887B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78C08D4A-57B1-4A00-81B5-DF9D1BD887B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78C08D4A-57B1-4A00-81B5-DF9D1BD887B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{134C3BEC-8413-4A97-8906-722B15A05437}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{134C3BEC-8413-4A97-8906-722B15A05437}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{134C3BEC-8413-4A97-8906-722B15A05437}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{134C3BEC-8413-4A97-8906-722B15A05437}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -953,6 +967,8 @@ Global
 		{D1194807-2E7D-428A-A2FA-7C6B50546AB2} = {CBBEC6B1-3381-438E-89AD-3B7820EDFA67}
 		{A479616F-DB38-48A0-8F7B-98BDFA1072F7} = {CBBEC6B1-3381-438E-89AD-3B7820EDFA67}
 		{78C08D4A-57B1-4A00-81B5-DF9D1BD887B8} = {662B4033-A96A-4569-89F2-3E2437FE0998}
+		{49D48343-AA2A-4627-B2D5-F9B66275A996} = {3A5000A7-B37E-4A5D-8668-82E7E2681993}
+		{134C3BEC-8413-4A97-8906-722B15A05437} = {49D48343-AA2A-4627-B2D5-F9B66275A996}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}
