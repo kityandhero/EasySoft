@@ -137,7 +137,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Yarp", "infra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{DAEE0382-4C98-4B0D-82A4-FC817D294164}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core. BootstrapBlazor", "infrastructure\EasySoft.Core. BootstrapBlazor\EasySoft.Core. BootstrapBlazor.csproj", "{58279D9D-1A78-45CD-868D-D9C15DA44A78}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.BootstrapBlazor", "infrastructure\EasySoft.Core.BootstrapBlazor\EasySoft.Core.BootstrapBlazor.csproj", "{58279D9D-1A78-45CD-868D-D9C15DA44A78}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.FreeSql", "infrastructure\EasySoft.Core.FreeSql\EasySoft.Core.FreeSql.csproj", "{C4A263C2-A021-4072-AA91-803E7F6758CD}"
 EndProject
