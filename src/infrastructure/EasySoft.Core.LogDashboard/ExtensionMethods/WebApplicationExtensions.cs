@@ -13,7 +13,7 @@ public static class WebApplicationExtensions
         application.UseLogDashboard();
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/LogDashboard" : FlagAssist.StartupUrls.Select(o => $"{o}/LogDashboard").Join(" "))} to visit LogDashboard."
+            $"You can access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/LogDashboard").Join(" ")} to visit LogDashboard."
         );
 
         return application;

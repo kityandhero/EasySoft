@@ -15,7 +15,7 @@ public static class EndpointConventionBuilderExtensions
         const string routeTemplate = "environmentAuxiliary/assemblyMap";
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get action map by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
+            $"You can get action map by access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
         endpoints.MapControllerRoute(
@@ -37,7 +37,7 @@ public static class EndpointConventionBuilderExtensions
         const string routeTemplate = "environmentAuxiliary/actionMap";
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get action map by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
+            $"You can get action map by access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
         endpoints.MapControllerRoute(

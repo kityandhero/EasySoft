@@ -87,9 +87,7 @@ public static class WebApplicationBuilderExtensions
             var openApiServerUrl = SwaggerConfigAssist.GetOpenApiServerUrl();
 
             openApiServerUrl = string.IsNullOrWhiteSpace(openApiServerUrl)
-                ? !FlagAssist.StartupUrls.Any()
-                    ? "https://[host]:[port]"
-                    : FlagAssist.StartupUrls.FirstOrDefault()
+                ? FlagAssist.StartupDisplayUrls.FirstOrDefault()
                 : openApiServerUrl;
 
             var openApiServer = new OpenApiServer

@@ -46,7 +46,12 @@ public static class FlagAssist
     /// <summary>
     /// StartupUrls
     /// </summary>
-    public static IEnumerable<string> StartupUrls { get; set; }
+    public static ICollection<string> StartupUrls { get; set; }
+
+    /// <summary>
+    /// StartupDisplayUrls
+    /// </summary>
+    public static ICollection<string> StartupDisplayUrls { get; set; }
 
     static FlagAssist()
     {
@@ -61,6 +66,7 @@ public static class FlagAssist
         PermissionVerificationSwitch = false;
         PermissionVerificationMiddlewareModeSwitch = false;
         StartupUrls = new List<string>();
+        StartupDisplayUrls = new List<string>();
     }
 
     /// <summary>

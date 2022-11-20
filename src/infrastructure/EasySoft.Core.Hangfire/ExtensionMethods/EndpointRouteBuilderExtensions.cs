@@ -17,7 +17,7 @@ public static class EndpointConventionBuilderExtensions
         const string routeTemplate = "hangfireConfigAuxiliary/getTemplate";
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get hangfireConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
+            $"You can get hangfireConfig template by access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
         endpoints.MapControllerRoute(
@@ -33,7 +33,7 @@ public static class EndpointConventionBuilderExtensions
         );
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get hangfireConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
+            $"You can get hangfireConfig template by access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
         );
 
         return endpoints;

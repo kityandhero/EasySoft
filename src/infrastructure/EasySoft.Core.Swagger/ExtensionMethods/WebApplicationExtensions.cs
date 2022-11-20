@@ -25,7 +25,7 @@ public static class WebApplicationExtensions
         application.UseSwaggerUI();
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access swagger api document by {(!FlagAssist.StartupUrls.Any() ? "https://[host]:[port]/swagger/index.html" : FlagAssist.StartupUrls.Select(o => $"{o}/swagger/index.html").Join(" "))}."
+            $"You can access swagger api document by {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/swagger/index.html").Join(" ")}."
         );
 
         if (EnvironmentAssist.IsDevelopment() && AuxiliaryConfigure.PromptConfigFileInfo)
@@ -61,7 +61,7 @@ public static class WebApplicationExtensions
         });
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access swagger knife4UI by {(!FlagAssist.StartupUrls.Any() ? $"https://[host]:[port]/{routePrefix}" : FlagAssist.StartupUrls.Select(o => $"{o}/{routePrefix}").Join(" "))}."
+            $"You can access swagger knife4UI by {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routePrefix}").Join(" ")}."
         );
 
         return application;

@@ -19,27 +19,41 @@ public static class WebApplicationBuilderExtensions
             $"{nameof(AddAdvanceUrls)}()"
         );
 
-        var urls = GeneralConfigAssist.GetUrls();
+        FlagAssist.StartupUrls.Clear();
+        FlagAssist.StartupDisplayUrls.Clear();
 
-        if (string.IsNullOrWhiteSpace(urls))
-        {
-            StartupConfigMessageAssist.AddConfig(
-                "Urls in generalConfig.json has not setting, suggest setting it with number or url, there will be better development experience."
+        var httpPost = GeneralConfigAssist.GetHttpPost();
+        var httpsPost = GeneralConfigAssist.GetHttpsPost();
+
+        if (httpPost <= 0 && httpsPost <= 0)
+            throw new Exception(
+                $"one of HttpPost or HttpsPost must bu greater than 0, please set httpPost or httpsPost in {GeneralConfigAssist.GetConfigFileInfo()}."
             );
 
-            return builder;
+        if (httpPost > 0)
+        {
+            FlagAssist.StartupUrls.Add($"http://*:{httpPost}");
+            FlagAssist.StartupDisplayUrls.Add($"http://localhost:{httpPost}");
+
+            StartupConfigMessageAssist.AddConfig(
+                $"HttpPost: {httpPost}."
+            );
         }
 
-        var urlsAdjust = urls.IsInt() ? $"http://localhost:{urls}" : urls;
+        if (httpsPost > 0)
+        {
+            FlagAssist.StartupUrls.Add($"https://*:{httpsPost}");
+            FlagAssist.StartupDisplayUrls.Add($"https://localhost:{httpsPost}");
 
-        FlagAssist.StartupUrls = urlsAdjust.Split(",").ToListFilterNullOrWhiteSpace()
-            .ForEach(o => o.IsInt() ? $"http://localhost:{o}" : o)
-            .ToListFilterNullOrWhiteSpace();
+            StartupConfigMessageAssist.AddConfig(
+                $"HttpsPost: {httpsPost}."
+            );
+        }
 
         builder.WebHost.UseUrls(FlagAssist.StartupUrls.ToArray());
 
-        StartupConfigMessageAssist.AddConfig(
-            $"Startup urls: {FlagAssist.StartupUrls.Join(" ")}."
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"You can access application at {FlagAssist.StartupDisplayUrls.Join(" ")}."
         );
 
         return builder;

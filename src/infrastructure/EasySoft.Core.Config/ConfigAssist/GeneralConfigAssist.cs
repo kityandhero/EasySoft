@@ -119,13 +119,30 @@ public static class GeneralConfigAssist
         return version;
     }
 
-    public static string GetUrls()
+    public static int GetHttpPost()
     {
-        var v = GetConfig().Urls;
+        var v = GetConfig().HttpPost;
 
-        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
-        return v;
+        if (!v.IsInt(out var value) || value < 0)
+            throw new ConfigErrorException(
+                $"请配置 HttpPost: {ConfigFile} -> HttpPost,请设置数字 value > 0"
+            );
+
+        return value;
+    }
+
+    public static int GetHttpsPost()
+    {
+        var v = GetConfig().HttpsPost;
+
+        if (!v.IsInt(out var value) || value < 0)
+            throw new ConfigErrorException(
+                $"请配置 HttpsPost: {ConfigFile} -> HttpsPost,请设置数字 value > 0"
+            );
+
+        return value;
     }
 
     public static bool GetCompressionSwitch()

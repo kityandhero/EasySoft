@@ -395,7 +395,7 @@ public static class WebApplicationBuilderExtensions
                 : capConfig.DashboardOptions.PathBase;
 
             StartupDescriptionMessageAssist.AddPrompt(
-                $"Cap dashboard is {pathBase}, you can access {(!FlagAssist.StartupUrls.Any() ? $"https://[host]:[port]{capConfig.DashboardOptions.PathBase}" : FlagAssist.StartupUrls.Select(o => $"{o}{pathBase}").Join(" "))} to visit it."
+                $"Cap dashboard is {pathBase}, you can access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}{pathBase}").Join(" ")} to visit it."
             );
         }
 

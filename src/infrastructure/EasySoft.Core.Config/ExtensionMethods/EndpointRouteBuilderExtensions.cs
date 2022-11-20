@@ -17,7 +17,7 @@ public static class EndpointConventionBuilderExtensions
         const string routeTemplate = "databaseConfigAuxiliary/getTemplate";
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get databaseConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
+            $"You can get databaseConfig template by access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
         endpoints.MapControllerRoute(
@@ -33,7 +33,7 @@ public static class EndpointConventionBuilderExtensions
         );
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get databaseConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
+            $"You can get databaseConfig template by access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
         );
 
         return endpoints;
@@ -50,7 +50,7 @@ public static class EndpointConventionBuilderExtensions
         const string routeTemplate = "developConfigAuxiliary/getTemplate";
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get developConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
+            $"You can get developConfig template by access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
         endpoints.MapControllerRoute(
@@ -66,7 +66,7 @@ public static class EndpointConventionBuilderExtensions
         );
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get developConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
+            $"You can get developConfig template by access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
         );
 
         return endpoints;
@@ -83,7 +83,7 @@ public static class EndpointConventionBuilderExtensions
         const string routeTemplate = "elasticSearchConfigAuxiliary/getTemplate";
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get elasticSearchConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
+            $"You can get elasticSearchConfig template by access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
         endpoints.MapControllerRoute(
@@ -99,7 +99,7 @@ public static class EndpointConventionBuilderExtensions
         );
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get elasticSearchConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
+            $"You can get elasticSearchConfig template by access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
         );
 
         return endpoints;
@@ -121,7 +121,7 @@ public static class EndpointConventionBuilderExtensions
         );
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get generalConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
+            $"You can get generalConfig template by access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
         const string routeCurrent = "generalConfigAuxiliary/getCurrent";
@@ -132,7 +132,7 @@ public static class EndpointConventionBuilderExtensions
         );
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get generalConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
+            $"You can get generalConfig template by access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
         );
 
         return endpoints;
@@ -149,7 +149,7 @@ public static class EndpointConventionBuilderExtensions
         const string routeTemplate = "mongoConfigAuxiliary/getTemplate";
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get mongoConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
+            $"You can get mongoConfig template by access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
         endpoints.MapControllerRoute(
@@ -165,7 +165,7 @@ public static class EndpointConventionBuilderExtensions
         );
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get mongoConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
+            $"You can get mongoConfig template by access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
         );
 
         return endpoints;
@@ -182,7 +182,7 @@ public static class EndpointConventionBuilderExtensions
         const string routeTemplate = "rabbitMQConfigAuxiliary/getTemplate";
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get rabbitMQConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
+            $"You can get rabbitMQConfig template by access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routeTemplate}").Join(" ")}{Info}."
         );
 
         endpoints.MapControllerRoute(
@@ -198,7 +198,7 @@ public static class EndpointConventionBuilderExtensions
         );
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get rabbitMQConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
+            $"You can get rabbitMQConfig template by access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routeCurrent}").Join(" ")}{Info}."
         );
 
         return endpoints;

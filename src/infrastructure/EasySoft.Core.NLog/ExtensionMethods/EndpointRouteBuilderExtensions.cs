@@ -11,7 +11,7 @@ public static class EndpointConventionBuilderExtensions
         );
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can get nLogInlayConfig template by access {FlagAssist.StartupUrls.Select(o => $"{o}/NLogInlayConfig").Join(" ")}, it only can access in development mode."
+            $"You can get nLogInlayConfig template by access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/NLogInlayConfig").Join(" ")}, it only can access in development mode."
         );
 
         return endpoints.MapControllerRoute(

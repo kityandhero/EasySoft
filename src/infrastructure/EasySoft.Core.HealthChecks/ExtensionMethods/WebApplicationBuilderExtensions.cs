@@ -43,7 +43,7 @@ public static class WebApplicationBuilderExtensions
         );
 
         StartupConfigMessageAssist.AddConfig(
-            $"HealthChecks: enable{(!FlagAssist.StartupUrls.Any() ? "." : $", you can access {FlagAssist.StartupUrls.Select(o => $"{o}/HealthChecks-ui").Join(" ")}")} to visit it."
+            $"HealthChecks: enable, you can access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/HealthChecks-ui").Join(" ")} to visit it."
         );
 
         return builder;

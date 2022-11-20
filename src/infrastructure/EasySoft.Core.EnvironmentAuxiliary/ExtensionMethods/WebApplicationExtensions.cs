@@ -42,7 +42,7 @@ public static class WebApplicationExtensions
         application.UseViewConfig(x => x.RenderPage());
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access {FlagAssist.StartupUrls.Select(o => $"{o}/viewConfig ").Join(" ")} to get info such as appSetting, display only in view development mode."
+            $"You can access {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/viewConfig ").Join(" ")} to get info such as appSetting, display only in view development mode."
         );
 
         return application;

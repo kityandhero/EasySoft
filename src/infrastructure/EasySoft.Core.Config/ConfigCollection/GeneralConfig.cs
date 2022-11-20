@@ -9,7 +9,13 @@ public class GeneralConfig : IConfig
 
     public string CacheMode { get; set; }
 
-    public string Urls { get; set; }
+    #region Start Port
+
+    public string HttpPost { get; set; }
+
+    public string HttpsPost { get; set; }
+
+    #endregion
 
     #region Compression
 
@@ -195,7 +201,8 @@ public class GeneralConfig : IConfig
     {
         CacheMode = CacheModeCollection.InMemory.ToString();
 
-        Urls = "";
+        HttpPost = "0";
+        HttpsPost = "0";
 
         CompressionSwitch = "0";
 

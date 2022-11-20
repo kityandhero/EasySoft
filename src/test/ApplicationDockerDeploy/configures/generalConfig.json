@@ -1,5 +1,5 @@
 {
-  "Urls": "80",
+  "HttpPost": "8845",
   "HttpRedirectionHttpsSwitch": "0",
   "NlogDefaultConfigTraceToConsoleSwitch": "1",
   "NlogDefaultConfigDebugToConsoleSwitch": "1"
