@@ -9,7 +9,6 @@
         <PackageProjectUrl>https://github.com/kityandhero/EasySoft/tree/main/src</PackageProjectUrl>
         <RepositoryUrl>https://github.com/kityandhero/EasySoft/tree/main/src</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageVersion>1.0.4</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>

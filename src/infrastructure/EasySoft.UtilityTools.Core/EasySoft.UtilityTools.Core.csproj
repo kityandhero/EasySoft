@@ -8,7 +8,6 @@
         <Description>EasySoft.UtilityTools.Core</Description>
         <PackageProjectUrl>https://github.com/kityandhero/EasySoft</PackageProjectUrl>
         <RepositoryUrl>https://github.com/kityandhero/EasySoft</RepositoryUrl>
-        <PackageVersion>1.0.2</PackageVersion>
     </PropertyGroup>
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
@@ -16,21 +15,21 @@
         <RepositoryType>git</RepositoryType>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\EasySoft.UtilityTools.Core.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\EasySoft.UtilityTools.Core.xml</DocumentationFile>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\EasySoft.UtilityTools.Core.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\EasySoft.UtilityTools.Core.xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="NGeoHash" Version="1.2.0" />
-        <PackageReference Include="QRCoder" Version="1.4.3" />
-        <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-        <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
+        <PackageReference Include="NGeoHash" Version="1.2.0"/>
+        <PackageReference Include="QRCoder" Version="1.4.3"/>
+        <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0"/>
+        <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0"/>
     </ItemGroup>
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
+        <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
     </ItemGroup>
 </Project>
