@@ -18,7 +18,7 @@ public static class WebApplicationExtensions
         application.UseMvc();
 
         var startMessage = new StartupMessage()
-            .SetLevel(LogLevel.Information)
+            .SetLevel(LogLevel.Trace)
             .SetMessage(
                 UtilityTools.Standard.ConstCollection.ApplicationStartExtraEndpointMessageStartDivider
             );

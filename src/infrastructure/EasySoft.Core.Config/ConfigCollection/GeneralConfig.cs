@@ -240,8 +240,8 @@ public class GeneralConfig : IConfig
 
         NlogDefaultConfigTraceToFileSwitch = "0";
         NlogDefaultConfigDebugToFileSwitch = "0";
-        NlogDefaultConfigTraceToConsoleSwitch = "1";
-        NlogDefaultConfigDebugToConsoleSwitch = "1";
+        NlogDefaultConfigTraceToConsoleSwitch = "0";
+        NlogDefaultConfigDebugToConsoleSwitch = "0";
         NlogConsoleMessageLimit = "0";
         NlogConsoleLimitingWrapperSwitch = "0";
         NlogConsoleRepeatedFilterSwitch = "0";
