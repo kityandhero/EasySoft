@@ -22,9 +22,6 @@
       <None Update="Dockerfile">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="docker.build.ps1">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
       <None Update="docker-compose.yaml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
