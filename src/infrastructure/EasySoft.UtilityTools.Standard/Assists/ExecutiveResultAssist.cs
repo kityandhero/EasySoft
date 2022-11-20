@@ -3,6 +3,9 @@ using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.UtilityTools.Standard.Assists;
 
+/// <summary>
+/// ExecutiveResultAssist
+/// </summary>
 public static class ExecutiveResultAssist
 {
     public static ExecutiveResult CreateOk()

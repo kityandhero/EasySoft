@@ -199,6 +199,7 @@ public static class WebApplicationBuilderExtensions
         {
             // 配置反向代理服务器, 需要在调用其他中间件之前 
             // https://docs.microsoft.com/zh-cn/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-6.0
+            // https: //learn.microsoft.com/zh-cn/aspnet/core/host-and-deploy/proxy-load-balancer?view=aspnetcore-6.0
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
@@ -221,7 +222,8 @@ public static class WebApplicationBuilderExtensions
 
         if (!app.Environment.IsDevelopment())
             // app.UseExceptionHandler("/Error");
-            app.UseHsts();
+            if (GeneralConfigAssist.GetHstsSwitch())
+                app.UseHsts();
 
         if (GeneralConfigAssist.GetHttpRedirectionHttpsSwitch())
         {

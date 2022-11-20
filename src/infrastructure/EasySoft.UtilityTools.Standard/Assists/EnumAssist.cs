@@ -4,6 +4,9 @@ using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.UtilityTools.Standard.Assists;
 
+/// <summary>
+/// EnumAssist
+/// </summary>
 public static class EnumAssist
 {
     /// <summary>
@@ -38,6 +41,11 @@ public static class EnumAssist
         return enumValueList.Cast<int>().OrderBy(x => x).ToArray();
     }
 
+    /// <summary>
+    /// BuildEnumCollectionWithValueAndName
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static IEnumerable<object> BuildEnumCollectionWithValueAndName<T>() where T : struct
     {
         var result = new List<object>();
@@ -100,6 +108,12 @@ public static class EnumAssist
         return BuildEnumCollectionToValueAndDescriptionDataByMatchMode(listExclude);
     }
 
+    /// <summary>
+    /// BuildEnumCollectionToValueAndDescriptionDataByContain
+    /// </summary>
+    /// <param name="contains"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static IEnumerable<object> BuildEnumCollectionToValueAndDescriptionDataByContain<T>(
         params T[] contains
     ) where T : struct

@@ -145,6 +145,29 @@ public static class GeneralConfigAssist
         return value;
     }
 
+    /// <summary>
+    /// HSTS 开关
+    /// </summary>
+    /// <remarks>
+    /// HSTS 简易解释，它是通过服务器发送一个响应头的方式来控制浏览器操作是否强制使用 Https.
+    /// </remarks>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
+    public static bool GetHstsSwitch()
+    {
+        var v = GetConfig().HstsSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+            throw new ConfigErrorException(
+                $"请配置 HstsSwitch: {ConfigFile} -> HstsSwitch,请设置 0/1",
+                GetConfigFileInfo()
+            );
+
+        return value == 1;
+    }
+
     public static bool GetCompressionSwitch()
     {
         var v = GetConfig().CompressionSwitch;

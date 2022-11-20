@@ -5,6 +5,10 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>10</LangVersion>
+        <IsPackable>true</IsPackable>
+        <PackageProjectUrl>https://github.com/kityandhero/EasySoft/tree/main/src</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/kityandhero/EasySoft/tree/main/src</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
     </PropertyGroup>
 
     <ItemGroup>

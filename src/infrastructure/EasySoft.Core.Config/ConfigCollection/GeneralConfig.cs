@@ -17,6 +17,8 @@ public class GeneralConfig : IConfig
 
     #endregion
 
+    public string HstsSwitch { get; set; }
+
     #region Compression
 
     public string CompressionSwitch { get; set; }
@@ -203,6 +205,8 @@ public class GeneralConfig : IConfig
 
         HttpPost = "0";
         HttpsPost = "0";
+
+        HstsSwitch = "0";
 
         CompressionSwitch = "0";
 

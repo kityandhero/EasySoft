@@ -351,6 +351,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker deploy  Docker éƒ¨ç½
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationDockerDeploy", "test\ApplicationDockerDeploy\ApplicationDockerDeploy.csproj", "{134C3BEC-8413-4A97-8906-722B15A05437}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{AD769C57-A84B-492D-BE2E-B5FDC98EB27D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -963,6 +965,7 @@ Global
 		{78C08D4A-57B1-4A00-81B5-DF9D1BD887B8} = {662B4033-A96A-4569-89F2-3E2437FE0998}
 		{49D48343-AA2A-4627-B2D5-F9B66275A996} = {3A5000A7-B37E-4A5D-8668-82E7E2681993}
 		{134C3BEC-8413-4A97-8906-722B15A05437} = {49D48343-AA2A-4627-B2D5-F9B66275A996}
+		{AD769C57-A84B-492D-BE2E-B5FDC98EB27D} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}
