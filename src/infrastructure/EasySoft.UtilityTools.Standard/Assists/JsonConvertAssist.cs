@@ -8,13 +8,27 @@ using Newtonsoft.Json.Serialization;
 
 namespace EasySoft.UtilityTools.Standard.Assists;
 
+/// <summary>
+/// JsonConvertAssist
+/// </summary>
 public static class JsonConvertAssist
 {
+    /// <summary>
+    /// CreateJsonSerializerSettings
+    /// </summary>
+    /// <param name="camelCase"></param>
+    /// <returns></returns>
     public static JsonSerializerSettings CreateJsonSerializerSettings(bool camelCase = true)
     {
         return CreateJsonSerializerSettings(camelCase, Array.Empty<JsonConverter>());
     }
 
+    /// <summary>
+    /// AdjustJsonSerializerSettings
+    /// </summary>
+    /// <param name="serializerSettings"></param>
+    /// <param name="action"></param>
+    /// <returns></returns>
     public static JsonSerializerSettings AdjustJsonSerializerSettings(
         JsonSerializerSettings serializerSettings,
         Action<JsonSerializerSettings>? action = null
@@ -35,6 +49,12 @@ public static class JsonConvertAssist
         return serializerSettings;
     }
 
+    /// <summary>
+    /// CreateJsonSerializerSettings
+    /// </summary>
+    /// <param name="camelCase"></param>
+    /// <param name="converters"></param>
+    /// <returns></returns>
     public static JsonSerializerSettings CreateJsonSerializerSettings(
         bool camelCase = true,
         params JsonConverter[] converters
@@ -52,16 +72,32 @@ public static class JsonConvertAssist
         });
     }
 
+    /// <summary>
+    /// DeserializeObject
+    /// </summary>
+    /// <param name="data"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static T? DeserializeObject<T>(string data)
     {
         return JsonConvert.DeserializeObject<T>(data);
     }
 
+    /// <summary>
+    /// Serialize
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
     public static string Serialize(object data)
     {
         return JsonConvert.SerializeObject(data);
     }
 
+    /// <summary>
+    /// SerializeWithFormat
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
     public static string SerializeWithFormat(object data)
     {
         return JsonConvert.SerializeObject(data, Formatting.Indented);
@@ -90,6 +126,12 @@ public static class JsonConvertAssist
         return JsonConvert.SerializeObject(data, CreateJsonSerializerSettings(true, converters));
     }
 
+    /// <summary>
+    /// FormatText
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="logger"></param>
+    /// <returns></returns>
     public static string FormatText(string source, ILogger? logger = null)
     {
         try

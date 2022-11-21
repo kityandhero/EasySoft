@@ -3,6 +3,9 @@ using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.UtilityTools.Standard.Assists;
 
+/// <summary>
+/// ReflectionAssist
+/// </summary>
 public static class ReflectionAssist
 {
     /// <summary>
@@ -180,6 +183,12 @@ public static class ReflectionAssist
                || typeDefinition == typeof(List<>);
     }
 
+    /// <summary>
+    /// GetClassName
+    /// </summary>
+    /// <param name="o"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static string GetClassName<T>(T o)
     {
         return o.GetClassName();
@@ -232,16 +241,37 @@ public static class ReflectionAssist
 
     #region GetPropertyName
 
+    /// <summary>
+    /// GetPropertyName
+    /// </summary>
+    /// <param name="propertyLambda"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static string GetPropertyName<T>(Expression<Func<T>> propertyLambda)
     {
         return GetPropertyName(propertyLambda, out _, out _);
     }
 
+    /// <summary>
+    /// GetPropertyName
+    /// </summary>
+    /// <param name="propertyLambda"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static string GetPropertyName<T>(Expression<Func<T, object>> propertyLambda)
     {
         return GetPropertyName(propertyLambda, out var _, out var _);
     }
 
+    /// <summary>
+    /// GetPropertyName
+    /// </summary>
+    /// <param name="propertyLambda"></param>
+    /// <param name="type"></param>
+    /// <param name="propertyInfo"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
     public static string GetPropertyName<T>(
         Expression<Func<T>> propertyLambda,
         out Type? type,
@@ -306,6 +336,15 @@ public static class ReflectionAssist
         throw new ArgumentException("PropertyInfo is null'");
     }
 
+    /// <summary>
+    /// GetPropertyName
+    /// </summary>
+    /// <param name="propertyLambda"></param>
+    /// <param name="type"></param>
+    /// <param name="propertyInfo"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
     public static string GetPropertyName<T>(
         Expression<Func<T, object>> propertyLambda,
         out Type? type,
@@ -424,6 +463,9 @@ public static class ReflectionAssist
     private static MemberExpression GetMethodCallExpressionName(Expression expression)
     {
         var methodCallExpression = (MethodCallExpression)expression;
+
+        if (methodCallExpression.Object == null)
+            throw new Exception("expression exec null");
 
         var left = (MemberExpression)methodCallExpression.Object;
 

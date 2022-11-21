@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.UtilityTools.Standard.Assists;
 
+/// <summary>
+/// GeoHashAssist
+/// </summary>
 public static class GeoHashAssist
 {
     /// <summary>
