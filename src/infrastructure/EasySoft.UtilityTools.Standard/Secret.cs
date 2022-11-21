@@ -3,15 +3,28 @@ using EasySoft.UtilityTools.Standard.Securities.Encryption;
 
 namespace EasySoft.UtilityTools.Standard;
 
+/// <summary>
+/// Secret
+/// </summary>
 public class Secret
 {
     private string Key { get; }
 
+    /// <summary>
+    /// Secret
+    /// </summary>
+    /// <param name="key"></param>
     public Secret(string key)
     {
         Key = key;
     }
 
+    /// <summary>
+    /// Encrypt
+    /// </summary>
+    /// <param name="source"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public string Encrypt(string source)
     {
         if (string.IsNullOrWhiteSpace(source)) throw new Exception("空字符串不允许加密");
@@ -31,12 +44,25 @@ public class Secret
         return result;
     }
 
+    /// <summary>
+    /// EncryptWithExpirationTime
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="timeSpan"></param>
+    /// <returns></returns>
     public string EncryptWithExpirationTime(string source, TimeSpan timeSpan)
     {
         var time = DateTime.Now.Add(timeSpan);
         return EncryptWithExpirationTime(source, time);
     }
 
+    /// <summary>
+    /// EncryptWithExpirationTime
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="expirationTime"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public string EncryptWithExpirationTime(string source, DateTime expirationTime)
     {
         if (string.IsNullOrWhiteSpace(source)) throw new Exception("空字符串不允许加密");
@@ -59,6 +85,11 @@ public class Secret
         return result;
     }
 
+    /// <summary>
+    /// Decrypt
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
     public string Decrypt(string target)
     {
         var result = "";
@@ -84,11 +115,24 @@ public class Secret
         return result;
     }
 
+    /// <summary>
+    /// DecryptWithExpirationTime
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="expired"></param>
+    /// <returns></returns>
     public string DecryptWithExpirationTime(string target, out bool expired)
     {
         return DecryptWithExpirationTime(target, out expired, out var _);
     }
 
+    /// <summary>
+    /// DecryptWithExpirationTime
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="expired"></param>
+    /// <param name="time"></param>
+    /// <returns></returns>
     public string DecryptWithExpirationTime(string target, out bool expired, out DateTime time)
     {
         var result = "";

@@ -2,6 +2,9 @@
 
 namespace EasySoft.UtilityTools.Standard;
 
+/// <summary>
+/// RandomEx
+/// </summary>
 public class RandomEx : Random
 {
     #region Constructors
