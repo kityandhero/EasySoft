@@ -2,12 +2,15 @@
 
 namespace EasySoft.UtilityTools.Standard.Result;
 
+/// <inheritdoc />
 public class ExecutiveResult : ExecutiveResult<object>
 {
+    /// <inheritdoc />
     public ExecutiveResult(ReturnMessage returnMessage) : base(returnMessage)
     {
     }
 
+    /// <inheritdoc />
     public ExecutiveResult(ReturnCode returnCode) : this(new ReturnMessage(returnCode))
     {
     }

@@ -1,22 +1,45 @@
 ﻿namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
+/// <summary>
+/// TimeSpanExtensions
+/// </summary>
 public static class TimeSpanExtensions
 {
+    /// <summary>
+    /// DaysRemainder
+    /// </summary>
+    /// <param name="timeSpan"></param>
+    /// <returns></returns>
     public static int DaysRemainder(this TimeSpan timeSpan)
     {
         return (DateTime.MinValue + timeSpan).Day - 1;
     }
 
+    /// <summary>
+    /// Months
+    /// </summary>
+    /// <param name="timeSpan"></param>
+    /// <returns></returns>
     public static int Months(this TimeSpan timeSpan)
     {
         return (DateTime.MinValue + timeSpan).Month - 1;
     }
 
+    /// <summary>
+    /// Years
+    /// </summary>
+    /// <param name="timeSpan"></param>
+    /// <returns></returns>
     public static int Years(this TimeSpan timeSpan)
     {
         return (DateTime.MinValue + timeSpan).Year - 1;
     }
 
+    /// <summary>
+    /// ToDateTimeArray
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
     public static int[] ToDateTimeArray(this TimeSpan input)
     {
         var array = new int[6];

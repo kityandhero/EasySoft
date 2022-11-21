@@ -22,6 +22,10 @@ public abstract class BaseExecutiveResult
     /// </summary>
     public string Message { get; set; }
 
+    /// <summary>
+    /// BaseExecutiveResult
+    /// </summary>
+    /// <param name="returnMessage"></param>
     protected BaseExecutiveResult(ReturnMessage returnMessage)
     {
         Success = returnMessage.Success;
@@ -29,10 +33,19 @@ public abstract class BaseExecutiveResult
         Message = returnMessage.Message;
     }
 
+    /// <summary>
+    /// BaseExecutiveResult
+    /// </summary>
+    /// <param name="returnCode"></param>
     protected BaseExecutiveResult(ReturnCode returnCode) : this(new ReturnMessage(returnCode))
     {
     }
 
+    /// <summary>
+    /// SetMessage
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
     public BaseExecutiveResult SetMessage(string message)
     {
         Message = message;

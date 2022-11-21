@@ -19,39 +19,31 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.*/
 
-#region Usings
+namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
-#endregion
-
-namespace EasySoft.UtilityTools.Standard.ExtensionMethods
+/// <summary>
+/// Extensions converting between types, checking if something is null, etc.
+/// </summary>
+public static class TypeConversionExtensions
 {
+    #region Functions
+
+    #region FormatToString
+
     /// <summary>
-    /// Extensions converting between types, checking if something is null, etc.
+    /// Calls the object's ToString function passing in the formatting
     /// </summary>
-    public static class TypeConversionExtensions
+    /// <param name="source">Input object</param>
+    /// <param name="format">Format of the output string</param>
+    /// <returns>The formatted string</returns>
+    public static string FormatToString(this object? source, string format)
     {
-        #region Functions
+        if (source == null) return "";
 
-        #region FormatToString
-
-        /// <summary>
-        /// Calls the object's ToString function passing in the formatting
-        /// </summary>
-        /// <param name="source">Input object</param>
-        /// <param name="format">Format of the output string</param>
-        /// <returns>The formatted string</returns>
-        public static string? FormatToString(this object? source, string format)
-        {
-            if (source == null)
-            {
-                return "";
-            }
-
-            return string.IsNullOrEmpty(format) ? source.Call<string>("ToString", format) : source.ToString() ?? "";
-        }
-
-        #endregion
-
-        #endregion
+        return string.IsNullOrEmpty(format) ? source.Call<string>("ToString", format) : source.ToString() ?? "";
     }
+
+    #endregion
+
+    #endregion
 }

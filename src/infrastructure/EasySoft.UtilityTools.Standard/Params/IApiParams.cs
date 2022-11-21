@@ -1,6 +1,8 @@
-﻿namespace EasySoft.UtilityTools.Standard.Params
+﻿namespace EasySoft.UtilityTools.Standard.Params;
+
+/// <summary>
+/// IApiParams
+/// </summary>
+public interface IApiParams
 {
-    public interface IApiParams
-    {
-    }
 }

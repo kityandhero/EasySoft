@@ -2,6 +2,9 @@
 
 namespace EasySoft.UtilityTools.Standard.JsonConverters;
 
+/// <summary>
+/// LongConverter
+/// </summary>
 public class LongConverter : JsonConverter
 {
     /// <summary>

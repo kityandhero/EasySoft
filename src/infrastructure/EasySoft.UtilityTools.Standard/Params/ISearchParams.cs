@@ -1,6 +1,8 @@
-﻿namespace EasySoft.UtilityTools.Standard.Params
+﻿namespace EasySoft.UtilityTools.Standard.Params;
+
+/// <summary>
+/// ISearchParams
+/// </summary>
+public interface ISearchParams : IApiParams
 {
-    public interface ISearchParams : IApiParams
-    {
-    }
 }
