@@ -7,6 +7,9 @@ namespace EasySoft.UtilityTools.Standard.Competence;
 /// </summary>
 public sealed class CompetenceCollection
 {
+    /// <summary>
+    /// CompetenceSets
+    /// </summary>
     public List<KeyValuePair<string, Dictionary<string, int>>> CompetenceSets { get; }
 
     private CompetenceCollection()
@@ -80,7 +83,7 @@ public sealed class CompetenceCollection
     /// <returns></returns>
     public static CompetenceCollection GetInstance()
     {
-        return CompetenceSingleton.SET;
+        return CompetenceSingleton.Competences;
     }
 
     // ReSharper disable once ClassNeverInstantiated.LocalConfigRedis
@@ -90,6 +93,6 @@ public sealed class CompetenceCollection
         {
         }
 
-        internal static readonly CompetenceCollection SET = new();
+        internal static readonly CompetenceCollection Competences = new();
     }
 }

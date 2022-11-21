@@ -2,6 +2,9 @@
 
 namespace EasySoft.UtilityTools.Standard.Assists;
 
+/// <summary>
+/// HtmlAssist
+/// </summary>
 public static class HtmlAssist
 {
     ///<summary> 取得HTML中所有图片的 URL。 </summary>
@@ -13,7 +16,8 @@ public static class HtmlAssist
         var regImg =
             new Regex(
                 @"<img\b[^<>]*?\bsrc[\s\t\r\n]*=[\s\t\r\n]*[""']?[\s\t\r\n]*(?<imgUrl>[^\s\t\r\n""'<>]*)[^<>]*?/?[\s\t\r\n]*>",
-                RegexOptions.IgnoreCase);
+                RegexOptions.IgnoreCase
+            );
 
         // 搜索匹配的字符串
         var matches = regImg.Matches(sHtmlText);
