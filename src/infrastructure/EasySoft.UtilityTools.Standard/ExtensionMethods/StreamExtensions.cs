@@ -312,6 +312,12 @@ public static class StreamExtensions
         return stream.ReadBytes(p);
     }
 
+    /// <summary>
+    /// ReadTo
+    /// </summary>
+    /// <param name="stream"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
     public static byte[] ReadTo(this Stream stream, string target)
     {
         return stream.ReadTo(target, Encoding.UTF8);
@@ -348,6 +354,11 @@ public static class StreamExtensions
         return bts.Length == 0 ? string.Empty : encoding.GetString(bts);
     }
 
+    /// <summary>
+    /// ToString
+    /// </summary>
+    /// <param name="stream"></param>
+    /// <returns></returns>
     public static string ToString(this Stream stream)
     {
         return stream.ToString(Encoding.UTF8);

@@ -4,6 +4,9 @@ using EasySoft.UtilityTools.Standard.Assists;
 
 namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
+/// <summary>
+/// ReflectionExtensions
+/// </summary>
 public static class ReflectionExtensions
 {
     #region Functions
@@ -1254,16 +1257,35 @@ public static class ReflectionExtensions
 
     #region HasAttribute
 
+    /// <summary>
+    /// HasAttribute
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="attributeType"></param>
+    /// <returns></returns>
     public static bool HasAttribute(this Type type, Type attributeType)
     {
         return type.IsDefined(attributeType, true);
     }
 
+    /// <summary>
+    /// HasAttribute
+    /// </summary>
+    /// <param name="type"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static bool HasAttribute<T>(this Type type) where T : Attribute
     {
         return type.HasAttribute(typeof(T));
     }
 
+    /// <summary>
+    /// HasAttribute
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="predicate"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static bool HasAttribute<T>(this Type type, Func<T, bool> predicate) where T : Attribute
     {
         return type.GetCustomAttributes<T>(true).Any(predicate);
@@ -1271,6 +1293,12 @@ public static class ReflectionExtensions
 
     #endregion
 
+    /// <summary>
+    /// IsNotAbstractClass
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="publicOnly"></param>
+    /// <returns></returns>
     public static bool IsNotAbstractClass(this Type type, bool publicOnly)
     {
         if (type.IsSpecialName)

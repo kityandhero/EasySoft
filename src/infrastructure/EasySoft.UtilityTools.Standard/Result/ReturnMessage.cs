@@ -4,16 +4,37 @@ using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.UtilityTools.Standard.Result;
 
+/// <summary>
+/// ReturnMessage
+/// </summary>
 public class ReturnMessage
 {
+    /// <summary>
+    /// Success
+    /// </summary>
     public bool Success { get; set; }
 
+    /// <summary>
+    /// Code
+    /// </summary>
     public int Code { get; set; }
 
+    /// <summary>
+    /// Message
+    /// </summary>
     public string Message { get; set; }
 
+    /// <summary>
+    /// Extra
+    /// </summary>
     public object Extra { get; set; }
 
+    /// <summary>
+    /// ReturnMessage
+    /// </summary>
+    /// <param name="code"></param>
+    /// <param name="message"></param>
+    /// <param name="success"></param>
     public ReturnMessage(int code, string message, bool success)
     {
         Code = code;
@@ -22,6 +43,13 @@ public class ReturnMessage
         Extra = new { };
     }
 
+    /// <summary>
+    /// ReturnMessage
+    /// </summary>
+    /// <param name="code"></param>
+    /// <param name="message"></param>
+    /// <param name="success"></param>
+    /// <param name="extra"></param>
     public ReturnMessage(int code, string message, bool success, object extra)
     {
         Code = code;
@@ -30,6 +58,10 @@ public class ReturnMessage
         Extra = extra;
     }
 
+    /// <summary>
+    /// ReturnMessage
+    /// </summary>
+    /// <param name="code"></param>
     public ReturnMessage(ReturnCode code)
     {
         Code = (int)code;
@@ -38,6 +70,11 @@ public class ReturnMessage
         Extra = new { };
     }
 
+    /// <summary>
+    /// ReturnMessage
+    /// </summary>
+    /// <param name="code"></param>
+    /// <param name="extra"></param>
     public ReturnMessage(ReturnCode code, object extra)
     {
         Code = (int)code;
@@ -46,6 +83,11 @@ public class ReturnMessage
         Extra = extra;
     }
 
+    /// <summary>
+    /// AppendMessage
+    /// </summary>
+    /// <param name="messages"></param>
+    /// <returns></returns>
     public ReturnMessage AppendMessage(params string[] messages)
     {
         var list = new List<string>
@@ -58,21 +100,40 @@ public class ReturnMessage
         return ToMessage(list.Join(","));
     }
 
+    /// <summary>
+    /// ToMessage
+    /// </summary>
+    /// <returns></returns>
     public ReturnMessage ToMessage()
     {
         return new ReturnMessage(Code, Message, Success);
     }
 
+    /// <summary>
+    /// ToMessage
+    /// </summary>
+    /// <param name="success"></param>
+    /// <returns></returns>
     public ReturnMessage ToMessage(bool success)
     {
         return new ReturnMessage(Code, Message, success);
     }
 
+    /// <summary>
+    /// ToMessage
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
     public ReturnMessage ToMessage(string message)
     {
         return new ReturnMessage(Code, message, Success);
     }
 
+    /// <summary>
+    /// ToMessage
+    /// </summary>
+    /// <param name="code"></param>
+    /// <returns></returns>
     public ReturnMessage ToMessage(int code)
     {
         return new ReturnMessage(code, Message, Success);

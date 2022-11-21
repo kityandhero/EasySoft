@@ -10,6 +10,10 @@ namespace EasySoft.UtilityTools.Standard.Securities.Encryption;
 /// </summary>
 public static class RsaAssist
 {
+    /// <summary>
+    /// CreateRsa
+    /// </summary>
+    /// <returns></returns>
     public static RSA CreateRsa()
     {
         return RSA.Create();
@@ -25,6 +29,13 @@ public static class RsaAssist
     //     return rsa;
     // }
 
+    /// <summary>
+    /// CreateKey
+    /// </summary>
+    /// <param name="privateKey"></param>
+    /// <param name="publicKey"></param>
+    /// <param name="type"></param>
+    /// <param name="usePemFormat"></param>
     public static void CreateKey(
         out string privateKey,
         out string publicKey,
