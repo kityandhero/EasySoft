@@ -1,7 +1,8 @@
-﻿using System.Globalization;
+﻿namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
-namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
-
+/// <summary>
+/// DecimalExtensions
+/// </summary>
 public class DecimalExtensions
 {
     /// <summary> 

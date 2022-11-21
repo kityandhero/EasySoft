@@ -1,21 +1,38 @@
-﻿using System.Globalization;
-using EasySoft.UtilityTools.Standard.Assists;
+﻿using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Enums;
 
 namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
+/// <summary>
+/// DateTimeExtensions
+/// </summary>
 public static class DateTimeExtensions
 {
+    /// <summary>
+    /// ToYearMonthDayHourMinuteSecond: yyyy-MM-dd HH:mm:ss
+    /// </summary>
+    /// <param name="source"></param>
+    /// <returns></returns>
     public static string ToYearMonthDayHourMinuteSecond(this DateTime source)
     {
         return source.ToString("yyyy-MM-dd HH:mm:ss");
     }
 
+    /// <summary>
+    /// ToYearMonthDayHourMinute: yyyy-MM-dd HH:mm
+    /// </summary>
+    /// <param name="source"></param>
+    /// <returns></returns>
     public static string ToYearMonthDayHourMinute(this DateTime source)
     {
         return source.ToString("yyyy-MM-dd HH:mm");
     }
 
+    /// <summary>
+    /// ToYearMonthDay: yyyy-MM-dd
+    /// </summary>
+    /// <param name="dateTime"></param>
+    /// <returns></returns>
     public static string ToYearMonthDay(this DateTime dateTime)
     {
         return dateTime.ToString("yyyy-MM-dd");

@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace EasySoft.UtilityTools.Standard;
+﻿namespace EasySoft.UtilityTools.Standard;
 
 /// <summary>
 /// 农历

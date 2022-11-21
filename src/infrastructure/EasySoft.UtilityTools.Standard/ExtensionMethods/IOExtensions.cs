@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
+/// <summary>
+/// IOExtensions
+/// </summary>
 public static class IOExtensions
 {
     #region ExistDir
@@ -95,6 +98,11 @@ public static class IOExtensions
 
     #region ExistFile
 
+    /// <summary>
+    /// ExistFile
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
     public static bool ExistFile(this string input)
     {
         if (input.IsNullOrEmpty()) return false;

@@ -4,8 +4,16 @@ using EasySoft.UtilityTools.Standard.Enums;
 
 namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
+/// <summary>
+/// Int32Extensions
+/// </summary>
 public static class Int32Extensions
 {
+    /// <summary>
+    /// CorrectionDayOfWeek
+    /// </summary>
+    /// <param name="dayOfWeek"></param>
+    /// <returns></returns>
     public static int CorrectionDayOfWeek(int dayOfWeek)
     {
         var result = dayOfWeek;
@@ -41,11 +49,22 @@ public static class Int32Extensions
 
     #endregion In
 
+    /// <summary>
+    /// ToObject
+    /// </summary>
+    /// <param name="v"></param>
+    /// <returns></returns>
     public static object ToObject(this int v)
     {
         return v;
     }
 
+    /// <summary>
+    /// GetEnumDescription
+    /// </summary>
+    /// <param name="v"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static string GetEnumDescription<T>(this int v) where T : struct
     {
         var result = "";
@@ -75,6 +94,12 @@ public static class Int32Extensions
         return result;
     }
 
+    /// <summary>
+    /// GetRenderValuer
+    /// </summary>
+    /// <param name="v"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static string GetRenderValuer<T>(this int v) where T : struct
     {
         var result = "";
@@ -104,6 +129,12 @@ public static class Int32Extensions
         return result;
     }
 
+    /// <summary>
+    /// CheckInEnum
+    /// </summary>
+    /// <param name="v"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static bool CheckInEnum<T>(this int v) where T : struct
     {
         var values = EnumAssist.GetIntValues<T>();
@@ -111,6 +142,13 @@ public static class Int32Extensions
         return values.Contains(v);
     }
 
+    /// <summary>
+    /// CheckInEnum
+    /// </summary>
+    /// <param name="v"></param>
+    /// <param name="items"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static bool CheckInEnum<T>(this int v, params T[] items) where T : struct
     {
         var values = items.ToList().Cast<int>().ToList();
@@ -118,6 +156,13 @@ public static class Int32Extensions
         return values.Contains(v);
     }
 
+    /// <summary>
+    /// EqualEnum
+    /// </summary>
+    /// <param name="v"></param>
+    /// <param name="target"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static bool EqualEnum<T>(this int v, T target) where T : struct
     {
         var tv = Convert.ToInt32(target);
@@ -125,6 +170,14 @@ public static class Int32Extensions
         return v == tv;
     }
 
+    /// <summary>
+    /// CheckInEnumWithExclude
+    /// </summary>
+    /// <param name="v"></param>
+    /// <param name="excludeItems"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static bool CheckInEnumWithExclude<T>(this int v, params T[] excludeItems) where T : struct
     {
         if (excludeItems == null || excludeItems.Length <= 0) throw new Exception("参数缺失，需要指定检测的排除项目");
@@ -136,6 +189,11 @@ public static class Int32Extensions
         return values.Contains(v);
     }
 
+    /// <summary>
+    /// ToWhether
+    /// </summary>
+    /// <param name="v"></param>
+    /// <returns></returns>
     public static Whether ToWhether(this int v)
     {
         return v == (int)Whether.Yes ? Whether.Yes : Whether.No;

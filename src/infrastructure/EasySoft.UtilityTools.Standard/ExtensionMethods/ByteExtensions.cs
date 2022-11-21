@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
+/// <summary>
+/// ByteExtensions
+/// </summary>
 public static class ByteExtensions
 {
     #region ToString

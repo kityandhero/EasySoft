@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace EasySoft.UtilityTools.Standard.Assists;
+﻿namespace EasySoft.UtilityTools.Standard.Assists;
 
 /// <summary>
 /// ColorAssist

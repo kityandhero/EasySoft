@@ -2,6 +2,9 @@
 
 namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
+/// <summary>
+/// ObjectExtensions
+/// </summary>
 public static class ObjectExtensions
 {
     /// <summary>
@@ -23,6 +26,13 @@ public static class ObjectExtensions
         if (obj == null) throw new ArgumentNullException(parameterName);
     }
 
+    /// <summary>
+    /// ConvertTo
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="defaultValue"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static T ConvertTo<T>(this object? value, object? defaultValue = null) where T : new()
     {
         return ConvertAssist.ObjectTo<T>(value, defaultValue)!;

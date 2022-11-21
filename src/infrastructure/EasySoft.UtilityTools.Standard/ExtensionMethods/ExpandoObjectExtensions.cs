@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
+/// <summary>
+/// ExpandoObjectExtensions
+/// </summary>
 public static class ExpandoObjectExtensions
 {
     /// <summary>
@@ -22,6 +25,12 @@ public static class ExpandoObjectExtensions
         return result;
     }
 
+    /// <summary>
+    /// Add
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="keyValuePairCollection"></param>
+    /// <returns></returns>
     public static ExpandoObject Add(
         this ExpandoObject source,
         IEnumerable<KeyValuePair<string, object?>> keyValuePairCollection
@@ -30,6 +39,12 @@ public static class ExpandoObjectExtensions
         return source.AddKeyValuePairCollection(keyValuePairCollection);
     }
 
+    /// <summary>
+    /// AddKeyValuePairCollection
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="keyValuePairCollection"></param>
+    /// <returns></returns>
     public static ExpandoObject AddKeyValuePairCollection(
         this ExpandoObject source,
         IEnumerable<KeyValuePair<string, object?>> keyValuePairCollection
@@ -40,6 +55,12 @@ public static class ExpandoObjectExtensions
         return source;
     }
 
+    /// <summary>
+    /// Add
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="keyValuePair"></param>
+    /// <returns></returns>
     public static ExpandoObject Add(
         this ExpandoObject source,
         KeyValuePair<string, object?> keyValuePair
@@ -48,6 +69,13 @@ public static class ExpandoObjectExtensions
         return source.AddKeyValuePair(keyValuePair);
     }
 
+    /// <summary>
+    /// AddKeyValuePair
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="keyValuePair"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static ExpandoObject AddKeyValuePair(
         this ExpandoObject source,
         KeyValuePair<string, object?> keyValuePair
@@ -60,6 +88,13 @@ public static class ExpandoObjectExtensions
         return source;
     }
 
+    /// <summary>
+    /// AddDictionary
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="dictionary"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static ExpandoObject AddDictionary(
         this ExpandoObject source,
         IDictionary<string, object?> dictionary

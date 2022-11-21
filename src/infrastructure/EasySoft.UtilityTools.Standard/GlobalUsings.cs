@@ -7,6 +7,7 @@ global using System.Collections.Specialized;
 global using System.ComponentModel;
 global using System.Data;
 global using System.Dynamic;
+global using System.Globalization;
 global using System.IO;
 global using System.Linq;
 global using System.Reflection;

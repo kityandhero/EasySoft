@@ -21,7 +21,6 @@ THE SOFTWARE.*/
 
 #region Usings
 
-using System.Globalization;
 using System.Threading.Tasks;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Comparison;

@@ -2,6 +2,9 @@
 
 namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
+/// <summary>
+/// Int64Extensions
+/// </summary>
 public static class Int64Extensions
 {
     #region In
@@ -40,6 +43,11 @@ public static class Int64Extensions
         return (int)source;
     }
 
+    /// <summary>
+    /// ToObject
+    /// </summary>
+    /// <param name="v"></param>
+    /// <returns></returns>
     public static object ToObject(this long v)
     {
         return v;

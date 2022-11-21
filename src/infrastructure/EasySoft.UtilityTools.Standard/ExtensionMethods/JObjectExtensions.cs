@@ -2,6 +2,9 @@
 
 namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
+/// <summary>
+/// JObjectExtension
+/// </summary>
 public static class JObjectExtension
 {
     /// <summary>

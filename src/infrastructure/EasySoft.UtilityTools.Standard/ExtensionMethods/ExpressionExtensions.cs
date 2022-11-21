@@ -2,6 +2,9 @@
 
 namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
+/// <summary>
+/// ExpressionExtensions
+/// </summary>
 public static class ExpressionExtensions
 {
     /// <summary>

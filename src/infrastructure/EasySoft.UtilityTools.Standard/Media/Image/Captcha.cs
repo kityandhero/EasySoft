@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using EasySoft.UtilityTools.Standard.Assists;
+﻿using EasySoft.UtilityTools.Standard.Assists;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;

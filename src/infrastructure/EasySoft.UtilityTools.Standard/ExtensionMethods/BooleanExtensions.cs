@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
+/// <summary>
+/// BooleanExtensions
+/// </summary>
 public static class BooleanExtensions
 {
     /// <summary>
