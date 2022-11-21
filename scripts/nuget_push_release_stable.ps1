@@ -5,6 +5,6 @@
 
 echo nugetkey:$myStr
 
-Get-ChildItem ./publish -Name *.nupkg | ForEach-Object -Process{
-   dotnet nuget push ./publish/$_ -k $myStr -s https://api.nuget.org/v3/index.json --skip-duplicate
+Get-ChildItem ../publish -Name *.nupkg | ForEach-Object -Process{
+   dotnet nuget push ../publish/$_ -k $myStr -s https://api.nuget.org/v3/index.json --skip-duplicate
 }  
