@@ -1,13 +1,22 @@
-﻿namespace EasySoft.UtilityTools.Standard.Exceptions
-{
-    public class BusinessException : System.Exception
-    {
-        public BusinessException() : this("")
-        {
-        }
+﻿namespace EasySoft.UtilityTools.Standard.Exceptions;
 
-        public BusinessException(string message) : base(message)
-        {
-        }
+/// <summary>
+/// BusinessException
+/// </summary>
+public class BusinessException : Exception
+{
+    /// <summary>
+    /// BusinessException
+    /// </summary>
+    public BusinessException() : this("")
+    {
+    }
+
+    /// <summary>
+    /// BusinessException
+    /// </summary>
+    /// <param name="message"></param>
+    public BusinessException(string message) : base(message)
+    {
     }
 }

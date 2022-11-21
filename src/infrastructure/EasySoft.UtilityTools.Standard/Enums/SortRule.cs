@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.UtilityTools.Standard.Enums;
 
+/// <summary>
+/// 排列规则
+/// </summary>
 public enum SortRule
 {
     /// <summary>

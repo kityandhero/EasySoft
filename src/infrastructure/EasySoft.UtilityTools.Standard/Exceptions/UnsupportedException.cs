@@ -2,7 +2,10 @@
 
 namespace EasySoft.UtilityTools.Standard.Exceptions;
 
-public class UnsupportedException : System.Exception
+/// <summary>
+/// 不支持异常
+/// </summary>
+public class UnsupportedException : Exception
 {
     /// <summary>
     /// UnsupportedException

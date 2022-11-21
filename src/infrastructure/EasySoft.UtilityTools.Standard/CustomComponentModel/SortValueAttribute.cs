@@ -5,6 +5,9 @@
 /// </summary>
 public class SortValueAttribute : DescriptionAttribute
 {
+    /// <summary>
+    /// Sort
+    /// </summary>
     public int Sort { get; }
 
     /// <summary>

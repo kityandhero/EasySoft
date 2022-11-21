@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.UtilityTools.Standard.Enums;
 
+/// <summary>
+/// 文本剪切模式
+/// </summary>
 public enum StringCutDirection
 {
     /// <summary>

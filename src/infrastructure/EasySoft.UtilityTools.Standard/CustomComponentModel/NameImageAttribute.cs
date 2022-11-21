@@ -5,6 +5,9 @@
 /// </summary>
 public class NameImageAttribute : DescriptionAttribute
 {
+    /// <summary>
+    /// Image
+    /// </summary>
     public string Image { get; set; }
 
     /// <summary>

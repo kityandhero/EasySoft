@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.UtilityTools.Standard.Exceptions;
 
+/// <summary>
+/// 参数异常
+/// </summary>
 public class ParamException : Exception
 {
     #region 属性

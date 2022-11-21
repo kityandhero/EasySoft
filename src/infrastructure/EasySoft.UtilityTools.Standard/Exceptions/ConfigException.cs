@@ -1,13 +1,22 @@
-﻿namespace EasySoft.UtilityTools.Standard.Exceptions
-{
-    public class ConfigException : System.Exception
-    {
-        public ConfigException() : this("")
-        {
-        }
+﻿namespace EasySoft.UtilityTools.Standard.Exceptions;
 
-        public ConfigException(string message) : base(message)
-        {
-        }
+/// <summary>
+/// 配置异常
+/// </summary>
+public class ConfigException : Exception
+{
+    /// <summary>
+    /// 配置异常
+    /// </summary>
+    public ConfigException() : this("")
+    {
+    }
+
+    /// <summary>
+    /// 配置异常
+    /// </summary>
+    /// <param name="message"></param>
+    public ConfigException(string message) : base(message)
+    {
     }
 }

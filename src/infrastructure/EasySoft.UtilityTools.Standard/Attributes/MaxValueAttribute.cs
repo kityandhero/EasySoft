@@ -6,6 +6,9 @@
 [AttributeUsage(AttributeTargets.All)]
 public sealed class MaxValueAttribute : Attribute
 {
+    /// <summary>
+    /// Value
+    /// </summary>
     public object Value { get; } = null!;
 
     /// <summary>

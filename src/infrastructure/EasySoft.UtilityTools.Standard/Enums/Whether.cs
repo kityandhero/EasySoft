@@ -17,16 +17,3 @@ public enum Whether
     [Description("是")]
     Yes = 1
 }
-
-public static class WhetherExtensionMethods
-{
-    public static bool ToBool(this Whether whether)
-    {
-        return whether == Whether.Yes;
-    }
-
-    public static int ToInt(this Whether whether)
-    {
-        return (int)whether;
-    }
-}
