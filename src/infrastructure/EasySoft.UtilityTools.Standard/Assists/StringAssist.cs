@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.UtilityTools.Standard.Assists;
 
+/// <summary>
+/// StringAssist
+/// </summary>
 public static class StringAssist
 {
     /// <summary>
@@ -7,11 +10,9 @@ public static class StringAssist
     /// </summary>
     /// <param name="list"></param>  
     /// <returns></returns>
-    public static bool IsAllNullOrWhiteSpace(params string[] list)
+    public static bool IsAllNullOrWhiteSpace(params string?[] list)
     {
-        if (list == null) return true;
-
-        return list.Length <= 0 || list.All(string.IsNullOrWhiteSpace);
+        return !list.Any() || list.All(string.IsNullOrWhiteSpace);
     }
 
     /// <summary>
@@ -19,10 +20,8 @@ public static class StringAssist
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>
-    public static bool IsAnyNullOrWhiteSpace(params string[] list)
+    public static bool IsAnyNullOrWhiteSpace(params string?[] list)
     {
-        if (list == null) return true;
-
-        return list.Length <= 0 || list.Any(string.IsNullOrWhiteSpace);
+        return list.Any() && list.Any(string.IsNullOrWhiteSpace);
     }
 }

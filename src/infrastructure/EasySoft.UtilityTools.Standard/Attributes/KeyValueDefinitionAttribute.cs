@@ -2,6 +2,9 @@
 
 namespace EasySoft.UtilityTools.Standard.Attributes;
 
+/// <summary>
+/// KeyValueDefinitionAttribute
+/// </summary>
 public class KeyValueDefinitionAttribute : DescriptionAttribute
 {
     private readonly string _tag;
@@ -29,10 +32,20 @@ public class KeyValueDefinitionAttribute : DescriptionAttribute
     /// </summary>
     public string DefaultValue { get; }
 
+    /// <summary>
+    /// KeyValueDefinitionAttribute
+    /// </summary>
     public KeyValueDefinitionAttribute() : this("", "", KeyValueType.String)
     {
     }
 
+    /// <summary>
+    /// KeyValueDefinitionAttribute
+    /// </summary>
+    /// <param name="description"></param>
+    /// <param name="tag"></param>
+    /// <param name="type"></param>
+    /// <param name="defaultValue"></param>
     public KeyValueDefinitionAttribute(
         string description,
         string tag,
@@ -45,6 +58,12 @@ public class KeyValueDefinitionAttribute : DescriptionAttribute
         DefaultValue = defaultValue;
     }
 
+    /// <summary>
+    /// KeyValueDefinitionAttribute
+    /// </summary>
+    /// <param name="description"></param>
+    /// <param name="tag"></param>
+    /// <param name="defaultValue"></param>
     public KeyValueDefinitionAttribute(
         string description,
         string tag,

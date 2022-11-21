@@ -1,12 +1,19 @@
-﻿namespace EasySoft.UtilityTools.Standard.CustomComponentModel
-{
-    public class NameImageAttribute : System.ComponentModel.DescriptionAttribute
-    {
-        public string Image { get; set; }
+﻿namespace EasySoft.UtilityTools.Standard.CustomComponentModel;
 
-        public NameImageAttribute(string name, string image) : base(name)
-        {
-            this.Image = image;
-        }
+/// <summary>
+/// NameImageAttribute
+/// </summary>
+public class NameImageAttribute : DescriptionAttribute
+{
+    public string Image { get; set; }
+
+    /// <summary>
+    /// NameImageAttribute
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="image"></param>
+    public NameImageAttribute(string name, string image) : base(name)
+    {
+        Image = image;
     }
 }

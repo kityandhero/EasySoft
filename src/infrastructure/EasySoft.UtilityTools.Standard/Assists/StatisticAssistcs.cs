@@ -9,6 +9,15 @@ public class StatisticHelper
 {
     #region 预处理统计时间区间
 
+    /// <summary>
+    /// PretreatmentRangeMode
+    /// </summary>
+    /// <param name="rangeMode"></param>
+    /// <param name="rangeStartTime"></param>
+    /// <param name="timeCount"></param>
+    /// <param name="startTime"></param>
+    /// <param name="endTime"></param>
+    /// <returns></returns>
     public static int PretreatmentRangeMode(
         int rangeMode,
         out DateTime rangeStartTime,

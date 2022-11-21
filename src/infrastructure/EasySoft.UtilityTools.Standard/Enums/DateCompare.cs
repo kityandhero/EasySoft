@@ -1,30 +1,32 @@
-﻿namespace EasySoft.UtilityTools.Standard.Enums
+﻿namespace EasySoft.UtilityTools.Standard.Enums;
+
+/// <summary>
+/// DateCompare
+/// </summary>
+public enum DateCompare
 {
-    public enum DateCompare
-    {
-        /// <summary>
-        /// In the future
-        /// </summary>
-        InFuture = 1,
-  
-        /// <summary>
-        /// In the past
-        /// </summary>
-        InPast = 2,
+    /// <summary>
+    /// In the future
+    /// </summary>
+    InFuture = 1,
 
-        /// <summary>
-        /// Today
-        /// </summary>
-        Today = 4,
+    /// <summary>
+    /// In the past
+    /// </summary>
+    InPast = 2,
 
-        /// <summary>
-        /// Weekday
-        /// </summary>
-        WeekDay = 8,
+    /// <summary>
+    /// Today
+    /// </summary>
+    Today = 4,
 
-        /// <summary>
-        /// Weekend
-        /// </summary>
-        WeekEnd = 16
-    }
+    /// <summary>
+    /// Weekday
+    /// </summary>
+    WeekDay = 8,
+
+    /// <summary>
+    /// Weekend
+    /// </summary>
+    WeekEnd = 16
 }

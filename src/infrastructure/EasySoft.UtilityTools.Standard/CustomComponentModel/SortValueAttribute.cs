@@ -1,19 +1,25 @@
-﻿namespace EasySoft.UtilityTools.Standard.CustomComponentModel
+﻿namespace EasySoft.UtilityTools.Standard.CustomComponentModel;
+
+/// <summary>
+/// 定义排序序列
+/// </summary>
+public class SortValueAttribute : DescriptionAttribute
 {
+    public int Sort { get; }
+
     /// <summary>
-    /// 定义排序序列
+    /// SortValueAttribute
     /// </summary>
-    public class SortValueAttribute : System.ComponentModel.DescriptionAttribute
+    public SortValueAttribute() : this(0)
     {
-        public int Sort { get; }
+    }
 
-        public SortValueAttribute() : this(0)
-        {
-        }
-
-        public SortValueAttribute(int sort) : base(sort.ToString())
-        {
-            this.Sort = sort;
-        }
+    /// <summary>
+    /// SortValueAttribute
+    /// </summary>
+    /// <param name="sort"></param>
+    public SortValueAttribute(int sort) : base(sort.ToString())
+    {
+        Sort = sort;
     }
 }

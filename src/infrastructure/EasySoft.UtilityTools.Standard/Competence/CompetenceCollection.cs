@@ -2,6 +2,9 @@
 
 namespace EasySoft.UtilityTools.Standard.Competence;
 
+/// <summary>
+/// CompetenceCollection
+/// </summary>
 public sealed class CompetenceCollection
 {
     public List<KeyValuePair<string, Dictionary<string, int>>> CompetenceSets { get; }
@@ -20,11 +23,11 @@ public sealed class CompetenceCollection
     public int? GetCompetenceIndex(string key, string competence)
     {
         int? result = null;
+
         foreach (var item in CompetenceSets)
             if (item.Key == key)
-                foreach (var one in item.Value)
-                    if (one.Key == competence)
-                        result = one.Value;
+                foreach (var one in item.Value.Where(one => one.Key == competence))
+                    result = one.Value;
 
         return result;
     }
@@ -42,6 +45,11 @@ public sealed class CompetenceCollection
         return key;
     }
 
+    /// <summary>
+    /// SetCompetenceSets
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="competenceSets"></param>
     public void SetCompetenceSets(string key, string competenceSets)
     {
         if (competenceSets.IsNullOrEmpty()) return;
@@ -66,6 +74,10 @@ public sealed class CompetenceCollection
         CompetenceSets.Add(new KeyValuePair<string, Dictionary<string, int>>(key, compare));
     }
 
+    /// <summary>
+    /// GetInstance
+    /// </summary>
+    /// <returns></returns>
     public static CompetenceCollection GetInstance()
     {
         return CompetenceSingleton.SET;

@@ -34,6 +34,9 @@ public class CompetenceEntity
     /// </summary>
     public string ExpansionSet { get; set; }
 
+    /// <summary>
+    /// CompetenceEntity
+    /// </summary>
     public CompetenceEntity()
     {
         GuidTag = "";
@@ -71,6 +74,10 @@ public class CompetenceEntity
         return jObject?.ToExpandoObject() ?? new ExpandoObject();
     }
 
+    /// <summary>
+    /// GetExpansionSetCollection
+    /// </summary>
+    /// <returns></returns>
     public List<object> GetExpansionSetCollection()
     {
         var result = new List<object>();
@@ -182,8 +189,17 @@ public class CompetenceEntity
     }
 }
 
+/// <summary>
+/// SortCompetenceComparer
+/// </summary>
 public class SortCompetenceComparer : IComparer<CompetenceEntity>
 {
+    /// <summary>
+    /// Compare
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
     public int Compare(CompetenceEntity? x, CompetenceEntity? y)
     {
         if (y != null && x != null && string.Compare(x.Name, y.Name, StringComparison.Ordinal) > 0) return 1;
@@ -192,8 +208,12 @@ public class SortCompetenceComparer : IComparer<CompetenceEntity>
     }
 }
 
+/// <summary>
+/// 
+/// </summary>
 public class UrlCompetenceComparer : IEqualityComparer<CompetenceEntity>, IComparer<CompetenceEntity>
 {
+    /// <inheritdoc />
     public bool Equals(CompetenceEntity? x, CompetenceEntity? y)
     {
         if (x != null && y != null && x.GuidTag == y.GuidTag) return true;
@@ -201,11 +221,13 @@ public class UrlCompetenceComparer : IEqualityComparer<CompetenceEntity>, ICompa
         return false;
     }
 
+    /// <inheritdoc />
     public int GetHashCode(CompetenceEntity obj)
     {
         throw new NotImplementedException();
     }
 
+    /// <inheritdoc />
     public int Compare(CompetenceEntity? x, CompetenceEntity? y)
     {
         if (y != null && x != null && x.GuidTag == y.GuidTag) return 1;
@@ -225,6 +247,9 @@ public class CompetenceBox
     /// </summary>
     public IList<CompetenceEntity> CompetenceCollection { get; set; }
 
+    /// <summary>
+    /// CompetenceBox
+    /// </summary>
     public CompetenceBox()
     {
         CompetenceCollection = new List<CompetenceEntity>();

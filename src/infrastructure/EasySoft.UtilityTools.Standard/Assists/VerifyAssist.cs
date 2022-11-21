@@ -4,6 +4,9 @@ using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.UtilityTools.Standard.Assists;
 
+/// <summary>
+/// VerifyAssist
+/// </summary>
 public static class VerifyAssist
 {
     /// <summary>
@@ -174,6 +177,11 @@ public static class VerifyAssist
 
     #endregion Check Double
 
+    /// <summary>
+    /// CheckPasswordCanUse
+    /// </summary>
+    /// <param name="initialPassword"></param>
+    /// <returns></returns>
     public static ExecutiveResult CheckPasswordCanUse(string initialPassword)
     {
         if (string.IsNullOrWhiteSpace(initialPassword))

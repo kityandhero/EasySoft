@@ -4,6 +4,9 @@ using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.UtilityTools.Standard.Attributes;
 
+/// <summary>
+/// ValidationEnumAttribute
+/// </summary>
 [AttributeUsage(AttributeTargets.All)]
 public class ValidationEnumAttribute : Attribute
 {
@@ -17,6 +20,10 @@ public class ValidationEnumAttribute : Attribute
 
     private bool ExistIgnoreValue { get; }
 
+    /// <summary>
+    /// ValidationEnumAttribute
+    /// </summary>
+    /// <param name="enumType"></param>
     public ValidationEnumAttribute(Type enumType) : this(
         enumType,
         0,
@@ -26,6 +33,11 @@ public class ValidationEnumAttribute : Attribute
     {
     }
 
+    /// <summary>
+    /// ValidationEnumAttribute
+    /// </summary>
+    /// <param name="enumType"></param>
+    /// <param name="ignoreValue"></param>
     public ValidationEnumAttribute(Type enumType, int ignoreValue) : this(
         enumType,
         ignoreValue,
@@ -35,6 +47,11 @@ public class ValidationEnumAttribute : Attribute
     {
     }
 
+    /// <summary>
+    /// ValidationEnumAttribute
+    /// </summary>
+    /// <param name="enumType"></param>
+    /// <param name="excludeArray"></param>
     public ValidationEnumAttribute(Type enumType, params object[] excludeArray) : this(
         enumType,
         0,
@@ -92,6 +109,11 @@ public class ValidationEnumAttribute : Attribute
         }
     }
 
+    /// <summary>
+    /// Validation
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public ExecutiveResult Validation(int value)
     {
         if (ExistIgnoreValue)
