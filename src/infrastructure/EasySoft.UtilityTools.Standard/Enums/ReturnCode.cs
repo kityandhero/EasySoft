@@ -2,6 +2,9 @@
 
 namespace EasySoft.UtilityTools.Standard.Enums;
 
+/// <summary>
+/// 返回代码
+/// </summary>
 public enum ReturnCode
 {
     /// <summary>
@@ -74,6 +77,9 @@ public enum ReturnCode
     [ReturnCodeSuccess(false)]
     PasswordNotMatch = 1005,
 
+    /// <summary>
+    /// 无效访问
+    /// </summary>
     [Description("无效访问")]
     [ReturnCodeSuccess(false)]
     InvalidAccess = 1006,
@@ -140,12 +146,4 @@ public enum ReturnCode
     [Description("无操作反馈")]
     [ReturnCodeSuccess(false)]
     NoChange = 10001
-}
-
-public static class ReturnCodeExtensionMethods
-{
-    public static int ToInt(this ReturnCode returnCode)
-    {
-        return (int)returnCode;
-    }
 }

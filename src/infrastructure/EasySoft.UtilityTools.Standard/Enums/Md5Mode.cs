@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.UtilityTools.Standard.Enums;
 
+/// <summary>
+/// Md5Mode
+/// </summary>
 public enum Md5Mode
 {
     /// <summary>

@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.UtilityTools.Standard.Enums;
 
+/// <summary>
+/// Gender
+/// </summary>
 public enum Gender
 {
     /// <summary>

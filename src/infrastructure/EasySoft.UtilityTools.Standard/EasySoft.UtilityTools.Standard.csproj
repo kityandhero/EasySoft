@@ -20,14 +20,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="NGeoHash" Version="1.2.0"/>
-        <PackageReference Include="QRCoder" Version="1.4.3"/>
-        <PackageReference Include="RSAExtensions" Version="1.1.0"/>
-        <PackageReference Include="SixLabors.ImageSharp" Version="2.1.3"/>
+        <PackageReference Include="NGeoHash" Version="1.2.0" />
+        <PackageReference Include="QRCoder" Version="1.4.3" />
+        <PackageReference Include="RSAExtensions" Version="1.1.0" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="2.1.3" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Dependence.Standard\EasySoft.Dependence.Standard.csproj"/>
+        <ProjectReference Include="..\EasySoft.Dependence.Standard\EasySoft.Dependence.Standard.csproj" />
     </ItemGroup>
 
 </Project>
