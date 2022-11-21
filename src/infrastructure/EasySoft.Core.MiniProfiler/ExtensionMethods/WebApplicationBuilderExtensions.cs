@@ -5,10 +5,18 @@ using EasySoft.UtilityTools.Core.ExtensionMethods;
 
 namespace EasySoft.Core.MiniProfiler.ExtensionMethods;
 
+/// <summary>
+/// WebApplicationBuilderExtensions
+/// </summary>
 public static class WebApplicationBuilderExtensions
 {
     private const string UniqueIdentifierAddAdvanceMiniProfile = "0087964a-ea50-4f11-9f85-35ee4146de53";
 
+    /// <summary>
+    /// AddAdvanceMiniProfile
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
     public static WebApplicationBuilder AddAdvanceMiniProfile(
         this WebApplicationBuilder builder
     )

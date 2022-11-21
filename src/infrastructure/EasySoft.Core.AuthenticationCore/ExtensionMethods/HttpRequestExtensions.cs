@@ -1,7 +1,16 @@
 ﻿namespace EasySoft.Core.AuthenticationCore.ExtensionMethods;
 
+/// <summary>
+/// HttpRequestExtensions
+/// </summary>
 public static class HttpRequestExtensions
 {
+    /// <summary>
+    /// GetToken
+    /// </summary>
+    /// <param name="httpRequest"></param>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public static string GetToken(this HttpRequest httpRequest, string key = "token")
     {
         var token = httpRequest.Headers.ContainsKey(key) ? httpRequest.Headers[key].ToString() : "";
@@ -25,6 +34,12 @@ public static class HttpRequestExtensions
         return token ?? "";
     }
 
+    /// <summary>
+    /// GetTokenAsync
+    /// </summary>
+    /// <param name="httpRequest"></param>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public static async Task<string> GetTokenAsync(this HttpRequest httpRequest, string key = "token")
     {
         var token = httpRequest.Headers.ContainsKey(key) ? httpRequest.Headers[key].ToString() : "";

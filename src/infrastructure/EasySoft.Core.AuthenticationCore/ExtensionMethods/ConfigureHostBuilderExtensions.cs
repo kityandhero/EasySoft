@@ -2,6 +2,9 @@
 
 namespace EasySoft.Core.AuthenticationCore.ExtensionMethods;
 
+/// <summary>
+/// ConfigureHostBuilderExtensions
+/// </summary>
 public static class ConfigureHostBuilderExtensions
 {
     /// <summary>

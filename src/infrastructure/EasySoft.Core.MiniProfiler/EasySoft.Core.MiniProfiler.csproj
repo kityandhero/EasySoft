@@ -4,6 +4,17 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <PackageProjectUrl>https://github.com/kityandhero/EasySoft</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/kityandhero/EasySoft.git</RepositoryUrl>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\EasySoft.Core.MiniProfiler.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\EasySoft.Core.MiniProfiler.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>

@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.Core.AuthenticationCore.Entities;
 
+/// <summary>
+/// Token
+/// </summary>
 public class Token
 {
     /// <summary>
@@ -7,6 +10,9 @@ public class Token
     /// </summary>
     public string IdentificationCode { get; set; }
 
+    /// <summary>
+    /// Token
+    /// </summary>
     public Token()
     {
         IdentificationCode = "";

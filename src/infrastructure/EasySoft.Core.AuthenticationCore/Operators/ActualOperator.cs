@@ -49,6 +49,10 @@ public abstract class ActualOperator : IActualOperator
         return _token;
     }
 
+    /// <summary>
+    /// IsAnonymous
+    /// </summary>
+    /// <returns></returns>
     public bool IsAnonymous()
     {
         return _identification == null;

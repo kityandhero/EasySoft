@@ -8,7 +8,15 @@
         <Title>EasySoft.Core.AuthenticationCore</Title>
         <Description>EasySoft.Core.AuthenticationCore</Description>
         <PackageProjectUrl>https://github.com/kityandhero/EasySoft</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/kityandhero/EasySoft</RepositoryUrl>
+        <RepositoryUrl>https://github.com/kityandhero/EasySoft.git</RepositoryUrl>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\EasySoft.Core.AuthenticationCore.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\EasySoft.Core.AuthenticationCore.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
