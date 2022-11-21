@@ -2,6 +2,9 @@
 
 namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
+/// <summary>
+/// ComparableExtensions
+/// </summary>
 public static class ComparableExtensions
 {
     #region Functions

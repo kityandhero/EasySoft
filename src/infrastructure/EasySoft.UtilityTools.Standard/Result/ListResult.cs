@@ -14,6 +14,9 @@ public class ListResult<T> : BaseExecutiveResult
     /// </summary>
     public List<T> List { get; set; }
 
+    /// <summary>
+    /// Count
+    /// </summary>
     public int Count => List.Count;
 
     /// <summary>

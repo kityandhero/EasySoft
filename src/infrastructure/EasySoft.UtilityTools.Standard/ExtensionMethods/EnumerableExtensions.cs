@@ -675,6 +675,12 @@ public static class EnumerableExtensions
 
     #endregion
 
+    /// <summary>
+    /// IsNullOrEmpty
+    /// </summary>
+    /// <param name="source"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static bool IsNullOrEmpty<T>(this IEnumerable<T>? source)
     {
         return source == null || !source.Any();

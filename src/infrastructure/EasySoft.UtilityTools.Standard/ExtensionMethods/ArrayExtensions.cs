@@ -297,6 +297,16 @@ public static class ArrayExtensions
 
     #region SortByPropertyValue
 
+    /// <summary>
+    /// SortByPropertyValue
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="getPropertyName"></param>
+    /// <param name="rule"></param>
+    /// <param name="propertyName"></param>
+    /// <param name="sortCount"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static T[] SortByPropertyValue<T>(this IEnumerable<T> source,
         string getPropertyName,
         SortRule rule = SortRule.Asc,

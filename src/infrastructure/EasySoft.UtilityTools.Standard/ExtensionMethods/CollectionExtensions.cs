@@ -3,6 +3,9 @@ using EasySoft.UtilityTools.Standard.Enums;
 
 namespace EasySoft.UtilityTools.Standard.ExtensionMethods;
 
+/// <summary>
+/// CollectionExtensions
+/// </summary>
 public static class CollectionExtensions
 {
     /// <summary>
@@ -335,6 +338,15 @@ public static class CollectionExtensions
         return enumerable.Join(connector, template, distinct, propertyName);
     }
 
+    /// <summary>
+    /// Merge
+    /// </summary>
+    /// <param name="collection"></param>
+    /// <param name="target"></param>
+    /// <typeparam name="TKey"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static ICollection<KeyValuePair<TKey, TValue>> Merge<TKey, TValue>(
         this ICollection<KeyValuePair<TKey, TValue>> collection,
         ICollection<KeyValuePair<TKey, TValue>> target
