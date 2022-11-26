@@ -6,7 +6,7 @@ public class NLogInlayConfigController : BasicController
 {
     public IActionResult Index()
     {
-        var data = JsonConvertAssist.FormatText(Tools.GetNlogDefaultConfig());
+        var data = JsonConvertAssist.FormatText(Tools.GetNlogEmbedConfig());
 
         return Content(data);
     }

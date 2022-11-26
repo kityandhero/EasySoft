@@ -126,6 +126,8 @@ public class GeneralConfig : IConfig
 
     #region Nog Embed Config
 
+    #region Internal Log
+
     /// <summary>
     /// 内嵌Nlog内部日志的级别, Trace|Debug|Info|Warn|Error|Fatal|Off, Off 表示关闭
     /// </summary>
@@ -140,6 +142,32 @@ public class GeneralConfig : IConfig
     /// 内嵌Nlog内部日志输出到的文件的路径
     /// </summary>
     public string NlogEmbedConfigInternalLogFile { get; set; }
+
+    #endregion
+
+    #region Production Log File
+
+    /// <summary>
+    /// 开关: 生产环境Nlog日志输出到文件
+    /// </summary>
+    public string NlogEmbedConfigProductionLogFileSwitch { get; set; }
+
+    /// <summary>
+    /// 生产环境Nlog日志的级别, Trace|Debug|Info|Warn|Error|Fatal
+    /// </summary>
+    public string NlogEmbedConfigProductionLogLevel { get; set; }
+
+    /// <summary>
+    /// 生产环境Nlog当前日志输出目的地
+    /// </summary>
+    public string NlogEmbedConfigProductionLogFileName { get; set; }
+
+    /// <summary>
+    /// 生产环境Nlog存档日志输出目的地
+    /// </summary>
+    public string NlogEmbedConfigProductionLogArchiveFileName { get; set; }
+
+    #endregion
 
     /// <summary>
     /// 开关 内嵌Nlog配置中是否启用Trace日志记录, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
@@ -261,9 +289,25 @@ public class GeneralConfig : IConfig
 
         HttpRedirectionHttpsSwitch = "0";
 
+        #region NlogEmbedConfig
+
+        #region Internal Log
+
         NlogEmbedConfigInternalLogLevel = "Off";
         NlogEmbedConfigInternalLogToFileSwitch = "0";
         NlogEmbedConfigInternalLogFile = "${basedir}/logs/nlog-internal.log";
+
+        #endregion
+
+        #region Production Log File
+
+        NlogEmbedConfigProductionLogFileSwitch = "0";
+        NlogEmbedConfigProductionLogLevel = "Off";
+        NlogEmbedConfigProductionLogFileName = "${basedir}/logs/nlog-production-${shortDate}.log";
+        NlogEmbedConfigProductionLogArchiveFileName = "${basedir}/logs/nlog-production-${shortDate}-{#####}.log";
+
+        #endregion
+
         NlogEmbedConfigTraceToFileSwitch = "0";
         NlogEmbedConfigDebugToFileSwitch = "0";
         NlogEmbedConfigTraceToConsoleSwitch = "0";
@@ -271,6 +315,8 @@ public class GeneralConfig : IConfig
         NlogEmbedConfigConsoleMessageLimit = "0";
         NlogEmbedConfigConsoleLimitingWrapperSwitch = "0";
         NlogEmbedConfigConsoleRepeatedFilterSwitch = "0";
+
+        #endregion
 
         MiniProFileSwitch = "0";
 

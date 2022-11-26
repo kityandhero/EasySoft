@@ -606,6 +606,8 @@ public static class GeneralConfigAssist
 
     #region Nog Embed Config
 
+    #region Internal Log
+
     /// <summary>
     /// 内嵌Nlog内部日志的级别, Trace|Debug|Info|Warn|Error|Fatal|Off, Off 表示关闭
     /// </summary>
@@ -665,6 +667,92 @@ public static class GeneralConfigAssist
 
         return v;
     }
+
+    #endregion
+
+    #region Production Log File
+
+    /// <summary>
+    /// 开关: 生产环境Nlog日志输出到文件
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static bool GetNlogEmbedConfigProductionLogFileSwitch()
+    {
+        var v = GetConfig().NlogEmbedConfigProductionLogFileSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+            throw new ConfigErrorException(
+                $"请配置 NlogEmbedConfigProductionLogFileSwitch: {ConfigFile} -> NlogEmbedConfigProductionLogFileSwitch,请设置 0/1",
+                GetConfigFileInfo()
+            );
+
+        return value == 1;
+    }
+
+    /// <summary>
+    /// 生产环境Nlog日志的级别, Trace|Debug|Info|Warn|Error|Fatal
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static string GetNlogEmbedConfigProductionLogLevel()
+    {
+        var v = GetConfig().NlogEmbedConfigProductionLogLevel;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        if (string.IsNullOrWhiteSpace(v))
+            throw new ConfigErrorException(
+                $"请配置 NlogEmbedConfigProductionLogLevel: {ConfigFile} -> NlogEmbedConfigProductionLogLevel",
+                GetConfigFileInfo()
+            );
+
+        return v;
+    }
+
+    /// <summary>
+    /// 生产环境Nlog当前日志输出目的地
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static string GetNlogEmbedConfigProductionLogFileName()
+    {
+        var v = GetConfig().NlogEmbedConfigProductionLogFileName;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        if (string.IsNullOrWhiteSpace(v))
+            throw new ConfigErrorException(
+                $"请配置 NlogEmbedConfigProductionLogFileName: {ConfigFile} -> NlogEmbedConfigProductionLogFileName",
+                GetConfigFileInfo()
+            );
+
+        return v;
+    }
+
+    /// <summary>
+    /// 生产环境Nlog存档日志输出目的地
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static string GetNlogEmbedConfigProductionLogArchiveFileName()
+    {
+        var v = GetConfig().NlogEmbedConfigProductionLogArchiveFileName;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        if (string.IsNullOrWhiteSpace(v))
+            throw new ConfigErrorException(
+                $"请配置 NlogEmbedConfigProductionLogArchiveFileName: {ConfigFile} -> NlogEmbedConfigProductionLogArchiveFileName",
+                GetConfigFileInfo()
+            );
+
+        return v;
+    }
+
+    #endregion
 
     /// <summary>
     /// 开关: 默认Nlog配置中是否启用Trace日志写入, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准

@@ -1,0 +1,5 @@
+      {
+        "logger": "*",
+        "minLevel": "###level###",
+        "writeTo": "production-file"
+      },

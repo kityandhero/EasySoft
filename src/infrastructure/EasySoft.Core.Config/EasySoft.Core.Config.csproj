@@ -48,6 +48,10 @@
         <EmbeddedResource Include="nlog.console.limiting.wrapper.txt" />
         <None Remove="nlog.console.filter.txt" />
         <EmbeddedResource Include="nlog.console.filter.txt" />
+        <None Remove="nlog.production.file.rule.txt" />
+        <EmbeddedResource Include="nlog.production.file.rule.txt" />
+        <None Remove="nlog.production.file.target.txt" />
+        <EmbeddedResource Include="nlog.production.file.target.txt" />
     </ItemGroup>
     
 </Project>

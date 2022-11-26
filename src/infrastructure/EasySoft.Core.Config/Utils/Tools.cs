@@ -12,7 +12,7 @@ public static class Tools
         return configureFolderPath;
     }
 
-    public static string GetNlogDefaultConfig()
+    public static string GetNlogEmbedConfig()
     {
         var mainConfig = GetNlogDefaultMainConfig();
 
@@ -87,6 +87,7 @@ public static class Tools
             .SupplementThrowConfigExceptions()
             .SupplementInternalLogLevel()
             .SupplementInternalLogFile()
+            .SupplementProductionLogConfig()
             .Replace("###exceptionless-extensions###", exceptionlessExtensions)
             .Replace("###trace-target###", traceTarget)
             .Replace("###debug-target###", debugTarget)
@@ -205,6 +206,41 @@ public static class Tools
             nlogEmbedConfigInternalLogToFileSwitch && string.IsNullOrWhiteSpace(nlogEmbedConfigInternalLogFile)
                 ? "\"internalLogFile\":true,"
                 : ""
+        );
+    }
+
+    private static string SupplementProductionLogConfig(this string config)
+    {
+        var nlogEmbedConfigProductionLogFileSwitch = GeneralConfigAssist.GetNlogEmbedConfigProductionLogFileSwitch();
+
+        if (!nlogEmbedConfigProductionLogFileSwitch)
+            return config.Replace(
+                "###production-file-target###",
+                ""
+            ).Replace(
+                "###production-file-rule###",
+                ""
+            );
+
+        var target = GetEmbeddedResourceFileContent("/nlog.production.file.target.txt").Replace(
+            "###file-name###",
+            GeneralConfigAssist.GetNlogEmbedConfigProductionLogFileName()
+        ).Replace(
+            "###archive-file-name###",
+            GeneralConfigAssist.GetNlogEmbedConfigProductionLogArchiveFileName()
+        );
+
+        var rule = GetEmbeddedResourceFileContent("/nlog.production.file.rule.txt").Replace(
+            "###level###",
+            GeneralConfigAssist.GetNlogEmbedConfigProductionLogLevel()
+        );
+
+        return config.Replace(
+            "###production-file-target###",
+            target
+        ).Replace(
+            "###production-file-rule###",
+            rule
         );
     }
 

@@ -29,7 +29,7 @@ public static class WebApplicationBuilderExtensions
             else
                 LogManager.Configuration = new NLogLoggingConfiguration(
                     new ConfigurationBuilder().AddJsonContent(
-                        Tools.GetNlogDefaultConfig()
+                        Tools.GetNlogEmbedConfig()
                     ).Build().GetSection("NLog")
                 );
 

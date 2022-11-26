@@ -19,6 +19,6 @@
   "AgileConfigNodes": "http://192.168.2.8:15000",
   "AgileConfigEnv": "DEV",
   "AgileConfigCacheDirectory": "configures\\agileConfig",
-  "NlogDefaultConfigTraceToConsoleSwitch": "1",
-  "NlogDefaultConfigDebugToConsoleSwitch": "1"
+  "NlogEmbedConfigTraceToConsoleSwitch": "1",
+  "NlogEmbedConfigDebugToConsoleSwitch": "1"
 }

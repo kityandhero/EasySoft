@@ -13,8 +13,8 @@
   "JsonWebTokenValidIssuer": "www.b.com",
   "JsonWebTokenValidAudience": "user",
   "JsonWebTokenIssuerSigningKey": "fcebbeb8c5ce4b108aa6e241d57cf6d8",
-  "NlogDefaultConfigTraceToConsoleSwitch": "1",
-  "NlogDefaultConfigDebugToConsoleSwitch": "1",
+  "NlogEmbedConfigTraceToConsoleSwitch": "1",
+  "NlogEmbedConfigDebugToConsoleSwitch": "1",
   "CapDashboardSwitch": "1",
   "CapDiscoverySwitch": "0"
 }
