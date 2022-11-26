@@ -22,31 +22,31 @@ public static class WebApplicationBuilderExtensions
         FlagAssist.StartupUrls.Clear();
         FlagAssist.StartupDisplayUrls.Clear();
 
-        var httpPost = GeneralConfigAssist.GetHttpPost();
-        var httpsPost = GeneralConfigAssist.GetHttpsPost();
+        var httpPort = GeneralConfigAssist.GetHttpPort();
+        var httpsPort = GeneralConfigAssist.GetHttpsPort();
 
-        if (httpPost <= 0 && httpsPost <= 0)
+        if (httpPort <= 0 && httpsPort <= 0)
             throw new Exception(
-                $"one of HttpPost or HttpsPost must bu greater than 0, please set httpPost or httpsPost in {GeneralConfigAssist.GetConfigFileInfo()}."
+                $"one of HttpPost or HttpsPort must bu greater than 0, please set httpPost or httpsPort in {GeneralConfigAssist.GetConfigFileInfo()}."
             );
 
-        if (httpPost > 0)
+        if (httpPort > 0)
         {
-            FlagAssist.StartupUrls.Add($"http://*:{httpPost}");
-            FlagAssist.StartupDisplayUrls.Add($"http://localhost:{httpPost}");
+            FlagAssist.StartupUrls.Add($"http://*:{httpPort}");
+            FlagAssist.StartupDisplayUrls.Add($"http://localhost:{httpPort}");
 
             StartupConfigMessageAssist.AddConfig(
-                $"HttpPost: {httpPost}."
+                $"HttpPost: {httpPort}."
             );
         }
 
-        if (httpsPost > 0)
+        if (httpsPort > 0)
         {
-            FlagAssist.StartupUrls.Add($"https://*:{httpsPost}");
-            FlagAssist.StartupDisplayUrls.Add($"https://localhost:{httpsPost}");
+            FlagAssist.StartupUrls.Add($"https://*:{httpsPort}");
+            FlagAssist.StartupDisplayUrls.Add($"https://localhost:{httpsPort}");
 
             StartupConfigMessageAssist.AddConfig(
-                $"HttpsPost: {httpsPost}."
+                $"HttpsPort: {httpsPort}."
             );
         }
 

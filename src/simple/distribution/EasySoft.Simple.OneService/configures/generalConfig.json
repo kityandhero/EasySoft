@@ -1,5 +1,5 @@
 {
-  "Urls": "8731",
+  "HttpsPort": "8731",
   "RegistrationCenterSwitch": "1",
   "RegistrationCenterType": "Consul"
 }

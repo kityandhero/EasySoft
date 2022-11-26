@@ -1,4 +1,4 @@
 {
-  "HttpPost": "80",
+  "HttpPort": "80",
   "HttpRedirectionHttpsSwitch": "0"
 }

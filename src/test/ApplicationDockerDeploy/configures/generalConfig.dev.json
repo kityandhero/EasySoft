@@ -1,5 +1,5 @@
 {
-  "HttpPost": "8445",
+  "HttpPort": "8445",
   "NlogDefaultConfigTraceToConsoleSwitch": "1",
   "NlogDefaultConfigDebugToConsoleSwitch": "1"
 }

@@ -1,5 +1,5 @@
 {
-  "Urls": "8846",
+  "HttpsPort": "8846",
   "HttpRedirectionHttpsSwitch": "0",
   "CompressionSwitch": "1",
   "CorsEnable": "1",

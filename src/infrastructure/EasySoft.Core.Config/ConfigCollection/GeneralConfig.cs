@@ -11,9 +11,9 @@ public class GeneralConfig : IConfig
 
     #region Start Port
 
-    public string HttpPost { get; set; }
+    public string HttpPort { get; set; }
 
-    public string HttpsPost { get; set; }
+    public string HttpsPort { get; set; }
 
     #endregion
 
@@ -203,8 +203,8 @@ public class GeneralConfig : IConfig
     {
         CacheMode = CacheModeCollection.InMemory.ToString();
 
-        HttpPost = "0";
-        HttpsPost = "0";
+        HttpPort = "0";
+        HttpsPort = "0";
 
         HstsSwitch = "0";
 

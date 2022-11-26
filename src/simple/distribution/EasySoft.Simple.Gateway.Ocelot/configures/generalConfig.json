@@ -1,5 +1,5 @@
 {
-  "Urls": "8722",
+  "HttpsPort": "8722",
   "GatewaySwitch": "1",
   "GatewayType": "Ocelot",
   "GatewayWithConsulSwitch": "1",

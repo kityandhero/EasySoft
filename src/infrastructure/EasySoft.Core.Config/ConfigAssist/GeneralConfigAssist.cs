@@ -119,27 +119,27 @@ public static class GeneralConfigAssist
         return version;
     }
 
-    public static int GetHttpPost()
+    public static int GetHttpPort()
     {
-        var v = GetConfig().HttpPost;
+        var v = GetConfig().HttpPort;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value) || value < 0)
             throw new ConfigErrorException(
-                $"请配置 HttpPost: {ConfigFile} -> HttpPost,请设置数字 value > 0"
+                $"请配置 HttpPort: {ConfigFile} -> HttpPort,请设置数字 value > 0"
             );
 
         return value;
     }
 
-    public static int GetHttpsPost()
+    public static int GetHttpsPort()
     {
-        var v = GetConfig().HttpsPost;
+        var v = GetConfig().HttpsPort;
 
         if (!v.IsInt(out var value) || value < 0)
             throw new ConfigErrorException(
-                $"请配置 HttpsPost: {ConfigFile} -> HttpsPost,请设置数字 value > 0"
+                $"请配置 HttpsPort: {ConfigFile} -> HttpsPort,请设置数字 value > 0"
             );
 
         return value;
