@@ -124,40 +124,59 @@ public class GeneralConfig : IConfig
     /// </summary>
     public string ForwardedHeadersSwitch { get; set; }
 
-    /// <summary>
-    /// 开关 默认Nlog配置中是否启用Trace日志记录, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
-    /// </summary>
-    public string NlogDefaultConfigTraceToFileSwitch { get; set; }
+    #region Nog Embed Config
 
     /// <summary>
-    /// 开关 默认Nlog配置中是否启用Debug日志记录, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// 内嵌Nlog内部日志的级别, "Off" 表时关闭
     /// </summary>
-    public string NlogDefaultConfigDebugToFileSwitch { get; set; }
+    public string NlogEmbedConfigInternalLogLevel { get; set; }
 
     /// <summary>
-    /// 开关 默认Nlog配置中是否启用Trace日志控制台显示, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// 开关 内嵌Nlog内部日志输出到文件开关
     /// </summary>
-    public string NlogDefaultConfigTraceToConsoleSwitch { get; set; }
+    public string NlogEmbedConfigInternalLogToFileSwitch { get; set; }
 
     /// <summary>
-    /// 开关 默认Nlog配置中是否启用Debug日志控制台显示, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// 内嵌Nlog内部日志输出到的文件的路径
     /// </summary>
-    public string NlogDefaultConfigDebugToConsoleSwitch { get; set; }
+    public string NlogEmbedConfigInternalLogFile { get; set; }
+
+    /// <summary>
+    /// 开关 内嵌Nlog配置中是否启用Trace日志记录, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// </summary>
+    public string NlogEmbedConfigTraceToFileSwitch { get; set; }
+
+    /// <summary>
+    /// 开关 内嵌Nlog配置中是否启用Debug日志记录, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// </summary>
+    public string NlogEmbedConfigDebugToFileSwitch { get; set; }
+
+    /// <summary>
+    /// 开关 内嵌Nlog配置中是否启用Trace日志控制台显示, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// </summary>
+    public string NlogEmbedConfigTraceToConsoleSwitch { get; set; }
+
+    /// <summary>
+    /// 开关 内嵌Nlog配置中是否启用Debug日志控制台显示, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// </summary>
+    public string NlogEmbedConfigDebugToConsoleSwitch { get; set; }
 
     /// <summary>
     /// Nlog 控制台输出限额, 默认不详
     /// </summary>
-    public string NlogConsoleMessageLimit { get; set; }
+    public string NlogEmbedConfigConsoleMessageLimit { get; set; }
 
     /// <summary>
     /// Nlog 控制台日志节流开关, 默认不启用
     /// </summary>
-    public string NlogConsoleLimitingWrapperSwitch { get; set; }
+    public string NlogEmbedConfigConsoleLimitingWrapperSwitch { get; set; }
 
     /// <summary>
     /// Nlog 控制台忽略重复输出, 默认不启用
     /// </summary>
-    public string NlogConsoleRepeatedFilterSwitch { get; set; }
+    public string NlogEmbedConfigConsoleRepeatedFilterSwitch { get; set; }
+
+    #endregion
 
     public string MiniProFileSwitch { get; set; }
 
@@ -242,13 +261,16 @@ public class GeneralConfig : IConfig
 
         HttpRedirectionHttpsSwitch = "0";
 
-        NlogDefaultConfigTraceToFileSwitch = "0";
-        NlogDefaultConfigDebugToFileSwitch = "0";
-        NlogDefaultConfigTraceToConsoleSwitch = "0";
-        NlogDefaultConfigDebugToConsoleSwitch = "0";
-        NlogConsoleMessageLimit = "0";
-        NlogConsoleLimitingWrapperSwitch = "0";
-        NlogConsoleRepeatedFilterSwitch = "0";
+        NlogEmbedConfigInternalLogLevel = "Off";
+        NlogEmbedConfigInternalLogToFileSwitch = "0";
+        NlogEmbedConfigInternalLogFile = "${basedir}/logs/nlog-internal.log";
+        NlogEmbedConfigTraceToFileSwitch = "0";
+        NlogEmbedConfigDebugToFileSwitch = "0";
+        NlogEmbedConfigTraceToConsoleSwitch = "0";
+        NlogEmbedConfigDebugToConsoleSwitch = "0";
+        NlogEmbedConfigConsoleMessageLimit = "0";
+        NlogEmbedConfigConsoleLimitingWrapperSwitch = "0";
+        NlogEmbedConfigConsoleRepeatedFilterSwitch = "0";
 
         MiniProFileSwitch = "0";
 

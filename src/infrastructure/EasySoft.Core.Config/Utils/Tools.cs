@@ -16,10 +16,10 @@ public static class Tools
     {
         var mainConfig = GetNlogDefaultMainConfig();
 
-        var nlogDefaultConfigDebugToFileSwitch = GeneralConfigAssist.GetNlogDefaultConfigDebugToFileSwitch();
-        var nlogDefaultConfigTraceToFileSwitch = GeneralConfigAssist.GetNlogDefaultConfigTraceToFileSwitch();
-        var nlogDefaultConfigDebugToConsoleSwitch = GeneralConfigAssist.GetNlogDefaultConfigDebugToConsoleSwitch();
-        var nlogDefaultConfigTraceToConsoleSwitch = GeneralConfigAssist.GetNlogDefaultConfigTraceToConsoleSwitch();
+        var nlogDefaultConfigDebugToFileSwitch = GeneralConfigAssist.GetNlogEmbedConfigDebugToFileSwitch();
+        var nlogDefaultConfigTraceToFileSwitch = GeneralConfigAssist.GetNlogEmbedConfigTraceToFileSwitch();
+        var nlogDefaultConfigDebugToConsoleSwitch = GeneralConfigAssist.GetNlogEmbedConfigDebugToConsoleSwitch();
+        var nlogDefaultConfigTraceToConsoleSwitch = GeneralConfigAssist.GetNlogEmbedConfigTraceToConsoleSwitch();
         var nlogDefaultConfigDebugToExceptionlessSwitch = GeneralConfigAssist.GetExceptionlessSwitch();
 
         var nlogDefaultConfigExceptionlessServerUrl = GeneralConfigAssist.GetExceptionlessServerUrl();
@@ -84,6 +84,9 @@ public static class Tools
         if (nlogConsoleRepeatedFilterSwitch) consoleFilters.Add(GetNlogConsoleFilterRepeated());
 
         mainConfig = mainConfig
+            .SupplementThrowConfigExceptions()
+            .SupplementInternalLogLevel()
+            .SupplementInternalLogFile()
             .Replace("###exceptionless-extensions###", exceptionlessExtensions)
             .Replace("###trace-target###", traceTarget)
             .Replace("###debug-target###", debugTarget)
@@ -102,6 +105,8 @@ public static class Tools
                 "###console-filters###",
                 consoleFilters.Any() ? consoleFilters.Join(",") : ""
             );
+
+        Console.WriteLine(mainConfig);
 
         return mainConfig;
     }
@@ -170,6 +175,39 @@ public static class Tools
     private static string GetNlogConsoleTarget()
     {
         return GetEmbeddedResourceFileContent("/nlog.console.target.txt");
+    }
+
+    private static string SupplementThrowConfigExceptions(this string config)
+    {
+        return config.Replace(
+            "###throw-config-exceptions###",
+            EnvironmentAssist
+                .GetEnvironment()
+                .IsDevelopment()
+                ? "true"
+                : "false"
+        );
+    }
+
+    private static string SupplementInternalLogLevel(this string config)
+    {
+        return config.Replace(
+            "###internal-log-level###",
+            GeneralConfigAssist.GetNlogEmbedConfigInternalLogLevel()
+        );
+    }
+
+    private static string SupplementInternalLogFile(this string config)
+    {
+        var nlogEmbedConfigInternalLogToFileSwitch = GeneralConfigAssist.GetNlogEmbedConfigInternalLogToFileSwitch();
+        var nlogEmbedConfigInternalLogFile = GeneralConfigAssist.GetNlogEmbedConfigInternalLogFile();
+
+        return config.Replace(
+            "###internal-log-file###",
+            nlogEmbedConfigInternalLogToFileSwitch && string.IsNullOrWhiteSpace(nlogEmbedConfigInternalLogFile)
+                ? "\"internalLogFile\":true,"
+                : ""
+        );
     }
 
     private static string GetEmbeddedResourceFileContent(string path)

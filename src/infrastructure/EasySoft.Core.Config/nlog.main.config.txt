@@ -1,9 +1,9 @@
 {
   "NLog": {
     "autoReload": true,
-    "throwConfigExceptions": true,
-    "internalLogLevel": "Info",
-    "internalLogFile": "${basedir}/logs/nlog-internal.log",
+    "internalThrowConfigExceptions": "###throw-config-exceptions###",
+    "internalLogLevel": "###internal-log-level###",
+    ###internal-log-file###
     "extensions": [
       {
         "assembly": "NLog.Extensions.Logging"

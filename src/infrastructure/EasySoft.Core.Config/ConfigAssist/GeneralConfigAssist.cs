@@ -604,20 +604,82 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    #region Nog Embed Config
+
     /// <summary>
-    /// 开关: 默认Nlog配置中是否启用Trace日志写入, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// 内嵌Nlog内部日志的级别, "Off" 表时关闭
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static bool GetNlogDefaultConfigTraceToFileSwitch()
+    public static string GetNlogEmbedConfigInternalLogLevel()
     {
-        var v = GetConfig().NlogDefaultConfigTraceToFileSwitch;
+        var v = GetConfig().NlogEmbedConfigInternalLogLevel;
+
+        v = string.IsNullOrWhiteSpace(v) ? "Off" : v;
+
+        if (string.IsNullOrWhiteSpace(v))
+            throw new ConfigErrorException(
+                $"请配置 NlogEmbedConfigInternalLogLevel: {ConfigFile} -> NlogEmbedConfigInternalLogLevel",
+                GetConfigFileInfo()
+            );
+
+        return v;
+    }
+
+    /// <summary>
+    /// 开关 内嵌Nlog内部日志输出到文件开关
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static bool GetNlogEmbedConfigInternalLogToFileSwitch()
+    {
+        var v = GetConfig().NlogEmbedConfigInternalLogToFileSwitch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
             throw new ConfigErrorException(
-                $"请配置 NlogDefaultConfigTraceToFileSwitch: {ConfigFile} -> NlogDefaultConfigTraceToFileSwitch,请设置 0/1",
+                $"请配置 NlogEmbedConfigInternalLogToFileSwitch: {ConfigFile} -> NlogEmbedConfigInternalLogToFileSwitch,请设置 0/1",
+                GetConfigFileInfo()
+            );
+
+        return value == 1;
+    }
+
+    /// <summary>
+    /// 内嵌Nlog内部日志输出到的文件的路径
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static string GetNlogEmbedConfigInternalLogFile()
+    {
+        var v = GetConfig().NlogEmbedConfigInternalLogFile;
+
+        v = string.IsNullOrWhiteSpace(v) ? "Off" : v;
+
+        if (string.IsNullOrWhiteSpace(v))
+            throw new ConfigErrorException(
+                $"请配置 NlogEmbedConfigInternalLogFile: {ConfigFile} -> NlogEmbedConfigInternalLogFile",
+                GetConfigFileInfo()
+            );
+
+        return v;
+    }
+
+    /// <summary>
+    /// 开关: 默认Nlog配置中是否启用Trace日志写入, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static bool GetNlogEmbedConfigTraceToFileSwitch()
+    {
+        var v = GetConfig().NlogEmbedConfigTraceToFileSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+            throw new ConfigErrorException(
+                $"请配置 NlogEmbedConfigTraceToFileSwitch: {ConfigFile} -> NlogEmbedConfigTraceToFileSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
 
@@ -629,15 +691,15 @@ public static class GeneralConfigAssist
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static bool GetNlogDefaultConfigTraceToConsoleSwitch()
+    public static bool GetNlogEmbedConfigTraceToConsoleSwitch()
     {
-        var v = GetConfig().NlogDefaultConfigTraceToConsoleSwitch;
+        var v = GetConfig().NlogEmbedConfigTraceToConsoleSwitch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
             throw new ConfigErrorException(
-                $"请配置 NlogDefaultConfigTraceToConsoleSwitch: {ConfigFile} -> NlogDefaultConfigTraceToConsoleSwitch,请设置 0/1",
+                $"请配置 NlogEmbedConfigTraceToConsoleSwitch: {ConfigFile} -> NlogEmbedConfigTraceToConsoleSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
 
@@ -649,15 +711,15 @@ public static class GeneralConfigAssist
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static bool GetNlogDefaultConfigDebugToFileSwitch()
+    public static bool GetNlogEmbedConfigDebugToFileSwitch()
     {
-        var v = GetConfig().NlogDefaultConfigDebugToFileSwitch;
+        var v = GetConfig().NlogEmbedConfigDebugToFileSwitch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
             throw new ConfigErrorException(
-                $"请配置 NlogDefaultConfigDebugToFileSwitch: {ConfigFile} -> NlogDefaultConfigDebugToFileSwitch,请设置 0/1",
+                $"请配置 NlogEmbedConfigDebugToFileSwitch: {ConfigFile} -> NlogEmbedConfigDebugToFileSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
 
@@ -666,21 +728,21 @@ public static class GeneralConfigAssist
 
     /// <summary>
     /// 开关: 默认Nlog配置中是否启用Debug日志控制台显示, 默认关闭, 使用任意自定义配置时该设置无效, 以自定义配置为准
-    /// NlogDefaultConfigTraceToConsoleSwitch 启用的情况下, 该开关将强制启用
+    /// NlogEmbedConfigTraceToConsoleSwitch 启用的情况下, 该开关将强制启用
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static bool GetNlogDefaultConfigDebugToConsoleSwitch()
+    public static bool GetNlogEmbedConfigDebugToConsoleSwitch()
     {
-        if (GetNlogDefaultConfigTraceToConsoleSwitch()) return true;
+        if (GetNlogEmbedConfigTraceToConsoleSwitch()) return true;
 
-        var v = GetConfig().NlogDefaultConfigDebugToConsoleSwitch;
+        var v = GetConfig().NlogEmbedConfigDebugToConsoleSwitch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
             throw new ConfigErrorException(
-                $"请配置 NlogDefaultConfigDebugToConsoleSwitch: {ConfigFile} -> NlogDefaultConfigDebugToConsoleSwitch,请设置 0/1",
+                $"请配置 NlogEmbedConfigDebugToConsoleSwitch: {ConfigFile} -> NlogEmbedConfigDebugToConsoleSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
 
@@ -689,7 +751,7 @@ public static class GeneralConfigAssist
 
     public static int GetNlogConsoleMessageLimit()
     {
-        var v = GetConfig().NlogConsoleMessageLimit;
+        var v = GetConfig().NlogEmbedConfigConsoleMessageLimit;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
@@ -709,9 +771,9 @@ public static class GeneralConfigAssist
     /// <exception cref="Exception"></exception>
     public static bool GetNlogConsoleLimitingWrapperSwitch()
     {
-        if (GetNlogDefaultConfigTraceToConsoleSwitch()) return true;
+        if (GetNlogEmbedConfigTraceToConsoleSwitch()) return true;
 
-        var v = GetConfig().NlogConsoleLimitingWrapperSwitch;
+        var v = GetConfig().NlogEmbedConfigConsoleLimitingWrapperSwitch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
@@ -733,9 +795,9 @@ public static class GeneralConfigAssist
     {
         if (GetNlogConsoleLimitingWrapperSwitch()) return false;
 
-        if (GetNlogDefaultConfigTraceToConsoleSwitch()) return true;
+        if (GetNlogEmbedConfigTraceToConsoleSwitch()) return true;
 
-        var v = GetConfig().NlogConsoleRepeatedFilterSwitch;
+        var v = GetConfig().NlogEmbedConfigConsoleRepeatedFilterSwitch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
@@ -747,6 +809,8 @@ public static class GeneralConfigAssist
 
         return value == 1;
     }
+
+    #endregion
 
     public static bool GetMiniProFileSwitch()
     {
