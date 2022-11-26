@@ -16,96 +16,14 @@ public static class Tools
     {
         var mainConfig = GetNlogDefaultMainConfig();
 
-        var nlogDefaultConfigDebugToFileSwitch = GeneralConfigAssist.GetNlogEmbedConfigDebugToFileSwitch();
-        var nlogDefaultConfigTraceToFileSwitch = GeneralConfigAssist.GetNlogEmbedConfigTraceToFileSwitch();
-        var nlogDefaultConfigDebugToConsoleSwitch = GeneralConfigAssist.GetNlogEmbedConfigDebugToConsoleSwitch();
-        var nlogDefaultConfigTraceToConsoleSwitch = GeneralConfigAssist.GetNlogEmbedConfigTraceToConsoleSwitch();
-        var nlogDefaultConfigDebugToExceptionlessSwitch = GeneralConfigAssist.GetExceptionlessSwitch();
-
-        var nlogDefaultConfigExceptionlessServerUrl = GeneralConfigAssist.GetExceptionlessServerUrl();
-        var nlogDefaultConfigExceptionlessApiKey = GeneralConfigAssist.GetExceptionlessApiKey();
-        var nlogConsoleRepeatedFilterSwitch = GeneralConfigAssist.GetNlogConsoleRepeatedFilterSwitch();
-
-        var debugRule = nlogDefaultConfigDebugToFileSwitch ? GetNlogDefaultDebugRuleConfig() : "";
-        var debugTarget = nlogDefaultConfigDebugToFileSwitch ? GetNlogDefaultDebugTargetConfig() : "";
-
-        debugRule = string.IsNullOrWhiteSpace(debugRule) ? "" : $"{debugRule},";
-        debugTarget = string.IsNullOrWhiteSpace(debugTarget) ? "" : $"{debugTarget},";
-
-        var traceRule = nlogDefaultConfigTraceToFileSwitch ? GetNlogDefaultTraceRuleConfig() : "";
-        var traceTarget = nlogDefaultConfigTraceToFileSwitch ? GetNlogDefaultTraceTargetConfig() : "";
-
-        traceRule = string.IsNullOrWhiteSpace(traceRule) ? "" : $"{traceRule},";
-        traceTarget = string.IsNullOrWhiteSpace(traceTarget) ? "" : $"{traceTarget},";
-
-        var exceptionlessExtensions =
-            nlogDefaultConfigDebugToExceptionlessSwitch ? GetNlogDefaultExceptionlessExtensionsConfig() : "";
-        var exceptionlessRule =
-            nlogDefaultConfigDebugToExceptionlessSwitch ? GetNlogDefaultExceptionlessRuleConfig() : "";
-        var exceptionlessTarget =
-            nlogDefaultConfigDebugToExceptionlessSwitch ? GetNlogDefaultExceptionlessTargetConfig() : "";
-
-        if (nlogDefaultConfigDebugToExceptionlessSwitch)
-            exceptionlessTarget = exceptionlessTarget
-                .Replace("###exceptionless-apiKey###", nlogDefaultConfigExceptionlessApiKey)
-                .Replace("###exceptionless-serverUrl###", nlogDefaultConfigExceptionlessServerUrl);
-
-        exceptionlessExtensions =
-            string.IsNullOrWhiteSpace(exceptionlessExtensions) ? "" : $"{exceptionlessExtensions},";
-        exceptionlessRule = string.IsNullOrWhiteSpace(exceptionlessRule) ? "" : $"{exceptionlessRule},";
-        exceptionlessTarget = string.IsNullOrWhiteSpace(exceptionlessTarget) ? "" : $"{exceptionlessTarget},";
-
-        var nlogConsoleLimitingWrapper = GetNlogConsoleLimitingWrapper();
-        var nlogConsoleTarget = GetNlogConsoleTarget();
-
-        if (GeneralConfigAssist.GetNlogConsoleLimitingWrapperSwitch())
-            mainConfig = mainConfig.Replace("###console-config###", nlogConsoleTarget);
-        else
-            mainConfig = mainConfig.Replace("###console-config###", nlogConsoleLimitingWrapper)
-                .Replace("###console-target###", nlogConsoleTarget);
-
-        var consoleMinLevel = nlogDefaultConfigTraceToConsoleSwitch ? "Trace" :
-            nlogDefaultConfigDebugToConsoleSwitch ? "Debug" : "Info";
-
-        var consoleMessageLimit = GeneralConfigAssist.GetNlogConsoleMessageLimit();
-
-        var consoleMessageLimitSetting = consoleMessageLimit <= 0 ? "" : $"\"messageLimit\": {consoleMessageLimit},";
-
-        var nlogWordHighlightingRules = EnvironmentAssist
-            .GetEnvironment()
-            .IsDevelopment()
-            ? GetNlogWordHighlightingRules()
-            : "";
-
-        var nlogConsoleFilter = GetNlogConsoleFilter();
-
-        var consoleFilters = new List<string>();
-
-        if (nlogConsoleRepeatedFilterSwitch) consoleFilters.Add(GetNlogConsoleFilterRepeated());
-
         mainConfig = mainConfig
             .SupplementThrowConfigExceptions()
             .SupplementInternalLogLevel()
             .SupplementInternalLogFile()
+            .SupplementGeneralRule()
+            .SupplementColorConsoleConfig()
             .SupplementProductionLogConfig()
-            .Replace("###exceptionless-extensions###", exceptionlessExtensions)
-            .Replace("###trace-target###", traceTarget)
-            .Replace("###debug-target###", debugTarget)
-            .Replace("###exceptionless-target###", exceptionlessTarget)
-            .Replace("###trace-rule###", traceRule)
-            .Replace("###debug-rule###", debugRule)
-            .Replace("###exceptionless-rule###", exceptionlessRule)
-            .Replace("###console-minLevel###", consoleMinLevel)
-            .Replace("###messageLimit###", consoleMessageLimitSetting)
-            .Replace("###word-highlighting-rules###", nlogWordHighlightingRules)
-            .Replace(
-                "###console-filter-config###",
-                consoleFilters.Any() ? nlogConsoleFilter : ""
-            )
-            .Replace(
-                "###console-filters###",
-                consoleFilters.Any() ? consoleFilters.Join(",") : ""
-            );
+            .SupplementExceptionlessConfig();
 
         return mainConfig;
     }
@@ -178,35 +96,38 @@ public static class Tools
 
     private static string SupplementThrowConfigExceptions(this string config)
     {
-        return config.Replace(
-            "###throw-config-exceptions###",
-            EnvironmentAssist
-                .GetEnvironment()
-                .IsDevelopment()
-                ? "true"
-                : "false"
-        );
+        return config
+            .Replace(
+                "###throw-config-exceptions###",
+                EnvironmentAssist
+                    .GetEnvironment()
+                    .IsDevelopment()
+                    ? "true"
+                    : "false"
+            );
     }
 
     private static string SupplementInternalLogLevel(this string config)
     {
-        return config.Replace(
-            "###internal-log-level###",
-            GeneralConfigAssist.GetNlogEmbedConfigInternalLogLevel()
-        );
+        return config
+            .Replace(
+                "###internal-log-level###",
+                GeneralConfigAssist.GetNlogEmbedConfigInternalLogLevel()
+            );
     }
 
     private static string SupplementInternalLogFile(this string config)
     {
-        var nlogEmbedConfigInternalLogToFileSwitch = GeneralConfigAssist.GetNlogEmbedConfigInternalLogToFileSwitch();
-        var nlogEmbedConfigInternalLogFile = GeneralConfigAssist.GetNlogEmbedConfigInternalLogFile();
+        var logToFileSwitch = GeneralConfigAssist.GetNlogEmbedConfigInternalLogToFileSwitch();
+        var logFile = GeneralConfigAssist.GetNlogEmbedConfigInternalLogFile();
 
-        return config.Replace(
-            "###internal-log-file###",
-            nlogEmbedConfigInternalLogToFileSwitch && string.IsNullOrWhiteSpace(nlogEmbedConfigInternalLogFile)
-                ? "\"internalLogFile\":true,"
-                : ""
-        );
+        return config
+            .Replace(
+                "###internal-log-file###",
+                logToFileSwitch && !string.IsNullOrWhiteSpace(logFile)
+                    ? "\"internalLogFile\":true,"
+                    : ""
+            );
     }
 
     private static string SupplementProductionLogConfig(this string config)
@@ -235,13 +156,118 @@ public static class Tools
             GeneralConfigAssist.GetNlogEmbedConfigProductionLogLevel()
         );
 
-        return config.Replace(
-            "###production-file-target###",
-            target
-        ).Replace(
-            "###production-file-rule###",
-            rule
-        );
+        return config
+            .Replace(
+                "###production-file-target###",
+                target
+            ).Replace(
+                "###production-file-rule###",
+                rule
+            );
+    }
+
+    private static string SupplementGeneralRule(this string config)
+    {
+        var nlogDefaultConfigDebugToFileSwitch = GeneralConfigAssist.GetNlogEmbedConfigDebugToFileSwitch();
+        var nlogDefaultConfigTraceToFileSwitch = GeneralConfigAssist.GetNlogEmbedConfigTraceToFileSwitch();
+
+        var debugRule = nlogDefaultConfigDebugToFileSwitch ? GetNlogDefaultDebugRuleConfig() : "";
+        var debugTarget = nlogDefaultConfigDebugToFileSwitch ? GetNlogDefaultDebugTargetConfig() : "";
+
+        debugRule = string.IsNullOrWhiteSpace(debugRule) ? "" : $"{debugRule},";
+        debugTarget = string.IsNullOrWhiteSpace(debugTarget) ? "" : $"{debugTarget},";
+
+        var traceRule = nlogDefaultConfigTraceToFileSwitch ? GetNlogDefaultTraceRuleConfig() : "";
+        var traceTarget = nlogDefaultConfigTraceToFileSwitch ? GetNlogDefaultTraceTargetConfig() : "";
+
+        traceRule = string.IsNullOrWhiteSpace(traceRule) ? "" : $"{traceRule},";
+        traceTarget = string.IsNullOrWhiteSpace(traceTarget) ? "" : $"{traceTarget},";
+
+        return config
+            .Replace("###trace-target###", traceTarget)
+            .Replace("###debug-target###", debugTarget)
+            .Replace("###trace-rule###", traceRule)
+            .Replace("###debug-rule###", debugRule);
+    }
+
+    private static string SupplementColorConsoleConfig(this string config)
+    {
+        var nlogDefaultConfigDebugToConsoleSwitch = GeneralConfigAssist.GetNlogEmbedConfigDebugToConsoleSwitch();
+        var nlogDefaultConfigTraceToConsoleSwitch = GeneralConfigAssist.GetNlogEmbedConfigTraceToConsoleSwitch();
+        var nlogConsoleRepeatedFilterSwitch = GeneralConfigAssist.GetNlogConsoleRepeatedFilterSwitch();
+
+        var nlogConsoleLimitingWrapper = GetNlogConsoleLimitingWrapper();
+        var nlogConsoleTarget = GetNlogConsoleTarget();
+
+        string configAdjust;
+
+        if (GeneralConfigAssist.GetNlogConsoleLimitingWrapperSwitch())
+            configAdjust = config.Replace("###console-config###", nlogConsoleTarget);
+        else
+            configAdjust = config.Replace("###console-config###", nlogConsoleLimitingWrapper)
+                .Replace("###console-target###", nlogConsoleTarget);
+
+        var consoleMinLevel = nlogDefaultConfigTraceToConsoleSwitch ? "Trace" :
+            nlogDefaultConfigDebugToConsoleSwitch ? "Debug" : "Info";
+
+        var consoleMessageLimit = GeneralConfigAssist.GetNlogConsoleMessageLimit();
+
+        var consoleMessageLimitSetting = consoleMessageLimit <= 0 ? "" : $"\"messageLimit\": {consoleMessageLimit},";
+
+        var nlogWordHighlightingRules = EnvironmentAssist
+            .GetEnvironment()
+            .IsDevelopment()
+            ? GetNlogWordHighlightingRules()
+            : "";
+
+        var nlogConsoleFilter = GetNlogConsoleFilter();
+
+        var consoleFilters = new List<string>();
+
+        if (nlogConsoleRepeatedFilterSwitch) consoleFilters.Add(GetNlogConsoleFilterRepeated());
+
+        return configAdjust
+            .Replace("###console-minLevel###", consoleMinLevel)
+            .Replace("###messageLimit###", consoleMessageLimitSetting)
+            .Replace("###word-highlighting-rules###", nlogWordHighlightingRules)
+            .Replace(
+                "###console-filter-config###",
+                consoleFilters.Any() ? nlogConsoleFilter : ""
+            )
+            .Replace(
+                "###console-filters###",
+                consoleFilters.Any() ? consoleFilters.Join(",") : ""
+            );
+    }
+
+    private static string SupplementExceptionlessConfig(this string config)
+    {
+        var nlogDefaultConfigDebugToExceptionlessSwitch = GeneralConfigAssist.GetExceptionlessSwitch();
+
+        var nlogDefaultConfigExceptionlessServerUrl = GeneralConfigAssist.GetExceptionlessServerUrl();
+        var nlogDefaultConfigExceptionlessApiKey = GeneralConfigAssist.GetExceptionlessApiKey();
+
+        var exceptionlessExtensions =
+            nlogDefaultConfigDebugToExceptionlessSwitch ? GetNlogDefaultExceptionlessExtensionsConfig() : "";
+        var exceptionlessRule =
+            nlogDefaultConfigDebugToExceptionlessSwitch ? GetNlogDefaultExceptionlessRuleConfig() : "";
+        var exceptionlessTarget =
+            nlogDefaultConfigDebugToExceptionlessSwitch ? GetNlogDefaultExceptionlessTargetConfig() : "";
+
+        if (nlogDefaultConfigDebugToExceptionlessSwitch)
+            exceptionlessTarget = exceptionlessTarget
+                .Replace("###exceptionless-apiKey###", nlogDefaultConfigExceptionlessApiKey)
+                .Replace("###exceptionless-serverUrl###", nlogDefaultConfigExceptionlessServerUrl);
+
+        exceptionlessExtensions =
+            string.IsNullOrWhiteSpace(exceptionlessExtensions) ? "" : $"{exceptionlessExtensions},";
+        exceptionlessRule = string.IsNullOrWhiteSpace(exceptionlessRule) ? "" : $"{exceptionlessRule},";
+        exceptionlessTarget = string.IsNullOrWhiteSpace(exceptionlessTarget) ? "" : $"{exceptionlessTarget},";
+
+        return config
+            .Replace("###exceptionless-extensions###", exceptionlessExtensions)
+            .Replace("###exceptionless-target###", exceptionlessTarget)
+            .Replace("###exceptionless-rule###", exceptionlessRule);
     }
 
     private static string GetEmbeddedResourceFileContent(string path)
