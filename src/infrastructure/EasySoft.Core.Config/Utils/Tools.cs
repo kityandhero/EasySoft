@@ -106,8 +106,6 @@ public static class Tools
                 consoleFilters.Any() ? consoleFilters.Join(",") : ""
             );
 
-        // Console.WriteLine(mainConfig);
-
         return mainConfig;
     }
 
