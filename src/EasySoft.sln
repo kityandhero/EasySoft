@@ -14,6 +14,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasySoft.SenparcEx", "infrastructure\EasySoft.SenparcEx\EasySoft.SenparcEx.csproj", "{013FCC47-0160-4B97-8256-B8B1BD2A130C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{65AFCFE2-59A9-4704-A9BE-A5B83F944E88}"
+	ProjectSection(SolutionItems) = preProject
+		infrastructure\task.md = infrastructure\task.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit-test", "unit-test", "{8D7FB3F6-1038-4974-A787-044646C716C1}"
 EndProject
