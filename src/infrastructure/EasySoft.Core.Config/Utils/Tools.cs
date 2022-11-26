@@ -125,7 +125,7 @@ public static class Tools
             .Replace(
                 "###internal-log-file###",
                 logToFileSwitch && !string.IsNullOrWhiteSpace(logFile)
-                    ? "\"internalLogFile\":true,"
+                    ? $"\"internalLogFile\":\"{logFile}\","
                     : ""
             );
     }
