@@ -607,7 +607,7 @@ public static class GeneralConfigAssist
     #region Nog Embed Config
 
     /// <summary>
-    /// 内嵌Nlog内部日志的级别, "Off" 表时关闭
+    /// 内嵌Nlog内部日志的级别, Trace|Debug|Info|Warn|Error|Fatal|Off, Off 表示关闭
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
