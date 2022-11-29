@@ -1,11 +1,11 @@
 ﻿using EasySoft.Simple.Tradition.Client.WebApi.Common;
 
-namespace EasySoft.Simple.Tradition.Client.WebApi.Areas.AuthTest.Controllers;
+namespace EasySoft.Simple.Tradition.Client.WebApi.Areas.Users.Controllers.Bases;
 
 /// <summary>
 /// AreaControllerCore
 /// </summary>
-[Area("AuthTest")]
+[Area("Users")]
 public abstract class AreaControllerCore : ControllerCore
 {
 }

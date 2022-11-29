@@ -1,13 +1,8 @@
-﻿using EasySoft.Core.Data.Repositories;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Simple.AccountCenter.Application.Contracts.DataTransferObjects.ApiParams;
+﻿using EasySoft.Simple.AccountCenter.Application.Contracts.DataTransferObjects.ApiParams;
 using EasySoft.Simple.AccountCenter.Application.Contracts.ExtensionMethods;
 using EasySoft.Simple.AccountCenter.Application.Contracts.Services;
 using EasySoft.Simple.AccountCenter.Domain.Aggregates.AccountAggregate;
 using EasySoft.Simple.DomainDrivenDesign.Application.Contracts.DataTransferObjects;
-using EasySoft.UtilityTools.Standard.Enums;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.Simple.AccountCenter.Application.Services;
 
@@ -39,7 +34,7 @@ public class UserService : IUserService
             Password = registerDto.Password.ToMd5()
         };
 
-        return await _userRepository.CreateAsync(user);
+        return await _userRepository.AddAsync(user);
     }
 
     public async Task<ExecutiveResult> RegisterMultiAsync(Dictionary<string, string> namePassword)
@@ -53,7 +48,7 @@ public class UserService : IUserService
             })
             .ToList();
 
-        return await _userRepository.CreateRangeAsync(list);
+        return await _userRepository.AddRangeAsync(list);
     }
 
     public async Task<ExecutiveResult<UserDto>> SignInAsync(SignInDto signInDto)

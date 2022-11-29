@@ -1,14 +1,4 @@
-﻿using EasySoft.Core.Data.Contexts.Interfaces;
-using EasySoft.Core.Data.Transactions;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
-using EasySoft.Simple.Tradition.Data.ExtensionMethods;
-using EasySoft.Simple.Tradition.Service.Services.Interfaces;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-using EasySoft.UtilityTools.Standard.Enums;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Microsoft.AspNetCore.Mvc;
-
-namespace EasySoft.Simple.Tradition.Client.WebApi.Areas.DataTest.Controllers;
+﻿namespace EasySoft.Simple.Tradition.Client.WebApi.Areas.DataTest.Controllers;
 
 /// <summary>
 ///     DataController

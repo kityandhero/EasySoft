@@ -2,38 +2,24 @@
 
 public static class WebApplicationBuilderExtensions
 {
+    private const string UniqueIdentifierAddCapEventBus = "b487b98c-355d-46f8-be1b-05b9032422d7";
+
     /// <summary>
-    /// 注册CAP组件(实现事件总线及最终一致性（分布式事务）的一个开源的组件)
+    /// 注册CAP事件订阅
     /// </summary>
-    public static WebApplicationBuilder AddCapEventBus<TSubscriber>(
-        this WebApplicationBuilder builder,
-        Action<CapOptions>? action = null
+    public static WebApplicationBuilder AddCapEventSubscriber<TSubscriber>(
+        this WebApplicationBuilder builder
     ) where TSubscriber : class, ICapSubscribe
     {
+        if (builder.HasRegistered(UniqueIdentifierAddCapEventBus))
+            return builder;
+
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddCapEventBus)}<{typeof(TSubscriber).Name}>."
+            $"{nameof(AddCapEventSubscriber)}<{typeof(TSubscriber).Name}>."
         );
 
-        builder.Services.AddCapEventBus<TSubscriber>(option => { action?.Invoke(option); });
+        builder.Services.AddCapEventSubscriber<TSubscriber>();
 
         return builder;
-    }
-
-    /// <summary>
-    /// 注册CAP组件(实现事件总线及最终一致性（分布式事务）的一个开源的组件)
-    /// </summary>
-    public static WebApplicationBuilder AddCapEventBus<TSubscriber>(
-        this WebApplicationBuilder builder,
-        SkyApmExtensions skyApmExtensions,
-        Action<CapOptions>? action = null
-    ) where TSubscriber : class, ICapSubscribe
-    {
-        StartupDescriptionMessageAssist.AddExecute(
-            "Execute skyApmExtensions.AddCap()."
-        );
-
-        skyApmExtensions.AddCap();
-
-        return builder.AddCapEventBus<TSubscriber>(action);
     }
 }

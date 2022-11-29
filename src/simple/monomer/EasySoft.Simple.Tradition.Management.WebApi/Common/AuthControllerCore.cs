@@ -1,8 +1,9 @@
 ﻿namespace EasySoft.Simple.Tradition.Management.WebApi.Common;
 
 /// <summary>
-/// ControllerCore
+/// AuthControllerCore
 /// </summary>
-public abstract class ControllerCore : CustomControllerBase
+[Operator]
+public abstract class AuthControllerCore : ControllerCore
 {
 }

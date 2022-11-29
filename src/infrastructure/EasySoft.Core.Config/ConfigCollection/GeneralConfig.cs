@@ -246,6 +246,8 @@ public class GeneralConfig : IConfig
 
     public string ExceptionlessApiKey { get; set; }
 
+    public string SkyApmSwitch { get; set; }
+
     public GeneralConfig()
     {
         CacheMode = CacheModeCollection.InMemory.ToString();
@@ -343,5 +345,7 @@ public class GeneralConfig : IConfig
         ExceptionlessSwitch = "0";
         ExceptionlessServerUrl = "";
         ExceptionlessApiKey = "";
+
+        SkyApmSwitch = "0";
     }
 }

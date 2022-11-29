@@ -1,43 +1,18 @@
-﻿using EasySoft.Simple.Tradition.Data.Contexts;
+﻿using EasySoft.Core.Infrastructure.Configures;
+using EasySoft.Simple.Tradition.Client.WebApi.EventSubscribers;
+using EasySoft.Simple.Tradition.Client.WebApi.Security;
+using EasySoft.Simple.Tradition.Data.Contexts;
 using EasySoft.Simple.Tradition.Data.EntityConfigures;
-using EasySoft.Simple.Tradition.Management.WebApi.Security;
 using EasySoft.Simple.Tradition.Service.Services.Implementations;
 
-namespace EasySoft.Simple.Tradition.Management.WebApi;
+namespace EasySoft.Simple.Tradition.Client.WebApi;
 
-/// <summary>
-/// StartUpConfigure
-/// </summary>
 public class StartUpConfigure : IStartUpConfigure
 {
-    /// <summary>
-    /// Init
-    /// </summary>
-    /// <exception cref="NotImplementedException"></exception>
     public void Init()
     {
-        AuxiliaryConfigure.PromptConfigFileInfo = true;
-
-        Core.EntityFramework.Configures.ContextConfigure.EnableDetailedErrors = true;
-        Core.EntityFramework.Configures.ContextConfigure.EnableSensitiveDataLogging = true;
-        Core.EntityFramework.Configures.ContextConfigure.AutoEnsureCreated = true;
-
         // 配置额外的构建项目
         ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
-            new ExtraAction<WebApplicationBuilder>()
-                .SetName("AddApiVersioning")
-                .SetAction(applicationBuilder =>
-                {
-                    applicationBuilder.Services.AddApiVersioning(o =>
-                    {
-                        //return versions in a response header
-                        o.ReportApiVersions = true;
-                        //default version select 
-                        o.DefaultApiVersion = new ApiVersion(1, 0);
-                        //if not specifying an api version,show the default version
-                        o.AssumeDefaultVersionWhenUnspecified = true;
-                    });
-                }),
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddAdvanceDbContext<DataContext>")
                 .SetAction(applicationBuilder =>
@@ -72,12 +47,18 @@ public class StartUpConfigure : IStartUpConfigure
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddAdvanceJsonWebToken")
                 .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceJsonWebToken<ApplicationOperator>(); }),
+            // applicationBuilder => { applicationBuilder.UseEasyToken<CustomTokenSecretOptions, ApplicationOperator>(); },
+            // 自定义token密钥解析类
+            // applicationBuilder => { applicationBuilder.UseEasyToken<CustomTokenSecretOptions, CustomTokenSecret, ApplicationOperator>(); },
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddPermissionVerification")
                 .SetAction(applicationBuilder =>
                 {
                     applicationBuilder.AddPermissionVerification<ApplicationPermissionObserver>();
-                })
+                }),
+            new ExtraAction<WebApplicationBuilder>()
+                .SetName("AddCapEventSubscriber")
+                .SetAction(applicationBuilder => { applicationBuilder.AddCapEventSubscriber<CapEventSubscriber>(); })
         );
     }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ControllerCore = EasySoft.Simple.Tradition.Client.WebApi.Common.ControllerCore;
+﻿using ControllerCore = EasySoft.Simple.Tradition.Client.WebApi.Common.ControllerCore;
 
 namespace EasySoft.Simple.Tradition.Client.WebApi.Areas.DataTest.Controllers;
 

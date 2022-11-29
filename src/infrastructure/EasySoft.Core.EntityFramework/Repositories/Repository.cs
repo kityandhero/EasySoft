@@ -298,7 +298,7 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
 
     #region Creeate
 
-    public async Task<ExecutiveResult<TEntity>> CreateAsync(
+    public async Task<ExecutiveResult<TEntity>> AddAsync(
         TEntity entity,
         CancellationToken cancellationToken = default
     )
@@ -319,7 +319,7 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         };
     }
 
-    public virtual async Task<ExecutiveResult> CreateRangeAsync(
+    public virtual async Task<ExecutiveResult> AddRangeAsync(
         IEnumerable<TEntity> entities,
         CancellationToken cancellationToken = default
     )

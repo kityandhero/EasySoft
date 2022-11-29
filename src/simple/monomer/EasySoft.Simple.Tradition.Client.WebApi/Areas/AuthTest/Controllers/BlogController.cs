@@ -1,10 +1,4 @@
-﻿using EasySoft.Core.AuthenticationCore.Attributes;
-using EasySoft.Core.Infrastructure.ExtensionMethods;
-using EasySoft.Simple.Tradition.Service.Services.Interfaces;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-using Microsoft.AspNetCore.Mvc;
-
-namespace EasySoft.Simple.Tradition.Client.WebApi.Areas.AuthTest.Controllers;
+﻿namespace EasySoft.Simple.Tradition.Client.WebApi.Areas.AuthTest.Controllers;
 
 /// <summary>
 /// AuthorController

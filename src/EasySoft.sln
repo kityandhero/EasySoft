@@ -228,7 +228,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "business 基础业务", "bu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.MultiTenant", "infrastructure\EasySoft.Core.MultiTenant\EasySoft.Core.MultiTenant.csproj", "{94CBB91F-B6C1-45D2-9A5F-2869CFE44761}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sms", "Sms", "{E1BAB9E5-5201-457C-82FE-0149A1AAC39C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sms", "sms", "{E1BAB9E5-5201-457C-82FE-0149A1AAC39C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.LuoSiMao", "infrastructure\EasySoft.Core.LuoSiMao\EasySoft.Core.LuoSiMao.csproj", "{47719C89-60EF-4D59-B222-1515DA30BB61}"
 EndProject

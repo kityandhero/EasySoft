@@ -1,5 +1,6 @@
 ﻿using EasySoft.Simple.Tradition.Data.Entities;
 using EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
+using EasySoft.Simple.Tradition.Service.Events;
 using EasySoft.Simple.Tradition.Service.ExtensionMethods;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 
@@ -10,7 +11,7 @@ namespace EasySoft.Simple.Tradition.Service.Services.Implementations;
 /// </summary>
 public class UserService : IUserService
 {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IEventPublisher _eventPublisher;
 
     private readonly IRepository<User> _userRepository;
 
@@ -21,18 +22,19 @@ public class UserService : IUserService
     /// <summary>
     /// UserService
     /// </summary>
-    /// <param name="unitOfWork"></param>
+    /// <param name="eventPublisher"></param>
     /// <param name="userRepository"></param>
     /// <param name="customerRepository"></param>
     /// <param name="blogRepository"></param>
     public UserService(
-        IUnitOfWork unitOfWork,
+        IEventPublisher eventPublisher,
         IRepository<User> userRepository,
         IRepository<Customer> customerRepository,
         IRepository<Blog> blogRepository
     )
     {
-        _unitOfWork = unitOfWork;
+        _eventPublisher = eventPublisher;
+
         _userRepository = userRepository;
         _customerRepository = customerRepository;
         _blogRepository = blogRepository;
@@ -57,51 +59,55 @@ public class UserService : IUserService
         if (result.Success)
             return new ExecutiveResult<UserDto>(ReturnCode.NoChange.ToMessage("登录名已存在"));
 
-        try
+        var user = EntityFactory.Create<User>();
+        var customer = EntityFactory.Create<Customer>();
+        var blog = EntityFactory.Create<Blog>();
+
+        user.LoginName = registerDto.LoginName;
+        user.Password = registerDto.Password.ToMd5();
+
+        customer.UserId = user.Id;
+
+        blog.UserId = user.Id;
+
+        var resultAddUser = await _userRepository.AddAsync(user);
+
+        if (!resultAddUser.Success)
+            throw new Exception(resultAddUser.Message);
+
+        var resultAddCustomer = await _customerRepository.AddAsync(customer);
+
+        if (!resultAddCustomer.Success)
+            throw new Exception(resultAddCustomer.Message);
+
+        var resultAddBlog = await _blogRepository.AddAsync(blog);
+
+        if (!resultAddBlog.Success)
+            throw new Exception(resultAddBlog.Message);
+
+        //发布注册成功事件
+        var eventId = IdentifierAssist.Create();
+        var eventData = new RegisterSuccessEvent.EventData()
         {
-            var user = EntityFactory.Create<User>();
-            var customer = EntityFactory.Create<Customer>();
-            var blog = EntityFactory.Create<Blog>();
+            UserId = user.Id
+        };
 
-            user.LoginName = registerDto.LoginName;
-            user.Password = registerDto.Password.ToMd5();
+        const string eventSource = nameof(RegisterAsync);
 
-            customer.UserId = user.Id;
+        await _eventPublisher.PublishAsync(new RegisterSuccessEvent(eventId, eventData, eventSource));
 
-            blog.UserId = user.Id;
-
-            var resultAddUser = await _userRepository.CreateAsync(user);
-
-            if (!resultAddUser.Success)
-                throw new Exception(resultAddUser.Message);
-
-            var resultAddCustomer = await _customerRepository.CreateAsync(customer);
-
-            if (!resultAddCustomer.Success)
-                throw new Exception(resultAddCustomer.Message);
-
-            var resultAddBlog = await _blogRepository.CreateAsync(blog);
-
-            if (!resultAddBlog.Success)
-                throw new Exception(resultAddBlog.Message);
-
-            await _unitOfWork.CommitAsync();
-
-            return new ExecutiveResult<UserDto>(ReturnCode.Ok)
-            {
-                Data = resultAddUser.Data?.ToUserDto()
-            };
-        }
-        catch (Exception ex)
+        return new ExecutiveResult<UserDto>(ReturnCode.Ok)
         {
-            await _unitOfWork.RollbackAsync();
+            Data = resultAddUser.Data?.ToUserDto()
+        };
+    }
 
-            return new ExecutiveResult<UserDto>(ReturnMessage.Exception.ToMessage(ex.Message));
-        }
-        finally
-        {
-            _unitOfWork.Dispose();
-        }
+    /// <inheritdoc />
+    public Task ProcessRegisterSuccessAsync(RegisterSuccessEvent registerSuccessEvent, IMessageTracker tracker)
+    {
+        LogAssist.Execute(nameof(ProcessRegisterSuccessAsync));
+
+        return Task.CompletedTask;
     }
 
     /// <summary>
@@ -114,59 +120,44 @@ public class UserService : IUserService
     {
         if (namePassword.Count <= 0) return new ExecutiveResult(ReturnCode.NoChange.ToMessage("无可添加数据"));
 
-        try
+        var users = new List<User>();
+        var customers = new List<Customer>();
+        var blogs = new List<Blog>();
+
+        foreach (var item in namePassword)
         {
-            var users = new List<User>();
-            var customers = new List<Customer>();
-            var blogs = new List<Blog>();
+            var user = EntityFactory.Create<User>();
+            var customer = EntityFactory.Create<Customer>();
+            var blog = EntityFactory.Create<Blog>();
 
-            foreach (var item in namePassword)
-            {
-                var user = EntityFactory.Create<User>();
-                var customer = EntityFactory.Create<Customer>();
-                var blog = EntityFactory.Create<Blog>();
+            user.LoginName = item.Key;
+            user.Password = item.Value;
 
-                user.LoginName = item.Key;
-                user.Password = item.Value;
+            customer.UserId = user.Id;
 
-                customer.UserId = user.Id;
+            blog.UserId = customer.Id;
 
-                blog.UserId = customer.Id;
-
-                customers.Add(customer);
-                users.Add(user);
-                blogs.Add(blog);
-            }
-
-            var result = await _userRepository.CreateRangeAsync(users);
-
-            if (!result.Success)
-                throw new Exception(result.Message);
-
-            result = await _customerRepository.CreateRangeAsync(customers);
-
-            if (!result.Success)
-                throw new Exception(result.Message);
-
-            result = await _blogRepository.CreateRangeAsync(blogs);
-
-            if (!result.Success)
-                throw new Exception(result.Message);
-
-            await _unitOfWork.CommitAsync();
-
-            return result;
+            customers.Add(customer);
+            users.Add(user);
+            blogs.Add(blog);
         }
-        catch (Exception ex)
-        {
-            await _unitOfWork.RollbackAsync();
 
-            return new ExecutiveResult(ReturnMessage.Exception.ToMessage(ex.Message));
-        }
-        finally
-        {
-            _unitOfWork.Dispose();
-        }
+        var result = await _userRepository.AddRangeAsync(users);
+
+        if (!result.Success)
+            throw new Exception(result.Message);
+
+        result = await _customerRepository.AddRangeAsync(customers);
+
+        if (!result.Success)
+            throw new Exception(result.Message);
+
+        result = await _blogRepository.AddRangeAsync(blogs);
+
+        if (!result.Success)
+            throw new Exception(result.Message);
+
+        return result;
     }
 
     /// <summary>

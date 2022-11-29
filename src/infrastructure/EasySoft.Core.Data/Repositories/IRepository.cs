@@ -145,12 +145,12 @@ public interface IRepository<TEntity, in TKey> : IRepository where TEntity : cla
 
     #region Create
 
-    Task<ExecutiveResult<TEntity>> CreateAsync(
+    Task<ExecutiveResult<TEntity>> AddAsync(
         TEntity entity,
         CancellationToken cancellationToken = default
     );
 
-    Task<ExecutiveResult> CreateRangeAsync(
+    Task<ExecutiveResult> AddRangeAsync(
         IEnumerable<TEntity> entities,
         CancellationToken cancellationToken = default
     );

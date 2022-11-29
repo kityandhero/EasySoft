@@ -1187,4 +1187,19 @@ public static class GeneralConfigAssist
 
         return v;
     }
+
+    public static bool GetSkyApmSwitch()
+    {
+        var v = GetConfig().SkyApmSwitch;
+
+        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
+
+        if (!v.IsInt(out var value))
+            throw new ConfigErrorException(
+                $"请配置 SkyApmSwitch: {ConfigFile} -> SkyApmSwitch,请设置 0/1",
+                GetConfigFileInfo()
+            );
+
+        return value == 1;
+    }
 }
