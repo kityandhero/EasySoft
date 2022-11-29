@@ -69,7 +69,7 @@ public class DataController : AreaControllerCore
     {
         var result = await _blogService.GetFirstAsync();
 
-        return !result.Success ? this.Fail(result.Code) : this.Success(result.Data?.ToBlogDto());
+        return !result.Success ? this.Fail(result.Code) : this.Success(result.Data);
     }
 
     /// <summary>
@@ -104,17 +104,5 @@ public class DataController : AreaControllerCore
         {
             _unitOfWork.Dispose();
         }
-    }
-
-    /// <summary>
-    /// UpdateFirstBlog  
-    /// </summary>
-    /// <returns></returns>
-    [HttpPost]
-    public async Task<IActionResult> UpdateFirstBlog()
-    {
-        var result = await _blogService.UpdateFirst();
-
-        return !result.Success ? this.Fail(result.Code) : this.Success(result.Data);
     }
 }

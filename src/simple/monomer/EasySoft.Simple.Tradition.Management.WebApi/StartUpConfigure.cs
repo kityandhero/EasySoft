@@ -2,7 +2,6 @@
 using EasySoft.Simple.Tradition.Data.EntityConfigures;
 using EasySoft.Simple.Tradition.Management.WebApi.Security;
 using EasySoft.Simple.Tradition.Service.Services.Implementations;
-using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 
 namespace EasySoft.Simple.Tradition.Management.WebApi;
 

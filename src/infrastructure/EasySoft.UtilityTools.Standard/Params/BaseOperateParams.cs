@@ -5,14 +5,10 @@
 /// </summary>
 public abstract class BaseOperateParams : IOperateParams
 {
-    /// <summary>
-    /// OperatorId
-    /// </summary>
+    /// <inheritdoc />
     public long OperatorId { get; set; }
 
-    /// <summary>
-    /// OperatorName
-    /// </summary>
+    /// <inheritdoc />
     public string OperatorName { get; set; }
 
     /// <summary>

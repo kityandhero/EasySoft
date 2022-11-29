@@ -35,6 +35,11 @@ public class CompetenceEntity
     public string ExpansionSet { get; set; }
 
     /// <summary>
+    /// 权限分组
+    /// </summary>
+    public int Group { get; set; }
+
+    /// <summary>
     /// CompetenceEntity
     /// </summary>
     public CompetenceEntity()
@@ -44,6 +49,7 @@ public class CompetenceEntity
         RelativePath = "";
         Explain = "";
         ExpansionSet = "";
+        Group = 0;
     }
 
     /// <summary>

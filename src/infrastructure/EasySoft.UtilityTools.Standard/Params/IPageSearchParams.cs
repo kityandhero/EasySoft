@@ -3,9 +3,9 @@
 namespace EasySoft.UtilityTools.Standard.Params;
 
 /// <summary>
-/// BaseSearchParams
+/// ISearchParams
 /// </summary>
-public abstract class BaseSearchParams : ISearchParams
+public interface IPageSearchParams : IApiParams
 {
     /// <summary>
     /// 页码

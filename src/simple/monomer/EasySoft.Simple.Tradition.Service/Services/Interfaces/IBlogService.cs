@@ -9,28 +9,22 @@ namespace EasySoft.Simple.Tradition.Service.Services.Interfaces;
 public interface IBlogService : IBusinessService
 {
     /// <summary>
-    /// GetBlogAsync
+    /// PageListAsync
     /// </summary>
-    /// <param name="authorId"></param>
+    /// <param name="blogSearchDto"></param>
     /// <returns></returns>
-    Task<ExecutiveResult<Blog>> GetBlogAsync(int authorId);
+    public Task<PageListResult<Blog>> PageListAsync(BlogSearchDto blogSearchDto);
 
     /// <summary>
     /// GetFirstAsync
     /// </summary>
     /// <returns></returns>
-    public Task<ExecutiveResult<Blog>> GetFirstAsync();
+    public Task<ExecutiveResult<BlogDto>> GetFirstAsync();
 
     /// <summary>
     /// GetBlogDtoSync
     /// </summary>
-    /// <param name="authorId"></param>
+    /// <param name="blogId"></param>
     /// <returns></returns>
-    public Task<ExecutiveResult<BlogDto>> GetBlogDtoSync(int authorId);
-
-    /// <summary>
-    /// UpdateFirst
-    /// </summary>
-    /// <returns></returns>
-    public Task<ExecutiveResult<Blog>> UpdateFirst();
+    public Task<ExecutiveResult<BlogDto>> GetBlogDtoSync(int blogId);
 }

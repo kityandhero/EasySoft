@@ -17,6 +17,8 @@ global using EasySoft.Core.PermissionVerification.Observers;
 global using EasySoft.Core.Web.Framework.BuilderAssists;
 global using EasySoft.Core.Web.Framework.Controllers;
 global using EasySoft.Core.Web.Framework.ExtensionMethods;
+global using EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
+global using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 global using EasySoft.UtilityTools.Core.ExtensionMethods;
 global using EasySoft.UtilityTools.Core.Results;
 global using EasySoft.UtilityTools.Standard.Competence;
