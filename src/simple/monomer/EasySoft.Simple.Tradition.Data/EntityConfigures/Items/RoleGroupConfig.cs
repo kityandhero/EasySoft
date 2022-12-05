@@ -21,5 +21,9 @@ public class RoleGroupConfig : BaseEntityTypeConfiguration<RoleGroup>
         builder.Property(x => x.Channel)
             .HasMaxLength(50)
             .HasDefaultValue(0);
+
+        builder.HasMany(x => x.Users)
+            .WithOne(x => x.RoleGroup)
+            .HasForeignKey(y => y.RoleGroupId);
     }
 }

@@ -32,6 +32,8 @@ public class BlogConfig : BaseEntityTypeConfiguration<Blog>
             // .HasColumnName("customer_id")
             .HasDefaultValue(0);
 
-        builder.HasMany(x => x.Posts).WithOne().HasForeignKey(y => y.BlogId);
+        builder.HasMany(x => x.Posts)
+            .WithOne()
+            .HasForeignKey(y => y.BlogId);
     }
 }
