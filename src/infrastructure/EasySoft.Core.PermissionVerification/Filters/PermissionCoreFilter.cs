@@ -34,11 +34,11 @@ public abstract class PermissionCoreFilter : OperateOfficerCore, IPermissionFilt
     }
 
     [Description("验证登录凭证以及操作权限")]
-    private void OnVerification(ActionExecutingContext context)
+    private async Task OnVerificationAsync(ActionExecutingContext context)
     {
         AdjustAccessPermission(context);
 
-        var result = TryVerification();
+        var result = await TryVerificationAsync();
 
         if (!result.Success) context.Result = result.Data;
     }
@@ -49,7 +49,7 @@ public abstract class PermissionCoreFilter : OperateOfficerCore, IPermissionFilt
     /// <param name="context"></param>
     public void OnActionExecuting(ActionExecutingContext context)
     {
-        OnVerification(context);
+        OnVerificationAsync(context).Wait();
     }
 
     /// <summary>

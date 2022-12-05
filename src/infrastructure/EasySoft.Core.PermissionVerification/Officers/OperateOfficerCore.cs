@@ -48,7 +48,7 @@ public abstract class OperateOfficerCore : AccessWayOfficer
     /// 检测访问权限
     /// </summary>
     /// <returns></returns>
-    private ExecutiveResult CheckAccessPermission()
+    private async Task<ExecutiveResult> CheckAccessPermissionAsync()
     {
         var applicationOperator = GetOperator();
 
@@ -61,20 +61,20 @@ public abstract class OperateOfficerCore : AccessWayOfficer
 
         if (_permissionObserver == null) throw new Exception("PermissionObserver has not set");
 
-        return _permissionObserver.CheckAccessPermission(AccessPermission.GuidTag);
+        return await _permissionObserver.CheckAccessPermissionAsync(AccessPermission.GuidTag);
     }
 
     /// <summary>
     /// TryVerification
     /// </summary>
     /// <returns></returns>
-    protected ExecutiveResult<ApiResult> TryVerification()
+    protected async Task<ExecutiveResult<ApiResult>> TryVerificationAsync()
     {
         CollectAccessWay();
 
         PrePareVerification();
 
-        var result = CheckAccessPermission();
+        var result = await CheckAccessPermissionAsync();
 
         if (result.Success) return new ExecutiveResult<ApiResult>(ReturnCode.Ok);
 

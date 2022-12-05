@@ -1,4 +1,5 @@
-﻿using EasySoft.Simple.Tradition.Data.Contexts;
+﻿using EasySoft.Core.Swagger.Configures;
+using EasySoft.Simple.Tradition.Data.Contexts;
 using EasySoft.Simple.Tradition.Data.EntityConfigures;
 using EasySoft.Simple.Tradition.Management.WebApi.Security;
 using EasySoft.Simple.Tradition.Service.Services.Implementations;
@@ -78,6 +79,16 @@ public class StartUpConfigure : IStartUpConfigure
                 {
                     applicationBuilder.AddPermissionVerification<ApplicationPermissionObserver>();
                 })
+        );
+
+        SwaggerConfigure.GeneralParameters.AddRange(
+            new OpenApiParameter
+            {
+                Name = "token",
+                Description = "登录凭据",
+                Required = false,
+                In = ParameterLocation.Header
+            }
         );
     }
 }

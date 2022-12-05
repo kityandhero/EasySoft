@@ -36,10 +36,10 @@ public class OperateOfficer : OperateOfficerCore, IOperateOfficer
     /// <param name="httpContext"></param>
     /// <returns></returns>
     [Description("验证登录凭证以及操作权限")]
-    public ExecutiveResult<ApiResult> DoVerification(HttpContext httpContext)
+    public async Task<ExecutiveResult<ApiResult>> DoVerificationAsync(HttpContext httpContext)
     {
         AdjustAccessPermission(httpContext);
 
-        return TryVerification();
+        return await TryVerificationAsync();
     }
 }

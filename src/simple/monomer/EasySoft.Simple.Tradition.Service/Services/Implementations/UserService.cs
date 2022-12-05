@@ -19,16 +19,28 @@ public class UserService : IUserService
 
     private readonly IRepository<Blog> _blogRepository;
 
+    private readonly IRepository<RoleGroup> _roleGroupRepository;
+
+    private readonly IRepository<PresetRole> _presetRoleRepository;
+
+    private readonly IRepository<CustomRole> _customRoleRepository;
+
     /// <summary>
     /// UserService
     /// </summary>
     /// <param name="eventPublisher"></param>
     /// <param name="userRepository"></param>
+    /// <param name="customRoleRepository"></param>
     /// <param name="customerRepository"></param>
     /// <param name="blogRepository"></param>
+    /// <param name="roleGroupRepository"></param>
+    /// <param name="presetRoleRepository"></param>
     public UserService(
         IEventPublisher eventPublisher,
         IRepository<User> userRepository,
+        IRepository<RoleGroup> roleGroupRepository,
+        IRepository<PresetRole> presetRoleRepository,
+        IRepository<CustomRole> customRoleRepository,
         IRepository<Customer> customerRepository,
         IRepository<Blog> blogRepository
     )
@@ -36,6 +48,10 @@ public class UserService : IUserService
         _eventPublisher = eventPublisher;
 
         _userRepository = userRepository;
+        _roleGroupRepository = roleGroupRepository;
+        _presetRoleRepository = presetRoleRepository;
+        _customRoleRepository = customRoleRepository;
+
         _customerRepository = customerRepository;
         _blogRepository = blogRepository;
     }

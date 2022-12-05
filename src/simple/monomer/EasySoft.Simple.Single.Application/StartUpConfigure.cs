@@ -37,7 +37,8 @@ public class StartUpConfigure : IStartUpConfigure
 
         SwaggerConfigure.ExternalSchemaType.Add(typeof(Task<ApiResult>));
 
-        SwaggerConfigure.GeneralParameters.AddRange(new OpenApiParameter
+        SwaggerConfigure.GeneralParameters.AddRange(
+            new OpenApiParameter
             {
                 Name = "headerParam",
                 Description = "全局 Header 参数",
@@ -62,7 +63,8 @@ public class StartUpConfigure : IStartUpConfigure
                 Description = "全局 Path 参数",
                 Required = false,
                 In = ParameterLocation.Path
-            });
+            }
+        );
 
         SwaggerConfigure.GeneralResponseHeaders.Add(
             new KeyValuePair<string, OpenApiHeader>(

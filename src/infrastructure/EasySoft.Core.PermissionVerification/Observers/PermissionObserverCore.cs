@@ -32,17 +32,17 @@ public abstract class PermissionObserverCore : IPermissionObserver
     public abstract bool OnJudging();
 
     /// <summary>
-    /// GetCompetenceEntityCollection
+    /// get competence entity collection
     /// </summary>
     /// <returns></returns>
-    public abstract List<CompetenceEntity> GetCompetenceEntityCollection();
+    public abstract Task<List<CompetenceEntity>> GetCompetenceEntityCollectionAsync();
 
     /// <summary>
-    /// CheckAccessPermission
+    /// check the access permission
     /// </summary>
     /// <param name="guidTag"></param>
     /// <returns></returns>
-    public virtual ExecutiveResult CheckAccessPermission(string guidTag)
+    public virtual async Task<ExecutiveResult> CheckAccessPermissionAsync(string guidTag)
     {
         if (string.IsNullOrWhiteSpace(guidTag))
             return new ExecutiveResult(
@@ -51,7 +51,7 @@ public abstract class PermissionObserverCore : IPermissionObserver
                 )
             );
 
-        var listCompetenceEntity = GetCompetenceEntityCollection();
+        var listCompetenceEntity = await GetCompetenceEntityCollectionAsync();
 
         foreach (var ce in listCompetenceEntity)
             if (ce.GuidTag == guidTag.Remove("-") || ce.GuidTag == ConstCollection.SuperRoleGuidTag)

@@ -16,5 +16,5 @@ public interface IOperateOfficer
     /// </summary>
     /// <param name="httpContext"></param>
     /// <returns></returns>
-    ExecutiveResult<ApiResult> DoVerification(HttpContext httpContext);
+    Task<ExecutiveResult<ApiResult>> DoVerificationAsync(HttpContext httpContext);
 }

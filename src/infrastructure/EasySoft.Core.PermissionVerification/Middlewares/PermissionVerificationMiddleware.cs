@@ -46,7 +46,7 @@ public class PermissionVerificationMiddleware : IMiddleware
 
         var operateOfficer = AutofacAssist.Instance.Resolve<IOperateOfficer>();
 
-        var result = operateOfficer.DoVerification(context);
+        var result = await operateOfficer.DoVerificationAsync(context);
 
         if (result.Success)
         {

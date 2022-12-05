@@ -21,12 +21,12 @@ public interface IPermissionObserver
     /// GetCompetenceEntityCollection
     /// </summary>
     /// <returns></returns>
-    public List<CompetenceEntity> GetCompetenceEntityCollection();
+    public Task<List<CompetenceEntity>> GetCompetenceEntityCollectionAsync();
 
     /// <summary>
     /// CheckAccessPermission
     /// </summary>
     /// <param name="guidTag"></param>
     /// <returns></returns>
-    public ExecutiveResult CheckAccessPermission(string guidTag);
+    public Task<ExecutiveResult> CheckAccessPermissionAsync(string guidTag);
 }
