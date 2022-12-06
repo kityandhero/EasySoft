@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
 using EasySoft.Core.EntityFramework.SqlServer.Contexts;
 using EasySoft.Simple.Tradition.Data.ExtensionMethods;
-using Microsoft.EntityFrameworkCore;
 
 namespace EasySoft.Simple.Tradition.Data.Contexts;
 

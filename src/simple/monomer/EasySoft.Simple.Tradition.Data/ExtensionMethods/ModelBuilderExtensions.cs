@@ -1,8 +1,4 @@
-﻿using EasySoft.Core.EntityFramework.EntityFactories;
-using EasySoft.IdGenerator.Assists;
-using EasySoft.Simple.Tradition.Data.Entities;
-using EasySoft.UtilityTools.Standard.Assists;
-using Microsoft.EntityFrameworkCore;
+﻿using EasySoft.Simple.Tradition.Data.Entities;
 
 namespace EasySoft.Simple.Tradition.Data.ExtensionMethods;
 

@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace EasySoft.Simple.Tradition.Data.Contexts;
