@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
-using EasySoft.UtilityTools.Standard.Competence;
 
-namespace EasySoft.Simple.Tradition.Data.Entities.Bases;
+namespace EasySoft.Core.Permission.Server.Entities.Bases;
 
 public abstract class BaseRoleEntity : BaseEntity, IRolePersistence
 {

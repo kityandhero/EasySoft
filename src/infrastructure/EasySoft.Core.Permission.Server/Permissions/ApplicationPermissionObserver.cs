@@ -1,7 +1,4 @@
-﻿using EasySoft.Simple.Tradition.Service.Services.Interfaces;
-using EasySoft.UtilityTools.Standard.Assists;
-
-namespace EasySoft.Simple.Tradition.Security.Permissions;
+﻿namespace EasySoft.Core.Permission.Server.Permissions;
 
 /// <summary>
 /// ApplicationPermissionObserver

@@ -28,9 +28,5 @@ public class UserConfig : BaseEntityTypeConfiguration<User>
             .HasColumnType(DatabaseConstant.Nvarchar)
             .HasMaxLength(100)
             .HasDefaultValue(string.Empty);
-
-        builder.HasOne(x => x.RoleGroup)
-            .WithMany(c => c.Users)
-            .HasForeignKey(x => x.RoleGroupId);
     }
 }

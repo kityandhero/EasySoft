@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel;
-using EasySoft.Simple.Tradition.Data.Entities.Bases;
-using EasySoft.UtilityTools.Standard.Competence;
+using EasySoft.Core.Permission.Server.Entities.Bases;
 
-namespace EasySoft.Simple.Tradition.Data.Entities;
+namespace EasySoft.Core.Permission.Server.Entities;
 
 /// <summary>
 /// 访问模块

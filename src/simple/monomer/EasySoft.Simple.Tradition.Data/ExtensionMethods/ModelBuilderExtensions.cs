@@ -6,16 +6,6 @@ public static class ModelBuilderExtensions
 {
     public static void Seed(this ModelBuilder modelBuilder)
     {
-        var roleGroup = EntityFactory.Create<RoleGroup>();
-
-        roleGroup.Id = 1;
-        roleGroup.Name = "空白用户组";
-        roleGroup.Channel = 0;
-
-        modelBuilder.Entity<RoleGroup>().HasData(
-            roleGroup
-        );
-
         var user = EntityFactory.Create<User>();
 
         user.Alias = "种子用户";

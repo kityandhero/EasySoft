@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Simple.Tradition.Service.Services.Interfaces;
+﻿namespace EasySoft.Core.Permission.Server.Services.Interfaces;
 
 /// <summary>
 /// ISecurityService

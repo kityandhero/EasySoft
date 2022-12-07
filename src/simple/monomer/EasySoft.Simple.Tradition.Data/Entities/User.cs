@@ -37,10 +37,4 @@ public class User : BaseEntity
     /// 角色组标识
     /// </summary>
     public long RoleGroupId { get; set; }
-
-    /// <summary>
-    /// 角色组
-    /// </summary>
-    [Description("角色组")]
-    public RoleGroup RoleGroup { get; set; }
 }

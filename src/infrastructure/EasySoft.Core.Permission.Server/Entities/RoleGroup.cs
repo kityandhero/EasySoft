@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel;
-using EasySoft.Simple.Tradition.Data.Entities.Bases;
+using EasySoft.Core.Permission.Server.Entities.Bases;
+using k8s.KubeConfigModels;
 
-namespace EasySoft.Simple.Tradition.Data.Entities;
+namespace EasySoft.Core.Permission.Server.Entities;
 
 /// <summary>
 /// 角色组
@@ -26,12 +27,4 @@ public class RoleGroup : BaseEntity
     /// </summary>
     [Description("预设角色集合")]
     public string PresetRoleCollection { get; set; } = "";
-
-    /// <summary>
-    /// 渠道码
-    /// </summary>
-    [Description("渠道码")]
-    public int Channel { get; set; }
-
-    public ICollection<User> Users { get; set; }
 }

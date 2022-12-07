@@ -1,7 +1,6 @@
-﻿using EasySoft.Simple.Tradition.Data.Entities;
-using EasySoft.Simple.Tradition.Service.Services.Interfaces;
+﻿using EasySoft.Core.Permission.Server.Entities;
 
-namespace EasySoft.Simple.Tradition.Service.Services.Implementations;
+namespace EasySoft.Core.Permission.Server.Services.Implementations;
 
 /// <summary>
 /// SecurityService
@@ -9,8 +8,6 @@ namespace EasySoft.Simple.Tradition.Service.Services.Implementations;
 public class SecurityService : ISecurityService
 {
     private readonly IEventPublisher _eventPublisher;
-
-    private readonly IRepository<User> _userRepository;
 
     private readonly IRepository<RoleGroup> _roleGroupRepository;
 
@@ -24,14 +21,12 @@ public class SecurityService : ISecurityService
     /// UserService
     /// </summary>
     /// <param name="eventPublisher"></param>
-    /// <param name="userRepository"></param>
     /// <param name="customRoleRepository"></param>
     /// <param name="roleGroupRepository"></param>
     /// <param name="presetRoleRepository"></param>
     /// <param name="accessWayRepository"></param>
     public SecurityService(
         IEventPublisher eventPublisher,
-        IRepository<User> userRepository,
         IRepository<RoleGroup> roleGroupRepository,
         IRepository<PresetRole> presetRoleRepository,
         IRepository<CustomRole> customRoleRepository,
@@ -40,7 +35,6 @@ public class SecurityService : ISecurityService
     {
         _eventPublisher = eventPublisher;
 
-        _userRepository = userRepository;
         _roleGroupRepository = roleGroupRepository;
         _presetRoleRepository = presetRoleRepository;
         _customRoleRepository = customRoleRepository;
@@ -48,19 +42,11 @@ public class SecurityService : ISecurityService
     }
 
     /// <inheritdoc />
-    public async Task<List<CompetenceEntity>> GetCompetenceEntityCollectionAsync(long userId)
+    public async Task<List<CompetenceEntity>> GetCompetenceEntityCollectionAsync(long roleGroupId)
     {
         var ceList = new List<CompetenceEntity>();
 
-        var userResult = await _userRepository.GetAsync(userId);
-
-        if (!userResult.Success || userResult.Data == null) return ceList;
-
-        var user = userResult.Data;
-
-        if (user.RoleGroup == null) return ceList;
-
-        var roelGroupResult = await _roleGroupRepository.GetAsync(user.RoleGroup.Id);
+        var roelGroupResult = await _roleGroupRepository.GetAsync(roleGroupId);
 
         if (!roelGroupResult.Success || roelGroupResult.Data == null) return ceList;
 
