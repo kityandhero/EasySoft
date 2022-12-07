@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Permission.Server.Permissions;
+﻿namespace EasySoft.Core.Permission.Server.Observers;
 
 /// <summary>
 /// ApplicationPermissionObserver

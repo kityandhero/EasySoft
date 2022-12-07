@@ -10,6 +10,7 @@ using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.LogDashboard.ExtensionMethods;
 using EasySoft.Core.MediatR.ExtensionMethods;
+using EasySoft.Core.Permission.Server.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.ExtensionMethods;
 using EasySoft.Core.Web.Framework.BuilderAssists;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
@@ -64,17 +65,14 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
         .SetName("AddAdvanceJsonWebToken")
         .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceJsonWebToken<ApplicationOperator>(); }),
     new ExtraAction<WebApplicationBuilder>()
-        .SetName("AddPermissionVerification")
-        .SetAction(applicationBuilder =>
-        {
-            applicationBuilder.AddPermissionVerification<ApplicationPermissionObserver>();
-        }),
+        .SetName("AddPermissionServer")
+        .SetAction(applicationBuilder => { applicationBuilder.AddPermissionServer(); }),
     // 启用日志面板
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddAdvanceLogDashboard")
         .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceLogDashboard(); }),
     new ExtraAction<WebApplicationBuilder>()
-        .SetName("AddPermissionVerification")
+        .SetName("AddAdvanceMediatR")
         .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceMediatR(Assembly.GetExecutingAssembly()); }),
     // 配置健康检测
     // applicationBuilder =>

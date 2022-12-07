@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Simple.Tradition.Management.WebApi.Security;
+﻿namespace EasySoft.Core.Permission.Server.Operators;
 
 /// <summary>
 /// ApplicationOperator

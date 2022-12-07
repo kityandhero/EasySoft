@@ -12,5 +12,5 @@ public interface IAccessWayDetector
     /// </summary>
     /// <param name="guidTag"></param>
     /// <returns></returns>
-    public AccessWayModel? Find(string guidTag);
+    public Task<AccessWayModel?> Find(string guidTag);
 }

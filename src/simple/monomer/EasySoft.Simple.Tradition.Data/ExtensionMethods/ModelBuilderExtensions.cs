@@ -11,7 +11,7 @@ public static class ModelBuilderExtensions
         user.Alias = "种子用户";
         user.RealName = "张小明";
         user.LoginName = "first";
-        user.Password = "123456";
+        user.Password = "123456".ToMd5();
         user.RoleGroupId = 1;
 
         modelBuilder.Entity<User>().HasData(

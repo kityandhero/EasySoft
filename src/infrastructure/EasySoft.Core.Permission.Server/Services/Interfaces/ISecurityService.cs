@@ -1,9 +1,11 @@
-﻿namespace EasySoft.Core.Permission.Server.Services.Interfaces;
+﻿using EasySoft.Core.Infrastructure.Services;
+
+namespace EasySoft.Core.Permission.Server.Services.Interfaces;
 
 /// <summary>
 /// ISecurityService
 /// </summary>
-public interface ISecurityService
+public interface ISecurityService : IBusinessService
 {
     /// <summary>
     /// get competence entity collection

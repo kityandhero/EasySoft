@@ -41,7 +41,7 @@ public abstract class AccessWayOfficer : OfficerCore
     /// <summary>
     /// CollectAccessWay
     /// </summary>
-    protected void CollectAccessWay()
+    protected async Task CollectAccessWay()
     {
         if (!GeneralConfigAssist.GetAccessWayDetectSwitch()) return;
 
@@ -56,7 +56,7 @@ public abstract class AccessWayOfficer : OfficerCore
 
         var accessWayDetector = AutofacAssist.Instance.Resolve<IAccessWayDetector>();
 
-        var accessWay = accessWayDetector.Find(AccessPermission.GuidTag);
+        var accessWay = await accessWayDetector.Find(AccessPermission.GuidTag);
 
         if (accessWay == null)
         {

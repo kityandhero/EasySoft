@@ -9,14 +9,11 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    public static WebApplicationBuilder UseAccessWayTransmitter(
+    public static WebApplicationBuilder AddAccessWayTransmitter(
         this WebApplicationBuilder builder
     )
     {
-        if (InitialAssist.InitialComplete)
-        {
-            return builder;
-        }
+        if (InitialAssist.InitialComplete) return builder;
 
         builder.Host.AddAccessWayTransmitter();
 

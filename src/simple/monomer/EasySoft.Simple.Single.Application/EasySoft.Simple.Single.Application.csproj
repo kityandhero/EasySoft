@@ -28,6 +28,7 @@
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.LogDashboard\EasySoft.Core.LogDashboard.csproj" />
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.MediatR\EasySoft.Core.MediatR.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Permission.Server\EasySoft.Core.Permission.Server.csproj" />
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj" />
     </ItemGroup>
 

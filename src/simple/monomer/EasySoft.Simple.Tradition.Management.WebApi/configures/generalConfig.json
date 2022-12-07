@@ -16,5 +16,6 @@
   "NlogEmbedConfigTraceToConsoleSwitch": "1",
   "NlogEmbedConfigDebugToConsoleSwitch": "1",
   "CapDashboardSwitch": "1",
-  "CapDiscoverySwitch": "0"
+  "CapDiscoverySwitch": "0",
+  "AccessWayDetectSwitch": "1"
 }

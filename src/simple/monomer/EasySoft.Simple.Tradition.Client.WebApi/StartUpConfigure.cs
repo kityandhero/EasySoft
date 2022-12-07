@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Infrastructure.Configures;
+using EasySoft.Core.Permission.Server.ExtensionMethods;
 using EasySoft.Simple.Tradition.Client.WebApi.EventSubscribers;
 using EasySoft.Simple.Tradition.Client.WebApi.Security;
 using EasySoft.Simple.Tradition.Data.Contexts;
@@ -51,11 +52,8 @@ public class StartUpConfigure : IStartUpConfigure
             // 自定义token密钥解析类
             // applicationBuilder => { applicationBuilder.UseEasyToken<CustomTokenSecretOptions, CustomTokenSecret, ApplicationOperator>(); },
             new ExtraAction<WebApplicationBuilder>()
-                .SetName("AddPermissionVerification")
-                .SetAction(applicationBuilder =>
-                {
-                    applicationBuilder.AddPermissionVerification<ApplicationPermissionObserver>();
-                }),
+                .SetName("AddPermissionServer")
+                .SetAction(applicationBuilder => { applicationBuilder.AddPermissionServer(); }),
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddCapEventSubscriber")
                 .SetAction(applicationBuilder => { applicationBuilder.AddCapEventSubscriber<CapEventSubscriber>(); })
