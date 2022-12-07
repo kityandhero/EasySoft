@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.AuthenticationCore.Operators;
-
-namespace EasySoft.Simple.DomainDrivenDesign.Infrastructure.Authentication;
+﻿namespace EasySoft.Simple.DomainDrivenDesign.Infrastructure.Authentication;
 
 /// <summary>
 /// ApplicationOperator

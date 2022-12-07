@@ -248,6 +248,8 @@ public class GeneralConfig : IConfig
 
     public string SkyApmSwitch { get; set; }
 
+    public string PermissionServerHostUrl { get; set; }
+
     public GeneralConfig()
     {
         CacheMode = CacheModeCollection.InMemory.ToString();
@@ -347,5 +349,7 @@ public class GeneralConfig : IConfig
         ExceptionlessApiKey = "";
 
         SkyApmSwitch = "0";
+
+        PermissionServerHostUrl = "";
     }
 }

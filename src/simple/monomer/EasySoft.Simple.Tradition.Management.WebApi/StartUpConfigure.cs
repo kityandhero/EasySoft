@@ -1,10 +1,6 @@
-﻿using EasySoft.Core.Permission.Server.ExtensionMethods;
-using EasySoft.Core.Permission.Server.Operators;
-using EasySoft.Core.Permission.Server.Services.Implementations;
-using EasySoft.Core.Permission.Server.Services.Interfaces;
-using EasySoft.Core.Swagger.Configures;
-using EasySoft.Simple.Tradition.Data.Contexts;
+﻿using EasySoft.Simple.Tradition.Data.Contexts;
 using EasySoft.Simple.Tradition.Data.EntityConfigures;
+using EasySoft.Simple.Tradition.Security.Security;
 using EasySoft.Simple.Tradition.Service.Services.Implementations;
 
 namespace EasySoft.Simple.Tradition.Management.WebApi;
@@ -78,7 +74,10 @@ public class StartUpConfigure : IStartUpConfigure
                 .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceJsonWebToken<ApplicationOperator>(); }),
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddPermissionServer")
-                .SetAction(applicationBuilder => { applicationBuilder.AddPermissionServer(); })
+                .SetAction(applicationBuilder =>
+                {
+                    applicationBuilder.AddPermissionVerification<ApplicationPermissionObserver>();
+                })
         );
 
         SwaggerConfigure.GeneralParameters.AddRange(

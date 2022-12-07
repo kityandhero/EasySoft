@@ -1202,4 +1202,19 @@ public static class GeneralConfigAssist
 
         return value == 1;
     }
+
+    public static string GetPermissionServerHostUrl()
+    {
+        var v = GetConfig().PermissionServerHostUrl;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        if (string.IsNullOrWhiteSpace(v))
+            throw new ConfigErrorException(
+                $"请配置 PermissionServerHostUrl: {ConfigFile} -> PermissionServerHostUrl",
+                GetConfigFileInfo()
+            );
+
+        return v;
+    }
 }

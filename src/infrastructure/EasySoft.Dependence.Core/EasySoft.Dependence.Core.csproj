@@ -58,6 +58,9 @@
         <PackageReference Include="Ocelot" Version="18.0.0" />
         <PackageReference Include="Ocelot.Provider.Consul" Version="18.0.0" />
         <PackageReference Include="Ocelot.Provider.Polly" Version="18.0.0" />
+        <PackageReference Include="Refit" Version="6.3.2" />
+        <PackageReference Include="Refit.HttpClientFactory" Version="6.3.2" />
+        <PackageReference Include="Refit.Newtonsoft.Json" Version="6.3.2" />
         <PackageReference Include="SkyAPM.Diagnostics.CAP" Version="2.1.0" />
         <PackageReference Include="SkyAPM.Utilities.DependencyInjection" Version="2.1.0" />
         <PackageReference Include="Svg" Version="3.4.4" />

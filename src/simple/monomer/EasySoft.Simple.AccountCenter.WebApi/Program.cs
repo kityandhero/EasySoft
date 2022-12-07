@@ -10,7 +10,6 @@ using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.LogDashboard.ExtensionMethods;
 using EasySoft.Core.MediatR.ExtensionMethods;
-using EasySoft.Core.Permission.Server.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.ExtensionMethods;
 using EasySoft.Core.Web.Framework.BuilderAssists;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
@@ -18,10 +17,10 @@ using EasySoft.Simple.AccountCenter.Application.Contracts.Services;
 using EasySoft.Simple.AccountCenter.Application.Services;
 using EasySoft.Simple.AccountCenter.Domain.EntityConfigures;
 using EasySoft.Simple.DomainDrivenDesign.Domain.Shared.Enums;
-using EasySoft.Simple.DomainDrivenDesign.Infrastructure.Authentication;
 using EasySoft.Simple.DomainDrivenDesign.Infrastructure.Contexts;
-using EasySoft.Simple.DomainDrivenDesign.Infrastructure.Permissions;
+using EasySoft.Simple.DomainDrivenDesign.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
+using ApplicationOperator = EasySoft.Simple.DomainDrivenDesign.Infrastructure.Authentication.ApplicationOperator;
 
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableDetailedErrors = true;
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableSensitiveDataLogging = true;
@@ -65,8 +64,11 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
         .SetName("AddAdvanceJsonWebToken")
         .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceJsonWebToken<ApplicationOperator>(); }),
     new ExtraAction<WebApplicationBuilder>()
-        .SetName("AddPermissionServer")
-        .SetAction(applicationBuilder => { applicationBuilder.AddPermissionServer(); }),
+        .SetName("AddPermissionVerification")
+        .SetAction(applicationBuilder =>
+        {
+            applicationBuilder.AddPermissionVerification<ApplicationPermissionObserver>();
+        }),
     // 启用日志面板
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddAdvanceLogDashboard")

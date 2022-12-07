@@ -10,7 +10,6 @@ using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.LogDashboard.ExtensionMethods;
 using EasySoft.Core.MediatR.ExtensionMethods;
-using EasySoft.Core.Permission.Server.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.ExtensionMethods;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Swagger.Configures;
@@ -123,8 +122,11 @@ public class StartUpConfigure : IStartUpConfigure
             // 自定义token密钥解析类
             // applicationBuilder => { applicationBuilder.UseEasyToken<CustomTokenSecretOptions, CustomTokenSecret, ApplicationOperator>(); },
             new ExtraAction<WebApplicationBuilder>()
-                .SetName("AddPermissionServer")
-                .SetAction(applicationBuilder => { applicationBuilder.AddPermissionServer(); }),
+                .SetName("AddPermissionVerification")
+                .SetAction(applicationBuilder =>
+                {
+                    applicationBuilder.AddPermissionVerification<ApplicationPermissionObserver>();
+                }),
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddExtraNormalInjection")
                 .SetAction(applicationBuilder =>

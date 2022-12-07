@@ -70,7 +70,7 @@ public abstract class OperateOfficerCore : AccessWayOfficer
     /// <returns></returns>
     protected async Task<ExecutiveResult<ApiResult>> TryVerificationAsync()
     {
-        CollectAccessWay();
+        CollectAccessWay().Wait();
 
         PrePareVerification();
 

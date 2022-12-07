@@ -41,4 +41,11 @@ public interface IUserService : IBusinessService
     /// <param name="signInDto"></param>
     /// <returns></returns>
     public Task<ExecutiveResult<UserDto>> SignInAsync(SignInDto signInDto);
+
+    /// <summary>
+    /// GetRoleGroupIdAsync
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    public Task<ExecutiveResult<long>> GetRoleGroupIdAsync(long userId);
 }

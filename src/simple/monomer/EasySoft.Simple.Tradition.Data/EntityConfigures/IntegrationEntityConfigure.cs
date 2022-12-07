@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using EasySoft.Core.EntityFramework.EntityConfigures.Implementations;
-using EasySoft.Simple.Tradition.Data.Entities;
+﻿using EasySoft.Simple.Tradition.Data.Entities;
 
 namespace EasySoft.Simple.Tradition.Data.EntityConfigures;
 
@@ -11,6 +9,9 @@ public class IntegrationEntityConfigure : BaseEntityConfigure
 {
     protected override IEnumerable<Assembly> GetEntityAssemblies()
     {
-        return new List<Assembly> { typeof(Blog).Assembly };
+        return new List<Assembly>
+        {
+            typeof(Blog).Assembly
+        };
     }
 }

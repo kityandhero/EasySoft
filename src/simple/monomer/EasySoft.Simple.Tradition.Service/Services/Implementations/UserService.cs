@@ -185,4 +185,20 @@ public class UserService : IUserService
 
         return new ExecutiveResult<UserDto>(result.Code);
     }
+
+    /// <inheritdoc />
+    public async Task<ExecutiveResult<long>> GetRoleGroupIdAsync(long userId)
+    {
+        if (userId <= 0) return new ExecutiveResult<long>(ReturnCode.NoData);
+
+        var result = await _userRepository.GetAsync(userId);
+
+        if (!result.Success || result.Data == null)
+            return new ExecutiveResult<long>(ReturnCode.NoData);
+
+        return new ExecutiveResult<long>(ReturnCode.Ok)
+        {
+            Data = result.Data.Id
+        };
+    }
 }

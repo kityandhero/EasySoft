@@ -56,9 +56,9 @@ public abstract class AccessWayOfficer : OfficerCore
 
         var accessWayDetector = AutofacAssist.Instance.Resolve<IAccessWayDetector>();
 
-        var accessWay = await accessWayDetector.Find(AccessPermission.GuidTag);
+        var accessWayModels = await accessWayDetector.Find(AccessPermission.GuidTag);
 
-        if (accessWay == null)
+        if (accessWayModels.Count <= 0)
         {
             AutofacAssist.Instance.Resolve<IAccessWayProducer>().Send(
                 AccessPermission.GuidTag,
@@ -69,9 +69,12 @@ public abstract class AccessWayOfficer : OfficerCore
         }
         else
         {
-            if (accessWay.Name == AccessPermission.Name && accessWay.RelativePath == AccessPermission.Path &&
-                accessWay.Expand == AccessPermission.Competence &&
-                accessWay.Channel == channel)
+            var accessWayModel = accessWayModels[0];
+
+            if (accessWayModel.Name == AccessPermission.Name &&
+                accessWayModel.RelativePath == AccessPermission.Path &&
+                accessWayModel.Expand == AccessPermission.Competence &&
+                accessWayModel.Channel == channel)
                 return;
 
             AutofacAssist.Instance.Resolve<IAccessWayProducer>().Send(

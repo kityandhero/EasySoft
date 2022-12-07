@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using EasySoft.Simple.Tradition.Data.DataTransferObjects;
+﻿using EasySoft.Simple.Tradition.Data.DataTransferObjects;
 using EasySoft.Simple.Tradition.Management.WebApi.Common;
 
 namespace EasySoft.Simple.Tradition.Management.WebApi.Controllers;

@@ -2,6 +2,7 @@
 
 global using System.ComponentModel;
 global using Autofac;
+global using EasySoft.Core.AccessWayTransmitter.ExtensionMethods;
 global using EasySoft.Core.AccessWayTransmitter.Producers;
 global using EasySoft.Core.AuthenticationCore.Operators;
 global using EasySoft.Core.AutoFac.IocAssists;
