@@ -57,7 +57,7 @@ public class StartUpConfigure : IStartUpConfigure
                 }),
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddCapEventSubscriber")
-                .SetAction(applicationBuilder => { applicationBuilder.AddCapEventSubscriber<CapEventSubscriber>(); })
+                .SetAction(applicationBuilder => { applicationBuilder.AddCapSubscriber<CapEventSubscriber>(); })
         );
     }
 }

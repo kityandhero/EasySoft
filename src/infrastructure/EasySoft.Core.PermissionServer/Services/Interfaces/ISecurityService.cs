@@ -18,4 +18,11 @@ public interface ISecurityService : IBusinessService
     /// <param name="guidTag"></param>
     /// <returns></returns>
     Task<IList<AccessWayModel>> FindAccessWayModelAsync(string guidTag);
+
+    /// <summary>
+    /// SaveAccessWayModelAsync
+    /// </summary>
+    /// <param name="accessWayExchange"></param>
+    /// <returns></returns>
+    Task SaveAccessWayModelAsync(AccessWayExchange accessWayExchange);
 }

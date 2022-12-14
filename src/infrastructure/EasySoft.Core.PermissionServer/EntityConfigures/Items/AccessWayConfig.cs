@@ -13,14 +13,17 @@ public class AccessWayConfig : BaseEntityTypeConfiguration<AccessWay>
 
         builder.Property(x => x.GuidTag)
             .HasColumnType(DatabaseConstant.Nvarchar)
+            .HasMaxLength(50)
             .HasDefaultValue(string.Empty);
 
         builder.Property(x => x.RelativePath)
             .HasColumnType(DatabaseConstant.Nvarchar)
+            .HasMaxLength(500)
             .HasDefaultValue(string.Empty);
 
         builder.Property(x => x.Expand)
             .HasColumnType(DatabaseConstant.Nvarchar)
+            .HasMaxLength(400)
             .HasDefaultValue(string.Empty);
 
         builder.Property(x => x.Channel)

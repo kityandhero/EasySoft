@@ -38,7 +38,7 @@ public abstract class PermissionObserverCore : IPermissionObserver
     public abstract Task<List<CompetenceEntity>> GetCompetenceEntityCollectionAsync();
 
     /// <summary>
-    /// check the access permission
+    /// 检测访问权限
     /// </summary>
     /// <param name="guidTag"></param>
     /// <returns></returns>

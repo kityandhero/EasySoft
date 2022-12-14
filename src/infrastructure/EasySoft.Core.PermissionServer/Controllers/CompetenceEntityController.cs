@@ -3,7 +3,7 @@
 namespace EasySoft.Core.PermissionServer.Controllers;
 
 [Route("competenceEntity")]
-public class CompetenceEntityController : CustomControllerBase, ICompetenceEntityApi
+public class CompetenceEntityController : CustomControllerBase
 {
     private readonly ISecurityService _securityService;
 

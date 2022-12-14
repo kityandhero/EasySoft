@@ -3,7 +3,7 @@
 namespace EasySoft.Core.PermissionServer.Controllers;
 
 [Route("accessWay")]
-public class AccessWayController : CustomControllerBase, IAccessWayApi
+public class AccessWayController : CustomControllerBase
 {
     private readonly ISecurityService _securityService;
 

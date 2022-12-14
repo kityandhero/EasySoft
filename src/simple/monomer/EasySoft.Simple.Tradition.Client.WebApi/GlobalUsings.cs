@@ -4,6 +4,7 @@ global using DotNetCore.CAP;
 global using EasySoft.Core.AuthenticationCore.Attributes;
 global using EasySoft.Core.AuthenticationCore.ExtensionMethods;
 global using EasySoft.Core.AuthenticationCore.Operators;
+global using EasySoft.Core.Cap.ExtensionMethods;
 global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.Data.ExtensionMethods;
 global using EasySoft.Core.Data.Transactions;

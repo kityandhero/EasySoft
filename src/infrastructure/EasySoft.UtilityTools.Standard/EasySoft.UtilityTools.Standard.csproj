@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <Nullable>enable</Nullable>
-        <LangVersion>10</LangVersion>
+        <LangVersion>11</LangVersion>
         <Title>EasySoft.UtilityTools.Standard</Title>
         <Description>EasySoft.UtilityTools.Standard</Description>
         <PackageProjectUrl>https://github.com/kityandhero/EasySoft</PackageProjectUrl>
@@ -20,14 +20,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="NGeoHash" Version="1.2.0" />
-        <PackageReference Include="QRCoder" Version="1.4.3" />
-        <PackageReference Include="RSAExtensions" Version="1.1.0" />
-        <PackageReference Include="SixLabors.ImageSharp" Version="2.1.3" />
+        <PackageReference Include="NGeoHash" Version="1.2.0"/>
+        <PackageReference Include="QRCoder" Version="1.4.3"/>
+        <PackageReference Include="RSAExtensions" Version="1.1.0"/>
+        <PackageReference Include="SixLabors.ImageSharp" Version="2.1.3"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Dependence.Standard\EasySoft.Dependence.Standard.csproj" />
+        <ProjectReference Include="..\EasySoft.Dependence.Standard\EasySoft.Dependence.Standard.csproj"/>
     </ItemGroup>
 
 </Project>

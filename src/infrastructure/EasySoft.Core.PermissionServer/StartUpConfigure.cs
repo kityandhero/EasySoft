@@ -1,8 +1,10 @@
-﻿using EasySoft.Core.PermissionServer.Contexts;
+﻿using EasySoft.Core.Cap.ExtensionMethods;
+using EasySoft.Core.PermissionServer.Contexts;
 using EasySoft.Core.PermissionServer.EntityConfigures;
 using EasySoft.Core.PermissionServer.Operators;
 using EasySoft.Core.PermissionServer.Services.Implementations;
 using EasySoft.Core.PermissionServer.Services.Interfaces;
+using EasySoft.Core.PermissionServer.Subscribers;
 
 namespace EasySoft.Core.PermissionServer;
 
@@ -58,7 +60,13 @@ public class StartUpConfigure : IStartUpConfigure
             // applicationBuilder => { applicationBuilder.AddStaticFileOptionsInjection<CustomStaticFileOptions>(); },
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddAdvanceJsonWebToken")
-                .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceJsonWebToken<ApplicationOperator>(); })
+                .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceJsonWebToken<ApplicationOperator>(); }),
+            new ExtraAction<WebApplicationBuilder>()
+                .SetName("AddCapSubscriber")
+                .SetAction(applicationBuilder =>
+                {
+                    applicationBuilder.AddCapSubscriber<AccessWayExchangeSubscriber>();
+                })
         );
 
         SwaggerConfigure.GeneralParameters.AddRange(

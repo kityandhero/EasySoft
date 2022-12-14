@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.SqlExecutionRecordTransmitter.Entities;
+﻿using EasySoft.Core.Infrastructure.Transmitters;
+using EasySoft.Core.SqlExecutionRecordTransmitter.Entities;
 using EasySoft.Core.SqlExecutionRecordTransmitter.Interfaces;
 
 namespace EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
@@ -46,7 +47,7 @@ public class SqlExecutionRecordProducer : ISqlExecutionRecordProducer
             Channel = _applicationChannel.GetChannel()
         };
 
-        _capPublisher.Publish(Configures.GetQueryName(), entity);
+        _capPublisher.Publish(TransmitterTopic.SqlExecutionRecordExchange, entity);
 
         return entity;
     }

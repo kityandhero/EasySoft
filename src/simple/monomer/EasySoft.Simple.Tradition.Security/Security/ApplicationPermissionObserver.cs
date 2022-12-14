@@ -1,5 +1,6 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
+﻿using EasySoft.Core.PermissionVerification.Clients;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
+using EasySoft.UtilityTools.Standard.Exceptions;
 
 namespace EasySoft.Simple.Tradition.Security.Security;
 
@@ -9,17 +10,21 @@ namespace EasySoft.Simple.Tradition.Security.Security;
 public class ApplicationPermissionObserver : PermissionObserverCore
 {
     private readonly IUserService _userService;
+    private readonly IPermissionClient _permissionClient;
 
     /// <summary>
     /// ApplicationPermissionObserver
     /// </summary>
     /// <param name="applicationActualOperator"></param>
+    /// <param name="permissionClient"></param>
     /// <param name="userService"></param>
     public ApplicationPermissionObserver(
         IActualOperator applicationActualOperator,
+        IPermissionClient permissionClient,
         IUserService userService
     ) : base(applicationActualOperator)
     {
+        _permissionClient = permissionClient;
         _userService = userService;
     }
 
@@ -48,8 +53,11 @@ public class ApplicationPermissionObserver : PermissionObserverCore
 
         if (!result.Success) return new List<CompetenceEntity>();
 
-        var api = RestService.For<ICompetenceEntityApi>(GeneralConfigAssist.GetPermissionServerHostUrl());
+        var apiResponse = await _permissionClient.GetCompetenceEntityCollectionAsync(result.Data);
 
-        return await api.GetCompetenceEntityCollectionAsync(result.Data);
+        if (!apiResponse.IsSuccessStatusCode)
+            throw new UnknownException($"rpc {GetType().Name}.{nameof(GetCompetenceEntityCollectionAsync)} call fail");
+
+        return apiResponse.Content ?? new List<CompetenceEntity>();
     }
 }

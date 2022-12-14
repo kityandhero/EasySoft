@@ -1,12 +1,10 @@
 ﻿using EasySoft.Core.Cap.Assists;
 using EasySoft.Core.Config.Cap;
+using EasySoft.Core.Config.Exceptions;
 using EasySoft.Core.EventBus;
 using EasySoft.Core.EventBus.Cap;
 using EasySoft.Core.EventBus.Cap.Filters;
 using EasySoft.Core.EventBus.Trackers;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-using SkyApm.Diagnostics.CAP;
-using SkyApm.Utilities.DependencyInjection;
 
 namespace EasySoft.Core.Cap.ExtensionMethods;
 
@@ -269,6 +267,12 @@ public static class WebApplicationBuilderExtensions
                             break;
 
                         case PersistentType.SqlServer:
+                            if (string.IsNullOrWhiteSpace(capPersistentConnection))
+                                throw new ConfigErrorException(
+                                    $"请配置 CapPersistentConnection: {GeneralConfigAssist.GetConfigFileName()} -> CapPersistentConnection,请设置",
+                                    GeneralConfigAssist.GetConfigFileInfo()
+                                );
+
                             if (!string.IsNullOrWhiteSpace(capPersistentConnection) &&
                                 capConfig.Persistent.SqlServer == null)
                                 capConfig.Persistent.SqlServer = new SqlServerOptions
@@ -277,7 +281,7 @@ public static class WebApplicationBuilderExtensions
                                 };
 
                             if (capConfig.Persistent.SqlServer == null)
-                                throw new Exception(
+                                throw new ConfigErrorException(
                                     "Cap persistent type is SqlServer, it need config,use CapAssist.GetConfig().Persistent.SqlServer to set it"
                                 );
 
@@ -289,6 +293,12 @@ public static class WebApplicationBuilderExtensions
                             break;
 
                         case PersistentType.MySql:
+                            if (string.IsNullOrWhiteSpace(capPersistentConnection))
+                                throw new ConfigErrorException(
+                                    $"请配置 CapPersistentConnection: {GeneralConfigAssist.GetConfigFileName()} -> CapPersistentConnection,请设置",
+                                    GeneralConfigAssist.GetConfigFileInfo()
+                                );
+
                             if (!string.IsNullOrWhiteSpace(capPersistentConnection) &&
                                 capConfig.Persistent.MySql == null)
                                 capConfig.Persistent.MySql = new MySqlOptions
@@ -309,6 +319,12 @@ public static class WebApplicationBuilderExtensions
                             break;
 
                         case PersistentType.PostgreSql:
+                            if (string.IsNullOrWhiteSpace(capPersistentConnection))
+                                throw new ConfigErrorException(
+                                    $"请配置 CapPersistentConnection: {GeneralConfigAssist.GetConfigFileName()} -> CapPersistentConnection,请设置",
+                                    GeneralConfigAssist.GetConfigFileInfo()
+                                );
+
                             if (!string.IsNullOrWhiteSpace(capPersistentConnection) &&
                                 capConfig.Persistent.PostgreSql == null)
                                 capConfig.Persistent.PostgreSql = new PostgreSqlOptions
@@ -329,6 +345,12 @@ public static class WebApplicationBuilderExtensions
                             break;
 
                         case PersistentType.MongoDB:
+                            if (string.IsNullOrWhiteSpace(capPersistentConnection))
+                                throw new ConfigErrorException(
+                                    $"请配置 CapPersistentConnection: {GeneralConfigAssist.GetConfigFileName()} -> CapPersistentConnection,请设置",
+                                    GeneralConfigAssist.GetConfigFileInfo()
+                                );
+
                             if (!string.IsNullOrWhiteSpace(capPersistentConnection) &&
                                 capConfig.Persistent.MongoDB == null)
                                 capConfig.Persistent.MongoDB = new MongoDBOptions()
@@ -351,6 +373,12 @@ public static class WebApplicationBuilderExtensions
                             break;
 
                         case PersistentType.Sqlite:
+                            if (string.IsNullOrWhiteSpace(capPersistentConnection))
+                                throw new ConfigErrorException(
+                                    $"请配置 CapPersistentConnection: {GeneralConfigAssist.GetConfigFileName()} -> CapPersistentConnection,请设置",
+                                    GeneralConfigAssist.GetConfigFileInfo()
+                                );
+
                             if (!string.IsNullOrWhiteSpace(capPersistentConnection) &&
                                 capConfig.Persistent.Sqlite == null)
                                 capConfig.Persistent.Sqlite = new SqliteOptions()
@@ -470,6 +498,22 @@ public static class WebApplicationBuilderExtensions
                 GeneralConfigAssist.GetConfigFileInfo()
             );
         }
+
+        return builder;
+    }
+
+    /// <summary>
+    /// 注册CAP事件订阅
+    /// </summary>
+    public static WebApplicationBuilder AddCapSubscriber<TSubscriber>(
+        this WebApplicationBuilder builder
+    ) where TSubscriber : class, ICapSubscribe
+    {
+        StartupDescriptionMessageAssist.AddExecute(
+            $"{nameof(AddCapSubscriber)}<{typeof(TSubscriber).Name}>."
+        );
+
+        builder.Services.AddCapSubscriber<TSubscriber>();
 
         return builder;
     }

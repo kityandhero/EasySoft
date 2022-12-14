@@ -1,7 +1,12 @@
-﻿using EasySoft.Core.PermissionVerification.Detectors;
+﻿using Castle.DynamicProxy;
+using EasySoft.Core.PermissionVerification.Clients;
+using EasySoft.Core.PermissionVerification.Detectors;
 using EasySoft.Core.PermissionVerification.Middlewares;
 using EasySoft.Core.PermissionVerification.Observers;
 using EasySoft.Core.PermissionVerification.Officers;
+using EasySoft.Core.Refit.ExtensionMethods;
+using EasySoft.UtilityTools.Core.Interceptors;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace EasySoft.Core.PermissionVerification.ExtensionMethods;
 
@@ -33,7 +38,44 @@ public static class WebApplicationBuilderExtensions
         builder.AddPermissionObserverInjection<TPermissionObserver>()
             .AddAccessWayTransmitter();
 
-        builder.Services.AddTransient<IAccessWayDetector, AccessWayDetector>();
+        builder.Services.TryAddSingleton(new ProxyGenerator());
+
+        builder.AddAdvanceRefitClient<IPermissionClient>(clientBuilder =>
+        {
+            clientBuilder.ConfigureHttpClient(client =>
+            {
+                if (!Uri.TryCreate(
+                        GeneralConfigAssist.GetPermissionServerHostUrl(),
+                        UriKind.Absolute,
+                        out var baseAddress
+                    ))
+                    throw new UnknownException("PermissionServerHostUrl error");
+
+                client.BaseAddress = baseAddress;
+            });
+        });
+
+        builder.Services.AddTransient(typeof(IAccessWayDetector), provider =>
+        {
+            var permissionClient = provider.GetRequiredService<IPermissionClient>();
+            var interceptors = new List<Type> { typeof(LogRecordInterceptor) }
+                .ConvertAll(interceptorType => { return provider.GetService(interceptorType) as IInterceptor; })
+                .ToArray();
+            var proxyGenerator = provider.GetService<ProxyGenerator>();
+
+            if (proxyGenerator == null)
+                throw new UnknownException(
+                    "provider.GetService<ProxyGenerator>() result is null"
+                );
+
+            var proxy = proxyGenerator.CreateInterfaceProxyWithTargetInterface(
+                typeof(IAccessWayDetector),
+                new AccessWayDetector(permissionClient),
+                interceptors
+            );
+
+            return proxy;
+        });
 
         if (middlewareMode)
         {

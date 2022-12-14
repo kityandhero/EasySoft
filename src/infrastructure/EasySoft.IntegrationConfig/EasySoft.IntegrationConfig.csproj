@@ -4,7 +4,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <LangVersion>10</LangVersion>
+        <LangVersion>11</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>EasySoft.IntegrationConfig</Title>
         <Description>EasySoft.IntegrationConfig</Description>
@@ -14,12 +14,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj" />
+        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="configures\logConfig.json" />
-      <None Remove="configures\messageQueueConfig.json" />
+        <None Remove="configures\logConfig.json"/>
+        <None Remove="configures\messageQueueConfig.json"/>
     </ItemGroup>
 
 </Project>

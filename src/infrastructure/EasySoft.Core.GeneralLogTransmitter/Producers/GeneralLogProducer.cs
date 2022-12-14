@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.GeneralLogTransmitter.Entities;
 using EasySoft.Core.GeneralLogTransmitter.Interfaces;
+using EasySoft.Core.Infrastructure.Transmitters;
 
 namespace EasySoft.Core.GeneralLogTransmitter.Producers;
 
@@ -72,7 +73,7 @@ public class GeneralLogProducer : IGeneralLogProducer
                 break;
         }
 
-        _capPublisher.Publish(Configures.GetQueryName(), entity);
+        _capPublisher.Publish(TransmitterTopic.GeneralLogExchange, entity);
 
         return entity;
     }

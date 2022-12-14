@@ -1,9 +1,10 @@
 ﻿using EasySoft.Core.PermissionVerification.Entities;
+using EasySoft.UtilityTools.Core.Attributes;
 
 namespace EasySoft.Core.PermissionVerification.Detectors;
 
 /// <summary>
-/// IAccessWayDetector
+/// 访问探测器
 /// </summary>
 public interface IAccessWayDetector
 {
@@ -12,5 +13,6 @@ public interface IAccessWayDetector
     /// </summary>
     /// <param name="guidTag"></param>
     /// <returns></returns>
+    [LogRecord]
     public Task<IList<AccessWayModel>> Find(string guidTag);
 }

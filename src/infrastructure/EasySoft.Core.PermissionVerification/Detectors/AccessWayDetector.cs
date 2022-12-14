@@ -1,11 +1,24 @@
-﻿using EasySoft.Core.PermissionVerification.Entities;
-using EasySoft.Core.PermissionVerification.Remotes;
-using Refit;
+﻿using EasySoft.Core.PermissionVerification.Clients;
+using EasySoft.Core.PermissionVerification.Entities;
+using EasySoft.UtilityTools.Core.Assists;
+using EasySoft.UtilityTools.Core.Attributes;
 
 namespace EasySoft.Core.PermissionVerification.Detectors;
 
+/// <inheritdoc />
 public class AccessWayDetector : IAccessWayDetector
 {
+    private readonly IPermissionClient _permissionClient;
+
+    /// <summary>
+    /// 访问探测器
+    /// </summary>
+    /// <param name="permissionClient"></param>
+    public AccessWayDetector(IPermissionClient permissionClient)
+    {
+        _permissionClient = permissionClient;
+    }
+
     /// <summary>
     /// Find
     /// </summary>
@@ -13,8 +26,11 @@ public class AccessWayDetector : IAccessWayDetector
     /// <returns></returns>
     public async Task<IList<AccessWayModel>> Find(string guidTag)
     {
-        var api = RestService.For<IAccessWayApi>(GeneralConfigAssist.GetPermissionServerHostUrl());
+        var apiResponse = await _permissionClient.FindAccessWayModel(guidTag);
 
-        return await api.Find(guidTag);
+        if (!apiResponse.IsSuccessStatusCode)
+            throw new UnknownException($"rpc {GetType().Name}.{nameof(Find)} call fail");
+
+        return apiResponse.Content ?? new List<AccessWayModel>();
     }
 }

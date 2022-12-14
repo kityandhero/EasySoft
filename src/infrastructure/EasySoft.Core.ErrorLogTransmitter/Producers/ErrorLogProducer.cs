@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.ErrorLogTransmitter.Entities;
 using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 using EasySoft.Core.ErrorLogTransmitter.Interfaces;
+using EasySoft.Core.Infrastructure.Transmitters;
 
 namespace EasySoft.Core.ErrorLogTransmitter.Producers;
 
@@ -19,7 +20,7 @@ public class ErrorLogProducer : IErrorLogProducer
 
     public void Send(IErrorLogExchange log)
     {
-        _capPublisher.Publish(Configures.GetQueryName(), log);
+        _capPublisher.Publish(TransmitterTopic.ErrorLogExchange, log);
     }
 
     public IErrorLogExchange Send(Exception ex)
@@ -41,7 +42,7 @@ public class ErrorLogProducer : IErrorLogProducer
 
         entity.Fill(ex, operatorId, requestInfo);
 
-        _capPublisher.Publish(Configures.GetQueryName(), entity);
+        _capPublisher.Publish(TransmitterTopic.ErrorLogExchange, entity);
 
         return entity;
     }

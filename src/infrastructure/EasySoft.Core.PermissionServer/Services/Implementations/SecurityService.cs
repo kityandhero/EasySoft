@@ -113,6 +113,34 @@ public class SecurityService : ISecurityService
         };
     }
 
+    public async Task SaveAccessWayModelAsync(AccessWayExchange accessWayExchange)
+    {
+        if (string.IsNullOrWhiteSpace(accessWayExchange.GuidTag)) return;
+
+        var resultGet = await _accessWayRepository.GetAsync(
+            o => o.GuidTag == accessWayExchange.GuidTag
+        );
+
+        if (resultGet.Success) return;
+
+        var accessWay = new AccessWay
+        {
+            Name = accessWayExchange.Name,
+            GuidTag = accessWayExchange.GuidTag,
+            RelativePath = accessWayExchange.RelativePath,
+            Expand = accessWayExchange.Expand,
+            Channel = accessWayExchange.Channel,
+            Status = accessWayExchange.Status,
+            Ip = accessWayExchange.Ip,
+            CreateTime = DateTimeOffset.Now.DateTime,
+            UpdateTime = DateTimeOffset.Now.DateTime
+        };
+
+        var resultAdd = await _accessWayRepository.AddAsync(accessWay);
+
+        if (!resultAdd.Success) throw new UnknownException(resultAdd.Message);
+    }
+
     private static List<RoleItem> GetCustomRoleItemList(RoleGroup roleGroup)
     {
         var list = new List<RoleItem>();

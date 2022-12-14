@@ -49,7 +49,7 @@ public abstract class PermissionCoreFilter : OperateOfficerCore, IPermissionFilt
     /// <param name="context"></param>
     public void OnActionExecuting(ActionExecutingContext context)
     {
-        OnVerificationAsync(context).Wait();
+        Task.FromResult(OnVerificationAsync(context));
     }
 
     /// <summary>

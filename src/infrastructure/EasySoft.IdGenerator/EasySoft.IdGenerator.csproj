@@ -4,7 +4,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <LangVersion>10</LangVersion>
+        <LangVersion>11</LangVersion>
         <Title>EasySoft.IdGenerator</Title>
         <Description>EasySoft.IdGenerator</Description>
         <PackageProjectUrl>https://github.com/kityandhero/EasySoft</PackageProjectUrl>
@@ -14,7 +14,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Yitter.IdGenerator" Version="1.0.14" />
+        <PackageReference Include="Yitter.IdGenerator" Version="1.0.14"/>
     </ItemGroup>
 
 </Project>

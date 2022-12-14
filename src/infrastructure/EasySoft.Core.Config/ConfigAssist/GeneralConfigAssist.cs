@@ -46,6 +46,11 @@ public static class GeneralConfigAssist
         return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
+    public static string GetConfigFileName()
+    {
+        return ConfigFile;
+    }
+
     public static string GetConfigFileInfo()
     {
         return $"[{ConfigFile}](./configures/{ConfigFile})";

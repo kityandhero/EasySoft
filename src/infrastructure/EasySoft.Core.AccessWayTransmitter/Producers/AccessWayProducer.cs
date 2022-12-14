@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.AccessWayTransmitter.Entities;
 using EasySoft.Core.AccessWayTransmitter.Interfaces;
+using EasySoft.Core.Infrastructure.Transmitters;
 
 namespace EasySoft.Core.AccessWayTransmitter.Producers;
 
@@ -32,7 +33,7 @@ public class AccessWayProducer : IAccessWayProducer
             Channel = _applicationChannel.GetChannel()
         };
 
-        _capPublisher.Publish(Configures.GetQueryName(), entity);
+        _capPublisher.Publish(TransmitterTopic.AccessWayExchange, entity);
 
         return entity;
     }

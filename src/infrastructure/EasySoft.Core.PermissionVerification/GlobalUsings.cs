@@ -2,6 +2,7 @@
 
 global using System.ComponentModel;
 global using Autofac;
+global using EasySoft.Core.AccessWayTransmitter.Entities;
 global using EasySoft.Core.AccessWayTransmitter.ExtensionMethods;
 global using EasySoft.Core.AccessWayTransmitter.Producers;
 global using EasySoft.Core.AuthenticationCore.Operators;
@@ -13,8 +14,10 @@ global using EasySoft.UtilityTools.Core.ExtensionMethods;
 global using EasySoft.UtilityTools.Core.Results;
 global using EasySoft.UtilityTools.Standard.Competence;
 global using EasySoft.UtilityTools.Standard.Enums;
+global using EasySoft.UtilityTools.Standard.Exceptions;
 global using EasySoft.UtilityTools.Standard.ExtensionMethods;
 global using EasySoft.UtilityTools.Standard.Result;
+global using Mapster;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Hosting;
 global using Microsoft.AspNetCore.Http;

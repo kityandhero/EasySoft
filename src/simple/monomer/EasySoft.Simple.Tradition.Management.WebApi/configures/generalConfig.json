@@ -15,7 +15,11 @@
   "JsonWebTokenIssuerSigningKey": "fcebbeb8c5ce4b108aa6e241d57cf6d8",
   "NlogEmbedConfigTraceToConsoleSwitch": "1",
   "NlogEmbedConfigDebugToConsoleSwitch": "1",
+  "CapTransportType": "RabbitMQ",
+  "CapPersistentType": "SqlServer",
+  "CapPersistentConnection": "server=database.b.com; User ID=pandora;Password=!@#$1234;database=cap;Encrypt=False",
   "CapDashboardSwitch": "1",
   "CapDiscoverySwitch": "0",
-  "AccessWayDetectSwitch": "1"
+  "AccessWayDetectSwitch": "1",
+  "PermissionServerHostUrl": "http://localhost:8839"
 }

@@ -362,6 +362,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "servers", "servers", "{1594
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.PermissionServer", "infrastructure\EasySoft.Core.PermissionServer\EasySoft.Core.PermissionServer.csproj", "{B1B8C600-06AB-46E0-A3A4-A303CD088D7F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rpc", "rpc", "{F7B686C0-6920-4592-AD8C-28A7CE030E1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Refit", "infrastructure\EasySoft.Core.Refit\EasySoft.Core.Refit.csproj", "{94780A32-A7F8-499C-90DD-9DA2A4221D06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -812,6 +816,10 @@ Global
 		{B1B8C600-06AB-46E0-A3A4-A303CD088D7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1B8C600-06AB-46E0-A3A4-A303CD088D7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1B8C600-06AB-46E0-A3A4-A303CD088D7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94780A32-A7F8-499C-90DD-9DA2A4221D06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94780A32-A7F8-499C-90DD-9DA2A4221D06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94780A32-A7F8-499C-90DD-9DA2A4221D06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94780A32-A7F8-499C-90DD-9DA2A4221D06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -986,6 +994,8 @@ Global
 		{D9BB2217-E5C2-4252-99C6-3B78611E07F2} = {662B4033-A96A-4569-89F2-3E2437FE0998}
 		{15940179-CE51-435B-A44C-F2D439F34E36} = {217C060B-95D6-4350-A2CD-D8E7D6309E3D}
 		{B1B8C600-06AB-46E0-A3A4-A303CD088D7F} = {15940179-CE51-435B-A44C-F2D439F34E36}
+		{F7B686C0-6920-4592-AD8C-28A7CE030E1F} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{94780A32-A7F8-499C-90DD-9DA2A4221D06} = {F7B686C0-6920-4592-AD8C-28A7CE030E1F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

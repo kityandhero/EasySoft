@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <LangVersion>10</LangVersion>
+        <LangVersion>11</LangVersion>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>EasySoft.UtilityTools.Core</Title>
@@ -21,15 +21,16 @@
         <DocumentationFile>bin\Release\EasySoft.UtilityTools.Core.xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="NGeoHash" Version="1.2.0"/>
-        <PackageReference Include="QRCoder" Version="1.4.3"/>
-        <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0"/>
-        <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0"/>
+        <PackageReference Include="NGeoHash" Version="1.2.0" />
+        <PackageReference Include="QRCoder" Version="1.4.3" />
+        <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+        <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
     </ItemGroup>
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
+        <ProjectReference Include="..\EasySoft.Dependence.Core\EasySoft.Dependence.Core.csproj" />
+        <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
     </ItemGroup>
 </Project>
