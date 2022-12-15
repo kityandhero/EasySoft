@@ -2,7 +2,7 @@
 
 public interface IUnitOfWork : IDisposable
 {
-    bool IsStartingUow { get; }
+    bool WhetherStartingUow { get; }
 
     void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, bool distributed = false);
 

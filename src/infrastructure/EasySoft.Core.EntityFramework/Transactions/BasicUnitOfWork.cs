@@ -1,18 +1,42 @@
 ﻿namespace EasySoft.Core.EntityFramework.Transactions;
 
+/// <summary>
+/// BasicUnitOfWork
+/// </summary>
+/// <typeparam name="TContext"></typeparam>
 public abstract class BasicUnitOfWork<TContext> : IUnitOfWork where TContext : BasicContext
 {
+    /// <summary>
+    /// BasicUnitOfWork
+    /// </summary>
+    /// <param name="context"></param>
+    /// <exception cref="ArgumentNullException"></exception>
     protected BasicUnitOfWork(TContext context)
     {
         AdvanceContext = context ?? throw new ArgumentNullException(nameof(context));
     }
 
+    /// <summary>
+    /// AdvanceContext
+    /// </summary>
     protected TContext AdvanceContext { get; init; }
 
+    /// <summary>
+    /// DbTransaction
+    /// </summary>
     protected IDbContextTransaction? DbTransaction { get; set; }
 
-    public bool IsStartingUow => AdvanceContext.Database.CurrentTransaction is not null;
+    /// <summary>
+    /// WhetherStartingUow
+    /// </summary>
+    public bool WhetherStartingUow => AdvanceContext.Database.CurrentTransaction is not null;
 
+    /// <summary>
+    /// BeginTransaction
+    /// </summary>
+    /// <param name="isolationLevel"></param>
+    /// <param name="distributed"></param>
+    /// <exception cref="ArgumentException"></exception>
     public void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, bool distributed = false)
     {
         if (AdvanceContext.Database.CurrentTransaction is not null)
@@ -21,6 +45,9 @@ public abstract class BasicUnitOfWork<TContext> : IUnitOfWork where TContext : B
         DbTransaction = GetDbContextTransaction(isolationLevel, distributed);
     }
 
+    /// <summary>
+    /// Commit
+    /// </summary>
     public void Commit()
     {
         var transaction = CheckDbTransactionExistence();
@@ -28,6 +55,9 @@ public abstract class BasicUnitOfWork<TContext> : IUnitOfWork where TContext : B
         transaction.Commit();
     }
 
+    /// <summary>
+    /// Rollback
+    /// </summary>
     public void Rollback()
     {
         var transaction = CheckDbTransactionExistence();
@@ -35,6 +65,10 @@ public abstract class BasicUnitOfWork<TContext> : IUnitOfWork where TContext : B
         transaction.Rollback();
     }
 
+    /// <summary>
+    /// CommitAsync
+    /// </summary>
+    /// <param name="cancellationToken"></param>
     public async Task CommitAsync(CancellationToken cancellationToken = default)
     {
         var transaction = CheckDbTransactionExistence();
@@ -42,6 +76,10 @@ public abstract class BasicUnitOfWork<TContext> : IUnitOfWork where TContext : B
         await transaction.CommitAsync(cancellationToken);
     }
 
+    /// <summary>
+    /// RollbackAsync
+    /// </summary>
+    /// <param name="cancellationToken"></param>
     public async Task RollbackAsync(CancellationToken cancellationToken = default)
     {
         var transaction = CheckDbTransactionExistence();
@@ -49,6 +87,9 @@ public abstract class BasicUnitOfWork<TContext> : IUnitOfWork where TContext : B
         await transaction.RollbackAsync(cancellationToken);
     }
 
+    /// <summary>
+    /// Dispose
+    /// </summary>
     public void Dispose()
     {
         Dispose(true);
@@ -68,6 +109,10 @@ public abstract class BasicUnitOfWork<TContext> : IUnitOfWork where TContext : B
         return DbTransaction;
     }
 
+    /// <summary>
+    /// Dispose
+    /// </summary>
+    /// <param name="disposing"></param>
     protected virtual void Dispose(bool disposing)
     {
         if (!disposing) return;
@@ -78,6 +123,12 @@ public abstract class BasicUnitOfWork<TContext> : IUnitOfWork where TContext : B
         DbTransaction = null;
     }
 
+    /// <summary>
+    /// GetDbContextTransaction
+    /// </summary>
+    /// <param name="isolationLevel"></param>
+    /// <param name="distributed"></param>
+    /// <returns></returns>
     protected abstract IDbContextTransaction GetDbContextTransaction(
         IsolationLevel isolationLevel = IsolationLevel.ReadCommitted,
         bool distributed = false

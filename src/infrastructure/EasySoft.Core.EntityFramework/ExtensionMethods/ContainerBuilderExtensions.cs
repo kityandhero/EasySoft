@@ -2,8 +2,18 @@
 
 namespace EasySoft.Core.EntityFramework.ExtensionMethods;
 
+/// <summary>
+/// ContainerBuilderExtensions
+/// </summary>
 public static class ContainerBuilderExtensions
 {
+    /// <summary>
+    /// AddAdvanceTenantContextFactory
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <typeparam name="TFactory"></typeparam>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static ContainerBuilder AddAdvanceTenantContextFactory<TFactory, T>(
         this ContainerBuilder builder
     ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : TenantBasicContext
@@ -14,6 +24,13 @@ public static class ContainerBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// AddAdvanceTenantContext
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <typeparam name="TFactory"></typeparam>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static ContainerBuilder AddAdvanceTenantContext<TFactory, T>(
         this ContainerBuilder builder
     ) where TFactory : AdvanceTenantContextFactory<T>, new() where T : TenantBasicContext

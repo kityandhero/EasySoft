@@ -3,10 +3,18 @@ using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
 
 namespace EasySoft.Core.EntityFramework.EntityTypeConfigures;
 
+/// <summary>
+/// BaseEntityTypeConfiguration
+/// </summary>
+/// <typeparam name="TEntity"></typeparam>
 public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfiguration<TEntity>,
     IAdvanceEntityTypeConfiguration
     where TEntity : Entity
 {
+    /// <summary>
+    /// Configure
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<TEntity> builder)
     {
         var entityType = typeof(TEntity);
@@ -21,6 +29,11 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
         ConfigureTenant(builder, entityType);
     }
 
+    /// <summary>
+    /// ConfigureTable
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="entityType"></param>
     protected virtual void ConfigureTable(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
         var tableName = BuildTableName(entityType);
@@ -32,16 +45,31 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
         if (!string.IsNullOrWhiteSpace(tableName)) builder.HasComment(tableComment);
     }
 
+    /// <summary>
+    /// BuildTableName
+    /// </summary>
+    /// <param name="entityType"></param>
+    /// <returns></returns>
     protected virtual string BuildTableName(Type entityType)
     {
         return "";
     }
 
+    /// <summary>
+    /// BuildTableComment
+    /// </summary>
+    /// <param name="entityType"></param>
+    /// <returns></returns>
     protected virtual string BuildTableComment(Type entityType)
     {
         return "";
     }
 
+    /// <summary>
+    /// ConfigureKey
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="entityType"></param>
     protected virtual void ConfigureKey(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
         builder.HasKey(x => x.Id);
@@ -52,14 +80,29 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
             .HasValueGenerator<IdentifierGenerator>();
     }
 
+    /// <summary>
+    /// ConfigureColumn
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="entityType"></param>
     protected virtual void ConfigureColumn(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
     }
 
+    /// <summary>
+    /// ConfigureIndex
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="entityType"></param>
     protected virtual void ConfigureIndex(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
     }
 
+    /// <summary>
+    /// ConfigureConcurrency
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="entityType"></param>
     protected virtual void ConfigureConcurrency(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
         if (typeof(IConcurrency).IsAssignableFrom(entityType))
@@ -70,6 +113,11 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
                 .ValueGeneratedOnAddOrUpdate();
     }
 
+    /// <summary>
+    /// ConfigureTenant
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="entityType"></param>
     protected virtual void ConfigureTenant(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
         if (typeof(ITenant).IsAssignableFrom(entityType))
@@ -79,6 +127,11 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
                 .HasDefaultValue(0);
     }
 
+    /// <summary>
+    /// ConfigureQueryFilter
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="entityType"></param>
     protected virtual void ConfigureQueryFilter(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
         if (!typeof(ISoftDelete).IsAssignableFrom(entityType)) return;

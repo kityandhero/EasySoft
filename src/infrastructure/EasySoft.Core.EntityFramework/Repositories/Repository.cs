@@ -2,28 +2,58 @@
 
 namespace EasySoft.Core.EntityFramework.Repositories;
 
+/// <summary>
+/// Repository
+/// </summary>
+/// <typeparam name="TEntity"></typeparam>
 public class Repository<TEntity> : Repository<TEntity, long>, IRepository<TEntity>
     where TEntity : class, IEntity<long>, new()
 {
+    /// <summary>
+    /// Repository
+    /// </summary>
+    /// <param name="context"></param>
     public Repository(DbContext context) : base(context)
     {
     }
 }
 
+/// <summary>
+/// Repository
+/// </summary>
+/// <typeparam name="TEntity"></typeparam>
+/// <typeparam name="TKey"></typeparam>
 public abstract class Repository<TEntity, TKey> : Repository<DbContext, TEntity, TKey>
     where TEntity : class, IEntity<TKey>, new()
 {
+    /// <summary>
+    /// Repository
+    /// </summary>
+    /// <param name="context"></param>
     protected Repository(DbContext context) : base(context)
     {
     }
 }
 
+/// <summary>
+/// Repository
+/// </summary>
+/// <typeparam name="TDbContext"></typeparam>
+/// <typeparam name="TEntity"></typeparam>
+/// <typeparam name="TKey"></typeparam>
 public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntity, TKey>
     where TDbContext : DbContext
     where TEntity : class, IEntity<TKey>, new()
 {
+    /// <summary>
+    /// Context
+    /// </summary>
     protected virtual TDbContext Context { get; }
 
+    /// <summary>
+    /// Repository
+    /// </summary>
+    /// <param name="context"></param>
     protected Repository(TDbContext context)
     {
         Context = context;
@@ -33,6 +63,18 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
 
     #region PageList
 
+    /// <summary>
+    /// PageListAsync
+    /// </summary>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="where"></param>
+    /// <param name="order"></param>
+    /// <param name="isAsc"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <typeparam name="TS"></typeparam>
+    /// <returns></returns>
     public async Task<PageListResult<TEntity>> PageListAsync<TS>(
         int pageIndex,
         int pageSize,
@@ -81,6 +123,12 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
 
     #region SingleList
 
+    /// <summary>
+    /// SingleListAsync
+    /// </summary>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public virtual async Task<IEnumerable<TEntity>> SingleListAsync(
         bool writeChannel = false,
         CancellationToken cancellationToken = default
@@ -89,6 +137,13 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         return await GetSet(writeChannel, true).ToListAsync(cancellationToken);
     }
 
+    /// <summary>
+    /// SingleListAsync
+    /// </summary>
+    /// <param name="where"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public virtual async Task<IEnumerable<TEntity>> SingleListAsync(
         Expression<Func<TEntity, bool>> where,
         bool writeChannel = false,
@@ -98,6 +153,16 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         return await Where(where, writeChannel, true).ToListAsync(cancellationToken);
     }
 
+    /// <summary>
+    /// SingleListAsync
+    /// </summary>
+    /// <param name="where"></param>
+    /// <param name="keySelector"></param>
+    /// <param name="descending"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <typeparam name="TTarget"></typeparam>
+    /// <returns></returns>
     public virtual async Task<IEnumerable<TEntity>> SingleListAsync<TTarget>(
         Expression<Func<TEntity, bool>> where,
         Func<TEntity, TTarget> keySelector,
@@ -113,6 +178,17 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
                 .ToListAsync(cancellationToken);
     }
 
+    /// <summary>
+    /// SingleListAsync
+    /// </summary>
+    /// <param name="where"></param>
+    /// <param name="keySelector"></param>
+    /// <param name="comparer"></param>
+    /// <param name="descending"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <typeparam name="TTarget"></typeparam>
+    /// <returns></returns>
     public virtual async Task<IEnumerable<TEntity>> SingleListAsync<TTarget>(
         Expression<Func<TEntity, bool>> where,
         Func<TEntity, TTarget> keySelector,
@@ -134,6 +210,13 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
 
     #region Get
 
+    /// <summary>
+    /// GetAsync
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public virtual async Task<ExecutiveResult<TEntity>> GetAsync(
         TKey id,
         bool writeChannel = false,
@@ -154,6 +237,13 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         };
     }
 
+    /// <summary>
+    /// GetAsync
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public virtual async Task<ExecutiveResult<TEntity>> GetAsync(
         Expression<Func<TEntity, bool>> filter,
         bool writeChannel = false,
@@ -170,6 +260,16 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         };
     }
 
+    /// <summary>
+    /// GetAsync
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <param name="keySelector"></param>
+    /// <param name="descending"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <typeparam name="TTarget"></typeparam>
+    /// <returns></returns>
     public virtual async Task<ExecutiveResult<TEntity>> GetAsync<TTarget>(
         Expression<Func<TEntity, bool>> filter,
         Func<TEntity, TTarget> keySelector,
@@ -189,6 +289,17 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         };
     }
 
+    /// <summary>
+    /// GetAsync
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <param name="keySelector"></param>
+    /// <param name="comparer"></param>
+    /// <param name="descending"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <typeparam name="TTarget"></typeparam>
+    /// <returns></returns>
     public virtual async Task<ExecutiveResult<TEntity>> GetAsync<TTarget>(
         Expression<Func<TEntity, bool>> filter,
         Func<TEntity, TTarget> keySelector,
@@ -264,6 +375,12 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
 
     #region where
 
+    /// <summary>
+    /// GetSet
+    /// </summary>
+    /// <param name="writeChannel"></param>
+    /// <param name="noTracking"></param>
+    /// <returns></returns>
     protected virtual IQueryable<TEntity> GetSet(bool writeChannel, bool noTracking)
     {
         switch (noTracking)
@@ -281,6 +398,13 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         return Context.Set<TEntity>();
     }
 
+    /// <summary>
+    /// Where
+    /// </summary>
+    /// <param name="expression"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="noTracking"></param>
+    /// <returns></returns>
     public virtual IQueryable<TEntity> Where(
         Expression<Func<TEntity, bool>>? expression = null,
         bool writeChannel = false,
@@ -298,6 +422,12 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
 
     #region Creeate
 
+    /// <summary>
+    /// AddAsync
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public async Task<ExecutiveResult<TEntity>> AddAsync(
         TEntity entity,
         CancellationToken cancellationToken = default
@@ -319,6 +449,12 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         };
     }
 
+    /// <summary>
+    /// AddRangeAsync
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public virtual async Task<ExecutiveResult> AddRangeAsync(
         IEnumerable<TEntity> entities,
         CancellationToken cancellationToken = default
@@ -335,6 +471,13 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
 
     #region Update
 
+    /// <summary>
+    /// UpdateAsync
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
     public virtual async Task<ExecutiveResult<TEntity>> UpdateAsync(
         TEntity entity,
         CancellationToken cancellationToken = default
@@ -364,6 +507,12 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         };
     }
 
+    /// <summary>
+    /// UpdateRangeAsync
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public virtual async Task<int> UpdateRangeAsync(
         IEnumerable<TEntity> entities,
         CancellationToken cancellationToken = default
@@ -374,6 +523,13 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         return await Context.SaveChangesAsync(cancellationToken);
     }
 
+    /// <summary>
+    /// DeleteAsync
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
     public Task<ExecutiveResult> DeleteAsync(object id, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
@@ -383,6 +539,12 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
 
     #region Delete
 
+    /// <summary>
+    /// DeleteAsync
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public virtual async Task<ExecutiveResult> DeleteAsync(
         TKey id,
         CancellationToken cancellationToken = default
@@ -395,6 +557,12 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
             : new ExecutiveResult(ReturnCode.NoData);
     }
 
+    /// <summary>
+    /// DeleteAsync
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public virtual async Task<ExecutiveResult<TEntity>> DeleteAsync(
         TEntity entity,
         CancellationToken cancellationToken = default
@@ -420,6 +588,12 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         };
     }
 
+    /// <summary>
+    /// BatchDeleteAsync
+    /// </summary>
+    /// <param name="idCollection"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public virtual async Task<ExecutiveResult> BatchDeleteAsync(
         IEnumerable<object> idCollection,
         CancellationToken cancellationToken = default
@@ -438,6 +612,12 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         return !success ? new ExecutiveResult(ReturnCode.NoChange) : new ExecutiveResult(ReturnCode.Ok);
     }
 
+    /// <summary>
+    /// BatchDeleteAsync
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public virtual async Task<ExecutiveResult> BatchDeleteAsync(
         IEnumerable<TEntity> entities,
         CancellationToken cancellationToken = default

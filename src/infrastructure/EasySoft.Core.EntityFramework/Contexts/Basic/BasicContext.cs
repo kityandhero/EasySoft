@@ -2,10 +2,18 @@
 
 namespace EasySoft.Core.EntityFramework.Contexts.Basic;
 
+/// <summary>
+/// BasicContext
+/// </summary>
 public abstract class BasicContext : DbContext, IDataContext
 {
     private readonly IEntityConfigure _entityConfigure;
 
+    /// <summary>
+    /// BasicContext
+    /// </summary>
+    /// <param name="options"></param>
+    /// <param name="entityConfigure"></param>
     protected BasicContext(
         DbContextOptions options,
         IEntityConfigure entityConfigure
@@ -17,6 +25,10 @@ public abstract class BasicContext : DbContext, IDataContext
         _entityConfigure = entityConfigure;
     }
 
+    /// <summary>
+    /// OnModelCreating
+    /// </summary>
+    /// <param name="modelBuilder"></param>
     protected sealed override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -34,6 +46,10 @@ public abstract class BasicContext : DbContext, IDataContext
     //         .HasQueryFilter(mt => mt.Tenant == _tenant);
     // }
 
+    /// <summary>
+    /// OnAdvanceModelCreating
+    /// </summary>
+    /// <param name="modelBuilder"></param>
     protected virtual void OnAdvanceModelCreating(ModelBuilder modelBuilder)
     {
     }
@@ -53,6 +69,10 @@ public abstract class BasicContext : DbContext, IDataContext
         _entityConfigure.OnModelCreating(modelBuilder);
     }
 
+    /// <summary>
+    /// OnSeedCreating
+    /// </summary>
+    /// <param name="modelBuilder"></param>
     protected virtual void OnSeedCreating(ModelBuilder modelBuilder)
     {
     }
@@ -71,6 +91,10 @@ public abstract class BasicContext : DbContext, IDataContext
     {
     }
 
+    /// <summary>
+    /// SaveChanges
+    /// </summary>
+    /// <returns></returns>
     public override int SaveChanges()
     {
         var changeCount = GetChangeCount();
@@ -92,6 +116,11 @@ public abstract class BasicContext : DbContext, IDataContext
         return result;
     }
 
+    /// <summary>
+    /// SaveChangesAsync
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var changeCount = GetChangeCount();

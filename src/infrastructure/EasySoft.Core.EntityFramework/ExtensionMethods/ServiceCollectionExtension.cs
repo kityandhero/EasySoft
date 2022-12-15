@@ -66,8 +66,12 @@ public static class ServiceCollectionExtension
 
                 if (ContextConfigure.EnableSensitiveDataLogging)
                     LogAssist.Prompt(
-                        $"{typeof(ContextConfigure).FullName} only takes effect in development mode."
+                        $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.EnableSensitiveDataLogging)} only takes effect in development mode."
                     );
+
+                LogAssist.Hint(
+                    $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.EntityConfigureAssemblies)} contain {(!ContextConfigure.EntityConfigureAssemblies.Any() ? "none" : ContextConfigure.EntityConfigureAssemblies.Select(o => o.GetName().Name).Join(","))}."
+                );
             }
 
             action(optionsBuilder);
@@ -149,10 +153,16 @@ public static class ServiceCollectionExtension
 
         services.TryAddSingleton(
             typeof(IEntityConfigure),
-            provider =>
+            _ =>
             {
-                var entityConfigure =
-                    new EntityConfigure().AddRangeAssemblies(ContextConfigure.EntityConfigureAssemblies);
+                var entityConfigureAssemblies = ContextConfigure.EntityConfigureAssemblies;
+
+                if (!entityConfigureAssemblies.Any())
+                    LogAssist.Warning("ContextConfigure.EntityConfigureAssemblies has none Assemblies");
+
+                var entityConfigure = new EntityConfigure().AddRangeAssemblies(
+                    entityConfigureAssemblies
+                );
 
                 return entityConfigure;
             }

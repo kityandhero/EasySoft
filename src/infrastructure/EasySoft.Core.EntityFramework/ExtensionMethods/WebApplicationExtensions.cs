@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.Core.EntityFramework.ExtensionMethods;
 
+/// <summary>
+/// WebApplicationExtensions
+/// </summary>
 public static class WebApplicationExtensions
 {
     internal static WebApplication UseAdvanceMigrationsEndPoint(
