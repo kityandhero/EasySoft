@@ -1,11 +1,30 @@
-﻿namespace EasySoft.Core.EntityFramework.ExtensionMethods;
+﻿using EasySoft.Core.EntityFramework.EntityConfigures.Implementations;
+using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
+using EasySoft.Core.EntityFramework.Repositories;
 
+namespace EasySoft.Core.EntityFramework.ExtensionMethods;
+
+/// <summary>
+/// ServiceCollectionExtension
+/// </summary>
 public static class ServiceCollectionExtension
 {
     private const string UniqueIdentifierAddAdvanceContext = "b8f6139c-9e5e-41ff-8c4b-2e81ed46548f";
 
     private const string UniqueIdentifierAddAdvanceContextPool = "3c843d66-f55c-42c8-b2b0-c7f7fe0d2dae";
 
+    private const string UniqueIdentifierAddAdvanceRepository = "fd5288c0-e788-43f8-94a5-86b4a78fbcba";
+
+    private const string UniqueIdentifierAddEntityConfigure = "1d68a6d0-470d-42b9-81df-898649c54c85";
+
+    /// <summary>
+    /// AddAdvanceContext
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="action"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static IServiceCollection AddAdvanceContext<T>(
         this IServiceCollection services,
         Action<DbContextOptionsBuilder> action
@@ -95,6 +114,49 @@ public static class ServiceCollectionExtension
 
             action(optionsBuilder);
         });
+
+        return services;
+    }
+
+    /// <summary>
+    /// AddAdvanceRepository
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddAdvanceRepository(
+        this IServiceCollection services
+    )
+    {
+        if (services.HasRegistered(UniqueIdentifierAddAdvanceRepository))
+            return services;
+
+        services.TryAddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+        return services;
+    }
+
+    /// <summary>
+    /// AddEntityConfigure
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddEntityConfigure(
+        this IServiceCollection services
+    )
+    {
+        if (services.HasRegistered(UniqueIdentifierAddEntityConfigure))
+            return services;
+
+        services.TryAddSingleton(
+            typeof(IEntityConfigure),
+            provider =>
+            {
+                var entityConfigure =
+                    new EntityConfigure().AddRangeAssemblies(ContextConfigure.EntityConfigureAssemblies);
+
+                return entityConfigure;
+            }
+        );
 
         return services;
     }

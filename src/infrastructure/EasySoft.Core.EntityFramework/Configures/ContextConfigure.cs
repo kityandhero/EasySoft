@@ -1,5 +1,10 @@
-﻿namespace EasySoft.Core.EntityFramework.Configures;
+﻿using Masuit.Tools;
 
+namespace EasySoft.Core.EntityFramework.Configures;
+
+/// <summary>
+/// ContextConfigure
+/// </summary>
 public static class ContextConfigure
 {
     /// <summary>
@@ -23,11 +28,35 @@ public static class ContextConfigure
     /// </summary>
     public static bool AutoEnsureCreated { get; set; }
 
+    /// <summary>
+    /// EntityConfigureAssemblies
+    /// </summary>
+    public static ISet<Assembly> EntityConfigureAssemblies { get; }
+
     static ContextConfigure()
     {
         EnableDetailedErrors = false;
         EnableSensitiveDataLogging = false;
         AutoMigrate = false;
         AutoEnsureCreated = false;
+        EntityConfigureAssemblies = new HashSet<Assembly>();
+    }
+
+    /// <summary>
+    /// AddEntityConfigureAssembly
+    /// </summary>
+    /// <param name="assembly"></param>
+    public static void AddEntityConfigureAssembly(Assembly assembly)
+    {
+        EntityConfigureAssemblies.Add(assembly);
+    }
+
+    /// <summary>
+    /// AddRangeEntityConfigureAssemblies
+    /// </summary>
+    /// <param name="assemblies"></param>
+    public static void AddRangeEntityConfigureAssemblies(IEnumerable<Assembly> assemblies)
+    {
+        EntityConfigureAssemblies.AddRange(assemblies);
     }
 }

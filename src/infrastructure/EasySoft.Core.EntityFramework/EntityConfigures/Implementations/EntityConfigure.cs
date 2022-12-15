@@ -1,13 +1,37 @@
 ﻿using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
+using Masuit.Tools;
+using Assembly = System.Reflection.Assembly;
 
 namespace EasySoft.Core.EntityFramework.EntityConfigures.Implementations;
 
 /// <summary>
 ///  适用于 EntityFramework Core 实体配置
 /// </summary>
-public abstract class BaseEntityConfigure : IEntityConfigure
+public class EntityConfigure : IEntityConfigure
 {
-    protected abstract IEnumerable<Assembly> GetEntityAssemblies();
+    private readonly ISet<Assembly> _assemblies = new HashSet<Assembly>();
+
+    /// <inheritdoc />
+    public IEnumerable<Assembly> GetAssemblies()
+    {
+        return _assemblies;
+    }
+
+    /// <inheritdoc />
+    public IEntityConfigure AddAssembly(Assembly assembly)
+    {
+        _assemblies.Add(assembly);
+
+        return this;
+    }
+
+    /// <inheritdoc />
+    public IEntityConfigure AddRangeAssemblies(IEnumerable<Assembly> assemblies)
+    {
+        _assemblies.AddRange(assemblies);
+
+        return this;
+    }
 
     /// <summary>
     /// 获取实体类型集合
@@ -24,13 +48,15 @@ public abstract class BaseEntityConfigure : IEntityConfigure
         return typeList.Append(typeof(EventTracker));
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="modelBuilder"></param>
     public virtual void OnModelCreating(ModelBuilder modelBuilder)
     {
-        var entityAssemblies = GetEntityAssemblies();
-
         var assemblies = new List<Assembly> { typeof(EventTracker).Assembly };
 
-        assemblies.AddRange(entityAssemblies);
+        assemblies.AddRange(GetAssemblies());
 
         assemblies = assemblies.Distinct().ToList();
 
@@ -59,7 +85,7 @@ public abstract class BaseEntityConfigure : IEntityConfigure
             .GetEntityTypes()
             .Where(x => types.Contains(x.ClrType));
 
-        entityTypes.ForEach(entityType =>
+        EnumerableExtensions.ForEach(entityTypes, entityType =>
         {
             modelBuilder.Entity(
                 entityType.Name,
@@ -71,7 +97,7 @@ public abstract class BaseEntityConfigure : IEntityConfigure
 
                     if (!string.IsNullOrWhiteSpace(descriptionTable)) builder.HasComment(descriptionTable);
 
-                    entityType.GetProperties().ForEach(property =>
+                    EnumerableExtensions.ForEach(entityType.GetProperties(), property =>
                     {
                         var propertyName = property.Name;
                         var memberInfo = entityType.ClrType

@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.Core.EntityFramework.SqlServer.Extensions;
 
+/// <summary>
+/// WebApplicationBuilderExtensions
+/// </summary>
 public static class WebApplicationBuilderExtensions
 {
     private const string UniqueIdentifier = "6909f3a5-aa12-4cb4-8637-c412f4beb9af";
@@ -11,11 +14,11 @@ public static class WebApplicationBuilderExtensions
     /// <param name="connectionString"></param>
     /// <param name="action"></param>
     /// <returns></returns> 
-    public static WebApplicationBuilder AddAdvanceSqlServer<TContext, TEntityConfigure>(
+    public static WebApplicationBuilder AddAdvanceSqlServer<TContext>(
         this WebApplicationBuilder builder,
         string connectionString,
         Action<DbContextOptionsBuilder> action
-    ) where TContext : SqlServerContext where TEntityConfigure : class, IEntityConfigure
+    ) where TContext : SqlServerContext
     {
         if (builder.HasRegistered(UniqueIdentifier))
             return builder;
@@ -24,7 +27,7 @@ public static class WebApplicationBuilderExtensions
             $"{nameof(AddAdvanceSqlServer)}<{typeof(TContext).Name}>."
         );
 
-        builder.Services.AddAdvanceSqlServer<TContext, TEntityConfigure>(opt =>
+        builder.Services.AddAdvanceSqlServer<TContext>(opt =>
         {
             opt.UseSqlServer(connectionString);
 

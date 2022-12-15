@@ -6,17 +6,12 @@ public static class ServiceCollectionExtensions
 {
     private static List<Type> DefaultInterceptorTypes => new() { typeof(UnitOfWorkInterceptor) };
 
-    private const string AdvanceUnitOfWorkInterceptorUniqueIdentifier = "5c82db26-dbf0-448f-bbd8-621e3bde9a1d";
-
     public static IServiceCollection AddAdvanceUnitOfWorkInterceptor(
         this IServiceCollection services
     )
     {
-        if (services.HasRegistered(AdvanceUnitOfWorkInterceptorUniqueIdentifier))
-            return services;
-
-        services.AddScoped<UnitOfWorkInterceptor>();
-        services.AddScoped<UnitOfWorkAsyncInterceptor>();
+        services.TryAddScoped<UnitOfWorkInterceptor>();
+        services.TryAddScoped<UnitOfWorkAsyncInterceptor>();
 
         return services;
     }
@@ -78,9 +73,9 @@ public static class ServiceCollectionExtensions
 
             if (implType is null) return;
 
-            services.AddScoped(implType);
+            services.TryAddScoped(implType);
             services.TryAddSingleton(new ProxyGenerator());
-            services.AddScoped(serviceType, provider =>
+            services.TryAddScoped(serviceType, provider =>
             {
                 var target = provider.GetService(implType);
                 var interceptors = DefaultInterceptorTypes

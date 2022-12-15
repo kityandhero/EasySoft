@@ -3,6 +3,7 @@ using Asp.Versioning;
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Data.ExtensionMethods;
+using EasySoft.Core.EntityFramework.ExtensionMethods;
 using EasySoft.Core.EntityFramework.MySql.Extensions;
 using EasySoft.Core.Grpc.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Assists;
@@ -16,6 +17,7 @@ using EasySoft.Core.Web.Framework.ExtensionMethods;
 using EasySoft.Simple.AccountCenter.Application.Contracts.Services;
 using EasySoft.Simple.AccountCenter.Application.Services;
 using EasySoft.Simple.AccountCenter.Domain.EntityConfigures;
+using EasySoft.Simple.AccountCenter.Domain.EntityConfigures.Items;
 using EasySoft.Simple.DomainDrivenDesign.Domain.Shared.Enums;
 using EasySoft.Simple.DomainDrivenDesign.Infrastructure.Contexts;
 using EasySoft.Simple.DomainDrivenDesign.Infrastructure.Security;
@@ -25,6 +27,7 @@ using ApplicationOperator = EasySoft.Simple.DomainDrivenDesign.Infrastructure.Au
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableDetailedErrors = true;
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableSensitiveDataLogging = true;
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.AutoEnsureCreated = true;
+EasySoft.Core.EntityFramework.Configures.ContextConfigure.AddEntityConfigureAssembly(typeof(UserConfig).Assembly);
 
 // 配置额外的构建项目
 ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
@@ -46,7 +49,9 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
         .SetName("AddAdvanceDbContext<DataContext>")
         .SetAction(applicationBuilder =>
         {
-            applicationBuilder.AddAdvanceMySql<DataContext, IntegrationEntityConfigure>(
+            applicationBuilder.AddAdvanceEntityFrameworkCore();
+
+            applicationBuilder.AddAdvanceMySql<DataContext>(
                 DatabaseConfigAssist.GetMainConnection(),
                 opt =>
                 {

@@ -11,11 +11,11 @@ public static class WebApplicationBuilderExtensions
     /// <param name="connectionString"></param>
     /// <param name="action"></param>
     /// <returns></returns> 
-    public static WebApplicationBuilder AddAdvanceMySql<TContext, TEntityConfigure>(
+    public static WebApplicationBuilder AddAdvanceMySql<TContext>(
         this WebApplicationBuilder builder,
         string connectionString,
         Action<DbContextOptionsBuilder> action
-    ) where TContext : MySqlContext where TEntityConfigure : class, IEntityConfigure
+    ) where TContext : MySqlContext
     {
         if (builder.HasRegistered(UniqueIdentifier))
             return builder;
@@ -24,7 +24,7 @@ public static class WebApplicationBuilderExtensions
             $"{nameof(AddAdvanceMySql)}<{typeof(TContext).Name}>."
         );
 
-        builder.Services.AddAdvanceMySql<TContext, TEntityConfigure>(opt =>
+        builder.Services.AddAdvanceMySql<TContext>(opt =>
         {
             opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 

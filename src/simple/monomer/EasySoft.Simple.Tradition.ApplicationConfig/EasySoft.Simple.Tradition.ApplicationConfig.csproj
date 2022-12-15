@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj" />
+      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.JsonWebToken\EasySoft.Core.JsonWebToken.csproj" />
+      <ProjectReference Include="..\EasySoft.Simple.Tradition.Data\EasySoft.Simple.Tradition.Data.csproj" />
+      <ProjectReference Include="..\EasySoft.Simple.Tradition.Security\EasySoft.Simple.Tradition.Security.csproj" />
+      <ProjectReference Include="..\EasySoft.Simple.Tradition.Service\EasySoft.Simple.Tradition.Service.csproj" />
+    </ItemGroup>
+
+</Project>

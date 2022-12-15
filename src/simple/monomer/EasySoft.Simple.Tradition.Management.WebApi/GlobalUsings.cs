@@ -19,6 +19,8 @@ global using EasySoft.Core.Swagger.Configures;
 global using EasySoft.Core.Web.Framework.BuilderAssists;
 global using EasySoft.Core.Web.Framework.Controllers;
 global using EasySoft.Core.Web.Framework.ExtensionMethods;
+global using EasySoft.Simple.Tradition.ApplicationConfig;
+global using EasySoft.Simple.Tradition.Security.Security;
 global using EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
 global using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 global using EasySoft.UtilityTools.Core.ExtensionMethods;

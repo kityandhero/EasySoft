@@ -3,7 +3,7 @@
 /// <summary>
 /// 适用于 EntityFramework Core 领域实体配置
 /// </summary>
-public abstract class BaseDomainEntityConfigure : BaseEntityConfigure
+public abstract class DomainEntityConfigure : EntityConfigure
 {
     protected override IEnumerable<Type> GetEntityTypes(Assembly assembly)
     {

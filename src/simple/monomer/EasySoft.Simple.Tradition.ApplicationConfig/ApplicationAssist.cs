@@ -1,32 +1,32 @@
-﻿using EasySoft.Core.PermissionServer.Contexts;
-using EasySoft.Core.PermissionServer.Entities;
-using EasySoft.Core.PermissionServer.Operators;
-using EasySoft.Core.PermissionServer.Services.Implementations;
-using EasySoft.Core.PermissionServer.Services.Interfaces;
-using EasySoft.Core.PermissionServer.Subscribers;
+﻿namespace EasySoft.Simple.Tradition.ApplicationConfig;
 
-namespace EasySoft.Core.PermissionServer;
-
-/// <summary>
-/// StartUpConfigure
-/// </summary>
-public class StartUpConfigure : IStartUpConfigure
+public static class ApplicationAssist
 {
-    /// <summary>
-    /// Init
-    /// </summary>
-    /// <exception cref="NotImplementedException"></exception>
-    public void Init()
+    public static void Init()
     {
         AuxiliaryConfigure.PromptConfigFileInfo = true;
 
         ContextConfigure.EnableDetailedErrors = true;
         ContextConfigure.EnableSensitiveDataLogging = true;
         ContextConfigure.AutoEnsureCreated = true;
-        ContextConfigure.AddEntityConfigureAssembly(typeof(RoleGroup).Assembly);
+        ContextConfigure.AddEntityConfigureAssembly(typeof(Blog).Assembly);
 
         // 配置额外的构建项目
         ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
+            new ExtraAction<WebApplicationBuilder>()
+                .SetName("AddApiVersioning")
+                .SetAction(applicationBuilder =>
+                {
+                    applicationBuilder.Services.AddApiVersioning(o =>
+                    {
+                        //return versions in a response header
+                        o.ReportApiVersions = true;
+                        //default version select 
+                        o.DefaultApiVersion = new ApiVersion(1, 0);
+                        //if not specifying an api version,show the default version
+                        o.AssumeDefaultVersionWhenUnspecified = true;
+                    });
+                }),
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddAdvanceDbContext<DataContext>")
                 .SetAction(applicationBuilder =>
@@ -34,7 +34,7 @@ public class StartUpConfigure : IStartUpConfigure
                     applicationBuilder.AddAdvanceEntityFrameworkCore();
 
                     //使用 Sql Server
-                    applicationBuilder.AddAdvanceSqlServer<PermissionSqlServerContext>(
+                    applicationBuilder.AddAdvanceSqlServer<SqlServerDataContext>(
                         DatabaseConfigAssist.GetMainConnection(),
                         opt =>
                         {
@@ -54,31 +54,15 @@ public class StartUpConfigure : IStartUpConfigure
                     // );
 
                     applicationBuilder.AddAssemblyBusinessServices(
-                        typeof(ISecurityService).Assembly,
-                        typeof(SecurityService).Assembly
+                        typeof(IBlogService).Assembly,
+                        typeof(BlogService).Assembly
                     );
                 }),
             // 自定义静态文件配置 如有特殊需求，可以进行配置，不配置将采用内置选项，此处仅作为有需要时的样例
             // applicationBuilder => { applicationBuilder.AddStaticFileOptionsInjection<CustomStaticFileOptions>(); },
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddAdvanceJsonWebToken")
-                .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceJsonWebToken<ApplicationOperator>(); }),
-            new ExtraAction<WebApplicationBuilder>()
-                .SetName("AddCapSubscriber")
-                .SetAction(applicationBuilder =>
-                {
-                    applicationBuilder.AddCapSubscriber<AccessWayExchangeSubscriber>();
-                })
-        );
-
-        SwaggerConfigure.GeneralParameters.AddRange(
-            new OpenApiParameter
-            {
-                Name = "token",
-                Description = "登录凭据",
-                Required = false,
-                In = ParameterLocation.Header
-            }
+                .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceJsonWebToken<ApplicationOperator>(); })
         );
     }
 }

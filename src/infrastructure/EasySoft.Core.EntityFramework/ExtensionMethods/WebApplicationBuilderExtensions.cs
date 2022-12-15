@@ -1,12 +1,40 @@
 ﻿namespace EasySoft.Core.EntityFramework.ExtensionMethods;
 
+/// <summary>
+/// WebApplicationBuilderExtensions
+/// </summary>
 public static class WebApplicationBuilderExtensions
 {
     // private const string UniqueIdentifierAddAdvanceContext = "3964d988-0ba6-44f4-90ba-cc5ae17a0a05";
     //
     // private const string UniqueIdentifierAddAdvanceContextPool = "494c3ace-765a-45f4-b798-7a29d76847b1";
-    //
-    // private const string UniqueIdentifierAddPooledAdvanceTenantContext = "bb87108a-a604-47e3-9166-60f424451c80";
+
+    private const string UniqueIdentifierAddAdvanceEntityFrameworkCore = "edbadcc0-ed91-4479-a503-c11b4be72fdc";
+
+    /// <summary>
+    ///     AddAdvanceEntityFrameworkCore
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns> 
+    public static WebApplicationBuilder AddAdvanceEntityFrameworkCore(
+        this WebApplicationBuilder builder
+    )
+    {
+        if (builder.HasRegistered(UniqueIdentifierAddAdvanceEntityFrameworkCore))
+            return builder;
+
+        StartupDescriptionMessageAssist.AddExecute(
+            $"{nameof(AddAdvanceEntityFrameworkCore)}."
+        );
+
+        builder.Services.AddAdvanceUnitOfWorkInterceptor();
+
+        builder.Services.AddAdvanceRepository();
+
+        builder.Services.AddEntityConfigure();
+
+        return builder;
+    }
 
     // /// <summary>
     // ///     AddAdvanceContext
