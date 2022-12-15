@@ -8,7 +8,6 @@ global using EasySoft.Core.PermissionVerification.Attributes;
 global using EasySoft.Core.PermissionVerification.ExtensionMethods;
 global using EasySoft.Core.Web.Framework.Controllers;
 global using EasySoft.Core.Web.Framework.ExtensionMethods;
-global using EasySoft.Simple.Tradition.ApplicationConfig;
 global using EasySoft.Simple.Tradition.Data.DataTransferObjects;
 global using EasySoft.Simple.Tradition.Security.Security;
 global using EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
