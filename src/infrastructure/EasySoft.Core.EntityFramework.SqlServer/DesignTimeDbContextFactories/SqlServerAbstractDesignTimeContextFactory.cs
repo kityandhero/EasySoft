@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.EntityFramework.SqlServer.DesignTimeDbContextFactories;
+﻿using System.Reflection;
+
+namespace EasySoft.Core.EntityFramework.SqlServer.DesignTimeDbContextFactories;
 
 /// <summary>
 /// SqlServerDesignTimeContextFactory 用于 migration
@@ -7,6 +9,12 @@ public abstract class
     SqlServerAbstractDesignTimeContextFactory<TSqlServerContext> : IDesignTimeDbContextFactory<TSqlServerContext>
     where TSqlServerContext : SqlServerContext
 {
+    /// <summary>
+    /// GetEntityConfigureAssemblies
+    /// </summary>
+    /// <returns></returns>
+    protected abstract ISet<Assembly> GetEntityConfigureAssemblies();
+
     /// <summary>
     /// CreateDbContext
     /// </summary>
@@ -20,10 +28,8 @@ public abstract class
 
         optionsBuilder.UseSnakeCaseNamingConvention();
 
-        var entityConfigureAssemblies = ContextConfigure.EntityConfigureAssemblies;
-
         var entityConfigure = new EntityConfigure().AddRangeAssemblies(
-            entityConfigureAssemblies
+            GetEntityConfigureAssemblies()
         );
 
         return typeof(TSqlServerContext).Create<TSqlServerContext>(optionsBuilder.Options, entityConfigure);

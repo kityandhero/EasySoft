@@ -53,90 +53,114 @@ namespace EasySoft.Simple.Tradition.Data.Migrations
             modelBuilder.Entity("EasySoft.Simple.Tradition.Data.Entities.Blog", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                        .HasColumnName("id")
+                        .HasColumnOrder(1)
+                        .HasComment("数据标识");
 
                     b.Property<string>("Motto")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("motto");
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasDefaultValue("")
+                        .HasColumnName("motto")
+                        .HasComment("座右铭");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("name");
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasDefaultValue("")
+                        .HasColumnName("name")
+                        .HasComment("名称");
 
                     b.Property<string>("Pseudonym")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("pseudonym");
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasDefaultValue("")
+                        .HasColumnName("pseudonym")
+                        .HasComment("笔名");
 
                     b.Property<long>("UserId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("user_id");
+                        .HasDefaultValue(0L)
+                        .HasColumnName("user_id")
+                        .HasComment("用户标识");
 
                     b.HasKey("Id")
                         .HasName("pk_blog");
 
                     b.ToTable("blog", (string)null);
 
+                    b.HasComment("博客");
+
                     b.HasData(
                         new
                         {
-                            Id = 364359199944710L,
+                            Id = 364366116073479L,
                             Motto = "",
                             Name = "",
                             Pseudonym = "",
-                            UserId = 364359199944709L
+                            UserId = 364366116073478L
                         });
                 });
 
             modelBuilder.Entity("EasySoft.Simple.Tradition.Data.Entities.Customer", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                        .HasColumnName("id")
+                        .HasColumnOrder(1)
+                        .HasComment("数据标识");
 
                     b.Property<long>("UserId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("user_id");
+                        .HasDefaultValue(0L)
+                        .HasColumnName("user_id")
+                        .HasComment("用户标识");
 
                     b.HasKey("Id")
                         .HasName("pk_customer");
 
                     b.ToTable("customer", (string)null);
 
+                    b.HasComment("顾客信息");
+
                     b.HasData(
                         new
                         {
-                            Id = 364359199944709L,
-                            UserId = 364359199936517L
+                            Id = 364366116073478L,
+                            UserId = 364366116073477L
                         });
                 });
 
             modelBuilder.Entity("EasySoft.Simple.Tradition.Data.Entities.Post", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                        .HasColumnName("id")
+                        .HasColumnOrder(1)
+                        .HasComment("数据标识");
 
                     b.Property<long>("BlogId")
                         .HasColumnType("bigint")
-                        .HasColumnName("blog_id");
+                        .HasColumnName("blog_id")
+                        .HasComment("");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("title");
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasDefaultValue("")
+                        .HasColumnName("title")
+                        .HasComment("");
 
                     b.HasKey("Id")
                         .HasName("pk_post");
@@ -149,66 +173,84 @@ namespace EasySoft.Simple.Tradition.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 364359199969285L,
-                            BlogId = 364359199944710L,
-                            Title = "4ce4fb39ddd34a978443e2559d7289e5"
+                            Id = 364366116073480L,
+                            BlogId = 364366116073479L,
+                            Title = "5cb3e93dd7b84a2bb238bdd80fafa31b"
                         },
                         new
                         {
-                            Id = 364359199969286L,
-                            BlogId = 364359199944710L,
-                            Title = "8a9399c1ddaf431fb1e96ea8257fddf3"
+                            Id = 364366116073481L,
+                            BlogId = 364366116073479L,
+                            Title = "c039271ed1a14a51ac26da13f8c900c3"
                         },
                         new
                         {
-                            Id = 364359199969287L,
-                            BlogId = 364359199944710L,
-                            Title = "e03302c78bf740ddbf6f5ab26ecc57be"
+                            Id = 364366116073482L,
+                            BlogId = 364366116073479L,
+                            Title = "11141e9cb3b9425ca3499cc112583e6e"
                         });
                 });
 
             modelBuilder.Entity("EasySoft.Simple.Tradition.Data.Entities.User", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                        .HasColumnName("id")
+                        .HasColumnOrder(1)
+                        .HasComment("数据标识");
 
                     b.Property<string>("Alias")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("alias");
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValue("")
+                        .HasColumnName("alias")
+                        .HasComment("别名");
 
                     b.Property<string>("LoginName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("login_name");
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValue("")
+                        .HasColumnName("login_name")
+                        .HasComment("登录名");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("password");
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValue("")
+                        .HasColumnName("password")
+                        .HasComment("密码");
 
                     b.Property<string>("RealName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("real_name");
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValue("")
+                        .HasColumnName("real_name")
+                        .HasComment("真实姓名");
 
                     b.Property<long>("RoleGroupId")
                         .HasColumnType("bigint")
-                        .HasColumnName("role_group_id");
+                        .HasColumnName("role_group_id")
+                        .HasComment("");
 
                     b.HasKey("Id")
                         .HasName("pk_user");
 
                     b.ToTable("user", (string)null);
 
+                    b.HasComment("基础账户");
+
                     b.HasData(
                         new
                         {
-                            Id = 364359199936517L,
+                            Id = 364366116073477L,
                             Alias = "种子用户",
                             LoginName = "first",
                             Password = "e10adc3949ba59abbe56e057f20f883e",
