@@ -54,4 +54,20 @@ public static class EnvironmentAssist
 
         return environment.GetAliasName();
     }
+
+    /// <summary>
+    /// TryGetEnvironmentAliasName
+    /// </summary>
+    /// <returns></returns>
+    public static string TryGetEnvironmentAliasName()
+    {
+        try
+        {
+            return GetEnvironmentAliasName();
+        }
+        catch (Exception e)
+        {
+            return "";
+        }
+    }
 }

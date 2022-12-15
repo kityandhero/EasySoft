@@ -33,12 +33,7 @@ public class StartUpConfigure : IStartUpConfigure
                 {
                     //使用 Sql Server
                     applicationBuilder.AddAdvanceSqlServer<PermissionSqlServerContext>(
-                        DatabaseConfigAssist.GetMainConnection(),
-                        opt =>
-                        {
-                            //自动转换命名格式
-                            opt.UseSnakeCaseNamingConvention();
-                        }
+                        DatabaseConfigAssist.GetMainConnection()
                     );
 
                     // 使用 MySql

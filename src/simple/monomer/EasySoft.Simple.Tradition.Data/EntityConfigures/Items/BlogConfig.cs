@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.EntityFramework.EntityTypeConfigures;
+﻿using System.Data;
+using EasySoft.Core.EntityFramework.EntityTypeConfigures;
 using EasySoft.Simple.Tradition.Data.Entities;
 using EasySoft.UtilityTools.Standard;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -28,7 +29,7 @@ public class BlogConfig : BaseEntityTypeConfiguration<Blog>
             .HasDefaultValue(string.Empty);
 
         builder.Property(x => x.UserId)
-            // .HasColumnName("customer_id")
+            .HasColumnName("user_id")
             .HasDefaultValue(0);
 
         builder.HasMany(x => x.Posts)

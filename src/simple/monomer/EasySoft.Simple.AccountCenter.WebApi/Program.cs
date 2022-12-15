@@ -54,12 +54,7 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
         .SetAction(applicationBuilder =>
         {
             applicationBuilder.AddAdvanceMySql<DataContext>(
-                DatabaseConfigAssist.GetMainConnection(),
-                opt =>
-                {
-                    //自动转换命名格式
-                    opt.UseSnakeCaseNamingConvention();
-                }
+                DatabaseConfigAssist.GetMainConnection()
             );
         }),
     new ExtraAction<WebApplicationBuilder>()

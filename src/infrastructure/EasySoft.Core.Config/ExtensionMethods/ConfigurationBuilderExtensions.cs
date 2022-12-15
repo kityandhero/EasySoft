@@ -13,7 +13,7 @@ public static class ConfigurationBuilderExtensions
             true
         );
 
-        if (!string.IsNullOrWhiteSpace(EnvironmentAssist.GetEnvironmentAliasName()))
+        if (!string.IsNullOrWhiteSpace(EnvironmentAssist.TryGetEnvironmentAliasName()))
         {
             var otherFilePath = filePath.Replace(".json", $".{EnvironmentAssist.GetEnvironmentAliasName()}.json");
 

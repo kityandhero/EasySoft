@@ -1,4 +1,6 @@
 ﻿using EasySoft.Core.Data.Configures;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations.Internal;
 
 namespace EasySoft.Simple.Tradition.ApplicationConfig;
 
@@ -39,12 +41,7 @@ public static class ApplicationAssist
                 {
                     //使用 Sql Server
                     applicationBuilder.AddAdvanceSqlServer<SqlServerDataContext>(
-                        DatabaseConfigAssist.GetMainConnection(),
-                        opt =>
-                        {
-                            //自动转换命名格式
-                            opt.UseSnakeCaseNamingConvention();
-                        }
+                        DatabaseConfigAssist.GetMainConnection()
                     );
 
                     // 使用 MySql

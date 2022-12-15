@@ -1,9 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
-using Microsoft.EntityFrameworkCore.Migrations.Internal;
-
-namespace EasySoft.Core.EntityFramework.ExtensionMethods;
+﻿namespace EasySoft.Core.EntityFramework.ExtensionMethods;
 
 /// <summary>
 /// WebApplicationExtensions

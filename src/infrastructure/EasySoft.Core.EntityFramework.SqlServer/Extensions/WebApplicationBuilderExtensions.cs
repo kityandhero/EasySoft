@@ -17,7 +17,7 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddAdvanceSqlServer<TContext>(
         this WebApplicationBuilder builder,
         string connectionString,
-        Action<DbContextOptionsBuilder> action
+        Action<DbContextOptionsBuilder>? action = null
     ) where TContext : SqlServerContext
     {
         if (builder.HasRegistered(UniqueIdentifier))
@@ -31,7 +31,9 @@ public static class WebApplicationBuilderExtensions
         {
             opt.UseSqlServer(connectionString);
 
-            action(opt);
+            opt.UseSnakeCaseNamingConvention();
+
+            action?.Invoke(opt);
         });
 
         return builder;

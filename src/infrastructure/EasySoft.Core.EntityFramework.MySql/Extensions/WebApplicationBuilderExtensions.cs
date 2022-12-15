@@ -14,7 +14,7 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddAdvanceMySql<TContext>(
         this WebApplicationBuilder builder,
         string connectionString,
-        Action<DbContextOptionsBuilder> action
+        Action<DbContextOptionsBuilder>? action = null
     ) where TContext : MySqlContext
     {
         if (builder.HasRegistered(UniqueIdentifier))
@@ -28,7 +28,9 @@ public static class WebApplicationBuilderExtensions
         {
             opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 
-            action(opt);
+            opt.UseSnakeCaseNamingConvention();
+
+            action?.Invoke(opt);
         });
 
         return builder;
