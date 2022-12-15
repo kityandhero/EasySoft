@@ -40,6 +40,10 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.TryAddSingleton(new ProxyGenerator());
 
+        StartupDescriptionMessageAssist.AddPrompt(
+            $"Permission server host url is {GeneralConfigAssist.GetPermissionServerHostUrl()}."
+        );
+
         builder.AddAdvanceRefitClient<IPermissionClient>(clientBuilder =>
         {
             clientBuilder.ConfigureHttpClient(client =>

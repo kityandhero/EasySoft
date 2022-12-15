@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Swagger.ModelConventions;
+﻿using EasySoft.Core.Data.ExtensionMethods;
+using EasySoft.Core.Swagger.ModelConventions;
 using EasySoft.Core.Web.Framework.Attributes;
 using EasySoft.Core.Web.Framework.Filters;
 
@@ -176,6 +177,10 @@ public static class WebApplicationBuilderExtensions
         builder.AddAdvanceCap();
 
         builder.AddAdvanceHangfire();
+
+        builder.AddAdvanceEntityFrameworkCore();
+
+        builder.AddAssemblyBusinessServices();
 
         var app = builder.Build();
 

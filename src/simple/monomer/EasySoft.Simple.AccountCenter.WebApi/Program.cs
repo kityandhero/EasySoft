@@ -2,6 +2,7 @@ using System.Reflection;
 using Asp.Versioning;
 using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.Data.Configures;
 using EasySoft.Core.Data.ExtensionMethods;
 using EasySoft.Core.EntityFramework.ExtensionMethods;
 using EasySoft.Core.EntityFramework.MySql.Extensions;
@@ -29,6 +30,9 @@ EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableSensitiveDataLog
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.AutoEnsureCreated = true;
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.AddEntityConfigureAssembly(typeof(UserConfig).Assembly);
 
+BusinessServiceConfigure.AddBusinessServiceInterfaceAssembly(typeof(IUserService).Assembly);
+BusinessServiceConfigure.AddBusinessServiceImplementationAssembly(typeof(UserService).Assembly);
+
 // 配置额外的构建项目
 ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
     new ExtraAction<WebApplicationBuilder>()
@@ -49,8 +53,6 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
         .SetName("AddAdvanceDbContext<DataContext>")
         .SetAction(applicationBuilder =>
         {
-            applicationBuilder.AddAdvanceEntityFrameworkCore();
-
             applicationBuilder.AddAdvanceMySql<DataContext>(
                 DatabaseConfigAssist.GetMainConnection(),
                 opt =>
@@ -58,11 +60,6 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
                     //自动转换命名格式
                     opt.UseSnakeCaseNamingConvention();
                 }
-            );
-
-            applicationBuilder.AddAssemblyBusinessServices(
-                typeof(IUserService).Assembly,
-                typeof(UserService).Assembly
             );
         }),
     new ExtraAction<WebApplicationBuilder>()

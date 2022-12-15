@@ -10,6 +10,10 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
 {
     private readonly IUnitOfWork _unitOfWork;
 
+    /// <summary>
+    /// 工作单元拦截器
+    /// </summary>
+    /// <param name="unitOfWork"></param>
     public UnitOfWorkAsyncInterceptor(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;

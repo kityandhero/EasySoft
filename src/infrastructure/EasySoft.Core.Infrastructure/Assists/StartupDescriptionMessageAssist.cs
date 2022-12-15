@@ -76,6 +76,16 @@ public static class StartupDescriptionMessageAssist
     }
 
     /// <summary>
+    /// AddHint
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="extra"></param>
+    public static void AddHint(string message, string extra = "")
+    {
+        AddTrace($"HINT: {message}", extra);
+    }
+
+    /// <summary>
     /// AddPrompt
     /// </summary>
     /// <param name="message"></param>

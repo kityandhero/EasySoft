@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.Core.Data.Attributes;
 
+/// <summary>
+/// 工作单元标记
+/// </summary>
 [AttributeUsage(AttributeTargets.Method)]
 public class UnitOfWorkAttribute : Attribute
 {

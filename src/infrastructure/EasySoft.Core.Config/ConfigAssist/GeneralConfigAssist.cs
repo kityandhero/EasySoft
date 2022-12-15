@@ -1212,13 +1212,14 @@ public static class GeneralConfigAssist
     {
         var v = GetConfig().PermissionServerHostUrl;
 
-        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+        if (!string.IsNullOrWhiteSpace(v)) return v;
 
-        if (string.IsNullOrWhiteSpace(v))
-            throw new ConfigErrorException(
-                $"请配置 PermissionServerHostUrl: {ConfigFile} -> PermissionServerHostUrl",
-                GetConfigFileInfo()
-            );
+        v = FlagAssist.StartupDisplayUrls.First();
+
+        StartupDescriptionMessageAssist.AddWarning(
+            $"PermissionServerHostUrl has not config, use the start base url {v}.",
+            GetConfigFileInfo()
+        );
 
         return v;
     }

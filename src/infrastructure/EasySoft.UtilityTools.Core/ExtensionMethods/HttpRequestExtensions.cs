@@ -1,5 +1,4 @@
 ﻿using EasySoft.UtilityTools.Standard.Assists;
-using EasySoft.UtilityTools.Standard.Entity;
 using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using EasySoft.UtilityTools.Standard.Mime;
 

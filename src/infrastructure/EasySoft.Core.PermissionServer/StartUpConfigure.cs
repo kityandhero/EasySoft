@@ -1,9 +1,8 @@
 ﻿using EasySoft.Core.PermissionServer.Contexts;
-using EasySoft.Core.PermissionServer.Entities;
+using EasySoft.Core.PermissionServer.Core.Assist;
+using EasySoft.Core.PermissionServer.Core.Services.Implementations;
+using EasySoft.Core.PermissionServer.Core.Subscribers;
 using EasySoft.Core.PermissionServer.Operators;
-using EasySoft.Core.PermissionServer.Services.Implementations;
-using EasySoft.Core.PermissionServer.Services.Interfaces;
-using EasySoft.Core.PermissionServer.Subscribers;
 
 namespace EasySoft.Core.PermissionServer;
 
@@ -23,7 +22,8 @@ public class StartUpConfigure : IStartUpConfigure
         ContextConfigure.EnableDetailedErrors = true;
         ContextConfigure.EnableSensitiveDataLogging = true;
         ContextConfigure.AutoEnsureCreated = true;
-        ContextConfigure.AddEntityConfigureAssembly(typeof(RoleGroup).Assembly);
+
+        PermissionServerAssist.Init();
 
         // 配置额外的构建项目
         ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
@@ -31,8 +31,6 @@ public class StartUpConfigure : IStartUpConfigure
                 .SetName("AddAdvanceDbContext<DataContext>")
                 .SetAction(applicationBuilder =>
                 {
-                    applicationBuilder.AddAdvanceEntityFrameworkCore();
-
                     //使用 Sql Server
                     applicationBuilder.AddAdvanceSqlServer<PermissionSqlServerContext>(
                         DatabaseConfigAssist.GetMainConnection(),
@@ -52,11 +50,6 @@ public class StartUpConfigure : IStartUpConfigure
                     //         opt.UseSnakeCaseNamingConvention();
                     //     }
                     // );
-
-                    applicationBuilder.AddAssemblyBusinessServices(
-                        typeof(ISecurityService).Assembly,
-                        typeof(SecurityService).Assembly
-                    );
                 }),
             // 自定义静态文件配置 如有特殊需求，可以进行配置，不配置将采用内置选项，此处仅作为有需要时的样例
             // applicationBuilder => { applicationBuilder.AddStaticFileOptionsInjection<CustomStaticFileOptions>(); },

@@ -2,10 +2,18 @@
 
 namespace EasySoft.Core.Data.ExtensionMethods;
 
+/// <summary>
+/// ServiceCollectionExtensions
+/// </summary>
 public static class ServiceCollectionExtensions
 {
     private static List<Type> DefaultInterceptorTypes => new() { typeof(UnitOfWorkInterceptor) };
 
+    /// <summary>
+    /// AddAdvanceUnitOfWorkInterceptor
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static IServiceCollection AddAdvanceUnitOfWorkInterceptor(
         this IServiceCollection services
     )
@@ -16,7 +24,13 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddAssemblyBusinessServiceInterfaces(
+    /// <summary>
+    /// AddAssemblyBusinessServiceInterfaces
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="assemblies"></param>
+    /// <returns></returns>
+    internal static IServiceCollection AddAssemblyBusinessServiceInterfaces(
         this IServiceCollection services,
         params Assembly[] assemblies
     )
@@ -30,7 +44,13 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddAssemblyBusinessServiceInterfaces(
+    /// <summary>
+    /// AddAssemblyBusinessServiceInterfaces
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="assembly"></param>
+    /// <returns></returns>
+    internal static IServiceCollection AddAssemblyBusinessServiceInterfaces(
         this IServiceCollection services,
         Assembly assembly
     )
@@ -46,7 +66,13 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddAssemblyBusinessServiceImplementations(
+    /// <summary>
+    /// AddAssemblyBusinessServiceImplementations
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="assemblies"></param>
+    /// <returns></returns>
+    internal static IServiceCollection AddAssemblyBusinessServiceImplementations(
         this IServiceCollection services,
         params Assembly[] assemblies
     )
@@ -60,7 +86,14 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddAssemblyBusinessServiceImplementations(
+    /// <summary>
+    /// AddAssemblyBusinessServiceImplementations
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="assembly"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    internal static IServiceCollection AddAssemblyBusinessServiceImplementations(
         this IServiceCollection services,
         Assembly assembly
     )

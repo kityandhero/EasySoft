@@ -11,17 +11,7 @@ public class StartUpConfigure : IStartUpConfigure
     /// <exception cref="NotImplementedException"></exception>
     public void Init()
     {
-        ApplicationAssist.Init();
-
-        // 配置额外的构建项目
-        ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
-            new ExtraAction<WebApplicationBuilder>()
-                .SetName("AddPermissionServer")
-                .SetAction(applicationBuilder =>
-                {
-                    applicationBuilder.AddPermissionVerification<ApplicationPermissionObserver>();
-                })
-        );
+        Core.Assists.ApplicationAssist.InitManagement();
 
         SwaggerConfigure.GeneralParameters.AddRange(
             new OpenApiParameter

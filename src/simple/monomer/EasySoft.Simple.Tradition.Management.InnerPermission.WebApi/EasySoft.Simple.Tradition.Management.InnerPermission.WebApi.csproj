@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Content Include="..\..\..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
+        <Content Update="configures\databaseConfig.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Update="configures\databaseConfig.mysql.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Update="configures\databaseConfig.sqlserver.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Update="configures\generalConfig.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Update="configures\rabbitMQConfig.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Update="configures\redisConfig.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Update="configures\swaggerConfig.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.PermissionServer.Core\EasySoft.Core.PermissionServer.Core.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Swagger\EasySoft.Core.Swagger.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj" />
+        <ProjectReference Include="..\EasySoft.Simple.Tradition.Common\EasySoft.Simple.Tradition.Common.csproj" />
+        <ProjectReference Include="..\EasySoft.Simple.Tradition.Management.Core\EasySoft.Simple.Tradition.Management.Core.csproj" />
+    </ItemGroup>
+
+</Project>

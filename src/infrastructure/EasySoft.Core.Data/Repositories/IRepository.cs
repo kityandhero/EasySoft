@@ -1,9 +1,13 @@
 ﻿namespace EasySoft.Core.Data.Repositories;
 
+/// <summary>
+/// IRepository
+/// </summary>
 public interface IRepository
 {
 }
 
+/// <inheritdoc />
 public interface IRepository<TEntity> : IRepository<TEntity, long> where TEntity : class, IEntity<long>
 {
 }
@@ -17,6 +21,18 @@ public interface IRepository<TEntity, in TKey> : IRepository where TEntity : cla
 
     #region PageList
 
+    /// <summary>
+    /// 分页列表
+    /// </summary>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="where"></param>
+    /// <param name="order"></param>
+    /// <param name="isAsc"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <typeparam name="TTarget"></typeparam>
+    /// <returns></returns>
     Task<PageListResult<TEntity>> PageListAsync<TTarget>(
         int pageIndex,
         int pageSize,
@@ -31,17 +47,40 @@ public interface IRepository<TEntity, in TKey> : IRepository where TEntity : cla
 
     #region SingleList
 
+    /// <summary>
+    /// 单页列表
+    /// </summary>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     Task<IEnumerable<TEntity>> SingleListAsync(
         bool writeChannel = false,
         CancellationToken cancellationToken = default
     );
 
+    /// <summary>
+    /// 单页列表
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     Task<IEnumerable<TEntity>> SingleListAsync(
         Expression<Func<TEntity, bool>> filter,
         bool writeChannel = false,
         CancellationToken cancellationToken = default
     );
 
+    /// <summary>
+    /// 单页列表
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <param name="keySelector"></param>
+    /// <param name="descending"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <typeparam name="TTarget"></typeparam>
+    /// <returns></returns>
     Task<IEnumerable<TEntity>> SingleListAsync<TTarget>(
         Expression<Func<TEntity, bool>> filter,
         Func<TEntity, TTarget> keySelector,
@@ -50,6 +89,17 @@ public interface IRepository<TEntity, in TKey> : IRepository where TEntity : cla
         CancellationToken cancellationToken = default
     );
 
+    /// <summary>
+    /// 单页列表
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <param name="keySelector"></param>
+    /// <param name="comparer"></param>
+    /// <param name="descending"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <typeparam name="TTarget"></typeparam>
+    /// <returns></returns>
     Task<IEnumerable<TEntity>> SingleListAsync<TTarget>(
         Expression<Func<TEntity, bool>> filter,
         Func<TEntity, TTarget> keySelector,
@@ -63,18 +113,42 @@ public interface IRepository<TEntity, in TKey> : IRepository where TEntity : cla
 
     #region Get
 
+    /// <summary>
+    /// 获取单项
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     Task<ExecutiveResult<TEntity>> GetAsync(
         TKey id,
         bool writeChannel = false,
         CancellationToken cancellationToken = default
     );
 
+    /// <summary>
+    /// 获取单项
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     Task<ExecutiveResult<TEntity>> GetAsync(
         Expression<Func<TEntity, bool>> filter,
         bool writeChannel = false,
         CancellationToken cancellationToken = default
     );
 
+    /// <summary>
+    /// 获取单项
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <param name="keySelector"></param>
+    /// <param name="descending"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <typeparam name="TTarget"></typeparam>
+    /// <returns></returns>
     Task<ExecutiveResult<TEntity>> GetAsync<TTarget>(
         Expression<Func<TEntity, bool>> filter,
         Func<TEntity, TTarget> keySelector,
@@ -83,6 +157,17 @@ public interface IRepository<TEntity, in TKey> : IRepository where TEntity : cla
         CancellationToken cancellationToken = default
     );
 
+    /// <summary>
+    /// 获取单项
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <param name="keySelector"></param>
+    /// <param name="comparer"></param>
+    /// <param name="descending"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <typeparam name="TTarget"></typeparam>
+    /// <returns></returns>
     Task<ExecutiveResult<TEntity>> GetAsync<TTarget>(
         Expression<Func<TEntity, bool>> filter,
         Func<TEntity, TTarget> keySelector,
@@ -143,13 +228,25 @@ public interface IRepository<TEntity, in TKey> : IRepository where TEntity : cla
 
     #endregion
 
-    #region Create
+    #region Add
 
+    /// <summary>
+    /// 添加
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     Task<ExecutiveResult<TEntity>> AddAsync(
         TEntity entity,
         CancellationToken cancellationToken = default
     );
 
+    /// <summary>
+    /// 添加多项
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     Task<ExecutiveResult> AddRangeAsync(
         IEnumerable<TEntity> entities,
         CancellationToken cancellationToken = default
@@ -159,32 +256,68 @@ public interface IRepository<TEntity, in TKey> : IRepository where TEntity : cla
 
     #region Update
 
+    /// <summary>
+    /// 更新
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     Task<ExecutiveResult<TEntity>> UpdateAsync(
         TEntity entity,
         CancellationToken cancellationToken = default
     );
 
+    /// <summary>
+    /// 更新多项
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     Task<int> UpdateRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
 
     #endregion
 
     #region Delete
 
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     Task<ExecutiveResult> DeleteAsync(
         object id,
         CancellationToken cancellationToken = default
     );
 
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     Task<ExecutiveResult<TEntity>> DeleteAsync(
         TEntity entity,
         CancellationToken cancellationToken = default
     );
 
+    /// <summary>
+    /// 批量删除
+    /// </summary>
+    /// <param name="idCollection"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     Task<ExecutiveResult> BatchDeleteAsync(
         IEnumerable<object> idCollection,
         CancellationToken cancellationToken = default
     );
 
+    /// <summary>
+    /// 批量删除
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     Task<ExecutiveResult> BatchDeleteAsync(IEnumerable<TEntity> entities,
         CancellationToken cancellationToken = default
     );
