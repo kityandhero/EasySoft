@@ -14,4 +14,9 @@ public static class DatabaseConstant
     /// Nvarchar
     /// </summary>
     public const string Nvarchar = "nvarchar";
+
+    /// <summary>
+    /// Nvarchar
+    /// </summary>
+    public const string NvarcharMax = "nvarchar(max)";
 }

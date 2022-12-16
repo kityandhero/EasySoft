@@ -17,14 +17,14 @@ public class PresetRoleConfig : BaseEntityTypeConfiguration<PresetRole>
             .HasDefaultValue(string.Empty);
 
         builder.Property(x => x.Content)
-            .HasColumnType(DatabaseConstant.Nvarchar)
+            .HasColumnType(DatabaseConstant.NvarcharMax)
             .HasDefaultValue(string.Empty);
 
         builder.Property(x => x.ModuleCount)
             .HasDefaultValue(0);
 
         builder.Property(x => x.Competence)
-            .HasColumnType(DatabaseConstant.Nvarchar)
+            .HasColumnType(DatabaseConstant.NvarcharMax)
             .HasDefaultValue(string.Empty);
 
         builder.Property(x => x.WhetherSuper)
@@ -35,6 +35,7 @@ public class PresetRoleConfig : BaseEntityTypeConfiguration<PresetRole>
 
         builder.Property(x => x.Ip)
             .HasColumnType(DatabaseConstant.Nvarchar)
+            .HasMaxLength(40)
             .HasDefaultValue(string.Empty);
 
         builder.Property(x => x.CreateUserId)

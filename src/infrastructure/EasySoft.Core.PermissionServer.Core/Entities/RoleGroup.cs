@@ -25,4 +25,25 @@ public class RoleGroup : BaseEntity
     /// </summary>
     [Description("预设角色集合")]
     public string PresetRoleCollection { get; set; } = "";
+
+    [Description("渠道码")]
+    public int Channel { get; set; }
+
+    [Description("状态码")]
+    public int Status { get; set; }
+
+    [Description("Ip")]
+    public string Ip { get; set; } = "";
+
+    [Description("创建人标识")]
+    public long CreateUserId { get; set; }
+
+    [Description("创建时间")]
+    public DateTime CreateTime { get; set; }
+
+    [Description("更新人标识")]
+    public long UpdateUserId { get; set; }
+
+    [Description("更新时间")]
+    public DateTime UpdateTime { get; set; }
 }
