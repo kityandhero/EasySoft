@@ -1,7 +1,5 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
-using EasySoft.UtilityTools.Standard.Assists;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.NPOI.Core;
 
@@ -169,10 +167,7 @@ public abstract class ExportBase : IExport
 
         var enumerable = list as T[] ?? list.ToArray();
 
-        foreach (var entity in enumerable)
-        {
-            AddEntity(entity, propertyNames);
-        }
+        foreach (var entity in enumerable) AddEntity(entity, propertyNames);
 
         AdjustColumnWidth(enumerable.FirstOrDefault(), propertyNames);
 
@@ -197,17 +192,11 @@ public abstract class ExportBase : IExport
 
         return propertyNames.Select(type.GetProperty).Select(property =>
         {
-            if (property == null)
-            {
-                return "";
-            }
+            if (property == null) return "";
 
             var result = property.GetValue(entity);
 
-            if (property.PropertyType == typeof(bool))
-            {
-                result = Convert.ToBoolean(result).Description();
-            }
+            if (property.PropertyType == typeof(bool)) result = Convert.ToBoolean(result).Description();
 
             return result;
         }).ToList();
@@ -218,17 +207,11 @@ public abstract class ExportBase : IExport
     /// </summary>
     private void AdjustColumnWidth<T>(T? entity, IReadOnlyList<string> propertyNames) where T : class
     {
-        if (entity == null)
-        {
-            return;
-        }
+        if (entity == null) return;
 
         var type = entity.GetType();
 
-        for (var i = 0; i < propertyNames.Count; i++)
-        {
-            AdjustColumnWidth(type.GetProperty(propertyNames[i]), i);
-        }
+        for (var i = 0; i < propertyNames.Count; i++) AdjustColumnWidth(type.GetProperty(propertyNames[i]), i);
     }
 
     /// <summary>
@@ -236,10 +219,7 @@ public abstract class ExportBase : IExport
     /// </summary>
     private void AdjustColumnWidth(MemberInfo? property, int index)
     {
-        if (property != null && ReflectionAssist.IsDate(property))
-        {
-            ColumnWidth(index, 12);
-        }
+        if (property != null && ReflectionAssist.IsDate(property)) ColumnWidth(index, 12);
     }
 
     /// <summary>
@@ -290,15 +270,9 @@ public abstract class ExportBase : IExport
     /// </summary>
     private string GetFileName(string fileName)
     {
-        if (fileName.IsNullOrEmpty())
-        {
-            fileName = Table.Title;
-        }
+        if (fileName.IsNullOrEmpty()) fileName = Table.Title;
 
-        if (fileName.IsNullOrEmpty())
-        {
-            fileName = DateTime.Now.ToYearMonthDay();
-        }
+        if (fileName.IsNullOrEmpty()) fileName = DateTime.Now.ToYearMonthDay();
 
         return fileName + "." + _format.ToString().ToLower();
     }

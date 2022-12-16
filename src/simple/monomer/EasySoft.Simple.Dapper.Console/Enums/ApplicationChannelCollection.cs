@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-
-namespace EasySoft.Simple.Dapper.Console.Enums;
+﻿namespace EasySoft.Simple.Dapper.Console.Enums;
 
 public enum ApplicationChannelCollection
 {

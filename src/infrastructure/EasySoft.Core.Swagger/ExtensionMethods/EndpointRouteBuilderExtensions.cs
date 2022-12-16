@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.Swagger.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Standard.Extensions;
+
+namespace EasySoft.Core.Swagger.ExtensionMethods;
 
 /// <summary>
 /// EndpointConventionBuilderExtensions

@@ -15,7 +15,7 @@ global using EasySoft.UtilityTools.Core.Assists;
 global using EasySoft.UtilityTools.Standard.Assists;
 global using EasySoft.UtilityTools.Standard.Competence;
 global using EasySoft.UtilityTools.Standard.Enums;
-global using EasySoft.UtilityTools.Standard.ExtensionMethods;
+global using EasySoft.UtilityTools.Standard.Extensions;
 global using EasySoft.UtilityTools.Standard.Params;
 global using EasySoft.UtilityTools.Standard.Result;
 global using Newtonsoft.Json;

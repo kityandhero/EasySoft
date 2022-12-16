@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.EasyCaching.ConfigAssist;
 using EasySoft.Core.EasyCaching.ConfigCollection;
-using EasySoft.Core.Infrastructure.Controllers;
 
 namespace EasySoft.Core.EasyCaching.Controllers;
 

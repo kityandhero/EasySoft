@@ -1,7 +1,7 @@
 ﻿using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Enums;
 using EasySoft.Core.Sql.Interfaces;
-using TypeExtensions = EasySoft.UtilityTools.Standard.ExtensionMethods.TypeExtensions;
+using TypeExtensions = EasySoft.UtilityTools.Standard.Extensions.TypeExtensions;
 
 namespace EasySoft.Core.Sql.Assists;
 

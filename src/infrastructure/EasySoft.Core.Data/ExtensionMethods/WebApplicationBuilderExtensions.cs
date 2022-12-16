@@ -1,4 +1,6 @@
 ﻿using EasySoft.Core.Data.Configures;
+using EasySoft.UtilityTools.Core.Extensions;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Data.ExtensionMethods;
 

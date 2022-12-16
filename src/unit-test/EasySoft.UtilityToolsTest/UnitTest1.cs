@@ -1,3 +1,5 @@
+using EasySoft.UtilityTools.Standard.Extensions;
+
 namespace EasySoft.UtilityToolsTest;
 
 public class Tests

@@ -1,11 +1,11 @@
-﻿using EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.UtilityTools.Standard.Exceptions;
 
 /// <summary>
 /// 未知的错误
 /// </summary>
-public class UnknownException : System.Exception
+public class UnknownException : Exception
 {
     /// <summary>
     /// UnknownException

@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.Hangfire.ConfigAssist;
 using EasySoft.Core.Hangfire.Enums;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Hangfire.Assists;
 

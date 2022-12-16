@@ -1,9 +1,4 @@
-﻿using DotNetCore.CAP;
-using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.ExchangeRegulation.ExtensionMethods;
-using EasySoft.Core.GeneralLogTransmitter.Entities;
-using EasySoft.Core.GeneralLogTransmitter.Producers;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 

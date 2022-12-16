@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Config.Options;
 

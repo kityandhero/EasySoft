@@ -1,7 +1,5 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.EasyCaching.interfaces;
-using EasySoft.Simple.Single.Application.Models;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿using EasySoft.Simple.Single.Application.Models;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 

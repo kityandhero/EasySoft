@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Simple.Tradition.Client.WebApi.Areas.DataTest.Controllers;
+﻿using EasySoft.UtilityTools.Standard.Extensions;
+
+namespace EasySoft.Simple.Tradition.Client.WebApi.Areas.DataTest.Controllers;
 
 /// <summary>
 ///     DataController

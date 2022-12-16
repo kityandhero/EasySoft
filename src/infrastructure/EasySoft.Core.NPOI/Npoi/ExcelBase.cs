@@ -1,8 +1,5 @@
 ﻿using EasySoft.Core.NPOI.Abstractions;
-using EasySoft.UtilityTools.Standard.Assists;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
 using NPOI.SS.UserModel;
-using NPOI.SS.Util;
 using Table = EasySoft.Core.NPOI.Core.Table;
 
 namespace EasySoft.Core.NPOI.Npoi;
@@ -116,15 +113,9 @@ public abstract class ExcelBase : IExcel
     /// <param name="cell">单元格</param>
     public IExcel CreateCell(Cell cell)
     {
-        if (cell.IsNull())
-        {
-            return this;
-        }
+        if (cell.IsNull()) return this;
 
-        if (_row != null)
-        {
-            _cell = GetOrCreateCell(_row, cell.ColumnIndex);
-        }
+        if (_row != null) _cell = GetOrCreateCell(_row, cell.ColumnIndex);
 
         SetCellValue(cell.Value);
         MergeCell(cell);
@@ -153,10 +144,7 @@ public abstract class ExcelBase : IExcel
             case "System.DateTime":
                 _cell?.SetCellValue(ConvertAssist.ToDate(value));
 
-                if (_cell != null)
-                {
-                    _cell.CellStyle = CreateDateStyle();
-                }
+                if (_cell != null) _cell.CellStyle = CreateDateStyle();
 
                 break;
             case "System.Boolean":
@@ -200,10 +188,7 @@ public abstract class ExcelBase : IExcel
     /// <param name="cell">单元格</param>
     public IExcel MergeCell(Cell cell)
     {
-        if (cell.NeedMerge)
-        {
-            MergeCell(cell.RowIndex, cell.EndRowIndex, cell.ColumnIndex, cell.EndColumnIndex);
-        }
+        if (cell.NeedMerge) MergeCell(cell.RowIndex, cell.EndRowIndex, cell.ColumnIndex, cell.EndColumnIndex);
 
         return this;
     }
@@ -224,15 +209,9 @@ public abstract class ExcelBase : IExcel
     /// </summary>
     private ICellStyle CreateDateStyle()
     {
-        if (_dateStyle != null)
-        {
-            return _dateStyle;
-        }
+        if (_dateStyle != null) return _dateStyle;
 
-        if (_workbook == null)
-        {
-            throw new Exception("workbook dis allow null");
-        }
+        if (_workbook == null) throw new Exception("workbook dis allow null");
 
         _dateStyle = CellStyleResolver.Resolve(_workbook, CellStyle.Body());
 
@@ -264,12 +243,8 @@ public abstract class ExcelBase : IExcel
             var row = GetOrCreateRow(i);
 
             for (var j = startColumnIndex; j <= endColumnIndex; j++)
-            {
                 if (row != null)
-                {
                     GetOrCreateCell(row, j).CellStyle = style;
-                }
-            }
         }
 
         return this;
@@ -282,10 +257,7 @@ public abstract class ExcelBase : IExcel
     /// <param name="style">单元格样式</param>
     public IExcel HeadStyle(Table table, CellStyle style)
     {
-        if (_headStyle == null && _workbook != null)
-        {
-            _headStyle = CellStyleResolver.Resolve(_workbook, style);
-        }
+        if (_headStyle == null && _workbook != null) _headStyle = CellStyleResolver.Resolve(_workbook, style);
 
         Style(0, table.HeadRowCount - 1, 0, table.ColumnNumber - 1, _headStyle);
 
@@ -299,10 +271,7 @@ public abstract class ExcelBase : IExcel
     /// <param name="style">单元格样式</param>
     public IExcel BodyStyle(Table table, CellStyle style)
     {
-        if (_bodyStyle == null && _workbook != null)
-        {
-            _bodyStyle = CellStyleResolver.Resolve(_workbook, style);
-        }
+        if (_bodyStyle == null && _workbook != null) _bodyStyle = CellStyleResolver.Resolve(_workbook, style);
 
         Style(table.HeadRowCount, table.HeadRowCount + table.BodyRowCount - 1, 0, table.ColumnNumber - 1, _bodyStyle);
 
@@ -316,10 +285,7 @@ public abstract class ExcelBase : IExcel
     /// <param name="style">单元格样式</param>
     public IExcel FootStyle(Table table, CellStyle style)
     {
-        if (_footStyle == null && _workbook != null)
-        {
-            _footStyle = CellStyleResolver.Resolve(_workbook, style);
-        }
+        if (_footStyle == null && _workbook != null) _footStyle = CellStyleResolver.Resolve(_workbook, style);
 
         Style(table.HeadRowCount + table.BodyRowCount, table.Count - 1, 0, table.ColumnNumber - 1, _footStyle);
 

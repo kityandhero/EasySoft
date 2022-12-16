@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.UtilityTools.Standard;
 

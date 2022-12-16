@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.EasyToken.AccessControl;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
+using EasySoft.UtilityTools.Core.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 

@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.PermissionVerification.Detectors;
 using EasySoft.Core.PermissionVerification.Entities;
+using EasySoft.UtilityTools.Core.Extensions;
 
 namespace EasySoft.Core.PermissionVerification.Officers;
 

@@ -3,6 +3,7 @@ using EasySoft.Core.PermissionVerification.Detectors;
 using EasySoft.Core.PermissionVerification.Middlewares;
 using EasySoft.Core.PermissionVerification.Observers;
 using EasySoft.Core.PermissionVerification.Officers;
+using EasySoft.UtilityTools.Core.Extensions;
 
 namespace EasySoft.Core.PermissionVerification.Extensions;
 

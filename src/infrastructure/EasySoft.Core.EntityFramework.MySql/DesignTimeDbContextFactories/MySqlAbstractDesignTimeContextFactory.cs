@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.EntityFramework.MySql.DesignTimeDbContextFactories;
 

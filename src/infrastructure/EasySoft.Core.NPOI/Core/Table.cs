@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.ExtensionMethods;
-
-namespace EasySoft.Core.NPOI.Core;
+﻿namespace EasySoft.Core.NPOI.Core;
 
 /// <summary>
 /// 表格
@@ -43,15 +41,9 @@ public class Table
     {
         get
         {
-            if (_header.Count == 0)
-            {
-                return string.Empty;
-            }
+            if (_header.Count == 0) return string.Empty;
 
-            if (_header[0].Cells.Count > 1)
-            {
-                return string.Empty;
-            }
+            if (_header[0].Cells.Count > 1) return string.Empty;
 
             return _header[0][0].Value.SafeString();
         }
@@ -139,20 +131,11 @@ public class Table
     /// </summary>
     private void ResetFirstColumnSpan()
     {
-        if (_rowIndex < 2)
-        {
-            return;
-        }
+        if (_rowIndex < 2) return;
 
-        if (_header.Count == 0)
-        {
-            return;
-        }
+        if (_header.Count == 0) return;
 
-        if (_header[0].ColumnNumber > 1)
-        {
-            return;
-        }
+        if (_header[0].ColumnNumber > 1) return;
 
         if (_header.Count > 1)
         {
@@ -161,15 +144,9 @@ public class Table
             return;
         }
 
-        if (_body == null)
-        {
-            return;
-        }
+        if (_body == null) return;
 
-        if (_body.Count == 0)
-        {
-            return;
-        }
+        if (_body.Count == 0) return;
 
         _header[0][0].ColumnSpan = _body[0].ColumnNumber;
     }
@@ -201,10 +178,7 @@ public class Table
     /// </summary>
     private Range GetBodyRange()
     {
-        if (_body != null)
-        {
-            return _body;
-        }
+        if (_body != null) return _body;
 
         _body = new Range(_rowIndex);
 
@@ -236,10 +210,7 @@ public class Table
     /// </summary>
     private Range GetFootRange()
     {
-        if (_footer != null)
-        {
-            return _footer;
-        }
+        if (_footer != null) return _footer;
 
         _footer = new Range(_rowIndex);
 

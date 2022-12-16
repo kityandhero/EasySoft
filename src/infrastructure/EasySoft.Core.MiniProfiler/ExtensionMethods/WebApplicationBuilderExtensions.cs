@@ -1,9 +1,4 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Startup;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-
-namespace EasySoft.Core.MiniProfiler.ExtensionMethods;
+﻿namespace EasySoft.Core.MiniProfiler.ExtensionMethods;
 
 /// <summary>
 /// WebApplicationBuilderExtensions

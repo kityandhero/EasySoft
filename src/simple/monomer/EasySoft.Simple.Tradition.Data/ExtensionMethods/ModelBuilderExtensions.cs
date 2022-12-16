@@ -1,4 +1,5 @@
 ﻿using EasySoft.Simple.Tradition.Data.Entities;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Simple.Tradition.Data.ExtensionMethods;
 

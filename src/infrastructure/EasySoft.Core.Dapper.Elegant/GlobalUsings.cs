@@ -21,5 +21,5 @@ global using EasySoft.UtilityTools.Core.Channels;
 global using EasySoft.UtilityTools.Standard;
 global using EasySoft.UtilityTools.Standard.Assists;
 global using EasySoft.UtilityTools.Standard.Enums;
-global using EasySoft.UtilityTools.Standard.ExtensionMethods;
+global using EasySoft.UtilityTools.Standard.Extensions;
 global using EasySoft.UtilityTools.Standard.Result;

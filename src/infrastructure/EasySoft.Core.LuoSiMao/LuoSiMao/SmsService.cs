@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.LuoSiMao.LuoSiMao;
+﻿using EasySoft.UtilityTools.Standard.Extensions;
+
+namespace EasySoft.Core.LuoSiMao.LuoSiMao;
 
 /// <summary>
 /// 短信服务
@@ -72,20 +74,11 @@ public class SmsService : ISmsService
     {
         var result = JsonConvertAssist.DeserializeObject<LuoSiMaoResult>(message);
 
-        if (result == null)
-        {
-            throw new Exception("response can not convert to LuoSiMaoResult");
-        }
+        if (result == null) throw new Exception("response can not convert to LuoSiMaoResult");
 
-        if (result.error == "0")
-        {
-            return SmsResult.Ok;
-        }
+        if (result.error == "0") return SmsResult.Ok;
 
-        if (result.msg == "WRONG_MOBILE")
-        {
-            return new SmsResult(false, message, SmsErrorCode.MobileError);
-        }
+        if (result.msg == "WRONG_MOBILE") return new SmsResult(false, message, SmsErrorCode.MobileError);
 
         return new SmsResult(false, message);
     }

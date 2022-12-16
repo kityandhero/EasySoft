@@ -6,7 +6,7 @@ global using EasySoft.Core.Config.ExtensionMethods;
 global using EasySoft.Core.Config.Utils;
 global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.UtilityTools.Core.Assists;
-global using EasySoft.UtilityTools.Core.ExtensionMethods;
+global using EasySoft.UtilityTools.Core.Extensions;
 global using EasySoft.UtilityTools.Standard.Assists;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.Configuration;

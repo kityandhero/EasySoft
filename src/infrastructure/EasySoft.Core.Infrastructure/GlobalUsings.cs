@@ -7,3 +7,4 @@ global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Mvc.ApplicationParts;
 global using Microsoft.AspNetCore.Routing;
 global using Microsoft.Extensions.Logging;
+global using StackExchange.Profiling;

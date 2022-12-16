@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace EasySoft.Core.EntityFramework.SqlServer.DesignTimeDbContextFactories;
+﻿namespace EasySoft.Core.EntityFramework.SqlServer.DesignTimeDbContextFactories;
 
 /// <summary>
 /// SqlServerDesignTimeContextFactory 用于 migration

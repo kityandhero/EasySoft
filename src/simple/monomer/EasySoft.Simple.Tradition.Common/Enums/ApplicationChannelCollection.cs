@@ -1,8 +1,4 @@
-﻿using System.ComponentModel;
-using EasySoft.UtilityTools.Core.Channels;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-
-namespace EasySoft.Simple.Tradition.Common.Enums;
+﻿namespace EasySoft.Simple.Tradition.Common.Enums;
 
 /// <summary>
 /// ApplicationChannelCollection

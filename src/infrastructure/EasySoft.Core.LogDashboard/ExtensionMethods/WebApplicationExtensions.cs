@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.LogDashboard.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Standard.Extensions;
+
+namespace EasySoft.Core.LogDashboard.ExtensionMethods;
 
 public static class WebApplicationExtensions
 {

@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.NPOI.Core;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
 
 namespace EasySoft.Core.NPOI;
 
@@ -72,10 +71,7 @@ public class Cell
         {
             Row.CheckNull("Row");
 
-            if (Row != null)
-            {
-                return Row.RowIndex;
-            }
+            if (Row != null) return Row.RowIndex;
 
             throw new Exception("Row is null");
         }

@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.EventBus.Cap;
-using EasySoft.Core.EventBus.Cap.Filters;
-using EasySoft.Core.EventBus.RabbitMq;
+﻿using EasySoft.Core.EventBus.RabbitMq;
 
 namespace EasySoft.Core.EventBus.ExtensionMethods;
 

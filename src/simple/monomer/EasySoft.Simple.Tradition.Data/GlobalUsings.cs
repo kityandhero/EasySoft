@@ -7,5 +7,4 @@ global using EasySoft.Core.EntityFramework.MySql.DesignTimeDbContextFactories;
 global using EasySoft.Core.EntityFramework.SqlServer.DesignTimeDbContextFactories;
 global using EasySoft.IdGenerator.Assists;
 global using EasySoft.UtilityTools.Standard.Assists;
-global using EasySoft.UtilityTools.Standard.ExtensionMethods;
 global using Microsoft.EntityFrameworkCore;

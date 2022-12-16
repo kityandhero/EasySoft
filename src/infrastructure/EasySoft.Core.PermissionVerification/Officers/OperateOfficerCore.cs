@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.PermissionVerification.Observers;
+using EasySoft.UtilityTools.Core.Extensions;
 
 namespace EasySoft.Core.PermissionVerification.Officers;
 

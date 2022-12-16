@@ -1,9 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
-using EasySoft.Core.Web.Framework.Controllers;
-using EasySoft.UtilityTools.Core.ExtensionMethods;
-using Microsoft.AspNetCore.Mvc;
-
-namespace EasySoft.Simple.OneService.Controllers;
+﻿namespace EasySoft.Simple.OneService.Controllers;
 
 /// <summary>
 /// Ocelot

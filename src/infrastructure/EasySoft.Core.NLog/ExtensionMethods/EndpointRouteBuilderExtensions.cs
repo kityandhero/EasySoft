@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.NLog.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Standard.Extensions;
+
+namespace EasySoft.Core.NLog.ExtensionMethods;
 
 public static class EndpointConventionBuilderExtensions
 {

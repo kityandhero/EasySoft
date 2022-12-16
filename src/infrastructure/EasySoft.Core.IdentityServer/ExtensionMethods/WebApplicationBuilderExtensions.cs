@@ -1,7 +1,4 @@
 ﻿using EasySoft.Core.IdentityServer.Configure;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EasySoft.Core.IdentityServer.ExtensionMethods;
 

@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.AuthenticationCore.Attributes;
-using EasySoft.Core.PermissionVerification.Attributes;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Simple.Single.Application.Areas.AuthTest.Controllers;
 

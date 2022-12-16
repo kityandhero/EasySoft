@@ -1,6 +1,6 @@
 ﻿using EasySoft.UtilityTools.Standard.Attributes;
 using EasySoft.UtilityTools.Standard.Enums;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.UtilityTools.Standard.Result;
 

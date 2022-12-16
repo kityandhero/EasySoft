@@ -7,7 +7,7 @@ global using Autofac.Extensions.DependencyInjection;
 global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.Core.Infrastructure.Controllers;
 global using EasySoft.UtilityTools.Core.Assists;
-global using EasySoft.UtilityTools.Core.ExtensionMethods;
+global using EasySoft.UtilityTools.Core.Extensions;
 global using EasySoft.UtilityTools.Standard.Assists;
 global using EasySoft.UtilityTools.Standard.Enums;
 global using Masuit.Tools.DateTimeExt;

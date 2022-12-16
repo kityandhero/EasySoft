@@ -57,7 +57,6 @@ public class Transport
     /// </summary>
     public AmazonSQSOptions? AmazonSQS { get; set; }
 
-    
     /// <summary>
     /// Kafka
     /// </summary>

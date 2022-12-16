@@ -1,4 +1,5 @@
 ﻿using EasySoft.Simple.Tradition.Management.Core.Common;
+using EasySoft.UtilityTools.Core.Extensions;
 
 namespace EasySoft.Simple.Tradition.Management.Core.Controllers;
 

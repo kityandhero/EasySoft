@@ -2,8 +2,8 @@
 
 global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.Core.Infrastructure.Startup;
-global using EasySoft.UtilityTools.Core.ExtensionMethods;
-global using EasySoft.UtilityTools.Standard.ExtensionMethods;
+global using EasySoft.UtilityTools.Core.Extensions;
+global using EasySoft.UtilityTools.Standard.Extensions;
 global using HealthChecks.UI.Client;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Diagnostics.HealthChecks;

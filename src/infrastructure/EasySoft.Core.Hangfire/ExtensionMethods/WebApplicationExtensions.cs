@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.Hangfire.ConfigAssist;
-using EasySoft.Core.Infrastructure.Configures;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Hangfire.ExtensionMethods;
 

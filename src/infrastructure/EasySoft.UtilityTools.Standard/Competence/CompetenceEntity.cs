@@ -1,5 +1,5 @@
 ﻿using EasySoft.UtilityTools.Standard.Assists;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.UtilityTools.Standard.Competence;
 

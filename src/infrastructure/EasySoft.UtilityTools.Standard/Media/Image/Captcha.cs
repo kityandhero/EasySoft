@@ -2,7 +2,6 @@
 using SixLabors.Fonts;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
 
 namespace EasySoft.UtilityTools.Standard.Media.Image;
 

@@ -1,5 +1,5 @@
 ﻿using EasySoft.UtilityTools.Standard.Enums;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+using EasySoft.UtilityTools.Standard.Extensions;
 using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.UtilityTools.Standard.Assists;

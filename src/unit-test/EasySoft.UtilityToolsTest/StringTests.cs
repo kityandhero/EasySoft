@@ -1,4 +1,6 @@
-﻿namespace EasySoft.UtilityToolsTest;
+﻿using EasySoft.UtilityTools.Standard.Extensions;
+
+namespace EasySoft.UtilityToolsTest;
 
 public class StringTests
 {

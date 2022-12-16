@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace EasySoft.UtilityTools.Core.Results;
+﻿namespace EasySoft.UtilityTools.Core.Results;
 
 /// <summary>
 /// IApiResult

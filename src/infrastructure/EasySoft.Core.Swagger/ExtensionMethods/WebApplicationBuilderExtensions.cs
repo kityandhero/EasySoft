@@ -2,6 +2,7 @@
 using EasySoft.Core.Swagger.Configures;
 using EasySoft.Core.Swagger.DocumentFilters;
 using EasySoft.Core.Swagger.OperationFilters;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Swagger.ExtensionMethods;
 

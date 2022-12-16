@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.UtilityTools.Core.Results;
 

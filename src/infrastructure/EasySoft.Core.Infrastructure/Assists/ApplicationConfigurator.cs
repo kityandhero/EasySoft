@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.Infrastructure.Startup;
-using EasySoft.UtilityTools.Standard.ExtensionMethods;
-using StackExchange.Profiling;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Infrastructure.Assists;
 

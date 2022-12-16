@@ -1,5 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Assists;
-using NPOI.SS.UserModel;
+﻿using NPOI.SS.UserModel;
 
 namespace EasySoft.Core.NPOI.Npoi;
 
@@ -56,15 +55,9 @@ public class CellStyleResolver
     /// </summary>
     private HorizontalAlignment GetHorizontalAlignment()
     {
-        if (_style.Alignment == Core.HorizontalAlignment.Left)
-        {
-            return HorizontalAlignment.Left;
-        }
+        if (_style.Alignment == Core.HorizontalAlignment.Left) return HorizontalAlignment.Left;
 
-        if (_style.Alignment == Core.HorizontalAlignment.Right)
-        {
-            return HorizontalAlignment.Right;
-        }
+        if (_style.Alignment == Core.HorizontalAlignment.Right) return HorizontalAlignment.Right;
 
         return HorizontalAlignment.Center;
     }
@@ -74,15 +67,9 @@ public class CellStyleResolver
     /// </summary>
     private VerticalAlignment GetVerticalAlignment()
     {
-        if (_style.VerticalAlignment == Core.VerticalAlignment.Top)
-        {
-            return VerticalAlignment.Top;
-        }
+        if (_style.VerticalAlignment == Core.VerticalAlignment.Top) return VerticalAlignment.Top;
 
-        if (_style.VerticalAlignment == Core.VerticalAlignment.Bottom)
-        {
-            return VerticalAlignment.Bottom;
-        }
+        if (_style.VerticalAlignment == Core.VerticalAlignment.Bottom) return VerticalAlignment.Bottom;
 
         return VerticalAlignment.Center;
     }

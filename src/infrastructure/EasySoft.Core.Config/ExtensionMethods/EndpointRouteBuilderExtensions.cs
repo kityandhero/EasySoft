@@ -1,4 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Config.ExtensionMethods;
 

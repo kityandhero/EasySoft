@@ -5,6 +5,7 @@ using EasySoft.Core.EventBus;
 using EasySoft.Core.EventBus.Cap;
 using EasySoft.Core.EventBus.Cap.Filters;
 using EasySoft.Core.EventBus.Trackers;
+using EasySoft.UtilityTools.Core.Extensions;
 
 namespace EasySoft.Core.Cap.ExtensionMethods;
 

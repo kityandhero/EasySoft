@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Data.Interceptors;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Data.ExtensionMethods;
 

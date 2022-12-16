@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace EasySoft.UtilityTools.Standard.Assists;
+﻿namespace EasySoft.UtilityTools.Standard.Assists;
 
 /// <summary>
 /// HtmlAssist
