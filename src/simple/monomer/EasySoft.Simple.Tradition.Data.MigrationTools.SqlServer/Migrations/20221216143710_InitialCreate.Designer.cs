@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
 {
     [DbContext(typeof(DataMigrationContext))]
-    [Migration("20221216025742_InitialCreate")]
+    [Migration("20221216143710_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,21 +66,21 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0)
                         .HasColumnName("channel")
-                        .HasComment("渠道码");
+                        .HasComment("");
+
+                    b.Property<long>("CreateBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasDefaultValue(0L)
+                        .HasColumnName("create_by")
+                        .HasComment("");
 
                     b.Property<DateTime>("CreateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValue(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
                         .HasColumnName("create_time")
-                        .HasComment("创建时间");
-
-                    b.Property<long>("CreateUserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("create_user_id")
-                        .HasComment("创建人标识");
+                        .HasComment("");
 
                     b.Property<string>("Expand")
                         .IsRequired()
@@ -89,7 +89,13 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                         .HasColumnType("nvarchar(400)")
                         .HasDefaultValue("")
                         .HasColumnName("expand")
-                        .HasComment("扩展权限");
+                        .HasComment("");
+
+                    b.Property<string>("Group")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("group")
+                        .HasComment("");
 
                     b.Property<string>("GuidTag")
                         .IsRequired()
@@ -98,7 +104,7 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasDefaultValue("")
                         .HasColumnName("guid_tag")
-                        .HasComment("识别标识");
+                        .HasComment("");
 
                     b.Property<string>("Ip")
                         .IsRequired()
@@ -107,7 +113,21 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                         .HasColumnType("nvarchar(40)")
                         .HasDefaultValue("")
                         .HasColumnName("ip")
-                        .HasComment("Ip");
+                        .HasComment("");
+
+                    b.Property<long>("ModifyBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasDefaultValue(0L)
+                        .HasColumnName("modify_by")
+                        .HasComment("");
+
+                    b.Property<DateTime>("ModifyTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
+                        .HasColumnName("modify_time")
+                        .HasComment("");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -116,7 +136,7 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                         .HasColumnType("nvarchar(400)")
                         .HasDefaultValue("")
                         .HasColumnName("name")
-                        .HasComment("名称");
+                        .HasComment("");
 
                     b.Property<string>("RelativePath")
                         .IsRequired()
@@ -125,28 +145,14 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                         .HasColumnType("nvarchar(500)")
                         .HasDefaultValue("")
                         .HasColumnName("relative_path")
-                        .HasComment("相对路径");
+                        .HasComment("");
 
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(0)
                         .HasColumnName("status")
-                        .HasComment("状态码");
-
-                    b.Property<DateTime>("UpdateTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
-                        .HasColumnName("update_time")
-                        .HasComment("更新时间");
-
-                    b.Property<long>("UpdateUserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("update_user_id")
-                        .HasComment("更新人标识");
+                        .HasComment("");
 
                     b.HasKey("Id")
                         .HasName("pk_access_way");
@@ -419,7 +425,8 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasDefaultValue("")
                         .HasColumnName("name")
                         .HasComment("角色组名");
@@ -513,11 +520,11 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 364520490926087L,
+                            Id = 364692391288838L,
                             Motto = "",
                             Name = "",
                             Pseudonym = "",
-                            UserId = 364520490926086L
+                            UserId = 364692391288837L
                         });
                 });
 
@@ -546,8 +553,8 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 364520490926086L,
-                            UserId = 364520490926085L
+                            Id = 364692391288837L,
+                            UserId = 364692391284741L
                         });
                 });
 
@@ -584,21 +591,21 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 364520490926088L,
-                            BlogId = 364520490926087L,
-                            Title = "3e85e1a0a6ee4ba1804010557e816bc2"
+                            Id = 364692391288839L,
+                            BlogId = 364692391288838L,
+                            Title = "78d202a4115e48d2af216df5eb00d433"
                         },
                         new
                         {
-                            Id = 364520490930181L,
-                            BlogId = 364520490926087L,
-                            Title = "d5dcf5e5525d4021a740a2271dcf0999"
+                            Id = 364692391288840L,
+                            BlogId = 364692391288838L,
+                            Title = "2395d41849c241d5b6cd363e60ffee02"
                         },
                         new
                         {
-                            Id = 364520490930182L,
-                            BlogId = 364520490926087L,
-                            Title = "2ba0a75f6d0b45cd8c8ad9bd927aa700"
+                            Id = 364692391288841L,
+                            BlogId = 364692391288838L,
+                            Title = "beb7cd9d702e4ea6a1b3ab2a56ca7ff7"
                         });
                 });
 
@@ -661,7 +668,7 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 364520490926085L,
+                            Id = 364692391284741L,
                             Alias = "种子用户",
                             LoginName = "first",
                             Password = "e10adc3949ba59abbe56e057f20f883e",

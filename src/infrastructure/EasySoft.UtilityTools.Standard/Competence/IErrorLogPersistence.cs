@@ -99,7 +99,7 @@ public interface IErrorLogPersistence
     /// 自定义数据
     /// </summary>
     [Description("自定义数据")]
-    public object CustomData { get; set; }
+    public string CustomData { get; set; }
 
     /// <summary>
     /// 自定义数据类型

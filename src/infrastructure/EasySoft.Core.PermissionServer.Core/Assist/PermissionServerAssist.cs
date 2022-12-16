@@ -6,8 +6,14 @@ using EasySoft.Core.PermissionServer.Core.Subscribers;
 
 namespace EasySoft.Core.PermissionServer.Core.Assist;
 
+/// <summary>
+/// PermissionServerAssist
+/// </summary>
 public static class PermissionServerAssist
 {
+    /// <summary>
+    /// Init
+    /// </summary>
     public static void Init()
     {
         ContextConfigure.AddEntityConfigureAssembly(typeof(RoleGroup).Assembly);

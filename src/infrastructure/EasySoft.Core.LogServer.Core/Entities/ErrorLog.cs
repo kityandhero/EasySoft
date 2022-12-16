@@ -3,6 +3,9 @@ using EasySoft.UtilityTools.Standard.Entity.Interfaces;
 
 namespace EasySoft.Core.LogServer.Core.Entities;
 
+/// <summary>
+/// ErrorLog
+/// </summary>
 public class ErrorLog : BaseEntity, IErrorLogPersistence, IChannel, IIp, IStatus, IOperate
 {
     /// <inheritdoc />
@@ -51,7 +54,7 @@ public class ErrorLog : BaseEntity, IErrorLogPersistence, IChannel, IIp, IStatus
     public string CustomLog { get; set; } = "";
 
     /// <inheritdoc />
-    public object CustomData { get; set; } = "";
+    public string CustomData { get; set; } = "";
 
     /// <inheritdoc />
     public int CustomDataType { get; set; } = CustomValueType.PlainValue.ToInt();

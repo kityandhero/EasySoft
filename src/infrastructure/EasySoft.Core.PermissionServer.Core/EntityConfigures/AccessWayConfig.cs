@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Entities;
 
-namespace EasySoft.Core.PermissionServer.Core.EntityConfigures.Items;
+namespace EasySoft.Core.PermissionServer.Core.EntityConfigures;
 
 /// <summary>
 /// AccessWayConfig

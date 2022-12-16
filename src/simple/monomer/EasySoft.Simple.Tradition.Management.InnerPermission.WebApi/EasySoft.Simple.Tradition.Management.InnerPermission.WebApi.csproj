@@ -36,6 +36,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.LogServer.Core\EasySoft.Core.LogServer.Core.csproj" />
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.PermissionServer.Core\EasySoft.Core.PermissionServer.Core.csproj" />
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Swagger\EasySoft.Core.Swagger.csproj" />
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj" />

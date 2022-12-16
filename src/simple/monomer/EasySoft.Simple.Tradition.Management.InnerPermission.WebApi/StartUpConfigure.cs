@@ -1,7 +1,4 @@
-﻿using EasySoft.Core.PermissionServer.Core.Assist;
-using EasySoft.Core.PermissionVerification.Configures;
-
-namespace EasySoft.Simple.Tradition.Management.InnerPermission.WebApi;
+﻿namespace EasySoft.Simple.Tradition.Management.InnerPermission.WebApi;
 
 /// <summary>
 /// StartUpConfigure
@@ -15,9 +12,16 @@ public class StartUpConfigure : IStartUpConfigure
     public void Init()
     {
         Core.Assists.ApplicationAssist.InitManagement();
-        PermissionConfigure.AddScanPermissionAssembly(typeof(Core.Assists.ApplicationAssist).Assembly);
+
+        PermissionConfigure.AddRangeScanPermissionAssemblies(new List<Assembly>
+        {
+            typeof(Core.Assists.ApplicationAssist).Assembly,
+            typeof(ErrorLog).Assembly
+        });
 
         PermissionServerAssist.Init();
+
+        LogServerAssist.Init();
 
         SwaggerConfigure.GeneralParameters.AddRange(
             new OpenApiParameter

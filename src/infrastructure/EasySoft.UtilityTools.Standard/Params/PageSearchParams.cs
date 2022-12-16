@@ -1,7 +1,7 @@
 ﻿namespace EasySoft.UtilityTools.Standard.Params;
 
 /// <summary>
-/// BaseSearchParams
+/// PageSearchParams
 /// </summary>
 public class PageSearchParams : IPageSearchParams
 {

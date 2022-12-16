@@ -20,4 +20,10 @@
       </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="configures\databaseConfig.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

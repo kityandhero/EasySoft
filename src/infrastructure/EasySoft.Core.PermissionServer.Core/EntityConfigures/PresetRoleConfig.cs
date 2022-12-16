@@ -1,10 +1,10 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Entities;
 
-namespace EasySoft.Core.PermissionServer.Core.EntityConfigures.Items;
+namespace EasySoft.Core.PermissionServer.Core.EntityConfigures;
 
-public class CustomRoleConfig : BaseEntityTypeConfiguration<CustomRole>
+public class PresetRoleConfig : BaseEntityTypeConfiguration<PresetRole>
 {
-    protected override void ConfigureColumn(EntityTypeBuilder<CustomRole> builder, Type entityType)
+    protected override void ConfigureColumn(EntityTypeBuilder<PresetRole> builder, Type entityType)
     {
         builder.Property(x => x.Name)
             .HasColumnType(DatabaseConstant.Nvarchar)

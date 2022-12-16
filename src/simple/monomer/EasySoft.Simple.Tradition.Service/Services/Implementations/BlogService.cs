@@ -21,11 +21,7 @@ public class BlogService : IBlogService
         _blogRepository = blogRepository;
     }
 
-    /// <summary>
-    /// GetBlogAsync
-    /// </summary>
-    /// <param name="blogSearchDto"></param>
-    /// <returns></returns>
+    /// <inheritdoc />
     public async Task<PageListResult<Blog>> PageListAsync(BlogSearchDto blogSearchDto)
     {
         return await _blogRepository.PageListAsync<Blog>(
@@ -34,10 +30,7 @@ public class BlogService : IBlogService
         );
     }
 
-    /// <summary>
-    /// GetFirstAsync
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc />
     public async Task<ExecutiveResult<BlogDto>> GetFirstAsync()
     {
         var enumerable = await _blogRepository.SingleListAsync();
@@ -54,11 +47,7 @@ public class BlogService : IBlogService
         };
     }
 
-    /// <summary>
-    /// GetBlogDtoSync
-    /// </summary>
-    /// <param name="blogId"></param>
-    /// <returns></returns>
+    /// <inheritdoc />
     public async Task<ExecutiveResult<BlogDto>> GetBlogDtoSync(long blogId)
     {
         var result = await _blogRepository.GetAsync(blogId);

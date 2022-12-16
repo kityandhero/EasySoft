@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.LogServer.Core.Entities;
+﻿using EasySoft.Core.LogServer.Core.DataTransferObjects;
+using EasySoft.Core.LogServer.Core.Entities;
 using EasySoft.Core.LogServer.Core.Services.Interfaces;
 
 namespace EasySoft.Core.LogServer.Core.Services.Implementations;
@@ -25,6 +26,15 @@ public class ErrorLogService : IErrorLogService
         _eventPublisher = eventPublisher;
 
         _errorLogRepository = errorLogRepository;
+    }
+
+    /// <inheritdoc />
+    public async Task<PageListResult<ErrorLog>> PageListAsync(ErrorLogSearchDto blogSearchDto)
+    {
+        return await _errorLogRepository.PageListAsync<ErrorLog>(
+            blogSearchDto.PageNo,
+            blogSearchDto.PageSize
+        );
     }
 
     public async Task SaveAsync(ErrorLogExchange errorLogExchange)

@@ -6,8 +6,14 @@ using EasySoft.Core.LogServer.Core.Subscribers;
 
 namespace EasySoft.Core.LogServer.Core.Assist;
 
+/// <summary>
+/// LogServerAssist
+/// </summary>
 public static class LogServerAssist
 {
+    /// <summary>
+    /// Init
+    /// </summary>
     public static void Init()
     {
         ContextConfigure.AddEntityConfigureAssembly(typeof(ErrorLog).Assembly);

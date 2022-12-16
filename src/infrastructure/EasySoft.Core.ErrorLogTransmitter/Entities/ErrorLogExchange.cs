@@ -55,7 +55,7 @@ public class ErrorLogExchange : BaseExchange, IErrorLogExchange
     public string CustomLog { get; set; } = "";
 
     /// <inheritdoc />
-    public object CustomData { get; set; } = "";
+    public string CustomData { get; set; } = "";
 
     /// <inheritdoc />
     public int CustomDataType { get; set; } = CustomValueType.PlainValue.ToInt();

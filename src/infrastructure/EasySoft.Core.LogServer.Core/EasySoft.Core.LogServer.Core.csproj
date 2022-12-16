@@ -6,13 +6,18 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\EasySoft.Core.LogServer.Core.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\EasySoft.Core.LogServer.Core.xml</DocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj" />
       <ProjectReference Include="..\EasySoft.Core.ErrorLogTransmitter\EasySoft.Core.ErrorLogTransmitter.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="EntityConfigures\Items" />
+      <ProjectReference Include="..\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj" />
     </ItemGroup>
 
 </Project>

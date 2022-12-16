@@ -1,34 +1,23 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Entities;
 
-namespace EasySoft.Core.PermissionServer.Core.EntityConfigures.Items;
+namespace EasySoft.Core.PermissionServer.Core.EntityConfigures;
 
-public class PresetRoleConfig : BaseEntityTypeConfiguration<PresetRole>
+public class RoleGroupConfig : BaseEntityTypeConfiguration<RoleGroup>
 {
-    protected override void ConfigureColumn(EntityTypeBuilder<PresetRole> builder, Type entityType)
+    protected override void ConfigureColumn(EntityTypeBuilder<RoleGroup> builder, Type entityType)
     {
         builder.Property(x => x.Name)
             .HasColumnType(DatabaseConstant.Nvarchar)
-            .HasMaxLength(400)
+            .HasMaxLength(50)
             .HasDefaultValue(string.Empty);
 
-        builder.Property(x => x.Description)
-            .HasColumnType(DatabaseConstant.Nvarchar)
-            .HasMaxLength(500)
-            .HasDefaultValue(string.Empty);
-
-        builder.Property(x => x.Content)
+        builder.Property(x => x.CustomRoleCollection)
             .HasColumnType(DatabaseConstant.NvarcharMax)
             .HasDefaultValue(string.Empty);
 
-        builder.Property(x => x.ModuleCount)
-            .HasDefaultValue(0);
-
-        builder.Property(x => x.Competence)
+        builder.Property(x => x.PresetRoleCollection)
             .HasColumnType(DatabaseConstant.NvarcharMax)
             .HasDefaultValue(string.Empty);
-
-        builder.Property(x => x.WhetherSuper)
-            .HasDefaultValue(0);
 
         builder.Property(x => x.Status)
             .HasDefaultValue(0);
