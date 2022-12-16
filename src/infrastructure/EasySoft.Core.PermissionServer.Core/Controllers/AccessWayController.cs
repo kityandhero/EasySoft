@@ -10,10 +10,10 @@ public class AccessWayController : CustomControllerBase
     /// <summary>
     /// EntranceController
     /// </summary>
-    /// <param name="blogService"></param>
-    public AccessWayController(ISecurityService blogService)
+    /// <param name="securityService"></param>
+    public AccessWayController(ISecurityService securityService)
     {
-        _securityService = blogService;
+        _securityService = securityService;
     }
 
     [Route("find")]

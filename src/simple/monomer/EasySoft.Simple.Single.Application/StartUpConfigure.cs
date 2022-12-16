@@ -10,7 +10,7 @@ using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.LogDashboard.ExtensionMethods;
 using EasySoft.Core.MediatR.ExtensionMethods;
-using EasySoft.Core.PermissionVerification.ExtensionMethods;
+using EasySoft.Core.PermissionVerification.Extensions;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Swagger.Configures;
 using EasySoft.Simple.Single.Application.Common;

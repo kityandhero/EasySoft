@@ -24,6 +24,15 @@ public abstract class OperateOfficerCore : AccessWayOfficer
 
     private IActualOperator GetOperator()
     {
+        if (Environment.IsDevelopment())
+        {
+            var logger = LoggerFactory.CreateLogger<OperateOfficerCore>();
+
+            logger.LogAdvanceExecute(
+                $"{nameof(OperateOfficerCore)}.{nameof(GetOperator)}"
+            );
+        }
+
         return _actualOperator;
     }
 
@@ -34,6 +43,15 @@ public abstract class OperateOfficerCore : AccessWayOfficer
     /// <exception cref="Exception"></exception>
     protected IPermissionObserver GetPermissionObserver()
     {
+        if (Environment.IsDevelopment())
+        {
+            var logger = LoggerFactory.CreateLogger<OperateOfficerCore>();
+
+            logger.LogAdvanceExecute(
+                $"{nameof(OperateOfficerCore)}.{nameof(GetPermissionObserver)}"
+            );
+        }
+
         if (!AutofacAssist.Instance.IsRegistered<IPermissionObserver>())
             throw new Exception("IPermissionObserver is not injected");
 
@@ -44,6 +62,15 @@ public abstract class OperateOfficerCore : AccessWayOfficer
 
     private void PrePareVerification()
     {
+        if (Environment.IsDevelopment())
+        {
+            var logger = LoggerFactory.CreateLogger<OperateOfficerCore>();
+
+            logger.LogAdvanceExecute(
+                $"{nameof(OperateOfficerCore)}.{nameof(PrePareVerification)}"
+            );
+        }
+
         _permissionObserver = AutofacAssist.Instance.Resolve<IPermissionObserver>();
     }
 
@@ -53,6 +80,15 @@ public abstract class OperateOfficerCore : AccessWayOfficer
     /// <returns></returns>
     private async Task<ExecutiveResult> CheckAccessPermissionAsync()
     {
+        if (Environment.IsDevelopment())
+        {
+            var logger = LoggerFactory.CreateLogger<OperateOfficerCore>();
+
+            logger.LogAdvanceExecute(
+                $"{nameof(OperateOfficerCore)}.{nameof(CheckAccessPermissionAsync)}"
+            );
+        }
+
         var applicationOperator = GetOperator();
 
         if (applicationOperator.IsAnonymous())
@@ -73,6 +109,15 @@ public abstract class OperateOfficerCore : AccessWayOfficer
     /// <returns></returns>
     protected async Task<ExecutiveResult<ApiResult>> TryVerificationAsync()
     {
+        if (Environment.IsDevelopment())
+        {
+            var logger = LoggerFactory.CreateLogger<OperateOfficerCore>();
+
+            logger.LogAdvanceExecute(
+                $"{nameof(OperateOfficerCore)}.{nameof(TryVerificationAsync)}"
+            );
+        }
+
         CollectAccessWay().Wait();
 
         PrePareVerification();

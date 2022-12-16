@@ -13,7 +13,6 @@ global using EasySoft.Core.Infrastructure.Configures;
 global using EasySoft.Core.Infrastructure.Startup;
 global using EasySoft.Core.JsonWebToken.ExtensionMethods;
 global using EasySoft.Core.PermissionVerification.Attributes;
-global using EasySoft.Core.PermissionVerification.ExtensionMethods;
 global using EasySoft.Core.PermissionVerification.Observers;
 global using EasySoft.Core.Swagger.Configures;
 global using EasySoft.Core.Web.Framework.BuilderAssists;

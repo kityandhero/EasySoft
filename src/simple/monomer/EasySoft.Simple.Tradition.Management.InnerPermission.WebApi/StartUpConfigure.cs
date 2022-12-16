@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Assist;
+using EasySoft.Core.PermissionVerification.Configures;
 
 namespace EasySoft.Simple.Tradition.Management.InnerPermission.WebApi;
 
@@ -14,6 +15,7 @@ public class StartUpConfigure : IStartUpConfigure
     public void Init()
     {
         Core.Assists.ApplicationAssist.InitManagement();
+        PermissionConfigure.AddScanPermissionAssembly(typeof(Core.Assists.ApplicationAssist).Assembly);
 
         PermissionServerAssist.Init();
 

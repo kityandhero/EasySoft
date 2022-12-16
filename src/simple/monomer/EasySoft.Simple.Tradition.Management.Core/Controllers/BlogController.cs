@@ -28,8 +28,7 @@ public class BlogController : AuthControllerCore
     /// <returns></returns>
     [Route("pageList")]
     [HttpPost]
-    [Description(ControllerDescription + "博客列表")]
-    [GuidTag("04b1998e-7b29-4531-bc1a-767a938e1b86")]
+    [Permission(ControllerDescription + "博客列表", "04b1998e-7b29-4531-bc1a-767a938e1b86")]
     public async Task<IApiResult> PageList(BlogSearchDto blogSearchDto)
     {
         var result = await _blogService.PageListAsync(blogSearchDto);

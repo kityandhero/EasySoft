@@ -80,7 +80,7 @@ public class EntranceController : AreaControllerCore
     /// </summary>
     /// <returns></returns>
     [Operator]
-    [GuidTag("65641b2706db4ddb8357082fa8860386")]
+    [Permission("65641b2706db4ddb8357082fa8860386")]
     public IActionResult AddData()
     {
         return Content("success");

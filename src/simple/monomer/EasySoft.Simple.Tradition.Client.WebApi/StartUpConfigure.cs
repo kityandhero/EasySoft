@@ -1,4 +1,5 @@
-﻿using EasySoft.Simple.Tradition.Client.WebApi.EventSubscribers;
+﻿using EasySoft.Core.PermissionVerification.Extensions;
+using EasySoft.Simple.Tradition.Client.WebApi.EventSubscribers;
 
 namespace EasySoft.Simple.Tradition.Client.WebApi;
 

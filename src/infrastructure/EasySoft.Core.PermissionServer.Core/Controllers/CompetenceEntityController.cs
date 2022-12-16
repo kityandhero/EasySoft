@@ -10,10 +10,10 @@ public class CompetenceEntityController : CustomControllerBase
     /// <summary>
     /// EntranceController
     /// </summary>
-    /// <param name="blogService"></param>
-    public CompetenceEntityController(ISecurityService blogService)
+    /// <param name="securityService"></param>
+    public CompetenceEntityController(ISecurityService securityService)
     {
-        _securityService = blogService;
+        _securityService = securityService;
     }
 
     [Route("getCollection")]

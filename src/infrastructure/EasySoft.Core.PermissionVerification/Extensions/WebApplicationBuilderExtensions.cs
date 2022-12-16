@@ -1,14 +1,10 @@
-﻿using Castle.DynamicProxy;
-using EasySoft.Core.PermissionVerification.Clients;
+﻿using EasySoft.Core.PermissionVerification.Clients;
 using EasySoft.Core.PermissionVerification.Detectors;
 using EasySoft.Core.PermissionVerification.Middlewares;
 using EasySoft.Core.PermissionVerification.Observers;
 using EasySoft.Core.PermissionVerification.Officers;
-using EasySoft.Core.Refit.ExtensionMethods;
-using EasySoft.UtilityTools.Core.Interceptors;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace EasySoft.Core.PermissionVerification.ExtensionMethods;
+namespace EasySoft.Core.PermissionVerification.Extensions;
 
 /// <summary>
 /// WebApplicationBuilderExtensions
@@ -93,6 +89,14 @@ public static class WebApplicationBuilderExtensions
 
             FlagAssist.PermissionVerificationMiddlewareModeSwitch = true;
         }
+
+        ApplicationConfigurator.AddWebApplicationExtraAction(
+            new ExtraAction<WebApplication>()
+                .SetName("")
+                .SetAction(
+                    application => { application.UseScanPermission(); }
+                )
+        );
 
         FlagAssist.PermissionVerificationSwitch = true;
 

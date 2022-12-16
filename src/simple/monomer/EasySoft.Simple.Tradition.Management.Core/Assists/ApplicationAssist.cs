@@ -1,10 +1,12 @@
-﻿namespace EasySoft.Simple.Tradition.Management.Core.Assists;
+﻿using EasySoft.Core.PermissionVerification.Extensions;
+
+namespace EasySoft.Simple.Tradition.Management.Core.Assists;
 
 public static class ApplicationAssist
 {
     public static void InitManagement()
     {
-        EasySoft.Simple.Tradition.ApplicationConfig.ApplicationAssist.Init();
+        ApplicationConfig.ApplicationAssist.Init();
 
         // 配置额外的构建项目
         ApplicationConfigurator.AddWebApplicationBuilderExtraActions(

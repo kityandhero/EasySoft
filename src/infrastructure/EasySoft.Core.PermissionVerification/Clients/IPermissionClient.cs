@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.PermissionVerification.Entities;
-using Microsoft.AspNetCore.Mvc;
 using Refit;
 
 namespace EasySoft.Core.PermissionVerification.Clients;

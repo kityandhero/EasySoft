@@ -28,21 +28,20 @@ public abstract class PermissionCoreFilter : OperateOfficerCore, IPermissionFilt
     {
         if (filterContext.ActionDescriptor is not ControllerActionDescriptor actionDescriptor) return;
 
-        var guidTagAttribute = actionDescriptor.MethodInfo.TryGetCustomAttribute<GuidTagAttribute>();
+        var permissionAttribute = actionDescriptor.MethodInfo.TryGetCustomAttribute<PermissionAttribute>();
 
-        if (guidTagAttribute == null) return;
+        if (permissionAttribute == null) return;
 
-        if (string.IsNullOrWhiteSpace(guidTagAttribute.GuidTag)) return;
+        if (string.IsNullOrWhiteSpace(permissionAttribute.GuidTag)) return;
 
         AccessPermission.Url = filterContext.HttpContext.Request.GetUrl();
         AccessPermission.Path = filterContext.HttpContext.Request.GetAbsolutePath();
 
-        var descriptionAttribute = filterContext.ActionDescriptor.TryGetCustomAttribute<DescriptionAttribute>();
-        var competenceConfig = filterContext.ActionDescriptor.TryGetCustomAttribute<CompetenceConfigAttribute>();
-
-        AccessPermission.Name = descriptionAttribute?.Description ?? AccessPermission.Path;
-        AccessPermission.Competence = competenceConfig?.ToString() ?? "";
-        AccessPermission.GuidTag = guidTagAttribute.GuidTag;
+        AccessPermission.Name = string.IsNullOrWhiteSpace(permissionAttribute.Name)
+            ? AccessPermission.Path
+            : permissionAttribute.Name;
+        AccessPermission.Competence = permissionAttribute.AggregateExpandItems();
+        AccessPermission.GuidTag = permissionAttribute.GuidTag;
     }
 
     [Description("验证登录凭证以及操作权限")]

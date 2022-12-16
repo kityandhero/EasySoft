@@ -115,14 +115,13 @@ public abstract class AccessWayOfficer : OfficerCore
                 accessWayModel.Expand == AccessPermission.Competence &&
                 accessWayModel.Channel == channel)
             {
-                if (Environment.IsDevelopment())
-                {
-                    var logger = LoggerFactory.CreateLogger<AccessWayOfficer>();
+                if (!Environment.IsDevelopment()) return;
 
-                    logger.LogAdvancePrompt(
-                        $"{nameof(AccessPermission)} {nameof(AccessPermission.GuidTag)} \"{AccessPermission.GuidTag}\" has existed and has not changed, ignore send."
-                    );
-                }
+                var logger = LoggerFactory.CreateLogger<AccessWayOfficer>();
+
+                logger.LogAdvancePrompt(
+                    $"{nameof(AccessPermission)} {nameof(AccessPermission.GuidTag)} \"{AccessPermission.GuidTag}\" has existed and not changed, ignore send."
+                );
 
                 return;
             }
@@ -139,7 +138,7 @@ public abstract class AccessWayOfficer : OfficerCore
                 var logger = LoggerFactory.CreateLogger<AccessWayOfficer>();
 
                 logger.LogAdvancePrompt(
-                    $"{nameof(AccessPermission)} {nameof(AccessPermission.GuidTag)} \"{AccessPermission.GuidTag}\" has existed and has changed, send to queue by producer."
+                    $"{nameof(AccessPermission)} {nameof(AccessPermission.GuidTag)} \"{AccessPermission.GuidTag}\" has existed and changed, send to queue by producer."
                 );
             }
         }

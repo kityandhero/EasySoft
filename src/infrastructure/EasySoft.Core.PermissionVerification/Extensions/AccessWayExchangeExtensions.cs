@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.PermissionVerification.Entities;
 
-namespace EasySoft.Core.PermissionVerification.ExtensionMethods;
+namespace EasySoft.Core.PermissionVerification.Extensions;
 
 /// <summary>
 /// AccessWayExchangeExtensions
@@ -25,6 +25,8 @@ public static class AccessWayExchangeExtensions
                 dest => dest.RelativePath, src => src.RelativePath
             ).Map(
                 dest => dest.Expand, src => src.Expand
+            ).Map(
+                dest => dest.Group, src => src.Group
             ).Map(
                 dest => dest.Channel, src => src.Channel
             );

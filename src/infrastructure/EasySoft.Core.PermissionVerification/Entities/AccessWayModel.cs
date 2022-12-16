@@ -30,6 +30,12 @@ public class AccessWayModel
     public string Expand { get; set; }
 
     /// <summary>
+    /// 组标识
+    /// </summary>
+    [Description("组标识")]
+    public string Group { get; set; }
+
+    /// <summary>
     /// 渠道码
     /// </summary>
     [Description("渠道码")]
@@ -44,6 +50,7 @@ public class AccessWayModel
         GuidTag = "";
         RelativePath = "";
         Expand = "";
+        Group = "";
         Channel = 0;
     }
 }

@@ -25,21 +25,20 @@ public class OperateOfficer : OperateOfficerCore, IOperateOfficer
     /// <param name="httpContext"></param>
     public void AdjustAccessPermission(HttpContext httpContext)
     {
-        var guidTagAttribute = httpContext.TryGetMetadata<GuidTagAttribute>();
+        var permissionAttribute = httpContext.TryGetMetadata<PermissionAttribute>();
 
-        if (guidTagAttribute == null) return;
+        if (permissionAttribute == null) return;
 
-        if (string.IsNullOrWhiteSpace(guidTagAttribute.GuidTag)) return;
+        if (string.IsNullOrWhiteSpace(permissionAttribute.GuidTag)) return;
 
         AccessPermission.Url = httpContext.Request.GetUrl();
         AccessPermission.Path = httpContext.Request.GetAbsolutePath();
 
-        var descriptionAttribute = httpContext.TryGetMetadata<DescriptionAttribute>();
-        var competenceConfig = httpContext.TryGetMetadata<CompetenceConfigAttribute>();
-
-        AccessPermission.Name = descriptionAttribute?.Description ?? AccessPermission.Path;
-        AccessPermission.Competence = competenceConfig?.ToString() ?? "";
-        AccessPermission.GuidTag = guidTagAttribute.GuidTag;
+        AccessPermission.Name = string.IsNullOrWhiteSpace(permissionAttribute.Name)
+            ? AccessPermission.Path
+            : permissionAttribute.Name;
+        AccessPermission.Competence = permissionAttribute.AggregateExpandItems();
+        AccessPermission.GuidTag = permissionAttribute.GuidTag;
     }
 
     /// <summary>

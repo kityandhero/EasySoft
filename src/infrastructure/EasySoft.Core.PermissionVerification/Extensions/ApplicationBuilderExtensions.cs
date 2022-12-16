@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.PermissionVerification.Middlewares;
 
-namespace EasySoft.Core.PermissionVerification.ExtensionMethods;
+namespace EasySoft.Core.PermissionVerification.Extensions;
 
 /// <summary>
 /// ApplicationBuilderExtensions

@@ -16,11 +16,15 @@ public class AccessWayExchange : BaseExchange, IAccessWayExchange
     [Description("扩展权限")]
     public string Expand { get; set; }
 
+    [Description("组标识")]
+    public string Group { get; set; }
+
     public AccessWayExchange()
     {
         Name = "";
         GuidTag = "";
         RelativePath = "";
         Expand = "";
+        Group = "";
     }
 }

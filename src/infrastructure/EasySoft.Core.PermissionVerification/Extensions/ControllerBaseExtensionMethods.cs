@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.PermissionVerification.ExtensionMethods;
+﻿namespace EasySoft.Core.PermissionVerification.Extensions;
 
 /// <summary>
 /// ControllerBaseExtensionMethods

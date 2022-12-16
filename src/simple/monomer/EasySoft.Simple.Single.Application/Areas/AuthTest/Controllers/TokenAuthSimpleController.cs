@@ -26,7 +26,7 @@ public class TokenAuthSimpleController : AreaControllerCore
     /// NeedPermission
     /// </summary>
     /// <returns></returns>
-    [GuidTag("356316bbf81e4cda93ab9a1238765875")]
+    [Permission("356316bbf81e4cda93ab9a1238765875")]
     public IActionResult NeedPermission()
     {
         return this.Success(new

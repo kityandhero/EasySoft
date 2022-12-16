@@ -37,7 +37,6 @@ global using EasySoft.Core.Mapster.ExtensionMethods;
 global using EasySoft.Core.MiniProfiler.ExtensionMethods;
 global using EasySoft.Core.NLog.Assists;
 global using EasySoft.Core.NLog.ExtensionMethods;
-global using EasySoft.Core.PermissionVerification.ExtensionMethods;
 global using EasySoft.Core.PermissionVerification.Filters;
 global using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 global using EasySoft.Core.Swagger.Configures;

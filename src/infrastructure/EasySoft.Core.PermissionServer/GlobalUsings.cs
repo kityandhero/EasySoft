@@ -29,7 +29,6 @@ global using EasySoft.Core.JsonWebToken.ExtensionMethods;
 global using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
 global using EasySoft.Core.PermissionVerification.Detectors;
 global using EasySoft.Core.PermissionVerification.Entities;
-global using EasySoft.Core.PermissionVerification.ExtensionMethods;
 global using EasySoft.Core.PermissionVerification.Observers;
 global using EasySoft.Core.Swagger.Configures;
 global using EasySoft.Core.Web.Framework.BuilderAssists;

@@ -33,9 +33,9 @@ public class PermissionVerificationMiddleware : IMiddleware
 
         logger.LogMiddlewareInvokeAsyncBefore<PermissionVerificationMiddleware>(_hostEnvironment);
 
-        var guidTagAttribute = context.TryGetMetadata<GuidTagAttribute>();
+        var permissionAttribute = context.TryGetMetadata<PermissionAttribute>();
 
-        if (guidTagAttribute == null)
+        if (permissionAttribute == null)
         {
             await next.Invoke(context);
 

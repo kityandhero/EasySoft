@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Data.ExtensionMethods;
+using EasySoft.Core.PermissionVerification.Extensions;
 using EasySoft.Core.Swagger.ModelConventions;
 using EasySoft.Core.Web.Framework.Attributes;
 using EasySoft.Core.Web.Framework.Filters;
