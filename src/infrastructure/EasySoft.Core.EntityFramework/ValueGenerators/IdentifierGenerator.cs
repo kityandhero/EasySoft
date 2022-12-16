@@ -3,7 +3,7 @@
 /// <summary>
 /// IdentifierGenerator
 /// </summary>
-public abstract class IdentifierGenerator : ValueGenerator
+public class IdentifierGenerator : ValueGenerator
 {
     /// <summary>
     /// GeneratesTemporaryValues

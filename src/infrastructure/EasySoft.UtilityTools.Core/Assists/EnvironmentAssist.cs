@@ -65,7 +65,7 @@ public static class EnvironmentAssist
         {
             return GetEnvironmentAliasName();
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return "";
         }
