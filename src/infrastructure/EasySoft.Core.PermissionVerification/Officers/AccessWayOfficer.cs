@@ -110,9 +110,9 @@ public abstract class AccessWayOfficer : OfficerCore
         {
             var accessWayModel = accessWayModels[0];
 
-            if (accessWayModel.Name == AccessPermission.Name &&
-                accessWayModel.RelativePath == AccessPermission.Path &&
-                accessWayModel.Expand == AccessPermission.Competence &&
+            if (accessWayModel.Name.ToLower() == AccessPermission.Name.ToLower() &&
+                accessWayModel.RelativePath.ToLower() == AccessPermission.Path.ToLower() &&
+                accessWayModel.Expand.ToLower() == AccessPermission.Competence.ToLower() &&
                 accessWayModel.Channel == channel)
             {
                 if (!Environment.IsDevelopment()) return;

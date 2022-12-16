@@ -301,4 +301,25 @@ public static class TypeExtensions
 
         return descriptionAttribute == null ? "" : descriptionAttribute.Description;
     }
+
+    /// <summary>
+    /// BuildInfo
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public static string BuildInfo(this object target)
+    {
+        var properties = target.GetType().GetProperties();
+
+        if (!properties.Any()) return "";
+
+        var list = properties.Select(o =>
+        {
+            var value = o.GetValue(target);
+
+            return $"\"{o.Name}\": \"{value}\"";
+        });
+
+        return list.Join(",");
+    }
 }

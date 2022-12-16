@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Entities;
 
-namespace EasySoft.Core.PermissionServer.Core.ExtensionMethods;
+namespace EasySoft.Core.PermissionServer.Core.Extensions;
 
 public static class AccessWayExtensions
 {

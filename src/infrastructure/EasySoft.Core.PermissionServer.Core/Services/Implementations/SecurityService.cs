@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Entities;
-using EasySoft.Core.PermissionServer.Core.ExtensionMethods;
+using EasySoft.Core.PermissionServer.Core.Extensions;
 using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
 
 namespace EasySoft.Core.PermissionServer.Core.Services.Implementations;
@@ -125,13 +125,13 @@ public class SecurityService : ISecurityService
 
         var accessWay = new AccessWay
         {
-            Name = accessWayExchange.Name,
-            GuidTag = accessWayExchange.GuidTag,
-            RelativePath = accessWayExchange.RelativePath,
-            Expand = accessWayExchange.Expand,
+            Name = accessWayExchange.Name.ToLower(),
+            GuidTag = accessWayExchange.GuidTag.ToLower(),
+            RelativePath = accessWayExchange.RelativePath.ToLower(),
+            Expand = accessWayExchange.Expand.ToLower(),
             Channel = accessWayExchange.Channel,
             Status = accessWayExchange.Status,
-            Ip = accessWayExchange.Ip,
+            Ip = accessWayExchange.Ip.ToLower(),
             CreateTime = DateTimeOffset.Now.DateTime,
             UpdateTime = DateTimeOffset.Now.DateTime
         };

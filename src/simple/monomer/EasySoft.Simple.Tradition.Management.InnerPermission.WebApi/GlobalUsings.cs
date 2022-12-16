@@ -3,7 +3,6 @@
 global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.Core.Infrastructure.Configures;
 global using EasySoft.Core.Infrastructure.Startup;
-global using EasySoft.Core.PermissionServer.Core.ExtensionMethods;
 global using EasySoft.Core.Swagger.Configures;
 global using EasySoft.Core.Web.Framework.BuilderAssists;
 global using EasySoft.Core.Web.Framework.ExtensionMethods;
