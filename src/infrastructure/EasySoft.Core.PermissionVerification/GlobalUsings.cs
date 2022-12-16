@@ -14,6 +14,7 @@ global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.Core.Infrastructure.Startup;
 global using EasySoft.Core.Refit.ExtensionMethods;
+global using EasySoft.UtilityTools.Core.Assists;
 global using EasySoft.UtilityTools.Core.Channels;
 global using EasySoft.UtilityTools.Core.Interceptors;
 global using EasySoft.UtilityTools.Core.Results;

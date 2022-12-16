@@ -65,4 +65,10 @@ public class ErrorLogExchange : BaseExchange, IErrorLogExchange
 
     /// <inheritdoc />
     public string ExceptionTypeFullName { get; set; } = "";
+
+    /// <summary>
+    /// 忽略
+    /// </summary>
+    [Description("忽略")]
+    public int Ignore { get; set; } = 0;
 }

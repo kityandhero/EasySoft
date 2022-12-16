@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.PermissionVerification.Attributes;
 using EasySoft.Core.PermissionVerification.Detectors;
 using EasySoft.Core.PermissionVerification.Entities;
-using EasySoft.UtilityTools.Core.Assists;
 
 namespace EasySoft.Core.PermissionVerification.Assists;
 

@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.LogServer.Core.Services.Interfaces;
-using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.LogServer.Core.Subscribers;
 
@@ -38,6 +37,16 @@ public sealed class ErrorLogExchangeSubscriber : ICapSubscribe
     [CapSubscribe(TransmitterTopic.ErrorLogExchange)]
     public async Task Process(ErrorLogExchange errorLogExchange)
     {
+        if (errorLogExchange.Ignore > 0)
+        {
+            if (_environment.IsDevelopment())
+                _logger.LogAdvancePrompt(
+                    "ErrorLog ignore process."
+                );
+
+            return;
+        }
+
         if (_environment.IsDevelopment())
         {
             _logger.LogAdvanceExecute($"{GetType().Name}.{nameof(Process)}");

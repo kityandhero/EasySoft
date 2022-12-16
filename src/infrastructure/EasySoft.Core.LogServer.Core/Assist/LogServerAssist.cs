@@ -1,5 +1,5 @@
-﻿using EasySoft.Core.Cap.ExtensionMethods;
-using EasySoft.Core.LogServer.Core.Entities;
+﻿using EasySoft.Core.LogServer.Core.Entities;
+using EasySoft.Core.LogServer.Core.Extensions;
 using EasySoft.Core.LogServer.Core.Services.Implementations;
 using EasySoft.Core.LogServer.Core.Services.Interfaces;
 using EasySoft.Core.LogServer.Core.Subscribers;
@@ -26,6 +26,13 @@ public static class LogServerAssist
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("")
                 .SetAction(applicationBuilder => { applicationBuilder.AddCapSubscriber<ErrorLogExchangeSubscriber>(); })
+        );
+
+        // 配置额外的应用项目
+        ApplicationConfigurator.AddWebApplicationExtraAction(
+            new ExtraAction<WebApplication>()
+                .SetName("")
+                .SetAction(applicationBuilder => { applicationBuilder.UseErrorLogSendExperiment(); })
         );
     }
 }

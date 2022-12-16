@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.PermissionVerification.Observers;
+﻿using EasySoft.Core.PermissionVerification.Attributes;
+
+namespace EasySoft.Core.PermissionVerification.Observers;
 
 /// <summary>
 /// PermissionObserverCore
@@ -47,7 +49,7 @@ public abstract class PermissionObserverCore : IPermissionObserver
         if (string.IsNullOrWhiteSpace(guidTag))
             return new ExecutiveResult(
                 ReturnCode.NoPermission.ToMessage(
-                    "接口未配置操作权限，如无需鉴权, 请移除 GuidTagAttribute 配置, 否则请修复配置值"
+                    $"接口未配置操作权限，如无需鉴权, 请移除 {nameof(PermissionAttribute)} 配置, 否则请修复配置值"
                 )
             );
 

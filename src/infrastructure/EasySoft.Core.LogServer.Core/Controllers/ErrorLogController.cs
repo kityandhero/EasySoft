@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.LogServer.Core.DataTransferObjects;
+﻿using EasySoft.Core.AuthenticationCore.Attributes;
+using EasySoft.Core.LogServer.Core.DataTransferObjects;
 using EasySoft.Core.LogServer.Core.Services.Interfaces;
 
 namespace EasySoft.Core.LogServer.Core.Controllers;
@@ -7,6 +8,7 @@ namespace EasySoft.Core.LogServer.Core.Controllers;
 /// ErrorLogController
 /// </summary>
 [Route("errorLog")]
+[Operator]
 public class ErrorLogController : CustomControllerBase
 {
     private const string ControllerDescription = "错误日志管理/";

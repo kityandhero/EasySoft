@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.PermissionVerification.Observers;
+﻿using EasySoft.Core.AuthenticationCore.Attributes;
+using EasySoft.Core.PermissionVerification.Observers;
 using EasySoft.UtilityTools.Core.Extensions;
 
 namespace EasySoft.Core.PermissionVerification.Officers;
@@ -93,7 +94,9 @@ public abstract class OperateOfficerCore : AccessWayOfficer
 
         if (applicationOperator.IsAnonymous())
             return new ExecutiveResult(
-                ReturnCode.NoPermission.ToMessage("匿名用户不支持鉴权, 请修复程序（配置登录验证）")
+                ReturnCode.NoPermission.ToMessage(
+                    $"匿名用户不支持鉴权, 请修复程序（配置登录验证 {nameof(OperatorAttribute)}）"
+                )
             );
 
         if (string.IsNullOrWhiteSpace(AccessPermission.GuidTag)) return new ExecutiveResult(ReturnCode.Ok);
