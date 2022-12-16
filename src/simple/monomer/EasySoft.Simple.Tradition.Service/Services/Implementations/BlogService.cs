@@ -59,7 +59,7 @@ public class BlogService : IBlogService
     /// </summary>
     /// <param name="blogId"></param>
     /// <returns></returns>
-    public async Task<ExecutiveResult<BlogDto>> GetBlogDtoSync(int blogId)
+    public async Task<ExecutiveResult<BlogDto>> GetBlogDtoSync(long blogId)
     {
         var result = await _blogRepository.GetAsync(blogId);
 

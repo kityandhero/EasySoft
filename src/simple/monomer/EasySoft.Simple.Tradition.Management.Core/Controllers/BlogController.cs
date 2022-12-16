@@ -43,4 +43,19 @@ public class BlogController : AuthControllerCore
             }
         );
     }
+
+    /// <summary>
+    /// PageList
+    /// </summary>
+    /// <param name="blogDto"></param>
+    /// <returns></returns>
+    [Route("pageList")]
+    [HttpPost]
+    [Permission(ControllerDescription + "博客详情", "16ccbcfb-15c0-4605-abd0-736f91e890af")]
+    public async Task<IApiResult> Get(BlogDto blogDto)
+    {
+        var result = await _blogService.GetBlogDtoSync(blogDto.BlogId);
+
+        return this.WrapperExecutiveResult(result);
+    }
 }
