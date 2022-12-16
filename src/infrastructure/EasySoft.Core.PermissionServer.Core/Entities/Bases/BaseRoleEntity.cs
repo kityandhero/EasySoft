@@ -1,76 +1,45 @@
-﻿namespace EasySoft.Core.PermissionServer.Core.Entities.Bases;
+﻿using EasySoft.Core.PermissionServer.Core.Entities.Interfaces;
 
-public abstract class BaseRoleEntity : BaseEntity, IRolePersistence
+namespace EasySoft.Core.PermissionServer.Core.Entities.Bases;
+
+/// <summary>
+/// BaseRoleEntity
+/// </summary>
+public abstract class BaseRoleEntity : BaseEntity, IRoleEntity, IIp, IStatus, IOperate
 {
-    /// <summary>
-    /// 名称  
-    /// </summary>
-    [Description("名称")]
+    /// <inheritdoc />
     public string Name { get; set; } = "";
 
-    /// <summary>
-    /// Description
-    /// </summary>
-    [Description("简介描述")]
+    /// <inheritdoc />
     public string Description { get; set; } = "";
 
-    /// <summary>
-    /// 内容详情
-    /// </summary>
-    [Description("内容详情")]
+    /// <inheritdoc />
     public string Content { get; set; } = "";
 
-    /// <summary>
-    /// 模块数量
-    /// </summary>
-    [Description("模块数量")]
+    /// <inheritdoc />
     public int ModuleCount { get; set; } = 0;
 
-    /// <summary>
-    /// 权限集合
-    /// </summary>
-    [Description("权限集合")]
+    /// <inheritdoc />
     public string Competence { get; set; } = "";
 
-    /// <summary>
-    /// 超级管理
-    /// </summary>
-    [Description("超级管理")]
+    /// <inheritdoc />
     public int WhetherSuper { get; set; } = 0;
 
-    /// <summary>
-    /// 状态码
-    /// </summary>
-    [Description("状态码")]
+    /// <inheritdoc />
     public int Status { get; set; } = 0;
 
-    /// <summary>
-    /// Ip
-    /// </summary>
-    [Description("Ip")]
+    /// <inheritdoc />
     public string Ip { get; set; } = "";
 
-    /// <summary>
-    /// 创建人标识
-    /// </summary>
-    [Description("创建人标识")]
-    public long CreateUserId { get; set; } = 0;
+    /// <inheritdoc />
+    public long CreateBy { get; set; }
 
-    /// <summary>
-    /// 创建时间"
-    /// </summary>
-    [Description("创建时间")]
+    /// <inheritdoc />
     public DateTime CreateTime { get; set; } = DateTime.Now;
 
-    /// <summary>
-    /// 更新人标识
-    /// </summary>
-    [Description("更新人标识")]
-    public long UpdateUserId { get; set; } = 0;
+    /// <inheritdoc />
+    public long ModifyBy { get; set; }
 
-    /// <summary>
-    /// 更新时间
-    /// </summary>
-    [Description("更新时间")]
-    public DateTime UpdateTime { get; set; } = DateTime.Now;
+    /// <inheritdoc />
+    public DateTime ModifyTime { get; set; }
 }

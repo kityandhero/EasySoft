@@ -1,9 +1,16 @@
 ﻿using EasySoft.Core.ExchangeRegulation.Interfaces;
 
-namespace EasySoft.Core.ExchangeRegulation.Query
+namespace EasySoft.Core.ExchangeRegulation.Query;
+
+/// <summary>
+/// IQueryFactory
+/// </summary>
+/// <typeparam name="T"></typeparam>
+public interface IQueryFactory<in T> where T : IExchangeEntity
 {
-    public interface IQueryFactory<T> where T : IExchangeEntity
-    {
-        IQuery<T> CreateQuery();
-    }
+    /// <summary>
+    /// CreateQuery
+    /// </summary>
+    /// <returns></returns>
+    IQuery<T> CreateQuery();
 }

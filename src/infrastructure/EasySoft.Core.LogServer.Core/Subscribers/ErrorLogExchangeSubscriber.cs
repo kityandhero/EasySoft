@@ -3,7 +3,7 @@
 namespace EasySoft.Core.LogServer.Core.Subscribers;
 
 /// <summary>
-/// CapEventSubscriber
+/// ErrorLogExchangeSubscriber
 /// </summary>
 public sealed class ErrorLogExchangeSubscriber : ICapSubscribe
 {
@@ -11,6 +11,12 @@ public sealed class ErrorLogExchangeSubscriber : ICapSubscribe
     private readonly IWebHostEnvironment _environment;
     private readonly IErrorLogService _errorLogService;
 
+    /// <summary>
+    /// ErrorLogExchangeSubscriber
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="environment"></param>
+    /// <param name="errorLogService"></param>
     public ErrorLogExchangeSubscriber(
         ILogger<ErrorLogExchangeSubscriber> logger,
         IWebHostEnvironment environment,

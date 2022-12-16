@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.PermissionServer.Core.Entities;
-using EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Contexts;
+﻿using EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Contexts;
 
 namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.DesignTimeDbContextFactories;
 
@@ -10,7 +9,8 @@ public class DesignTimeContextFactory : SqlServerAbstractDesignTimeContextFactor
         return new HashSet<Assembly>
         {
             typeof(User).Assembly,
-            typeof(RoleGroup).Assembly
+            typeof(RoleGroup).Assembly,
+            typeof(ErrorLog).Assembly
         };
     }
 }

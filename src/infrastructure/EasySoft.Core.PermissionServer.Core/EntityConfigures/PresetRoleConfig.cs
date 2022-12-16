@@ -2,8 +2,12 @@
 
 namespace EasySoft.Core.PermissionServer.Core.EntityConfigures;
 
+/// <summary>
+/// PresetRoleConfig
+/// </summary>
 public class PresetRoleConfig : BaseEntityTypeConfiguration<PresetRole>
 {
+    /// <inheritdoc />
     protected override void ConfigureColumn(EntityTypeBuilder<PresetRole> builder, Type entityType)
     {
         builder.Property(x => x.Name)
@@ -38,16 +42,16 @@ public class PresetRoleConfig : BaseEntityTypeConfiguration<PresetRole>
             .HasMaxLength(40)
             .HasDefaultValue(string.Empty);
 
-        builder.Property(x => x.CreateUserId)
+        builder.Property(x => x.CreateBy)
             .HasDefaultValue(0L);
 
         builder.Property(x => x.CreateTime)
             .HasDefaultValue(ConstCollection.DbDefaultDateTime);
 
-        builder.Property(x => x.UpdateUserId)
+        builder.Property(x => x.ModifyBy)
             .HasDefaultValue(0L);
 
-        builder.Property(x => x.UpdateTime)
+        builder.Property(x => x.ModifyTime)
             .HasDefaultValue(ConstCollection.DbDefaultDateTime);
     }
 }

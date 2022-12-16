@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework.SqlServer\EasySoft.Core.EntityFramework.SqlServer.csproj" />
+      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.LogServer.Core\EasySoft.Core.LogServer.Core.csproj" />
       <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.PermissionServer.Core\EasySoft.Core.PermissionServer.Core.csproj" />
       <ProjectReference Include="..\EasySoft.Simple.Tradition.Data\EasySoft.Simple.Tradition.Data.csproj" />
     </ItemGroup>

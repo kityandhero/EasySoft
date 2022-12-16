@@ -2,8 +2,16 @@
 
 namespace EasySoft.Core.PermissionServer.Core.Extensions;
 
+/// <summary>
+/// AccessWayExtensions
+/// </summary>
 public static class AccessWayExtensions
 {
+    /// <summary>
+    /// ToAccessWayModel
+    /// </summary>
+    /// <param name="accessWay"></param>
+    /// <returns></returns>
     public static AccessWayModel ToAccessWayModel(this AccessWay accessWay)
     {
         var typeAdapterConfig = new TypeAdapterConfig();
@@ -17,6 +25,8 @@ public static class AccessWayExtensions
                 dest => dest.RelativePath, src => src.RelativePath
             ).Map(
                 dest => dest.Expand, src => src.Expand
+            ).Map(
+                dest => dest.Group, src => src.Group
             ).Map(
                 dest => dest.Channel, src => src.Channel
             );

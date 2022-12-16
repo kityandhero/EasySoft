@@ -37,6 +37,7 @@ public class ErrorLogService : IErrorLogService
         );
     }
 
+    /// <inheritdoc />
     public async Task SaveAsync(ErrorLogExchange errorLogExchange)
     {
         var errorLog = new ErrorLog

@@ -3,6 +3,9 @@ using EasySoft.Core.ErrorLogTransmitter.Producers;
 
 namespace EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 
+/// <summary>
+/// WebApplicationBuilderExtensions
+/// </summary>
 public static class WebApplicationBuilderExtensions
 {
     /// <summary>

@@ -2,6 +2,9 @@
 
 namespace EasySoft.Core.PermissionServer.Core.Controllers;
 
+/// <summary>
+/// AccessWayController
+/// </summary>
 [Route("accessWay")]
 public class AccessWayController : CustomControllerBase
 {
@@ -16,6 +19,11 @@ public class AccessWayController : CustomControllerBase
         _securityService = securityService;
     }
 
+    /// <summary>
+    /// Find
+    /// </summary>
+    /// <param name="guidTag"></param>
+    /// <returns></returns>
     [Route("find")]
     [HttpPost]
     public async Task<IList<AccessWayModel>> Find(string guidTag)

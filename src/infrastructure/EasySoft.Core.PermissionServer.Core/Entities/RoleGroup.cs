@@ -6,7 +6,7 @@ namespace EasySoft.Core.PermissionServer.Core.Entities;
 /// 角色组
 /// </summary>
 [Description("角色组")]
-public class RoleGroup : BaseEntity
+public class RoleGroup : BaseEntity, IChannel, IStatus, IIp, IOperate
 {
     /// <summary>
     /// 角色组名
@@ -26,24 +26,24 @@ public class RoleGroup : BaseEntity
     [Description("预设角色集合")]
     public string PresetRoleCollection { get; set; } = "";
 
-    [Description("渠道码")]
+    /// <inheritdoc />
     public int Channel { get; set; }
 
-    [Description("状态码")]
+    /// <inheritdoc />
     public int Status { get; set; }
 
-    [Description("Ip")]
+    /// <inheritdoc />
     public string Ip { get; set; } = "";
 
-    [Description("创建人标识")]
-    public long CreateUserId { get; set; }
+    /// <inheritdoc />
+    public long CreateBy { get; set; }
 
-    [Description("创建时间")]
+    /// <inheritdoc />
     public DateTime CreateTime { get; set; }
 
-    [Description("更新人标识")]
-    public long UpdateUserId { get; set; }
+    /// <inheritdoc />
+    public long ModifyBy { get; set; }
 
-    [Description("更新时间")]
-    public DateTime UpdateTime { get; set; }
+    /// <inheritdoc />
+    public DateTime ModifyTime { get; set; }
 }

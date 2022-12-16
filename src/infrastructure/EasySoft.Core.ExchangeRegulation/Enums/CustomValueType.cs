@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.Core.ExchangeRegulation.Enums;
 
+/// <summary>
+/// CustomValueType
+/// </summary>
 public enum CustomValueType
 {
     /// <summary>
@@ -24,5 +27,5 @@ public enum CustomValueType
     /// PlainValue
     /// </summary>
     [Description("PlainValue")]
-    PlainValue = 300,
+    PlainValue = 300
 }

@@ -1,6 +1,4 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.PermissionServer.Core.Subscribers;
 
@@ -13,6 +11,12 @@ public sealed class AccessWayExchangeSubscriber : ICapSubscribe
     private readonly IWebHostEnvironment _environment;
     private readonly ISecurityService _securityService;
 
+    /// <summary>
+    /// AccessWayExchangeSubscriber
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="environment"></param>
+    /// <param name="securityService"></param>
     public AccessWayExchangeSubscriber(
         ILogger<AccessWayExchangeSubscriber> logger,
         IWebHostEnvironment environment,

@@ -2,6 +2,9 @@
 
 namespace EasySoft.Core.ExchangeRegulation.ExtensionMethods;
 
+/// <summary>
+/// ExchangeEntityExtensions
+/// </summary>
 public static class ExchangeEntityExtensions
 {
     /// <summary>
@@ -31,10 +34,7 @@ public static class ExchangeEntityExtensions
     {
         var d = entity.ToExpandoObject();
 
-        if (additionalData != null)
-        {
-            d.Add(new KeyValuePair<string, object?>("additional", additionalData));
-        }
+        if (additionalData != null) d.Add(new KeyValuePair<string, object?>("additional", additionalData));
 
         d.Add(new KeyValuePair<string, object?>("Key", entity.GetId()));
 
@@ -64,10 +64,7 @@ public static class ExchangeEntityExtensions
         params Expression<Func<T, object>>[] expression
     ) where T : IExchangeEntity
     {
-        if (expression.Length == 0)
-        {
-            throw new Exception("expression disallow empty");
-        }
+        if (expression.Length == 0) throw new Exception("expression disallow empty");
 
         var className = entity.GetType().Name;
         var eo = entity.ToExpandoObject(false);
@@ -78,19 +75,12 @@ public static class ExchangeEntityExtensions
 
         foreach (var item in eo)
         {
-            if (!propertyList.Contains(item.Key))
-            {
-                continue;
-            }
+            if (!propertyList.Contains(item.Key)) continue;
 
             if (item.Key.Equals(identification))
-            {
                 result.Add(new KeyValuePair<string, object?>(className + $"{identification}", item.Value));
-            }
             else
-            {
                 result.Add(item);
-            }
         }
 
         result.Add(new KeyValuePair<string, object?>("Key", entity.GetId()));
@@ -113,10 +103,7 @@ public static class ExchangeEntityExtensions
         params Expression<Func<T, object>>[] expression
     ) where T : IExchangeEntity
     {
-        if (expression.Length == 0)
-        {
-            throw new Exception("expression disallow empty");
-        }
+        if (expression.Length == 0) throw new Exception("expression disallow empty");
 
         var className = entity.GetType().Name;
         var eo = entity.ToExpandoObject(false);
@@ -127,19 +114,12 @@ public static class ExchangeEntityExtensions
 
         foreach (var item in eo)
         {
-            if (propertyList.Contains(item.Key))
-            {
-                continue;
-            }
+            if (propertyList.Contains(item.Key)) continue;
 
             if (item.Key.Equals(identification))
-            {
                 result.Add(new KeyValuePair<string, object?>(className + $"{identification}", item.Value));
-            }
             else
-            {
                 result.Add(item);
-            }
         }
 
         result.Add(new KeyValuePair<string, object?>("Key", entity.GetId()));

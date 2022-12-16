@@ -1,5 +1,8 @@
 ﻿namespace EasySoft.Core.ErrorLogTransmitter.Enums;
 
+/// <summary>
+/// ErrorLogExchangeType
+/// </summary>
 public enum ErrorLogExchangeType
 {
     /// <summary>
