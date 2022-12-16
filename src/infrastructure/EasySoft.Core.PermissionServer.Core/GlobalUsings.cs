@@ -19,6 +19,7 @@ global using EasySoft.Core.EventBus.Trackers;
 global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.Core.Infrastructure.Configures;
 global using EasySoft.Core.Infrastructure.Repositories.Entities.Implementations;
+global using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
 global using EasySoft.Core.Infrastructure.Services;
 global using EasySoft.Core.Infrastructure.Startup;
 global using EasySoft.Core.Infrastructure.Transmitters;

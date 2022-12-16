@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace EasySoft.Core.Infrastructure.Repositories.Entities.Implementations;
+﻿namespace EasySoft.Core.Infrastructure.Repositories.Entities.Implementations;
 
 /// <summary>
 /// 事件跟踪

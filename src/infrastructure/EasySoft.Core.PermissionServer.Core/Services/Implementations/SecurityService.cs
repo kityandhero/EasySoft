@@ -99,6 +99,7 @@ public class SecurityService : ISecurityService
         return ceList;
     }
 
+    /// <inheritdoc />
     public async Task<IList<AccessWayModel>> FindAccessWayModelAsync(string guidTag)
     {
         var result = await _accessWayRepository.GetAsync(
@@ -113,6 +114,7 @@ public class SecurityService : ISecurityService
         };
     }
 
+    /// <inheritdoc />
     public async Task SaveAccessWayModelAsync(AccessWayExchange accessWayExchange)
     {
         if (string.IsNullOrWhiteSpace(accessWayExchange.GuidTag)) return;
@@ -129,11 +131,12 @@ public class SecurityService : ISecurityService
             GuidTag = accessWayExchange.GuidTag.ToLower(),
             RelativePath = accessWayExchange.RelativePath.ToLower(),
             Expand = accessWayExchange.Expand.ToLower(),
+            Group = accessWayExchange.Group.ToLower(),
             Channel = accessWayExchange.Channel,
-            Status = accessWayExchange.Status,
+            Status = 0,
             Ip = accessWayExchange.Ip.ToLower(),
             CreateTime = DateTimeOffset.Now.DateTime,
-            UpdateTime = DateTimeOffset.Now.DateTime
+            ModifyTime = DateTimeOffset.Now.DateTime
         };
 
         var resultAdd = await _accessWayRepository.AddAsync(accessWay);

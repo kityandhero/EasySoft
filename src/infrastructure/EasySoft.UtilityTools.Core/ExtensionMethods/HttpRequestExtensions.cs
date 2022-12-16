@@ -85,9 +85,9 @@ public static class HttpRequestExtensions
 
         var json = await streamReader.ReadToEndAsync();
 
-        result = ConvertAssist.JsonToNameValueCollection(json);
+        request.Body.Seek(0, SeekOrigin.Begin);
 
-        request.Body.Position = 0;
+        result = ConvertAssist.JsonToNameValueCollection(json);
 
         return result;
     }

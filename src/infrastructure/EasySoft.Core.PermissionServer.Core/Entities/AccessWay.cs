@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Entities.Bases;
+using EasySoft.UtilityTools.Standard.Entity.Interfaces;
 
 namespace EasySoft.Core.PermissionServer.Core.Entities;
 
@@ -6,38 +7,41 @@ namespace EasySoft.Core.PermissionServer.Core.Entities;
 /// 访问模块
 /// </summary>
 [Description("访问模块")]
-public class AccessWay : BaseEntity, IAccessWayPersistence
+public class AccessWay : BaseEntity, IAccessWayPersistence, IOperate, IIp, IStatus
 {
-    [Description("名称")]
+    /// <inheritdoc />
     public string Name { get; set; } = "";
 
-    [Description("识别标识")]
+    /// <inheritdoc />
     public string GuidTag { get; set; } = "";
 
-    [Description("相对路径")]
+    /// <inheritdoc />
     public string RelativePath { get; set; } = "";
 
-    [Description("扩展权限")]
+    /// <inheritdoc />
     public string Expand { get; set; } = "";
 
-    [Description("渠道码")]
+    /// <inheritdoc />
+    public string Group { get; set; } = "";
+
+    /// <inheritdoc />
     public int Channel { get; set; }
 
-    [Description("状态码")]
+    /// <inheritdoc />
     public int Status { get; set; }
 
-    [Description("Ip")]
+    /// <inheritdoc />
     public string Ip { get; set; } = "";
 
-    [Description("创建人标识")]
-    public long CreateUserId { get; set; }
+    /// <inheritdoc />
+    public long CreateBy { get; set; }
 
-    [Description("创建时间")]
+    /// <inheritdoc />
     public DateTime CreateTime { get; set; }
 
-    [Description("更新人标识")]
-    public long UpdateUserId { get; set; }
+    /// <inheritdoc />
+    public long ModifyBy { get; set; }
 
-    [Description("更新时间")]
-    public DateTime UpdateTime { get; set; }
+    /// <inheritdoc />
+    public DateTime ModifyTime { get; set; }
 }

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
+﻿using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
 
 namespace EasySoft.Core.Infrastructure.Repositories.Entities.Implementations;
 

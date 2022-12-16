@@ -24,14 +24,13 @@ public abstract class OperateOfficerCore : AccessWayOfficer
 
     private IActualOperator GetOperator()
     {
-        if (Environment.IsDevelopment())
-        {
-            var logger = LoggerFactory.CreateLogger<OperateOfficerCore>();
+        if (!Environment.IsDevelopment()) return _actualOperator;
 
-            logger.LogAdvanceExecute(
-                $"{nameof(OperateOfficerCore)}.{nameof(GetOperator)}"
-            );
-        }
+        var logger = LoggerFactory.CreateLogger<OperateOfficerCore>();
+
+        logger.LogAdvanceExecute(
+            $"{nameof(OperateOfficerCore)}.{nameof(GetOperator)}"
+        );
 
         return _actualOperator;
     }

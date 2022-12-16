@@ -1,13 +1,9 @@
-﻿using EasySoft.Core.ErrorLogTransmitter.Enums;
-using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
-using EasySoft.Core.ErrorLogTransmitter.Interfaces;
+﻿using EasySoft.Core.LogServer.Core.Entities.Bases;
+using EasySoft.UtilityTools.Standard.Entity.Interfaces;
 
-namespace EasySoft.Core.ErrorLogTransmitter.Entities;
+namespace EasySoft.Core.LogServer.Core.Entities;
 
-/// <summary>
-/// ErrorLogExchange
-/// </summary>
-public class ErrorLogExchange : BaseExchange, IErrorLogExchange
+public class ErrorLog : BaseEntity, IErrorLogPersistence, IChannel, IIp, IStatus, IOperate
 {
     /// <inheritdoc />
     public long UserId { get; set; }
@@ -65,4 +61,25 @@ public class ErrorLogExchange : BaseExchange, IErrorLogExchange
 
     /// <inheritdoc />
     public string ExceptionTypeFullName { get; set; } = "";
+
+    /// <inheritdoc />
+    public int Channel { get; set; }
+
+    /// <inheritdoc />
+    public int Status { get; set; }
+
+    /// <inheritdoc />
+    public string Ip { get; set; } = "";
+
+    /// <inheritdoc />
+    public long CreateBy { get; set; }
+
+    /// <inheritdoc />
+    public DateTime CreateTime { get; set; }
+
+    /// <inheritdoc />
+    public long ModifyBy { get; set; }
+
+    /// <inheritdoc />
+    public DateTime ModifyTime { get; set; }
 }

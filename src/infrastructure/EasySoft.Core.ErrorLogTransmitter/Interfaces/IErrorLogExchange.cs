@@ -1,5 +1,10 @@
-﻿namespace EasySoft.Core.ErrorLogTransmitter.Interfaces;
+﻿using EasySoft.UtilityTools.Standard.Competence;
 
-public interface IErrorLogExchange : IExchangeEntity
+namespace EasySoft.Core.ErrorLogTransmitter.Interfaces;
+
+/// <summary>
+/// IErrorLogExchange
+/// </summary>
+public interface IErrorLogExchange : IExchangeEntity, IErrorLogPersistence
 {
 }

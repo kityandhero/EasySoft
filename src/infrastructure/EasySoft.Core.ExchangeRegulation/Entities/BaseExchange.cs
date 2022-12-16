@@ -2,47 +2,36 @@
 
 namespace EasySoft.Core.ExchangeRegulation.Entities;
 
-public abstract class BaseExchange : IExchangeEntity
+/// <summary>
+/// BaseExchange
+/// </summary>
+public abstract class BaseExchange : IExchangeEntity, IChannel, IIp, ICreate
 {
-    public string Id { get; set; }
-
     /// <summary>
-    /// 产生的来源标识（例如哪个产品的标识）
+    /// Id
     /// </summary>
+    [Description("Id")]
+    public string Id { get; set; } = Guid.NewGuid().ToString();
+
+    /// <inheritdoc />
     public int Channel { get; set; }
 
-    /// <summary>
-    /// 状态码
-    /// </summary>
-    public int Status { get; set; }
+    /// <inheritdoc />
+    public string Ip { get; set; } = "";
 
-    /// <summary>
-    /// 生成Ip
-    /// </summary>
-    public string Ip { get; set; }
+    /// <inheritdoc />
+    public long CreateBy { get; set; }
 
-    /// <summary>
-    /// 创建时间
-    /// </summary>
-    public long CreateUnixTime { get; set; }
+    /// <inheritdoc />
+    public DateTime CreateTime { get; set; } = DateTimeOffset.Now.DateTime;
 
-    /// <summary>
-    /// 创建人标识 
-    /// </summary>
-    public long CreateOperatorId { get; set; }
-
-    protected BaseExchange()
-    {
-        Id = Guid.NewGuid().ToString();
-        Ip = "";
-        CreateUnixTime = DateTime.Now.ToUnixTime();
-    }
-
+    /// <inheritdoc />
     public string GetId()
     {
         return Id;
     }
 
+    /// <inheritdoc />
     public string GetIdentificationName()
     {
         return ReflectionAssist.GetPropertyName(() => Id);

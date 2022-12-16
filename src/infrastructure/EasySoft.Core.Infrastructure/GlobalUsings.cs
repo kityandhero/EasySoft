@@ -1,5 +1,6 @@
 ﻿// Global using directives
 
+global using System.ComponentModel;
 global using EasySoft.UtilityTools.Standard;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Mvc;

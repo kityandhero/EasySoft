@@ -3,8 +3,19 @@ using EasySoft.Core.ErrorLogTransmitter.Enums;
 
 namespace EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 
+/// <summary>
+/// ErrorLogExchangeExtensions
+/// </summary>
 public static class ErrorLogExchangeExtensions
 {
+    /// <summary>
+    /// Fill
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="ex"></param>
+    /// <param name="operatorId"></param>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public static ErrorLogExchange Fill(
         this ErrorLogExchange entity,
         Exception ex,
@@ -15,7 +26,7 @@ public static class ErrorLogExchangeExtensions
         try
         {
             entity.ExceptionTypeName = ex.GetType().Name;
-            entity.ExceptionTypeFullName = ex.GetType().FullName;
+            entity.ExceptionTypeFullName = ex.GetType().FullName ?? "";
             entity.Message = ex.Message;
             entity.StackTrace = ex.StackTrace ?? "";
             entity.Source = ex.Source ?? "";
@@ -40,7 +51,7 @@ public static class ErrorLogExchangeExtensions
             entity.UserId = operatorId;
             entity.Type = ErrorLogExchangeType.Exception.ToInt();
             entity.Degree = ErrorLogExchangeDegree.Error.ToInt();
-            entity.CreateOperatorId = 0;
+            entity.CreateBy = 0;
         }
         catch (Exception e)
         {
