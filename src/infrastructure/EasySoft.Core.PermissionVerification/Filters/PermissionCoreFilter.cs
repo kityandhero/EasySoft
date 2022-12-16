@@ -9,6 +9,18 @@ namespace EasySoft.Core.PermissionVerification.Filters;
 public abstract class PermissionCoreFilter : OperateOfficerCore, IPermissionFilter
 {
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="loggerFactory"></param>
+    /// <param name="environment"></param>
+    protected PermissionCoreFilter(
+        ILoggerFactory loggerFactory,
+        IWebHostEnvironment environment
+    ) : base(loggerFactory, environment)
+    {
+    }
+
+    /// <summary>
     /// AdjustAccessPermission
     /// </summary>
     /// <param name="filterContext"></param>

@@ -8,6 +8,18 @@ namespace EasySoft.Core.PermissionVerification.Officers;
 public class OperateOfficer : OperateOfficerCore, IOperateOfficer
 {
     /// <summary>
+    /// OperateOfficer
+    /// </summary>
+    /// <param name="loggerFactory"></param>
+    /// <param name="environment"></param>
+    public OperateOfficer(
+        ILoggerFactory loggerFactory,
+        IWebHostEnvironment environment
+    ) : base(loggerFactory, environment)
+    {
+    }
+
+    /// <summary>
     /// AdjustAccessPermission
     /// </summary>
     /// <param name="httpContext"></param>

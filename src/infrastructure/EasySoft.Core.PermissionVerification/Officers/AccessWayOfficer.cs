@@ -8,6 +8,16 @@ namespace EasySoft.Core.PermissionVerification.Officers;
 /// </summary>
 public abstract class AccessWayOfficer : OfficerCore
 {
+    /// <summary>
+    /// LoggerFactory
+    /// </summary>
+    protected ILoggerFactory LoggerFactory { get; }
+
+    /// <summary>
+    /// Environment
+    /// </summary>
+    protected IWebHostEnvironment Environment { get; }
+
     private IApplicationChannel Channel { get; }
 
     /// <summary>
@@ -18,10 +28,17 @@ public abstract class AccessWayOfficer : OfficerCore
     /// <summary>
     /// AccessWayOfficer
     /// </summary>
-    protected AccessWayOfficer()
+    protected AccessWayOfficer(ILoggerFactory loggerFactory, IWebHostEnvironment environment)
     {
-        AccessPermission = new AccessPermission();
+        LoggerFactory = loggerFactory;
+        Environment = environment;
+
         Channel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
+        AccessPermission = new AccessPermission
+        {
+            Channel = GetChannel(),
+            ChannelName = GetChannelName()
+        };
     }
 
     private int GetChannel()
@@ -47,6 +64,19 @@ public abstract class AccessWayOfficer : OfficerCore
 
         if (string.IsNullOrWhiteSpace(AccessPermission.GuidTag)) return;
 
+        if (Environment.IsDevelopment())
+        {
+            var logger = LoggerFactory.CreateLogger<AccessWayOfficer>();
+
+            logger.LogAdvanceExecute(
+                $"{nameof(AccessWayOfficer)}.{nameof(CollectAccessWay)}"
+            );
+
+            logger.LogAdvancePrompt(
+                $"{nameof(AccessPermission)} is \"{AccessPermission.Name}, {AccessPermission.GuidTag}({AccessPermission.Path}), {AccessPermission.ChannelName}({AccessPermission.Channel})\"."
+            );
+        }
+
         var channel = GetChannel();
 
         CompetenceCollection.GetInstance().SetCompetenceSets(
@@ -66,6 +96,15 @@ public abstract class AccessWayOfficer : OfficerCore
                 AccessPermission.Path,
                 AccessPermission.Competence
             );
+
+            if (Environment.IsDevelopment())
+            {
+                var logger = LoggerFactory.CreateLogger<AccessWayOfficer>();
+
+                logger.LogAdvancePrompt(
+                    $"{nameof(AccessPermission)} {nameof(AccessPermission.GuidTag)} \"{AccessPermission.GuidTag}\" has not existed, send to queue by producer."
+                );
+            }
         }
         else
         {
@@ -75,7 +114,18 @@ public abstract class AccessWayOfficer : OfficerCore
                 accessWayModel.RelativePath == AccessPermission.Path &&
                 accessWayModel.Expand == AccessPermission.Competence &&
                 accessWayModel.Channel == channel)
+            {
+                if (Environment.IsDevelopment())
+                {
+                    var logger = LoggerFactory.CreateLogger<AccessWayOfficer>();
+
+                    logger.LogAdvancePrompt(
+                        $"{nameof(AccessPermission)} {nameof(AccessPermission.GuidTag)} \"{AccessPermission.GuidTag}\" has existed and has not changed, ignore send."
+                    );
+                }
+
                 return;
+            }
 
             AutofacAssist.Instance.Resolve<IAccessWayProducer>().Send(
                 AccessPermission.GuidTag,
@@ -83,6 +133,15 @@ public abstract class AccessWayOfficer : OfficerCore
                 AccessPermission.Path,
                 AccessPermission.Competence
             );
+
+            if (Environment.IsDevelopment())
+            {
+                var logger = LoggerFactory.CreateLogger<AccessWayOfficer>();
+
+                logger.LogAdvancePrompt(
+                    $"{nameof(AccessPermission)} {nameof(AccessPermission.GuidTag)} \"{AccessPermission.GuidTag}\" has existed and has changed, send to queue by producer."
+                );
+            }
         }
     }
 }

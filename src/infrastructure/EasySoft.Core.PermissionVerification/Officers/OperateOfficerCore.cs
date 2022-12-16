@@ -12,7 +12,10 @@ public abstract class OperateOfficerCore : AccessWayOfficer
     /// <summary>
     /// OperateOfficerCore
     /// </summary>
-    protected OperateOfficerCore()
+    protected OperateOfficerCore(
+        ILoggerFactory loggerFactory,
+        IWebHostEnvironment environment
+    ) : base(loggerFactory, environment)
     {
         _actualOperator = AutofacAssist.Instance.Resolve<IActualOperator>();
     }

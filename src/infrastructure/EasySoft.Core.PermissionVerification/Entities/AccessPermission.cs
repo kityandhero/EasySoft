@@ -31,6 +31,16 @@ public class AccessPermission
     public string Path { get; set; }
 
     /// <summary>
+    /// Channel
+    /// </summary>
+    public int Channel { get; set; }
+
+    /// <summary>
+    /// ChannelName
+    /// </summary>
+    public string ChannelName { get; set; }
+
+    /// <summary>
     /// AccessPermission
     /// </summary>
     public AccessPermission()
@@ -40,5 +50,7 @@ public class AccessPermission
         GuidTag = "";
         Url = "";
         Path = "";
+        Channel = 0;
+        ChannelName = "";
     }
 }
