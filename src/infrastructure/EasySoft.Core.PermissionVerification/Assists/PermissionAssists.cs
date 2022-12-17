@@ -71,9 +71,10 @@ public static class PermissionAssists
 
                 AccessWayModelScanQuery.Enqueue(accessWayModel);
 
-                StartupDescriptionMessageAssist.AddPrompt(
-                    $"Scan Permission: \"{assembly.GetName().Name}\" -> \"{accessWayModel.Name}, {accessWayModel.GuidTag} ({accessWayModel.RelativePath})\"."
-                );
+                if (EnvironmentAssist.IsDevelopment())
+                    LogAssist.Prompt(
+                        $"Scan Permission: \"{assembly.GetName().Name}\" -> \"{accessWayModel.Name}, {accessWayModel.GuidTag} ({accessWayModel.RelativePath})\"."
+                    );
             });
         });
     }
@@ -82,11 +83,16 @@ public static class PermissionAssists
     {
         if (!GetAccessWayModelScanQuery().Any()) return;
 
-        StartupDescriptionMessageAssist.AddPrompt(
-            $"Permission need sync {GetAccessWayModelScanQuery().Count}, start sync."
-        );
+        var isDevelopment = EnvironmentAssist.IsDevelopment();
 
-        Task.Run(() => { Task.FromResult(ExecSync()); });
+        if (isDevelopment)
+            LogAssist.Prompt(
+                $"Permission need sync {GetAccessWayModelScanQuery().Count}, start sync."
+            );
+
+        Task.FromResult(ExecSync());
+
+        if (isDevelopment) LogAssist.Prompt("Permission sync complete.");
     }
 
     private static async Task ExecSync()
@@ -105,8 +111,9 @@ public static class PermissionAssists
                 accessWayModel.RelativePath,
                 accessWayModel.Expand
             );
-        }
 
-        LogAssist.Prompt("Permission sync complete.");
+            if (EnvironmentAssist.IsDevelopment())
+                LogAssist.Prompt($"Send {nameof(AccessWayModel)} -> {accessWayModel.BuildInfo()}.");
+        }
     }
 }

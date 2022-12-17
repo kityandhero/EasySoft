@@ -19,4 +19,18 @@ public static class ExecutiveResultExtensions
 
         return executiveResult;
     }
+
+    /// <summary>
+    /// ToExecutiveResult
+    /// </summary>
+    /// <param name="executiveResult"></param>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public static ExecutiveResult<TR> ToExecutiveResult<T, TR>(this ExecutiveResult<T> executiveResult, TR? data)
+    {
+        return new ExecutiveResult<TR>(executiveResult.Code)
+        {
+            Data = data
+        };
+    }
 }

@@ -1,0 +1,37 @@
+﻿using EasySoft.Core.AppSecurityServer.Core.Entities.Bases;
+
+namespace EasySoft.Core.AppSecurityServer.Core.Entities;
+
+/// <summary>
+/// 应用安全
+/// </summary>
+[Description("应用安全")]
+public class AppSecurity : BaseEntity, IAppSecurity, IChannel, ISoftDelete, IIp, IOperate
+{
+    /// <inheritdoc />
+    public string AppId { get; set; } = UniqueIdAssist.CreateUUID();
+
+    /// <inheritdoc />
+    public string AppSecret { get; set; } = UniqueIdAssist.CreateUUID().ToMd5();
+
+    /// <inheritdoc />
+    public int Channel { get; set; }
+
+    /// <inheritdoc />
+    public int Deleted { get; set; }
+
+    /// <inheritdoc />
+    public string Ip { get; set; } = "";
+
+    /// <inheritdoc />
+    public long CreateBy { get; set; }
+
+    /// <inheritdoc />
+    public DateTime CreateTime { get; set; } = DateTime.Now;
+
+    /// <inheritdoc />
+    public long ModifyBy { get; set; }
+
+    /// <inheritdoc />
+    public DateTime ModifyTime { get; set; } = DateTime.Now;
+}

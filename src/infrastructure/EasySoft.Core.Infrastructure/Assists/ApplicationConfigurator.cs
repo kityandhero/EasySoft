@@ -1,5 +1,7 @@
 ﻿using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Standard.Extensions;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.Infrastructure.Assists;
 
@@ -8,6 +10,16 @@ namespace EasySoft.Core.Infrastructure.Assists;
 /// </summary>
 public static class ApplicationConfigurator
 {
+    /// <summary>
+    /// AfterApplicationStartHandler
+    /// </summary>
+    public delegate void AfterApplicationStartHandler(IServiceProvider services);
+
+    /// <summary>
+    /// OnApplicationStart
+    /// </summary>
+    public static event AfterApplicationStartHandler? OnApplicationStart;
+
     /// <summary>
     /// Password Salt
     /// </summary>
@@ -20,6 +32,22 @@ public static class ApplicationConfigurator
     private static readonly List<IExtraAction<WebApplication>> WebApplicationExtraActions = new();
 
     private static Action<MiniProfilerOptions>? _miniProfileOptionAction;
+
+    static ApplicationConfigurator()
+    {
+        OnApplicationStart += serviceProvider =>
+        {
+            var environment = serviceProvider.GetService<IWebHostEnvironment>();
+
+            if (!environment.IsDevelopment()) return;
+
+            var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
+
+            loggerFactory?.CreateLogger<object>().LogAdvancePrompt(
+                "Execute work after application start."
+            );
+        };
+    }
 
     /// <summary>
     /// SetMiniProfilerOptionsAction
@@ -147,5 +175,14 @@ public static class ApplicationConfigurator
     public static IEnumerable<IExtraAction<WebApplication>> GetAllWebApplicationExtraActions()
     {
         return WebApplicationExtraActions;
+    }
+
+    /// <summary>
+    /// DoAfterApplicationStart
+    /// </summary>
+    /// <param name="serviceProvider"></param>
+    public static void DoAfterApplicationStart(IServiceProvider serviceProvider)
+    {
+        OnApplicationStart?.Invoke(serviceProvider);
     }
 }

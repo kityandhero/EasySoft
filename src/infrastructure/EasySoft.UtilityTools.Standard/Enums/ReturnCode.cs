@@ -57,6 +57,13 @@ public enum ReturnCode
     ParamError = 1001,
 
     /// <summary>
+    /// 参数错误
+    /// </summary>
+    [Description("校验错误")]
+    [ReturnCodeSuccess(false)]
+    VerifyError = 1011,
+
+    /// <summary>
     /// 无数据
     /// </summary>
     [Description("无数据")]

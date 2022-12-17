@@ -23,9 +23,12 @@ public static class WebApplicationExtensions
             $"{nameof(UseScanPermission)}."
         );
 
-        PermissionConfigure.ScanPermissionAssemblies.ForEach(PermissionAssists.ScanPermission);
+        ApplicationConfigurator.OnApplicationStart += serviceProvider =>
+        {
+            PermissionConfigure.ScanPermissionAssemblies.ForEach(PermissionAssists.ScanPermission);
 
-        PermissionAssists.Sync();
+            PermissionAssists.Sync();
+        };
 
         return application;
     }

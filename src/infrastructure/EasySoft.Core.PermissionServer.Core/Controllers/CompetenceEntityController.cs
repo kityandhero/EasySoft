@@ -8,15 +8,15 @@ namespace EasySoft.Core.PermissionServer.Core.Controllers;
 [Route("competenceEntity")]
 public class CompetenceEntityController : CustomControllerBase
 {
-    private readonly ISecurityService _securityService;
+    private readonly IPermissionService _permissionService;
 
     /// <summary>
     /// EntranceController
     /// </summary>
-    /// <param name="securityService"></param>
-    public CompetenceEntityController(ISecurityService securityService)
+    /// <param name="permissionService"></param>
+    public CompetenceEntityController(IPermissionService permissionService)
     {
-        _securityService = securityService;
+        _permissionService = permissionService;
     }
 
     /// <summary>
@@ -28,6 +28,6 @@ public class CompetenceEntityController : CustomControllerBase
     [HttpPost]
     public async Task<List<CompetenceEntity>> GetCompetenceEntityCollectionAsync(long roleGroupId)
     {
-        return await _securityService.GetCompetenceEntityCollectionAsync(roleGroupId);
+        return await _permissionService.GetCompetenceEntityCollectionAsync(roleGroupId);
     }
 }

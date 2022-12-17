@@ -18,8 +18,8 @@ public static class PermissionServerAssist
     {
         ContextConfigure.AddEntityConfigureAssembly(typeof(RoleGroup).Assembly);
 
-        BusinessServiceConfigure.AddBusinessServiceInterfaceAssembly(typeof(ISecurityService).Assembly);
-        BusinessServiceConfigure.AddBusinessServiceImplementationAssembly(typeof(SecurityService).Assembly);
+        BusinessServiceConfigure.AddBusinessServiceInterfaceAssembly(typeof(IPermissionService).Assembly);
+        BusinessServiceConfigure.AddBusinessServiceImplementationAssembly(typeof(PermissionService).Assembly);
 
         // 配置额外的构建项目
         ApplicationConfigurator.AddWebApplicationBuilderExtraActions(

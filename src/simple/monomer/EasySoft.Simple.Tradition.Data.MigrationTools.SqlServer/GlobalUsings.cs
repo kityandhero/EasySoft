@@ -1,6 +1,7 @@
 ﻿// Global using directives
 
 global using System.Reflection;
+global using EasySoft.Core.AppSecurityServer.Core.Entities;
 global using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
 global using EasySoft.Core.EntityFramework.SqlServer.Contexts;
 global using EasySoft.Core.EntityFramework.SqlServer.DesignTimeDbContextFactories;

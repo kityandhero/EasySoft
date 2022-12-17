@@ -19,6 +19,8 @@ public class StartUpConfigure : IStartUpConfigure
             typeof(ErrorLog).Assembly
         });
 
+        AppSecurityServerAssist.Init();
+
         PermissionServerAssist.Init();
 
         LogServerAssist.Init();

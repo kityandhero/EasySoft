@@ -36,11 +36,11 @@ public class AccessWay : BaseEntity, IAccessWayPersistence, IIp, IStatus, IOpera
     public long CreateBy { get; set; }
 
     /// <inheritdoc />
-    public DateTime CreateTime { get; set; }
+    public DateTime CreateTime { get; set; } = DateTime.Now;
 
     /// <inheritdoc />
     public long ModifyBy { get; set; }
 
     /// <inheritdoc />
-    public DateTime ModifyTime { get; set; }
+    public DateTime ModifyTime { get; set; } = DateTime.Now;
 }

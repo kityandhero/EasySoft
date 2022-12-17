@@ -1,4 +1,5 @@
 ﻿using EasySoft.UtilityTools.Standard.Assists;
+using EasySoft.UtilityTools.Standard.Exceptions;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
@@ -38,6 +39,21 @@ public class Captcha
         LetterCount = 5;
         LetterWidth = 15;
         LetterHeight = 27;
+    }
+
+    /// <summary>
+    /// 设置验证码位数
+    /// </summary>
+    /// <param name="letterCount"></param>
+    /// <returns></returns>
+    public Captcha SetLetterCount(int letterCount)
+    {
+        if (letterCount < 4 || letterCount > 8)
+            throw new UnknownException("letterCount must greater than 3 or less than 9");
+
+        LetterCount = letterCount;
+
+        return this;
     }
 
     /// <summary>

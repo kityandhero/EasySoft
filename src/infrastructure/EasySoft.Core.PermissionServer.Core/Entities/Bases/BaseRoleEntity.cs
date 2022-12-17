@@ -41,5 +41,5 @@ public abstract class BaseRoleEntity : BaseEntity, IRoleEntity, IIp, IStatus, IO
     public long ModifyBy { get; set; }
 
     /// <inheritdoc />
-    public DateTime ModifyTime { get; set; }
+    public DateTime ModifyTime { get; set; }= DateTime.Now;
 }

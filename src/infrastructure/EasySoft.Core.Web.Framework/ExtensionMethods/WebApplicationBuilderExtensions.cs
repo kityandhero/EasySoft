@@ -434,6 +434,21 @@ public static class WebApplicationBuilderExtensions
 
         StartupWarnMessageAssist.Print();
 
+        app.Lifetime.ApplicationStarted.Register(() =>
+        {
+            ApplicationConfigurator.DoAfterApplicationStart(app.Services);
+        });
+
+        if (app.Environment.IsDevelopment())
+            ApplicationConfigurator.OnApplicationStart += serviceProvider =>
+            {
+                var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
+
+                loggerFactory?.CreateLogger<object>().LogAdvancePrompt(
+                    "Execute work after application End."
+                );
+            };
+
         return app;
     }
 

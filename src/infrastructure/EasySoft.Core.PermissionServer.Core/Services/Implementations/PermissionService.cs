@@ -5,9 +5,9 @@ using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
 namespace EasySoft.Core.PermissionServer.Core.Services.Implementations;
 
 /// <summary>
-/// SecurityService
+/// PermissionService
 /// </summary>
-public class SecurityService : ISecurityService
+public class PermissionService : IPermissionService
 {
     private readonly IEventPublisher _eventPublisher;
 
@@ -27,7 +27,7 @@ public class SecurityService : ISecurityService
     /// <param name="roleGroupRepository"></param>
     /// <param name="presetRoleRepository"></param>
     /// <param name="accessWayRepository"></param>
-    public SecurityService(
+    public PermissionService(
         IEventPublisher eventPublisher,
         IRepository<RoleGroup> roleGroupRepository,
         IRepository<PresetRole> presetRoleRepository,

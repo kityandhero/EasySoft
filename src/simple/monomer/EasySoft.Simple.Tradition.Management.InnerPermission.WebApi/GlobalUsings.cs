@@ -1,6 +1,7 @@
 ﻿// Global using directives
 
 global using System.Reflection;
+global using EasySoft.Core.AppSecurityServer.Core.Assist;
 global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.Core.Infrastructure.Configures;
 global using EasySoft.Core.Infrastructure.Startup;

@@ -3,7 +3,7 @@
 /// <summary>
 /// ISecurityService
 /// </summary>
-public interface ISecurityService : IBusinessService
+public interface IPermissionService : IBusinessService
 {
     /// <summary>
     /// get competence entity collection

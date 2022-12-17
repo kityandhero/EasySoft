@@ -10,7 +10,8 @@ public class DesignTimeContextFactory : SqlServerAbstractDesignTimeContextFactor
         {
             typeof(User).Assembly,
             typeof(RoleGroup).Assembly,
-            typeof(ErrorLog).Assembly
+            typeof(ErrorLog).Assembly,
+            typeof(AppSecurity).Assembly
         };
     }
 }

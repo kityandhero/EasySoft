@@ -8,15 +8,15 @@ namespace EasySoft.Core.PermissionServer.Core.Controllers;
 [Route("accessWay")]
 public class AccessWayController : CustomControllerBase
 {
-    private readonly ISecurityService _securityService;
+    private readonly IPermissionService _permissionService;
 
     /// <summary>
     /// EntranceController
     /// </summary>
-    /// <param name="securityService"></param>
-    public AccessWayController(ISecurityService securityService)
+    /// <param name="permissionService"></param>
+    public AccessWayController(IPermissionService permissionService)
     {
-        _securityService = securityService;
+        _permissionService = permissionService;
     }
 
     /// <summary>
@@ -28,6 +28,6 @@ public class AccessWayController : CustomControllerBase
     [HttpPost]
     public async Task<IList<AccessWayModel>> Find(string guidTag)
     {
-        return await _securityService.FindAccessWayModelAsync(guidTag);
+        return await _permissionService.FindAccessWayModelAsync(guidTag);
     }
 }
