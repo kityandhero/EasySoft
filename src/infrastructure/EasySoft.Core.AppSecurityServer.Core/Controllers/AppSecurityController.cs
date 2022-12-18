@@ -10,19 +10,23 @@ namespace EasySoft.Core.AppSecurityServer.Core.Controllers;
 [Route("appSecurity")]
 public class AppSecurityController : CustomControllerBase
 {
+    private readonly ILoggerFactory _loggerFactory;
     private readonly IAppPublicKeyService _appPublicKeyService;
     private readonly IAppSecurityService _appSecurityService;
 
     /// <summary>
     /// EntranceController
     /// </summary>
+    /// <param name="loggerFactory"></param>
     /// <param name="appPublicKeyService"></param>
     /// <param name="appSecurityService"></param>
     public AppSecurityController(
+        ILoggerFactory loggerFactory,
         IAppPublicKeyService appPublicKeyService,
         IAppSecurityService appSecurityService
     )
     {
+        _loggerFactory = loggerFactory;
         _appPublicKeyService = appPublicKeyService;
         _appSecurityService = appSecurityService;
     }
@@ -36,21 +40,30 @@ public class AppSecurityController : CustomControllerBase
     [HttpPost]
     public async Task<IList<AppSecurityDto>> Verify(AppSecurityDto appSecurityDto)
     {
-        var resultVerify = await _appSecurityService.VerifyAsync(appSecurityDto);
-
-        if (!resultVerify.Success || resultVerify.Data == null) return new List<AppSecurityDto>();
-
-        var data = resultVerify.Data;
-
-        var resultGetAppPublicKey = await _appPublicKeyService.GetAsync();
-
-        if (!resultGetAppPublicKey.Success || resultGetAppPublicKey.Data == null) return new List<AppSecurityDto>();
-
-        data.PublicKey = resultGetAppPublicKey.Data.Key;
-
-        return new List<AppSecurityDto>
+        try
         {
-            data
-        };
+            var resultVerify = await _appSecurityService.VerifyAsync(appSecurityDto);
+
+            if (!resultVerify.Success || resultVerify.Data == null) return new List<AppSecurityDto>();
+
+            var data = resultVerify.Data;
+
+            var resultGetAppPublicKey = await _appPublicKeyService.GetAsync();
+
+            if (!resultGetAppPublicKey.Success || resultGetAppPublicKey.Data == null) return new List<AppSecurityDto>();
+
+            data.PublicKey = resultGetAppPublicKey.Data.Key;
+
+            return new List<AppSecurityDto>
+            {
+                data
+            };
+        }
+        catch (Exception e)
+        {
+            _loggerFactory.CreateLogger<object>().LogAdvanceException(e);
+
+            throw;
+        }
     }
 }
