@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Core.Assists;
-
-namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
+﻿namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 
 /// <summary>
 /// LogController

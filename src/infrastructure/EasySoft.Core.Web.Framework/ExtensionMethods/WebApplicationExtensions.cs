@@ -130,4 +130,143 @@ public static class WebApplicationExtensions
             action(endpoint);
         }
     }
+
+    /// <summary>
+    /// 注册应用启动后自定义任务
+    /// </summary>  
+    /// <param name="application"></param>
+    /// <returns></returns>
+    internal static WebApplication RegisterWorks(
+        this WebApplication application
+    )
+    {
+        return application
+            .BindTimers()
+            .RegisterStartWorks()
+            .RegisterStoppingWorks()
+            .BindStartWorkCompleteNotify();
+    }
+
+    /// <summary>
+    /// 注册应用启动完成后自定义任务
+    /// </summary>  
+    /// <param name="application"></param>
+    /// <returns></returns>
+    private static WebApplication RegisterStartWorks(
+        this WebApplication application
+    )
+    {
+        application.Lifetime.ApplicationStarted.Register(() =>
+        {
+            ApplicationConfigurator.DoAfterApplicationStart(application.Services);
+        });
+
+        return application;
+    }
+
+    /// <summary>
+    /// 注册应用停止时自定义任务
+    /// </summary>  
+    /// <param name="application"></param>
+    /// <returns></returns>
+    private static WebApplication RegisterStoppingWorks(
+        this WebApplication application
+    )
+    {
+        application.Lifetime.ApplicationStopping.Register(() =>
+        {
+            ApplicationConfigurator.DoWhenApplicationStopping(application.Services);
+        });
+
+        return application;
+    }
+
+    /// <summary>
+    /// 绑定应用启动后自定义任务执行完毕通知
+    /// </summary>  
+    /// <param name="application"></param>
+    /// <returns></returns>
+    private static WebApplication BindStartWorkCompleteNotify(
+        this WebApplication application
+    )
+    {
+        if (application.Environment.IsDevelopment())
+            ApplicationConfigurator.OnApplicationStart += serviceProvider =>
+            {
+                var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
+
+                loggerFactory?.CreateLogger<object>().LogAdvancePrompt(
+                    "Execute work after application End."
+                );
+            };
+
+        return application;
+    }
+
+    /// <summary>
+    /// 绑定定时器触发
+    /// </summary>
+    private static WebApplication BindTimers(
+        this WebApplication application
+    )
+    {
+        return application
+            .BindTimersStart()
+            .BindTimersStop();
+    }
+
+    /// <summary>
+    /// 绑定定时器启动触发
+    /// </summary>
+    private static WebApplication BindTimersStart(
+        this WebApplication application
+    )
+    {
+        //应用启动后启动定时器
+        ApplicationConfigurator.OnApplicationStart += serviceProvider =>
+        {
+            var timers = ApplicationConfigurator.GetTimers();
+
+            if (!timers.Any()) return;
+
+            if (application.Environment.IsDevelopment())
+                application.Logger.LogAdvancePrompt(
+                    $"Times({timers.Count}) will start."
+                );
+
+            timers.ForEach(t => { t.Start(); });
+        };
+
+        return application;
+    }
+
+    /// <summary>
+    /// 绑定定时器停止触发
+    /// </summary>
+    private static WebApplication BindTimersStop(
+        this WebApplication application
+    )
+    {
+        //停止定时器执行并释放资源
+        ApplicationConfigurator.OnApplicationStopping += serviceProvider =>
+        {
+            var timers = ApplicationConfigurator.GetTimers();
+
+            if (!timers.Any()) return;
+
+            if (application.Environment.IsDevelopment())
+                application.Logger.LogAdvancePrompt(
+                    $"Times({timers.Count}) will stop and dispose."
+                );
+
+            timers.ForEach(t =>
+            {
+                t.Stop();
+
+                t.Dispose();
+            });
+        };
+
+        return application;
+    }
 }

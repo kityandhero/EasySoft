@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Core.Assists;
-using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Infrastructure.ExtensionMethods;
 

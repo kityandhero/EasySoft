@@ -27,6 +27,7 @@ global using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 global using EasySoft.Core.Swagger.Configures;
 global using EasySoft.Core.Web.Framework.BuilderAssists;
 global using EasySoft.Core.Web.Framework.ExtensionMethods;
+global using EasySoft.UtilityTools.Core.Assists;
 global using EasySoft.UtilityTools.Core.Channels;
 global using EasySoft.UtilityTools.Core.Extensions;
 global using EasySoft.UtilityTools.Core.Results;

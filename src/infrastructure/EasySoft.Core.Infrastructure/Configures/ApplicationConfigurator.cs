@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.Infrastructure.Startup;
-using EasySoft.UtilityTools.Standard.Extensions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+using Masuit.Tools;
+using Timer = System.Timers.Timer;
 
 namespace EasySoft.Core.Infrastructure.Configures;
 
@@ -16,16 +15,29 @@ public static class ApplicationConfigurator
     public delegate void AfterApplicationStartHandler(IServiceProvider services);
 
     /// <summary>
+    /// AfterApplicationStartHandler
+    /// </summary>
+    public delegate void ApplicationStoppingHandler(IServiceProvider services);
+
+    /// <summary>
     /// OnApplicationStart
     /// </summary>
     public static event AfterApplicationStartHandler? OnApplicationStart;
+
+    /// <summary>
+    /// OnApplicationStopping
+    /// </summary>
+    public static event ApplicationStoppingHandler? OnApplicationStopping;
 
     /// <summary>
     /// Password Salt
     /// </summary>
     public static string PasswordSalt { get; set; } = "";
 
+    private static readonly ICollection<Timer> Timers = new List<Timer>();
+
     private static readonly HashSet<string> Areas = new(StringComparer.OrdinalIgnoreCase);
+
     private static readonly List<IExtraAction<MvcOptions>> MvcOptionExtraActions = new();
     private static readonly List<IExtraAction<IEndpointRouteBuilder>> EndpointRouteBuilderExtraActions = new();
     private static readonly List<IExtraAction<WebApplicationBuilder>> WebApplicationBuilderExtraActions = new();
@@ -47,6 +59,23 @@ public static class ApplicationConfigurator
                 "Execute work after application start."
             );
         };
+    }
+
+    /// <summary>
+    /// AddTimer
+    /// </summary>
+    public static ICollection<Timer> GetTimers()
+    {
+        return Timers;
+    }
+
+    /// <summary>
+    /// AddTimer
+    /// </summary>
+    /// <param name="timers"></param>
+    public static void AddTimer(params Timer[] timers)
+    {
+        Timers.AddRange(timers);
     }
 
     /// <summary>
@@ -184,5 +213,14 @@ public static class ApplicationConfigurator
     public static void DoAfterApplicationStart(IServiceProvider serviceProvider)
     {
         OnApplicationStart?.Invoke(serviceProvider);
+    }
+
+    /// <summary>
+    /// DoAfterApplicationStart
+    /// </summary>
+    /// <param name="serviceProvider"></param>
+    public static void DoWhenApplicationStopping(IServiceProvider serviceProvider)
+    {
+        OnApplicationStopping?.Invoke(serviceProvider);
     }
 }

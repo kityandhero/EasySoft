@@ -1,6 +1,7 @@
 ﻿using EasySoft.Simple.Single.Application.Common;
 using EasySoft.Simple.Single.Application.PrepareStartWorks;
 using EasySoft.Simple.Single.Application.Security;
+using Timer = System.Timers.Timer;
 
 namespace EasySoft.Simple.Single.Application;
 
@@ -74,7 +75,7 @@ public class StartUpConfigure : IStartUpConfigure
         Core.EntityFramework.Configures.ContextConfigure.EnableSensitiveDataLogging = true;
         Core.EntityFramework.Configures.ContextConfigure.AutoEnsureCreated = true;
 
-// 配置额外的构建项目
+        // 配置额外的构建项目
         ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddApiVersioning")
@@ -151,5 +152,16 @@ public class StartUpConfigure : IStartUpConfigure
         {
             // LogAssist.Info("config changed");
         };
+
+        var testTimer = new Timer(5000);
+
+        testTimer.Elapsed += (sender, e) => HandleTimer();
+
+        ApplicationConfigurator.AddTimer(testTimer);
+    }
+
+    private static void HandleTimer()
+    {
+        LogAssist.Prompt("timer trigger.");
     }
 }

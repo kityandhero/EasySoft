@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-
-namespace EasySoft.Core.Infrastructure.Assists;
+﻿namespace EasySoft.Core.Infrastructure.Assists;
 
 /// <summary>
 /// ServiceAssist
