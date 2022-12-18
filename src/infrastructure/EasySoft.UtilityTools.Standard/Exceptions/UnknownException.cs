@@ -11,7 +11,7 @@ public class UnknownException : Exception
     /// UnknownException
     /// </summary>
     /// <param name="message"></param>
-    public UnknownException(string message = "") : base("未知的错误{0}".FormatValue(message))
+    public UnknownException(string message = "") : base("error -> {0}".FormatValue(message))
     {
     }
 }

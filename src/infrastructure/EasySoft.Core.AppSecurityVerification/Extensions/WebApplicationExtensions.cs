@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.AppSecurityVerification.Detectors;
+using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.AppSecurityVerification.Extensions;
 
@@ -35,7 +36,7 @@ public static class WebApplicationExtensions
             }
             catch (Exception e)
             {
-                await application.StopAsync();
+                application.Logger.LogAdvanceException(e);
             }
         };
 

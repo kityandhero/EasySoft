@@ -169,6 +169,18 @@ public static class LoggerExtensions
 
     #endregion
 
+    #region Exception
+
+    /// <summary>
+    /// 记录错误信息
+    /// </summary>
+    public static void LogAdvanceException(this ILogger logger, Exception exception)
+    {
+        logger.LogError(0, exception, null);
+    }
+
+    #endregion
+
     #region Execute
 
     /// <summary>

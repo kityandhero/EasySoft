@@ -57,7 +57,7 @@ public class JsonWebTokenMiddleware : IMiddleware
         catch (Exception e)
         {
             if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
-                AutofacAssist.Instance.Resolve<IErrorLogProducer>().SendAsync(
+                await AutofacAssist.Instance.Resolve<IErrorLogProducer>().SendAsync(
                     e,
                     0,
                     context.BuildRequestInfo()
