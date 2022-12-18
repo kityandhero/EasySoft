@@ -1,4 +1,4 @@
-﻿namespace EasySoft.UtilityTools.Core.Attributes;
+﻿namespace EasySoft.UtilityTools.Standard.Attributes;
 
 /// <summary>
 /// 日志记录标记

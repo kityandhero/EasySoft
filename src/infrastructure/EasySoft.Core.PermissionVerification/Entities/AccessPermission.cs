@@ -10,7 +10,7 @@ public class AccessPermission
     /// </summary>
     public string Name { get; set; }
 
-    /// <summary>
+    /// <summary>   
     /// Competence
     /// </summary>
     public string Competence { get; set; }

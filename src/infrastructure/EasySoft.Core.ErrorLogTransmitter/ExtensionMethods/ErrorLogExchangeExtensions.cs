@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.ErrorLogTransmitter.Entities;
 using EasySoft.Core.ErrorLogTransmitter.Enums;
+using EasySoft.UtilityTools.Standard.Entities;
 
 namespace EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 

@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.ErrorLogTransmitter.Interfaces;
+using EasySoft.UtilityTools.Standard.Entities;
 
 namespace EasySoft.Core.ErrorLogTransmitter.Producers;
 

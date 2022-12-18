@@ -1,12 +1,15 @@
-﻿using MediatR;
-
-namespace EasySoft.UtilityTools.Standard.Notifications;
+﻿namespace EasySoft.UtilityTools.Standard.Notifications;
 
 /// <summary>
 /// 应用安全校验通知
 /// </summary>
 public class AppSecurityVerifyNotification : INotification
 {
+    /// <summary>
+    /// VerifyResult
+    /// </summary>
+    public bool VerifyResult { get; private set; }
+
     /// <summary>
     /// 应用安全校验通知
     /// </summary>
@@ -15,9 +18,4 @@ public class AppSecurityVerifyNotification : INotification
     {
         VerifyResult = verifyResult;
     }
-
-    /// <summary>
-    /// VerifyResult
-    /// </summary>
-    public bool VerifyResult { get; private set; }
 }

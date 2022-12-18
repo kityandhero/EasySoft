@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.PermissionVerification.Entities;
-using EasySoft.UtilityTools.Core.Attributes;
 
 namespace EasySoft.Core.PermissionVerification.Detectors;
 

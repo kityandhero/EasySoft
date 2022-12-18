@@ -1,4 +1,7 @@
-﻿namespace EasySoft.Core.PermissionServer.Core.Services.Interfaces;
+﻿using EasySoft.Core.PermissionVerification.Entities;
+using EasySoft.UtilityTools.Standard.Entities;
+
+namespace EasySoft.Core.PermissionServer.Core.Services.Interfaces;
 
 /// <summary>
 /// ISecurityService

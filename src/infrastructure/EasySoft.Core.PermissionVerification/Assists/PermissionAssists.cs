@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.PermissionVerification.Attributes;
+using EasySoft.Core.PermissionVerification.Clients;
 using EasySoft.Core.PermissionVerification.Detectors;
 using EasySoft.Core.PermissionVerification.Entities;
 
@@ -79,7 +80,7 @@ public static class PermissionAssists
         });
     }
 
-    internal static async Task StartSaveAsync()
+    internal static async Task StartSaveAsync(IAccessWayDetector accessWayDetector)
     {
         if (!GetAccessWayModelScanQuery().Any()) return;
 
@@ -90,17 +91,15 @@ public static class PermissionAssists
                 $"Permission need sync {GetAccessWayModelScanQuery().Count}, start sync."
             );
 
-        await ExecSaveAsync();
+        await ExecSaveAsync(accessWayDetector);
 
         if (isDevelopment) LogAssist.Prompt("Permission sync complete.");
     }
 
-    private static async Task ExecSaveAsync()
+    private static async Task ExecSaveAsync(IAccessWayDetector accessWayDetector)
     {
         while (AccessWayModelScanQuery.TryDequeue(out var accessWayModel))
         {
-            var accessWayDetector = AutofacAssist.Instance.Resolve<IAccessWayDetector>();
-
             var accessWayModels = await accessWayDetector.Find(accessWayModel.GuidTag);
 
             if (accessWayModels.Count > 0) continue;

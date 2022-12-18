@@ -1,5 +1,5 @@
 ﻿using EasySoft.UtilityTools.Standard.DataTransferObjects;
-using EasySoft.UtilityTools.Standard.Entity.Interfaces;
+using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 using EasySoft.UtilityTools.Standard.Exceptions;
 using EasySoft.UtilityTools.Standard.Extensions;
 using EasySoft.UtilityTools.Standard.Media.Image;

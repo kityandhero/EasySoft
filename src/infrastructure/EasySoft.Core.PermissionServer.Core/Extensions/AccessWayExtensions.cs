@@ -1,4 +1,6 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Entities;
+using EasySoft.Core.PermissionVerification.Entities;
+using EasySoft.UtilityTools.Standard.Entities;
 
 namespace EasySoft.Core.PermissionServer.Core.Extensions;
 

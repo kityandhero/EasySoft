@@ -1,4 +1,4 @@
-﻿namespace EasySoft.UtilityTools.Standard.Entity.Interfaces;
+﻿namespace EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 /// <summary>
 /// 最后更新时间

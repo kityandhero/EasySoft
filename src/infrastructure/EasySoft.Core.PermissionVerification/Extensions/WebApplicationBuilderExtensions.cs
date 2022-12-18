@@ -59,11 +59,11 @@ public static class WebApplicationBuilderExtensions
             });
         });
 
-        builder.Services.AddTransient(typeof(IAccessWayDetector), provider =>
+        builder.Services.TryAddTransient(typeof(IAccessWayDetector), provider =>
         {
             var permissionClient = provider.GetRequiredService<IPermissionClient>();
             var interceptors = new List<Type> { typeof(LogRecordInterceptor) }
-                .ConvertAll(interceptorType => { return provider.GetService(interceptorType) as IInterceptor; })
+                .ConvertAll(interceptorType => provider.GetService(interceptorType) as IInterceptor)
                 .ToArray();
             var proxyGenerator = provider.GetService<ProxyGenerator>();
 

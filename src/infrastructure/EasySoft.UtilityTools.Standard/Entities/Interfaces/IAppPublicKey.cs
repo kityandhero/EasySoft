@@ -1,4 +1,4 @@
-﻿namespace EasySoft.UtilityTools.Standard.Entity.Interfaces;
+﻿namespace EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 /// <summary>
 /// 应用验证公钥

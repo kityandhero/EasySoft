@@ -24,7 +24,6 @@ global using System.Threading;
 global using System.Threading.Tasks;
 global using Castle.DynamicProxy;
 global using EasySoft.UtilityTools.Standard.Assists;
-global using EasySoft.UtilityTools.Standard.Entity;
 global using EasySoft.UtilityTools.Standard.Enums;
 global using EasySoft.UtilityTools.Standard.Mime;
 global using EasySoft.UtilityTools.Standard.Result;

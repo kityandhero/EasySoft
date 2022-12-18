@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.EntityFramework.ValueGenerators;
 using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
-using EasySoft.UtilityTools.Standard.Entity.Interfaces;
+using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 namespace EasySoft.Core.EntityFramework.EntityTypeConfigures;
 

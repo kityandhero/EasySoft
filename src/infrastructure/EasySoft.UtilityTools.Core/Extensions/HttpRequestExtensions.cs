@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Standard.Extensions;
+﻿using EasySoft.UtilityTools.Standard.Entities;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.UtilityTools.Core.Extensions;
 

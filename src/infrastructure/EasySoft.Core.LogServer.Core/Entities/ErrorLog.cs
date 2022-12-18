@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.LogServer.Core.Entities.Bases;
-using EasySoft.UtilityTools.Standard.Entity.Interfaces;
+using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 namespace EasySoft.Core.LogServer.Core.Entities;
 

@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.AppSecurityVerification.Clients;
 using EasySoft.Core.AppSecurityVerification.Detectors;
-using MediatR;
 
 namespace EasySoft.Core.AppSecurityVerification.Extensions;
 

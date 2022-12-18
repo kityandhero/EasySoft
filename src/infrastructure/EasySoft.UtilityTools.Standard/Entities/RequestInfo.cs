@@ -1,4 +1,4 @@
-﻿namespace EasySoft.UtilityTools.Standard.Entity;
+﻿namespace EasySoft.UtilityTools.Standard.Entities;
 
 /// <summary>
 /// RequestInfo

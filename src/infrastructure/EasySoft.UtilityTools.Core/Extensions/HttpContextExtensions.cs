@@ -1,4 +1,6 @@
-﻿namespace EasySoft.UtilityTools.Core.Extensions;
+﻿using EasySoft.UtilityTools.Standard.Entities;
+
+namespace EasySoft.UtilityTools.Core.Extensions;
 
 /// <summary>
 /// HttpContextExtensions

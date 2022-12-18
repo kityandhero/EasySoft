@@ -1,6 +1,4 @@
 ﻿using EasySoft.Core.AppSecurityVerification.Clients;
-using EasySoft.UtilityTools.Standard.Notifications;
-using MediatR;
 
 namespace EasySoft.Core.AppSecurityVerification.Detectors;
 

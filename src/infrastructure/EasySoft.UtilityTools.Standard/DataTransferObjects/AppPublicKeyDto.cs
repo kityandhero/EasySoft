@@ -1,4 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Entity.Interfaces;
+﻿using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 namespace EasySoft.UtilityTools.Standard.DataTransferObjects;
 

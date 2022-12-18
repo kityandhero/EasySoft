@@ -14,6 +14,8 @@ global using EasySoft.UtilityTools.Standard.Assists;
 global using EasySoft.UtilityTools.Standard.DataTransferObjects;
 global using EasySoft.UtilityTools.Standard.Exceptions;
 global using EasySoft.UtilityTools.Standard.Extensions;
+global using EasySoft.UtilityTools.Standard.Notifications;
+global using MediatR;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Hosting;
 global using Microsoft.Extensions.DependencyInjection;

@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.PermissionVerification.Assists;
+using EasySoft.Core.PermissionVerification.Detectors;
 using EasySoft.UtilityTools.Core.Extensions;
 
 namespace EasySoft.Core.PermissionVerification.NotificationHandlers;
@@ -10,19 +11,23 @@ public class PermissionScanReply : INotificationHandler<AppSecurityFirstVerifyNo
 {
     private readonly ILoggerFactory _loggerFactory;
     private readonly IWebHostEnvironment _environment;
+    private readonly IAccessWayDetector _accessWayDetector;
 
     /// <summary>
     /// 权限扫描应答
     /// </summary>
     /// <param name="loggerFactory"></param>
     /// <param name="environment"></param>
+    /// <param name="accessWayDetector"></param>
     public PermissionScanReply(
         ILoggerFactory loggerFactory,
-        IWebHostEnvironment environment
+        IWebHostEnvironment environment,
+        IAccessWayDetector accessWayDetector
     )
     {
         _loggerFactory = loggerFactory;
         _environment = environment;
+        _accessWayDetector = accessWayDetector;
     }
 
     /// <inheritdoc />
@@ -36,6 +41,6 @@ public class PermissionScanReply : INotificationHandler<AppSecurityFirstVerifyNo
         if (!notification.VerifyResult)
             return;
 
-        await PermissionAssists.StartSaveAsync();
+        await PermissionAssists.StartSaveAsync(_accessWayDetector);
     }
 }
