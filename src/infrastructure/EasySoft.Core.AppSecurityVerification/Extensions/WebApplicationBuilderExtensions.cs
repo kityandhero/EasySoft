@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.AppSecurityVerification.Clients;
 using EasySoft.Core.AppSecurityVerification.Detectors;
-using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.AppSecurityVerification.Extensions;
 
@@ -53,6 +52,7 @@ public static class WebApplicationBuilderExtensions
             provider =>
             {
                 var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
+                var environment = provider.GetRequiredService<IWebHostEnvironment>();
                 var applicationChannel = provider.GetRequiredService<IApplicationChannel>();
                 var appSecurityClient = provider.GetRequiredService<IAppSecurityClient>();
 
@@ -70,6 +70,7 @@ public static class WebApplicationBuilderExtensions
                     typeof(IAppSecurityDetector),
                     new AppSecurityDetector(
                         loggerFactory,
+                        environment,
                         applicationChannel,
                         appSecurityClient
                     ),

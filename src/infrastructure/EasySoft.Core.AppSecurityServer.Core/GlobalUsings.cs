@@ -34,6 +34,7 @@ global using EasySoft.UtilityTools.Core.Results;
 global using EasySoft.UtilityTools.Standard;
 global using EasySoft.UtilityTools.Standard.Assists;
 global using EasySoft.UtilityTools.Standard.Competence;
+global using EasySoft.UtilityTools.Standard.DataTransferObjects;
 global using EasySoft.UtilityTools.Standard.Entity.Interfaces;
 global using EasySoft.UtilityTools.Standard.Enums;
 global using EasySoft.UtilityTools.Standard.Exceptions;

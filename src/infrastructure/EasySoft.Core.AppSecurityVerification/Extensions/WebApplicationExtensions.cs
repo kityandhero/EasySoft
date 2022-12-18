@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.AppSecurityVerification.Detectors;
-using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.AppSecurityVerification.Extensions;
 

@@ -1,23 +1,21 @@
-﻿namespace EasySoft.UtilityTools.Standard.DataTransferObjects;
+﻿using EasySoft.UtilityTools.Standard.Entity.Interfaces;
+
+namespace EasySoft.UtilityTools.Standard.DataTransferObjects;
 
 /// <summary>
 /// AppSecurityDto
 /// </summary>
-public class AppSecurityDto
+public class AppSecurityDto : IAppSecurity
 {
     /// <summary>
     /// ErrorLogId
     /// </summary>
     public long AppSecurityId { get; set; }
 
-    /// <summary>
-    /// ChannelId
-    /// </summary>
+    /// <inheritdoc />
     public string AppId { get; set; } = "";
 
-    /// <summary>
-    /// AppSecret
-    /// </summary>
+    /// <inheritdoc />
     public string AppSecret { get; set; } = "";
 
     /// <summary>

@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.AppSecurityServer.Core.DataTransferObjects;
-using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
-using EasySoft.UtilityTools.Standard.DataTransferObjects;
+﻿using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Controllers;
 
@@ -38,13 +36,27 @@ public class AppSecurityController : CustomControllerBase
     /// <returns></returns>
     [Route("verify")]
     [HttpPost]
-    public async Task<IList<AppSecurityDto>> Verify(AppSecurityDto appSecurityDto)
+    public async Task<IList<AppSecurityDto>> Verify([FromBody] AppSecurityDto appSecurityDto)
     {
         try
         {
             var resultVerify = await _appSecurityService.VerifyAsync(appSecurityDto);
 
-            if (!resultVerify.Success || resultVerify.Data == null) return new List<AppSecurityDto>();
+            if (!resultVerify.Success)
+            {
+                _loggerFactory.CreateLogger<object>().LogAdvanceError(resultVerify.Message);
+
+                return new List<AppSecurityDto>();
+            }
+
+            if (resultVerify.Data == null)
+            {
+                _loggerFactory.CreateLogger<object>().LogAdvanceError(
+                    $" appid {appSecurityDto.AppId} do not exist."
+                );
+
+                return new List<AppSecurityDto>();
+            }
 
             var data = resultVerify.Data;
 

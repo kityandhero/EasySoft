@@ -11,5 +11,5 @@ public interface IAppSecurityClient
     /// <param name="appSecurityDto"></param>
     /// <returns></returns>
     [Post("/appSecurity/verify")]
-    public Task<ApiResponse<IList<AppPublicKeyDto>>> VerifyAsync(AppSecurityDto appSecurityDto);
+    public Task<ApiResponse<IList<AppPublicKeyDto>>> VerifyAsync([Body] AppSecurityDto appSecurityDto);
 }

@@ -1,8 +1,6 @@
-﻿using EasySoft.Core.AppSecurityServer.Core.DataTransferObjects;
-using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
+﻿using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
 using EasySoft.Core.AppSecurityServer.Core.Entities;
 using EasySoft.Core.AppSecurityServer.Core.Extensions;
-using EasySoft.UtilityTools.Standard.DataTransferObjects;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Services.Implementations;
 
@@ -32,19 +30,48 @@ public class AppSecurityService : IAppSecurityService
     public async Task<ExecutiveResult<AppSecurityDto>> VerifyAsync(AppSecurityDto appSecurityDto)
     {
         if (appSecurityDto.UnixTime < 0)
-            return new ExecutiveResult<AppSecurityDto>(ReturnCode.ParamError.ToMessage("unixTime error"));
+            return new ExecutiveResult<AppSecurityDto>(
+                ReturnCode.ParamError.ToMessage(
+                    $"unixTime params error -> {appSecurityDto.BuildInfo()}"
+                )
+            );
 
         if (string.IsNullOrWhiteSpace(appSecurityDto.Salt))
-            return new ExecutiveResult<AppSecurityDto>(ReturnCode.ParamError.ToMessage("salt error"));
+            return new ExecutiveResult<AppSecurityDto>(
+                ReturnCode.ParamError.ToMessage(
+                    $"salt params error -> {appSecurityDto.BuildInfo()}"
+                )
+            );
 
         if (string.IsNullOrWhiteSpace(appSecurityDto.AppId))
-            return new ExecutiveResult<AppSecurityDto>(ReturnCode.ParamError.ToMessage("appId error"));
+            return new ExecutiveResult<AppSecurityDto>(
+                ReturnCode.ParamError.ToMessage(
+                    $"appId params error -> {appSecurityDto.BuildInfo()}"
+                )
+            );
 
         if (appSecurityDto.Channel < 0)
-            return new ExecutiveResult<AppSecurityDto>(ReturnCode.ParamError.ToMessage("channel error"));
+            return new ExecutiveResult<AppSecurityDto>(
+                ReturnCode.ParamError.ToMessage(
+                    $"channel params error -> {appSecurityDto.BuildInfo()}"
+                )
+            );
 
         if (string.IsNullOrWhiteSpace(appSecurityDto.Sign))
-            return new ExecutiveResult<AppSecurityDto>(ReturnCode.ParamError.ToMessage("sign error"));
+            return new ExecutiveResult<AppSecurityDto>(
+                ReturnCode.ParamError.ToMessage(
+                    $"sign params error -> {appSecurityDto.BuildInfo()}"
+                )
+            );
+
+        if (appSecurityDto.AppId == AppSecurityAssist.EmbedAppId)
+            return new ExecutiveResult<AppSecurityDto>(ReturnCode.Ok)
+            {
+                Data = new AppSecurityDto
+                {
+                    AppId = appSecurityDto.AppId
+                }
+            };
 
         var result = await _appSecurityRepository.GetAsync(
             o => o.AppId == appSecurityDto.AppId

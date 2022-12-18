@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Standard.Entity.Interfaces;
+﻿using EasySoft.UtilityTools.Standard.DataTransferObjects;
+using EasySoft.UtilityTools.Standard.Entity.Interfaces;
 using EasySoft.UtilityTools.Standard.Exceptions;
 using EasySoft.UtilityTools.Standard.Extensions;
 using EasySoft.UtilityTools.Standard.Media.Image;
@@ -10,6 +11,16 @@ namespace EasySoft.UtilityTools.Standard.Assists;
 /// </summary>
 public static class AppSecurityAssist
 {
+    /// <summary>
+    /// 内嵌模式公共AppId
+    /// </summary>
+    public const string EmbedAppId = "EmbedModeAppId";
+
+    /// <summary>
+    /// 内嵌模式公共AppId
+    /// </summary>
+    public const string EmbedAppSecret = "EmbedModeSecret";
+
     /// <summary>
     /// get salt
     /// </summary>
@@ -26,6 +37,20 @@ public static class AppSecurityAssist
     public static long GetUnixTime()
     {
         return DateTime.Now.ToUnixTime();
+    }
+
+    /// <summary>
+    /// 签名
+    /// </summary>
+    /// <param name="appSecurityDto"></param>
+    /// <returns></returns>
+    public static AppSecurityDto Sign(AppSecurityDto appSecurityDto)
+    {
+        var sign = Sign(appSecurityDto, appSecurityDto.UnixTime, appSecurityDto.Salt);
+
+        appSecurityDto.Sign = sign;
+
+        return appSecurityDto;
     }
 
     /// <summary>
