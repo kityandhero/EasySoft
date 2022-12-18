@@ -39,4 +39,9 @@ public class AppSecurityDto
     /// Sign
     /// </summary>
     public string Sign { get; set; } = "";
+
+    /// <summary>
+    /// PublicKey
+    /// </summary>
+    public string PublicKey { get; set; } = "";
 }

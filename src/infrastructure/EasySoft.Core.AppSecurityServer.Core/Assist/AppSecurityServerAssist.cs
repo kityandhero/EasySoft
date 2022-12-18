@@ -12,8 +12,9 @@ public static class AppSecurityServerAssist
     /// <summary>
     /// Init
     /// </summary>
-    public static void Init()
+    public static void Init(bool embedMode)
     {
+        AppSecurityServerConfigure.EmbedMode = embedMode;
         ContextConfigure.AddEntityConfigureAssembly(typeof(AppSecurity).Assembly);
 
         BusinessServiceConfigure.AddBusinessServiceInterfaceAssembly(typeof(IAppSecurityService).Assembly);

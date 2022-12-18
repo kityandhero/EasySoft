@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;
+﻿using EasySoft.Core.Infrastructure.Configures;
+
+namespace EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {

@@ -25,7 +25,7 @@ public abstract class EventEntity<TData> where TData : class
     /// <summary>
     /// 事件发生的时间
     /// </summary>
-    public virtual DateTime OccurredDate { get; set; } = DateTime.Now;
+    public virtual DateTime OccurredDate { get; set; } = DateTimeOffset.Now.DateTime;
 
     /// <summary>
     /// 触发事件的方法

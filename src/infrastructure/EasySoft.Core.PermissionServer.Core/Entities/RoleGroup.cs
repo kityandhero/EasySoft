@@ -39,11 +39,11 @@ public class RoleGroup : BaseEntity, IChannel, IStatus, IIp, IOperate
     public long CreateBy { get; set; }
 
     /// <inheritdoc />
-    public DateTime CreateTime { get; set; } = DateTime.Now;
+    public DateTime CreateTime { get; set; } = DateTimeOffset.Now.DateTime;
 
     /// <inheritdoc />
     public long ModifyBy { get; set; }
 
     /// <inheritdoc />
-    public DateTime ModifyTime { get; set; } = DateTime.Now;
+    public DateTime ModifyTime { get; set; } = DateTimeOffset.Now.DateTime;
 }

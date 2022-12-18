@@ -1,4 +1,5 @@
-﻿using EasySoft.Simple.AccountCenter.Application.Contracts.DataTransferObjects.ApiParams;
+﻿using EasySoft.Core.Infrastructure.Configures;
+using EasySoft.Simple.AccountCenter.Application.Contracts.DataTransferObjects.ApiParams;
 using EasySoft.Simple.AccountCenter.Application.Contracts.ExtensionMethods;
 using EasySoft.Simple.AccountCenter.Application.Contracts.Services;
 using EasySoft.Simple.AccountCenter.Domain.Aggregates.AccountAggregate;

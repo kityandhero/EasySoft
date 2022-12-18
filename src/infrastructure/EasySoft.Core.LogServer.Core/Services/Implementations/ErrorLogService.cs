@@ -31,7 +31,7 @@ public class ErrorLogService : IErrorLogService
     /// <inheritdoc />
     public async Task<PageListResult<ErrorLog>> PageListAsync(ErrorLogSearchDto blogSearchDto)
     {
-        return await _errorLogRepository.PageListAsync<ErrorLog>(
+        return await _errorLogRepository.PageListAsync(
             blogSearchDto.PageNo,
             blogSearchDto.PageSize
         );

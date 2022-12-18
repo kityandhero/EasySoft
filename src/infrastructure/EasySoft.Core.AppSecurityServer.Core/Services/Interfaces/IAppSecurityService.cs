@@ -3,7 +3,7 @@
 namespace EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
 
 /// <summary>
-/// IAppSecurityService
+/// 应用密钥服务
 /// </summary>
 public interface IAppSecurityService : IBusinessService
 {

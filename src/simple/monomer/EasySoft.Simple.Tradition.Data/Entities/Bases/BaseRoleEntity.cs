@@ -63,7 +63,7 @@ public abstract class BaseRoleEntity : BaseEntity, IRolePersistence
     /// 创建时间"
     /// </summary>
     [Description("创建时间")]
-    public DateTime CreateTime { get; set; } = DateTime.Now;
+    public DateTime CreateTime { get; set; } = DateTimeOffset.Now.DateTime;
 
     /// <summary>
     /// 更新人标识
@@ -75,5 +75,5 @@ public abstract class BaseRoleEntity : BaseEntity, IRolePersistence
     /// 更新时间
     /// </summary>
     [Description("更新时间")]
-    public DateTime UpdateTime { get; set; } = DateTime.Now;
+    public DateTime UpdateTime { get; set; } = DateTimeOffset.Now.DateTime;
 }

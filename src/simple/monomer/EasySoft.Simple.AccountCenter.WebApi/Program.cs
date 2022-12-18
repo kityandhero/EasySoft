@@ -8,6 +8,7 @@ using EasySoft.Core.EntityFramework.ExtensionMethods;
 using EasySoft.Core.EntityFramework.MySql.Extensions;
 using EasySoft.Core.Grpc.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Infrastructure.Configures;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.LogDashboard.ExtensionMethods;

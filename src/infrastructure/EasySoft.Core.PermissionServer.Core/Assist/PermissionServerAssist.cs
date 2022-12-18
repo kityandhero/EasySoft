@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.Data.Configures;
-using EasySoft.Core.PermissionServer.Core.Entities;
+﻿using EasySoft.Core.PermissionServer.Core.Entities;
 using EasySoft.Core.PermissionServer.Core.Services.Implementations;
 using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
 using EasySoft.Core.PermissionServer.Core.Subscribers;
@@ -12,10 +11,13 @@ namespace EasySoft.Core.PermissionServer.Core.Assist;
 public static class PermissionServerAssist
 {
     /// <summary>
-    /// Init
+    /// 初始化
     /// </summary>
-    public static void Init()
+    /// <param name="embedMode">是否使用嵌入模式，嵌入模式不会执行请求校验</param>
+    public static void Init(bool embedMode)
     {
+        PermissionServerConfigure.EmbedMode = embedMode;
+
         ContextConfigure.AddEntityConfigureAssembly(typeof(RoleGroup).Assembly);
 
         BusinessServiceConfigure.AddBusinessServiceInterfaceAssembly(typeof(IPermissionService).Assembly);

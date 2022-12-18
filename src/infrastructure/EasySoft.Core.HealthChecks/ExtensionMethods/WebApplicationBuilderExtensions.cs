@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.HealthChecks.Entities;
+using EasySoft.Core.Infrastructure.Configures;
 
 namespace EasySoft.Core.HealthChecks.ExtensionMethods;
 

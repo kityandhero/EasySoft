@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.PermissionVerification.Extensions;
+﻿using EasySoft.Core.Infrastructure.Configures;
+using EasySoft.Core.PermissionVerification.Extensions;
 
 namespace EasySoft.Simple.Tradition.Management.Core.Assists;
 

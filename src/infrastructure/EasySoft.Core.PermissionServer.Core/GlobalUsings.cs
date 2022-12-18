@@ -7,6 +7,7 @@ global using EasySoft.Core.AccessWayTransmitter.Entities;
 global using EasySoft.Core.AuthenticationCore.Operators;
 global using EasySoft.Core.Cap.ExtensionMethods;
 global using EasySoft.Core.Config.ConfigAssist;
+global using EasySoft.Core.Data.Configures;
 global using EasySoft.Core.Data.ExtensionMethods;
 global using EasySoft.Core.Data.Repositories;
 global using EasySoft.Core.EntityFramework.Configures;

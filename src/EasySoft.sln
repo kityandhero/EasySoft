@@ -392,9 +392,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "log", "log", "{04B8FDF6-A79
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.LogServer.Core", "infrastructure\EasySoft.Core.LogServer.Core\EasySoft.Core.LogServer.Core.csproj", "{B124F632-45CF-4E75-8F89-78A1FE7CF6C5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secret", "secret", "{EDAE387F-5D5D-4C80-9B66-86280CEA81D5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "appSecurity", "appSecurity", "{EDAE387F-5D5D-4C80-9B66-86280CEA81D5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.AppSecurityServer.Core", "infrastructure\EasySoft.Core.AppSecurityServer.Core\EasySoft.Core.AppSecurityServer.Core.csproj", "{0FFCCE03-A5B7-4FC8-965B-EB7D07B66B33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.AppSecurityVerification", "infrastructure\EasySoft.Core.AppSecurityVerification\EasySoft.Core.AppSecurityVerification.csproj", "{648050D2-EAAE-409B-9689-8C2F563CDB25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -882,6 +884,10 @@ Global
 		{0FFCCE03-A5B7-4FC8-965B-EB7D07B66B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FFCCE03-A5B7-4FC8-965B-EB7D07B66B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FFCCE03-A5B7-4FC8-965B-EB7D07B66B33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{648050D2-EAAE-409B-9689-8C2F563CDB25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{648050D2-EAAE-409B-9689-8C2F563CDB25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{648050D2-EAAE-409B-9689-8C2F563CDB25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{648050D2-EAAE-409B-9689-8C2F563CDB25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1073,6 +1079,7 @@ Global
 		{B124F632-45CF-4E75-8F89-78A1FE7CF6C5} = {04B8FDF6-A79C-4C9F-AD94-6A1733A16CA7}
 		{EDAE387F-5D5D-4C80-9B66-86280CEA81D5} = {E29F4070-C588-4878-9F82-F1AAC205DB2D}
 		{0FFCCE03-A5B7-4FC8-965B-EB7D07B66B33} = {EDAE387F-5D5D-4C80-9B66-86280CEA81D5}
+		{648050D2-EAAE-409B-9689-8C2F563CDB25} = {217C060B-95D6-4350-A2CD-D8E7D6309E3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

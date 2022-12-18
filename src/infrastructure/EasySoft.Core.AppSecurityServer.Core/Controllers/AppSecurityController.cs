@@ -9,14 +9,20 @@ namespace EasySoft.Core.AppSecurityServer.Core.Controllers;
 [Route("appSecurity")]
 public class AppSecurityController : CustomControllerBase
 {
+    private readonly IAppPublicKeyService _appPublicKeyService;
     private readonly IAppSecurityService _appSecurityService;
 
     /// <summary>
     /// EntranceController
     /// </summary>
+    /// <param name="appPublicKeyService"></param>
     /// <param name="appSecurityService"></param>
-    public AppSecurityController(IAppSecurityService appSecurityService)
+    public AppSecurityController(
+        IAppPublicKeyService appPublicKeyService,
+        IAppSecurityService appSecurityService
+    )
     {
+        _appPublicKeyService = appPublicKeyService;
         _appSecurityService = appSecurityService;
     }
 
@@ -29,13 +35,21 @@ public class AppSecurityController : CustomControllerBase
     [HttpPost]
     public async Task<IList<AppSecurityDto>> Verify(AppSecurityDto appSecurityDto)
     {
-        var result = await _appSecurityService.VerifyAsync(appSecurityDto);
+        var resultVerify = await _appSecurityService.VerifyAsync(appSecurityDto);
 
-        if (!result.Success || result.Data == null) return new List<AppSecurityDto>();
+        if (!resultVerify.Success || resultVerify.Data == null) return new List<AppSecurityDto>();
+
+        var data = resultVerify.Data;
+
+        var resultGetAppPublicKey = await _appPublicKeyService.GetAsync();
+
+        if (!resultGetAppPublicKey.Success || resultGetAppPublicKey.Data == null) return new List<AppSecurityDto>();
+
+        data.PublicKey = resultGetAppPublicKey.Data.Key;
 
         return new List<AppSecurityDto>
         {
-            result.Data
+            data
         };
     }
 }

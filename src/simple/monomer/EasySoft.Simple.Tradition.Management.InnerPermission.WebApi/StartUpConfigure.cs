@@ -19,11 +19,11 @@ public class StartUpConfigure : IStartUpConfigure
             typeof(ErrorLog).Assembly
         });
 
-        AppSecurityServerAssist.Init();
+        AppSecurityServerAssist.Init(true);
 
-        PermissionServerAssist.Init();
+        PermissionServerAssist.Init(true);
 
-        LogServerAssist.Init();
+        LogServerAssist.Init(true);
 
         SwaggerConfigure.GeneralParameters.AddRange(
             new OpenApiParameter

@@ -3,7 +3,7 @@ using EasySoft.UtilityTools.Standard.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace EasySoft.Core.Infrastructure.Assists;
+namespace EasySoft.Core.Infrastructure.Configures;
 
 /// <summary>
 /// Application Configurator

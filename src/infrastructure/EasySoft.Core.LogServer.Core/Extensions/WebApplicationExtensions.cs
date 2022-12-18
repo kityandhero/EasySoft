@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Core.Assists;
+﻿using EasySoft.Core.Infrastructure.Configures;
+using EasySoft.UtilityTools.Core.Assists;
 
 namespace EasySoft.Core.LogServer.Core.Extensions;
 

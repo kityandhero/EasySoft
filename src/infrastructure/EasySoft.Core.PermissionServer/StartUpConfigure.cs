@@ -23,7 +23,7 @@ public class StartUpConfigure : IStartUpConfigure
         ContextConfigure.EnableSensitiveDataLogging = true;
         ContextConfigure.AutoEnsureCreated = true;
 
-        PermissionServerAssist.Init();
+        PermissionServerAssist.Init(false);
 
         // 配置额外的构建项目
         ApplicationConfigurator.AddWebApplicationBuilderExtraActions(

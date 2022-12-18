@@ -64,6 +64,27 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
     #region PageList
 
     /// <inheritdoc />
+    public async Task<PageListResult<TEntity>> PageListAsync(
+        int pageIndex,
+        int pageSize,
+        Expression<Func<TEntity, bool>>? where = null,
+        bool isAsc = true,
+        bool writeChannel = false,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await PageListAsync<TEntity>(
+            pageIndex,
+            pageSize,
+            where,
+            null,
+            isAsc,
+            writeChannel,
+            cancellationToken
+        );
+    }
+
+    /// <inheritdoc />
     public async Task<PageListResult<TEntity>> PageListAsync<TS>(
         int pageIndex,
         int pageSize,

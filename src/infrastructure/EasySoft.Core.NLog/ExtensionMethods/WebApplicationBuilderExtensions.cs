@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.NLog.ExtensionMethods;
+﻿using EasySoft.Core.Infrastructure.Configures;
+
+namespace EasySoft.Core.NLog.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {

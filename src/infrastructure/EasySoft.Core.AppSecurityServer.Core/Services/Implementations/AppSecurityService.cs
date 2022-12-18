@@ -5,9 +5,7 @@ using EasySoft.Core.AppSecurityServer.Core.Extensions;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Services.Implementations;
 
-/// <summary>
-/// SecurityService
-/// </summary>
+/// <inheritdoc />
 public class AppSecurityService : IAppSecurityService
 {
     private readonly IEventPublisher _eventPublisher;

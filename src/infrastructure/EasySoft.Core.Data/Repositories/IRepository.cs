@@ -27,6 +27,25 @@ public interface IRepository<TEntity, in TKey> : IRepository where TEntity : cla
     /// <param name="pageIndex"></param>
     /// <param name="pageSize"></param>
     /// <param name="where"></param>
+    /// <param name="isAsc"></param>
+    /// <param name="writeChannel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>    
+    Task<PageListResult<TEntity>> PageListAsync(
+        int pageIndex,
+        int pageSize,
+        Expression<Func<TEntity, bool>>? where = null,
+        bool isAsc = true,
+        bool writeChannel = false,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// 分页列表
+    /// </summary>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="where"></param>
     /// <param name="order"></param>
     /// <param name="isAsc"></param>
     /// <param name="writeChannel"></param>

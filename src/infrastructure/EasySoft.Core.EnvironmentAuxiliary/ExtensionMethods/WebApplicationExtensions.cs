@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.EnvironmentAuxiliary.ExtensionMethods;
+﻿using EasySoft.Core.Infrastructure.Configures;
+
+namespace EasySoft.Core.EnvironmentAuxiliary.ExtensionMethods;
 
 public static class WebApplicationExtensions
 {

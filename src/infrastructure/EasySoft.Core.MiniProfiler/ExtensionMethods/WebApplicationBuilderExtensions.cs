@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.MiniProfiler.ExtensionMethods;
+﻿using EasySoft.Core.Infrastructure.Configures;
+
+namespace EasySoft.Core.MiniProfiler.ExtensionMethods;
 
 /// <summary>
 /// WebApplicationBuilderExtensions
