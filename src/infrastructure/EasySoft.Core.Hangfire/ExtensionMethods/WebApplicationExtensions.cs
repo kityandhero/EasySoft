@@ -21,7 +21,7 @@ public static class WebApplicationExtensions
         );
 
         if (EnvironmentAssist.IsDevelopment() && AuxiliaryConfigure.PromptConfigFileInfo)
-            ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
+            ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
                 new ExtraAction<IEndpointRouteBuilder>()
                     .SetName("")
                     .SetAction(endpoints => { endpoints.MapHangfireConfigFile(); })

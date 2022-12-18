@@ -67,7 +67,7 @@ public class UserService : IUserService
 
         var user = result.Data;
 
-        if (signInDto.Password.ToMd5(ApplicationConfigurator.PasswordSalt) != user.Password)
+        if (signInDto.Password.ToMd5(ApplicationConfigure.PasswordSalt) != user.Password)
             return new ExecutiveResult<UserDto>(ReturnCode.ParamError.ToMessage("用户名或密码错误"));
 
         return new ExecutiveResult<UserDto>(ReturnCode.Ok)

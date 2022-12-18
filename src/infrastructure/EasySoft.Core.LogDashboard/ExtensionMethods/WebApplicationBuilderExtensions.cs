@@ -20,7 +20,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddLogDashboard();
 
-        ApplicationConfigurator.AddWebApplicationExtraAction(
+        ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("UseAdvanceLogDashboard")
                 .SetAction(application => { application.UseAdvanceLogDashboard(); })

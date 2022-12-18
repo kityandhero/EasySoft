@@ -35,6 +35,7 @@ global using EasySoft.Core.Infrastructure.Controllers;
 global using EasySoft.Core.Infrastructure.Startup;
 global using EasySoft.Core.JsonWebToken.ExtensionMethods;
 global using EasySoft.Core.Mapster.ExtensionMethods;
+global using EasySoft.Core.MediatR.ExtensionMethods;
 global using EasySoft.Core.MiniProfiler.ExtensionMethods;
 global using EasySoft.Core.NLog.Assists;
 global using EasySoft.Core.NLog.ExtensionMethods;

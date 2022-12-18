@@ -20,7 +20,7 @@ public static class ApplicationAssist
         BusinessServiceConfigure.AddBusinessServiceImplementationAssembly(typeof(BlogService).Assembly);
 
         // 配置额外的构建项目
-        ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
+        ApplicationConfigure.AddWebApplicationBuilderExtraActions(
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddApiVersioning")
                 .SetAction(applicationBuilder =>

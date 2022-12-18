@@ -45,37 +45,37 @@ public static class WebApplicationExtensions
             $"{nameof(UseConfigureTemplate)}."
         );
 
-        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
+        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapDatabaseConfigFile(); })
         );
 
-        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
+        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapDevelopConfigFile(); })
         );
 
-        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
+        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapElasticSearchConfigFile(); })
         );
 
-        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
+        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapGeneralConfigFile(); })
         );
 
-        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
+        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapMongoConfigFile(); })
         );
 
-        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
+        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapRabbitMQConfigFile(); })

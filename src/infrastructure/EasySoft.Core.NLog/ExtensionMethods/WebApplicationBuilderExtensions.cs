@@ -38,7 +38,7 @@ public static class WebApplicationBuilderExtensions
             b.AddNLogWeb();
         });
 
-        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
+        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapNLogInlayConfig(); })
@@ -75,7 +75,7 @@ public static class WebApplicationBuilderExtensions
             b.AddNLogWeb();
         });
 
-        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
+        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapNLogInlayConfig(); })

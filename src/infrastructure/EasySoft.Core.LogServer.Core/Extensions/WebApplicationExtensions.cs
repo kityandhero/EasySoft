@@ -20,7 +20,7 @@ public static class WebApplicationExtensions
             $"{nameof(UseErrorLogSendExperiment)}."
         );
 
-        ApplicationConfigurator.OnApplicationStart += async (serviceProvider) =>
+        ApplicationConfigure.OnApplicationStart += async (serviceProvider) =>
         {
             await DoErrorLogSendExperiment(serviceProvider);
         };

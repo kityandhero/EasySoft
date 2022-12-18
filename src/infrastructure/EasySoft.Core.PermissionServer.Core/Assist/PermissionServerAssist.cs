@@ -24,7 +24,7 @@ public static class PermissionServerAssist
         BusinessServiceConfigure.AddBusinessServiceImplementationAssembly(typeof(PermissionService).Assembly);
 
         // 配置额外的构建项目
-        ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
+        ApplicationConfigure.AddWebApplicationBuilderExtraActions(
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("")
                 .SetAction(applicationBuilder =>

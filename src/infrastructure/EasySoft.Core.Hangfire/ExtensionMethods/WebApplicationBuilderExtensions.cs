@@ -62,7 +62,7 @@ public static class WebApplicationBuilderExtensions
             $"Hangfire storage type is {storageType.ToString()}, available storage is {HangfireAssist.GetAllAvailableStorageType()}."
         );
 
-        ApplicationConfigurator.AddWebApplicationExtraAction(
+        ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(application => { application.UseAdvanceHangfire(); })

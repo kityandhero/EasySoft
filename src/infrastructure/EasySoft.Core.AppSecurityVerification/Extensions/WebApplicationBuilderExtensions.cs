@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.AppSecurityVerification.Clients;
 using EasySoft.Core.AppSecurityVerification.Detectors;
+using MediatR;
 
 namespace EasySoft.Core.AppSecurityVerification.Extensions;
 
@@ -53,6 +54,7 @@ public static class WebApplicationBuilderExtensions
             {
                 var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
                 var environment = provider.GetRequiredService<IWebHostEnvironment>();
+                var mediator = provider.GetRequiredService<IMediator>();
                 var applicationChannel = provider.GetRequiredService<IApplicationChannel>();
                 var appSecurityClient = provider.GetRequiredService<IAppSecurityClient>();
 
@@ -71,6 +73,7 @@ public static class WebApplicationBuilderExtensions
                     new AppSecurityDetector(
                         loggerFactory,
                         environment,
+                        mediator,
                         applicationChannel,
                         appSecurityClient
                     ),
@@ -81,7 +84,7 @@ public static class WebApplicationBuilderExtensions
             }
         );
 
-        ApplicationConfigurator.AddWebApplicationExtraAction(
+        ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(

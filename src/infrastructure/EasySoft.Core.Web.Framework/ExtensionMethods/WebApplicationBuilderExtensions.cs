@@ -164,6 +164,8 @@ public static class WebApplicationBuilderExtensions
 
         builder.AddAdvanceSwagger();
 
+        builder.AddAdvanceMediatR();
+
         builder.AddAdvanceEasyCaching();
 
         builder.AddAdvanceMiniProfile();
@@ -459,7 +461,7 @@ public static class WebApplicationBuilderExtensions
         WebApplicationBuilder builder
     )
     {
-        var extraActions = ApplicationConfigurator.GetAllWebApplicationBuilderExtraActions().ToList();
+        var extraActions = ApplicationConfigure.GetAllWebApplicationBuilderExtraActions().ToList();
 
         if (extraActions.Count <= 0) return;
 
@@ -505,7 +507,7 @@ public static class WebApplicationBuilderExtensions
         WebApplication application
     )
     {
-        var extraActions = ApplicationConfigurator.GetAllWebApplicationExtraActions().ToList();
+        var extraActions = ApplicationConfigure.GetAllWebApplicationExtraActions().ToList();
 
         if (extraActions.Count <= 0) return;
 
@@ -551,7 +553,7 @@ public static class WebApplicationBuilderExtensions
         MvcOptions option
     )
     {
-        var extraActions = ApplicationConfigurator.GetAllMvcOptionExtraActions().ToList();
+        var extraActions = ApplicationConfigure.GetAllMvcOptionExtraActions().ToList();
 
         if (extraActions.Count <= 0) return;
 

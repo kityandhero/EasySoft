@@ -21,6 +21,7 @@ global using EasySoft.UtilityTools.Standard;
 global using EasySoft.UtilityTools.Standard.Enums;
 global using EasySoft.UtilityTools.Standard.Extensions;
 global using EasySoft.UtilityTools.Standard.Result;
+global using Masuit.Tools.Systems;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.ChangeTracking;

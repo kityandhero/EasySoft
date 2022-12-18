@@ -48,10 +48,10 @@ public static class WebApplicationBuilderExtensions
             // 设定在弹出的明细窗口里会显式 Time With Children 这列
             options.PopupShowTimeWithChildren = true;
 
-            ApplicationConfigurator.GetMiniProfilerOptionsAction()?.Invoke(options);
+            ApplicationConfigure.GetMiniProfilerOptionsAction()?.Invoke(options);
         });
 
-        ApplicationConfigurator.AddWebApplicationExtraAction(
+        ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(

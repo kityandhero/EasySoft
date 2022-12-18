@@ -46,15 +46,15 @@ public static class WebApplicationBuilderExtensions
             $"{nameof(AddAssemblyBusinessServiceInterfaces)}."
         );
 
-        var assemblies = BusinessServiceConfigure.BusinessServiceInterfaceAssemblies.ToArray();
+        var assemblies = BusinessServiceConfigure.GetBusinessServiceInterfaceAssemblies().ToArray();
 
         if (!assemblies.Any())
             StartupDescriptionMessageAssist.AddWarning(
-                $"{nameof(BusinessServiceConfigure)}.{nameof(BusinessServiceConfigure.BusinessServiceInterfaceAssemblies)} has none."
+                $"{nameof(BusinessServiceConfigure)}.{nameof(BusinessServiceConfigure.GetBusinessServiceInterfaceAssemblies)} has none."
             );
 
         StartupDescriptionMessageAssist.AddHint(
-            $"{typeof(BusinessServiceConfigure).FullName}.{nameof(BusinessServiceConfigure.BusinessServiceInterfaceAssemblies)} contain {(!BusinessServiceConfigure.BusinessServiceInterfaceAssemblies.Any() ? "none" : BusinessServiceConfigure.BusinessServiceInterfaceAssemblies.Select(o => o.GetName().Name).Join(","))}."
+            $"{typeof(BusinessServiceConfigure).FullName}.{nameof(BusinessServiceConfigure.GetBusinessServiceInterfaceAssemblies)} contain {(!BusinessServiceConfigure.GetBusinessServiceInterfaceAssemblies().Any() ? "none" : BusinessServiceConfigure.GetBusinessServiceInterfaceAssemblies().Select(o => o.GetName().Name).Join(","))}."
         );
 
         builder.Services.AddAssemblyBusinessServiceInterfaces(
@@ -77,15 +77,15 @@ public static class WebApplicationBuilderExtensions
             $"{nameof(AddAssemblyBusinessServiceImplementations)}."
         );
 
-        var assemblies = BusinessServiceConfigure.BusinessServiceImplementationAssemblies.ToArray();
+        var assemblies = BusinessServiceConfigure.GetBusinessServiceImplementationAssemblies().ToArray();
 
         if (!assemblies.Any())
             StartupDescriptionMessageAssist.AddWarning(
-                $"{nameof(BusinessServiceConfigure)}.{nameof(BusinessServiceConfigure.BusinessServiceImplementationAssemblies)} has none."
+                $"{nameof(BusinessServiceConfigure)}.{nameof(BusinessServiceConfigure.GetBusinessServiceImplementationAssemblies)} has none."
             );
 
         StartupDescriptionMessageAssist.AddHint(
-            $"{typeof(BusinessServiceConfigure).FullName}.{nameof(BusinessServiceConfigure.BusinessServiceImplementationAssemblies)} contain {(!BusinessServiceConfigure.BusinessServiceImplementationAssemblies.Any() ? "none" : BusinessServiceConfigure.BusinessServiceImplementationAssemblies.Select(o => o.GetName().Name).Join(","))}."
+            $"{typeof(BusinessServiceConfigure).FullName}.{nameof(BusinessServiceConfigure.GetBusinessServiceImplementationAssemblies)} contain {(!BusinessServiceConfigure.GetBusinessServiceImplementationAssemblies().Any() ? "none" : BusinessServiceConfigure.GetBusinessServiceImplementationAssemblies().Select(o => o.GetName().Name).Join(","))}."
         );
 
         builder.Services.AddAssemblyBusinessServiceImplementations(

@@ -13,43 +13,44 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.AgileConfigClient\EasySoft.Core.AgileConfigClient.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.Cap\EasySoft.Core.Cap.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.ConsulConfigCenterClient\EasySoft.Core.ConsulConfigCenterClient.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.ConsulRegistrationCenterClient\EasySoft.Core.ConsulRegistrationCenterClient.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.EnvironmentAuxiliary\EasySoft.Core.EnvironmentAuxiliary.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.EasyCaching\EasySoft.Core.EasyCaching.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.EasyToken\EasySoft.Core.EasyToken.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.ErrorLogTransmitter\EasySoft.Core.ErrorLogTransmitter.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.Exceptionless\EasySoft.Core.Exceptionless.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.GeneralLogTransmitter\EasySoft.Core.GeneralLogTransmitter.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.Hangfire\EasySoft.Core.Hangfire.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.JsonWebToken\EasySoft.Core.JsonWebToken.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.Mapster\EasySoft.Core.Mapster.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.MiniProfiler\EasySoft.Core.MiniProfiler.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.NLog\EasySoft.Core.NLog.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.Gateway.Ocelot\EasySoft.Core.Gateway.Ocelot.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.PermissionVerification\EasySoft.Core.PermissionVerification.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.PrepareStartWork\EasySoft.Core.PrepareStartWork.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.Swagger\EasySoft.Core.Swagger.csproj"/>
-        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.AgileConfigClient\EasySoft.Core.AgileConfigClient.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.Cap\EasySoft.Core.Cap.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.ConsulConfigCenterClient\EasySoft.Core.ConsulConfigCenterClient.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.ConsulRegistrationCenterClient\EasySoft.Core.ConsulRegistrationCenterClient.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.EnvironmentAuxiliary\EasySoft.Core.EnvironmentAuxiliary.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.EasyCaching\EasySoft.Core.EasyCaching.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.EasyToken\EasySoft.Core.EasyToken.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.ErrorLogTransmitter\EasySoft.Core.ErrorLogTransmitter.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.Exceptionless\EasySoft.Core.Exceptionless.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.GeneralLogTransmitter\EasySoft.Core.GeneralLogTransmitter.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.Hangfire\EasySoft.Core.Hangfire.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.JsonWebToken\EasySoft.Core.JsonWebToken.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.Mapster\EasySoft.Core.Mapster.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.MediatR\EasySoft.Core.MediatR.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.MiniProfiler\EasySoft.Core.MiniProfiler.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.NLog\EasySoft.Core.NLog.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.Gateway.Ocelot\EasySoft.Core.Gateway.Ocelot.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.PermissionVerification\EasySoft.Core.PermissionVerification.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.PrepareStartWork\EasySoft.Core.PrepareStartWork.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.Swagger\EasySoft.Core.Swagger.csproj" />
+        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Asp.Versioning.Mvc" Version="6.1.0"/>
-        <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="6.1.0"/>
-        <PackageReference Include="Autofac" Version="6.4.0"/>
-        <PackageReference Include="Autofac.Configuration" Version="6.0.0"/>
-        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0"/>
-        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0"/>
-        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0"/>
+        <PackageReference Include="Asp.Versioning.Mvc" Version="6.1.0" />
+        <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="6.1.0" />
+        <PackageReference Include="Autofac" Version="6.4.0" />
+        <PackageReference Include="Autofac.Configuration" Version="6.0.0" />
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Assists"/>
+        <Folder Include="Assists" />
     </ItemGroup>
 </Project>

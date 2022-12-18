@@ -28,7 +28,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Host.AddAdvanceRedLock(options);
 
-        ApplicationConfigurator.AddWebApplicationExtraAction(
+        ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>().SetName("UseAdvanceRedLock").SetAction(application =>
             {
                 application.Lifetime.ApplicationStopping.Register(RedLockAssist.DisposeFactory);

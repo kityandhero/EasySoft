@@ -1,4 +1,6 @@
 ﻿using EasySoft.Core.AppSecurityVerification.Clients;
+using EasySoft.UtilityTools.Standard.Notifications;
+using MediatR;
 
 namespace EasySoft.Core.AppSecurityVerification.Detectors;
 
@@ -9,6 +11,8 @@ public class AppSecurityDetector : IAppSecurityDetector
 
     private readonly IWebHostEnvironment _environment;
 
+    private readonly IMediator _mediator;
+
     private readonly IApplicationChannel _applicationChannel;
 
     private readonly IAppSecurityClient _appSecurityClient;
@@ -18,17 +22,20 @@ public class AppSecurityDetector : IAppSecurityDetector
     /// </summary>
     /// <param name="loggerFactory"></param>
     /// <param name="environment"></param>
+    /// <param name="mediator"></param>
     /// <param name="applicationChannel"></param>
     /// <param name="appSecurityClient"></param>
     public AppSecurityDetector(
         ILoggerFactory loggerFactory,
         IWebHostEnvironment environment,
+        IMediator mediator,
         IApplicationChannel applicationChannel,
         IAppSecurityClient appSecurityClient
     )
     {
         _loggerFactory = loggerFactory;
         _environment = environment;
+        _mediator = mediator;
         _applicationChannel = applicationChannel;
         _appSecurityClient = appSecurityClient;
     }
@@ -81,5 +88,14 @@ public class AppSecurityDetector : IAppSecurityDetector
         }
 
         AppSecurityClientConfigure.SetPublicKey(list.First().Key);
+
+        var appSecurityFirstVerifyNotification = new AppSecurityFirstVerifyNotification(true);
+
+        if (_environment.IsDevelopment())
+            logger.LogAdvancePrompt(
+                $"Send mediator Notification {nameof(AppSecurityFirstVerifyNotification)} -> {appSecurityFirstVerifyNotification.BuildInfo()}"
+            );
+
+        await _mediator.Publish(appSecurityFirstVerifyNotification);
     }
 }

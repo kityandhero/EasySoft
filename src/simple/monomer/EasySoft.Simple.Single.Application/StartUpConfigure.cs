@@ -76,7 +76,7 @@ public class StartUpConfigure : IStartUpConfigure
         Core.EntityFramework.Configures.ContextConfigure.AutoEnsureCreated = true;
 
         // 配置额外的构建项目
-        ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
+        ApplicationConfigure.AddWebApplicationBuilderExtraActions(
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddApiVersioning")
                 .SetAction(applicationBuilder =>
@@ -125,12 +125,6 @@ public class StartUpConfigure : IStartUpConfigure
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddAdvanceLogDashboard")
                 .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceLogDashboard(); }),
-            new ExtraAction<WebApplicationBuilder>()
-                .SetName("AddAdvanceMediatR")
-                .SetAction(applicationBuilder =>
-                {
-                    applicationBuilder.AddAdvanceMediatR(Assembly.GetExecutingAssembly());
-                }),
             // 配置健康检测
             // applicationBuilder =>
             // {
@@ -146,14 +140,14 @@ public class StartUpConfigure : IStartUpConfigure
             })
         );
 
-        ApplicationConfigurator.AddAreas("AreaTest", "AuthTest", "DataTest", "ComponentTest");
+        ApplicationConfigure.AddAreas("AreaTest", "AuthTest", "DataTest", "ComponentTest");
 
         AgileConfigClientActionAssist.ActionAgileConfigChanged = _ =>
         {
             // LogAssist.Info("config changed");
         };
 
-        ApplicationConfigurator.AddTimer(
+        ApplicationConfigure.AddTimer(
             5000,
             (services, _) =>
             {

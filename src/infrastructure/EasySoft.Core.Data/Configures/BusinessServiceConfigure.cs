@@ -1,4 +1,5 @@
 ﻿using Masuit.Tools;
+using Masuit.Tools.Systems;
 
 namespace EasySoft.Core.Data.Configures;
 
@@ -10,20 +11,20 @@ public static class BusinessServiceConfigure
     /// <summary>
     /// 业务服务定义程序集
     /// </summary>
-    public static ISet<Assembly> BusinessServiceInterfaceAssemblies { get; }
+    private static readonly ISet<Assembly> BusinessServiceInterfaceAssemblies = new ConcurrentHashSet<Assembly>();
 
     /// <summary>
     /// 业务服务实现程序集
     /// </summary>
-    public static ISet<Assembly> BusinessServiceImplementationAssemblies { get; }
+    private static readonly ISet<Assembly> BusinessServiceImplementationAssemblies = new ConcurrentHashSet<Assembly>();
 
     /// <summary>
-    /// 业务服务配置
+    /// GetBusinessServiceInterfaceAssemblies
     /// </summary>
-    static BusinessServiceConfigure()
+    /// <returns></returns>
+    public static ISet<Assembly> GetBusinessServiceInterfaceAssemblies()
     {
-        BusinessServiceInterfaceAssemblies = new HashSet<Assembly>();
-        BusinessServiceImplementationAssemblies = new HashSet<Assembly>();
+        return BusinessServiceInterfaceAssemblies;
     }
 
     /// <summary>
@@ -42,6 +43,15 @@ public static class BusinessServiceConfigure
     public static void AddRangeBusinessServiceInterfaceAssemblies(IEnumerable<Assembly> assemblies)
     {
         BusinessServiceInterfaceAssemblies.AddRange(assemblies);
+    }
+
+    /// <summary>
+    /// GetBusinessServiceImplementationAssemblies
+    /// </summary>
+    /// <returns></returns>
+    public static ISet<Assembly> GetBusinessServiceImplementationAssemblies()
+    {
+        return BusinessServiceImplementationAssemblies;
     }
 
     /// <summary>

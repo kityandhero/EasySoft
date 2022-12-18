@@ -65,7 +65,7 @@ public static class ServiceCollectionExtensions
             );
         }
 
-        ApplicationConfigurator.AddWebApplicationExtraAction(
+        ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(application => { application.UseOcelot().Wait(); })

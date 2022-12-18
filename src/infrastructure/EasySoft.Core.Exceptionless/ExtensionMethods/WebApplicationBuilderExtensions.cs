@@ -30,7 +30,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddAdvanceExceptionless();
 
-        ApplicationConfigurator.AddWebApplicationExtraAction(
+        ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>().SetName("").SetAction(application => application.UseExceptionless())
         );
 

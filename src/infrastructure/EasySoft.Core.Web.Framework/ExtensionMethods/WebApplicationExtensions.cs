@@ -23,9 +23,9 @@ public static class WebApplicationExtensions
                 UtilityTools.Standard.ConstCollection.ApplicationStartExtraEndpointMessageStartDivider
             );
 
-        if (ApplicationConfigurator.GetAllAreas().Any())
+        if (ApplicationConfigure.GetAllAreas().Any())
         {
-            var areaAdjust = ApplicationConfigurator.GetAllAreas()
+            var areaAdjust = ApplicationConfigure.GetAllAreas()
                 .Where(o => !string.IsNullOrWhiteSpace(o.Remove(" ")))
                 .ToList();
 
@@ -34,11 +34,11 @@ public static class WebApplicationExtensions
                 StartupConfigMessageAssist.AddTraceDivider();
 
                 StartupConfigMessageAssist.AddConfig(
-                    $"Areas: {ApplicationConfigurator.GetAllAreas().Join(",")}"
+                    $"Areas: {ApplicationConfigure.GetAllAreas().Join(",")}"
                 );
 
                 StartupDescriptionMessageAssist.AddPrompt(
-                    $"Areas: {ApplicationConfigurator.GetAllAreas().Join(",")}"
+                    $"Areas: {ApplicationConfigure.GetAllAreas().Join(",")}"
                 );
 
                 application.UseEndpoints(endpoints =>
@@ -102,7 +102,7 @@ public static class WebApplicationExtensions
         IStartupMessage startNormalMessageAssist
     )
     {
-        var extraActions = ApplicationConfigurator.GetAllEndpointRouteBuilderExtraActions().ToList();
+        var extraActions = ApplicationConfigure.GetAllEndpointRouteBuilderExtraActions().ToList();
 
         if (extraActions.Count <= 0) return;
 
@@ -158,7 +158,7 @@ public static class WebApplicationExtensions
     {
         application.Lifetime.ApplicationStarted.Register(() =>
         {
-            ApplicationConfigurator.DoAfterApplicationStart(application.Services);
+            ApplicationConfigure.DoAfterApplicationStart(application.Services);
         });
 
         return application;
@@ -175,7 +175,7 @@ public static class WebApplicationExtensions
     {
         application.Lifetime.ApplicationStopping.Register(() =>
         {
-            ApplicationConfigurator.DoWhenApplicationStopping(application.Services);
+            ApplicationConfigure.DoWhenApplicationStopping(application.Services);
         });
 
         return application;
@@ -191,7 +191,7 @@ public static class WebApplicationExtensions
     )
     {
         if (application.Environment.IsDevelopment())
-            ApplicationConfigurator.OnApplicationStart += serviceProvider =>
+            ApplicationConfigure.OnApplicationStart += serviceProvider =>
             {
                 var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
 
@@ -223,9 +223,9 @@ public static class WebApplicationExtensions
     )
     {
         //应用启动后启动定时器
-        ApplicationConfigurator.OnApplicationStart += _ =>
+        ApplicationConfigure.OnApplicationStart += _ =>
         {
-            var timers = ApplicationConfigurator.GetTimers();
+            var timers = ApplicationConfigure.GetTimers();
 
             if (!timers.Any()) return;
 
@@ -260,9 +260,9 @@ public static class WebApplicationExtensions
     )
     {
         //停止定时器执行并释放资源
-        ApplicationConfigurator.OnApplicationStopping += _ =>
+        ApplicationConfigure.OnApplicationStopping += _ =>
         {
-            var timers = ApplicationConfigurator.GetTimers();
+            var timers = ApplicationConfigure.GetTimers();
 
             if (!timers.Any()) return;
 

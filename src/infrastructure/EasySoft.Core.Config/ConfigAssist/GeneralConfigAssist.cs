@@ -232,7 +232,7 @@ public static class GeneralConfigAssist
         v = FlagAssist.StartupDisplayUrls.First();
 
         StartupDescriptionMessageAssist.AddWarning(
-            $"PermissionServerHostUrl has not config, use the start base url {v}.",
+            $"AppSecurityServerHostUrl has not config, use the start base url {v}.",
             GetConfigFileInfo()
         );
 

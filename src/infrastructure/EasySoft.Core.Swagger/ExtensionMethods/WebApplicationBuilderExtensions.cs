@@ -168,7 +168,7 @@ public static class WebApplicationBuilderExtensions
             // explicit opt-in - needs to be placed after AddSwaggerGen()
             builder.Services.AddSwaggerGenNewtonsoftSupport();
 
-        ApplicationConfigurator.AddWebApplicationExtraAction(
+        ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(application =>

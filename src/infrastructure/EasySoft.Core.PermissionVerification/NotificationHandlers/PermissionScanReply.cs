@@ -1,0 +1,41 @@
+﻿using EasySoft.Core.PermissionVerification.Assists;
+using EasySoft.UtilityTools.Core.Extensions;
+
+namespace EasySoft.Core.PermissionVerification.NotificationHandlers;
+
+/// <summary>
+/// 权限扫描应答
+/// </summary>
+public class PermissionScanReply : INotificationHandler<AppSecurityFirstVerifyNotification>
+{
+    private readonly ILoggerFactory _loggerFactory;
+    private readonly IWebHostEnvironment _environment;
+
+    /// <summary>
+    /// 权限扫描应答
+    /// </summary>
+    /// <param name="loggerFactory"></param>
+    /// <param name="environment"></param>
+    public PermissionScanReply(
+        ILoggerFactory loggerFactory,
+        IWebHostEnvironment environment
+    )
+    {
+        _loggerFactory = loggerFactory;
+        _environment = environment;
+    }
+
+    /// <inheritdoc />
+    public async Task Handle(AppSecurityFirstVerifyNotification notification, CancellationToken cancellationToken)
+    {
+        if (_environment.IsDevelopment())
+            _loggerFactory.CreateLogger<object>().LogAdvancePrompt(
+                $"Receive {nameof(AppSecurityFirstVerifyNotification)} -> {notification.BuildInfo()}"
+            );
+
+        if (!notification.VerifyResult)
+            return;
+
+        await PermissionAssists.StartSaveAsync();
+    }
+}

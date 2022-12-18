@@ -3,26 +3,16 @@
 internal static class ConfigureHostBuilderExtensions
 {
     internal static ConfigureHostBuilder AddAdvanceMediatR(
-        this ConfigureHostBuilder builder,
-        Assembly assembly
+        this ConfigureHostBuilder builder
     )
     {
         builder.ConfigureContainer<ContainerBuilder>((_, containerBuilder) =>
         {
-            containerBuilder.AddAdvanceMediator(assembly);
-        });
+            containerBuilder.AddAdvanceMediator(MediatRConfigure.GetAssemblies());
 
-        return builder;
-    }
-
-    internal static ConfigureHostBuilder AddAdvanceMediatR(
-        this ConfigureHostBuilder builder,
-        IEnumerable<Assembly> assemblies
-    )
-    {
-        builder.ConfigureContainer<ContainerBuilder>((_, containerBuilder) =>
-        {
-            containerBuilder.AddAdvanceMediator(assemblies);
+            StartupDescriptionMessageAssist.AddHint(
+                $"{typeof(MediatRConfigure).FullName}.{nameof(MediatRConfigure.GetAssemblies)} contain {(!MediatRConfigure.GetAssemblies().Any() ? "none" : MediatRConfigure.GetAssemblies().Select(o => o.GetName().Name).Join(","))}."
+            );
         });
 
         return builder;

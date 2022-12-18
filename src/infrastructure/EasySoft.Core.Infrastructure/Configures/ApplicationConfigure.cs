@@ -1,5 +1,4 @@
-﻿using System.Timers;
-using EasySoft.Core.Infrastructure.Assists;
+﻿using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using Masuit.Tools;
 using Timer = System.Timers.Timer;
@@ -9,7 +8,7 @@ namespace EasySoft.Core.Infrastructure.Configures;
 /// <summary>
 /// Application Configurator
 /// </summary>
-public static class ApplicationConfigurator
+public static class ApplicationConfigure
 {
     /// <summary>
     /// AfterApplicationStartHandler
@@ -47,7 +46,7 @@ public static class ApplicationConfigurator
 
     private static Action<MiniProfilerOptions>? _miniProfileOptionAction;
 
-    static ApplicationConfigurator()
+    static ApplicationConfigure()
     {
         OnApplicationStart += serviceProvider =>
         {

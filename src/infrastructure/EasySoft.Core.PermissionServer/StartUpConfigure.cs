@@ -26,7 +26,7 @@ public class StartUpConfigure : IStartUpConfigure
         PermissionServerAssist.Init(false);
 
         // 配置额外的构建项目
-        ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
+        ApplicationConfigure.AddWebApplicationBuilderExtraActions(
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddAdvanceDbContext<DataContext>")
                 .SetAction(applicationBuilder =>

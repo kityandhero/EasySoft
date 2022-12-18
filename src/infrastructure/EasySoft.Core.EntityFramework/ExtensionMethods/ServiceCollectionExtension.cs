@@ -70,7 +70,7 @@ public static class ServiceCollectionExtension
                     );
 
                 LogAssist.Hint(
-                    $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.EntityConfigureAssemblies)} contain {(!ContextConfigure.EntityConfigureAssemblies.Any() ? "none" : ContextConfigure.EntityConfigureAssemblies.Select(o => o.GetName().Name).Join(","))}."
+                    $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.GetEntityConfigureAssemblies)} contain {(!ContextConfigure.GetEntityConfigureAssemblies().Any() ? "none" : ContextConfigure.GetEntityConfigureAssemblies().Select(o => o.GetName().Name).Join(","))}."
                 );
             }
 
@@ -155,7 +155,7 @@ public static class ServiceCollectionExtension
             typeof(IEntityConfigure),
             _ =>
             {
-                var entityConfigureAssemblies = ContextConfigure.EntityConfigureAssemblies;
+                var entityConfigureAssemblies = ContextConfigure.GetEntityConfigureAssemblies();
 
                 if (!entityConfigureAssemblies.Any())
                     LogAssist.Warning("ContextConfigure.EntityConfigureAssemblies has none Assemblies");

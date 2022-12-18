@@ -11,7 +11,7 @@ public static class ApplicationAssist
         ApplicationConfig.ApplicationAssist.Init();
 
         // 配置额外的构建项目
-        ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
+        ApplicationConfigure.AddWebApplicationBuilderExtraActions(
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddPermissionServer")
                 .SetAction(applicationBuilder => { applicationBuilder.AddAppSecurityVerification(); }),

@@ -23,7 +23,7 @@ public static class ServiceCollectionExtensions
             $"Response use compression"
         );
 
-        ApplicationConfigurator.AddWebApplicationExtraAction(
+        ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(

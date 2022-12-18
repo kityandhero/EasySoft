@@ -63,7 +63,7 @@ public static class WebApplicationExtensions
             $"{nameof(UseAdvanceAssemblyMap)}."
         );
 
-        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
+        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapAssemblyMap(); })
@@ -85,7 +85,7 @@ public static class WebApplicationExtensions
             $"{nameof(UseAdvanceActionMap)}."
         );
 
-        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
+        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapActionMap(); })

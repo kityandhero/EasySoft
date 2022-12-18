@@ -23,14 +23,14 @@ public static class LogServerAssist
         BusinessServiceConfigure.AddBusinessServiceImplementationAssembly(typeof(ErrorLogService).Assembly);
 
         // 配置额外的构建项目
-        ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
+        ApplicationConfigure.AddWebApplicationBuilderExtraActions(
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("")
                 .SetAction(applicationBuilder => { applicationBuilder.AddCapSubscriber<ErrorLogExchangeSubscriber>(); })
         );
 
         // 配置额外的应用项目
-        ApplicationConfigurator.AddWebApplicationExtraAction(
+        ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(applicationBuilder => { applicationBuilder.UseErrorLogSendExperiment(); })

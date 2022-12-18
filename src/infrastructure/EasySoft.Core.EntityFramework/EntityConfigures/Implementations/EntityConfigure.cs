@@ -9,7 +9,7 @@ namespace EasySoft.Core.EntityFramework.EntityConfigures.Implementations;
 /// </summary>
 public class EntityConfigure : IEntityConfigure
 {
-    private readonly ISet<Assembly> _assemblies = new HashSet<Assembly>();
+    private readonly ISet<Assembly> _assemblies = new ConcurrentHashSet<Assembly>();
 
     /// <inheritdoc />
     public IEnumerable<Assembly> GetAssemblies()

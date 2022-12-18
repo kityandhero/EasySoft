@@ -10,13 +10,13 @@ public static class WebApplicationBuilderExtensions
     {
         if (ConsulFlagAssist.GetInitializeRegistrationWhetherComplete()) return builder;
 
-        ApplicationConfigurator.AddWebApplicationExtraAction(
+        ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(application => application.UseAdvanceConsulRegistrationCenter())
         );
 
-        ApplicationConfigurator.AddEndpointRouteBuilderExtraAction(
+        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => endpoints.MapConsulHealthCheck())

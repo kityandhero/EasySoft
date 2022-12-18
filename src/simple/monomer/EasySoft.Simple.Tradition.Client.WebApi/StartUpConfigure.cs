@@ -10,7 +10,7 @@ public class StartUpConfigure : IStartUpConfigure
         ApplicationAssist.Init();
 
         // 配置额外的构建项目
-        ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
+        ApplicationConfigure.AddWebApplicationBuilderExtraActions(
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddPermissionVerification")
                 .SetAction(applicationBuilder =>

@@ -35,7 +35,7 @@ BusinessServiceConfigure.AddBusinessServiceInterfaceAssembly(typeof(IUserService
 BusinessServiceConfigure.AddBusinessServiceImplementationAssembly(typeof(UserService).Assembly);
 
 // 配置额外的构建项目
-ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
+ApplicationConfigure.AddWebApplicationBuilderExtraActions(
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddApiVersioning")
         .SetAction(applicationBuilder =>
@@ -71,9 +71,6 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddAdvanceLogDashboard")
         .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceLogDashboard(); }),
-    new ExtraAction<WebApplicationBuilder>()
-        .SetName("AddAdvanceMediatR")
-        .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceMediatR(Assembly.GetExecutingAssembly()); }),
     // 配置健康检测
     // applicationBuilder =>
     // {
@@ -87,7 +84,7 @@ ApplicationConfigurator.AddWebApplicationBuilderExtraActions(
         .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceGrpc(); })
 );
 
-ApplicationConfigurator.AddWebApplicationExtraAction(
+ApplicationConfigure.AddWebApplicationExtraAction(
     new ExtraAction<WebApplication>()
         .SetName("MapAdvanceGrpcService")
         .SetAction(application =>

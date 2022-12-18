@@ -31,7 +31,7 @@ public static class ContextConfigure
     /// <summary>
     /// EntityConfigureAssemblies
     /// </summary>
-    public static ISet<Assembly> EntityConfigureAssemblies { get; }
+    private static readonly ISet<Assembly> EntityConfigureAssemblies = new ConcurrentHashSet<Assembly>();
 
     static ContextConfigure()
     {
@@ -39,7 +39,14 @@ public static class ContextConfigure
         EnableSensitiveDataLogging = false;
         AutoMigrate = false;
         AutoEnsureCreated = false;
-        EntityConfigureAssemblies = new HashSet<Assembly>();
+    }
+
+    /// <summary>
+    /// GetEntityConfigureAssemblies
+    /// </summary>
+    public static ISet<Assembly> GetEntityConfigureAssemblies()
+    {
+        return EntityConfigureAssemblies;
     }
 
     /// <summary>

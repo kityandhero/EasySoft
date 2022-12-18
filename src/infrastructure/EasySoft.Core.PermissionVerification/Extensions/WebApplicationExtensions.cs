@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Configures;
-using EasySoft.Core.PermissionVerification.Assists;
+﻿using EasySoft.Core.PermissionVerification.Assists;
 using EasySoft.Core.PermissionVerification.Configures;
 
 namespace EasySoft.Core.PermissionVerification.Extensions;
@@ -24,11 +23,9 @@ public static class WebApplicationExtensions
             $"{nameof(UseScanPermission)}."
         );
 
-        ApplicationConfigurator.OnApplicationStart += async serviceProvider =>
+        ApplicationConfigure.OnApplicationStart += _ =>
         {
             PermissionConfigure.ScanPermissionAssemblies.ForEach(PermissionAssists.ScanPermission);
-
-            await PermissionAssists.StartSaveAsync();
         };
 
         return application;
