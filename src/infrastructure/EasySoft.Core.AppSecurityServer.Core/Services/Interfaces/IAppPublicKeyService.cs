@@ -6,7 +6,7 @@ namespace EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
 /// <summary>
 /// 应用校验公钥服务
 /// </summary>
-public interface IAppPublicKeyService
+public interface IAppPublicKeyService : IBusinessService
 {
     /// <summary>
     /// 获取应用校验公钥
