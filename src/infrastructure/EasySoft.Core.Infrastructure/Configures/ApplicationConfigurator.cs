@@ -1,4 +1,6 @@
-﻿using EasySoft.Core.Infrastructure.Startup;
+﻿using System.Timers;
+using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Infrastructure.Startup;
 using Masuit.Tools;
 using Timer = System.Timers.Timer;
 
@@ -70,7 +72,21 @@ public static class ApplicationConfigurator
     }
 
     /// <summary>
-    /// AddTimer
+    /// 增加简易定时任务
+    /// </summary>
+    /// <param name="interval">定时触发时间（毫秒）</param>
+    /// <param name="action"></param>
+    public static void AddTimer(uint interval, Action<IServiceProvider, ElapsedEventArgs> action)
+    {
+        var timer = new Timer(interval);
+
+        timer.Elapsed += (_, e) => { action(ServiceAssist.GetServiceProvider(), e); };
+
+        Timers.AddRange(timer);
+    }
+
+    /// <summary>
+    /// 增加简易定时任务
     /// </summary>
     /// <param name="timers"></param>
     public static void AddTimer(params Timer[] timers)

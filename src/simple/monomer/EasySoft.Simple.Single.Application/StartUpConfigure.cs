@@ -153,15 +153,13 @@ public class StartUpConfigure : IStartUpConfigure
             // LogAssist.Info("config changed");
         };
 
-        var testTimer = new Timer(5000);
+        ApplicationConfigurator.AddTimer(
+            5000, (services, _) =>
+            {
+                var logger = services.GetService<ILogger<object>>();
 
-        testTimer.Elapsed += (sender, e) => HandleTimer();
-
-        ApplicationConfigurator.AddTimer(testTimer);
-    }
-
-    private static void HandleTimer()
-    {
-        LogAssist.Prompt("timer trigger.");
+                logger?.LogAdvancePrompt("timer trigger.");
+            }
+        );
     }
 }
