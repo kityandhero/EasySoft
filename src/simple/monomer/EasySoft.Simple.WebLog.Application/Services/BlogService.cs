@@ -39,7 +39,7 @@ public class BlogService : IBlogService
         };
     }
 
-    public async Task<ExecutiveResult<BlogDto>> GetBlogDtoSync(int authorId)
+    public async Task<ExecutiveResult<BlogDto>> GetBlogDtoAsync(int authorId)
     {
         var result = await _blogRepository.GetAsync(authorId);
 
@@ -54,7 +54,7 @@ public class BlogService : IBlogService
         return new ExecutiveResult<BlogDto>(ReturnCode.NoData);
     }
 
-    public async Task<ExecutiveResult<Blog>> UpdateFirst()
+    public async Task<ExecutiveResult<Blog>> UpdateFirstAsync()
     {
         var result = await GetFirstAsync();
 

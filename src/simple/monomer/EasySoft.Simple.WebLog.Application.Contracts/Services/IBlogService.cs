@@ -11,7 +11,7 @@ public interface IBlogService : IBusinessService
 
     public Task<ExecutiveResult<Blog>> GetFirstAsync();
 
-    public Task<ExecutiveResult<BlogDto>> GetBlogDtoSync(int authorId);
+    public Task<ExecutiveResult<BlogDto>> GetBlogDtoAsync(int authorId);
 
-    public Task<ExecutiveResult<Blog>> UpdateFirst();
+    public Task<ExecutiveResult<Blog>> UpdateFirstAsync();
 }

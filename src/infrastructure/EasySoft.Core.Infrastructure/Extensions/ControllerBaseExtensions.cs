@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Infrastructure.ExtensionMethods;
+﻿namespace EasySoft.Core.Infrastructure.Extensions;
 
 /// <summary>
 /// 控制器动作结果扩展方法

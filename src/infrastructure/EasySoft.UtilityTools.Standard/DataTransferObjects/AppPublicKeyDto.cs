@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.AppSecurityServer.Core.DataTransferObjects;
+﻿using EasySoft.UtilityTools.Standard.Entity.Interfaces;
+
+namespace EasySoft.UtilityTools.Standard.DataTransferObjects;
 
 /// <inheritdoc />
 public class AppPublicKeyDto : IAppPublicKey

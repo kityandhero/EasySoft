@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.AppSecurityServer.Core.DataTransferObjects;
+﻿namespace EasySoft.UtilityTools.Standard.DataTransferObjects;
 
 /// <summary>
 /// AppSecurityDto

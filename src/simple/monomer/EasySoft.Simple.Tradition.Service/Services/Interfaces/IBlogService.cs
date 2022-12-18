@@ -26,5 +26,5 @@ public interface IBlogService : IBusinessService
     /// </summary>
     /// <param name="blogId"></param>
     /// <returns></returns>
-    public Task<ExecutiveResult<BlogDto>> GetBlogDtoSync(long blogId);
+    public Task<ExecutiveResult<BlogDto>> GetBlogDtoAsync(long blogId);
 }

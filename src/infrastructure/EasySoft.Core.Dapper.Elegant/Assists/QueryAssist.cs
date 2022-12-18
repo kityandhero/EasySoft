@@ -954,7 +954,7 @@ public class QueryAssist
             Exception exception
         )
         {
-            AutofacAssist.Instance.Resolve<IErrorLogProducer>().Send(
+            AutofacAssist.Instance.Resolve<IErrorLogProducer>().SendAsync(
                 exception,
                 0
             );
@@ -1016,7 +1016,7 @@ public class QueryAssist
                 exception.Data.Add("mapperChannel", mapperChannel.GetChannel());
             }
 
-            AutofacAssist.Instance.Resolve<IErrorLogProducer>().Send(
+            AutofacAssist.Instance.Resolve<IErrorLogProducer>().SendAsync(
                 exception,
                 0
             );

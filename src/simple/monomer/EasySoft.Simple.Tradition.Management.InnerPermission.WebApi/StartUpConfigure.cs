@@ -11,7 +11,7 @@ public class StartUpConfigure : IStartUpConfigure
     /// <exception cref="NotImplementedException"></exception>
     public void Init()
     {
-        Core.Assists.ApplicationAssist.InitManagement();
+        AppSecurityServerAssist.Init(true);
 
         PermissionConfigure.AddRangeScanPermissionAssemblies(new List<Assembly>
         {
@@ -19,11 +19,11 @@ public class StartUpConfigure : IStartUpConfigure
             typeof(ErrorLog).Assembly
         });
 
-        AppSecurityServerAssist.Init(true);
-
         PermissionServerAssist.Init(true);
 
         LogServerAssist.Init(true);
+
+        Core.Assists.ApplicationAssist.InitManagement();
 
         SwaggerConfigure.GeneralParameters.AddRange(
             new OpenApiParameter

@@ -17,7 +17,7 @@ public class AccessWayProducer : IAccessWayProducer
         _applicationChannel = applicationChannel;
     }
 
-    public IAccessWayExchange Send(
+    public async Task<IAccessWayExchange> SendAsync(
         string guidTag,
         string name,
         string path,
@@ -33,7 +33,7 @@ public class AccessWayProducer : IAccessWayProducer
             Channel = _applicationChannel.GetChannel()
         };
 
-        _capPublisher.Publish(TransmitterTopic.AccessWayExchange, entity);
+        await _capPublisher.PublishAsync(TransmitterTopic.AccessWayExchange, entity);
 
         return entity;
     }

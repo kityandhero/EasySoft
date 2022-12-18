@@ -2,6 +2,7 @@
 using EasySoft.Core.AppSecurityServer.Core.Entities;
 using EasySoft.Core.AppSecurityServer.Core.Extensions;
 using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
+using EasySoft.UtilityTools.Standard.DataTransferObjects;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Services.Implementations;
 

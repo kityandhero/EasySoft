@@ -6,4 +6,21 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\EasySoft.Core.AppSecurityVerification.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\EasySoft.Core.AppSecurityVerification.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\domain\EasySoft.Ddd.Service.DependencyInjection\EasySoft.Ddd.Service.DependencyInjection.csproj" />
+      <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
+      <ProjectReference Include="..\EasySoft.Core.Refit\EasySoft.Core.Refit.csproj" />
+      <ProjectReference Include="..\EasySoft.Dependence.Core\EasySoft.Dependence.Core.csproj" />
+      <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj" />
+      <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -28,7 +28,7 @@ public class AuthorController : AreaControllerCore
         if (!resultActualOperator.Success || resultActualOperator.Data == null)
             return this.Fail(resultActualOperator.Code);
 
-        var result = await _blogService.GetBlogDtoSync(
+        var result = await _blogService.GetBlogDtoAsync(
             Convert.ToInt32(resultActualOperator.Data.GetIdentification())
         );
 

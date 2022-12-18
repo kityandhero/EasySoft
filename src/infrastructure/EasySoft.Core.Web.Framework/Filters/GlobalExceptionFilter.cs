@@ -58,7 +58,7 @@ public class GlobalExceptionFilter : IExceptionFilter
 
             var requestInfo = context.HttpContext.BuildRequestInfo();
 
-            errorLogProducer.Send(context.Exception, 0, requestInfo);
+            errorLogProducer.SendAsync(context.Exception, 0, requestInfo);
         }
 
         context.Result = new JsonResult(

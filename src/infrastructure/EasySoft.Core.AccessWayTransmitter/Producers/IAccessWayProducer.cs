@@ -4,7 +4,7 @@ namespace EasySoft.Core.AccessWayTransmitter.Producers;
 
 public interface IAccessWayProducer
 {
-    public IAccessWayExchange Send(
+    public Task<IAccessWayExchange> SendAsync(
         string guidTag,
         string name,
         string path,

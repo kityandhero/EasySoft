@@ -80,7 +80,7 @@ public class DataController : AreaControllerCore
 
             await _userService.RegisterMultiAsync(dictionary);
 
-            var result = await _blogService.GetBlogDtoSync(1);
+            var result = await _blogService.GetBlogDtoAsync(1);
 
             await _unitOfWork.CommitAsync();
 

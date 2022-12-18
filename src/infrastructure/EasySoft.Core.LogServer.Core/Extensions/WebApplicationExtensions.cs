@@ -1,7 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Configures;
-using EasySoft.UtilityTools.Core.Assists;
-
-namespace EasySoft.Core.LogServer.Core.Extensions;
+﻿namespace EasySoft.Core.LogServer.Core.Extensions;
 
 /// <summary>
 /// WebApplicationExtensions
@@ -23,12 +20,15 @@ public static class WebApplicationExtensions
             $"{nameof(UseErrorLogSendExperiment)}."
         );
 
-        ApplicationConfigurator.OnApplicationStart += DoErrorLogSendExperiment;
+        ApplicationConfigurator.OnApplicationStart += async (serviceProvider) =>
+        {
+            await DoErrorLogSendExperiment(serviceProvider);
+        };
 
         return application;
     }
 
-    private static void DoErrorLogSendExperiment(IServiceProvider serviceProvider)
+    private static async Task DoErrorLogSendExperiment(IServiceProvider serviceProvider)
     {
         var environment = serviceProvider.GetService<IWebHostEnvironment>();
 
@@ -50,7 +50,7 @@ public static class WebApplicationExtensions
             );
         }
 
-        AutofacAssist.Instance.Resolve<IErrorLogProducer>().Send(
+        await AutofacAssist.Instance.Resolve<IErrorLogProducer>().SendAsync(
             errorLogExchange
         );
 

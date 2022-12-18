@@ -11,22 +11,14 @@ public interface IErrorLogProducer
     /// 发送
     /// </summary>
     /// <param name="errorLogExchange"></param>
-    void Send(IErrorLogExchange errorLogExchange);
+    Task SendAsync(IErrorLogExchange errorLogExchange);
 
     /// <summary>
     /// 发送
     /// </summary>
     /// <param name="ex"></param>
     /// <returns></returns>
-    IErrorLogExchange Send(Exception ex);
-
-    /// <summary>
-    /// 发送
-    /// </summary>
-    /// <param name="ex"></param>
-    /// <param name="operatorId"></param>
-    /// <returns></returns>
-    IErrorLogExchange Send(Exception ex, long operatorId);
+    Task<IErrorLogExchange> SendAsync(Exception ex);
 
     /// <summary>
     /// 发送
@@ -35,5 +27,5 @@ public interface IErrorLogProducer
     /// <param name="operatorId"></param>
     /// <param name="requestInfo"></param>
     /// <returns></returns>
-    IErrorLogExchange Send(Exception ex, long operatorId, RequestInfo requestInfo);
+    Task<IErrorLogExchange> SendAsync(Exception ex, long operatorId, RequestInfo? requestInfo = null);
 }

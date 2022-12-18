@@ -48,7 +48,7 @@ public class BlogService : IBlogService
     }
 
     /// <inheritdoc />
-    public async Task<ExecutiveResult<BlogDto>> GetBlogDtoSync(long blogId)
+    public async Task<ExecutiveResult<BlogDto>> GetBlogDtoAsync(long blogId)
     {
         var result = await _blogRepository.GetAsync(blogId);
 

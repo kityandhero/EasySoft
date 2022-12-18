@@ -223,7 +223,7 @@ public static class WebApplicationExtensions
     )
     {
         //应用启动后启动定时器
-        ApplicationConfigurator.OnApplicationStart += serviceProvider =>
+        ApplicationConfigurator.OnApplicationStart += _ =>
         {
             var timers = ApplicationConfigurator.GetTimers();
 
@@ -234,7 +234,19 @@ public static class WebApplicationExtensions
                     $"Times({timers.Count}) will start."
                 );
 
-            timers.ForEach(t => { t.Start(); });
+            var tokenSource = new CancellationTokenSource();
+            var token = tokenSource.Token;
+
+            tokenSource.Cancel();
+
+            Task.Delay(
+                    TimeSpan.FromSeconds(5),
+                    token
+                )
+                .ContinueWith(
+                    t => { timers.ForEach(t => { t.Start(); }); },
+                    token
+                );
         };
 
         return application;
@@ -248,7 +260,7 @@ public static class WebApplicationExtensions
     )
     {
         //停止定时器执行并释放资源
-        ApplicationConfigurator.OnApplicationStopping += serviceProvider =>
+        ApplicationConfigurator.OnApplicationStopping += _ =>
         {
             var timers = ApplicationConfigurator.GetTimers();
 

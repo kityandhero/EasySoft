@@ -79,7 +79,7 @@ public static class PermissionAssists
         });
     }
 
-    internal static void Sync()
+    internal static async Task StartSaveAsync()
     {
         if (!GetAccessWayModelScanQuery().Any()) return;
 
@@ -90,12 +90,12 @@ public static class PermissionAssists
                 $"Permission need sync {GetAccessWayModelScanQuery().Count}, start sync."
             );
 
-        Task.FromResult(ExecSync());
+        await ExecSaveAsync();
 
         if (isDevelopment) LogAssist.Prompt("Permission sync complete.");
     }
 
-    private static async Task ExecSync()
+    private static async Task ExecSaveAsync()
     {
         while (AccessWayModelScanQuery.TryDequeue(out var accessWayModel))
         {
@@ -105,7 +105,7 @@ public static class PermissionAssists
 
             if (accessWayModels.Count > 0) continue;
 
-            AutofacAssist.Instance.Resolve<IAccessWayProducer>().Send(
+            await AutofacAssist.Instance.Resolve<IAccessWayProducer>().SendAsync(
                 accessWayModel.GuidTag,
                 accessWayModel.Name,
                 accessWayModel.RelativePath,

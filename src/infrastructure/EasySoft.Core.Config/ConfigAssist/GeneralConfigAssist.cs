@@ -203,6 +203,44 @@ public static class GeneralConfigAssist
         return v;
     }
 
+    #region AppSecurity
+
+    public static string GetAppId()
+    {
+        var v = GetConfig().AppId;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        return v;
+    }
+
+    public static string GetAppSecret()
+    {
+        var v = GetConfig().AppSecret;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        return v;
+    }
+
+    public static string GetAppSecurityServerHostUrl()
+    {
+        var v = GetConfig().AppSecurityServerHostUrl;
+
+        if (!string.IsNullOrWhiteSpace(v)) return v;
+
+        v = FlagAssist.StartupDisplayUrls.First();
+
+        StartupDescriptionMessageAssist.AddWarning(
+            $"PermissionServerHostUrl has not config, use the start base url {v}.",
+            GetConfigFileInfo()
+        );
+
+        return v;
+    }
+
+    #endregion
+
     public static bool GetAccessWayDetectSwitch()
     {
         var v = GetConfig().AccessWayDetectSwitch;

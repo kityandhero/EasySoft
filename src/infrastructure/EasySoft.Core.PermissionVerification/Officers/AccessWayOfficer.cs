@@ -91,7 +91,7 @@ public abstract class AccessWayOfficer : OfficerCore
 
         if (accessWayModels.Count <= 0)
         {
-            AutofacAssist.Instance.Resolve<IAccessWayProducer>().Send(
+            await AutofacAssist.Instance.Resolve<IAccessWayProducer>().SendAsync(
                 AccessPermission.GuidTag,
                 AccessPermission.Name,
                 AccessPermission.Path,
@@ -127,7 +127,7 @@ public abstract class AccessWayOfficer : OfficerCore
                 return;
             }
 
-            AutofacAssist.Instance.Resolve<IAccessWayProducer>().Send(
+            await AutofacAssist.Instance.Resolve<IAccessWayProducer>().SendAsync(
                 AccessPermission.GuidTag,
                 AccessPermission.Name,
                 AccessPermission.Path,

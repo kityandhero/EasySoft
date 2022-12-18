@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.ExtensionMethods;
+﻿using EasySoft.Core.Infrastructure.Extensions;
 using EasySoft.Core.Infrastructure.Startup;
 
 namespace EasySoft.Core.Infrastructure.Assists;

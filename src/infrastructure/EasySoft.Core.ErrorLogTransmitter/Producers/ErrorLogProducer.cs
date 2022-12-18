@@ -24,25 +24,19 @@ public class ErrorLogProducer : IErrorLogProducer
     }
 
     /// <inheritdoc />
-    public void Send(IErrorLogExchange errorLogExchange)
+    public async Task SendAsync(IErrorLogExchange errorLogExchange)
     {
-        _capPublisher.Publish(TransmitterTopic.ErrorLogExchange, errorLogExchange);
+        await _capPublisher.PublishAsync(TransmitterTopic.ErrorLogExchange, errorLogExchange);
     }
 
     /// <inheritdoc />
-    public IErrorLogExchange Send(Exception ex)
+    public async Task<IErrorLogExchange> SendAsync(Exception ex)
     {
-        return Send(ex, 0, null);
+        return await SendAsync(ex, 0, null);
     }
 
     /// <inheritdoc />
-    public IErrorLogExchange Send(Exception ex, long operatorId)
-    {
-        return Send(ex, operatorId, null);
-    }
-
-    /// <inheritdoc />
-    public IErrorLogExchange Send(Exception ex, long operatorId, RequestInfo? requestInfo)
+    public async Task<IErrorLogExchange> SendAsync(Exception ex, long operatorId, RequestInfo? requestInfo = null)
     {
         var entity = new ErrorLogExchange
         {
@@ -51,7 +45,7 @@ public class ErrorLogProducer : IErrorLogProducer
 
         entity.Fill(ex, operatorId, requestInfo);
 
-        _capPublisher.Publish(TransmitterTopic.ErrorLogExchange, entity);
+        await _capPublisher.PublishAsync(TransmitterTopic.ErrorLogExchange, entity);
 
         return entity;
     }

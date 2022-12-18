@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.AppSecurityServer.Core.DataTransferObjects;
 using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
+using EasySoft.UtilityTools.Standard.DataTransferObjects;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Controllers;
 

@@ -154,7 +154,8 @@ public class StartUpConfigure : IStartUpConfigure
         };
 
         ApplicationConfigurator.AddTimer(
-            5000, (services, _) =>
+            5000,
+            (services, _) =>
             {
                 var logger = services.GetService<ILogger<object>>();
 

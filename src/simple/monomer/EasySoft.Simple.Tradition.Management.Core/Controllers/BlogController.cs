@@ -55,7 +55,7 @@ public class BlogController : AuthControllerCore
     [Permission(ControllerDescription + "博客详情", "16ccbcfb-15c0-4605-abd0-736f91e890af")]
     public async Task<IApiResult> Get(BlogDto blogDto)
     {
-        var result = await _blogService.GetBlogDtoSync(blogDto.BlogId);
+        var result = await _blogService.GetBlogDtoAsync(blogDto.BlogId);
 
         return this.WrapperExecutiveResult(result);
     }
