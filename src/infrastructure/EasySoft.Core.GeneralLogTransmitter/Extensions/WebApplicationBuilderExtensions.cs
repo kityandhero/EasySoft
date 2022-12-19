@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.GeneralLogTransmitter.Producers;
 
-namespace EasySoft.Core.GeneralLogTransmitter.ExtensionMethods;
+namespace EasySoft.Core.GeneralLogTransmitter.Extensions;
 
 /// <summary>
 /// WebApplicationBuilderExtensions

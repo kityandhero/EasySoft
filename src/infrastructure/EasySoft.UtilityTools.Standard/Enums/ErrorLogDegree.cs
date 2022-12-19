@@ -1,9 +1,9 @@
-﻿namespace EasySoft.Core.ErrorLogTransmitter.Enums;
+﻿namespace EasySoft.UtilityTools.Standard.Enums;
 
 /// <summary>
 /// 重要程度
 /// </summary>
-public enum ErrorLogExchangeDegree
+public enum ErrorLogDegree
 {
     /// <summary>
     /// 一般记录

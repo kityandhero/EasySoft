@@ -1,7 +1,4 @@
-﻿using Autofac;
-using EasySoft.Core.ErrorLogTransmitter.Producers;
-
-namespace EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
+﻿namespace EasySoft.Core.ErrorLogTransmitter.Extensions;
 
 /// <summary>
 /// WebApplicationBuilderExtensions
@@ -17,10 +14,7 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-        {
-            containerBuilder.RegisterType<ErrorLogProducer>().As<IErrorLogProducer>().SingleInstance();
-        });
+        builder.Services.AddErrorLogTransmitter();
 
         return builder;
     }

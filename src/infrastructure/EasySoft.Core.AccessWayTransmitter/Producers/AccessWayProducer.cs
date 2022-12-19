@@ -5,12 +5,18 @@ using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 namespace EasySoft.Core.AccessWayTransmitter.Producers;
 
+/// <inheritdoc />
 public class AccessWayProducer : IAccessWayProducer
 {
     private readonly ICapPublisher _capPublisher;
 
     private readonly IApplicationChannel _applicationChannel;
 
+    /// <summary>
+    /// AccessWayProducer
+    /// </summary>
+    /// <param name="capPublisher"></param>
+    /// <param name="applicationChannel"></param>
     public AccessWayProducer(ICapPublisher capPublisher, IApplicationChannel applicationChannel)
     {
         _capPublisher = capPublisher;
@@ -18,6 +24,7 @@ public class AccessWayProducer : IAccessWayProducer
         _applicationChannel = applicationChannel;
     }
 
+    /// <inheritdoc />
     public async Task<IAccessWayExchange> SendAsync(
         IAccessWay accessWay
     )

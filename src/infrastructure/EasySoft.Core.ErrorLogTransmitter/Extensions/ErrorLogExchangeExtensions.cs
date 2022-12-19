@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.ErrorLogTransmitter.Entities;
-using EasySoft.Core.ErrorLogTransmitter.Enums;
 
-namespace EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
+namespace EasySoft.Core.ErrorLogTransmitter.Extensions;
 
 /// <summary>
 /// ErrorLogExchangeExtensions
@@ -49,8 +48,8 @@ public static class ErrorLogExchangeExtensions
             }
 
             entity.UserId = operatorId;
-            entity.Type = ErrorLogExchangeType.Exception.ToInt();
-            entity.Degree = ErrorLogExchangeDegree.Error.ToInt();
+            entity.Type = ErrorLogType.Exception.ToInt();
+            entity.Degree = ErrorLogDegree.Error.ToInt();
             entity.CreateBy = 0;
         }
         catch (Exception e)

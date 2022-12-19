@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.ErrorLogTransmitter.Enums;
-using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
+﻿using EasySoft.Core.ErrorLogTransmitter.Extensions;
 using EasySoft.Core.ErrorLogTransmitter.Interfaces;
 
 namespace EasySoft.Core.ErrorLogTransmitter.Entities;
@@ -28,10 +27,10 @@ public class ErrorLogExchange : BaseExchange, IErrorLogExchange, IIgnore
     public string Scene { get; set; } = "";
 
     /// <inheritdoc />
-    public int Type { get; set; } = ErrorLogExchangeType.DataError.ToInt();
+    public int Type { get; set; } = ErrorLogType.DataError.ToInt();
 
     /// <inheritdoc />
-    public int Degree { get; set; } = ErrorLogExchangeDegree.Info.ToInt();
+    public int Degree { get; set; } = ErrorLogDegree.Info.ToInt();
 
     /// <inheritdoc />
     public string Header { get; set; } = "";

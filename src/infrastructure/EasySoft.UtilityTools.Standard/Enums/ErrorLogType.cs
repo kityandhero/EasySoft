@@ -1,9 +1,9 @@
-﻿namespace EasySoft.Core.ErrorLogTransmitter.Enums;
+﻿namespace EasySoft.UtilityTools.Standard.Enums;
 
 /// <summary>
 /// ErrorLogExchangeType
 /// </summary>
-public enum ErrorLogExchangeType
+public enum ErrorLogType
 {
     /// <summary>
     /// 数据错误

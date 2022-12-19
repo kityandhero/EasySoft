@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Competence;
-
-namespace EasySoft.Core.ErrorLogTransmitter.Interfaces;
+﻿namespace EasySoft.Core.ErrorLogTransmitter.Interfaces;
 
 /// <summary>
 /// 错误日志传输信息

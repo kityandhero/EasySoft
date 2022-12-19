@@ -5,7 +5,7 @@ namespace EasySoft.Core.SqlExecutionRecordTransmitter.Entities;
 /// <summary>
 /// SqlExecutionRecordExchange
 /// </summary>
-public class SqlExecutionRecordExchange : BaseExchange, ISqlExecutionRecordExchange, IIgnore
+public class SqlExecutionRecordExchange : BaseExchange, ISqlExecutionRecordExchange
 {
     /// <inheritdoc />
     public string CommandString { get; set; } = "";

@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Web.Framework.Attributes;
+﻿using EasySoft.Core.GeneralLogTransmitter.Extensions;
+using EasySoft.Core.Web.Framework.Attributes;
 using EasySoft.Core.Web.Framework.Filters;
 
 namespace EasySoft.Core.Web.Framework.ExtensionMethods;
@@ -173,6 +174,8 @@ public static class WebApplicationBuilderExtensions
         builder.AddGeneralLogTransmitter();
 
         builder.AddErrorLogTransmitter();
+
+        builder.AddSqlExecutionRecordTransmitter();
 
         builder.AddAdvanceCap();
 

@@ -6,7 +6,6 @@ global using System.Reflection;
 global using Autofac;
 global using Castle.DynamicProxy;
 global using EasySoft.Core.AccessWayTransmitter.Entities;
-global using EasySoft.Core.AccessWayTransmitter.ExtensionMethods;
 global using EasySoft.Core.AccessWayTransmitter.Producers;
 global using EasySoft.Core.AuthenticationCore.Operators;
 global using EasySoft.Core.AutoFac.IocAssists;

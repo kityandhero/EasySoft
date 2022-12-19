@@ -1,7 +1,10 @@
 ﻿using EasySoft.Core.AccessWayTransmitter.Assists;
 
-namespace EasySoft.Core.AccessWayTransmitter.ExtensionMethods;
+namespace EasySoft.Core.AccessWayTransmitter.Extensions;
 
+/// <summary>
+/// WebApplicationBuilderExtensions
+/// </summary>
 public static class WebApplicationBuilderExtensions
 {
     /// <summary>
@@ -15,7 +18,7 @@ public static class WebApplicationBuilderExtensions
     {
         if (InitialAssist.InitialComplete) return builder;
 
-        builder.Host.AddAccessWayTransmitter();
+        builder.Services.AddAccessWayTransmitter();
 
         InitialAssist.InitialComplete = true;
 

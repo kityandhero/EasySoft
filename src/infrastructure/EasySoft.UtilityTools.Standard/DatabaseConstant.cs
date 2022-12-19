@@ -16,7 +16,12 @@ public static class DatabaseConstant
     public const string Nvarchar = "nvarchar";
 
     /// <summary>
-    /// Nvarchar
+    /// NvarcharMax
     /// </summary>
     public const string NvarcharMax = "nvarchar(max)";
+
+    /// <summary>
+    /// Decimal_18_6
+    /// </summary>
+    public const string Decimal_18_6 = "decimal(18,6)";
 }

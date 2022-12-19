@@ -36,6 +36,7 @@
         <ProjectReference Include="..\EasySoft.Core.PermissionVerification\EasySoft.Core.PermissionVerification.csproj" />
         <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
         <ProjectReference Include="..\EasySoft.Core.PrepareStartWork\EasySoft.Core.PrepareStartWork.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.SqlExecutionRecordTransmitter\EasySoft.Core.SqlExecutionRecordTransmitter.csproj" />
         <ProjectReference Include="..\EasySoft.Core.Swagger\EasySoft.Core.Swagger.csproj" />
         <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj" />
     </ItemGroup>

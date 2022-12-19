@@ -9,3 +9,4 @@ global using EasySoft.Core.ExchangeRegulation.Interfaces;
 global using EasySoft.UtilityTools.Core.Channels;
 global using EasySoft.UtilityTools.Standard.Competence;
 global using Microsoft.AspNetCore.Builder;
+global using Microsoft.Extensions.DependencyInjection;

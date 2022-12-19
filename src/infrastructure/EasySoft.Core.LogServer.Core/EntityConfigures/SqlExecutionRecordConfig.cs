@@ -24,12 +24,15 @@ public class SqlExecutionRecordConfig : BaseEntityTypeConfiguration<SqlExecution
             .HasDefaultValue(string.Empty);
 
         builder.Property(x => x.StartMilliseconds)
+            .HasColumnType(DatabaseConstant.Decimal_18_6)
             .HasDefaultValue(0);
 
         builder.Property(x => x.DurationMilliseconds)
+            .HasColumnType(DatabaseConstant.Decimal_18_6)
             .HasDefaultValue(0);
 
         builder.Property(x => x.FirstFetchDurationMilliseconds)
+            .HasColumnType(DatabaseConstant.Decimal_18_6)
             .HasDefaultValue(0);
 
         builder.Property(x => x.Errored)

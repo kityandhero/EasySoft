@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.LogServer.Core.Entities.Bases;
+﻿using EasySoft.Core.ErrorLogTransmitter.Extensions;
+using EasySoft.Core.LogServer.Core.Entities.Bases;
 
 namespace EasySoft.Core.LogServer.Core.Entities;
 
@@ -26,10 +27,10 @@ public class ErrorLog : BaseEntity, IErrorLog, IIp, IStatus, IOperate
     public string Scene { get; set; } = "";
 
     /// <inheritdoc />
-    public int Type { get; set; } = ErrorLogExchangeType.DataError.ToInt();
+    public int Type { get; set; } = ErrorLogType.DataError.ToInt();
 
     /// <inheritdoc />
-    public int Degree { get; set; } = ErrorLogExchangeDegree.Info.ToInt();
+    public int Degree { get; set; } = ErrorLogDegree.Info.ToInt();
 
     /// <inheritdoc />
     public string Header { get; set; } = "";
