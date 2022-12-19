@@ -10,7 +10,6 @@ public class StartUpConfigure : IStartUpConfigure
     /// <summary>
     /// Init
     /// </summary>
-    /// <exception cref="NotImplementedException"></exception>
     public void Init()
     {
         PermissionConfigure.AddRangeScanPermissionAssemblies(new List<Assembly>

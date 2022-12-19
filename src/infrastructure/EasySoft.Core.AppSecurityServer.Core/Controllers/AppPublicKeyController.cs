@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
+using EasySoft.Core.PermissionVerification.Attributes;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Controllers;
 
@@ -9,6 +10,8 @@ namespace EasySoft.Core.AppSecurityServer.Core.Controllers;
 [Operator]
 public class AppPublicKeyController : CustomControllerBase
 {
+    private const string ControllerDescription = "应用校验密钥管理/";
+
     private readonly IAppPublicKeyService _appPublicKeyService;
 
     /// <summary>
@@ -26,6 +29,7 @@ public class AppPublicKeyController : CustomControllerBase
     /// <returns></returns>
     [Route("get")]
     [HttpPost]
+    [Permission(ControllerDescription + "获取密钥", "f10b1036-85f0-4972-8133-64b50f29b488")]
     public async Task<IApiResult> Get()
     {
         var result = await _appPublicKeyService.GetAsync();
@@ -39,6 +43,7 @@ public class AppPublicKeyController : CustomControllerBase
     /// <returns></returns>
     [Route("refresh")]
     [HttpPost]
+    [Permission(ControllerDescription + "刷新密钥", "2e3047c3-b578-4a89-97e6-a6c412feaa6a")]
     public async Task<IApiResult> Refresh()
     {
         var result = await _appPublicKeyService.RefreshAsync();
