@@ -15,7 +15,7 @@ public static class WebApplicationBuilderExtensions
             $"{nameof(AddAdvanceMediatR)}."
         );
 
-        builder.Host.AddAdvanceMediatR();
+        builder.Services.AddMediatR(MediatRConfigure.GetAssemblies().ToArray());
 
         return builder;
     }
