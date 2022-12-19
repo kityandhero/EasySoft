@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Simple.Tradition.Management.InnerPermission.WebApi;
+﻿using EasySoft.Core.AppSecurityServer.Core.Entities;
+
+namespace EasySoft.Simple.Tradition.Management.InnerPermission.WebApi;
 
 /// <summary>
 /// StartUpConfigure
@@ -11,13 +13,14 @@ public class StartUpConfigure : IStartUpConfigure
     /// <exception cref="NotImplementedException"></exception>
     public void Init()
     {
-        AppSecurityServerAssist.Init(true);
-
         PermissionConfigure.AddRangeScanPermissionAssemblies(new List<Assembly>
         {
             typeof(Core.Assists.ApplicationAssist).Assembly,
-            typeof(ErrorLog).Assembly
+            typeof(ErrorLog).Assembly,
+            typeof(AppSecurity).Assembly
         });
+
+        AppSecurityServerAssist.Init(true);
 
         PermissionServerAssist.Init(true);
 
