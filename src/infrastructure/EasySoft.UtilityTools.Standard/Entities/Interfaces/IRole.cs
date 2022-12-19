@@ -1,9 +1,9 @@
-﻿namespace EasySoft.UtilityTools.Standard.Competence;
+﻿namespace EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 /// <summary>
 /// IRolePersistence
 /// </summary>
-public interface IRolePersistence
+public interface IRole
 {
     /// <summary>
     /// 权限集合

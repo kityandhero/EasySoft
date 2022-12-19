@@ -1,6 +1,7 @@
 ﻿using EasySoft.UtilityTools.Core.Exceptions;
 using EasySoft.UtilityTools.Core.Results;
 using EasySoft.UtilityTools.Standard.Entities;
+using EasySoft.UtilityTools.Standard.Entities.Implementations;
 using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.UtilityTools.Core.Extensions;
@@ -559,7 +560,7 @@ public static class ControllerBaseExtensions
     /// </summary>
     /// <param name="controller"></param>
     /// <returns></returns>
-    public static RequestInfo BuildRequestInfo(this ControllerBase controller)
+    public static IRequestInfo BuildRequestInfo(this ControllerBase controller)
     {
         return controller.HttpContext.BuildRequestInfo();
     }

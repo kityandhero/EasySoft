@@ -1,6 +1,6 @@
-﻿using EasySoft.Core.ExchangeRegulation.Enums;
+﻿using EasySoft.UtilityTools.Standard.Enums;
 
-namespace EasySoft.Core.ExchangeRegulation.ExtensionMethods;
+namespace EasySoft.UtilityTools.Standard.Extensions;
 
 /// <summary>
 /// CustomValueTypeExtensions

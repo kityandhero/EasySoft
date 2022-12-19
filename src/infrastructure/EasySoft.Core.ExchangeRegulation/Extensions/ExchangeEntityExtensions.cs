@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.ExchangeRegulation.Interfaces;
 
-namespace EasySoft.Core.ExchangeRegulation.ExtensionMethods;
+namespace EasySoft.Core.ExchangeRegulation.Extensions;
 
 /// <summary>
 /// ExchangeEntityExtensions

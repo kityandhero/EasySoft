@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Entities.Bases;
-using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 namespace EasySoft.Core.PermissionServer.Core.Entities;
 
@@ -7,7 +6,7 @@ namespace EasySoft.Core.PermissionServer.Core.Entities;
 /// 访问模块
 /// </summary>
 [Description("访问模块")]
-public class AccessWay : BaseEntity, IAccessWayPersistence, IIp, IStatus, IOperate
+public class AccessWay : BaseEntity, IAccessWay, IIp, IStatus, IOperate
 {
     /// <inheritdoc />
     public string Name { get; set; } = "";

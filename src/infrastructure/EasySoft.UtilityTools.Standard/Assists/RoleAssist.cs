@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Standard.Enums;
+﻿using EasySoft.UtilityTools.Standard.Entities.Interfaces;
+using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.UtilityTools.Standard.Assists;
@@ -19,8 +20,8 @@ public static class RoleAssist
     public static async Task<List<CompetenceEntity>> MergeCompetenceCollectionAsync<T>(
         List<T> list,
         IEnumerable<CompetenceEntity> ceList,
-        Func<IEnumerable<CompetenceEntity>, Task<IEnumerable<IAccessWayPersistence>>> accessWayPersistenceListGetter
-    ) where T : IRolePersistence
+        Func<IEnumerable<CompetenceEntity>, Task<IEnumerable<IAccessWay>>> accessWayPersistenceListGetter
+    ) where T : IRole
     {
         var listCompetenceEntity = ceList.Select(o => o.GetClone()).ToList();
 
@@ -69,8 +70,8 @@ public static class RoleAssist
     /// <returns></returns>
     public static async Task<IList<CompetenceEntity>> GetCompetenceEntityCollectionAsync<T>(
         T role,
-        Func<IEnumerable<CompetenceEntity>, Task<IEnumerable<IAccessWayPersistence>>> accessWayPersistenceListGetter
-    ) where T : IRolePersistence
+        Func<IEnumerable<CompetenceEntity>, Task<IEnumerable<IAccessWay>>> accessWayPersistenceListGetter
+    ) where T : IRole
     {
         IList<CompetenceEntity> result = new List<CompetenceEntity>();
 
@@ -116,7 +117,7 @@ public static class RoleAssist
 
             if (result.Count > 0)
             {
-                var listAccessWay = new List<IAccessWayPersistence>();
+                var listAccessWay = new List<IAccessWay>();
 
                 if (list.Count > 0)
                     listAccessWay = (await accessWayPersistenceListGetter(result)).ToList();

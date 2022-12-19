@@ -1,11 +1,14 @@
 ﻿using EasySoft.Core.ErrorLogTransmitter.Enums;
 using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 using EasySoft.Core.ErrorLogTransmitter.Interfaces;
+using EasySoft.Core.ExchangeRegulation.Extensions;
+using EasySoft.UtilityTools.Standard.Enums;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.ErrorLogTransmitter.Entities;
 
 /// <summary>
-/// ErrorLogExchange
+/// 错误日志传输信息
 /// </summary>
 public class ErrorLogExchange : BaseExchange, IErrorLogExchange
 {

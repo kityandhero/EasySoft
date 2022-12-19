@@ -3,7 +3,7 @@
 /// <summary>
 /// IRoleEntity
 /// </summary>
-public interface IRoleEntity : IRolePersistence
+public interface IRoleEntity : IRole
 {
     /// <summary>
     /// 名称  

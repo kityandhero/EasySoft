@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.ErrorLogTransmitter.Entities;
 using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 using EasySoft.Core.ErrorLogTransmitter.Interfaces;
-using EasySoft.UtilityTools.Standard.Entities;
 
 namespace EasySoft.Core.ErrorLogTransmitter.Producers;
 
@@ -33,11 +32,15 @@ public class ErrorLogProducer : IErrorLogProducer
     /// <inheritdoc />
     public async Task<IErrorLogExchange> SendAsync(Exception ex)
     {
-        return await SendAsync(ex, 0, null);
+        return await SendAsync(ex, 0);
     }
 
     /// <inheritdoc />
-    public async Task<IErrorLogExchange> SendAsync(Exception ex, long operatorId, RequestInfo? requestInfo = null)
+    public async Task<IErrorLogExchange> SendAsync(
+        Exception ex,
+        long operatorId,
+        IRequestInfo? requestInfo = null
+    )
     {
         var entity = new ErrorLogExchange
         {

@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.ErrorLogTransmitter.Entities;
 using EasySoft.Core.ErrorLogTransmitter.Enums;
-using EasySoft.UtilityTools.Standard.Entities;
+using EasySoft.UtilityTools.Standard.Enums;
 
 namespace EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 
@@ -21,7 +21,7 @@ public static class ErrorLogExchangeExtensions
         this ErrorLogExchange entity,
         Exception ex,
         long operatorId = 0,
-        RequestInfo? request = null
+        IRequestInfo? request = null
     )
     {
         try

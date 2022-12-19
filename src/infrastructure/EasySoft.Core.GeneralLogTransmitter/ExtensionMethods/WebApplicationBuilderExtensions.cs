@@ -2,6 +2,9 @@
 
 namespace EasySoft.Core.GeneralLogTransmitter.ExtensionMethods;
 
+/// <summary>
+/// WebApplicationBuilderExtensions
+/// </summary>
 public static class WebApplicationBuilderExtensions
 {
     /// <summary>

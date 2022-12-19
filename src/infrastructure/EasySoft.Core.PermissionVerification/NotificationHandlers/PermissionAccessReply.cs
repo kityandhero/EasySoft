@@ -37,7 +37,7 @@ public class PermissionAccessReply : INotificationHandler<PermissionAccessNotifi
                 $"Receive {nameof(PermissionAccessNotification)} -> {notification.BuildInfo()}"
             );
 
-        var accessWayPersistence = notification.AccessWayPersistence;
+        var accessWayPersistence = notification.AccessWay;
 
         var accessWayModels = await _accessWayDetector.Find(accessWayPersistence.GuidTag);
 

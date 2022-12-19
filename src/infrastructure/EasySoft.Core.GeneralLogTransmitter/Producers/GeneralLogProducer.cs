@@ -1,15 +1,20 @@
 ﻿using EasySoft.Core.GeneralLogTransmitter.Entities;
 using EasySoft.Core.GeneralLogTransmitter.Interfaces;
-using EasySoft.Core.Infrastructure.Transmitters;
 
 namespace EasySoft.Core.GeneralLogTransmitter.Producers;
 
+/// <inheritdoc />
 public class GeneralLogProducer : IGeneralLogProducer
 {
     private readonly ICapPublisher _capPublisher;
 
     private readonly IApplicationChannel _applicationChannel;
 
+    /// <summary>
+    /// 一般日志发送者
+    /// </summary>
+    /// <param name="capPublisher"></param>
+    /// <param name="applicationChannel"></param>
     public GeneralLogProducer(ICapPublisher capPublisher, IApplicationChannel applicationChannel)
     {
         _capPublisher = capPublisher;
@@ -17,6 +22,7 @@ public class GeneralLogProducer : IGeneralLogProducer
         _applicationChannel = applicationChannel;
     }
 
+    /// <inheritdoc />
     public IGeneralLogExchange Send(string message)
     {
         return Send(
@@ -27,6 +33,7 @@ public class GeneralLogProducer : IGeneralLogProducer
         );
     }
 
+    /// <inheritdoc />
     public IGeneralLogExchange Send(object message, CustomValueType messageValueType)
     {
         return Send(
@@ -37,6 +44,7 @@ public class GeneralLogProducer : IGeneralLogProducer
         );
     }
 
+    /// <inheritdoc />
     public IGeneralLogExchange Send(
         object message,
         CustomValueType messageValueType,

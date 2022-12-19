@@ -1,4 +1,5 @@
 ﻿using EasySoft.UtilityTools.Standard.Entities;
+using EasySoft.UtilityTools.Standard.Entities.Implementations;
 using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.UtilityTools.Core.Extensions;
@@ -144,7 +145,7 @@ public static class HttpRequestExtensions
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
-    public static RequestInfo BuildRequestInfo(this HttpRequest request)
+    public static IRequestInfo BuildRequestInfo(this HttpRequest request)
     {
         var requestInfo = new RequestInfo
         {

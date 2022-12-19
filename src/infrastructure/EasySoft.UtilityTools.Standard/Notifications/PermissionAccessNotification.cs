@@ -1,4 +1,6 @@
-﻿namespace EasySoft.UtilityTools.Standard.Notifications;
+﻿using EasySoft.UtilityTools.Standard.Entities.Interfaces;
+
+namespace EasySoft.UtilityTools.Standard.Notifications;
 
 /// <summary>
 /// 应用安全校验通知
@@ -8,16 +10,16 @@ public class PermissionAccessNotification : INotification
     /// <summary>
     /// VerifyResult
     /// </summary>
-    public IAccessWayPersistence AccessWayPersistence { get; }
+    public IAccessWay AccessWay { get; }
 
     /// <summary>
     /// 应用安全首次校验通知
     /// </summary>
-    /// <param name="accessWayPersistence"></param>
+    /// <param name="accessWay"></param>
     public PermissionAccessNotification(
-        IAccessWayPersistence accessWayPersistence
+        IAccessWay accessWay
     )
     {
-        AccessWayPersistence = accessWayPersistence;
+        AccessWay = accessWay;
     }
 }

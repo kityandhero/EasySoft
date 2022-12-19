@@ -1,9 +1,11 @@
-﻿namespace EasySoft.Core.PermissionVerification.Entities;
+﻿using EasySoft.UtilityTools.Standard.Entities.Interfaces;
+
+namespace EasySoft.Core.PermissionVerification.Entities;
 
 /// <summary>
 /// AccessWayModel
 /// </summary>
-public class AccessWayModel : IAccessWayPersistence
+public class AccessWayModel : IAccessWay
 {
     /// <inheritdoc />
     public string Name { get; set; } = "";

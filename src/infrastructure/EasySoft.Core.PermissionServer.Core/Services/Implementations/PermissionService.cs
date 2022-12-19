@@ -2,7 +2,6 @@
 using EasySoft.Core.PermissionServer.Core.Extensions;
 using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
 using EasySoft.Core.PermissionVerification.Entities;
-using EasySoft.UtilityTools.Standard.Entities;
 
 namespace EasySoft.Core.PermissionServer.Core.Services.Implementations;
 
@@ -65,7 +64,7 @@ public class PermissionService : IPermissionService
         {
             IList<CustomRole> list = new List<CustomRole>();
 
-            async void GetCustomRole(RoleItem o)
+            async void GetCustomRole(IRoleItem o)
             {
                 var r = await _customRoleRepository.GetAsync(o.Id);
 
@@ -83,7 +82,7 @@ public class PermissionService : IPermissionService
         {
             IList<PresetRole> list = new List<PresetRole>();
 
-            async void GetPresetRole(RoleItem o)
+            async void GetPresetRole(IRoleItem o)
             {
                 var r = await _presetRoleRepository.GetAsync(o.Id);
 
@@ -146,15 +145,15 @@ public class PermissionService : IPermissionService
         if (!resultAdd.Success) throw new UnknownException(resultAdd.Message);
     }
 
-    private static List<RoleItem> GetCustomRoleItemList(RoleGroup roleGroup)
+    private static List<IRoleItem> GetCustomRoleItemList(RoleGroup roleGroup)
     {
-        var list = new List<RoleItem>();
+        var list = new List<IRoleItem>();
 
         try
         {
-            list = (JsonConvert.DeserializeObject<List<RoleItem>>(
+            list = (JsonConvert.DeserializeObject<List<IRoleItem>>(
                     roleGroup.CustomRoleCollection
-                ) ?? new List<RoleItem>())
+                ) ?? new List<IRoleItem>())
                 .ToListFilterNullable();
         }
         catch (Exception)
@@ -165,15 +164,15 @@ public class PermissionService : IPermissionService
         return list;
     }
 
-    private static List<RoleItem> GetPresetRoleItemList(RoleGroup roleGroup)
+    private static IList<IRoleItem> GetPresetRoleItemList(RoleGroup roleGroup)
     {
-        var list = new List<RoleItem>();
+        var list = new List<IRoleItem>();
 
         try
         {
-            list = (JsonConvert.DeserializeObject<List<RoleItem>>(
+            list = (JsonConvert.DeserializeObject<List<IRoleItem>>(
                     roleGroup.PresetRoleCollection
-                ) ?? new List<RoleItem>())
+                ) ?? new List<IRoleItem>())
                 .ToListFilterNullable();
         }
         catch (Exception)
@@ -184,7 +183,7 @@ public class PermissionService : IPermissionService
         return list;
     }
 
-    private async Task<IEnumerable<IAccessWayPersistence>> GetAccessWayPersistenceList(
+    private async Task<IEnumerable<IAccessWay>> GetAccessWayPersistenceList(
         IEnumerable<CompetenceEntity> competenceEntities
     )
     {

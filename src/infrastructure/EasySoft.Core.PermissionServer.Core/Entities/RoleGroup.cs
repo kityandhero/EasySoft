@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Entities.Bases;
-using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 namespace EasySoft.Core.PermissionServer.Core.Entities;
 

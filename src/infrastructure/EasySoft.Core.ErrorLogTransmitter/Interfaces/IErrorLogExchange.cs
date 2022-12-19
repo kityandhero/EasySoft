@@ -3,8 +3,8 @@
 namespace EasySoft.Core.ErrorLogTransmitter.Interfaces;
 
 /// <summary>
-/// IErrorLogExchange
+/// 错误日志传输信息
 /// </summary>
-public interface IErrorLogExchange : IExchangeEntity, IErrorLogPersistence
+public interface IErrorLogExchange : IExchangeEntity, IErrorLog
 {
 }

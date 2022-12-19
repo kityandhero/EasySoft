@@ -1,4 +1,6 @@
-﻿using EasySoft.UtilityTools.Standard.Extensions;
+﻿using EasySoft.Core.ExchangeRegulation.Extensions;
+using EasySoft.Core.GeneralLogTransmitter.Entities;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 

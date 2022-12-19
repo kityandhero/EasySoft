@@ -1,13 +1,13 @@
 ﻿namespace EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 /// <summary>
-/// 应用验证公钥
+/// 角色项
 /// </summary>
-public interface IAppPublicKey
+public interface IRoleItem
 {
     /// <summary>
-    /// 验证公钥
+    /// Id
     /// </summary>
-    [Description("Key")]
-    string Key { get; set; }
+    [Description("Id")]
+    long Id { get; set; }
 }

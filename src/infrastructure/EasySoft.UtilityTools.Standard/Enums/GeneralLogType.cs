@@ -1,6 +1,9 @@
-﻿namespace EasySoft.Core.GeneralLogTransmitter.Enums;
+﻿namespace EasySoft.UtilityTools.Standard.Enums;
 
-public enum GeneralLogExchangeType
+/// <summary>
+/// 一般日志类型
+/// </summary>
+public enum GeneralLogType
 {
     /// <summary>
     /// 未知分类
@@ -12,5 +15,5 @@ public enum GeneralLogExchangeType
     /// 一般日志
     /// </summary>
     [Description("一般日志")]
-    Common = 0,
+    Common = 0
 }

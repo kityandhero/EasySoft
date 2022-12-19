@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Entities;
-
-namespace EasySoft.UtilityTools.Core.Extensions;
+﻿namespace EasySoft.UtilityTools.Core.Extensions;
 
 /// <summary>
 /// HttpContextExtensions
@@ -110,7 +108,7 @@ public static class HttpContextExtensions
     /// </summary>
     /// <param name="httpContext"></param>
     /// <returns></returns>
-    public static RequestInfo BuildRequestInfo(this HttpContext httpContext)
+    public static IRequestInfo BuildRequestInfo(this HttpContext httpContext)
     {
         return httpContext.Request.BuildRequestInfo();
     }

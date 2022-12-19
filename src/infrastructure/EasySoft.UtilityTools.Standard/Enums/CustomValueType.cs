@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.ExchangeRegulation.Enums;
+﻿namespace EasySoft.UtilityTools.Standard.Enums;
 
 /// <summary>
 /// CustomValueType

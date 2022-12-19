@@ -12,7 +12,6 @@ global using EasySoft.Core.AutoFac.ExtensionMethods;
 global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.DynamicConfig.Assists;
 global using EasySoft.Core.EasyCaching.interfaces;
-global using EasySoft.Core.ExchangeRegulation.ExtensionMethods;
 global using EasySoft.Core.GeneralLogTransmitter.Entities;
 global using EasySoft.Core.GeneralLogTransmitter.Producers;
 global using EasySoft.Core.Infrastructure.Assists;

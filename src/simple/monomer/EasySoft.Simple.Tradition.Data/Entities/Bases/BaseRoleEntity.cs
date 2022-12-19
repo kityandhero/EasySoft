@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel;
 using EasySoft.UtilityTools.Standard.Competence;
+using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 namespace EasySoft.Simple.Tradition.Data.Entities.Bases;
 
-public abstract class BaseRoleEntity : BaseEntity, IRolePersistence
+public abstract class BaseRoleEntity : BaseEntity, IRole
 {
     /// <summary>
     /// 名称  

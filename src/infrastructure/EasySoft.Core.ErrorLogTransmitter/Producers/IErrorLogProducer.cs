@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.ErrorLogTransmitter.Interfaces;
-using EasySoft.UtilityTools.Standard.Entities;
 
 namespace EasySoft.Core.ErrorLogTransmitter.Producers;
 
@@ -28,5 +27,5 @@ public interface IErrorLogProducer
     /// <param name="operatorId"></param>
     /// <param name="requestInfo"></param>
     /// <returns></returns>
-    Task<IErrorLogExchange> SendAsync(Exception ex, long operatorId, RequestInfo? requestInfo = null);
+    Task<IErrorLogExchange> SendAsync(Exception ex, long operatorId, IRequestInfo? requestInfo = null);
 }

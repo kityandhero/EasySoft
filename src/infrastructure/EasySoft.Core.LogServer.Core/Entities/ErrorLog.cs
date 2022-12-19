@@ -1,12 +1,11 @@
 ﻿using EasySoft.Core.LogServer.Core.Entities.Bases;
-using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 namespace EasySoft.Core.LogServer.Core.Entities;
 
 /// <summary>
 /// ErrorLog
 /// </summary>
-public class ErrorLog : BaseEntity, IErrorLogPersistence, IChannel, IIp, IStatus, IOperate
+public class ErrorLog : BaseEntity, IErrorLog, IChannel, IIp, IStatus, IOperate
 {
     /// <inheritdoc />
     public long UserId { get; set; }
