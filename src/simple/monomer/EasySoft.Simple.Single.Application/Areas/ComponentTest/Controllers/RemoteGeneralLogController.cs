@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.ExchangeRegulation.Extensions;
-using EasySoft.Core.GeneralLogTransmitter.Entities;
 using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
@@ -30,12 +29,12 @@ public class RemoteGeneralLogController : AreaControllerCore
     /// Test
     /// </summary>
     /// <returns></returns>
-    public IActionResult Test()
+    public async Task<IActionResult> Test()
     {
         if (!GeneralConfigAssist.GetRemoteGeneralLogSwitch())
             return this.Fail(ReturnCode.NoChange.ToMessage("RemoteGeneralLogEnable switch is not open"));
 
-        var log = _generalLogProducer.Send("Test");
+        var log = await _generalLogProducer.SendAsync("Test");
 
         return this.Success(log.ToObject());
     }

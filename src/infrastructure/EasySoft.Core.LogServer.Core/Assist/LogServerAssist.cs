@@ -26,14 +26,19 @@ public static class LogServerAssist
         ApplicationConfigure.AddWebApplicationBuilderExtraActions(
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("")
-                .SetAction(applicationBuilder => { applicationBuilder.AddCapSubscriber<ErrorLogExchangeSubscriber>(); })
+                .SetAction(applicationBuilder =>
+                {
+                    applicationBuilder.AddCapSubscriber<ErrorLogExchangeSubscriber>();
+                    applicationBuilder.AddCapSubscriber<GeneralLogExchangeSubscriber>();
+                    applicationBuilder.AddCapSubscriber<SqlExecutionRecordExchangeSubscriber>();
+                })
         );
 
         // 配置额外的应用项目
         ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
-                .SetAction(applicationBuilder => { applicationBuilder.UseErrorLogSendExperiment(); })
+                .SetAction(applicationBuilder => { applicationBuilder.UseLogSendExperiment(); })
         );
     }
 }

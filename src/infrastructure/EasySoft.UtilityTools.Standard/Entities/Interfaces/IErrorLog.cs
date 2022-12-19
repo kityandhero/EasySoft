@@ -3,7 +3,7 @@
 /// <summary>
 /// 错误日志
 /// </summary>
-public interface IErrorLog
+public interface IErrorLog : IChannel
 {
     /// <summary>
     /// 创建人

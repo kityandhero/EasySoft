@@ -3,6 +3,6 @@
 /// <summary>
 /// ISqlExecutionRecordExchange
 /// </summary>
-public interface ISqlExecutionRecordExchange : IExchangeEntity, ISqlExecutionRecord
+public interface ISqlExecutionRecordExchange : IExchangeEntity, ISqlExecutionRecord, IIgnore
 {
 }

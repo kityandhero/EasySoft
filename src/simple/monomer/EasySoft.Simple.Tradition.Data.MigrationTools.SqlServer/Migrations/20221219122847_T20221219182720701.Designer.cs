@@ -4,6 +4,7 @@ using EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
 {
     [DbContext(typeof(DataMigrationContext))]
-    partial class DataMigrationContextModelSnapshot : ModelSnapshot
+    [Migration("20221219122847_T20221219182720701")]
+    partial class T20221219182720701
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -496,137 +498,6 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.ToTable("general_log", (string)null);
                 });
 
-            modelBuilder.Entity("EasySoft.Core.LogServer.Core.Entities.SqlExecutionRecord", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint")
-                        .HasColumnName("id")
-                        .HasColumnOrder(1)
-                        .HasComment("数据标识");
-
-                    b.Property<int>("Channel")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("channel")
-                        .HasComment("");
-
-                    b.Property<int>("CollectMode")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("collect_mode")
-                        .HasComment("");
-
-                    b.Property<string>("CommandString")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("")
-                        .HasColumnName("command_string")
-                        .HasComment("");
-
-                    b.Property<long>("CreateBy")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("create_by")
-                        .HasComment("");
-
-                    b.Property<DateTime>("CreateTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
-                        .HasColumnName("create_time")
-                        .HasComment("");
-
-                    b.Property<string>("DatabaseChannel")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)")
-                        .HasDefaultValue("")
-                        .HasColumnName("database_channel")
-                        .HasComment("");
-
-                    b.Property<decimal>("DurationMilliseconds")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("duration_milliseconds")
-                        .HasComment("");
-
-                    b.Property<int>("Errored")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("errored")
-                        .HasComment("");
-
-                    b.Property<string>("ExecuteType")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasDefaultValue("")
-                        .HasColumnName("execute_type")
-                        .HasComment("");
-
-                    b.Property<decimal>("FirstFetchDurationMilliseconds")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("first_fetch_duration_milliseconds")
-                        .HasComment("");
-
-                    b.Property<string>("Ip")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ip")
-                        .HasComment("");
-
-                    b.Property<long>("ModifyBy")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("modify_by")
-                        .HasComment("");
-
-                    b.Property<DateTime>("ModifyTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
-                        .HasColumnName("modify_time")
-                        .HasComment("");
-
-                    b.Property<string>("StackTraceSnippet")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("")
-                        .HasColumnName("stack_trace_snippet")
-                        .HasComment("");
-
-                    b.Property<decimal>("StartMilliseconds")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
-                        .HasDefaultValue(0m)
-                        .HasColumnName("start_milliseconds")
-                        .HasComment("");
-
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("status")
-                        .HasComment("");
-
-                    b.HasKey("Id")
-                        .HasName("pk_sql_execution_record");
-
-                    b.ToTable("sql_execution_record", (string)null);
-                });
-
             modelBuilder.Entity("EasySoft.Core.PermissionServer.Core.Entities.AccessWay", b =>
                 {
                     b.Property<long>("Id")
@@ -1094,11 +965,11 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 365743699324935L,
+                            Id = 365722520887303L,
                             Motto = "",
                             Name = "",
                             Pseudonym = "",
-                            UserId = 365743699324934L
+                            UserId = 365722520887302L
                         });
                 });
 
@@ -1127,8 +998,8 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 365743699324934L,
-                            UserId = 365743699324933L
+                            Id = 365722520887302L,
+                            UserId = 365722520887301L
                         });
                 });
 
@@ -1165,21 +1036,21 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 365743699324936L,
-                            BlogId = 365743699324935L,
-                            Title = "47f9edc8646343c1a9952ff197884a58"
+                            Id = 365722520887304L,
+                            BlogId = 365722520887303L,
+                            Title = "30f71ba1770f4b489097d66399c94fd9"
                         },
                         new
                         {
-                            Id = 365743699324937L,
-                            BlogId = 365743699324935L,
-                            Title = "e46546e750564dfba1e354d03b36dfda"
+                            Id = 365722520891397L,
+                            BlogId = 365722520887303L,
+                            Title = "51dab6b353ef47a2935373f10779efb3"
                         },
                         new
                         {
-                            Id = 365743699324938L,
-                            BlogId = 365743699324935L,
-                            Title = "7dc85d1a3b60432ca2366126c24ec64d"
+                            Id = 365722520891398L,
+                            BlogId = 365722520887303L,
+                            Title = "db530a4b706f45a5b6e03f7b2ea33cfb"
                         });
                 });
 
@@ -1242,7 +1113,7 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 365743699324933L,
+                            Id = 365722520887301L,
                             Alias = "种子用户",
                             LoginName = "first",
                             Password = "e10adc3949ba59abbe56e057f20f883e",

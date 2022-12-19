@@ -12,7 +12,14 @@ public interface IGeneralLogProducer
     /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
-    public IGeneralLogExchange Send(string message);
+    public Task<IGeneralLogExchange> SendAsync(string message);
+
+    /// <summary>
+    /// 发送
+    /// </summary>
+    /// <param name="generalLogExchange"></param>
+    /// <returns></returns>
+    public Task<IGeneralLogExchange> SendAsync(IGeneralLogExchange generalLogExchange);
 
     /// <summary>
     /// 发送
@@ -20,7 +27,7 @@ public interface IGeneralLogProducer
     /// <param name="message"></param>
     /// <param name="messageValueType"></param>
     /// <returns></returns>
-    public IGeneralLogExchange Send(object message, CustomValueType messageValueType);
+    public Task<IGeneralLogExchange> SendAsync(object message, CustomValueType messageValueType);
 
     /// <summary>
     /// 发送
@@ -30,7 +37,7 @@ public interface IGeneralLogProducer
     /// <param name="content"></param>
     /// <param name="contentValueType"></param>
     /// <returns></returns>
-    public IGeneralLogExchange Send(
+    public Task<IGeneralLogExchange> SendAsync(
         object message,
         CustomValueType messageValueType,
         object content,

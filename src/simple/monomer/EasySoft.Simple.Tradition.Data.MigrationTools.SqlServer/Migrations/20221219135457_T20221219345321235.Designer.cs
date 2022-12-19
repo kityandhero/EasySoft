@@ -4,6 +4,7 @@ using EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
 {
     [DbContext(typeof(DataMigrationContext))]
-    partial class DataMigrationContextModelSnapshot : ModelSnapshot
+    [Migration("20221219135457_T20221219345321235")]
+    partial class T20221219345321235
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

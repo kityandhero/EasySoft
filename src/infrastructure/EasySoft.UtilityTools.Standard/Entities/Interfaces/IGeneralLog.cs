@@ -3,7 +3,7 @@
 /// <summary>
 /// 一般日志持久信息
 /// </summary>
-public interface IGeneralLog
+public interface IGeneralLog : IChannel, IIp, ICreate
 {
     /// <summary>
     /// 消息描述

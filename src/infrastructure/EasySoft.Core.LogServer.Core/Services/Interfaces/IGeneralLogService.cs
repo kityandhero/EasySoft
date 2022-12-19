@@ -4,21 +4,21 @@ using EasySoft.Core.LogServer.Core.Entities;
 namespace EasySoft.Core.LogServer.Core.Services.Interfaces;
 
 /// <summary>
-/// ISecurityService
+/// IGeneralLogService
 /// </summary>
-public interface IErrorLogService : IBusinessService
+public interface IGeneralLogService : IBusinessService
 {
     /// <summary>
     /// PageListAsync
     /// </summary>
     /// <param name="blogSearchDto"></param>
     /// <returns></returns>
-    public Task<PageListResult<ErrorLog>> PageListAsync(ErrorLogSearchDto blogSearchDto);
+    public Task<PageListResult<GeneralLog>> PageListAsync(GeneralLogSearchDto blogSearchDto);
 
     /// <summary>
     /// SaveAccessWayModelAsync
     /// </summary>
-    /// <param name="errorLogExchange"></param>
+    /// <param name="generalLogExchange"></param>
     /// <returns></returns>
-    Task SaveAsync(IErrorLogExchange errorLogExchange);
+    Task SaveAsync(IGeneralLogExchange generalLogExchange);
 }

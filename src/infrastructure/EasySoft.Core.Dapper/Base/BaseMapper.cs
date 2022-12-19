@@ -2374,9 +2374,9 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
                 CommandString = one.CommandString,
                 ExecuteType = one.ExecuteType,
                 StackTraceSnippet = one.StackTraceSnippet,
-                StartMilliseconds = Convert.ToDouble(one.StartMilliseconds),
-                DurationMilliseconds = Convert.ToDouble(one.DurationMilliseconds ?? 0m),
-                FirstFetchDurationMilliseconds = Convert.ToDouble(one.FirstFetchDurationMilliseconds ?? 0m),
+                StartMilliseconds = one.StartMilliseconds,
+                DurationMilliseconds = one.DurationMilliseconds ?? 0m,
+                FirstFetchDurationMilliseconds = one.FirstFetchDurationMilliseconds ?? 0m,
                 Errored = one.Errored ? 1 : 0,
                 TriggerChannel = applicationChannel.GetChannel(),
                 CollectMode = CollectMode.MiniProfiler.ToInt(),
@@ -2400,8 +2400,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
 
         if (!_sqlLogRecordJudge(applicationChannel.GetChannel())) return;
 
-        AutofacAssist.Instance.Resolve<ISqlExecutionRecordProducer>().Send(
-            sqlExecutionMessage.SqlExecutionMessageId,
+        AutofacAssist.Instance.Resolve<ISqlExecutionRecordProducer>().SendAsync(
             sqlExecutionMessage.CommandString,
             sqlExecutionMessage.ExecuteType,
             sqlExecutionMessage.StackTraceSnippet,

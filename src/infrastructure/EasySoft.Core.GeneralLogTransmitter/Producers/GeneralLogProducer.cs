@@ -23,9 +23,9 @@ public class GeneralLogProducer : IGeneralLogProducer
     }
 
     /// <inheritdoc />
-    public IGeneralLogExchange Send(string message)
+    public async Task<IGeneralLogExchange> SendAsync(string message)
     {
-        return Send(
+        return await SendAsync(
             message,
             CustomValueType.PlainValue,
             "",
@@ -34,9 +34,17 @@ public class GeneralLogProducer : IGeneralLogProducer
     }
 
     /// <inheritdoc />
-    public IGeneralLogExchange Send(object message, CustomValueType messageValueType)
+    public async Task<IGeneralLogExchange> SendAsync(IGeneralLogExchange generalLogExchange)
     {
-        return Send(
+        await _capPublisher.PublishAsync(TransmitterTopic.GeneralLogExchange, generalLogExchange);
+
+        return generalLogExchange;
+    }
+
+    /// <inheritdoc />
+    public async Task<IGeneralLogExchange> SendAsync(object message, CustomValueType messageValueType)
+    {
+        return await SendAsync(
             message,
             messageValueType,
             "",
@@ -45,7 +53,7 @@ public class GeneralLogProducer : IGeneralLogProducer
     }
 
     /// <inheritdoc />
-    public IGeneralLogExchange Send(
+    public async Task<IGeneralLogExchange> SendAsync(
         object message,
         CustomValueType messageValueType,
         object content,
@@ -81,7 +89,7 @@ public class GeneralLogProducer : IGeneralLogProducer
                 break;
         }
 
-        _capPublisher.Publish(TransmitterTopic.GeneralLogExchange, entity);
+        await _capPublisher.PublishAsync(TransmitterTopic.GeneralLogExchange, entity);
 
         return entity;
     }

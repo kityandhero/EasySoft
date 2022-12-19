@@ -2,19 +2,19 @@
 
 public class SqlExecutionMessage
 {
-    public string SqlExecutionMessageId { get; set; }
+    public string SqlExecutionMessageId { get; set; } = "";
 
-    public string CommandString { get; set; }
+    public string CommandString { get; set; } = "";
 
-    public string ExecuteType { get; set; }
+    public string ExecuteType { get; set; } = "";
 
-    public string StackTraceSnippet { get; set; }
+    public string StackTraceSnippet { get; set; } = "";
 
-    public double StartMilliseconds { get; set; }
+    public decimal StartMilliseconds { get; set; }
 
-    public double DurationMilliseconds { get; set; }
+    public decimal DurationMilliseconds { get; set; }
 
-    public double FirstFetchDurationMilliseconds { get; set; }
+    public decimal FirstFetchDurationMilliseconds { get; set; }
 
     public int Errored { get; set; }
 
@@ -34,14 +34,5 @@ public class SqlExecutionMessage
     /// </summary>
     public long CreateOperatorId { get; set; }
 
-    public string DatabaseChannel { get; set; }
-
-    public SqlExecutionMessage()
-    {
-        SqlExecutionMessageId = "";
-        CommandString = "";
-        ExecuteType = "";
-        StackTraceSnippet = "";
-        DatabaseChannel = "";
-    }
+    public string DatabaseChannel { get; set; } = "";
 }

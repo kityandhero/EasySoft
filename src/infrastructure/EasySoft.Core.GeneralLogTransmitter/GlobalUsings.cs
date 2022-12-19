@@ -9,6 +9,7 @@ global using EasySoft.Core.ExchangeRegulation.Interfaces;
 global using EasySoft.Core.Infrastructure.Transmitters;
 global using EasySoft.UtilityTools.Core.Channels;
 global using EasySoft.UtilityTools.Standard.Competence;
+global using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 global using EasySoft.UtilityTools.Standard.Enums;
 global using EasySoft.UtilityTools.Standard.Extensions;
 global using Microsoft.AspNetCore.Builder;

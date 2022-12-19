@@ -21,4 +21,7 @@ public class GeneralLogExchange : BaseExchange, IGeneralLogExchange
 
     /// <inheritdoc />
     public int Type { get; set; } = GeneralLogType.Common.ToInt();
+
+    /// <inheritdoc />
+    public int Ignore { get; set; }
 }

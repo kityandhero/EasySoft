@@ -935,8 +935,7 @@ public class QueryAssist
         /// <param name="sqlExecutionMessage">sql</param>
         private static void LogSqlExecutionMessage(SqlExecutionMessage sqlExecutionMessage)
         {
-            AutofacAssist.Instance.Resolve<ISqlExecutionRecordProducer>().Send(
-                sqlExecutionMessage.SqlExecutionMessageId,
+            AutofacAssist.Instance.Resolve<ISqlExecutionRecordProducer>().SendAsync(
                 sqlExecutionMessage.CommandString,
                 sqlExecutionMessage.ExecuteType,
                 sqlExecutionMessage.StackTraceSnippet,

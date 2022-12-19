@@ -3,14 +3,8 @@
 /// <summary>
 /// ISqlExecutionRecord
 /// </summary>
-public interface ISqlExecutionRecord
+public interface ISqlExecutionRecord : IChannel, IIp, ICreate
 {
-    /// <summary>
-    /// SqlExecutionRecordId
-    /// </summary>
-    [Description("SqlExecutionRecordId")]
-    string SqlExecutionRecordId { get; set; }
-
     /// <summary>
     /// CommandString
     /// </summary>
@@ -33,31 +27,25 @@ public interface ISqlExecutionRecord
     /// StartMilliseconds
     /// </summary>
     [Description("StartMilliseconds")]
-    double StartMilliseconds { get; set; }
+    decimal StartMilliseconds { get; set; }
 
     /// <summary>
     /// DurationMilliseconds
     /// </summary>
     [Description("DurationMilliseconds")]
-    double DurationMilliseconds { get; set; }
+    decimal DurationMilliseconds { get; set; }
 
     /// <summary>
     /// FirstFetchDurationMilliseconds
     /// </summary>
     [Description("FirstFetchDurationMilliseconds")]
-    double FirstFetchDurationMilliseconds { get; set; }
+    decimal FirstFetchDurationMilliseconds { get; set; }
 
     /// <summary>
     /// Errored
     /// </summary>
     [Description("Errored")]
     int Errored { get; set; }
-
-    /// <summary>
-    /// TriggerChannel
-    /// </summary>
-    [Description("TriggerChannel")]
-    int TriggerChannel { get; set; }
 
     /// <summary>
     /// CollectMode

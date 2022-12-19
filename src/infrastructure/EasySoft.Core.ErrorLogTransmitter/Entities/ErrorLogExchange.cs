@@ -1,16 +1,13 @@
 ﻿using EasySoft.Core.ErrorLogTransmitter.Enums;
 using EasySoft.Core.ErrorLogTransmitter.ExtensionMethods;
 using EasySoft.Core.ErrorLogTransmitter.Interfaces;
-using EasySoft.Core.ExchangeRegulation.Extensions;
-using EasySoft.UtilityTools.Standard.Enums;
-using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.ErrorLogTransmitter.Entities;
 
 /// <summary>
 /// 错误日志传输信息
 /// </summary>
-public class ErrorLogExchange : BaseExchange, IErrorLogExchange
+public class ErrorLogExchange : BaseExchange, IErrorLogExchange, IIgnore
 {
     /// <inheritdoc />
     public long UserId { get; set; }
@@ -69,9 +66,6 @@ public class ErrorLogExchange : BaseExchange, IErrorLogExchange
     /// <inheritdoc />
     public string ExceptionTypeFullName { get; set; } = "";
 
-    /// <summary>
-    /// 忽略
-    /// </summary>
-    [Description("忽略")]
-    public int Ignore { get; set; } = 0;
+    /// <inheritdoc />
+    public int Ignore { get; set; }
 }

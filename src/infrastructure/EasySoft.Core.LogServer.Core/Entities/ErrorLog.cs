@@ -5,7 +5,7 @@ namespace EasySoft.Core.LogServer.Core.Entities;
 /// <summary>
 /// 错误日志
 /// </summary>
-public class ErrorLog : BaseEntity, IErrorLog, IChannel, IIp, IStatus, IOperate
+public class ErrorLog : BaseEntity, IErrorLog, IIp, IStatus, IOperate
 {
     /// <inheritdoc />
     public long UserId { get; set; }

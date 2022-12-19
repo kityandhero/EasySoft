@@ -1,11 +1,11 @@
-﻿using EasySoft.Core.SqlExecutionRecordTransmitter.Interfaces;
+﻿using EasySoft.Core.LogServer.Core.Entities.Bases;
 
-namespace EasySoft.Core.SqlExecutionRecordTransmitter.Entities;
+namespace EasySoft.Core.LogServer.Core.Entities;
 
 /// <summary>
-/// SqlExecutionRecordExchange
+/// SqlExecutionRecord
 /// </summary>
-public class SqlExecutionRecordExchange : BaseExchange, ISqlExecutionRecordExchange, IIgnore
+public class SqlExecutionRecord : BaseEntity, ISqlExecutionRecord, IIp, IStatus, IOperate
 {
     /// <inheritdoc />
     public string CommandString { get; set; } = "";
@@ -35,5 +35,23 @@ public class SqlExecutionRecordExchange : BaseExchange, ISqlExecutionRecordExcha
     public string DatabaseChannel { get; set; } = "";
 
     /// <inheritdoc />
-    public int Ignore { get; set; }
+    public int Channel { get; set; }
+
+    /// <inheritdoc />
+    public int Status { get; set; }
+
+    /// <inheritdoc />
+    public string Ip { get; set; } = "";
+
+    /// <inheritdoc />
+    public long CreateBy { get; set; }
+
+    /// <inheritdoc />
+    public DateTime CreateTime { get; set; } = DateTimeOffset.Now.DateTime;
+
+    /// <inheritdoc />
+    public long ModifyBy { get; set; }
+
+    /// <inheritdoc />
+    public DateTime ModifyTime { get; set; } = DateTimeOffset.Now.DateTime;
 }

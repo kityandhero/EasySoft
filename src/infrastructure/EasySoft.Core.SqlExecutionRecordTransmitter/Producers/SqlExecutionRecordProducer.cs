@@ -1,15 +1,20 @@
-﻿using EasySoft.Core.Infrastructure.Transmitters;
-using EasySoft.Core.SqlExecutionRecordTransmitter.Entities;
+﻿using EasySoft.Core.SqlExecutionRecordTransmitter.Entities;
 using EasySoft.Core.SqlExecutionRecordTransmitter.Interfaces;
 
 namespace EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
 
+/// <inheritdoc />
 public class SqlExecutionRecordProducer : ISqlExecutionRecordProducer
 {
     private readonly ICapPublisher _capPublisher;
 
     private readonly IApplicationChannel _applicationChannel;
 
+    /// <summary>
+    /// SqlExecutionRecordProducer
+    /// </summary>
+    /// <param name="capPublisher"></param>
+    /// <param name="applicationChannel"></param>
     public SqlExecutionRecordProducer(ICapPublisher capPublisher, IApplicationChannel applicationChannel)
     {
         _capPublisher = capPublisher;
@@ -17,14 +22,14 @@ public class SqlExecutionRecordProducer : ISqlExecutionRecordProducer
         _applicationChannel = applicationChannel;
     }
 
-    public ISqlExecutionRecordExchange Send(
-        string sqlExecutionRecordId,
+    /// <inheritdoc />
+    public async Task<ISqlExecutionRecordExchange> SendAsync(
         string commandString,
         string executeType,
         string stackTraceSnippet,
-        double startMilliseconds,
-        double durationMilliseconds,
-        double firstFetchDurationMilliseconds,
+        decimal startMilliseconds,
+        decimal durationMilliseconds,
+        decimal firstFetchDurationMilliseconds,
         int errored,
         int triggerChannel,
         int collectMode,
@@ -33,7 +38,6 @@ public class SqlExecutionRecordProducer : ISqlExecutionRecordProducer
     {
         var entity = new SqlExecutionRecordExchange
         {
-            SqlExecutionRecordId = sqlExecutionRecordId,
             CommandString = commandString,
             ExecuteType = executeType,
             StackTraceSnippet = stackTraceSnippet,
@@ -41,14 +45,21 @@ public class SqlExecutionRecordProducer : ISqlExecutionRecordProducer
             DurationMilliseconds = durationMilliseconds,
             FirstFetchDurationMilliseconds = firstFetchDurationMilliseconds,
             Errored = errored,
-            TriggerChannel = triggerChannel,
             CollectMode = collectMode,
             DatabaseChannel = databaseChannel,
             Channel = _applicationChannel.GetChannel()
         };
 
-        _capPublisher.Publish(TransmitterTopic.SqlExecutionRecordExchange, entity);
+        await _capPublisher.PublishAsync(TransmitterTopic.SqlExecutionRecordExchange, entity);
 
         return entity;
+    }
+
+    /// <inheritdoc />
+    public async Task<ISqlExecutionRecordExchange> SendAsync(ISqlExecutionRecordExchange executionRecordExchange)
+    {
+        await _capPublisher.PublishAsync(TransmitterTopic.SqlExecutionRecordExchange, executionRecordExchange);
+
+        return executionRecordExchange;
     }
 }
