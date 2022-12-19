@@ -59,27 +59,30 @@ public static class WebApplicationBuilderExtensions
             });
         });
 
-        builder.Services.TryAddTransient(typeof(IAccessWayDetector), provider =>
-        {
-            var permissionClient = provider.GetRequiredService<IPermissionClient>();
-            var interceptors = new List<Type> { typeof(LogRecordInterceptor) }
-                .ConvertAll(interceptorType => provider.GetService(interceptorType) as IInterceptor)
-                .ToArray();
-            var proxyGenerator = provider.GetService<ProxyGenerator>();
+        builder.Services.AddTransient(
+            typeof(IAccessWayDetector), provider =>
+            {
+                var permissionClient = provider.GetRequiredService<IPermissionClient>();
 
-            if (proxyGenerator == null)
-                throw new UnknownException(
-                    "provider.GetService<ProxyGenerator>() result is null"
+                var interceptors = new List<Type> { typeof(LogRecordInterceptor) }
+                    .ConvertAll(interceptorType => provider.GetService(interceptorType) as IInterceptor)
+                    .ToArray();
+                var proxyGenerator = provider.GetService<ProxyGenerator>();
+
+                if (proxyGenerator == null)
+                    throw new UnknownException(
+                        "provider.GetService<ProxyGenerator>() result is null"
+                    );
+
+                var proxy = proxyGenerator.CreateInterfaceProxyWithTargetInterface(
+                    typeof(IAccessWayDetector),
+                    new AccessWayDetector(permissionClient),
+                    interceptors
                 );
 
-            var proxy = proxyGenerator.CreateInterfaceProxyWithTargetInterface(
-                typeof(IAccessWayDetector),
-                new AccessWayDetector(permissionClient),
-                interceptors
-            );
-
-            return proxy;
-        });
+                return proxy;
+            }
+        );
 
         if (middlewareMode)
         {
