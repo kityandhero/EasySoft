@@ -3,7 +3,7 @@
 namespace EasySoft.Core.LogServer.Core.Entities;
 
 /// <summary>
-/// ErrorLog
+/// 错误日志
 /// </summary>
 public class ErrorLog : BaseEntity, IErrorLog, IChannel, IIp, IStatus, IOperate
 {

@@ -1,5 +1,10 @@
-﻿namespace EasySoft.Core.AccessWayTransmitter.Interfaces;
+﻿using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
-public interface IAccessWayExchange : IExchangeEntity
+namespace EasySoft.Core.AccessWayTransmitter.Interfaces;
+
+/// <summary>
+/// IAccessWayExchange
+/// </summary>
+public interface IAccessWayExchange : IExchangeEntity, IAccessWay
 {
 }

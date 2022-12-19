@@ -11,6 +11,14 @@
         <RepositoryUrl>https://github.com/kityandhero/EasySoft</RepositoryUrl>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\EasySoft.Core.AccessWayTransmitter.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\EasySoft.Core.AccessWayTransmitter.xml</DocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\EasySoft.Core.Cap\EasySoft.Core.Cap.csproj" />
       <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />

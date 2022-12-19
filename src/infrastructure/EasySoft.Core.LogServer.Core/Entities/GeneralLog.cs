@@ -3,7 +3,7 @@
 namespace EasySoft.Core.LogServer.Core.Entities;
 
 /// <summary>
-/// 一般日志持久化
+/// 一般日志
 /// </summary>
 public class GeneralLog : BaseEntity, IGeneralLog, IChannel, IIp, IStatus, IOperate
 {

@@ -1,13 +1,9 @@
-﻿using EasySoft.Core.EntityFramework.EntityTypeConfigures;
-using EasySoft.Core.LogServer.Core.Entities;
-using EasySoft.UtilityTools.Standard;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using EasySoft.Core.LogServer.Core.Entities;
 
 namespace EasySoft.Core.LogServer.Core.EntityConfigures;
 
 /// <summary>
-/// AccessWayConfig
+/// ErrorLogConfig
 /// </summary>
 public class ErrorLogConfig : BaseEntityTypeConfiguration<ErrorLog>
 {

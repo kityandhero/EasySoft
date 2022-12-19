@@ -1,6 +1,8 @@
 ﻿namespace EasySoft.Core.SqlExecutionRecordTransmitter.Interfaces;
 
-public interface ISqlExecutionRecordExchange : IExchangeEntity
+/// <summary>
+/// ISqlExecutionRecordExchange
+/// </summary>
+public interface ISqlExecutionRecordExchange : IExchangeEntity, ISqlExecutionRecord
 {
-    
 }
