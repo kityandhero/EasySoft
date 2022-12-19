@@ -20,8 +20,6 @@ public static class WebApplicationExtensions
             $"{nameof(UseAppSecurityFirstVerify)}."
         );
 
-        MediatRConfigure.AddAssembly(typeof(AppSecurityDetector).Assembly);
-
         ApplicationConfigure.OnApplicationStart += async serviceProvider =>
         {
             var appSecurityDetector = serviceProvider.GetRequiredService<IAppSecurityDetector>();

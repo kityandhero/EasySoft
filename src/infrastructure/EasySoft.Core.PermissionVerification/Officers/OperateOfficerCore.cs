@@ -16,8 +16,9 @@ public abstract class OperateOfficerCore : AccessWayOfficer
     /// </summary>
     protected OperateOfficerCore(
         ILoggerFactory loggerFactory,
-        IWebHostEnvironment environment
-    ) : base(loggerFactory, environment)
+        IWebHostEnvironment environment,
+        IMediator mediator
+    ) : base(loggerFactory, environment, mediator)
     {
         _actualOperator = AutofacAssist.Instance.Resolve<IActualOperator>();
     }
@@ -121,7 +122,7 @@ public abstract class OperateOfficerCore : AccessWayOfficer
             );
         }
 
-        CollectAccessWay().Wait();
+        await CollectAccessWay();
 
         PrePareVerification();
 

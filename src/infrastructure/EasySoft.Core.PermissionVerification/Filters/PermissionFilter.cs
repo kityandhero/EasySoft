@@ -10,10 +10,12 @@ public class PermissionFilter : PermissionCoreFilter
     /// </summary>
     /// <param name="loggerFactory"></param>
     /// <param name="environment"></param>
+    /// <param name="mediator"></param>
     public PermissionFilter(
         ILoggerFactory loggerFactory,
-        IWebHostEnvironment environment
-    ) : base(loggerFactory, environment)
+        IWebHostEnvironment environment,
+        IMediator mediator
+    ) : base(loggerFactory, environment, mediator)
     {
     }
 }

@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.PermissionVerification.Attributes;
-using EasySoft.Core.PermissionVerification.Clients;
 using EasySoft.Core.PermissionVerification.Detectors;
 using EasySoft.Core.PermissionVerification.Entities;
 
@@ -10,11 +9,33 @@ namespace EasySoft.Core.PermissionVerification.Assists;
 /// </summary>
 public static class PermissionAssists
 {
-    private static readonly ConcurrentQueue<AccessWayModel> AccessWayModelScanQuery;
+    private static readonly IDictionary<string, AccessWayModel> AccessWayModelScanHistory =
+        new ConcurrentDictionary<string, AccessWayModel>();
 
-    static PermissionAssists()
+    private static readonly ConcurrentQueue<AccessWayModel> AccessWayModelScanQuery = new();
+
+    /// <summary>
+    /// AddAccessWayModelScanHistory
+    /// </summary>
+    /// <param name="mediator"></param>
+    /// <param name="guidTag"></param>
+    /// <param name="accessWayModel"></param>
+    public static async Task AddAccessWayModelScanHistory(
+        IMediator mediator,
+        string guidTag,
+        AccessWayModel accessWayModel
+    )
     {
-        AccessWayModelScanQuery = new ConcurrentQueue<AccessWayModel>();
+        if (AccessWayModelScanHistory.Keys.Contains(guidTag))
+            return;
+
+        AccessWayModelScanHistory.Add(guidTag, accessWayModel);
+
+        LogAssist.Prompt(
+            $"Permission -> {accessWayModel.BuildInfo()} add to history."
+        );
+
+        await mediator.Publish(new PermissionAccessNotification(accessWayModel));
     }
 
     /// <summary>
@@ -104,12 +125,7 @@ public static class PermissionAssists
 
             if (accessWayModels.Count > 0) continue;
 
-            await AutofacAssist.Instance.Resolve<IAccessWayProducer>().SendAsync(
-                accessWayModel.GuidTag,
-                accessWayModel.Name,
-                accessWayModel.RelativePath,
-                accessWayModel.Expand
-            );
+            await AutofacAssist.Instance.Resolve<IAccessWayProducer>().SendAsync(accessWayModel);
 
             if (EnvironmentAssist.IsDevelopment())
                 LogAssist.Prompt($"Send {nameof(AccessWayModel)} -> {accessWayModel.BuildInfo()}.");

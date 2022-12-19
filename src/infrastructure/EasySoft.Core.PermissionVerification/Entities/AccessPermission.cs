@@ -8,27 +8,32 @@ public class AccessPermission
     /// <summary>
     /// Name
     /// </summary>
-    public string Name { get; set; }
+    public string Name { get; set; } = "";
 
     /// <summary>   
     /// Competence
     /// </summary>
-    public string Competence { get; set; }
+    public string Competence { get; set; } = "";
 
     /// <summary>
     /// GuidTag
     /// </summary>
-    public string GuidTag { get; set; }
+    public string GuidTag { get; set; } = "";
+
+    /// <summary>
+    /// GuidTag
+    /// </summary>
+    public string Group { get; set; } = "";
 
     /// <summary>
     /// Url
     /// </summary>
-    public string Url { get; set; }
+    public string Url { get; set; } = "";
 
     /// <summary>
     /// Path
     /// </summary>
-    public string Path { get; set; }
+    public string Path { get; set; } = "";
 
     /// <summary>
     /// Channel
@@ -38,19 +43,5 @@ public class AccessPermission
     /// <summary>
     /// ChannelName
     /// </summary>
-    public string ChannelName { get; set; }
-
-    /// <summary>
-    /// AccessPermission
-    /// </summary>
-    public AccessPermission()
-    {
-        Name = "";
-        Competence = "";
-        GuidTag = "";
-        Url = "";
-        Path = "";
-        Channel = 0;
-        ChannelName = "";
-    }
+    public string ChannelName { get; set; } = "";
 }

@@ -83,6 +83,8 @@ public static class WebApplicationBuilderExtensions
             }
         );
 
+        builder.Services.AddMediatR(typeof(IAppSecurityDetector).Assembly);
+
         ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")

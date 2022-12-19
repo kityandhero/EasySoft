@@ -1,5 +1,6 @@
-﻿using EasySoft.Core.PermissionVerification.Detectors;
+﻿using EasySoft.Core.PermissionVerification.Assists;
 using EasySoft.Core.PermissionVerification.Entities;
+using EasySoft.Core.PermissionVerification.Extensions;
 using EasySoft.UtilityTools.Core.Extensions;
 
 namespace EasySoft.Core.PermissionVerification.Officers;
@@ -19,6 +20,11 @@ public abstract class AccessWayOfficer : OfficerCore
     /// </summary>
     protected IWebHostEnvironment Environment { get; }
 
+    /// <summary>
+    /// Mediator
+    /// </summary>
+    protected IMediator Mediator { get; }
+
     private IApplicationChannel Channel { get; }
 
     /// <summary>
@@ -29,10 +35,15 @@ public abstract class AccessWayOfficer : OfficerCore
     /// <summary>
     /// AccessWayOfficer
     /// </summary>
-    protected AccessWayOfficer(ILoggerFactory loggerFactory, IWebHostEnvironment environment)
+    protected AccessWayOfficer(
+        ILoggerFactory loggerFactory,
+        IWebHostEnvironment environment,
+        IMediator mediator
+    )
     {
         LoggerFactory = loggerFactory;
         Environment = environment;
+        Mediator = mediator;
 
         Channel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
         AccessPermission = new AccessPermission
@@ -51,7 +62,7 @@ public abstract class AccessWayOfficer : OfficerCore
     /// GetChannelName
     /// </summary>
     /// <returns></returns>
-    protected string GetChannelName()
+    private string GetChannelName()
     {
         return Channel.GetName();
     }
@@ -78,70 +89,13 @@ public abstract class AccessWayOfficer : OfficerCore
             );
         }
 
-        var channel = GetChannel();
-
         CompetenceCollection.GetInstance().SetCompetenceSets(
             CompetenceCollection.BuildCompetenceKey(AccessPermission.Url),
             AccessPermission.Competence
         );
 
-        var accessWayDetector = AutofacAssist.Instance.Resolve<IAccessWayDetector>();
+        var accessWayModel = AccessPermission.ToAccessWayModel();
 
-        var accessWayModels = await accessWayDetector.Find(AccessPermission.GuidTag);
-
-        if (accessWayModels.Count <= 0)
-        {
-            await AutofacAssist.Instance.Resolve<IAccessWayProducer>().SendAsync(
-                AccessPermission.GuidTag,
-                AccessPermission.Name,
-                AccessPermission.Path,
-                AccessPermission.Competence
-            );
-
-            if (Environment.IsDevelopment())
-            {
-                var logger = LoggerFactory.CreateLogger<AccessWayOfficer>();
-
-                logger.LogAdvancePrompt(
-                    $"{nameof(AccessPermission)} {nameof(AccessPermission.GuidTag)} \"{AccessPermission.GuidTag}\" has not existed, send to queue by producer."
-                );
-            }
-        }
-        else
-        {
-            var accessWayModel = accessWayModels[0];
-
-            if (accessWayModel.Name.ToLower() == AccessPermission.Name.ToLower() &&
-                accessWayModel.RelativePath.ToLower() == AccessPermission.Path.ToLower() &&
-                accessWayModel.Expand.ToLower() == AccessPermission.Competence.ToLower() &&
-                accessWayModel.Channel == channel)
-            {
-                if (!Environment.IsDevelopment()) return;
-
-                var logger = LoggerFactory.CreateLogger<AccessWayOfficer>();
-
-                logger.LogAdvancePrompt(
-                    $"{nameof(AccessPermission)} {nameof(AccessPermission.GuidTag)} \"{AccessPermission.GuidTag}\" has existed and not changed, ignore send."
-                );
-
-                return;
-            }
-
-            await AutofacAssist.Instance.Resolve<IAccessWayProducer>().SendAsync(
-                AccessPermission.GuidTag,
-                AccessPermission.Name,
-                AccessPermission.Path,
-                AccessPermission.Competence
-            );
-
-            if (Environment.IsDevelopment())
-            {
-                var logger = LoggerFactory.CreateLogger<AccessWayOfficer>();
-
-                logger.LogAdvancePrompt(
-                    $"{nameof(AccessPermission)} {nameof(AccessPermission.GuidTag)} \"{AccessPermission.GuidTag}\" has existed and changed, send to queue by producer."
-                );
-            }
-        }
+        await PermissionAssists.AddAccessWayModelScanHistory(Mediator, accessWayModel.GuidTag, accessWayModel);
     }
 }

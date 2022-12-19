@@ -45,6 +45,7 @@ public sealed class CompetenceCollection
         var urlLowerString = url.ToLower();
         var u = new Uri(urlLowerString);
         var key = u.Scheme + "://" + u.Host + u.AbsolutePath;
+
         return key;
     }
 
@@ -59,10 +60,12 @@ public sealed class CompetenceCollection
 
         var valueList = competenceSets.Split('|');
         var compare = new Dictionary<string, int>();
+
         for (var i = 0; i < valueList.Length; i++) compare.Add(valueList[i], i);
 
         var remove = false;
         var removeVal = new KeyValuePair<string, Dictionary<string, int>>();
+
         foreach (var keyPair in CompetenceSets)
             if (keyPair.Key == key)
                 if (keyPair.Value != null)

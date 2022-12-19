@@ -18,18 +18,16 @@ public class AccessWayProducer : IAccessWayProducer
     }
 
     public async Task<IAccessWayExchange> SendAsync(
-        string guidTag,
-        string name,
-        string path,
-        string competence
+        IAccessWayPersistence accessWayPersistence
     )
     {
         var entity = new AccessWayExchange
         {
-            GuidTag = guidTag,
-            Name = name,
-            RelativePath = path,
-            Expand = competence,
+            Name = accessWayPersistence.Name,
+            GuidTag = accessWayPersistence.GuidTag,
+            RelativePath = accessWayPersistence.RelativePath,
+            Expand = accessWayPersistence.Expand,
+            Group = accessWayPersistence.Group,
             Channel = _applicationChannel.GetChannel()
         };
 

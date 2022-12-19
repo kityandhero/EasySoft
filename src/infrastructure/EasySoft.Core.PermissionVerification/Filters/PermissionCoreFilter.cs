@@ -14,10 +14,12 @@ public abstract class PermissionCoreFilter : OperateOfficerCore, IPermissionFilt
     /// </summary>
     /// <param name="loggerFactory"></param>
     /// <param name="environment"></param>
+    /// <param name="mediator"></param>
     protected PermissionCoreFilter(
         ILoggerFactory loggerFactory,
-        IWebHostEnvironment environment
-    ) : base(loggerFactory, environment)
+        IWebHostEnvironment environment,
+        IMediator mediator
+    ) : base(loggerFactory, environment, mediator)
     {
     }
 

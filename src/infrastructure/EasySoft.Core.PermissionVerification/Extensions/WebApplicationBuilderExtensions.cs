@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.PermissionVerification.Clients;
 using EasySoft.Core.PermissionVerification.Detectors;
 using EasySoft.Core.PermissionVerification.Middlewares;
-using EasySoft.Core.PermissionVerification.NotificationHandlers;
 using EasySoft.Core.PermissionVerification.Observers;
 using EasySoft.Core.PermissionVerification.Officers;
 using EasySoft.UtilityTools.Core.Extensions;
@@ -28,8 +27,6 @@ public static class WebApplicationBuilderExtensions
     {
         if (builder.HasRegistered(UniqueIdentifierAddPermissionVerification))
             return builder;
-
-        MediatRConfigure.AddAssembly(typeof(PermissionScanReply).Assembly);
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddPermissionVerification)}<{typeof(TPermissionObserver).Name}>."
@@ -96,6 +93,8 @@ public static class WebApplicationBuilderExtensions
 
             FlagAssist.PermissionVerificationMiddlewareModeSwitch = true;
         }
+
+        builder.Services.AddMediatR(typeof(IAccessWayDetector).Assembly);
 
         ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
