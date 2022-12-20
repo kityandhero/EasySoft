@@ -162,9 +162,15 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
     )
     {
         return descending
-            ? await Where(where, writeChannel, true).AsEnumerable().OrderByDescending(keySelector).AsQueryable()
+            ? await Where(where, writeChannel, true)
+                .AsEnumerable()
+                .OrderByDescending(keySelector)
+                .AsQueryable()
                 .ToListAsync(cancellationToken)
-            : await Where(where, writeChannel, true).AsEnumerable().OrderBy(keySelector).AsQueryable()
+            : await Where(where, writeChannel, true)
+                .AsEnumerable()
+                .OrderBy(keySelector)
+                .AsQueryable()
                 .ToListAsync(cancellationToken);
     }
 
@@ -179,10 +185,15 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
     )
     {
         return descending
-            ? await Where(where, writeChannel, true).AsEnumerable().OrderByDescending(keySelector, comparer)
+            ? await Where(where, writeChannel, true)
+                .AsEnumerable()
+                .OrderByDescending(keySelector, comparer)
                 .AsQueryable()
                 .ToListAsync(cancellationToken)
-            : await Where(where, writeChannel, true).AsEnumerable().OrderBy(keySelector, comparer).AsQueryable()
+            : await Where(where, writeChannel, true)
+                .AsEnumerable()
+                .OrderBy(keySelector, comparer)
+                .AsQueryable()
                 .ToListAsync(cancellationToken);
     }
 

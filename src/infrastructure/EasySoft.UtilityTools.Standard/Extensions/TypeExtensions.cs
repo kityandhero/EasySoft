@@ -258,6 +258,16 @@ public static class TypeExtensions
     #endregion
 
     /// <summary>
+    /// ToDbType
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public static DbType ToDbType(this Type type)
+    {
+        return ConvertAssist.TypeToDbType(type);
+    }
+
+    /// <summary>
     /// GetGenericTypeName
     /// </summary>
     /// <param name="type"></param>

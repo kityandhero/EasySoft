@@ -1327,4 +1327,114 @@ public static class ConvertAssist
     {
         return Guid.TryParse(input.SafeString(), out var result) ? result : null;
     }
+
+    /// <summary>
+    /// TypeToDbType
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public static DbType TypeToDbType(Type type)
+    {
+        DbType dbt;
+
+        try
+        {
+            dbt = (DbType)Enum.Parse(typeof(DbType), type.Name);
+        }
+        catch
+        {
+            dbt = DbType.Object;
+        }
+
+        return dbt;
+    }
+
+    /// <summary>
+    /// DbTypeToType
+    /// </summary>
+    /// <param name="dbType"></param>
+    /// <returns></returns>
+    public static Type DbTypeToType(DbType dbType)
+    {
+        var toReturn = typeof(DBNull);
+
+        switch (dbType)
+        {
+            case DbType.UInt64:
+                toReturn = typeof(ulong);
+                break;
+
+            case DbType.Int64:
+                toReturn = typeof(long);
+                break;
+
+            case DbType.Int32:
+                toReturn = typeof(int);
+                break;
+
+            case DbType.UInt32:
+                toReturn = typeof(uint);
+                break;
+
+            case DbType.Single:
+                toReturn = typeof(float);
+                break;
+
+            case DbType.Date:
+            case DbType.DateTime:
+            case DbType.Time:
+                toReturn = typeof(DateTime);
+                break;
+
+            case DbType.String:
+            case DbType.StringFixedLength:
+            case DbType.AnsiString:
+            case DbType.AnsiStringFixedLength:
+                toReturn = typeof(string);
+                break;
+
+            case DbType.UInt16:
+                toReturn = typeof(ushort);
+                break;
+
+            case DbType.Int16:
+                toReturn = typeof(short);
+                break;
+
+            case DbType.SByte:
+                toReturn = typeof(byte);
+                break;
+
+            case DbType.Object:
+                toReturn = typeof(object);
+                break;
+
+            case DbType.VarNumeric:
+            case DbType.Decimal:
+                toReturn = typeof(decimal);
+                break;
+
+            case DbType.Currency:
+                toReturn = typeof(double);
+                break;
+
+            case DbType.Binary:
+                toReturn = typeof(byte[]);
+                break;
+
+            case DbType.Double:
+                toReturn = typeof(double);
+                break;
+
+            case DbType.Guid:
+                toReturn = typeof(Guid);
+                break;
+
+            case DbType.Boolean:
+                toReturn = typeof(bool);
+                break;
+        }
+
+        return toReturn;
+    }
 }

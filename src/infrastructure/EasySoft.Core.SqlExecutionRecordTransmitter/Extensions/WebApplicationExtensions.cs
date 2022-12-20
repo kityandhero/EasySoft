@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Startup;
-using EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
+﻿using EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
 
 namespace EasySoft.Core.SqlExecutionRecordTransmitter.Extensions;
 
@@ -27,9 +26,18 @@ public static class WebApplicationExtensions
             3000,
             (serviceProvider, e) =>
             {
-                if (SqlLogInnerQueue.GetQueue().Count <= 0) return;
-
                 var environment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
+
+                if (SqlLogInnerQueue.GetQueue().Count <= 0)
+                {
+                    var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<object>();
+
+                    logger.LogAdvancePrompt(
+                        $"None sql execution record need send."
+                    );
+
+                    return;
+                }
 
                 if (environment.IsDevelopment())
                 {

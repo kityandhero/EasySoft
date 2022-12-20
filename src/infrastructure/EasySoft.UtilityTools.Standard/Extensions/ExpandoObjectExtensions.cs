@@ -83,7 +83,10 @@ public static class ExpandoObjectExtensions
     {
         var resultAdd = source.TryAdd(keyValuePair.Key, keyValuePair.Value ?? "");
 
-        if (!resultAdd) throw new Exception("ExpandoObject TryAdd Fail");
+        if (!resultAdd)
+            throw new Exception(
+                $"ExpandoObject TryAdd Fail -> key: {keyValuePair.Key}, value: {keyValuePair.Value ?? ""}"
+            );
 
         return source;
     }

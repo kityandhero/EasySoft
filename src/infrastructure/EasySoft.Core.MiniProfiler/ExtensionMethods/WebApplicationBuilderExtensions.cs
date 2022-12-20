@@ -40,16 +40,23 @@ public static class WebApplicationBuilderExtensions
             GeneralConfigAssist.GetConfigFileInfo()
         );
 
-        builder.Services.AddMiniProfiler(options =>
-        {
-            // 设定弹出窗口的位置是左下角
-            options.PopupRenderPosition = RenderPosition.BottomLeft;
+        builder.Services
+            .AddMiniProfiler(
+                options =>
+                {
+                    options.RouteBasePath = "/profiler";
 
-            // 设定在弹出的明细窗口里会显式 Time With Children 这列
-            options.PopupShowTimeWithChildren = true;
+                    // 设定弹出窗口的位置是左下角
+                    options.PopupRenderPosition = RenderPosition.BottomLeft;
 
-            ApplicationConfigure.GetMiniProfilerOptionsAction()?.Invoke(options);
-        });
+                    // 设定在弹出的明细窗口里会显式 Time With Children 这列
+                    options.PopupShowTimeWithChildren = true;
+
+                    options.ColorScheme = ColorScheme.Auto;
+
+                    ApplicationConfigure.GetMiniProfilerOptionsAction()?.Invoke(options);
+                }
+            ).AddEntityFramework();
 
         ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()

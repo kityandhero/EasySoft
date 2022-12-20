@@ -1,6 +1,7 @@
 ﻿// Global using directives
 
 global using System.Data;
+global using System.Data.Common;
 global using System.Linq.Expressions;
 global using System.Reflection;
 global using Autofac;
@@ -20,6 +21,7 @@ global using EasySoft.UtilityTools.Core.Assists;
 global using EasySoft.UtilityTools.Core.Channels;
 global using EasySoft.UtilityTools.Core.Extensions;
 global using EasySoft.UtilityTools.Standard;
+global using EasySoft.UtilityTools.Standard.Assists;
 global using EasySoft.UtilityTools.Standard.Entities.Implementations;
 global using EasySoft.UtilityTools.Standard.Enums;
 global using EasySoft.UtilityTools.Standard.Extensions;
@@ -29,6 +31,7 @@ global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Hosting;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.ChangeTracking;
+global using Microsoft.EntityFrameworkCore.Diagnostics;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.EntityFrameworkCore.Storage;
 global using Microsoft.EntityFrameworkCore.ValueGeneration;
@@ -36,3 +39,4 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.DependencyInjection.Extensions;
 global using Microsoft.Extensions.Hosting;
 global using Microsoft.Extensions.Logging;
+global using StackExchange.Profiling;
