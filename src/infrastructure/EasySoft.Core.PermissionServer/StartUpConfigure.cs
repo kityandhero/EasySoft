@@ -50,13 +50,7 @@ public class StartUpConfigure : IStartUpConfigure
             // applicationBuilder => { applicationBuilder.AddStaticFileOptionsInjection<CustomStaticFileOptions>(); },
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddAdvanceJsonWebToken")
-                .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceJsonWebToken<ApplicationOperator>(); }),
-            new ExtraAction<WebApplicationBuilder>()
-                .SetName("AddCapSubscriber")
-                .SetAction(applicationBuilder =>
-                {
-                    applicationBuilder.AddCapSubscriber<AccessWayExchangeSubscriber>();
-                })
+                .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceJsonWebToken<ApplicationOperator>(); })
         );
 
         SwaggerConfigure.GeneralParameters.AddRange(

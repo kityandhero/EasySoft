@@ -1,4 +1,7 @@
-﻿using EasySoft.Core.GeneralLogTransmitter.Producers;
+﻿using EasySoft.Core.Config.ConfigAssist;
+using EasySoft.Core.GeneralLogTransmitter.Producers;
+using EasySoft.Core.Infrastructure.Assists;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EasySoft.Core.GeneralLogTransmitter.Extensions;
 
@@ -7,6 +10,8 @@ namespace EasySoft.Core.GeneralLogTransmitter.Extensions;
 /// </summary>
 public static class WebApplicationBuilderExtensions
 {
+    private const string UniqueIdentifierAddGeneralLogTransmitter = "eb34705d-9ab6-4def-a853-41d3ff47c2b8";
+
     /// <summary>
     /// 配置远程普通日志传输
     /// </summary>
@@ -16,10 +21,17 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-        {
-            containerBuilder.RegisterType<GeneralLogProducer>().As<IGeneralLogProducer>().SingleInstance();
-        });
+        if (builder.HasRegistered(UniqueIdentifierAddGeneralLogTransmitter))
+            return builder;
+
+        StartupConfigMessageAssist.AddConfig(
+            GeneralConfigAssist.GetRemoteGeneralLogSwitch()
+                ? "RemoteGeneralLogEnable: enable."
+                : "RemoteGeneralLogEnable: disable.",
+            GeneralConfigAssist.GetConfigFileInfo()
+        );
+
+        builder.Services.AddSingleton<IGeneralLogProducer, GeneralLogProducer>();
 
         return builder;
     }

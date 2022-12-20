@@ -30,6 +30,7 @@ global using EasySoft.UtilityTools.Core.Results;
 global using EasySoft.UtilityTools.Standard;
 global using EasySoft.UtilityTools.Standard.Assists;
 global using EasySoft.UtilityTools.Standard.Competence;
+global using EasySoft.UtilityTools.Standard.Entities.Implementations;
 global using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 global using EasySoft.UtilityTools.Standard.Enums;
 global using EasySoft.UtilityTools.Standard.Exceptions;

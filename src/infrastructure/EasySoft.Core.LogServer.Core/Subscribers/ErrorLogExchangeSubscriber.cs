@@ -45,7 +45,7 @@ public sealed class ErrorLogExchangeSubscriber : ICapSubscribe
                 );
 
             return;
-        }
+        }   
 
         if (_environment.IsDevelopment())
         {

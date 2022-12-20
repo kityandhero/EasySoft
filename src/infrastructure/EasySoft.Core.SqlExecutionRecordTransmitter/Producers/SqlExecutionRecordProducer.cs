@@ -49,7 +49,10 @@ public class SqlExecutionRecordProducer : ISqlExecutionRecordProducer
             Channel = _applicationChannel.GetChannel()
         };
 
-        await _capPublisher.PublishAsync(TransmitterTopic.SqlExecutionRecordExchange, entity);
+        await _capPublisher.PublishAsync(
+            TransmitterTopic.SqlExecutionRecordExchange,
+            entity
+        );
 
         return entity;
     }
@@ -57,7 +60,10 @@ public class SqlExecutionRecordProducer : ISqlExecutionRecordProducer
     /// <inheritdoc />
     public async Task<ISqlExecutionRecord> SendAsync(ISqlExecutionRecord executionRecordExchange)
     {
-        await _capPublisher.PublishAsync(TransmitterTopic.SqlExecutionRecordExchange, executionRecordExchange);
+        await _capPublisher.PublishAsync(
+            TransmitterTopic.SqlExecutionRecordExchange,
+            executionRecordExchange
+        );
 
         return executionRecordExchange;
     }

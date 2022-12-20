@@ -370,20 +370,6 @@ public static class WebApplicationBuilderExtensions
             );
         }
 
-        StartupConfigMessageAssist.AddConfig(
-            GeneralConfigAssist.GetRemoteErrorLogSwitch()
-                ? "RemoteErrorLogEnable: enable."
-                : "RemoteErrorLogEnable: disable.",
-            GeneralConfigAssist.GetConfigFileInfo()
-        );
-
-        StartupConfigMessageAssist.AddConfig(
-            GeneralConfigAssist.GetRemoteGeneralLogSwitch()
-                ? "RemoteGeneralLogEnable: enable."
-                : "RemoteGeneralLogEnable: disable.",
-            GeneralConfigAssist.GetConfigFileInfo()
-        );
-
         if (app.Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
 
         app.UseAdvanceEnvironmentAuxiliary();

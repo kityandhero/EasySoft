@@ -23,6 +23,13 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddSqlExecutionRecordTransmitter)}");
 
+        StartupConfigMessageAssist.AddConfig(
+            GeneralConfigAssist.GetRemoteSqlExecutionRecordSwitch()
+                ? "RemoteSqlExecutionRecordEnable: enable."
+                : "RemoteSqlExecutionRecordEnable: disable.",
+            GeneralConfigAssist.GetConfigFileInfo()
+        );
+
         builder.Services.AddSqlExecutionRecordTransmitter();
 
         ApplicationConfigure.AddWebApplicationExtraAction(

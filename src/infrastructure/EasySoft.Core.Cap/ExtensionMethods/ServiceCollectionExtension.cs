@@ -3,7 +3,7 @@
 /// <summary>
 /// ServiceCollectionExtension
 /// </summary>
-public static class ServiceCollectionExtension
+internal static class ServiceCollectionExtension
 {
     /// <summary>
     /// AddCapSubscriber
@@ -11,7 +11,7 @@ public static class ServiceCollectionExtension
     /// <param name="services"></param>
     /// <typeparam name="TSubscriber"></typeparam>
     /// <returns></returns>
-    public static IServiceCollection AddCapSubscriber<TSubscriber>(
+    internal static IServiceCollection AddCapSubscriber<TSubscriber>(
         this IServiceCollection services
     ) where TSubscriber : class, ICapSubscribe
     {

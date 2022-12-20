@@ -35,7 +35,7 @@ public sealed class GeneralLogExchangeSubscriber : ICapSubscribe
     /// <param name="generalLogExchange"></param>
     /// <returns></returns>
     [CapSubscribe(TransmitterTopic.GeneralLogExchange)]
-    public async Task Process(IGeneralLogExchange generalLogExchange)
+    public async Task Process(GeneralLogExchange generalLogExchange)
     {
         if (generalLogExchange.Ignore > 0)
         {

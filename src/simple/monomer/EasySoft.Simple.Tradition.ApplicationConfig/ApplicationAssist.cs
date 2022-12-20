@@ -9,7 +9,7 @@ public static class ApplicationAssist
     public static void Init()
     {
         AuxiliaryConfigure.PromptConfigFileInfo = true;
-        AuxiliaryConfigure.PromptStartupExecuteMessage = true;
+        // AuxiliaryConfigure.PromptStartupExecuteMessage = true;
 
         ContextConfigure.EnableDetailedErrors = true;
         ContextConfigure.EnableSensitiveDataLogging = true;

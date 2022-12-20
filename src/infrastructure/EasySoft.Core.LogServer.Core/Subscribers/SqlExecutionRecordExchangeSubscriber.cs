@@ -35,7 +35,7 @@ public class SqlExecutionRecordExchangeSubscriber : ICapSubscribe
     /// <param name="exchange"></param>
     /// <returns></returns>
     [CapSubscribe(TransmitterTopic.SqlExecutionRecordExchange)]
-    public async Task Process(ISqlExecutionRecordExchange exchange)
+    public async Task Process(SqlExecutionRecordExchange exchange)
     {
         if (exchange.Ignore > 0)
         {
