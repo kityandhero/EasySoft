@@ -55,8 +55,6 @@ public class LogCommandInterceptor : DbCommandInterceptor
         var environment = _serviceProvider.GetRequiredService<IWebHostEnvironment>();
         var applicationChannel = _serviceProvider.GetRequiredService<IApplicationChannel>();
 
-        var sqlAdjust = sql;
-
         var parametersCount = command.Parameters.Count;
 
         var nameValues = new List<object>();
@@ -79,18 +77,16 @@ public class LogCommandInterceptor : DbCommandInterceptor
                 name = commandParameter.ParameterName,
                 value = commandParameter.Value ?? ""
             });
-
-            sqlAdjust = sqlAdjust.Replace(commandParameter.ParameterName, commandParameter.Value?.ToString() ?? "");
         }
+
+        var sqlAdjust = new StackExchange.Profiling.SqlFormatters.InlineFormatter().FormatSql(sql, sqlTimingParameters);
 
         if (environment.IsDevelopment())
         {
             var logger = loggerFactory.CreateLogger<object>();
 
             logger.LogAdvancePrompt(sql);
-            logger.LogAdvancePrompt(
-                new StackExchange.Profiling.SqlFormatters.InlineFormatter().FormatSql(sql, sqlTimingParameters)
-            );
+            logger.LogAdvancePrompt(sqlAdjust);
         }
 
         SqlLogInnerQueue.Enqueue(
