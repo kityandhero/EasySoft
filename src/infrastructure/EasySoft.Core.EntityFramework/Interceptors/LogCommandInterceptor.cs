@@ -5,25 +5,17 @@
 /// </summary>
 public class LogCommandInterceptor : DbCommandInterceptor
 {
-    private readonly ILoggerFactory _loggerFactory;
-    private readonly IApplicationChannel _applicationChannel;
-    private readonly IWebHostEnvironment _environment;
+    private readonly IServiceProvider _serviceProvider;
 
     /// <summary>
     /// LogCommandInterceptor
     /// </summary>
-    /// <param name="loggerFactory"></param>
-    /// <param name="applicationChannel"></param>
-    /// <param name="environment"></param>
+    /// <param name="serviceProvider"></param>
     public LogCommandInterceptor(
-        ILoggerFactory loggerFactory,
-        IWebHostEnvironment environment,
-        IApplicationChannel applicationChannel
+        IServiceProvider serviceProvider
     )
     {
-        _loggerFactory = loggerFactory;
-        _applicationChannel = applicationChannel;
-        _environment = environment;
+        _serviceProvider = serviceProvider;
     }
 
     /// <inheritdoc />
@@ -57,6 +49,12 @@ public class LogCommandInterceptor : DbCommandInterceptor
 
         var sql = command.CommandText;
 
+        if (sql.ToLower().Contains("insert", StringComparison.OrdinalIgnoreCase)) return;
+
+        var loggerFactory = _serviceProvider.GetRequiredService<ILoggerFactory>();
+        var environment = _serviceProvider.GetRequiredService<IWebHostEnvironment>();
+        var applicationChannel = _serviceProvider.GetRequiredService<IApplicationChannel>();
+
         var sqlAdjust = sql;
 
         var parametersCount = command.Parameters.Count;
@@ -85,9 +83,9 @@ public class LogCommandInterceptor : DbCommandInterceptor
             sqlAdjust = sqlAdjust.Replace(commandParameter.ParameterName, commandParameter.Value?.ToString() ?? "");
         }
 
-        if (_environment.IsDevelopment())
+        if (environment.IsDevelopment())
         {
-            var logger = _loggerFactory.CreateLogger<object>();
+            var logger = loggerFactory.CreateLogger<object>();
 
             logger.LogAdvancePrompt(sql);
             logger.LogAdvancePrompt(
@@ -105,7 +103,7 @@ public class LogCommandInterceptor : DbCommandInterceptor
                     paramList = nameValues,
                     sqlAdjust
                 }),
-                Channel = _applicationChannel.GetChannel()
+                Channel = applicationChannel.GetChannel()
             }
         );
     }

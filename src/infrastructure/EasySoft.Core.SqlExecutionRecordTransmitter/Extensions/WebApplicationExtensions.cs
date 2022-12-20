@@ -23,7 +23,7 @@ public static class WebApplicationExtensions
         );
 
         ApplicationConfigure.AddTimer(
-            3000,
+            SqlLogInnerQueue.SendInterval,
             (serviceProvider, e) =>
             {
                 var environment = serviceProvider.GetRequiredService<IWebHostEnvironment>();

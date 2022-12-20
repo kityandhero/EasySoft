@@ -39,47 +39,11 @@ public static class ServiceCollectionExtension
 
         services.AddDbContext<DbContext, T>((serviceProvider, optionsBuilder) =>
         {
-            // optionsBuilder.UseLoggerFactory(serviceProvider.GetService<ILoggerFactory>());
+            optionsBuilder.UseLoggerFactory(serviceProvider.GetService<ILoggerFactory>());
 
-            optionsBuilder.AddInterceptors(
-                new LogCommandInterceptor(
-                    serviceProvider.GetRequiredService<ILoggerFactory>(),
-                    serviceProvider.GetRequiredService<IWebHostEnvironment>(),
-                    serviceProvider.GetRequiredService<IApplicationChannel>()
-                )
-            );
+            optionsBuilder.AddInterceptors(new LogCommandInterceptor(serviceProvider));
 
             var environment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
-
-            // if (GeneralConfigAssist.GetRemoteSqlExecutionRecordSwitch())
-            // {
-            //     var applicationChannel = serviceProvider.GetRequiredService<IApplicationChannel>();
-            //
-            //     optionsBuilder.LogTo(
-            //         message =>
-            //         {
-            //             SqlLogInnerQueue.Enqueue(
-            //                 new SqlExecutionRecordExchange
-            //                 {
-            //                     CommandString = message,
-            //                     ExecuteType = SqlExecuteType.EntityFramework.ToInt(),
-            //                     Channel = applicationChannel.GetChannel()
-            //                 }
-            //             );
-            //         },
-            //         (eventId, logLevel) =>
-            //         {
-            //             if (logLevel == LogLevel.Information)
-            //             {
-            //                 var s = eventId.Name;
-            //
-            //                 return true;
-            //             }
-            //
-            //             return false;
-            //         }
-            //     );
-            // }
 
             if (environment.IsDevelopment())
             {
