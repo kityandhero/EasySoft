@@ -6,6 +6,7 @@ global using System.Reflection;
 global using System.Timers;
 global using EasySoft.UtilityTools.Core.Extensions;
 global using EasySoft.UtilityTools.Standard;
+global using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 global using EasySoft.UtilityTools.Standard.Extensions;
 global using Masuit.Tools.Systems;
 global using Microsoft.AspNetCore.Builder;

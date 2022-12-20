@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Entities.Interfaces;
-
-namespace EasySoft.Core.Infrastructure.Queues;
+﻿namespace EasySoft.Core.Infrastructure.Queues;
 
 /// <summary>
 /// SqlLogInnerQueue
