@@ -38,29 +38,32 @@ public static class ServiceCollectionExtension
 
         services.AddDbContext<DbContext, T>((serviceProvider, optionsBuilder) =>
         {
+            optionsBuilder.UseLoggerFactory(serviceProvider.GetService<ILoggerFactory>());
+
             var environment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
 
             if (GeneralConfigAssist.GetRemoteSqlExecutionRecordSwitch())
             {
                 var applicationChannel = serviceProvider.GetRequiredService<IApplicationChannel>();
 
-                optionsBuilder.LogTo(message =>
-                {
-                    SqlLogInnerQueue.Enqueue(
-                        new SqlExecutionRecordExchange
-                        {
-                            CommandString = message,
-                            ExecuteType = SqlExecuteType.EntityFramework.ToInt(),
-                            Channel = applicationChannel.GetChannel()
-                        }
-                    );
-                });
+                optionsBuilder.LogTo(
+                    message =>
+                    {
+                        SqlLogInnerQueue.Enqueue(
+                            new SqlExecutionRecordExchange
+                            {
+                                CommandString = message,
+                                ExecuteType = SqlExecuteType.EntityFramework.ToInt(),
+                                Channel = applicationChannel.GetChannel()
+                            }
+                        );
+                    },
+                    LogLevel.Information
+                );
             }
 
             if (environment.IsDevelopment())
             {
-                optionsBuilder.UseLoggerFactory(serviceProvider.GetService<ILoggerFactory>());
-
                 if (ContextConfigure.EnableSensitiveDataLogging)
                 {
                     LogAssist.Hint(

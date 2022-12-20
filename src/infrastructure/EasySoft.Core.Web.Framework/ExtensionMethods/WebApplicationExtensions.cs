@@ -231,22 +231,10 @@ public static class WebApplicationExtensions
 
             if (application.Environment.IsDevelopment())
                 application.Logger.LogAdvancePrompt(
-                    $"Times({timers.Count}) will start."
+                    $"Timers ({timers.Count}) will start."
                 );
 
-            var tokenSource = new CancellationTokenSource();
-            var token = tokenSource.Token;
-
-            tokenSource.Cancel();
-
-            Task.Delay(
-                    TimeSpan.FromSeconds(5),
-                    token
-                )
-                .ContinueWith(
-                    t => { timers.ForEach(t => { t.Start(); }); },
-                    token
-                );
+            timers.ForEach(t => { t.Start(); });
         };
 
         return application;
@@ -268,7 +256,7 @@ public static class WebApplicationExtensions
 
             if (application.Environment.IsDevelopment())
                 application.Logger.LogAdvancePrompt(
-                    $"Times({timers.Count}) will stop and dispose."
+                    $"Timers ({timers.Count}) will stop and dispose."
                 );
 
             timers.ForEach(t =>
