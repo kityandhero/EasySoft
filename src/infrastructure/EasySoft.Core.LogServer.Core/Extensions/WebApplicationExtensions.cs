@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.LogServer.Core.Extensions;
+﻿using EasySoft.UtilityTools.Standard.Entities.Implementations;
+
+namespace EasySoft.Core.LogServer.Core.Extensions;
 
 /// <summary>
 /// WebApplicationExtensions

@@ -17,6 +17,11 @@ public class SqlExecutionRecordConfig : BaseEntityTypeConfiguration<SqlExecution
         builder.Property(x => x.ExecuteType)
             .HasColumnType(DatabaseConstant.Nvarchar)
             .HasMaxLength(200)
+            .HasDefaultValue(0);
+
+        builder.Property(x => x.ExecuteTypeSource)
+            .HasColumnType(DatabaseConstant.Nvarchar)
+            .HasMaxLength(200)
             .HasDefaultValue(string.Empty);
 
         builder.Property(x => x.StackTraceSnippet)

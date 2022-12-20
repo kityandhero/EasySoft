@@ -10,7 +10,6 @@ global using EasySoft.Core.EntityFramework.Configures;
 global using EasySoft.Core.EntityFramework.Contexts.Basic;
 global using EasySoft.Core.EntityFramework.EntityConfigures.Implementations;
 global using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
-global using EasySoft.Core.EntityFramework.ExtensionMethods;
 global using EasySoft.Core.EntityFramework.MySql.Contexts;
 global using EasySoft.Core.EntityFramework.MySql.Transactions;
 global using EasySoft.Core.EntityFramework.Repositories;

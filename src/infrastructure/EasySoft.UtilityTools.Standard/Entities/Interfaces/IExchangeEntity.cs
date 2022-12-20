@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.ExchangeRegulation.Interfaces;
+﻿namespace EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 /// <summary>
 /// IExchangeEntity

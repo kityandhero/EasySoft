@@ -4,8 +4,7 @@
 /// UnitOfWork
 /// </summary>
 /// <typeparam name="TContext"></typeparam>
-public class UnitOfWork<TContext> : BasicUnitOfWork<TContext>
-    where TContext : SqlServerContext
+public class UnitOfWork<TContext> : BasicUnitOfWork<TContext> where TContext : SqlServerContext
 {
     private readonly ICapPublisher? _publisher;
 

@@ -2,7 +2,7 @@
 using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
 using EasySoft.Core.EntityFramework.Repositories;
 
-namespace EasySoft.Core.EntityFramework.ExtensionMethods;
+namespace EasySoft.Core.EntityFramework.Extensions;
 
 /// <summary>
 /// ServiceCollectionExtension
@@ -38,7 +38,26 @@ public static class ServiceCollectionExtension
 
         services.AddDbContext<DbContext, T>((serviceProvider, optionsBuilder) =>
         {
-            if (EnvironmentAssist.GetEnvironment().IsDevelopment())
+            var environment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
+
+            if (GeneralConfigAssist.GetRemoteSqlExecutionRecordSwitch())
+            {
+                var applicationChannel = serviceProvider.GetRequiredService<IApplicationChannel>();
+
+                optionsBuilder.LogTo(message =>
+                {
+                    SqlLogInnerQueue.Enqueue(
+                        new SqlExecutionRecordExchange
+                        {
+                            CommandString = message,
+                            ExecuteType = SqlExecuteType.EntityFramework.ToInt(),
+                            Channel = applicationChannel.GetChannel()
+                        }
+                    );
+                });
+            }
+
+            if (environment.IsDevelopment())
             {
                 optionsBuilder.UseLoggerFactory(serviceProvider.GetService<ILoggerFactory>());
 

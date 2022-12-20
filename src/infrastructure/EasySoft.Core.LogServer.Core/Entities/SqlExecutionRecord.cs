@@ -5,13 +5,19 @@ namespace EasySoft.Core.LogServer.Core.Entities;
 /// <summary>
 /// SqlExecutionRecord
 /// </summary>
-public class SqlExecutionRecord : BaseEntity, ISqlExecutionRecord, IIp, IStatus, IOperate
+public class SqlExecutionRecord : BaseEntity, ISqlExecutionRecord, IStatus, IOperate
 {
+    /// <inheritdoc />
+    public string ExecuteGuid { get; set; } = UniqueIdAssist.CreateUUID();
+
     /// <inheritdoc />
     public string CommandString { get; set; } = "";
 
     /// <inheritdoc />
-    public string ExecuteType { get; set; } = "";
+    public int ExecuteType { get; set; } = SqlExecuteType.Unknown.ToInt();
+
+    /// <inheritdoc />
+    public string ExecuteTypeSource { get; set; } = "";
 
     /// <inheritdoc />
     public string StackTraceSnippet { get; set; } = "";

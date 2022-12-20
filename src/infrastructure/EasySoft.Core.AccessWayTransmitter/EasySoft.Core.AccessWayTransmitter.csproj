@@ -27,6 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Assists" />
       <Folder Include="Enums" />
     </ItemGroup>
 

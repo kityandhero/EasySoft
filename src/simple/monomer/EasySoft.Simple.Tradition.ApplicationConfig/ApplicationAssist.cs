@@ -9,10 +9,10 @@ public static class ApplicationAssist
     public static void Init()
     {
         AuxiliaryConfigure.PromptConfigFileInfo = true;
+        AuxiliaryConfigure.PromptStartupExecuteMessage = true;
 
         ContextConfigure.EnableDetailedErrors = true;
         ContextConfigure.EnableSensitiveDataLogging = true;
-        // ContextConfigure.AutoEnsureCreated = true;
         ContextConfigure.AutoMigrate = true;
         ContextConfigure.AddEntityConfigureAssembly(typeof(Blog).Assembly);
 

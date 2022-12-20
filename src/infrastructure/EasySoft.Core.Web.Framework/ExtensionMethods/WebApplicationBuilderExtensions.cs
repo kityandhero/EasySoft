@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.GeneralLogTransmitter.Extensions;
+﻿using EasySoft.Core.EntityFramework.Extensions;
+using EasySoft.Core.GeneralLogTransmitter.Extensions;
 using EasySoft.Core.Web.Framework.Attributes;
 using EasySoft.Core.Web.Framework.Filters;
 

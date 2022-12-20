@@ -4,7 +4,6 @@ global using Asp.Versioning;
 global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.Data.ExtensionMethods;
 global using EasySoft.Core.EntityFramework.Configures;
-global using EasySoft.Core.EntityFramework.ExtensionMethods;
 global using EasySoft.Core.EntityFramework.SqlServer.Extensions;
 global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.Core.Infrastructure.Configures;

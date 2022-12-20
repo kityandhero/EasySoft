@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.EntityFramework.ExtensionMethods;
+﻿namespace EasySoft.Core.EntityFramework.Extensions;
 
 /// <summary>
 /// WebApplicationExtensions
@@ -24,18 +24,25 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        if (!EnvironmentAssist.GetEnvironment().IsDevelopment()) return application;
+        var environment = application.Services.GetRequiredService<IWebHostEnvironment>();
+
+        if (!environment.IsDevelopment()) return application;
 
         if (ContextConfigure.AutoMigrate && ContextConfigure.AutoEnsureCreated)
             throw new Exception(" 不能同时启用AutoMigrate, AutoEnsureCreated");
 
         if (!ContextConfigure.AutoMigrate) return application;
 
-        LogAssist.Execute($"{nameof(UseAutoMigrate)}.");
+        if (!environment.IsDevelopment())
+        {
+            var logger = application.Services.GetRequiredService<ILoggerFactory>().CreateLogger<object>();
 
-        LogAssist.Hint(
-            $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.AutoMigrate)} is {ContextConfigure.AutoMigrate}."
-        );
+            logger.LogAdvanceExecute($"{nameof(UseAutoMigrate)}.");
+
+            logger.LogAdvanceHint(
+                $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.AutoMigrate)} is {ContextConfigure.AutoMigrate}."
+            );
+        }
 
         var context = ServiceAssist.GetServiceProvider().GetService<DbContext>();
 

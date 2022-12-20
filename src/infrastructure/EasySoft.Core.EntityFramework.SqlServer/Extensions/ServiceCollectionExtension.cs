@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.EntityFramework.SqlServer.Extensions;
+﻿using EasySoft.Core.EntityFramework.Extensions;
+
+namespace EasySoft.Core.EntityFramework.SqlServer.Extensions;
 
 /// <summary>
 /// ServiceCollectionExtension

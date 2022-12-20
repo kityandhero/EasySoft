@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.EntityFramework.Contexts.ContextFactories;
 
-namespace EasySoft.Core.EntityFramework.ExtensionMethods;
+namespace EasySoft.Core.EntityFramework.Extensions;
 
 internal static class ConfigureHostBuilderExtensions
 {

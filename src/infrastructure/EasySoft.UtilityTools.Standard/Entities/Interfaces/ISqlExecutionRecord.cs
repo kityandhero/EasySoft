@@ -9,13 +9,25 @@ public interface ISqlExecutionRecord : IChannel, IIp, ICreate
     /// CommandString
     /// </summary>
     [Description("CommandString")]
+    string ExecuteGuid { get; set; }
+
+    /// <summary>
+    /// CommandString
+    /// </summary>
+    [Description("CommandString")]
     string CommandString { get; set; }
 
     /// <summary>
     /// ExecuteType
     /// </summary>
     [Description("ExecuteType")]
-    string ExecuteType { get; set; }
+    int ExecuteType { get; set; }
+
+    /// <summary>
+    /// ExecuteTypeSource
+    /// </summary>
+    [Description("ExecuteTypeSource")]
+    string ExecuteTypeSource { get; set; }
 
     /// <summary>
     /// StackTraceSnippet

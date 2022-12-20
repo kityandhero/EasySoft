@@ -10,6 +10,7 @@ global using System.Reflection;
 global using System.Text;
 global using EasySoft.UtilityTools.Standard;
 global using EasySoft.UtilityTools.Standard.Assists;
+global using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 global using EasySoft.UtilityTools.Standard.Extensions;
 global using Microsoft.Data.SqlClient;
 global using Newtonsoft.Json;

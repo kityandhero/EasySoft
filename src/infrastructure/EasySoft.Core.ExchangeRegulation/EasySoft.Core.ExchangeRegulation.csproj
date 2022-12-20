@@ -24,7 +24,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Entities" />
       <Folder Include="Enums" />
+      <Folder Include="Interfaces" />
     </ItemGroup>
 
 </Project>

@@ -4,7 +4,6 @@ using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Data.Configures;
 using EasySoft.Core.Data.ExtensionMethods;
-using EasySoft.Core.EntityFramework.ExtensionMethods;
 using EasySoft.Core.EntityFramework.MySql.Extensions;
 using EasySoft.Core.Grpc.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Assists;

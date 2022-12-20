@@ -1,5 +1,7 @@
 ﻿using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.Interfaces;
+using EasySoft.UtilityTools.Standard.Entities.Interfaces;
+using SqlExecuteType = EasySoft.UtilityTools.Standard.Enums.SqlExecuteType;
 
 namespace EasySoft.Core.Dapper.Base;
 
@@ -2368,20 +2370,23 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
         var dictionary = MiniProfiler.Current.Head.CustomTimings;
 
         foreach (var item in dictionary)
-            listCustomTiming.AddRange(item.Value.Select(one => new SqlExecutionMessage
-            {
-                SqlExecutionMessageId = one.Id.ToString(),
-                CommandString = one.CommandString,
-                ExecuteType = one.ExecuteType,
-                StackTraceSnippet = one.StackTraceSnippet,
-                StartMilliseconds = one.StartMilliseconds,
-                DurationMilliseconds = one.DurationMilliseconds ?? 0m,
-                FirstFetchDurationMilliseconds = one.FirstFetchDurationMilliseconds ?? 0m,
-                Errored = one.Errored ? 1 : 0,
-                TriggerChannel = applicationChannel.GetChannel(),
-                CollectMode = CollectMode.MiniProfiler.ToInt(),
-                DatabaseChannel = GetMapperChannel().GetChannel()
-            }));
+            listCustomTiming.AddRange(item.Value.Select(
+                one => new SqlExecutionMessage
+                {
+                    ExecuteGuid = one.Id.ToString(),
+                    CommandString = one.CommandString,
+                    ExecuteType = SqlExecuteType.MiniProfiler.ToInt(),
+                    ExecuteTypeSource = one.ExecuteType,
+                    StackTraceSnippet = one.StackTraceSnippet,
+                    StartMilliseconds = one.StartMilliseconds,
+                    DurationMilliseconds = one.DurationMilliseconds ?? 0m,
+                    FirstFetchDurationMilliseconds = one.FirstFetchDurationMilliseconds ?? 0m,
+                    Errored = one.Errored ? 1 : 0,
+                    Channel = applicationChannel.GetChannel(),
+                    CollectMode = CollectMode.MiniProfiler.ToInt(),
+                    DatabaseChannel = GetMapperChannel().GetChannel()
+                }
+            ));
 
         if (listCustomTiming.Count <= 0) return;
 
@@ -2392,7 +2397,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
     /// 记录执行的sql
     /// </summary>
     /// <param name="sqlExecutionMessage">sql</param>
-    private void LogSqlExecutionMessage(SqlExecutionMessage sqlExecutionMessage)
+    private void LogSqlExecutionMessage(ISqlExecutionRecord sqlExecutionMessage)
     {
         if (_sqlLogRecordJudge == null) return;
 
@@ -2408,7 +2413,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
             sqlExecutionMessage.DurationMilliseconds,
             sqlExecutionMessage.FirstFetchDurationMilliseconds,
             sqlExecutionMessage.Errored,
-            sqlExecutionMessage.TriggerChannel,
+            sqlExecutionMessage.Channel,
             sqlExecutionMessage.CollectMode,
             sqlExecutionMessage.DatabaseChannel
         );

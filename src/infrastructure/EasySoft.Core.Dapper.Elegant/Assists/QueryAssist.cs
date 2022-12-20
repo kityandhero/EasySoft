@@ -912,15 +912,14 @@ public class QueryAssist
                 where !string.IsNullOrWhiteSpace(sql)
                 select new SqlExecutionMessage
                 {
-                    SqlExecutionMessageId = Guid.NewGuid().ToString(),
                     CommandString = sql,
-                    ExecuteType = "",
+                    ExecuteType = SqlExecuteType.Unknown.ToInt(),
                     StackTraceSnippet = "",
                     StartMilliseconds = 0,
                     DurationMilliseconds = 0,
                     FirstFetchDurationMilliseconds = 0,
                     Errored = 0,
-                    TriggerChannel = applicationChannel.GetChannel(),
+                    Channel = applicationChannel.GetChannel(),
                     CollectMode = CollectMode.MiniProfiler.ToInt(),
                     DatabaseChannel = mapperChannel.GetChannel()
                 }
@@ -943,7 +942,7 @@ public class QueryAssist
                 sqlExecutionMessage.DurationMilliseconds,
                 sqlExecutionMessage.FirstFetchDurationMilliseconds,
                 sqlExecutionMessage.Errored,
-                sqlExecutionMessage.TriggerChannel,
+                sqlExecutionMessage.Channel,
                 sqlExecutionMessage.CollectMode,
                 sqlExecutionMessage.DatabaseChannel
             );

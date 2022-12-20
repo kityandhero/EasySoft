@@ -1,38 +1,54 @@
-﻿namespace EasySoft.Core.Sql.Entities;
+﻿using SqlExecuteType = EasySoft.UtilityTools.Standard.Enums.SqlExecuteType;
 
-public class SqlExecutionMessage
+namespace EasySoft.Core.Sql.Entities;
+
+/// <summary>
+/// sql message
+/// </summary>
+public class SqlExecutionMessage : ISqlExecutionRecord
 {
-    public string SqlExecutionMessageId { get; set; } = "";
+    /// <inheritdoc />
+    public string ExecuteGuid { get; set; } = UniqueIdAssist.CreateUUID();
 
+    /// <inheritdoc />
     public string CommandString { get; set; } = "";
 
-    public string ExecuteType { get; set; } = "";
+    /// <inheritdoc />
+    public int ExecuteType { get; set; } = SqlExecuteType.Unknown.ToInt();
 
+    /// <inheritdoc />
+    public string ExecuteTypeSource { get; set; } = "";
+
+    /// <inheritdoc />
     public string StackTraceSnippet { get; set; } = "";
 
+    /// <inheritdoc />
     public decimal StartMilliseconds { get; set; }
 
+    /// <inheritdoc />
     public decimal DurationMilliseconds { get; set; }
 
+    /// <inheritdoc />
     public decimal FirstFetchDurationMilliseconds { get; set; }
 
+    /// <inheritdoc />
     public int Errored { get; set; }
 
-    public int TriggerChannel { get; set; }
-
+    /// <inheritdoc />
     public int CollectMode { get; set; }
 
+    /// <inheritdoc />
+    public string DatabaseChannel { get; set; } = "";
+
+    /// <inheritdoc />
     public int Channel { get; set; }
 
-    /// <summary>
-    /// 创建时间
-    /// </summary>
-    public long CreateUnixTime { get; set; }
+    /// <inheritdoc />
+    public string Ip { get; set; } = "";
 
-    /// <summary>
-    /// 创建人标识 
-    /// </summary>
-    public long CreateOperatorId { get; set; }
+    /// <inheritdoc />
+    public long CreateBy { get; set; }
 
-    public string DatabaseChannel { get; set; } = "";
+    /// <inheritdoc />
+    public DateTime CreateTime { get; set; } = DateTimeOffset.Now.DateTime;
 }

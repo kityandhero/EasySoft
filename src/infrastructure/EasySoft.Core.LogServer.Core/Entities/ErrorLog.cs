@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.ErrorLogTransmitter.Extensions;
-using EasySoft.Core.LogServer.Core.Entities.Bases;
+﻿using EasySoft.Core.LogServer.Core.Entities.Bases;
 
 namespace EasySoft.Core.LogServer.Core.Entities;
 

@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.SqlExecutionRecordTransmitter.Entities;
-using EasySoft.Core.SqlExecutionRecordTransmitter.Interfaces;
+﻿using EasySoft.UtilityTools.Standard.Entities.Implementations;
 
 namespace EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
 
@@ -25,13 +24,13 @@ public class SqlExecutionRecordProducer : ISqlExecutionRecordProducer
     /// <inheritdoc />
     public async Task<ISqlExecutionRecordExchange> SendAsync(
         string commandString,
-        string executeType,
+        int executeType,
         string stackTraceSnippet,
         decimal startMilliseconds,
         decimal durationMilliseconds,
         decimal firstFetchDurationMilliseconds,
         int errored,
-        int triggerChannel,
+        int channel,
         int collectMode,
         string databaseChannel
     )
@@ -56,7 +55,7 @@ public class SqlExecutionRecordProducer : ISqlExecutionRecordProducer
     }
 
     /// <inheritdoc />
-    public async Task<ISqlExecutionRecordExchange> SendAsync(ISqlExecutionRecordExchange executionRecordExchange)
+    public async Task<ISqlExecutionRecord> SendAsync(ISqlExecutionRecord executionRecordExchange)
     {
         await _capPublisher.PublishAsync(TransmitterTopic.SqlExecutionRecordExchange, executionRecordExchange);
 

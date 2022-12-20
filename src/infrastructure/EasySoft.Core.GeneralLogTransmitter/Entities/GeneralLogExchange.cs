@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.GeneralLogTransmitter.Interfaces;
+using EasySoft.UtilityTools.Standard.Entities.Implementations;
 
 namespace EasySoft.Core.GeneralLogTransmitter.Entities;
 

@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.SqlExecutionRecordTransmitter.Interfaces;
+﻿namespace EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 /// <summary>
 /// ISqlExecutionRecordExchange

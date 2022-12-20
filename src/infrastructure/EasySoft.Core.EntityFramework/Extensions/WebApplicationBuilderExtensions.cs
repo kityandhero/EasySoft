@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.EntityFramework.ExtensionMethods;
+﻿namespace EasySoft.Core.EntityFramework.Extensions;
 
 /// <summary>
 /// WebApplicationBuilderExtensions

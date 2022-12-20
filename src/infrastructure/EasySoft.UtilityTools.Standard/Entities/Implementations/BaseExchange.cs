@@ -1,7 +1,7 @@
-﻿using EasySoft.Core.ExchangeRegulation.Interfaces;
+﻿using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
-namespace EasySoft.Core.ExchangeRegulation.Entities;
+namespace EasySoft.UtilityTools.Standard.Entities.Implementations;
 
 /// <summary>
 /// BaseExchange

@@ -22,7 +22,6 @@ global using EasySoft.Core.EnvironmentAuxiliary.ExtensionMethods;
 global using EasySoft.Core.DynamicConfig.Assists;
 global using EasySoft.Core.EasyCaching.ExtensionMethods;
 global using EasySoft.Core.EasyToken.ExtensionMethods;
-global using EasySoft.Core.EntityFramework.ExtensionMethods;
 global using EasySoft.Core.ErrorLogTransmitter.Extensions;
 global using EasySoft.Core.ErrorLogTransmitter.Producers;
 global using EasySoft.Core.Exceptionless.ExtensionMethods;

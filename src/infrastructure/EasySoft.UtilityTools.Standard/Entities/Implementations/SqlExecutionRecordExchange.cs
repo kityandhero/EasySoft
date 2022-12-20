@@ -1,6 +1,9 @@
-﻿using EasySoft.Core.SqlExecutionRecordTransmitter.Interfaces;
+﻿using EasySoft.UtilityTools.Standard.Assists;
+using EasySoft.UtilityTools.Standard.Entities.Interfaces;
+using EasySoft.UtilityTools.Standard.Extensions;
+using SqlExecuteType = EasySoft.UtilityTools.Standard.Enums.SqlExecuteType;
 
-namespace EasySoft.Core.SqlExecutionRecordTransmitter.Entities;
+namespace EasySoft.UtilityTools.Standard.Entities.Implementations;
 
 /// <summary>
 /// SqlExecutionRecordExchange
@@ -8,10 +11,16 @@ namespace EasySoft.Core.SqlExecutionRecordTransmitter.Entities;
 public class SqlExecutionRecordExchange : BaseExchange, ISqlExecutionRecordExchange
 {
     /// <inheritdoc />
+    public string ExecuteGuid { get; set; } = UniqueIdAssist.CreateUUID();
+
+    /// <inheritdoc />
     public string CommandString { get; set; } = "";
 
     /// <inheritdoc />
-    public string ExecuteType { get; set; } = "";
+    public int ExecuteType { get; set; } = SqlExecuteType.Unknown.ToInt();
+
+    /// <inheritdoc />
+    public string ExecuteTypeSource { get; set; } = "";
 
     /// <inheritdoc />
     public string StackTraceSnippet { get; set; } = "";

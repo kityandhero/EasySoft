@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.SqlExecutionRecordTransmitter.Interfaces;
-
-namespace EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
+﻿namespace EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
 
 /// <summary>
 /// SqlExecutionRecordProducer
@@ -17,19 +15,19 @@ public interface ISqlExecutionRecordProducer
     /// <param name="durationMilliseconds"></param>
     /// <param name="firstFetchDurationMilliseconds"></param>
     /// <param name="errored"></param>
-    /// <param name="triggerChannel"></param>
+    /// <param name="channel"></param>
     /// <param name="collectMode"></param>
     /// <param name="databaseChannel"></param>
     /// <returns></returns>
     Task<ISqlExecutionRecordExchange> SendAsync(
         string commandString,
-        string executeType,
+        int executeType,
         string stackTraceSnippet,
         decimal startMilliseconds,
         decimal durationMilliseconds,
         decimal firstFetchDurationMilliseconds,
         int errored,
-        int triggerChannel,
+        int channel,
         int collectMode,
         string databaseChannel
     );
@@ -39,5 +37,5 @@ public interface ISqlExecutionRecordProducer
     /// </summary>
     /// <param name="executionRecordExchange"></param>
     /// <returns></returns>
-    Task<ISqlExecutionRecordExchange> SendAsync(ISqlExecutionRecordExchange executionRecordExchange);
+    Task<ISqlExecutionRecord> SendAsync(ISqlExecutionRecord executionRecordExchange);
 }

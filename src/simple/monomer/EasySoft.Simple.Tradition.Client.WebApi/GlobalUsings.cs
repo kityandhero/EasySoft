@@ -8,7 +8,6 @@ global using EasySoft.Core.Cap.ExtensionMethods;
 global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.Data.ExtensionMethods;
 global using EasySoft.Core.Data.Transactions;
-global using EasySoft.Core.EntityFramework.ExtensionMethods;
 global using EasySoft.Core.EntityFramework.SqlServer.Extensions;
 global using EasySoft.Core.EventBus.ExtensionMethods;
 global using EasySoft.Core.EventBus.Trackers;
