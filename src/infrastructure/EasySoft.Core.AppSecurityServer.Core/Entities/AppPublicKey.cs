@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.AppSecurityServer.Core.Entities.Bases;
-using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Entities;
 
