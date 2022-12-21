@@ -7,18 +7,16 @@ namespace EasySoft.UtilityTools.Standard.Result.Implements;
 /// ListResult
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class ListResult<T> : BaseExecutiveResult
-
+public class ListResult<T> : BaseExecutiveResult, IListResult<T>
 {
-    /// <summary>
-    /// 页数据
-    /// </summary>
+    /// <inheritdoc />
     public List<T> List { get; set; }
 
-    /// <summary>
-    /// Count
-    /// </summary>
-    public int Count => List.Count;
+    /// <inheritdoc />
+    public int Count()
+    {
+        return List.Count;
+    }
 
     /// <summary>
     /// ListResult

@@ -37,7 +37,7 @@ public class AppPublicKeyService : IAppPublicKeyService
 
         if (!pageListResult.Success) return new ExecutiveResult<AppPublicKeyDto>(pageListResult.Code);
 
-        if (pageListResult.Count > 0)
+        if (pageListResult.Count() > 0)
         {
             var list = pageListResult.List;
 
@@ -71,7 +71,7 @@ public class AppPublicKeyService : IAppPublicKeyService
 
         AppPublicKey appPublicKey;
 
-        if (pageListResult.Count > 0)
+        if (pageListResult.Count() > 0)
         {
             var list = pageListResult.List;
 
@@ -108,7 +108,7 @@ public class AppPublicKeyService : IAppPublicKeyService
 
         if (!pageListResult.Success) return;
 
-        if (pageListResult.Count > 0) return;
+        if (pageListResult.Count() > 0) return;
 
         await RefreshAsync();
     }

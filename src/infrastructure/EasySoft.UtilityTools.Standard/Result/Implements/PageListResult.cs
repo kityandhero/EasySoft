@@ -7,26 +7,18 @@ namespace EasySoft.UtilityTools.Standard.Result.Implements;
 /// PageListResult
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class PageListResult<T> : ListResult<T>
+public class PageListResult<T> : ListResult<T>, IPageListResult<T>
 {
-    /// <summary>
-    /// 页码
-    /// </summary>
+    /// <inheritdoc />
     public int PageIndex { get; set; }
 
-    /// <summary>
-    /// 页条目数
-    /// </summary>
+    /// <inheritdoc />
     public int PageSize { get; set; }
 
-    /// <summary>
-    /// 总数据量
-    /// </summary>
+    /// <inheritdoc />
     public long TotalSize { get; set; }
 
-    /// <summary>
-    /// 是否有数据
-    /// </summary>
+    /// <inheritdoc />
     public bool HasData { get; }
 
     /// <summary>
