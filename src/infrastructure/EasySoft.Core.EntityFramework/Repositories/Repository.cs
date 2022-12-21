@@ -102,6 +102,7 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         if (isAsc)
             list = order == null
                 ? await Where(where, writeChannel, true)
+                    .OrderByDescending(o => o.Id)
                     .Skip(pageSize * (pageIndex - 1))
                     .Take(pageSize)
                     .ToListAsync(cancellationToken)

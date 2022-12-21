@@ -73,16 +73,16 @@ public class AppSecurityDetector : IAppSecurityDetector
 
         var result = apiResponse.Content;
 
-        // if (!result.Success || result.Data == null)
-        // {
-        //     var message = $"rpc get none AppPublicKey -> {result.Message}.";
-        //
-        //     logger.LogAdvanceError(message);
-        //
-        //     throw new UnknownException(message);
-        // }
+        if (!result.Success || result.Data == null)
+        {
+            var message = $"rpc get none AppPublicKey -> {result.Message}.";
 
-        // AppSecurityClientConfigure.SetPublicKey(result.Data.Key);
+            logger.LogAdvanceError(message);
+
+            throw new UnknownException(message);
+        }
+
+        AppSecurityClientConfigure.SetPublicKey(result.Data.Key);
 
         var appSecurityFirstVerifyNotification = new AppSecurityFirstVerifyNotification(true);
 

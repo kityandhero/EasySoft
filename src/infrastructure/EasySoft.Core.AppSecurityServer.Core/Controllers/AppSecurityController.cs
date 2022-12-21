@@ -54,18 +54,9 @@ public class AppSecurityController : CustomControllerBase
                 if (_environment.IsDevelopment())
                     _loggerFactory.CreateLogger<object>().LogAdvanceError(resultVerify.Message);
 
-                // return new List<AppPublicKeyDto> { new() };
                 return RpcResultFactory.CreateFromReturnMessage<AppPublicKeyDto>(
-                    ReturnMessage.NoData.ToMessage()
+                    ReturnMessage.NoData.ToMessage(resultVerify.Message)
                 );
-
-                return new RpcResult<AppPublicKeyDto>()
-                {
-                    Code = ReturnCode.NoData.ToInt(),
-                    Success = false,
-                    Message = resultVerify.Message,
-                    Data = new AppPublicKeyDto()
-                };
             }
 
             if (resultVerify.Data == null)
@@ -75,34 +66,16 @@ public class AppSecurityController : CustomControllerBase
                 if (_environment.IsDevelopment())
                     _loggerFactory.CreateLogger<object>().LogAdvanceError(message);
 
-                // return new List<AppPublicKeyDto> { new() };
-
                 return RpcResultFactory.CreateFromReturnMessage<AppPublicKeyDto>(
-                    ReturnMessage.NoData
+                    ReturnMessage.NoData.ToMessage(message)
                 );
-
-                // return new ApiResult<AppPublicKeyDto>(ReturnCode.NoData)
-                // {
-                //     Message = message,
-                //     Data = new AppPublicKeyDto()
-                // };
             }
 
             var resultGetAppPublicKey = await _appPublicKeyService.GetAsync();
 
-            // if (!resultGetAppPublicKey.Success || resultGetAppPublicKey.Data == null)
-            //     return new List<AppPublicKeyDto> { new() };
-
-            // return new List<AppPublicKeyDto> { resultGetAppPublicKey.Data };
-
             return RpcResultFactory.CreateSuccess(
                 resultGetAppPublicKey.Data
             );
-
-            // return new ApiResult<AppPublicKeyDto>(ReturnCode.Ok)
-            // {
-            //     Data = resultGetAppPublicKey.Data
-            // };
         }
         catch (Exception e)
         {

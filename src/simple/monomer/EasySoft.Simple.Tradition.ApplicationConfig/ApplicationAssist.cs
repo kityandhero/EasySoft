@@ -13,7 +13,7 @@ public static class ApplicationAssist
         // AuxiliaryConfigure.PromptStartupExecuteMessage = true;
 
         ContextConfigure.EnableDetailedErrors = true;
-        ContextConfigure.EnableSensitiveDataLogging = true;
+        // ContextConfigure.EnableSensitiveDataLogging = true;
         ContextConfigure.AutoMigrate = true;
         ContextConfigure.AddEntityConfigureAssembly(typeof(Blog).Assembly);
 
