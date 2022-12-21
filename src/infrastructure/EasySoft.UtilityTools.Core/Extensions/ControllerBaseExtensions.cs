@@ -1,10 +1,7 @@
 ﻿using EasySoft.UtilityTools.Core.Exceptions;
-using EasySoft.UtilityTools.Core.Results;
 using EasySoft.UtilityTools.Core.Results.Implements;
 using EasySoft.UtilityTools.Core.Results.Interfaces;
-using EasySoft.UtilityTools.Standard.Entities;
 using EasySoft.UtilityTools.Standard.Extensions;
-using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.UtilityTools.Core.Extensions;
 
@@ -161,7 +158,7 @@ public static class ControllerBaseExtensions
     /// <returns></returns>
     public static IApiResult Fail(
         this ControllerBase controller,
-        ReturnMessage returnMessage,
+        IReturnMessage returnMessage,
         object? data = null,
         object? extraData = null
     )

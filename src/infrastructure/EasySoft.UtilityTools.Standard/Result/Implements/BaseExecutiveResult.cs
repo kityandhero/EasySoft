@@ -16,7 +16,7 @@ public abstract class BaseExecutiveResult : IExecutiveResult
     /// <summary>
     /// 结果代码
     /// </summary>
-    public ReturnMessage Code { get; set; }
+    public IReturnMessage Code { get; set; }
 
     /// <summary>
     /// 消息
@@ -27,7 +27,7 @@ public abstract class BaseExecutiveResult : IExecutiveResult
     /// BaseExecutiveResult
     /// </summary>
     /// <param name="returnMessage"></param>
-    protected BaseExecutiveResult(ReturnMessage returnMessage)
+    protected BaseExecutiveResult(IReturnMessage returnMessage)
     {
         Success = returnMessage.Success;
         Code = returnMessage;

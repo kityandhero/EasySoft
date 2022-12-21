@@ -1,7 +1,5 @@
 ﻿using EasySoft.UtilityTools.Core.Results.Implements;
-using EasySoft.UtilityTools.Core.Results.Interfaces;
 using EasySoft.UtilityTools.Standard.Extensions;
-using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.UtilityTools.Core.Results.Factories;
 
@@ -69,7 +67,7 @@ public static class RpcResultFactory
     /// <param name="returnMessage"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static RpcResult<T> CreateFromReturnMessage<T>(ReturnMessage returnMessage)
+    public static RpcResult<T> CreateFromReturnMessage<T>(IReturnMessage returnMessage)
     {
         return new RpcResult<T>
         {
@@ -87,7 +85,7 @@ public static class RpcResultFactory
     /// <param name="data"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static RpcResult<T> CreateFromReturnMessage<T>(ReturnMessage returnMessage, T? data)
+    public static RpcResult<T> CreateFromReturnMessage<T>(IReturnMessage returnMessage, T? data)
     {
         return new RpcResult<T>
         {

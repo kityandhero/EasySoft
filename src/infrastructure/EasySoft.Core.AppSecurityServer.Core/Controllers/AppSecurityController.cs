@@ -1,8 +1,4 @@
 ﻿using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
-using EasySoft.UtilityTools.Core.Results.Factories;
-using EasySoft.UtilityTools.Core.Results.Implements;
-using EasySoft.UtilityTools.Core.Results.Interfaces;
-using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Controllers;
 
@@ -56,7 +52,7 @@ public class AppSecurityController : CustomControllerBase
                     _loggerFactory.CreateLogger<object>().LogAdvanceError(resultVerify.Message);
 
                 return RpcResultFactory.CreateFromReturnMessage<AppPublicKeyDto>(
-                    ReturnMessage.NoData.ToMessage(resultVerify.Message)
+                    ReturnMessageFactory.NoData.ToMessage(resultVerify.Message)
                 );
             }
 
@@ -68,7 +64,7 @@ public class AppSecurityController : CustomControllerBase
                     _loggerFactory.CreateLogger<object>().LogAdvanceError(message);
 
                 return RpcResultFactory.CreateFromReturnMessage<AppPublicKeyDto>(
-                    ReturnMessage.NoData.ToMessage(message)
+                    ReturnMessageFactory.NoData.ToMessage(message)
                 );
             }
 

@@ -1,4 +1,5 @@
 ﻿using EasySoft.UtilityTools.Standard.Enums;
+using EasySoft.UtilityTools.Standard.Result.Interfaces;
 
 namespace EasySoft.UtilityTools.Standard.Result.Implements;
 
@@ -33,7 +34,7 @@ public class ListResult<T> : BaseExecutiveResult
     /// </summary>
     /// <param name="returnMessage"></param>
     /// <param name="list"></param>
-    public ListResult(ReturnMessage returnMessage, List<T> list) : base(returnMessage)
+    public ListResult(IReturnMessage returnMessage, List<T> list) : base(returnMessage)
     {
         List = list;
     }

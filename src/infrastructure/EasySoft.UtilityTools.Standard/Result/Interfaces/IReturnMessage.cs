@@ -1,4 +1,6 @@
-﻿namespace EasySoft.UtilityTools.Standard.Result.Interfaces;
+﻿using EasySoft.UtilityTools.Standard.Result.Implements;
+
+namespace EasySoft.UtilityTools.Standard.Result.Interfaces;
 
 /// <summary>
 /// return message
@@ -8,20 +10,54 @@ public interface IReturnMessage
     /// <summary>
     /// Success
     /// </summary>
-    public bool Success { get; set; }
+    bool Success { get; set; }
 
     /// <summary>
     /// Code
     /// </summary>
-    public int Code { get; set; }
+    int Code { get; set; }
 
     /// <summary>
     /// Message
     /// </summary>
-    public string Message { get; set; }
+    string Message { get; set; }
 
     /// <summary>
     /// Extra
     /// </summary>
-    public object Extra { get; set; }
+    object Extra { get; set; }
+
+    /// <summary>
+    /// AppendMessage
+    /// </summary>
+    /// <param name="messages"></param>
+    /// <returns></returns>
+    IReturnMessage AppendMessage(params string[] messages);
+
+    /// <summary>
+    /// ToMessage
+    /// </summary>
+    /// <returns></returns>
+    IReturnMessage ToMessage();
+
+    /// <summary>
+    /// ToMessage
+    /// </summary>
+    /// <param name="success"></param>
+    /// <returns></returns>
+    IReturnMessage ToMessage(bool success);
+
+    /// <summary>
+    /// ToMessage
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    IReturnMessage ToMessage(string message);
+
+    /// <summary>
+    /// ToMessage
+    /// </summary>
+    /// <param name="code"></param>
+    /// <returns></returns>
+    IReturnMessage ToMessage(int code);
 }

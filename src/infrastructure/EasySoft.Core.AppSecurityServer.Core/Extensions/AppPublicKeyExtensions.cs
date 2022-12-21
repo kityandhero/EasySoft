@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.AppSecurityServer.Core.DataTransferObjects;
-using EasySoft.Core.AppSecurityServer.Core.Entities;
+﻿using EasySoft.Core.AppSecurityServer.Core.Entities;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Extensions;
 

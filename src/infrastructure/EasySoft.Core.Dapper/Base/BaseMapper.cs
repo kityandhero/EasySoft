@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.Interfaces;
 using EasySoft.UtilityTools.Standard.Entities.Interfaces;
+using EasySoft.UtilityTools.Standard.Result.Factories;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 using SqlExecuteType = EasySoft.UtilityTools.Standard.Enums.SqlExecuteType;
 
@@ -368,7 +369,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
             }
         }
 
-        return new ExecutiveResult<T>(ReturnMessage.Ok)
+        return new ExecutiveResult<T>(ReturnMessageFactory.Ok)
         {
             Data = model
         };
@@ -508,7 +509,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
             }
         }
 
-        return new ExecutiveResult<T>(ReturnMessage.Ok)
+        return new ExecutiveResult<T>(ReturnMessageFactory.Ok)
         {
             Data = model
         };
@@ -602,7 +603,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
             }
         }
 
-        return new ExecutiveResult<List<T>>(ReturnMessage.Ok)
+        return new ExecutiveResult<List<T>>(ReturnMessageFactory.Ok)
         {
             Data = list
         };
@@ -658,7 +659,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
             }
         }
 
-        return new ExecutiveResult<T>(ReturnMessage.Ok)
+        return new ExecutiveResult<T>(ReturnMessageFactory.Ok)
         {
             Data = model
         };
@@ -763,7 +764,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
             }
         }
 
-        return new ExecutiveResult<T>(ReturnMessage.Ok)
+        return new ExecutiveResult<T>(ReturnMessageFactory.Ok)
         {
             Data = model
         };
@@ -819,7 +820,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
             }
         }
 
-        return new ExecutiveResult<T>(ReturnMessage.Ok)
+        return new ExecutiveResult<T>(ReturnMessageFactory.Ok)
         {
             Data = model
         };
@@ -875,7 +876,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
             }
         }
 
-        return new ExecutiveResult<T>(ReturnMessage.Ok)
+        return new ExecutiveResult<T>(ReturnMessageFactory.Ok)
         {
             Data = model
         };
@@ -1040,7 +1041,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
             }
         }
 
-        return new ExecutiveResult<T>(ReturnMessage.Ok)
+        return new ExecutiveResult<T>(ReturnMessageFactory.Ok)
         {
             Data = model
         };
@@ -1088,7 +1089,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
             }
         }
 
-        return new ExecutiveResult<T>(ReturnMessage.Ok)
+        return new ExecutiveResult<T>(ReturnMessageFactory.Ok)
         {
             Data = model
         };
@@ -1201,7 +1202,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
             }
         }
 
-        return new ExecutiveResult(ReturnMessage.Ok);
+        return new ExecutiveResult(ReturnMessageFactory.Ok);
     }
 
     public ExecutiveResult DeleteMany(IEnumerable<T> models)
@@ -1246,7 +1247,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
             }
         }
 
-        return new ExecutiveResult(ReturnMessage.Ok);
+        return new ExecutiveResult(ReturnMessageFactory.Ok);
     }
 
     #endregion

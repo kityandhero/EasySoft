@@ -1,6 +1,6 @@
 ﻿using EasySoft.UtilityTools.Standard.Enums;
-using EasySoft.UtilityTools.Standard.Result;
 using EasySoft.UtilityTools.Standard.Result.Implements;
+using EasySoft.UtilityTools.Standard.Result.Interfaces;
 
 namespace EasySoft.UtilityTools.Standard.Extensions;
 
@@ -14,7 +14,7 @@ public static class ReturnCodeExtension
     /// </summary>
     /// <param name="returnCode"></param>
     /// <returns></returns>
-    public static ReturnMessage ToMessage(this ReturnCode returnCode)
+    public static IReturnMessage ToMessage(this ReturnCode returnCode)
     {
         return new ReturnMessage(returnCode);
     }
@@ -25,7 +25,7 @@ public static class ReturnCodeExtension
     /// <param name="returnCode"></param>
     /// <param name="message"></param>
     /// <returns></returns>
-    public static ReturnMessage ToMessage(this ReturnCode returnCode, string message)
+    public static IReturnMessage ToMessage(this ReturnCode returnCode, string message)
     {
         return new ReturnMessage(returnCode).ToMessage(message);
     }
@@ -36,7 +36,7 @@ public static class ReturnCodeExtension
     /// <param name="returnCode"></param>
     /// <param name="success"></param>
     /// <returns></returns>
-    public static ReturnMessage ToMessage(this ReturnCode returnCode, bool success)
+    public static IReturnMessage ToMessage(this ReturnCode returnCode, bool success)
     {
         return new ReturnMessage(returnCode).ToMessage(success);
     }
@@ -47,7 +47,7 @@ public static class ReturnCodeExtension
     /// <param name="returnCode"></param>
     /// <param name="code"></param>
     /// <returns></returns>
-    public static ReturnMessage ToMessage(this ReturnCode returnCode, int code)
+    public static IReturnMessage ToMessage(this ReturnCode returnCode, int code)
     {
         return new ReturnMessage(returnCode).ToMessage(code);
     }

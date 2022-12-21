@@ -7,7 +7,7 @@ namespace EasySoft.UtilityTools.Standard.Result.Implements;
 public class ExecutiveResult : ExecutiveResult<object>
 {
     /// <inheritdoc />
-    public ExecutiveResult(ReturnMessage returnMessage) : base(returnMessage)
+    public ExecutiveResult(IReturnMessage returnMessage) : base(returnMessage)
     {
     }
 
@@ -29,7 +29,7 @@ public class ExecutiveResult<T> : BaseExecutiveResult, IExecutiveResult<T>
     /// ExecutiveResult
     /// </summary>
     /// <param name="returnMessage"></param>
-    public ExecutiveResult(ReturnMessage returnMessage) : base(returnMessage)
+    public ExecutiveResult(IReturnMessage returnMessage) : base(returnMessage)
     {
         Data = default;
     }

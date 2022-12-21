@@ -1,4 +1,5 @@
 ﻿using EasySoft.UtilityTools.Standard.Enums;
+using EasySoft.UtilityTools.Standard.Result.Interfaces;
 
 namespace EasySoft.UtilityTools.Standard.Result.Implements;
 
@@ -45,7 +46,7 @@ public class PageListResult<T> : ListResult<T>
     /// <param name="pageSize"></param>
     /// <param name="totalSize"></param>
     public PageListResult(
-        ReturnMessage returnMessage,
+        IReturnMessage returnMessage,
         List<T> list,
         int pageIndex,
         int pageSize,
@@ -67,7 +68,7 @@ public class PageListResult<T> : ListResult<T>
     /// <param name="pageSize"></param>
     /// <param name="totalSize"></param>
     public PageListResult(
-        ReturnMessage returnMessage,
+        IReturnMessage returnMessage,
         List<T> list,
         int pageIndex,
         int pageSize,
@@ -84,7 +85,13 @@ public class PageListResult<T> : ListResult<T>
     /// PageListResult
     /// </summary>
     /// <param name="returnMessage"></param>
-    public PageListResult(ReturnMessage returnMessage) : this(returnMessage, new List<T>(), 1, 10, 0)
+    public PageListResult(IReturnMessage returnMessage) : this(
+        returnMessage,
+        new List<T>(),
+        1,
+        10,
+        0
+    )
     {
     }
 

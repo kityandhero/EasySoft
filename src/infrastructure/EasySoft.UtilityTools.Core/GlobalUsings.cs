@@ -28,6 +28,8 @@ global using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 global using EasySoft.UtilityTools.Standard.Enums;
 global using EasySoft.UtilityTools.Standard.Mime;
 global using EasySoft.UtilityTools.Standard.Result;
+global using EasySoft.UtilityTools.Standard.Result.Implements;
+global using EasySoft.UtilityTools.Standard.Result.Interfaces;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Hosting;
 global using Microsoft.AspNetCore.Http;

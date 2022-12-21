@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Standard.Entities.Interfaces;
+﻿using EasySoft.UtilityTools.Standard.Competence;
+using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.Extensions;
 

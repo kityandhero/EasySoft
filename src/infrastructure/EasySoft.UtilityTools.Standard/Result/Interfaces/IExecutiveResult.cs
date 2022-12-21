@@ -26,7 +26,7 @@ public interface IExecutiveResult
     /// <summary>
     /// 结果代码
     /// </summary>
-    public ReturnMessage Code { get; set; }
+    public IReturnMessage Code { get; set; }
 
     /// <summary>
     /// 消息

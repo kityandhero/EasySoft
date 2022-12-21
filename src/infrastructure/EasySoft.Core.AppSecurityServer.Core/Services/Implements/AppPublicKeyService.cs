@@ -2,7 +2,6 @@
 using EasySoft.Core.AppSecurityServer.Core.Extensions;
 using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
 using EasySoft.UtilityTools.Standard.Result.Implements;
-using Hangfire.States;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Services.Implements;
 
