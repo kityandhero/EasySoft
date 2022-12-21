@@ -36,12 +36,22 @@ internal static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
+        ApplicationConfigure.OnApplicationStart += async (serviceProvider) =>
+        {
+            await DetectionAppPublicKey(serviceProvider, DateTime.Now);
+        };
+
         ApplicationConfigure.AddTimer(DetectionInterval, DetectionAppPublicKey);
 
         return builder;
     }
 
     private static async void DetectionAppPublicKey(IServiceProvider serviceProvider, ElapsedEventArgs e)
+    {
+        await DetectionAppPublicKey(serviceProvider, e.SignalTime);
+    }
+
+    private static async Task DetectionAppPublicKey(IServiceProvider serviceProvider, DateTime time)
     {
         var environment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
 
@@ -50,7 +60,7 @@ internal static class WebApplicationBuilderExtensions
             var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<object>();
 
             logger.LogAdvancePrompt(
-                $"Detection app public key, interval {DetectionInterval} , time {e.SignalTime.ToYearMonthDayHourMinuteSecond()}.");
+                $"Detection app public key, interval {DetectionInterval} , time {time.ToYearMonthDayHourMinuteSecond()}.");
         }
 
         var appPublicKeyService = serviceProvider.GetRequiredService<IAppPublicKeyService>();
