@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Data.Configures;
+using EasySoft.Simple.Tradition.Service.Services.Implements;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 

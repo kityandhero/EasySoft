@@ -44,9 +44,9 @@ public static class AppSecurityAssist
     /// </summary>
     /// <param name="appSecurityDto"></param>
     /// <returns></returns>
-    public static AppSecurityDto Sign(AppSecurityDto appSecurityDto)
+    public static AppSecurityDto SignVerify(AppSecurityDto appSecurityDto)
     {
-        var sign = Sign(appSecurityDto, appSecurityDto.UnixTime, appSecurityDto.Salt);
+        var sign = SignVerify(appSecurityDto, appSecurityDto.UnixTime, appSecurityDto.Salt);
 
         appSecurityDto.Sign = sign;
 
@@ -60,7 +60,7 @@ public static class AppSecurityAssist
     /// <param name="unixTime"></param>
     /// <param name="salt"></param>
     /// <returns></returns>
-    public static string Sign(IAppSecurity appSecurity, long unixTime, string salt)
+    public static string SignVerify(IAppSecurity appSecurity, long unixTime, string salt)
     {
         if (unixTime < 0) throw new UnknownException("unixTime error");
 
@@ -81,5 +81,59 @@ public static class AppSecurityAssist
             throw new UnknownException("appSecret length error");
 
         return $"{appSecurity.AppId}{appSecurity}{unixTime.ToString()}{salt}".ToMd5();
+    }
+
+    /// <summary>
+    /// 请求签名
+    /// </summary>
+    /// <param name="appSecurityDto"></param>
+    /// <returns></returns>
+    public static AppSecurityDto SignRequest(AppSecurityDto appSecurityDto)
+    {
+        var sign = SignRequest(appSecurityDto, appSecurityDto.PublicKey, appSecurityDto.Salt);
+
+        appSecurityDto.Sign = sign;
+
+        return appSecurityDto;
+    }
+
+    /// <summary>
+    /// 请求签名
+    /// </summary>
+    /// <param name="appSecurity"></param>
+    /// <param name="publicKey"></param>
+    /// <param name="salt"></param>
+    /// <returns></returns>
+    public static string SignRequest(IAppSecurity appSecurity, string publicKey, string salt)
+    {
+        return SignRequest(appSecurity.AppId, publicKey, salt);
+    }
+
+    /// <summary>
+    /// 请求签名
+    /// </summary>
+    /// <param name="appId"></param>
+    /// <param name="publicKey"></param>
+    /// <param name="salt"></param>
+    /// <returns></returns>
+    public static string SignRequest(string appId, string publicKey, string salt)
+    {
+        if (string.IsNullOrWhiteSpace(salt)) throw new UnknownException("salt error");
+
+        if (string.IsNullOrWhiteSpace(appId)) throw new UnknownException("AppId not allow empty");
+
+        if (string.IsNullOrWhiteSpace(publicKey)) throw new UnknownException("publicKey not allow empty");
+
+        var appIdAdjust = appId.Trim().Remove(" ");
+
+        if (appIdAdjust != appId)
+            throw new UnknownException("appid length error");
+
+        var publicKeyAdjust = publicKey.Trim().Remove(" ");
+
+        if (publicKeyAdjust != publicKey)
+            throw new UnknownException("publicKey length error");
+
+        return $"{appId}{publicKey}{salt}".ToMd5();
     }
 }

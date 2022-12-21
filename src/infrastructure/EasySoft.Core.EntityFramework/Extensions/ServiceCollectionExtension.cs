@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.EntityFramework.EntityConfigures.Implementations;
+﻿using EasySoft.Core.EntityFramework.EntityConfigures.Implements;
 using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
 using EasySoft.Core.EntityFramework.Interceptors;
 using EasySoft.Core.EntityFramework.Repositories;

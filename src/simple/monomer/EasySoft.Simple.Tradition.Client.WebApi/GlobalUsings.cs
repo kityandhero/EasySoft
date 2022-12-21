@@ -25,7 +25,6 @@ global using EasySoft.Simple.Tradition.Common.Enums;
 global using EasySoft.Simple.Tradition.Data.Contexts;
 global using EasySoft.Simple.Tradition.Security.Security;
 global using EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
-global using EasySoft.Simple.Tradition.Service.Services.Implementations;
 global using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 global using EasySoft.UtilityTools.Core.Extensions;
 global using EasySoft.UtilityTools.Core.Results;

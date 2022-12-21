@@ -12,7 +12,6 @@ global using EasySoft.Core.JsonWebToken.ExtensionMethods;
 global using EasySoft.Simple.Tradition.Data.Contexts;
 global using EasySoft.Simple.Tradition.Data.Entities;
 global using EasySoft.Simple.Tradition.Security.Security;
-global using EasySoft.Simple.Tradition.Service.Services.Implementations;
 global using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.EntityFrameworkCore;

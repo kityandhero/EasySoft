@@ -1,4 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Entities.Implementations;
+﻿using EasySoft.UtilityTools.Standard.Entities.Implements;
 
 namespace EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
 

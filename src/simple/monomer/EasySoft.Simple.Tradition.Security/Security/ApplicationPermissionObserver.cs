@@ -1,4 +1,6 @@
 ﻿using EasySoft.Core.PermissionVerification.Clients;
+using EasySoft.Core.PermissionVerification.Detectors;
+using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 using EasySoft.UtilityTools.Standard.Exceptions;
 
@@ -10,7 +12,7 @@ namespace EasySoft.Simple.Tradition.Security.Security;
 public class ApplicationPermissionObserver : PermissionObserverCore
 {
     private readonly IUserService _userService;
-    private readonly IPermissionClient _permissionClient;
+    private readonly IAccessWayDetector _permissionClient;
 
     /// <summary>
     /// ApplicationPermissionObserver
@@ -20,7 +22,7 @@ public class ApplicationPermissionObserver : PermissionObserverCore
     /// <param name="userService"></param>
     public ApplicationPermissionObserver(
         IActualOperator applicationActualOperator,
-        IPermissionClient permissionClient,
+        IAccessWayDetector permissionClient,
         IUserService userService
     ) : base(applicationActualOperator)
     {

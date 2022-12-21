@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.EntityFramework.SqlServer.DesignTimeDbContextFactories;
+﻿using EasySoft.Core.EntityFramework.EntityConfigures.Implements;
+
+namespace EasySoft.Core.EntityFramework.SqlServer.DesignTimeDbContextFactories;
 
 /// <summary>
 /// SqlServerDesignTimeContextFactory 用于 migration

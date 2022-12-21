@@ -10,7 +10,6 @@ global using DotNetCore.CAP.Serialization;
 global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.Data.Repositories;
 global using EasySoft.Core.Infrastructure.Assists;
-global using EasySoft.Core.Infrastructure.Repositories.Entities.Implementations;
 global using EasySoft.IdGenerator.Assists;
 global using EasySoft.UtilityTools.Core.Extensions;
 global using EasySoft.UtilityTools.Standard.Assists;

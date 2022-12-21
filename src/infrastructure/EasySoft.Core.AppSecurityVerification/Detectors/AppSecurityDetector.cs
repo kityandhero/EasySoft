@@ -43,18 +43,14 @@ public class AppSecurityDetector : IAppSecurityDetector
     {
         var appSecurityDto = new AppSecurityDto
         {
-            AppId = AppSecurityServerConfigure.EmbedMode
-                ? AppSecurityAssist.EmbedAppId
-                : GeneralConfigAssist.GetAppId(),
-            AppSecret = AppSecurityServerConfigure.EmbedMode
-                ? AppSecurityAssist.EmbedAppSecret
-                : GeneralConfigAssist.GetAppSecret(),
+            AppId = GeneralConfigAssist.GetAppId(),
+            AppSecret = GeneralConfigAssist.GetAppSecret(),
             UnixTime = AppSecurityAssist.GetUnixTime(),
             Salt = AppSecurityAssist.GetSalt(),
             Channel = _applicationChannel.GetChannel()
         };
 
-        appSecurityDto = AppSecurityAssist.Sign(appSecurityDto);
+        appSecurityDto = AppSecurityAssist.SignVerify(appSecurityDto);
 
         var logger = _loggerFactory.CreateLogger<AppSecurityDetector>();
 

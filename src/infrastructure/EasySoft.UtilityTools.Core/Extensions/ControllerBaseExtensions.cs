@@ -1,7 +1,6 @@
 ﻿using EasySoft.UtilityTools.Core.Exceptions;
 using EasySoft.UtilityTools.Core.Results;
 using EasySoft.UtilityTools.Standard.Entities;
-using EasySoft.UtilityTools.Standard.Entities.Implementations;
 using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.UtilityTools.Core.Extensions;

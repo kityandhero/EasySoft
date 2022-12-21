@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Repositories.Entities.Implementations;
+﻿using EasySoft.Core.Infrastructure.Repositories.Entities.Implements;
 
 namespace EasySoft.Core.LogServer.Core.Entities.Bases;
 

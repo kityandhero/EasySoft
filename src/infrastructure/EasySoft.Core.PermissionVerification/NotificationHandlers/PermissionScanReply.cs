@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.PermissionVerification.Assists;
 using EasySoft.Core.PermissionVerification.Detectors;
+using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
 using EasySoft.UtilityTools.Core.Extensions;
 
 namespace EasySoft.Core.PermissionVerification.NotificationHandlers;

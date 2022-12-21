@@ -1,6 +1,8 @@
 ﻿using EasySoft.Core.AccessWayTransmitter.Extensions;
 using EasySoft.Core.PermissionVerification.Clients;
 using EasySoft.Core.PermissionVerification.Detectors;
+using EasySoft.Core.PermissionVerification.Detectors.Implements;
+using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
 using EasySoft.Core.PermissionVerification.Middlewares;
 using EasySoft.Core.PermissionVerification.Observers;
 using EasySoft.Core.PermissionVerification.Officers;
@@ -58,7 +60,8 @@ public static class WebApplicationBuilderExtensions
         });
 
         builder.Services.AddTransient(
-            typeof(IAccessWayDetector), provider =>
+            typeof(IAccessWayDetector),
+            provider =>
             {
                 var permissionClient = provider.GetRequiredService<IPermissionClient>();
 

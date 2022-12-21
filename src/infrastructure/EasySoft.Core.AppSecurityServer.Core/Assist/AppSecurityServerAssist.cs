@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.AppSecurityServer.Core.Entities;
-using EasySoft.Core.AppSecurityServer.Core.Services.Implementations;
+using EasySoft.Core.AppSecurityServer.Core.Services.Implements;
 using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Assist;

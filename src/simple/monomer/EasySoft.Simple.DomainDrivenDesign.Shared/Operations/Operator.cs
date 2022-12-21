@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Operations.Implementations;
+﻿using EasySoft.Core.Infrastructure.Operations.Implements;
 
 namespace EasySoft.Simple.DomainDrivenDesign.Shared.Operations;
 

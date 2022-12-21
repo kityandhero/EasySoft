@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Domain.Base.Entities.Implementations;
+﻿using EasySoft.Core.Domain.Base.Entities.Implements;
 
 namespace EasySoft.Simple.WebLog.Domain.Aggregates.BlogAggregate;
 

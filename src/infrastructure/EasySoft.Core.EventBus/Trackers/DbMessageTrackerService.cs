@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.EventBus.Trackers;
+﻿using EasySoft.Core.Infrastructure.Repositories.Entities.Implements;
+
+namespace EasySoft.Core.EventBus.Trackers;
 
 public class DbMessageTrackerService : IMessageTracker
 {

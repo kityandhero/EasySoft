@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.LogServer.Core.Entities;
 using EasySoft.Core.LogServer.Core.Extensions;
-using EasySoft.Core.LogServer.Core.Services.Implementations;
+using EasySoft.Core.LogServer.Core.Services.Implements;
 using EasySoft.Core.LogServer.Core.Services.Interfaces;
 using EasySoft.Core.LogServer.Core.Subscribers;
 

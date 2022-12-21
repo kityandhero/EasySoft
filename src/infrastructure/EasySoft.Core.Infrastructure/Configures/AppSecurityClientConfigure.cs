@@ -3,7 +3,7 @@
 /// <summary>
 /// AppSecurityClientConfigure
 /// </summary>
-public class AppSecurityClientConfigure
+public abstract class AppSecurityClientConfigure
 {
     private static string _publicKey = "";
 

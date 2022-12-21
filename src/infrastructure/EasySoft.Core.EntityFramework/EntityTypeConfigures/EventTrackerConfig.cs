@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.EntityFramework.EntityTypeConfigures;
+﻿using EasySoft.Core.Infrastructure.Repositories.Entities.Implements;
+
+namespace EasySoft.Core.EntityFramework.EntityTypeConfigures;
 
 /// <summary>
 /// EventTrackerConfig

@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.AccessWayTransmitter.Interfaces;
-using EasySoft.UtilityTools.Standard.Entities.Implementations;
+using EasySoft.UtilityTools.Standard.Entities.Implements;
 
 namespace EasySoft.Core.AccessWayTransmitter.Entities;
 

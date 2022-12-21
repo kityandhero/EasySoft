@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.ErrorLogTransmitter.Extensions;
 using EasySoft.Core.ErrorLogTransmitter.Interfaces;
-using EasySoft.UtilityTools.Standard.Entities.Implementations;
+using EasySoft.UtilityTools.Standard.Entities.Implements;
 
 namespace EasySoft.Core.ErrorLogTransmitter.Entities;
 

@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Entities;
-using EasySoft.Core.PermissionServer.Core.Services.Implementations;
+using EasySoft.Core.PermissionServer.Core.Services.Implements;
 using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
 using EasySoft.Core.PermissionServer.Core.Subscribers;
 

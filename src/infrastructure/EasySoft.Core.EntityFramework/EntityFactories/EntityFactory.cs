@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.EntityFramework.EntityFactories;
+﻿using EasySoft.Core.Infrastructure.Repositories.Entities.Implements;
+
+namespace EasySoft.Core.EntityFramework.EntityFactories;
 
 /// <summary>
 /// EntityFactory

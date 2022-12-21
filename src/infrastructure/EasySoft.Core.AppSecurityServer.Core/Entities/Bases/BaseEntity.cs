@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.AppSecurityServer.Core.Entities.Bases;
+﻿using EasySoft.Core.Infrastructure.Repositories.Entities.Implements;
+
+namespace EasySoft.Core.AppSecurityServer.Core.Entities.Bases;
 
 /// <summary>
 /// BaseEntity

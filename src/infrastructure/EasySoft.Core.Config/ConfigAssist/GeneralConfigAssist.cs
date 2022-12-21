@@ -3,6 +3,7 @@ using EasySoft.Core.Config.ConfigCollection;
 using EasySoft.Core.Config.Exceptions;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
+using EasySoft.Core.Infrastructure.Configures;
 using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Config.ConfigAssist;
@@ -207,6 +208,9 @@ public static class GeneralConfigAssist
 
     public static string GetAppId()
     {
+        if (AppSecurityServerConfigure.EmbedMode)
+            return AppSecurityAssist.EmbedAppId;
+
         var v = GetConfig().AppId;
 
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
@@ -216,6 +220,9 @@ public static class GeneralConfigAssist
 
     public static string GetAppSecret()
     {
+        if (AppSecurityServerConfigure.EmbedMode)
+            return AppSecurityAssist.EmbedAppSecret;
+
         var v = GetConfig().AppSecret;
 
         v = string.IsNullOrWhiteSpace(v) ? "" : v;

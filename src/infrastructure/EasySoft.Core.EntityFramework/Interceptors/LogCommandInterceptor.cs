@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.EntityFramework.Interceptors;
+﻿using EasySoft.UtilityTools.Standard.Entities.Implements;
+
+namespace EasySoft.Core.EntityFramework.Interceptors;
 
 /// <summary>
 /// LogCommandInterceptor
