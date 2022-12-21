@@ -1,46 +1,79 @@
-﻿using System.ComponentModel;
+﻿namespace EasySoft.Core.Sql.Enums;
 
-namespace EasySoft.Core.Sql.Enums
+/// <summary>
+/// 筛选条件
+/// </summary>
+public enum ConditionType
 {
     /// <summary>
-    /// 筛选条件
+    /// 等于
     /// </summary>
-    public enum ConditionType
-    {
-        [Description("等于")]
-        Eq,
+    [Description("等于")]
+    Eq,
 
-        [Description("不等于")]
-        Ne,
+    /// <summary>
+    /// 不等于
+    /// </summary>
+    [Description("不等于")]
+    Ne,
 
-        [Description("大于")]
-        Gt,
+    /// <summary>
+    /// 大于
+    /// </summary>
+    [Description("大于")]
+    Gt,
 
-        [Description("大于等于")]
-        Gte,
+    /// <summary>
+    /// 大于等于
+    /// </summary>
+    [Description("大于等于")]
+    Gte,
 
-        [Description("小于")]
-        Lt,
+    /// <summary>
+    /// 小于
+    /// </summary>
+    [Description("小于")]
+    Lt,
 
-        [Description("小于等于")]
-        Lte,
+    /// <summary>
+    /// 小于等于
+    /// </summary>
+    [Description("小于等于")]
+    Lte,
 
-        [Description("包括指定的所有值,可以指定不同类型的条件和值")]
-        In,
+    /// <summary>
+    /// 包括指定的所有值,可以指定不同类型的条件和值
+    /// </summary>
+    [Description("包括指定的所有值,可以指定不同类型的条件和值")]
+    In,
 
-        [Description("返回与数组中所有条件都不匹配")]
-        NotIn,
+    /// <summary>
+    /// 返回与数组中所有条件都不匹配
+    /// </summary>
+    [Description("返回与数组中所有条件都不匹配")]
+    NotIn,
 
-        [Description("模糊查询")]
-        LikeBefore,
+    /// <summary>
+    /// 模糊查询
+    /// </summary>
+    [Description("模糊查询")]
+    LikeBefore,
 
-        [Description("模糊查询")]
-        LikeAfter,
+    /// <summary>
+    /// 模糊查询
+    /// </summary>
+    [Description("模糊查询")]
+    LikeAfter,
 
-        [Description("模糊查询")]
-        LikeAny,
+    /// <summary>
+    /// 模糊查询
+    /// </summary>
+    [Description("模糊查询")]
+    LikeAny,
 
-        [Description("Is Null")]
-        IsNull,
-    }
+    /// <summary>
+    /// is null
+    /// </summary>
+    [Description("Is Null")]
+    IsNull
 }

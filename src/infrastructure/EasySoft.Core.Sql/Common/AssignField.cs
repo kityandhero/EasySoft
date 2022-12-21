@@ -1,9 +1,13 @@
-﻿using EasySoft.Core.Sql.Assists;
+﻿using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
+using EasySoft.Core.Sql.Assists;
 using EasySoft.Core.Sql.Enums;
-using EasySoft.Core.Sql.Interfaces;
 
 namespace EasySoft.Core.Sql.Common;
 
+/// <summary>
+/// AssignField
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class AssignField<T> where T : new()
 {
     /// <summary>
@@ -21,15 +25,30 @@ public class AssignField<T> where T : new()
     /// </summary>
     public AssignFieldType AssignFieldType { get; set; }
 
+    /// <summary>
+    /// TransferExpression
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public string TransferExpression(out Type type)
     {
         return TransferAssist.GetTableAndColumnName(Expression, out type);
     }
 }
 
+/// <summary>
+/// AssignFieldAssist
+/// </summary>
 public static class AssignFieldAssist
 {
-    public static string Build<T>(IEnumerable<AssignField<T>> assignUpdates) where T : IEntityExtra, new()
+    /// <summary>
+    /// Build
+    /// </summary>
+    /// <param name="assignUpdates"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static string Build<T>(IEnumerable<AssignField<T>> assignUpdates) where T : IEntity, new()
     {
         var list = new List<string>();
 
@@ -49,7 +68,7 @@ public static class AssignFieldAssist
     /// </summary>
     /// <param name="assignField"></param>
     /// <returns></returns>
-    public static string Build<T>(AssignField<T> assignField) where T : IEntityExtra, new()
+    public static string Build<T>(AssignField<T> assignField) where T : IEntity, new()
     {
         return Build(new[]
         {
@@ -57,7 +76,13 @@ public static class AssignFieldAssist
         });
     }
 
-    public static string TransferAssignUpdate<T>(AssignField<T> assignField) where T : IEntityExtra, new()
+    /// <summary>
+    /// TransferAssignUpdate
+    /// </summary>
+    /// <param name="assignField"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static string TransferAssignUpdate<T>(AssignField<T> assignField) where T : IEntity, new()
     {
         return SqlAssist.TransferAssignField(assignField);
     }

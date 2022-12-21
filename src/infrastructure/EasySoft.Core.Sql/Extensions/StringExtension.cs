@@ -3,13 +3,22 @@ using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Enums;
 using EasySoft.Core.Sql.Interfaces;
 
-namespace EasySoft.Core.Sql.ExtensionMethods;
+namespace EasySoft.Core.Sql.Extensions;
 
+/// <summary>
+/// StringExtension
+/// </summary>
 public static class StringExtension
 {
-    public static string AllField(this string sql, params IEntityExtra[] models)
+    /// <summary>
+    /// all fields
+    /// </summary>
+    /// <param name="sql"></param>
+    /// <param name="models"></param>
+    /// <returns></returns>
+    public static string AllFields(this string sql, params IEntityExtra[] models)
     {
-        return SqlAssist.AllField(sql, models);
+        return SqlAssist.AllFields(sql, models);
     }
 
     #region Field

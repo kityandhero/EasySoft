@@ -20,6 +20,12 @@ public class AppSecurityConfig : BaseEntityTypeConfiguration<AppSecurity>
             .HasMaxLength(40)
             .HasDefaultValue(string.Empty);
 
+        builder.Property(x => x.SuperRoleRecentlyMaintainTime)
+            .HasDefaultValue(ConstCollection.DbDefaultDateTime);
+
+        builder.Property(x => x.SuperRoleNextMaintainTime)
+            .HasDefaultValue(ConstCollection.DbDefaultDateTime);
+
         builder.Property(x => x.Channel)
             .HasDefaultValue(0);
 

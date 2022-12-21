@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.Interfaces;
+using EasySoft.Core.Sql.Extensions;
 using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 using EasySoft.UtilityTools.Standard.Result.Factories;
 using EasySoft.UtilityTools.Standard.Result.Implements;
@@ -144,7 +145,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
                 .AppendFragment($" {(transferWrapperQuery ? " TOP 1 " : "")}{model.GetPrimaryKeyName()} ")
                 .From(model);
         else
-            query = SqlAssist.Select().AppendFragment(" TOP 1 ").AllField(model).From(model);
+            query = SqlAssist.Select().AppendFragment(" TOP 1 ").AllFields(model).From(model);
 
         if (conditions.Count > 0)
         {
@@ -168,7 +169,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
             }
 
         if (transferWrapperQuery)
-            query = SqlAssist.Select().AllField(model).From(model)
+            query = SqlAssist.Select().AllFields(model).From(model)
                 .AppendFragment($" WHERE {model.GetPrimaryKeyName()} = ({query})");
 
         if (_mapperTransaction == null)
@@ -1519,7 +1520,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
     public IList<T> SingleListEntity(ICollection<Condition<T>> conditions, IList<Sort<T>> sorts)
     {
         var model = new T();
-        var query = SqlAssist.Select().AllField(model).From(model);
+        var query = SqlAssist.Select().AllFields(model).From(model);
 
         if (conditions.Count > 0)
         {
@@ -1862,7 +1863,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
         var model = new T();
         var query = new StringBuilder();
 
-        var sqlCore = SqlAssist.SelectCount().From(model);
+        var sqlCore = SqlAssist.BuildSelectCount().From(model);
 
         sqlCore += " WHERE ";
 

@@ -1,9 +1,12 @@
 ﻿using EasySoft.Core.Sql.Assists;
 using EasySoft.Core.Sql.Enums;
-using EasySoft.Core.Sql.Interfaces;
 
 namespace EasySoft.Core.Sql.Common;
 
+/// <summary>
+/// Condition
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class Condition<T> where T : new()
 {
     /// <summary>
@@ -118,46 +121,5 @@ public class Condition<T> where T : new()
             return TransferAssist.GetColumnName(Expression, out type);
 
         throw new Exception("unknown ColumnTransferMode");
-    }
-}
-
-public static class ConditionAssist
-{
-    /// <summary>
-    /// 构建占位常量查询
-    /// </summary>
-    public static string PlaceholderCondition = " 1=1 ";
-
-    public static string Build<T>(IEnumerable<Condition<T>> conditions) where T : IEntityExtra, new()
-    {
-        var list = new List<string>();
-
-        var enumerable = conditions as Condition<T>[] ?? conditions.ToArray();
-
-        if (enumerable.Any())
-            foreach (var c in enumerable)
-                list.Add(SqlAssist.LinkCondition("", c));
-
-        if (list.Count == 0) throw new Exception("没有可以构造的Sql条件");
-
-        return $" WHERE {list.Join(" AND ")}";
-    }
-
-    /// <summary>
-    /// 生成条件
-    /// </summary>
-    /// <param name="condition"></param>
-    /// <returns></returns>
-    public static string Build<T>(Condition<T> condition) where T : IEntityExtra, new()
-    {
-        return Build(new[]
-        {
-            condition
-        });
-    }
-
-    public static string TransferCondition<T>(Condition<T> condition) where T : IEntityExtra, new()
-    {
-        return SqlAssist.TransferCondition(condition);
     }
 }

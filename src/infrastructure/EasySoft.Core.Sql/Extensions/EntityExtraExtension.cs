@@ -1,7 +1,10 @@
 ﻿using EasySoft.Core.Sql.Interfaces;
 
-namespace EasySoft.Core.Sql.ExtensionMethods;
+namespace EasySoft.Core.Sql.Extensions;
 
+/// <summary>
+/// EntityExtraExtension
+/// </summary>
 public static class EntityExtraExtension
 {
     /// <summary>

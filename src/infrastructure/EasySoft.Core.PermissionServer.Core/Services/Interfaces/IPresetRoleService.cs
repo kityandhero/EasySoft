@@ -5,9 +5,5 @@
 /// </summary>
 public interface IPresetRoleService
 {
-    /// <summary>
-    /// SaveAccessWayModelAsync
-    /// </summary>
-    /// <returns></returns>
-    Task ScanSuperRole();
+
 }

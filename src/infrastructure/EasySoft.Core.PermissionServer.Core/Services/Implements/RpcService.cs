@@ -1,16 +1,14 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Entities;
 using EasySoft.Core.PermissionServer.Core.Extensions;
 using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
-using EasySoft.Core.PermissionVerification.Entities;
-using EasySoft.UtilityTools.Standard.Result;
-using EasySoft.UtilityTools.Standard.Result.Implements;
+using EasySoft.UtilityTools.Standard.Enums;
 
 namespace EasySoft.Core.PermissionServer.Core.Services.Implements;
 
 /// <summary>
 /// PermissionService
 /// </summary>
-public class PermissionService : IPermissionService
+public class RpcService : IRpcService
 {
     private readonly IEventPublisher _eventPublisher;
 
@@ -30,7 +28,7 @@ public class PermissionService : IPermissionService
     /// <param name="roleGroupRepository"></param>
     /// <param name="presetRoleRepository"></param>
     /// <param name="accessWayRepository"></param>
-    public PermissionService(
+    public RpcService(
         IEventPublisher eventPublisher,
         IRepository<RoleGroup> roleGroupRepository,
         IRepository<PresetRole> presetRoleRepository,
@@ -103,7 +101,7 @@ public class PermissionService : IPermissionService
     }
 
     /// <inheritdoc />
-    public async Task<ExecutiveResult<AccessWayModel>> FindAccessWayModelAsync(string guidTag)
+    public async Task<ExecutiveResult<AccessWayModel>> FindAccessWayAsync(string guidTag)
     {
         var result = await _accessWayRepository.GetAsync(
             o => o.GuidTag == guidTag
@@ -113,33 +111,15 @@ public class PermissionService : IPermissionService
     }
 
     /// <inheritdoc />
-    public async Task SaveAccessWayModelAsync(AccessWayExchange accessWayExchange)
+    public async Task MaintainSuperRole(int channel)
     {
-        if (string.IsNullOrWhiteSpace(accessWayExchange.GuidTag)) return;
-
-        var resultGet = await _accessWayRepository.GetAsync(
-            o => o.GuidTag == accessWayExchange.GuidTag
+        var result = await _presetRoleRepository.GetAsync(
+            o => o.Channel == channel && o.WhetherSuper == Whether.Yes.ToInt()
         );
 
-        if (resultGet.Success) return;
+        if (result.Success) return;
 
-        var accessWay = new AccessWay
-        {
-            Name = accessWayExchange.Name.ToLower(),
-            GuidTag = accessWayExchange.GuidTag.ToLower(),
-            RelativePath = accessWayExchange.RelativePath.ToLower(),
-            Expand = accessWayExchange.Expand.ToLower(),
-            Group = accessWayExchange.Group.ToLower(),
-            Channel = accessWayExchange.Channel,
-            Status = 0,
-            Ip = accessWayExchange.Ip.ToLower(),
-            CreateTime = DateTimeOffset.Now.DateTime,
-            ModifyTime = DateTimeOffset.Now.DateTime
-        };
-
-        var resultAdd = await _accessWayRepository.AddAsync(accessWay);
-
-        if (!resultAdd.Success) throw new UnknownException(resultAdd.Message);
+        throw new NotImplementedException();
     }
 
     private static List<IRoleItem> GetCustomRoleItemList(RoleGroup roleGroup)

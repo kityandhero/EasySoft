@@ -1,6 +1,7 @@
 ﻿// Global using directives
 
 global using System.Collections;
+global using System.ComponentModel;
 global using System.ComponentModel.DataAnnotations.Schema;
 global using System.Data;
 global using System.Data.Common;

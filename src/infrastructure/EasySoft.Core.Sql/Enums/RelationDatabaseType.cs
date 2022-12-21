@@ -1,10 +1,13 @@
-﻿namespace EasySoft.Core.Sql.Enums
+﻿namespace EasySoft.Core.Sql.Enums;
+
+/// <summary>
+/// 关系型数据库类型
+/// </summary>
+public enum RelationDatabaseType
 {
     /// <summary>
-    /// 关系型数据库类型
+    /// SqlServer
     /// </summary>
-    public enum RelationDatabaseType
-    {
-        SqlServer = 100
-    }
+    [Description("SqlServer")]
+    SqlServer = 100
 }

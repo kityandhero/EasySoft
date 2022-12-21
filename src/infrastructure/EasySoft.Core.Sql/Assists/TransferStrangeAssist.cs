@@ -1,16 +1,33 @@
-﻿using EasySoft.Core.Sql.Common;
+﻿using EasySoft.Core.Infrastructure.Extensions;
+using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
+using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Enums;
-using EasySoft.Core.Sql.Interfaces;
 
 namespace EasySoft.Core.Sql.Assists;
 
+/// <summary>
+/// TransferStrangeAssist
+/// </summary>
 public static class TransferStrangeAssist
 {
+    /// <summary>
+    /// GetPropertyName
+    /// </summary>
+    /// <param name="propertyLambda"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static string GetPropertyName<T>(Expression<Func<T, object>> propertyLambda)
     {
         return GetPropertyName(propertyLambda, out Type _);
     }
 
+    /// <summary>
+    /// GetPropertyName
+    /// </summary>
+    /// <param name="propertyLambda"></param>
+    /// <param name="entityType"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static string GetPropertyName<T>(
         Expression<Func<T, object>> propertyLambda,
         out Type entityType
@@ -19,6 +36,13 @@ public static class TransferStrangeAssist
         return GetPropertyName(propertyLambda, out entityType, out var _);
     }
 
+    /// <summary>
+    /// GetPropertyName
+    /// </summary>
+    /// <param name="propertyLambda"></param>
+    /// <param name="propertyInfo"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static string GetPropertyName<T>(
         Expression<Func<T, object>> propertyLambda,
         out PropertyInfo propertyInfo
@@ -27,6 +51,15 @@ public static class TransferStrangeAssist
         return GetPropertyName(propertyLambda, out var _, out propertyInfo);
     }
 
+    /// <summary>
+    /// GetPropertyName
+    /// </summary>
+    /// <param name="propertyLambda"></param>
+    /// <param name="entityType"></param>
+    /// <param name="propertyInfo"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
     public static string GetPropertyName<T>(
         Expression<Func<T, object>> propertyLambda,
         out Type entityType,
@@ -94,7 +127,13 @@ public static class TransferStrangeAssist
 
     #region TransferCondition
 
-    public static string TransferCondition<T>(ConditionStrange<T> condition) where T : IEntityExtra, new()
+    /// <summary>
+    /// TransferCondition
+    /// </summary>
+    /// <param name="condition"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static string TransferCondition<T>(ConditionStrange<T> condition) where T : IEntity, new()
     {
         var transferResult = TransferConditionCore(condition);
 
@@ -103,14 +142,14 @@ public static class TransferStrangeAssist
         return $"({transferResult} {condition.CollaborationCondition})";
     }
 
-    private static string TransferConditionCore<T>(ConditionStrange<T> condition) where T : IEntityExtra, new()
+    private static string TransferConditionCore<T>(ConditionStrange<T> condition) where T : IEntity, new()
     {
         var p1 = condition.TransferExpression(out var type);
 
         {
             var m = type.Create();
 
-            var entity = m as IEntityExtra;
+            var entity = m as IEntity;
 
             var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
             var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();

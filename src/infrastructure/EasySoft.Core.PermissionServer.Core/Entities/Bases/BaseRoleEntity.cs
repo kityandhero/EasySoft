@@ -5,7 +5,7 @@ namespace EasySoft.Core.PermissionServer.Core.Entities.Bases;
 /// <summary>
 /// BaseRoleEntity
 /// </summary>
-public abstract class BaseRoleEntity : BaseEntity, IRoleEntity, IIp, IStatus, IOperate
+public abstract class BaseRoleEntity : BaseEntity, IRoleEntity, IChannel, IStatus, IIp, IOperate
 {
     /// <inheritdoc />
     public string Name { get; set; } = "";
@@ -24,6 +24,9 @@ public abstract class BaseRoleEntity : BaseEntity, IRoleEntity, IIp, IStatus, IO
 
     /// <inheritdoc />
     public int WhetherSuper { get; set; } = 0;
+
+    /// <inheritdoc />
+    public int Channel { get; set; }
 
     /// <inheritdoc />
     public int Status { get; set; } = 0;

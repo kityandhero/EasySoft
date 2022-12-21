@@ -4,6 +4,10 @@ using EasySoft.Core.Sql.Interfaces;
 
 namespace EasySoft.Core.Sql.Common;
 
+/// <summary>
+/// ConditionStrange
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class ConditionStrange<T> where T : new()
 {
     /// <summary>
@@ -26,10 +30,17 @@ public class ConditionStrange<T> where T : new()
     /// </summary>
     public string CollaborationCondition { get; private set; }
 
+    /// <summary>
+    /// ConditionStrange
+    /// </summary>
     public ConditionStrange() : this("")
     {
     }
 
+    /// <summary>
+    /// ConditionStrange
+    /// </summary>
+    /// <param name="collaborationCondition"></param>
     public ConditionStrange(string collaborationCondition)
     {
         CollaborationCondition = collaborationCondition;

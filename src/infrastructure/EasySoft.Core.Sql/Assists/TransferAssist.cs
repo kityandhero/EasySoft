@@ -1,10 +1,14 @@
-﻿using EasySoft.Core.Sql.Common;
+﻿using EasySoft.Core.Infrastructure.Extensions;
+using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
+using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Enums;
-using EasySoft.Core.Sql.Interfaces;
 using TypeExtensions = EasySoft.UtilityTools.Standard.Extensions.TypeExtensions;
 
 namespace EasySoft.Core.Sql.Assists;
 
+/// <summary>
+/// TransferAssist
+/// </summary>
 public static class TransferAssist
 {
     public static string GetTableName<T>(T entity)
@@ -489,7 +493,7 @@ public static class TransferAssist
 
     #region TransferCondition
 
-    public static string TransferCondition<T>(Condition<T> condition) where T : IEntityExtra, new()
+    public static string TransferCondition<T>(Condition<T> condition) where T : IEntity, new()
     {
         var transferResult = TransferConditionCore(condition);
 
@@ -498,13 +502,13 @@ public static class TransferAssist
         return $"({transferResult} {condition.CollaborationCondition})";
     }
 
-    private static string TransferConditionCore<T>(Condition<T> condition) where T : IEntityExtra, new()
+    private static string TransferConditionCore<T>(Condition<T> condition) where T : IEntity, new()
     {
         var p1 = condition.TransferExpression(out var type);
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -801,20 +805,20 @@ public static class TransferAssist
 
     #region TransferAssignUpdate
 
-    public static string TransferAssignField<T>(AssignField<T> assignField) where T : IEntityExtra, new()
+    public static string TransferAssignField<T>(AssignField<T> assignField) where T : IEntity, new()
     {
         var transferResult = TransferAssignUpdateCore(assignField);
 
         return transferResult;
     }
 
-    private static string TransferAssignUpdateCore<T>(AssignField<T> assignField) where T : IEntityExtra, new()
+    private static string TransferAssignUpdateCore<T>(AssignField<T> assignField) where T : IEntity, new()
     {
         var p1 = assignField.TransferExpression(out var type);
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -892,7 +896,7 @@ public static class TransferAssist
 
     #endregion
 
-    public static string TransferSort<T>(Sort<T> sort) where T : IEntityExtra, new()
+    public static string TransferSort<T>(Sort<T> sort) where T : IEntity, new()
     {
         return SqlAssist.TransferSort(sort);
     }
@@ -905,7 +909,7 @@ public static class TransferAssist
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -925,7 +929,7 @@ public static class TransferAssist
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -943,6 +947,12 @@ public static class TransferAssist
 
     #region TransferMaxField
 
+    /// <summary>
+    /// TransferMaxField
+    /// </summary>
+    /// <param name="fieldItem"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static string TransferMaxField<T>(FieldItem<T> fieldItem)
     {
         var f = GetTableAndColumnName(
@@ -953,7 +963,7 @@ public static class TransferAssist
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -967,6 +977,12 @@ public static class TransferAssist
         return f;
     }
 
+    /// <summary>
+    /// TransferMaxField
+    /// </summary>
+    /// <param name="fieldItemSpecial"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static string TransferMaxField<T>(FieldItemSpecial<T> fieldItemSpecial)
     {
         var f = GetTableAndColumnName(
@@ -977,7 +993,7 @@ public static class TransferAssist
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -995,13 +1011,19 @@ public static class TransferAssist
 
     #region TransferMinField
 
+    /// <summary>
+    /// TransferMinField
+    /// </summary>
+    /// <param name="fieldItem"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static string TransferMinField<T>(FieldItem<T> fieldItem)
     {
         var f = GetTableAndColumnName(fieldItem.PropertyLambda, out var type, out var propertyInfo);
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -1021,7 +1043,7 @@ public static class TransferAssist
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -1045,7 +1067,7 @@ public static class TransferAssist
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -1065,7 +1087,7 @@ public static class TransferAssist
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -1092,7 +1114,7 @@ public static class TransferAssist
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
         var fieldDecorateEnd = entity == null ? "" : entity.GetSqlFieldDecorateEnd();
@@ -1112,7 +1134,7 @@ public static class TransferAssist
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
         var fieldDecorateEnd = entity == null ? "" : entity.GetSqlFieldDecorateEnd();

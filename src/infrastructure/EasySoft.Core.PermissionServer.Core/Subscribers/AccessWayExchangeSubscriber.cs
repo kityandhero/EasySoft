@@ -9,24 +9,24 @@ public sealed class AccessWayExchangeSubscriber : ICapSubscribe
 {
     private readonly ILogger<AccessWayExchangeSubscriber> _logger;
     private readonly IWebHostEnvironment _environment;
-    private readonly IPermissionService _permissionService;
+    private readonly IAccessWayService _accessWayService;
 
     /// <summary>
     /// AccessWayExchangeSubscriber
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="environment"></param>
-    /// <param name="permissionService"></param>
+    /// <param name="accessWayService"></param>
     public AccessWayExchangeSubscriber(
         ILogger<AccessWayExchangeSubscriber> logger,
         IWebHostEnvironment environment,
-        IPermissionService permissionService
+        IAccessWayService accessWayService
     )
     {
         _logger = logger;
         _environment = environment;
 
-        _permissionService = permissionService;
+        _accessWayService = accessWayService;
     }
 
     /// <summary>
@@ -46,6 +46,6 @@ public sealed class AccessWayExchangeSubscriber : ICapSubscribe
             );
         }
 
-        await _permissionService.SaveAccessWayModelAsync(accessWayExchange);
+        await _accessWayService.SaveAccessWayAsync(accessWayExchange);
     }
 }
