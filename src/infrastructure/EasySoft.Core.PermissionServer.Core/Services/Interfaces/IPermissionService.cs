@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.PermissionVerification.Entities;
 using EasySoft.UtilityTools.Standard.Entities;
+using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.Core.PermissionServer.Core.Services.Interfaces;
 
@@ -20,7 +21,7 @@ public interface IPermissionService : IBusinessService
     /// </summary>
     /// <param name="guidTag"></param>
     /// <returns></returns>
-    Task<IList<AccessWayModel>> FindAccessWayModelAsync(string guidTag);
+    Task<ExecutiveResult<AccessWayModel>> FindAccessWayModelAsync(string guidTag);
 
     /// <summary>
     /// SaveAccessWayModelAsync

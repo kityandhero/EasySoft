@@ -1,7 +1,7 @@
 ﻿using EasySoft.Core.PermissionVerification.Clients;
 using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
 using EasySoft.Core.PermissionVerification.Entities;
-using EasySoft.UtilityTools.Standard.Assists;
+using EasySoft.UtilityTools.Core.Extensions;
 
 namespace EasySoft.Core.PermissionVerification.Detectors.Implements;
 
@@ -24,7 +24,7 @@ public class AccessWayDetector : IAccessWayDetector
     /// </summary>
     /// <param name="guidTag"></param>
     /// <returns></returns>
-    public async Task<IList<AccessWayModel>> Find(string guidTag)
+    public async Task<ExecutiveResult<AccessWayModel>> Find(string guidTag)
     {
         var appId = GeneralConfigAssist.GetAppId();
         var salt = AppSecurityAssist.GetSalt();
@@ -41,9 +41,9 @@ public class AccessWayDetector : IAccessWayDetector
             salt
         );
 
-        if (!apiResponse.IsSuccessStatusCode)
+        if (!apiResponse.IsSuccessStatusCode || apiResponse.Content == null)
             throw new UnknownException($"rpc {GetType().Name}.{nameof(Find)} call fail");
 
-        return apiResponse.Content ?? new List<AccessWayModel>();
+        return apiResponse.Content.ToExecutiveResult();
     }
 }

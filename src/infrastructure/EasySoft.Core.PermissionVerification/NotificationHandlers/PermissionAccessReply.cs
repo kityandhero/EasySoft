@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.PermissionVerification.Detectors;
-using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
+﻿using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
 using EasySoft.UtilityTools.Core.Extensions;
 
 namespace EasySoft.Core.PermissionVerification.NotificationHandlers;
@@ -40,9 +39,9 @@ public class PermissionAccessReply : INotificationHandler<PermissionAccessNotifi
 
         var accessWayPersistence = notification.AccessWay;
 
-        var accessWayModels = await _accessWayDetector.Find(accessWayPersistence.GuidTag);
+        var result = await _accessWayDetector.Find(accessWayPersistence.GuidTag);
 
-        if (accessWayModels.Count <= 0)
+        if (!result.Success || result.Data == null)
         {
             await AutofacAssist.Instance.Resolve<IAccessWayProducer>().SendAsync(accessWayPersistence);
 
@@ -57,7 +56,7 @@ public class PermissionAccessReply : INotificationHandler<PermissionAccessNotifi
         }
         else
         {
-            var accessWayModel = accessWayModels[0];
+            var accessWayModel = result.Data;
 
             if (accessWayModel.Name.ToLower() == accessWayPersistence.Name.ToLower() &&
                 accessWayModel.RelativePath.ToLower() == accessWayPersistence.RelativePath.ToLower() &&

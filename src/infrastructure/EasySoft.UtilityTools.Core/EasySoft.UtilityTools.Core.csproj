@@ -33,4 +33,7 @@
         <ProjectReference Include="..\EasySoft.Dependence.Core\EasySoft.Dependence.Core.csproj" />
         <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Results" />
+    </ItemGroup>
 </Project>

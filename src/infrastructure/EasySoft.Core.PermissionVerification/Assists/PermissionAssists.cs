@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.PermissionVerification.Attributes;
-using EasySoft.Core.PermissionVerification.Detectors;
 using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
 using EasySoft.Core.PermissionVerification.Entities;
 
@@ -124,9 +123,9 @@ public static class PermissionAssists
 
         while (AccessWayModelScanQuery.TryDequeue(out var accessWayModel))
         {
-            var accessWayModels = await accessWayDetector.Find(accessWayModel.GuidTag);
+            var result = await accessWayDetector.Find(accessWayModel.GuidTag);
 
-            if (accessWayModels.Count > 0) continue;
+            if (result.Success) continue;
 
             await accessWayProducer.SendAsync(accessWayModel);
 

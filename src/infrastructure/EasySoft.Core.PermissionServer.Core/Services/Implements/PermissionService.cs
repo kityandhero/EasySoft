@@ -2,6 +2,7 @@
 using EasySoft.Core.PermissionServer.Core.Extensions;
 using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
 using EasySoft.Core.PermissionVerification.Entities;
+using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.Core.PermissionServer.Core.Services.Implements;
 
@@ -101,18 +102,13 @@ public class PermissionService : IPermissionService
     }
 
     /// <inheritdoc />
-    public async Task<IList<AccessWayModel>> FindAccessWayModelAsync(string guidTag)
+    public async Task<ExecutiveResult<AccessWayModel>> FindAccessWayModelAsync(string guidTag)
     {
         var result = await _accessWayRepository.GetAsync(
             o => o.GuidTag == guidTag
         );
 
-        if (!result.Success || result.Data == null) return new List<AccessWayModel>();
-
-        return new List<AccessWayModel>
-        {
-            result.Data.ToAccessWayModel()
-        };
+        return result.ToExecutiveResult(result.Data?.ToAccessWayModel());
     }
 
     /// <inheritdoc />

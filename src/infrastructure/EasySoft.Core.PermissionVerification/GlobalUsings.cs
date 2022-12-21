@@ -19,6 +19,7 @@ global using EasySoft.UtilityTools.Core.Attributes;
 global using EasySoft.UtilityTools.Core.Channels;
 global using EasySoft.UtilityTools.Core.Interceptors;
 global using EasySoft.UtilityTools.Core.Results;
+global using EasySoft.UtilityTools.Standard.Assists;
 global using EasySoft.UtilityTools.Standard.Attributes;
 global using EasySoft.UtilityTools.Standard.Competence;
 global using EasySoft.UtilityTools.Standard.Entities;

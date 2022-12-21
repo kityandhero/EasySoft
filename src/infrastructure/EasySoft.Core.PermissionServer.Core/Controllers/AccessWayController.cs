@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
 using EasySoft.Core.PermissionVerification.Entities;
+using EasySoft.UtilityTools.Core.Results.Implements;
 using EasySoft.UtilityTools.Standard.Entities;
 
 namespace EasySoft.Core.PermissionServer.Core.Controllers;
@@ -28,8 +29,10 @@ public class AccessWayController : CustomControllerBase
     /// <returns></returns>
     [Route("find")]
     [HttpPost]
-    public async Task<IList<AccessWayModel>> Find(string guidTag)
+    public async Task<RpcResult<AccessWayModel>> Find(string guidTag)
     {
-        return await _permissionService.FindAccessWayModelAsync(guidTag);
+        var result = await _permissionService.FindAccessWayModelAsync(guidTag);
+
+        return result.ToRpcResult();
     }
 }

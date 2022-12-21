@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.PermissionVerification.Entities;
+using EasySoft.UtilityTools.Core.Results.Implements;
 using Refit;
 
 namespace EasySoft.Core.PermissionVerification.Clients;
@@ -17,7 +18,7 @@ public interface IPermissionClient
     /// <param name="originAppSalt">请求源混淆字符串</param>
     /// <returns></returns>
     [Post("/accessWay/find")]
-    public Task<ApiResponse<IList<AccessWayModel>>> FindAccessWayModel(
+    public Task<ApiResponse<RpcResult<AccessWayModel>>> FindAccessWayModel(
         string guidTag,
         [Header("originId")] string originAppId,
         [Header("originSign")] string originAppSign,
@@ -33,7 +34,7 @@ public interface IPermissionClient
     /// <param name="originAppSalt">请求源混淆字符串</param>
     /// <returns></returns>
     [Post("/competenceEntity/getCollection")]
-    Task<ApiResponse<List<CompetenceEntity>>> GetCompetenceEntityCollectionAsync(
+    Task<ApiResponse<RpcResult<List<CompetenceEntity>>>> GetCompetenceEntityCollectionAsync(
         long roleGroupId,
         [Header("originId")] string originAppId,
         [Header("originSign")] string originAppSign,
