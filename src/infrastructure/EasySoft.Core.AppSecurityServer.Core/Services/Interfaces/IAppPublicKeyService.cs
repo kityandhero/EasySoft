@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.AppSecurityServer.Core.DataTransferObjects;
-
-namespace EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
+﻿namespace EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
 
 /// <summary>
 /// 应用校验公钥服务
@@ -13,9 +11,15 @@ public interface IAppPublicKeyService : IBusinessService
     /// <returns></returns>
     Task<ExecutiveResult<AppPublicKeyDto>> GetAsync();
 
-    /// <summary>
+    /// <summary>       
     /// 刷新校验公钥
     /// </summary>
     /// <returns></returns>
     Task<ExecutiveResult<AppPublicKeyDto>> RefreshAsync();
+
+    /// <summary>
+    /// 检测公钥, 用于内部数据完善
+    /// </summary>
+    /// <returns></returns>
+    Task DetectionAsync();
 }

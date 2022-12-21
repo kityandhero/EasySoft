@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Entities;
+using EasySoft.Core.PermissionServer.Core.Extensions;
 using EasySoft.Core.PermissionServer.Core.Services.Implements;
 using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
 using EasySoft.Core.PermissionServer.Core.Subscribers;
@@ -27,10 +28,7 @@ public static class PermissionServerAssist
         ApplicationConfigure.AddWebApplicationBuilderExtraActions(
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("")
-                .SetAction(applicationBuilder =>
-                {
-                    applicationBuilder.AddCapSubscriber<AccessWayExchangeSubscriber>();
-                })
+                .SetAction(applicationBuilder => { applicationBuilder.AddPermissionServerCore(); })
         );
     }
 }
