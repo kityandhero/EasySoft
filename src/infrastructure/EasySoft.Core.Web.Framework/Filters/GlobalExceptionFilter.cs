@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.Web.Framework.Filters;
+﻿using EasySoft.UtilityTools.Core.Results.Implements;
+
+namespace EasySoft.Core.Web.Framework.Filters;
 
 /// <summary>
 /// GlobalExceptionFilter

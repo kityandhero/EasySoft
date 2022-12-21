@@ -62,7 +62,7 @@ public class AppSecurityDetector : IAppSecurityDetector
 
         var apiResponse = await _appSecurityClient.VerifyAsync(appSecurityDto);
 
-        if (!apiResponse.IsSuccessStatusCode)
+        if (!apiResponse.IsSuccessStatusCode || apiResponse.Content == null)
         {
             var message = $"rpc {GetType().Name}.{nameof(Verify)} call fail";
 
@@ -71,18 +71,18 @@ public class AppSecurityDetector : IAppSecurityDetector
             throw new UnknownException(message);
         }
 
-        var list = apiResponse.Content ?? new List<AppPublicKeyDto>();
+        var result = apiResponse.Content;
 
-        if (!list.Any())
-        {
-            var message = $"rpc {GetType().Name}.{nameof(Verify)} get none AppPublicKey.";
+        // if (!result.Success || result.Data == null)
+        // {
+        //     var message = $"rpc get none AppPublicKey -> {result.Message}.";
+        //
+        //     logger.LogAdvanceError(message);
+        //
+        //     throw new UnknownException(message);
+        // }
 
-            logger.LogAdvanceError(message);
-
-            throw new UnknownException(message);
-        }
-
-        AppSecurityClientConfigure.SetPublicKey(list.First().Key);
+        // AppSecurityClientConfigure.SetPublicKey(result.Data.Key);
 
         var appSecurityFirstVerifyNotification = new AppSecurityFirstVerifyNotification(true);
 

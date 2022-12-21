@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Simple.Single.Application.Areas.AreaTest.Controllers;
+﻿using EasySoft.UtilityTools.Core.Results.Interfaces;
+
+namespace EasySoft.Simple.Single.Application.Areas.AreaTest.Controllers;
 
 /// <summary>
 /// AreaTestController

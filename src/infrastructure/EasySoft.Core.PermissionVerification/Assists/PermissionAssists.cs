@@ -120,13 +120,15 @@ public static class PermissionAssists
 
     private static async Task ExecSaveAsync(IAccessWayDetector accessWayDetector)
     {
+        var accessWayProducer = AutofacAssist.Instance.Resolve<IAccessWayProducer>();
+
         while (AccessWayModelScanQuery.TryDequeue(out var accessWayModel))
         {
             var accessWayModels = await accessWayDetector.Find(accessWayModel.GuidTag);
 
             if (accessWayModels.Count > 0) continue;
 
-            await AutofacAssist.Instance.Resolve<IAccessWayProducer>().SendAsync(accessWayModel);
+            await accessWayProducer.SendAsync(accessWayModel);
 
             if (EnvironmentAssist.IsDevelopment())
                 LogAssist.Prompt($"Send {nameof(AccessWayModel)} -> {accessWayModel.BuildInfo()}.");

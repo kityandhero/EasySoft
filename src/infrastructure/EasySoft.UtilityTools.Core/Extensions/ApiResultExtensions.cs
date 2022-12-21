@@ -1,4 +1,5 @@
 ﻿using EasySoft.UtilityTools.Core.Results;
+using EasySoft.UtilityTools.Core.Results.Implements;
 
 namespace EasySoft.UtilityTools.Core.Extensions;
 

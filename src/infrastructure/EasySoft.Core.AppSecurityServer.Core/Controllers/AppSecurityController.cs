@@ -1,4 +1,7 @@
 ﻿using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
+using EasySoft.UtilityTools.Core.Results.Factories;
+using EasySoft.UtilityTools.Core.Results.Implements;
+using EasySoft.UtilityTools.Core.Results.Interfaces;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Controllers;
 
@@ -9,6 +12,7 @@ namespace EasySoft.Core.AppSecurityServer.Core.Controllers;
 public class AppSecurityController : CustomControllerBase
 {
     private readonly ILoggerFactory _loggerFactory;
+    private readonly IWebHostEnvironment _environment;
     private readonly IAppPublicKeyService _appPublicKeyService;
     private readonly IAppSecurityService _appSecurityService;
 
@@ -16,15 +20,18 @@ public class AppSecurityController : CustomControllerBase
     /// EntranceController
     /// </summary>
     /// <param name="loggerFactory"></param>
+    /// <param name="environment"></param>
     /// <param name="appPublicKeyService"></param>
     /// <param name="appSecurityService"></param>
     public AppSecurityController(
         ILoggerFactory loggerFactory,
+        IWebHostEnvironment environment,
         IAppPublicKeyService appPublicKeyService,
         IAppSecurityService appSecurityService
     )
     {
         _loggerFactory = loggerFactory;
+        _environment = environment;
         _appPublicKeyService = appPublicKeyService;
         _appSecurityService = appSecurityService;
     }
@@ -36,7 +43,7 @@ public class AppSecurityController : CustomControllerBase
     /// <returns></returns>
     [Route("verify")]
     [HttpPost]
-    public async Task<IList<AppSecurityDto>> Verify([FromBody] AppSecurityDto appSecurityDto)
+    public async Task<RpcResult<AppPublicKeyDto>> Verify([FromBody] AppSecurityDto appSecurityDto)
     {
         try
         {
@@ -44,32 +51,58 @@ public class AppSecurityController : CustomControllerBase
 
             if (!resultVerify.Success)
             {
-                _loggerFactory.CreateLogger<object>().LogAdvanceError(resultVerify.Message);
+                if (_environment.IsDevelopment())
+                    _loggerFactory.CreateLogger<object>().LogAdvanceError(resultVerify.Message);
 
-                return new List<AppSecurityDto>();
+                // return new List<AppPublicKeyDto> { new() };
+                return RpcResultFactory.CreateFromReturnMessage<AppPublicKeyDto>(
+                    ReturnMessage.NoData.ToMessage()
+                );
+
+                return new RpcResult<AppPublicKeyDto>()
+                {
+                    Code = ReturnCode.NoData.ToInt(),
+                    Success = false,
+                    Message = resultVerify.Message,
+                    Data = new AppPublicKeyDto()
+                };
             }
 
             if (resultVerify.Data == null)
             {
-                _loggerFactory.CreateLogger<object>().LogAdvanceError(
-                    $" appid {appSecurityDto.AppId} do not exist."
+                var message = $"appid {appSecurityDto.AppId} do not exist.";
+
+                if (_environment.IsDevelopment())
+                    _loggerFactory.CreateLogger<object>().LogAdvanceError(message);
+
+                // return new List<AppPublicKeyDto> { new() };
+
+                return RpcResultFactory.CreateFromReturnMessage<AppPublicKeyDto>(
+                    ReturnMessage.NoData
                 );
 
-                return new List<AppSecurityDto>();
+                // return new ApiResult<AppPublicKeyDto>(ReturnCode.NoData)
+                // {
+                //     Message = message,
+                //     Data = new AppPublicKeyDto()
+                // };
             }
-
-            var data = resultVerify.Data;
 
             var resultGetAppPublicKey = await _appPublicKeyService.GetAsync();
 
-            if (!resultGetAppPublicKey.Success || resultGetAppPublicKey.Data == null) return new List<AppSecurityDto>();
+            // if (!resultGetAppPublicKey.Success || resultGetAppPublicKey.Data == null)
+            //     return new List<AppPublicKeyDto> { new() };
 
-            data.PublicKey = resultGetAppPublicKey.Data.Key;
+            // return new List<AppPublicKeyDto> { resultGetAppPublicKey.Data };
 
-            return new List<AppSecurityDto>
-            {
-                data
-            };
+            return RpcResultFactory.CreateSuccess(
+                resultGetAppPublicKey.Data
+            );
+
+            // return new ApiResult<AppPublicKeyDto>(ReturnCode.Ok)
+            // {
+            //     Data = resultGetAppPublicKey.Data
+            // };
         }
         catch (Exception e)
         {

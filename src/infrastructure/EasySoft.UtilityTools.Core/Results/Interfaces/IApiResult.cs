@@ -1,9 +1,9 @@
-﻿namespace EasySoft.UtilityTools.Core.Results;
+﻿namespace EasySoft.UtilityTools.Core.Results.Interfaces;
 
 /// <summary>
 /// IApiResult
 /// </summary>
-public interface IApiResult : IApiResult<object, object>
+public interface IApiResult : IApiResult<object>
 {
 }
 

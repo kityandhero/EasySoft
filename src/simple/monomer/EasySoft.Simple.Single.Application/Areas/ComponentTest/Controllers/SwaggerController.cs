@@ -1,4 +1,6 @@
 ﻿using EasySoft.Simple.Single.Application.DataTransfer;
+using EasySoft.UtilityTools.Core.Results.Implements;
+using EasySoft.UtilityTools.Core.Results.Interfaces;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 

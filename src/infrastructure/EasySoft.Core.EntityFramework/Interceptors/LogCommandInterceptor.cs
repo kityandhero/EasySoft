@@ -49,7 +49,7 @@ public class LogCommandInterceptor : DbCommandInterceptor
     {
         if (!GeneralConfigAssist.GetRemoteSqlExecutionRecordSwitch()) return;
 
-        var sql = command.CommandText;
+        var sql = command.CommandText.Replace("\r\n", " ");
 
         if (sql.ToLower().Contains("insert", StringComparison.OrdinalIgnoreCase)) return;
 

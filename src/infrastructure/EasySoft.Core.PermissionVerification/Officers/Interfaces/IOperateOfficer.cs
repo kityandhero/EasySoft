@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.PermissionVerification.Officers.Interfaces;
+﻿using EasySoft.UtilityTools.Core.Results.Implements;
+
+namespace EasySoft.Core.PermissionVerification.Officers.Interfaces;
 
 /// <summary>
 /// IOperateOfficer

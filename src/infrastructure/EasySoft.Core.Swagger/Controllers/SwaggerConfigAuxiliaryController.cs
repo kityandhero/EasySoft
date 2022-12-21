@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.Swagger.ConfigAssist;
 using EasySoft.Core.Swagger.ConfigCollection;
+using EasySoft.UtilityTools.Core.Results.Interfaces;
 
 namespace EasySoft.Core.Swagger.Controllers;
 

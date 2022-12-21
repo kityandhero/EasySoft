@@ -1,4 +1,6 @@
 ﻿using EasySoft.Core.Swagger.Configures;
+using EasySoft.UtilityTools.Core.Results.Implements;
+using EasySoft.UtilityTools.Core.Results.Interfaces;
 
 namespace EasySoft.Core.Swagger.DocumentFilters;
 

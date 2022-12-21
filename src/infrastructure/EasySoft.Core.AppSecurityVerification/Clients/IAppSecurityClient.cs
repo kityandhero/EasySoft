@@ -1,4 +1,7 @@
-﻿namespace EasySoft.Core.AppSecurityVerification.Clients;
+﻿using EasySoft.UtilityTools.Core.Results.Implements;
+using EasySoft.UtilityTools.Core.Results.Interfaces;
+
+namespace EasySoft.Core.AppSecurityVerification.Clients;
 
 /// <summary>
 /// IPermissionClient
@@ -11,5 +14,5 @@ public interface IAppSecurityClient
     /// <param name="appSecurityDto"></param>
     /// <returns></returns>
     [Post("/appSecurity/verify")]
-    public Task<ApiResponse<IList<AppPublicKeyDto>>> VerifyAsync([Body] AppSecurityDto appSecurityDto);
+    public Task<ApiResponse<RpcResult<AppPublicKeyDto>>> VerifyAsync([Body] AppSecurityDto appSecurityDto);
 }

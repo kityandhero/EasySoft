@@ -1,4 +1,5 @@
 ﻿using EasySoft.Simple.Tradition.Client.WebApi.Areas.Users.Controllers.Bases;
+using EasySoft.UtilityTools.Core.Results.Interfaces;
 
 namespace EasySoft.Simple.Tradition.Client.WebApi.Areas.Users.Controllers;
 

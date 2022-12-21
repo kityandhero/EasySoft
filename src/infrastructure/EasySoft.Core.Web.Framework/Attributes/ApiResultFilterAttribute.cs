@@ -1,4 +1,7 @@
-﻿namespace EasySoft.Core.Web.Framework.Attributes;
+﻿using EasySoft.UtilityTools.Core.Results.Implements;
+using EasySoft.UtilityTools.Core.Results.Interfaces;
+
+namespace EasySoft.Core.Web.Framework.Attributes;
 
 public sealed class ApiResultFilterAttribute : ActionFilterAttribute
 {

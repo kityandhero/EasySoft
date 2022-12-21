@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.JsonWebToken.Filters;
+﻿using EasySoft.UtilityTools.Core.Results.Implements;
+
+namespace EasySoft.Core.JsonWebToken.Filters;
 
 public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
 {

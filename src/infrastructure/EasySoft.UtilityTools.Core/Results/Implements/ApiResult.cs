@@ -1,11 +1,12 @@
-﻿using EasySoft.UtilityTools.Standard.Extensions;
+﻿using EasySoft.UtilityTools.Core.Results.Interfaces;
+using EasySoft.UtilityTools.Standard.Extensions;
 
-namespace EasySoft.UtilityTools.Core.Results;
+namespace EasySoft.UtilityTools.Core.Results.Implements;
 
 /// <summary>
 /// ApiResult
 /// </summary>
-public class ApiResult : ApiResult<object, object>, IApiResult
+public class ApiResult : ApiResult<object>, IApiResult
 {
     /// <summary>
     /// CustomDataResult
@@ -169,20 +170,13 @@ public class ApiResult<TData, TExtraData> : ActionResult, IApiResult<TData, TExt
         ExtraData = extraData;
     }
 
-    /// <summary>
-    /// set camelCase
-    /// </summary>
-    /// <param name="camelCase"></param>
-    /// <returns></returns>
+    /// <inheritdoc />
     public void SetCamelCase(bool camelCase)
     {
         _camelCase = camelCase;
     }
 
-    /// <summary>
-    /// 获取是否使用 camelCase
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc />
     public bool GetCamelCase()
     {
         return _camelCase;
