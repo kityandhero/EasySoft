@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.AppSecurityServer.Core.Entities;
+using EasySoft.Core.AppSecurityServer.Core.Extensions;
 using EasySoft.Core.AppSecurityServer.Core.Services.Implements;
 using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
 
@@ -19,5 +20,12 @@ public static class AppSecurityServerAssist
 
         BusinessServiceConfigure.AddBusinessServiceInterfaceAssembly(typeof(IAppSecurityService).Assembly);
         BusinessServiceConfigure.AddBusinessServiceImplementationAssembly(typeof(AppSecurityService).Assembly);
+
+        // 配置额外的构建项目
+        ApplicationConfigure.AddWebApplicationBuilderExtraActions(
+            new ExtraAction<WebApplicationBuilder>()
+                .SetName("")
+                .SetAction(applicationBuilder => { applicationBuilder.AddAppSecurityServerCore(); })
+        );
     }
 }

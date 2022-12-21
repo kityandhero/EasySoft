@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Queues;
-using EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
-using Microsoft.Extensions.DependencyInjection;
+﻿using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Extensions;
 
@@ -9,41 +7,54 @@ namespace EasySoft.Core.AppSecurityServer.Core.Extensions;
 /// </summary>
 internal static class WebApplicationBuilderExtensions
 {
+    private const int DetectionInterval = 60000;
+
     /// <summary>
     /// add permission server core logic
     /// </summary>
     /// <param name="builder"></param>    
     /// <returns></returns>
-    internal static WebApplicationBuilder AddPermissionServerCore(
+    internal static WebApplicationBuilder AddAppSecurityServerCore(
         this WebApplicationBuilder builder
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddPermissionServerCore)}."
+            $"{nameof(AddAppSecurityServerCore)}."
         );
 
-        ApplicationConfigure.AddTimer(
-            60000,
-            (serviceProvider, e) =>
-            {
-                var environment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
-
-                if (environment.IsDevelopment())
-                {
-                    var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<object>();
-
-                    logger.LogAdvancePrompt(
-                        $"Exec send sql execution record, count {SqlLogInnerQueue.GetQueue().Count}."
-                    );
-                }
-
-                var sqlExecutionRecordProducer = serviceProvider.GetRequiredService<ISqlExecutionRecordProducer>();
-
-                while (SqlLogInnerQueue.GetQueue().TryDequeue(out var sqlExecutionRecord))
-                    sqlExecutionRecordProducer.SendAsync(sqlExecutionRecord);
-            }
-        );
+        builder.AddDetectionAppPublicKey();
 
         return builder;
+    }
+
+    /// <summary>
+    /// add permission server core logic
+    /// </summary>
+    /// <param name="builder"></param>    
+    /// <returns></returns>
+    private static WebApplicationBuilder AddDetectionAppPublicKey(
+        this WebApplicationBuilder builder
+    )
+    {
+        ApplicationConfigure.AddTimer(DetectionInterval, DetectionAppPublicKey);
+
+        return builder;
+    }
+
+    private static async void DetectionAppPublicKey(IServiceProvider serviceProvider, ElapsedEventArgs e)
+    {
+        var environment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
+
+        if (environment.IsDevelopment())
+        {
+            var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<object>();
+
+            logger.LogAdvancePrompt(
+                $"Detection app public key, interval {DetectionInterval} , time {e.SignalTime.ToYearMonthDayHourMinuteSecond()}.");
+        }
+
+        var appPublicKeyService = serviceProvider.GetRequiredService<IAppPublicKeyService>();
+
+        await appPublicKeyService.DetectionAsync();
     }
 }
