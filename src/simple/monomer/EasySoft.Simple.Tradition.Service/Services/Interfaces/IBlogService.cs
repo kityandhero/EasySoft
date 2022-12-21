@@ -1,5 +1,6 @@
 ﻿using EasySoft.Simple.Tradition.Data.DataTransferObjects;
 using EasySoft.Simple.Tradition.Data.Entities;
+using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Simple.Tradition.Service.Services.Interfaces;
 

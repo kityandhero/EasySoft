@@ -2,6 +2,7 @@
 using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
 using EasySoft.Core.PermissionVerification.Entities;
 using EasySoft.UtilityTools.Core.Extensions;
+using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.PermissionVerification.Detectors.Implements;
 

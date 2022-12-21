@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.JsonWebToken.Assists;
+﻿using EasySoft.UtilityTools.Standard.Result.Implements;
+
+namespace EasySoft.Core.JsonWebToken.Assists;
 
 public static class ActualOperatorAssist
 {

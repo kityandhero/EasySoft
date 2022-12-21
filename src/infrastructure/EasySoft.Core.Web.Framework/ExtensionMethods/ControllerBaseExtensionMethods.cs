@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.Web.Framework.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Standard.Result.Implements;
+
+namespace EasySoft.Core.Web.Framework.ExtensionMethods;
 
 public static class ControllerBaseExtensionMethods
 {

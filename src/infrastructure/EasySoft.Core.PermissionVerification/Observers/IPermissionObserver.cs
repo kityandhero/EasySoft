@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.PermissionVerification.Observers;
+﻿using EasySoft.UtilityTools.Standard.Result.Implements;
+
+namespace EasySoft.Core.PermissionVerification.Observers;
 
 /// <summary>
 /// IPermissionObserver

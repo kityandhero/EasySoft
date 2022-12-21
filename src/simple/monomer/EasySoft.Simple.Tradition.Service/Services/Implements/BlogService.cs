@@ -2,6 +2,7 @@
 using EasySoft.Simple.Tradition.Data.Entities;
 using EasySoft.Simple.Tradition.Data.ExtensionMethods;
 using EasySoft.Simple.Tradition.Service.Services.Interfaces;
+using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Simple.Tradition.Service.Services.Implements;
 

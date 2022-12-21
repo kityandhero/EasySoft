@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.EasyCaching.ConfigAssist;
 using EasySoft.Core.EasyCaching.Entities;
 using EasySoft.UtilityTools.Standard.Enums;
+using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.EasyCaching.Operators;
 

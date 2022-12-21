@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
+﻿using EasySoft.UtilityTools.Standard.Result.Implements;
+
+namespace EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
 
 /// <summary>
 /// 应用校验公钥服务

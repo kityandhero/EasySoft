@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.MinIO.Assists;
+﻿using EasySoft.UtilityTools.Standard.Result.Implements;
+
+namespace EasySoft.Core.MinIO.Assists;
 
 public static class MinioClientAssist
 {

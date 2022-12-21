@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.Interfaces;
 using EasySoft.UtilityTools.Standard.Entities.Interfaces;
+using EasySoft.UtilityTools.Standard.Result.Implements;
 using SqlExecuteType = EasySoft.UtilityTools.Standard.Enums.SqlExecuteType;
 
 namespace EasySoft.Core.Dapper.Base;

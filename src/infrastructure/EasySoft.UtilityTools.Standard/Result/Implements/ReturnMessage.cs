@@ -1,32 +1,25 @@
 ﻿using EasySoft.UtilityTools.Standard.Attributes;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.Extensions;
+using EasySoft.UtilityTools.Standard.Result.Interfaces;
 
-namespace EasySoft.UtilityTools.Standard.Result;
+namespace EasySoft.UtilityTools.Standard.Result.Implements;
 
 /// <summary>
 /// ReturnMessage
 /// </summary>
-public class ReturnMessage
+public class ReturnMessage : IReturnMessage
 {
-    /// <summary>
-    /// Success
-    /// </summary>
+    /// <inheritdoc />
     public bool Success { get; set; }
 
-    /// <summary>
-    /// Code
-    /// </summary>
+    /// <inheritdoc />
     public int Code { get; set; }
 
-    /// <summary>
-    /// Message
-    /// </summary>
+    /// <inheritdoc />
     public string Message { get; set; }
 
-    /// <summary>
-    /// Extra
-    /// </summary>
+    /// <inheritdoc />
     public object Extra { get; set; }
 
     /// <summary>

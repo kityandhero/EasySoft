@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.Data.Repositories;
+﻿using EasySoft.UtilityTools.Standard.Result.Implements;
+
+namespace EasySoft.Core.Data.Repositories;
 
 /// <summary>
 /// IRepository

@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.CacheCore.interfaces;
+﻿using EasySoft.UtilityTools.Standard.Result.Implements;
+
+namespace EasySoft.Core.CacheCore.interfaces;
 
 public interface ICacheOperator
 {

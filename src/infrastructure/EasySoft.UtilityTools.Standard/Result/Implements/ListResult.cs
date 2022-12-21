@@ -1,6 +1,6 @@
 ﻿using EasySoft.UtilityTools.Standard.Enums;
 
-namespace EasySoft.UtilityTools.Standard.Result;
+namespace EasySoft.UtilityTools.Standard.Result.Implements;
 
 /// <summary>
 /// ListResult

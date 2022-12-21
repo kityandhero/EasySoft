@@ -1,11 +1,12 @@
 ﻿using EasySoft.UtilityTools.Standard.Enums;
+using EasySoft.UtilityTools.Standard.Result.Interfaces;
 
-namespace EasySoft.UtilityTools.Standard.Result;
+namespace EasySoft.UtilityTools.Standard.Result.Implements;
 
 /// <summary>
 /// BaseExecutiveResult
 /// </summary>
-public abstract class BaseExecutiveResult
+public abstract class BaseExecutiveResult : IExecutiveResult
 {
     /// <summary>
     /// 是否成功

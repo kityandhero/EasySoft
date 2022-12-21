@@ -2,6 +2,7 @@
 using EasySoft.Simple.WebLog.Application.Contracts.DataTransferObjects;
 using EasySoft.Simple.WebLog.Domain.Aggregates.BlogAggregate;
 using EasySoft.UtilityTools.Standard.Result;
+using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Simple.WebLog.Application.Contracts.Services;
 

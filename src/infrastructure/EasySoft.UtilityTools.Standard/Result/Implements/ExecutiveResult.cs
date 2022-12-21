@@ -1,6 +1,7 @@
 ﻿using EasySoft.UtilityTools.Standard.Enums;
+using EasySoft.UtilityTools.Standard.Result.Interfaces;
 
-namespace EasySoft.UtilityTools.Standard.Result;
+namespace EasySoft.UtilityTools.Standard.Result.Implements;
 
 /// <inheritdoc />
 public class ExecutiveResult : ExecutiveResult<object>
@@ -19,11 +20,9 @@ public class ExecutiveResult : ExecutiveResult<object>
 /// <summary>
 /// 执行结果，用于返回方法等的执行结果判断
 /// </summary>
-public class ExecutiveResult<T> : BaseExecutiveResult
+public class ExecutiveResult<T> : BaseExecutiveResult, IExecutiveResult<T>
 {
-    /// <summary>
-    /// 数据  
-    /// </summary>
+    /// <inheritdoc />
     public T? Data { get; set; }
 
     /// <summary>
