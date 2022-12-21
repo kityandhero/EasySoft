@@ -8,8 +8,8 @@ public interface ICompetenceDetector
     /// <summary>
     /// 获取权限实体集合
     /// </summary>
-    /// <param name="guidTag"></param>
+    /// <param name="roleGroupId"></param>
     /// <returns></returns>
     [LogRecord]
-    public Task<IList<CompetenceEntity>> GetCompetenceEntityCollection(string guidTag);
+    public Task<IList<CompetenceEntity>> GetCompetenceEntityCollection(long roleGroupId);
 }

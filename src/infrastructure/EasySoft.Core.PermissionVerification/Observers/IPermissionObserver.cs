@@ -21,7 +21,7 @@ public interface IPermissionObserver
     /// GetCompetenceEntityCollection
     /// </summary>
     /// <returns></returns>
-    public Task<List<CompetenceEntity>> GetCompetenceEntityCollectionAsync();
+    public Task<IList<CompetenceEntity>> GetCompetenceEntityCollectionAsync();
 
     /// <summary>
     /// CheckAccessPermission

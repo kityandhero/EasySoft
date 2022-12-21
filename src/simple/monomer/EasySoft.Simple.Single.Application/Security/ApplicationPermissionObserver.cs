@@ -32,7 +32,7 @@ public class ApplicationPermissionObserver : PermissionObserverCore
     /// </summary>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public override Task<List<CompetenceEntity>> GetCompetenceEntityCollectionAsync()
+    public override Task<IList<CompetenceEntity>> GetCompetenceEntityCollectionAsync()
     {
         throw new NotImplementedException();
     }

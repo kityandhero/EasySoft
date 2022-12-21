@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Attributes;
-
-namespace EasySoft.Core.AppSecurityVerification.Detectors;
+﻿namespace EasySoft.Core.AppSecurityVerification.Detectors.Interfaces;
 
 /// <summary>
 /// 应用安全探测器

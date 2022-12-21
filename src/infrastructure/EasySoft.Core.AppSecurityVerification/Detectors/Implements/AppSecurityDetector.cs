@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.AppSecurityVerification.Clients;
+using EasySoft.Core.AppSecurityVerification.Detectors.Interfaces;
 
-namespace EasySoft.Core.AppSecurityVerification.Detectors;
+namespace EasySoft.Core.AppSecurityVerification.Detectors.Implements;
 
 /// <inheritdoc />
 public class AppSecurityDetector : IAppSecurityDetector

@@ -1,8 +1,4 @@
-﻿using EasySoft.Core.PermissionVerification.Clients;
-using EasySoft.Core.PermissionVerification.Detectors;
-using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
-using EasySoft.Simple.Tradition.Service.Services.Interfaces;
-using EasySoft.UtilityTools.Standard.Exceptions;
+﻿using EasySoft.Simple.Tradition.Service.Services.Interfaces;
 
 namespace EasySoft.Simple.Tradition.Security.Security;
 
@@ -12,21 +8,21 @@ namespace EasySoft.Simple.Tradition.Security.Security;
 public class ApplicationPermissionObserver : PermissionObserverCore
 {
     private readonly IUserService _userService;
-    private readonly IAccessWayDetector _permissionClient;
+    private readonly ICompetenceDetector _competenceDetector;
 
     /// <summary>
     /// ApplicationPermissionObserver
     /// </summary>
     /// <param name="applicationActualOperator"></param>
-    /// <param name="permissionClient"></param>
+    /// <param name="competenceDetector"></param>
     /// <param name="userService"></param>
     public ApplicationPermissionObserver(
         IActualOperator applicationActualOperator,
-        IAccessWayDetector permissionClient,
+        ICompetenceDetector competenceDetector,
         IUserService userService
     ) : base(applicationActualOperator)
     {
-        _permissionClient = permissionClient;
+        _competenceDetector = competenceDetector;
         _userService = userService;
     }
 
@@ -45,7 +41,7 @@ public class ApplicationPermissionObserver : PermissionObserverCore
     /// </summary>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public override async Task<List<CompetenceEntity>> GetCompetenceEntityCollectionAsync()
+    public override async Task<IList<CompetenceEntity>> GetCompetenceEntityCollectionAsync()
     {
         var identification = GetActualOperator().GetIdentification();
 
@@ -55,11 +51,8 @@ public class ApplicationPermissionObserver : PermissionObserverCore
 
         if (!result.Success) return new List<CompetenceEntity>();
 
-        var apiResponse = await _permissionClient.GetCompetenceEntityCollectionAsync(result.Data);
+        var list = await _competenceDetector.GetCompetenceEntityCollection(result.Data);
 
-        if (!apiResponse.IsSuccessStatusCode)
-            throw new UnknownException($"rpc {GetType().Name}.{nameof(GetCompetenceEntityCollectionAsync)} call fail");
-
-        return apiResponse.Content ?? new List<CompetenceEntity>();
+        return list;
     }
 }

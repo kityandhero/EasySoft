@@ -11,6 +11,7 @@ global using EasySoft.UtilityTools.Core.Channels;
 global using EasySoft.UtilityTools.Core.Extensions;
 global using EasySoft.UtilityTools.Core.Interceptors;
 global using EasySoft.UtilityTools.Standard.Assists;
+global using EasySoft.UtilityTools.Standard.Attributes;
 global using EasySoft.UtilityTools.Standard.DataTransferObjects;
 global using EasySoft.UtilityTools.Standard.Exceptions;
 global using EasySoft.UtilityTools.Standard.Extensions;

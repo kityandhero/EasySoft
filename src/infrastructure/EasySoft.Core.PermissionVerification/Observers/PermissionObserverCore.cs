@@ -37,7 +37,7 @@ public abstract class PermissionObserverCore : IPermissionObserver
     /// get competence entity collection
     /// </summary>
     /// <returns></returns>
-    public abstract Task<List<CompetenceEntity>> GetCompetenceEntityCollectionAsync();
+    public abstract Task<IList<CompetenceEntity>> GetCompetenceEntityCollectionAsync();
 
     /// <summary>
     /// 检测访问权限

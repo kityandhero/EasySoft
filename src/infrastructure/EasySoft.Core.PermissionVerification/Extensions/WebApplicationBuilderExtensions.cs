@@ -85,6 +85,32 @@ public static class WebApplicationBuilderExtensions
             }
         );
 
+        builder.Services.AddTransient(
+            typeof(ICompetenceDetector),
+            provider =>
+            {
+                var permissionClient = provider.GetRequiredService<IPermissionClient>();
+
+                var interceptors = new List<Type> { typeof(LogRecordInterceptor) }
+                    .ConvertAll(interceptorType => provider.GetService(interceptorType) as IInterceptor)
+                    .ToArray();
+                var proxyGenerator = provider.GetService<ProxyGenerator>();
+
+                if (proxyGenerator == null)
+                    throw new UnknownException(
+                        "provider.GetService<ProxyGenerator>() result is null"
+                    );
+
+                var proxy = proxyGenerator.CreateInterfaceProxyWithTargetInterface(
+                    typeof(ICompetenceDetector),
+                    new CompetenceDetector(permissionClient),
+                    interceptors
+                );
+
+                return proxy;
+            }
+        );
+
         if (middlewareMode)
         {
             builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>

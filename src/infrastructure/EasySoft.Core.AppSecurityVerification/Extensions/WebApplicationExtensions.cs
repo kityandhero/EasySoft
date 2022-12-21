@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.AppSecurityVerification.Detectors;
+using EasySoft.Core.AppSecurityVerification.Detectors.Interfaces;
 
 namespace EasySoft.Core.AppSecurityVerification.Extensions;
 
