@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.PermissionVerification.Officers;
+﻿namespace EasySoft.Core.PermissionVerification.Officers.Interfaces;
 
 /// <summary>
 /// IOfficer

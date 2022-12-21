@@ -1,7 +1,8 @@
 ﻿using EasySoft.Core.PermissionVerification.Attributes;
+using EasySoft.Core.PermissionVerification.Officers.Interfaces;
 using EasySoft.UtilityTools.Core.Extensions;
 
-namespace EasySoft.Core.PermissionVerification.Officers;
+namespace EasySoft.Core.PermissionVerification.Officers.Implements;
 
 /// <summary>
 /// OperateOfficer

@@ -6,6 +6,8 @@ using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
 using EasySoft.Core.PermissionVerification.Middlewares;
 using EasySoft.Core.PermissionVerification.Observers;
 using EasySoft.Core.PermissionVerification.Officers;
+using EasySoft.Core.PermissionVerification.Officers.Implements;
+using EasySoft.Core.PermissionVerification.Officers.Interfaces;
 using EasySoft.UtilityTools.Core.Extensions;
 
 namespace EasySoft.Core.PermissionVerification.Extensions;
