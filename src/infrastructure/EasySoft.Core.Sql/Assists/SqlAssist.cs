@@ -1,9 +1,8 @@
-﻿using EasySoft.Core.Infrastructure.Extensions;
-using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
+﻿using EasySoft.Core.Sql.Builders;
 using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Enums;
 using EasySoft.Core.Sql.Extensions;
-using Constants = EasySoft.Core.Sql.Common.Constants;
+using EasySoft.Core.Sql.Factories;
 
 namespace EasySoft.Core.Sql.Assists;
 
@@ -58,11 +57,16 @@ public static class SqlAssist
     /// <returns></returns>
     public static string BuildSelectCount(string fragment = "", string columnAlias = "TotalCount")
     {
-        if (string.IsNullOrWhiteSpace(fragment))
-            return $"SELECT COUNT(*) AS {(string.IsNullOrWhiteSpace(columnAlias) ? "TotalCount" : columnAlias)} ";
+        var list = new List<string>
+        {
+            "SELECT",
+            "COUNT(*)",
+            "AS",
+            string.IsNullOrWhiteSpace(columnAlias) ? "TotalCount" : columnAlias,
+            string.IsNullOrWhiteSpace(fragment) ? "" : fragment
+        };
 
-        return $"SELECT COUNT(*) AS {(string.IsNullOrWhiteSpace(columnAlias) ? "TotalCount" : columnAlias)} {0}"
-            .FormatValue(fragment);
+        return list.Join(" ");
     }
 
     #region On
@@ -93,204 +97,6 @@ public static class SqlAssist
     public static string TransferConditionStrange<T>(ConditionStrange<T> condition) where T : IEntity, new()
     {
         return TransferStrangeAssist.TransferCondition(condition);
-    }
-
-    /// <summary>
-    /// OnlyCondition
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="condition"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static string OnlyCondition<T>(
-        string sql,
-        Condition<T> condition
-    ) where T : IEntity, new()
-    {
-        var resultTransferCondition = TransferCondition(condition);
-
-        return " {0} {1} ".FormatValue(sql, resultTransferCondition);
-    }
-
-    /// <summary>
-    /// OnlyConditionStrange
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="condition"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static string OnlyConditionStrange<T>(
-        string sql,
-        ConditionStrange<T> condition
-    ) where T : IEntity, new()
-    {
-        var resultTransferCondition = TransferConditionStrange(condition);
-
-        return " {0} {1} ".FormatValue(sql, resultTransferCondition);
-    }
-
-    /// <summary>
-    /// WhereCondition
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="condition"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static string WhereCondition<T>(
-        string sql,
-        Condition<T> condition
-    ) where T : IEntity, new()
-    {
-        var resultTransferCondition = TransferCondition(condition);
-
-        return "{0} WHERE {1}".FormatValue(sql, resultTransferCondition);
-    }
-
-    /// <summary>
-    /// WhereConditionStrange
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="condition"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static string WhereConditionStrange<T>(
-        string sql,
-        ConditionStrange<T> condition
-    ) where T : IEntity, new()
-    {
-        var resultTransferCondition = TransferConditionStrange(condition);
-
-        return "{0} WHERE {1}".FormatValue(sql, resultTransferCondition);
-    }
-
-    /// <summary>
-    /// AndCondition
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="condition"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static string AndCondition<T>(
-        string sql,
-        Condition<T> condition
-    ) where T : IEntity, new()
-    {
-        var resultTransferCondition = TransferCondition(condition);
-
-        return "{0} AND {1}".FormatValue(sql, resultTransferCondition);
-    }
-
-    /// <summary>
-    /// AndConditionStrange
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="condition"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static string AndConditionStrange<T>(
-        string sql,
-        ConditionStrange<T> condition
-    ) where T : IEntity, new()
-    {
-        var resultTransferCondition = TransferConditionStrange(condition);
-
-        return "{0} AND {1}".FormatValue(sql, resultTransferCondition);
-    }
-
-    /// <summary>
-    /// LinkConditions
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="conditions"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static string LinkConditions<T>(
-        string sql,
-        ICollection<Condition<T>> conditions
-    ) where T : IEntity, new()
-    {
-        var result = sql;
-
-        foreach (var condition in conditions) result = LinkCondition(result, condition);
-
-        return result;
-    }
-
-    /// <summary>
-    /// LinkCondition
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="condition"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static string LinkCondition<T>(
-        string sql,
-        Condition<T> condition
-    ) where T : IEntity, new()
-    {
-        var resultTransferCondition = TransferCondition(condition);
-
-        var connector = "";
-
-        if (!string.IsNullOrWhiteSpace(sql)) connector = GetConditionConnector(sql);
-
-        return "{0} {1} {2}".FormatValue(sql, connector, resultTransferCondition);
-    }
-
-    /// <summary>
-    /// LinkConditionStrange
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="condition"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static string LinkConditionStrange<T>(
-        string sql,
-        ConditionStrange<T> condition
-    ) where T : IEntity, new()
-    {
-        var resultTransferCondition = TransferConditionStrange(condition);
-
-        var connector = "";
-
-        if (!string.IsNullOrWhiteSpace(sql)) connector = GetConditionConnector(sql);
-
-        return "{0} {1} {2}".FormatValue(sql, connector, resultTransferCondition);
-    }
-
-    /// <summary>
-    /// LinkConditions
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="assignUpdates"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static string LinkConditions<T>(
-        string sql,
-        ICollection<AssignField<T>> assignUpdates
-    ) where T : IEntity, new()
-    {
-        var result = sql;
-
-        foreach (var assignUpdate in assignUpdates) result = LinkAssignField(result, assignUpdate);
-
-        return result;
-    }
-
-    /// <summary>
-    /// LinkAssignField
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="assignField"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static string LinkAssignField<T>(string sql, AssignField<T> assignField) where T : IEntity, new()
-    {
-        var resultTransferAssignUpdate = TransferAssignField(assignField);
-
-        var connector = GetAssignFieldConnector(sql);
-
-        return "{0} {1} {2}".FormatValue(sql, connector, resultTransferAssignUpdate);
     }
 
     /// <summary>
@@ -325,8 +131,19 @@ public static class SqlAssist
 
         var t = p.Split('.');
 
-        p =
-            $"{(!string.IsNullOrWhiteSpace(schemaName) ? $"{fieldDecorateStart}{schemaName}{fieldDecorateEnd}.{p}" : "")}{fieldDecorateStart}{t[0]}{fieldDecorateEnd}.{fieldDecorateStart}{t[1]}{fieldDecorateEnd}";
+        var list = new List<string>
+        {
+            !string.IsNullOrWhiteSpace(schemaName) ? $"{fieldDecorateStart}{schemaName}{fieldDecorateEnd}.{p}" : "",
+            fieldDecorateStart,
+            t[0],
+            fieldDecorateEnd,
+            ".",
+            fieldDecorateStart,
+            t[1],
+            fieldDecorateEnd
+        };
+
+        p = list.Join("");
 
         return sortType == SortType.Asc ? $" {p} ASC" : $" {p} DESC";
     }
@@ -346,33 +163,6 @@ public static class SqlAssist
     }
 
     /// <summary>
-    /// OrderBy
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="sort"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static string OrderBy<T>(string sql, Sort<T> sort)
-    {
-        return OrderBy(sql, sort.Expression, sort.SortType);
-    }
-
-    /// <summary>
-    /// OrderBy
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="propertyLambda"></param>
-    /// <param name="sortType"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static string OrderBy<T>(string sql, Expression<Func<T, object>> propertyLambda, SortType sortType)
-    {
-        var sort = TransferSort(propertyLambda, sortType);
-
-        return $"{(string.IsNullOrWhiteSpace(sql) ? "" : $"{sql} ORDER BY ")} {sort}";
-    }
-
-    /// <summary>
     /// AndOrderByFragment
     /// </summary>
     /// <param name="sql"></param>
@@ -384,33 +174,6 @@ public static class SqlAssist
         return sortType == SortType.Asc
             ? $"{(string.IsNullOrWhiteSpace(sql) ? "" : $"{sql},")} {fragment} ASC "
             : $"{(string.IsNullOrWhiteSpace(sql) ? "" : $"{sql},")} {fragment} DESC ";
-    }
-
-    /// <summary>
-    /// AndOrderBy
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="sort"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static string AndOrderBy<T>(string sql, Sort<T> sort)
-    {
-        return AndOrderBy(sql, sort.Expression, sort.SortType);
-    }
-
-    /// <summary>
-    /// AndOrderBy
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="propertyLambda"></param>
-    /// <param name="sortType"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static string AndOrderBy<T>(string sql, Expression<Func<T, object>> propertyLambda, SortType sortType)
-    {
-        var sort = TransferSort(propertyLambda, sortType);
-
-        return $"{(string.IsNullOrWhiteSpace(sql) ? "" : $"{sql},")} {sort}";
     }
 
     /// <summary>
@@ -477,9 +240,9 @@ public static class SqlAssist
     {
         var model = new T();
 
-        string sql;
+        var list = new List<string>();
 
-        var fields = "".AllFields(model);
+        var fields = new AdvanceSqlBuilder().AllFields(model).Sql;
 
         var where = "";
 
@@ -490,22 +253,26 @@ public static class SqlAssist
         if (listSort.Count > 0) sort = SortAssist.Build(listSort);
 
         if (top.HasValue)
-            sql = $@"SELECT {fields}
-                FROM {model.GetTableName()} WITH (NOLOCK)
-                WHERE {model.GetPrimaryKeyName()} IN
-                      (
-                          SELECT TOP {top} {model.GetPrimaryKeyName()}
-                          FROM {model.GetTableName()} WITH (NOLOCK)
-                          {where}
-                          {sort}
-                      )";
+        {
+            list.Add($"SELECT {fields}");
+            list.Add($"FROM {model.GetTableName()} WITH (NOLOCK)");
+            list.Add($"WHERE {model.GetPrimaryKeyName()} IN");
+            list.Add("(");
+            list.Add($"SELECT TOP {top} {model.GetPrimaryKeyName()}");
+            list.Add($"FROM {model.GetTableName()} WITH (NOLOCK)");
+            list.Add($"{where}");
+            list.Add($"{sort}");
+            list.Add(")");
+        }
         else
-            sql = $@"SELECT {fields}
-                FROM {model.GetTableName()} WITH (NOLOCK)
-                {where}
-                {sort}";
+        {
+            list.Add($"SELECT {fields}");
+            list.Add($"FROM {model.GetTableName()} WITH (NOLOCK)");
+            list.Add($"{where}");
+            list.Add($"{sort}");
+        }
 
-        return sql;
+        return list.Join(" ");
     }
 
     /// <summary>
@@ -544,7 +311,7 @@ public static class SqlAssist
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static string BuildListSql<T>(
-        ICollection<FieldItemSpecial<T>> fieldItems,
+        IEnumerable<FieldItemSpecial<T>> fieldItems,
         ICollection<Condition<T>> listCondition,
         ICollection<Sort<T>> listSort,
         int? top = null
@@ -552,11 +319,11 @@ public static class SqlAssist
     {
         var model = new T();
 
-        string sql;
+        var list = new List<string>();
 
         var fieldList = new List<string>();
 
-        foreach (var fieldItem in fieldItems) fieldList.Add(TransferAssist.TransferField(fieldItem));
+        fieldItems.ForEach(fieldItem => { fieldList.Add(TransferAssist.TransferField(fieldItem)); });
 
         var fields = fieldList.Join(",");
 
@@ -568,23 +335,27 @@ public static class SqlAssist
             ? SortAssist.Build(listSort)
             : $" ORDER BY {model.GetPrimaryKeyValue()} DESC ";
 
-        if (top.HasValue && top <= 100)
-            sql = $@"SELECT {fields}
-                FROM {model.GetTableName()} WITH (NOLOCK)
-                WHERE {model.GetPrimaryKeyName()} IN
-                      (
-                          SELECT TOP {top} {model.GetPrimaryKeyName()}
-                          FROM {model.GetTableName()} WITH (NOLOCK)
-                          {where}
-                          {sort}
-                      )";
+        if (top is <= 100)
+        {
+            list.Add($"SELECT {fields}");
+            list.Add($"FROM {model.GetTableName()} WITH (NOLOCK)");
+            list.Add($"WHERE {model.GetPrimaryKeyName()} IN");
+            list.Add("(");
+            list.Add($"SELECT TOP {top} {model.GetPrimaryKeyName()}");
+            list.Add($"FROM {model.GetTableName()} WITH (NOLOCK)");
+            list.Add($"{where}");
+            list.Add($"{sort}");
+            list.Add(")");
+        }
         else
-            sql = $@"SELECT {fields}
-                FROM {model.GetTableName()} WITH (NOLOCK)
-                {where}
-                {sort}";
+        {
+            list.Add($"SELECT {fields}");
+            list.Add($"FROM {model.GetTableName()} WITH (NOLOCK)");
+            list.Add($"{where}");
+            list.Add($"{sort}");
+        }
 
-        return sql;
+        return list.Join(" ");
     }
 
     /// <summary>
@@ -599,7 +370,7 @@ public static class SqlAssist
         string fields,
         string where,
         string tableName,
-        int? top
+        uint? top
     )
     {
         return BuildListSql(fields, where, "", tableName, top);
@@ -619,7 +390,7 @@ public static class SqlAssist
         string where,
         string order,
         string tableName,
-        int? top
+        uint? top
     )
     {
         return BuildListSql(fields, where, order, "", tableName, top);
@@ -635,14 +406,29 @@ public static class SqlAssist
     /// <param name="tableName"></param>
     /// <param name="top"></param>
     /// <returns></returns>
-    public static string BuildListSql(string fields, string where, string order, string group, string tableName,
-        int? top)
+    public static string BuildListSql(
+        string fields,
+        string where,
+        string order,
+        string group,
+        string tableName,
+        uint? top
+    )
     {
-        var sql = top.HasValue
-            ? $@"SELECT TOP {top} {fields} FROM {tableName} {(!string.IsNullOrWhiteSpace(where) ? $" WHERE {where} " : "")} {(!string.IsNullOrWhiteSpace(group) ? $" GROUP BY {group} " : "")} {(!string.IsNullOrWhiteSpace(order) ? $" ORDER BY {order} " : "")}"
-            : $@"SELECT {fields} FROM {tableName} {(!string.IsNullOrWhiteSpace(where) ? $" WHERE {where} " : "")} {(!string.IsNullOrWhiteSpace(group) ? $" GROUP BY {group} " : "")} {(!string.IsNullOrWhiteSpace(order) ? $" ORDER BY {order} " : "")}";
+        var list = new List<string>
+        {
+            "SELECT"
+        };
 
-        return sql;
+        if (top is > 0) list.Add($"TOP {top}");
+
+        list.Add($"{fields}");
+        list.Add($"FROM {tableName}");
+        list.Add($"{(!string.IsNullOrWhiteSpace(where) ? $" WHERE {where} " : "")}");
+        list.Add($"{(!string.IsNullOrWhiteSpace(group) ? $" GROUP BY {group} " : "")}");
+        list.Add($"{(!string.IsNullOrWhiteSpace(order) ? $" ORDER BY {order} " : "")}");
+
+        return list.Join(" ");
     }
 
     /// <summary>
@@ -664,27 +450,40 @@ public static class SqlAssist
         int? top
     )
     {
-        string sql;
+        var list = new List<string>
+        {
+            $"SELECT {fields}",
+            $"FROM {tableName} WITH (NOLOCK)"
+        };
 
         if (top.HasValue)
-            sql = $@"SELECT {fields}
-                FROM {tableName} WITH (NOLOCK)
-                WHERE {primaryKey} IN
-                      (
-                          SELECT TOP {top} {primaryKey}
-                          FROM {tableName} WITH (NOLOCK)
-                          {(!string.IsNullOrWhiteSpace(where) ? $" WHERE {where} " : "")}
-                          {(!string.IsNullOrWhiteSpace(order) ? $" ORDER BY {order} " : "")}
-                      )";
+        {
+            list.Add($"WHERE {primaryKey} IN");
+            list.Add("(");
+            list.Add($"SELECT TOP {top} {primaryKey}");
+            list.Add($"FROM {tableName} WITH (NOLOCK)");
+            list.Add($"{(!string.IsNullOrWhiteSpace(where) ? $" WHERE {where} " : "")}");
+            list.Add($"{(!string.IsNullOrWhiteSpace(order) ? $" ORDER BY {order} " : "")}");
+            list.Add(")");
+        }
         else
-            sql = $@"SELECT {fields}
-                FROM {tableName} WITH (NOLOCK)
-                {(!string.IsNullOrWhiteSpace(where) ? $" WHERE {where} " : "")}
-                {(!string.IsNullOrWhiteSpace(order) ? $" ORDER BY {order} " : "")}";
+        {
+            list.Add($"{(!string.IsNullOrWhiteSpace(where) ? $" WHERE {where} " : "")}");
+            list.Add($"{(!string.IsNullOrWhiteSpace(order) ? $" ORDER BY {order} " : "")}");
+        }
 
-        return sql;
+        return list.Join(" ");
     }
 
+    /// <summary>
+    /// BuildPageListSql
+    /// </summary>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="listCondition"></param>
+    /// <param name="listSort"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static string BuildPageListSql<T>(
         int pageIndex,
         int pageSize,
@@ -697,7 +496,7 @@ public static class SqlAssist
 
         var model = new T();
 
-        var fields = "".AllFields(model);
+        var fields = new AdvanceSqlBuilder().AllFields(model);
 
         var where = "";
 
@@ -705,24 +504,28 @@ public static class SqlAssist
 
         var sort = listSort is { Count: > 0 }
             ? SortAssist.Build(listSort)
-            : $" ORDER BY {model.GetPrimaryKeyValue()} DESC ";
+            : $"ORDER BY {model.GetPrimaryKeyValue()} DESC";
 
-        var sql = $@"SELECT {fields}
-                    FROM {model.GetTableName()} WITH (NOLOCK)
-                    WHERE {model.GetPrimaryKeyName()} IN
-                          (
-                              SELECT {model.GetPrimaryKeyName()}
-                              FROM
-                              (
-                                  SELECT {model.GetPrimaryKeyName()},
-                                         ROW_NUMBER() OVER ({sort}) AS rowId
-                                  FROM {model.GetTableName()} WITH (NOLOCK)
-                                  {@where}
-                              ) data
-                              WHERE rowId between {start} and {end}
-                          ) {sort}";
+        var list = new List<string>
+        {
+            $"SELECT {fields}",
+            $"FROM {model.GetTableName()} WITH (NOLOCK)",
+            $"WHERE {model.GetPrimaryKeyName()} IN",
+            "(",
+            $"SELECT {model.GetPrimaryKeyName()}",
+            "FROM",
+            "(",
+            $"SELECT {model.GetPrimaryKeyName()},",
+            $"ROW_NUMBER() OVER ({sort}) AS rowId",
+            $"FROM {model.GetTableName()} WITH (NOLOCK)",
+            $"{where}",
+            ") data",
+            $"WHERE rowId between {start} and {end}",
+            ")",
+            $"{sort}"
+        };
 
-        return sql;
+        return list.Join(" ");
     }
 
     /// <summary>
@@ -738,7 +541,7 @@ public static class SqlAssist
     public static string BuildPageListSql<T>(
         int pageIndex,
         int pageSize,
-        ICollection<Expression<Func<T>>> listPropertyLambda,
+        IEnumerable<Expression<Func<T>>> listPropertyLambda,
         ICollection<Condition<T>> listCondition,
         ICollection<Sort<T>> listSort
     ) where T : IEntity, new()
@@ -750,24 +553,33 @@ public static class SqlAssist
 
         var fields = listPropertyLambda.Aggregate(
             "",
-            (current, propertyLambda) => current.AppendField(propertyLambda)
+            (current, propertyLambda) => new AdvanceSqlBuilder(current).AppendField(propertyLambda).Sql
         );
 
         var where = "";
 
         if (listCondition.Count > 0) where = ConditionAssist.Build(listCondition);
 
-        string sort;
+        var sort = listSort.Count > 0 ? SortAssist.Build(listSort) : $"ORDER BY {model.GetPrimaryKeyValue()} DESC";
 
-        if (listSort.Count > 0)
-            sort = SortAssist.Build(listSort);
-        else
-            sort = $" ORDER BY {model.GetPrimaryKeyValue()} DESC ";
+        var list = new List<string>
+        {
+            $"SELECT {fields}",
+            $"FROM {model.GetTableName()} WITH (NOLOCK)",
+            $"WHERE {model.GetPrimaryKeyValue()} IN",
+            "(",
+            $"SELECT {model.GetPrimaryKeyValue()} FROM",
+            "(",
+            $"SELECT {model.GetPrimaryKeyValue()},ROW_NUMBER() OVER ({sort}) AS rowId",
+            $"FROM {model.GetTableName()} WITH (NOLOCK)",
+            $"{where}",
+            ") data",
+            $"WHERE rowId between {start} and {end}",
+            ")",
+            $"{sort}"
+        };
 
-        var sql =
-            $@"SELECT {fields} FROM {model.GetTableName()} WITH (NOLOCK) WHERE {model.GetPrimaryKeyValue()} IN (SELECT {model.GetPrimaryKeyValue()} FROM (SELECT {model.GetPrimaryKeyValue()},ROW_NUMBER() OVER ({sort}) AS rowId FROM {model.GetTableName()} WITH (NOLOCK) {where}) data WHERE rowId between {start} and {end}) {sort}";
-
-        return sql;
+        return list.Join(" ");
     }
 
     /// <summary>
@@ -829,10 +641,26 @@ public static class SqlAssist
         var start = (pageIndex - 1) * pageSize + 1;
         var end = start + pageSize - 1;
 
-        var sql =
-            $@"SELECT {fields} FROM {tableName} WITH (NOLOCK) WHERE {primaryKey} IN (SELECT {primaryKey} FROM (SELECT {primaryKey},ROW_NUMBER() OVER (order by {order}) AS rowId FROM {tableName} WITH (NOLOCK) {(!string.IsNullOrWhiteSpace(where) ? $" WHERE {where} " : "")} {(!string.IsNullOrWhiteSpace(group) ? $" WHERE {group} " : "")}) data WHERE rowId between {start} and {end}) order by {order}";
+        var list = new List<string>
+        {
+            $"SELECT {fields}",
+            $"FROM {tableName} WITH (NOLOCK)",
+            $"WHERE {primaryKey} IN",
+            "(",
+            $"SELECT {primaryKey}",
+            "FROM",
+            "(",
+            $"SELECT {primaryKey},ROW_NUMBER() OVER (order by {order}) AS rowId",
+            $"FROM {tableName} WITH (NOLOCK)",
+            $"{(!string.IsNullOrWhiteSpace(where) ? $" WHERE {where} " : "")}",
+            $"{(!string.IsNullOrWhiteSpace(group) ? $" WHERE {group} " : "")}",
+            ") data",
+            $"WHERE rowId between {start} and {end}",
+            ")",
+            $"order by {order}"
+        };
 
-        return sql;
+        return list.Join(" ");
     }
 
     /// <summary>
@@ -889,448 +717,321 @@ public static class SqlAssist
         var start = (pageIndex - 1) * pageSize + 1;
         var end = start + pageSize - 1;
 
-        return
-            $"SELECT * FROM (SELECT row_number() over (ORDER BY {order}) AS rowId, {fields} FROM {tableName} {(!string.IsNullOrWhiteSpace(where) ? $" WHERE {where} " : "")} {(!string.IsNullOrWhiteSpace(group) ? $" GROUP BY {group} " : "")} ) as t where rowId between {start} and {end}";
+        var list = new List<string>
+        {
+            "SELECT *",
+            "FROM",
+            "(",
+            $"SELECT row_number() over (ORDER BY {order}) AS rowId, {fields}",
+            $"FROM {tableName}",
+            $"{(!string.IsNullOrWhiteSpace(where) ? $" WHERE {where} " : "")}",
+            $"{(!string.IsNullOrWhiteSpace(group) ? $" GROUP BY {group} " : "")}",
+            ") AS t",
+            $"WHERE rowId BETWEEN {start} AND {end}"
+        };
+
+        return list.Join(" ");
     }
 
+    /// <summary>
+    /// BuildCountSql
+    /// </summary>
+    /// <param name="where"></param>
+    /// <param name="tableName"></param>
+    /// <returns></returns>
     public static string BuildCountSql(string where, string tableName)
     {
-        return $"SELECT COUNT(*) FROM {tableName} {(!string.IsNullOrWhiteSpace(where) ? $" WHERE {where} " : "")}";
+        var list = new List<string>
+        {
+            "SELECT COUNT(*)",
+            $"FROM {tableName}",
+            $"{(!string.IsNullOrWhiteSpace(where) ? $" WHERE {where} " : "")}"
+        };
+
+        return list.Join(" ");
     }
 
     #endregion Select
 
     #region Insert
 
+    /// <summary>
+    /// Insert
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static string Insert(IEntity model)
     {
+        model.BuildNameAndValueList(out var nameList, out var valueList);
+
         var schemaName = model.GetSqlSchemaName();
-        var nameString = new StringBuilder();
-        var valueString = new StringBuilder();
-
-        var modelType = model.GetType();
-
         var tableName = TransferAssist.GetTableName(model);
 
-        var fieldDecorateStart = model.GetSqlFieldDecorateStart();
-        var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
-
-        foreach (var p in modelType.GetProperties())
+        var list = new List<string>
         {
-            if (!p.CanWrite) continue;
+            "INSERT INTO",
+            !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{tableName}" : tableName,
+            "(",
+            $"{nameList.Join(",")}",
+            ")",
+            "VALUES",
+            "(",
+            $"{valueList.Join(",")}",
+            ")"
+        };
 
-            var columnMapperAttribute = Tools.GetColumnAttribute(p);
-
-            if (columnMapperAttribute == null) throw new Exception("columnMapperAttribute is null");
-
-            nameString.Append($"{fieldDecorateStart}{columnMapperAttribute.Name}{fieldDecorateEnd},");
-
-            valueString.Append($"@{p.Name},");
-        }
-
-        if (!string.IsNullOrWhiteSpace(nameString.ToString())) nameString = nameString.Remove(nameString.Length - 1, 1);
-
-        if (!string.IsNullOrWhiteSpace(valueString.ToString()))
-            valueString = valueString.Remove(valueString.Length - 1, 1);
-
-        var result = new StringBuilder();
-
-        result.Append("INSERT INTO");
-        result.Append(' ');
-
-        if (!string.IsNullOrWhiteSpace(schemaName)) result.Append($"{schemaName}.");
-
-        result.Append(tableName);
-        result.Append($" ( {nameString} ) VALUES ( {valueString} )");
-
-        return result.ToString();
+        return list.Join(" ");
     }
 
+    /// <summary>
+    /// InsertUniquer
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="uniquerConditions"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static string InsertUniquer<T>(
         IEntity model,
         ICollection<Condition<T>> uniquerConditions
     ) where T : IEntity, new()
     {
+        model.BuildNameAndValueList(out var nameList, out var valueList);
+
         var schemaName = model.GetSqlSchemaName();
-        var nameString = new StringBuilder();
-        var valueString = new StringBuilder();
-
-        var modelType = model.GetType();
-
         var tableName = TransferAssist.GetTableName(model);
 
-        var fieldDecorateStart = model.GetSqlFieldDecorateStart();
-        var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
-
-        foreach (var p in modelType.GetProperties())
+        var list = new List<string>
         {
-            if (!p.CanWrite) continue;
+            "INSERT INTO",
+            !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{tableName}" : tableName,
+            "(",
+            $"{nameList.Join(",")}",
+            ")",
+            "SELECT",
+            $"{valueList.Join(",")}",
+            "WHERE NOT EXISTS",
+            "(",
+            $"{new AdvanceSqlBuilder().Select().AppendFragment($"{model.GetTableName()}.{model.GetPrimaryKeyName()}").From(model).LinkConditions(uniquerConditions)}",
+            ")"
+        };
 
-            var columnMapperAttribute = Tools.GetColumnAttribute(p);
-
-            if (columnMapperAttribute == null) throw new Exception("columnMapperAttribute is null");
-
-            nameString.Append($"{fieldDecorateStart}{columnMapperAttribute.Name}{fieldDecorateEnd},");
-
-            valueString.Append($"@{p.Name},");
-        }
-
-        if (!string.IsNullOrWhiteSpace(nameString.ToString())) nameString = nameString.Remove(nameString.Length - 1, 1);
-
-        if (!string.IsNullOrWhiteSpace(valueString.ToString()))
-            valueString = valueString.Remove(valueString.Length - 1, 1);
-
-        var result = new StringBuilder();
-
-        result.Append("INSERT INTO");
-        result.Append(' ');
-
-        if (!string.IsNullOrWhiteSpace(schemaName)) result.Append($"{schemaName}.");
-
-        result.Append(tableName);
-        result.Append(
-            $" ( {nameString} ) SELECT  {valueString} WHERE NOT EXISTS ({Select().AppendFragment($"{model.GetTableName()}.{model.GetPrimaryKeyName()}").From(model).LinkConditions(uniquerConditions)})"
-        );
-
-        return result.ToString();
+        return list.Join(" ");
     }
 
     #endregion Insert
 
     #region Update
 
+    /// <summary>
+    /// Update
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static string Update(IEntity model)
     {
         var schemaName = model.GetSqlSchemaName();
-        var nameValueString = new StringBuilder();
-        var modelType = model.GetType();
+        var nameValueList = model.BuildNameValueList();
         var tableName = TransferAssist.GetTableName(model);
-        var fieldDecorateStart = model.GetSqlFieldDecorateStart();
 
-        var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
-        foreach (var p in modelType.GetProperties())
-        {
-            if (!p.CanWrite) continue;
-
-            var columnName = TransferAssist.GetColumnName(p);
-
-            if (columnName == null) throw new Exception("columnMapperAttribute is null");
-
-            if (!columnName.ToLower().Equals(Constants.DefaultTablePrimaryKey))
-                nameValueString.Append(
-                    $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name},"
-                );
-        }
-
-        if (!string.IsNullOrWhiteSpace(nameValueString.ToString()))
-            nameValueString = nameValueString.Remove(nameValueString.Length - 1, 1);
-        else
+        if (nameValueList.Count <= 0)
             throw new Exception("更新字段不能空缺！");
 
-        var result = new StringBuilder();
+        var list = new List<string>
+        {
+            "UPDATE",
+            !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{tableName}" : tableName,
+            "SET",
+            $"{nameValueList.Join(",")}",
+            "Where",
+            $"{model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
+        };
 
-        result.Append("UPDATE ");
-
-        if (!string.IsNullOrWhiteSpace(schemaName)) result.Append($"{schemaName}.");
-
-        result.Append(tableName);
-        result.Append(
-            $" SET {nameValueString} Where {model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
-        );
-
-        return result.ToString();
+        return list.Join(" ");
     }
 
+    /// <summary>
+    /// UpdateWithCondition
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="conditions"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static string UpdateWithCondition<T>(
         T model,
         ICollection<Condition<T>> conditions
     ) where T : IEntity, new()
     {
-        var schemaName = model.GetSqlSchemaName();
-
         if (conditions == null || conditions.Count == 0) throw new Exception("条件更新不能缺少条件语句！");
 
-        var nameValueString = new StringBuilder();
-        var modelType = model.GetType();
+        var nameValueList = model.BuildNameValueList();
+        var schemaName = model.GetSqlSchemaName();
         var tableName = TransferAssist.GetTableName(model);
 
-        var fieldDecorateStart = model.GetSqlFieldDecorateStart();
-
-        var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
-
-        foreach (var p in modelType.GetProperties())
-        {
-            if (!p.CanWrite) continue;
-
-            var columnName = TransferAssist.GetColumnName(p);
-
-            if (columnName == null) throw new Exception("columnMapperAttribute is null");
-
-            if (!p.Name.ToLower().Equals(Constants.DefaultTablePrimaryKey))
-                nameValueString.Append(
-                    $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name},"
-                );
-        }
-
-        if (!string.IsNullOrWhiteSpace(nameValueString.ToString()))
-            nameValueString = nameValueString.Remove(nameValueString.Length - 1, 1);
-        else
+        if (nameValueList.Count <= 0)
             throw new Exception("更新字段不能空缺！");
 
-        var result = new StringBuilder();
+        var list = new List<string>
+        {
+            "UPDATE",
+            !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{tableName}" : tableName,
+            "SET",
+            $"{nameValueList.Join(",")}",
+            $"{ConditionAssist.Build(conditions)}"
+        };
 
-        result.Append("UPDATE ");
-
-        if (!string.IsNullOrWhiteSpace(schemaName)) result.Append($"{schemaName}.");
-
-        result.Append(tableName);
-        result.Append(nameValueString);
-        result.AppendLine(ConditionAssist.Build(conditions));
-
-        return result.ToString();
+        return list.Join(" ");
     }
 
+    /// <summary>
+    /// UpdateSpecific
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="listPropertyLambda"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static string UpdateSpecific<T>(
         T model,
         ICollection<Expression<Func<T>>> listPropertyLambda
     ) where T : IEntity, new()
     {
-        if (listPropertyLambda == null || !listPropertyLambda.Any()) throw new Exception("缺少指定的更新属性");
-
+        var nameValueList = model.BuildNameValueList(listPropertyLambda);
         var schemaName = model.GetSqlSchemaName();
-        var nameValueString = new StringBuilder();
-        var modelType = model.GetType();
         var tableName = TransferAssist.GetTableName(model);
-        var fieldDecorateStart = model.GetSqlFieldDecorateStart();
 
-        var listPropertyName = new List<string>();
-
-        foreach (var pExpression in listPropertyLambda)
-        {
-            var propertyName = ReflectionAssist.GetPropertyName(pExpression);
-
-            listPropertyName.Add(propertyName);
-        }
-
-        var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
-
-        foreach (var p in modelType.GetProperties())
-        {
-            if (!p.CanWrite) continue;
-
-            if (!listPropertyName.Contains(p.Name)) continue;
-
-            var columnName = TransferAssist.GetColumnName(p);
-
-            if (columnName == null) throw new Exception("columnMapperAttribute is null");
-
-            if (!columnName.ToLower().Equals(Constants.DefaultTablePrimaryKey))
-                nameValueString.Append(
-                    $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name},"
-                );
-        }
-
-        if (!string.IsNullOrWhiteSpace(nameValueString.ToString()))
-            nameValueString = nameValueString.Remove(nameValueString.Length - 1, 1);
-        else
+        if (nameValueList.Count <= 0)
             throw new Exception("更新字段不能空缺！");
 
-        var result = new StringBuilder();
+        var list = new List<string>
+        {
+            "UPDATE",
+            !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{tableName}" : tableName,
+            "SET",
+            $"{nameValueList.Join(",")}",
+            "WHERE",
+            $"{model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
+        };
 
-        result.Append("UPDATE ");
-
-        if (!string.IsNullOrWhiteSpace(schemaName)) result.Append($"{schemaName}.");
-
-        result.Append(tableName);
-        result.Append(
-            $" SET {nameValueString} WHERE {model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
-        );
-
-        return result.ToString();
+        return list.Join(" ");
     }
 
+    /// <summary>
+    /// UpdateSpecific
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="listPropertyLambda"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static string UpdateSpecific<T>(
         T model,
         ICollection<Expression<Func<T, object>>> listPropertyLambda
     ) where T : IEntity, new()
     {
-        if (listPropertyLambda == null || !listPropertyLambda.Any()) throw new Exception("缺少指定的更新属性");
-
+        var nameValueList = model.BuildNameValueList(listPropertyLambda);
         var schemaName = model.GetSqlSchemaName();
-        var nameValueString = new StringBuilder();
-        var modelType = model.GetType();
         var tableName = TransferAssist.GetTableName(model);
-        var fieldDecorateStart = model.GetSqlFieldDecorateStart();
 
-        var listPropertyName = new List<string>();
-
-        foreach (var pExpression in listPropertyLambda)
-        {
-            var propertyName = ReflectionAssist.GetPropertyName(pExpression);
-
-            listPropertyName.Add(propertyName);
-        }
-
-        var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
-
-        foreach (var p in modelType.GetProperties())
-        {
-            if (!p.CanWrite) continue;
-
-            if (!listPropertyName.Contains(p.Name)) continue;
-
-            var columnName = TransferAssist.GetColumnName(p);
-
-            if (columnName == null) throw new Exception("columnMapperAttribute is null");
-
-            if (!columnName.ToLower().Equals(Constants.DefaultTablePrimaryKey))
-                nameValueString.Append(
-                    $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name},"
-                );
-        }
-
-        if (!string.IsNullOrWhiteSpace(nameValueString.ToString()))
-            nameValueString = nameValueString.Remove(nameValueString.Length - 1, 1);
-        else
+        if (nameValueList.Count <= 0)
             throw new Exception("更新字段不能空缺！");
 
-        var result = new StringBuilder();
+        var list = new List<string>
+        {
+            "UPDATE",
+            !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{tableName}" : tableName,
+            "SET",
+            $"{nameValueList.Join(",")}",
+            "WHERE",
+            $"{model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
+        };
 
-        result.Append("UPDATE ");
-
-        if (!string.IsNullOrWhiteSpace(schemaName)) result.Append($"{schemaName}.");
-
-        result.Append(tableName);
-        result.Append(
-            $" SET {nameValueString} Where {model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
-        );
-
-        return result.ToString();
+        return list.Join(" ");
     }
 
+    /// <summary>
+    /// UpdateSpecificWithCondition
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="listPropertyLambda"></param>
+    /// <param name="conditions"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static string UpdateSpecificWithCondition<T>(
         T model,
         ICollection<Expression<Func<T>>> listPropertyLambda,
         ICollection<Condition<T>> conditions
     ) where T : IEntity, new()
     {
-        if (listPropertyLambda == null || !listPropertyLambda.Any()) throw new Exception("缺少指定的更新属性");
-
-        var schemaName = model.GetSqlSchemaName();
-
         if (conditions == null || conditions.Count == 0) throw new Exception("条件更新不能缺少条件语句！");
 
-        var nameValueString = new StringBuilder();
-        var modelType = model.GetType();
+        var schemaName = model.GetSqlSchemaName();
+        var nameValueList = model.BuildNameValueList(listPropertyLambda);
         var tableName = TransferAssist.GetTableName(model);
-        var fieldDecorateStart = model.GetSqlFieldDecorateStart();
-        var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
 
-        var listPropertyName = new List<string>();
-
-        foreach (var pExpression in listPropertyLambda)
-        {
-            var propertyName = ReflectionAssist.GetPropertyName(pExpression);
-
-            listPropertyName.Add(propertyName);
-        }
-
-        foreach (var p in modelType.GetProperties())
-        {
-            if (!p.CanWrite) continue;
-
-            if (!listPropertyName.Contains(p.Name)) continue;
-
-            var columnMapperAttribute = Tools.GetColumnAttribute(p);
-
-            if (columnMapperAttribute == null) throw new Exception("columnMapperAttribute is null");
-
-            if (!p.Name.ToLower().Equals(Constants.DefaultTablePrimaryKey))
-                nameValueString.Append(
-                    $"{fieldDecorateStart}{columnMapperAttribute.Name}{fieldDecorateEnd} = @{p.Name},"
-                );
-        }
-
-        if (!string.IsNullOrWhiteSpace(nameValueString.ToString()))
-            nameValueString = nameValueString.Remove(nameValueString.Length - 1, 1);
-        else
+        if (nameValueList.Count <= 0)
             throw new Exception("更新字段不能空缺！");
 
-        var result = new StringBuilder();
+        var list = new List<string>
+        {
+            "UPDATE",
+            !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{tableName}" : tableName,
+            "SET",
+            $"{nameValueList.Join(",")}",
+            $"{ConditionAssist.Build(conditions)}"
+        };
 
-        result.Append("UPDATE ");
-
-        if (!string.IsNullOrWhiteSpace(schemaName)) result.Append($"{schemaName}.");
-
-        result.Append(tableName);
-        result.Append(" SET ");
-        result.Append(nameValueString);
-        result.AppendLine(ConditionAssist.Build(conditions));
-
-        return result.ToString();
+        return list.Join(" ");
     }
 
+    /// <summary>
+    /// UpdateSpecificWithCondition
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="listPropertyLambda"></param>
+    /// <param name="conditions"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static string UpdateSpecificWithCondition<T>(
         T model,
         ICollection<Expression<Func<T, object>>> listPropertyLambda,
         ICollection<Condition<T>> conditions
     ) where T : IEntity, new()
     {
-        if (listPropertyLambda == null || !listPropertyLambda.Any()) throw new Exception("缺少指定的更新属性");
-
-        var schemaName = model.GetSqlSchemaName();
         if (conditions == null || conditions.Count == 0) throw new Exception("条件更新不能缺少条件语句！");
 
-        var nameValueString = new StringBuilder();
-        var modelType = model.GetType();
+        var schemaName = model.GetSqlSchemaName();
+        var nameValueList = model.BuildNameValueList(listPropertyLambda);
         var tableName = TransferAssist.GetTableName(model);
-        var fieldDecorateStart = model.GetSqlFieldDecorateStart();
-        var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
 
-        var listPropertyName = new List<string>();
-
-        foreach (var pExpression in listPropertyLambda)
-        {
-            var propertyName = ReflectionAssist.GetPropertyName(pExpression);
-
-            listPropertyName.Add(propertyName);
-        }
-
-        foreach (var p in modelType.GetProperties())
-        {
-            if (!p.CanWrite) continue;
-
-            if (!listPropertyName.Contains(p.Name)) continue;
-
-            var columnMapperAttribute = Tools.GetColumnAttribute(p);
-
-            if (columnMapperAttribute == null) throw new Exception("columnMapperAttribute is null");
-
-            if (!p.Name.ToLower().Equals(Constants.DefaultTablePrimaryKey))
-                nameValueString.Append(
-                    $"{fieldDecorateStart}{columnMapperAttribute.Name}{fieldDecorateEnd} = @{p.Name},"
-                );
-        }
-
-        if (!string.IsNullOrWhiteSpace(nameValueString.ToString()))
-            nameValueString = nameValueString.Remove(nameValueString.Length - 1, 1);
-        else
+        if (nameValueList.Count <= 0)
             throw new Exception("更新字段不能空缺！");
 
-        var result = new StringBuilder();
+        var list = new List<string>
+        {
+            "UPDATE",
+            !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{tableName}" : tableName,
+            "SET",
+            $"{nameValueList.Join(",")}",
+            $"{ConditionAssist.Build(conditions)}"
+        };
 
-        result.Append("UPDATE ");
-
-        if (!string.IsNullOrWhiteSpace(schemaName)) result.Append($"{schemaName}.");
-
-        result.Append(tableName);
-        result.Append(" SET ");
-        result.Append(nameValueString);
-        result.AppendLine(ConditionAssist.Build(conditions));
-
-        return result.ToString();
+        return list.Join(" ");
     }
 
+    /// <summary>
+    /// UpdateAssignField
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="listAssignField"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static string UpdateAssignField<T>(
         T model,
         ICollection<AssignField<T>>? listAssignField
@@ -1339,31 +1040,34 @@ public static class SqlAssist
         if (listAssignField == null || !listAssignField.Any()) throw new Exception("缺少指定的更新属性");
 
         var schemaName = model.GetSqlSchemaName();
-        // var modelType = model.GetType();
         var tableName = TransferAssist.GetTableName(model);
-        // var fieldDecorateStart = model.GetSqlFieldDecorateStart();
 
         var nameValueString = AssignFieldAssist.Build(listAssignField);
 
-        if (!string.IsNullOrWhiteSpace(nameValueString))
-            nameValueString = nameValueString.Remove(nameValueString.Length - 1, 1);
-        else
+        if (string.IsNullOrWhiteSpace(nameValueString))
             throw new Exception("更新字段不能空缺！");
 
-        var result = new StringBuilder();
+        var list = new List<string>
+        {
+            "UPDATE",
+            !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{tableName}" : tableName,
+            "SET",
+            $"{nameValueString}",
+            "WHERE",
+            $"{model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
+        };
 
-        result.Append("UPDATE ");
-
-        if (!string.IsNullOrWhiteSpace(schemaName)) result.Append($"{schemaName}.");
-
-        result.Append(tableName);
-        result.Append(
-            $" SET {nameValueString} Where {model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
-        );
-
-        return result.ToString();
+        return list.Join(" ");
     }
 
+    /// <summary>
+    /// UpdatesAssignField
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="listPropertyLambda"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static string UpdatesAssignField<T>(
         T model,
         ICollection<Expression<Func<T, object>>> listPropertyLambda
@@ -1372,121 +1076,107 @@ public static class SqlAssist
         if (listPropertyLambda == null || !listPropertyLambda.Any()) throw new Exception("缺少指定的更新属性");
 
         var schemaName = model.GetSqlSchemaName();
-        var nameValueString = new StringBuilder();
-        var modelType = model.GetType();
+        var nameValueList = model.BuildNameValueList(listPropertyLambda);
         var tableName = TransferAssist.GetTableName(model);
-        var fieldDecorateStart = model.GetSqlFieldDecorateStart();
 
-        var listPropertyName = new List<string>();
-
-        foreach (var pExpression in listPropertyLambda)
-        {
-            var propertyName = ReflectionAssist.GetPropertyName(pExpression);
-
-            listPropertyName.Add(propertyName);
-        }
-
-        var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
-
-        foreach (var p in modelType.GetProperties())
-        {
-            if (!p.CanWrite) continue;
-
-            if (!listPropertyName.Contains(p.Name)) continue;
-
-            var columnName = TransferAssist.GetColumnName(p);
-
-            if (columnName == null) throw new Exception("columnMapperAttribute is null");
-
-            if (!columnName.ToLower().Equals(Constants.DefaultTablePrimaryKey))
-                nameValueString.Append(
-                    $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name},"
-                );
-        }
-
-        if (!string.IsNullOrWhiteSpace(nameValueString.ToString()))
-            nameValueString = nameValueString.Remove(nameValueString.Length - 1, 1);
-        else
+        if (nameValueList.Count <= 0)
             throw new Exception("更新字段不能空缺！");
 
-        var result = new StringBuilder();
+        var list = new List<string>
+        {
+            "UPDATE",
+            !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{tableName}" : tableName,
+            "SET",
+            $"{nameValueList}",
+            "WHERE",
+            $"{model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
+        };
 
-        result.Append("UPDATE ");
-
-        if (!string.IsNullOrWhiteSpace(schemaName)) result.Append($"{schemaName}.");
-
-        result.Append(tableName);
-        result.Append(
-            $" SET {nameValueString} Where {model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
-        );
-
-        return result.ToString();
+        return list.Join(" ");
     }
 
     #endregion Update
 
     #region Delete
 
-    public static string DeleteByPrimaryKey<T>(long key) where T : IEntity, new()
+    /// <summary>
+    /// delete by primary value
+    /// </summary>
+    /// <param name="key"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static string Delete<T>(long key) where T : IEntity, new()
     {
         var model = new T();
+
         model.SetPrimaryKeyValue(key);
+
         return Delete(model);
     }
 
+    /// <summary>
+    /// Delete
+    /// </summary>
+    /// <param name="model"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static string Delete<T>(T model) where T : IEntity, new()
     {
         var schemaName = model.GetSqlSchemaName();
         var tableName = TransferAssist.GetTableName(model);
         var fieldDecorateStart = model.GetSqlFieldDecorateStart();
         var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
-        var result = new StringBuilder();
 
-        result.Append("DELETE FROM");
-        result.Append(" ");
+        var list = new List<string>
+        {
+            "DELETE FROM",
+            !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{tableName}" : tableName,
+            "WHERE",
+            $"{fieldDecorateStart}{model.GetPrimaryKeyName()}{fieldDecorateEnd} = {model.TransferPrimaryKeyValueToSql()}"
+        };
 
-        if (!string.IsNullOrWhiteSpace(schemaName))
-            result.Append($"{fieldDecorateStart}{schemaName}{fieldDecorateEnd}.");
-
-        result.Append($"{fieldDecorateStart}{tableName}{fieldDecorateEnd}");
-        result.Append(" ");
-        result.Append(
-            $"Where {fieldDecorateStart}{model.GetPrimaryKeyName()}{fieldDecorateEnd} = {model.TransferPrimaryKeyValueToSql()}"
-        );
-
-        return result.ToString();
+        return list.Join(" ");
     }
 
+    /// <summary>
+    /// Delete
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="conditions"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static string Delete<T>(
         T model,
         ICollection<Condition<T>> conditions
     ) where T : IEntity, new()
     {
-        var schemaName = model.GetSqlSchemaName();
-
         if (conditions == null || conditions.Count == 0) throw new Exception("条件更新不能缺少条件语句！");
 
+        var schemaName = model.GetSqlSchemaName();
         var tableName = TransferAssist.GetTableName(model);
 
-        var result = new StringBuilder();
+        var list = new List<string>
+        {
+            "DELETE FROM",
+            !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{tableName}" : tableName,
+            $"{ConditionAssist.Build(conditions)}"
+        };
 
-        result.Append("DELETE ");
-        result.Append("FROM ");
-
-        if (!string.IsNullOrWhiteSpace(schemaName)) result.Append($"{schemaName}.");
-
-        result.Append(tableName);
-
-        result.AppendLine(ConditionAssist.Build(conditions));
-
-        return result.ToString();
+        return list.Join(" ");
     }
 
     #endregion
 
-    #region DeleteMany
+    #region DeleteBatch
 
-    public static string DeleteManyByPrimaryKey<T>(IEnumerable<long> keys) where T : IEntity, new()
+    /// <summary>
+    /// delete many by primary value
+    /// </summary>
+    /// <param name="keys"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static string DeleteBatch<T>(IEnumerable<long> keys) where T : IEntity, new()
     {
         var list = new List<T>();
 
@@ -1499,10 +1189,17 @@ public static class SqlAssist
             list.Add(model);
         }
 
-        return DeleteMany(list.AsEnumerable());
+        return DeleteBatch(list.AsEnumerable());
     }
 
-    public static string DeleteMany<T>(IEnumerable<T> models) where T : IEntity, new()
+    /// <summary>
+    /// DeleteBatch
+    /// </summary>
+    /// <param name="models"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static string DeleteBatch<T>(IEnumerable<T> models) where T : IEntity, new()
     {
         var modelList = models.ToList();
 
@@ -1518,28 +1215,31 @@ public static class SqlAssist
         var tableName = TransferAssist.GetTableName(model);
         var fieldDecorateStart = model.GetSqlFieldDecorateStart();
         var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
-        var result = new StringBuilder();
 
-        result.Append("DELETE FROM");
-        result.Append(" ");
+        var list = new List<string>
+        {
+            "DELETE FROM",
+            !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{tableName}" : tableName,
+            "WHERE",
+            $"{fieldDecorateStart}{model.GetPrimaryKeyName()}{fieldDecorateEnd} IN",
+            "(",
+            $"{values.Join(",", "'{0}'")}",
+            ")"
+        };
 
-        if (!string.IsNullOrWhiteSpace(schemaName))
-            result.Append($"{fieldDecorateStart}{schemaName}{fieldDecorateEnd}.");
-
-        result.Append($"{fieldDecorateStart}{tableName}{fieldDecorateEnd}");
-        result.Append(" ");
-        result.Append(
-            $"Where {fieldDecorateStart}{model.GetPrimaryKeyName()}{fieldDecorateEnd} IN ({values.Join(",", "'{0}'")})"
-        );
-
-        return result.ToString();
+        return list.Join(" ");
     }
 
     #endregion
 
-    private static string GetConditionConnector(string sql)
+    /// <summary>
+    /// GetConditionConnector
+    /// </summary>
+    /// <param name="sql"></param>
+    /// <returns></returns>
+    public static string GetConditionConnector(string sql)
     {
-        var sqlTrim = sql.Trim();
+        var sqlTrim = sql.Trim().ToLower();
         var connector = "AND";
         var andLastIndex = sqlTrim.LastIndexOf(" and", StringComparison.OrdinalIgnoreCase);
         var whereLastIndex = sqlTrim.LastIndexOf(" where", StringComparison.OrdinalIgnoreCase);
@@ -1563,9 +1263,14 @@ public static class SqlAssist
         return connector;
     }
 
-    private static string GetAssignFieldConnector(string sql)
+    /// <summary>
+    /// GetAssignFieldConnector
+    /// </summary>
+    /// <param name="sql"></param>
+    /// <returns></returns>
+    public static string GetAssignFieldConnector(string sql)
     {
-        var sqlTrim = sql.Trim();
+        var sqlTrim = sql.Trim().ToLower();
         var setLastIndex = sqlTrim.LastIndexOf(" set", StringComparison.OrdinalIgnoreCase);
 
         var connector = setLastIndex >= 0 ? "," : "";

@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Sql.Attributes;
+﻿namespace EasySoft.UtilityTools.Standard.Attributes;
 
 /// <summary>
 /// advance column

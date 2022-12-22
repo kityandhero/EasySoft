@@ -11,7 +11,7 @@ public static class EntityAssist
         TimeSpan.TicksPerSecond * 12 * RandomEx.ThreadSafeNext(36000, 72000)
     );
 
-    private static string GetEntityCacheKey<T>(long id) where T : IEntityExtraSelf<T>, new()
+    private static string GetEntityCacheKey<T>(long id) where T : IEntitySelf<T>, new()
     {
         return DapperElegantConfigurator.GetCacheOperator()?.BuildKey(
             "entityCache",
@@ -21,7 +21,7 @@ public static class EntityAssist
         ) ?? "";
     }
 
-    public static T? RefreshCache<T>(long id) where T : IEntityExtraSelf<T>, new()
+    public static T? RefreshCache<T>(long id) where T : IEntitySelf<T>, new()
     {
         RemoveEntityCache<T>(id);
 
@@ -32,7 +32,7 @@ public static class EntityAssist
     /// GetEntityCache
     /// </summary>
     /// <returns></returns>
-    public static T? GetEntity<T>(long id, bool enableCache = true) where T : IEntityExtraSelf<T>, new()
+    public static T? GetEntity<T>(long id, bool enableCache = true) where T : IEntitySelf<T>, new()
     {
         if (id <= 0) return default;
 
@@ -57,7 +57,7 @@ public static class EntityAssist
         return data;
     }
 
-    private static T? GetEntityCore<T>(long id) where T : IEntityExtraSelf<T>, new()
+    private static T? GetEntityCore<T>(long id) where T : IEntitySelf<T>, new()
     {
         if (id <= 0) return default;
 
@@ -72,7 +72,7 @@ public static class EntityAssist
     /// <summary>
     /// 移除缓存
     /// </summary>
-    public static ExecutiveResult RemoveEntityCache<T>(long id) where T : IEntityExtraSelf<T>, new()
+    public static ExecutiveResult RemoveEntityCache<T>(long id) where T : IEntitySelf<T>, new()
     {
         var result = new ExecutiveResult(ReturnCode.NoChange);
 
@@ -91,7 +91,7 @@ public static class EntityAssist
 
     #endregion EntityCache
 
-    public static ExecutiveResult RemoveEntityCache<T>(T entity) where T : IEntityExtraSelf<T>, new()
+    public static ExecutiveResult RemoveEntityCache<T>(T entity) where T : IEntitySelf<T>, new()
     {
         var result = new ExecutiveResult(ReturnCode.NoChange);
 
@@ -106,14 +106,14 @@ public static class EntityAssist
 
     #region CheckExist
 
-    public static bool CheckExist<T>(long id, bool enableCache = true) where T : IEntityExtraSelf<T>, new()
+    public static bool CheckExist<T>(long id, bool enableCache = true) where T : IEntitySelf<T>, new()
     {
         var entity = GetEntity<T>(id, enableCache);
 
         return entity != null;
     }
 
-    public static bool CheckExist<T>(Condition<T> condition) where T : IEntityExtraSelf<T>, new()
+    public static bool CheckExist<T>(Condition<T> condition) where T : IEntitySelf<T>, new()
     {
         var entity = GetEntity(condition);
 
@@ -121,7 +121,7 @@ public static class EntityAssist
     }
 
     public static bool CheckExist<T>(ICollection<Condition<T>> conditions)
-        where T : IEntityExtraSelf<T>, new()
+        where T : IEntitySelf<T>, new()
     {
         var entity = GetEntity(conditions);
 
@@ -135,7 +135,7 @@ public static class EntityAssist
     public static IList<ExpandoObject> SingleListEntity<T>(
         ICollection<FieldItemSpecial<T>> fieldItems, Condition<T> condition,
         Sort<T> sort
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -154,7 +154,7 @@ public static class EntityAssist
     public static IList<ExpandoObject> SingleListObject<T>(
         ICollection<Expression<Func<T, object>>> listPropertyLambda,
         ICollection<Condition<T>> conditions, Sort<T> sort
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -172,7 +172,7 @@ public static class EntityAssist
 
     public static IList<ExpandoObject> SingleListObject<T>(
         ICollection<FieldItemSpecial<T>> fieldItems, Condition<T> condition
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -190,7 +190,7 @@ public static class EntityAssist
     public static IList<ExpandoObject> SingleListObject<T>(
         ICollection<Expression<Func<T, object>>> listPropertyLambda, Condition<T> condition,
         IList<Sort<T>> sorts
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -209,7 +209,7 @@ public static class EntityAssist
     public static IList<ExpandoObject> SingleListObject<T>(
         ICollection<FieldItemSpecial<T>> fieldItems, Condition<T> condition,
         IList<Sort<T>> sorts
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -228,7 +228,7 @@ public static class EntityAssist
     public static IList<ExpandoObject> SingleListObject<T>(
         ICollection<Expression<Func<T, object>>> listPropertyLambda,
         ICollection<Condition<T>> conditions
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -247,7 +247,7 @@ public static class EntityAssist
         ICollection<Expression<Func<T, object>>> listPropertyLambda,
         ICollection<Condition<T>> conditions,
         IList<Sort<T>> sorts
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -267,7 +267,7 @@ public static class EntityAssist
         ICollection<FieldItemSpecial<T>> fieldItems,
         ICollection<Condition<T>> conditions,
         IList<Sort<T>> sorts
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -287,7 +287,7 @@ public static class EntityAssist
 
     #region SingleListEntity
 
-    public static IList<T> SingleListEntity<T>(Sort<T> sort) where T : IEntityExtraSelf<T>, new()
+    public static IList<T> SingleListEntity<T>(Sort<T> sort) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -299,7 +299,7 @@ public static class EntityAssist
         return result;
     }
 
-    public static IList<T> SingleListEntity<T>(ICollection<object> listId) where T : IEntityExtraSelf<T>, new()
+    public static IList<T> SingleListEntity<T>(ICollection<object> listId) where T : IEntitySelf<T>, new()
     {
         if (!listId.Any()) return new List<T>();
 
@@ -337,7 +337,7 @@ public static class EntityAssist
     public static IList<T> SingleListEntity<T>(
         Condition<T> condition,
         Sort<T> sort
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -352,7 +352,7 @@ public static class EntityAssist
     public static IList<T> SingleListEntity<T>(
         ICollection<Condition<T>> conditions,
         Sort<T> sort
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -365,7 +365,7 @@ public static class EntityAssist
     }
 
     public static IList<T> SingleListEntity<T>(Condition<T> condition)
-        where T : IEntityExtraSelf<T>, new()
+        where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -380,7 +380,7 @@ public static class EntityAssist
     public static IList<T> SingleListEntity<T>(
         Condition<T> condition,
         IList<Sort<T>> sorts
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -394,7 +394,7 @@ public static class EntityAssist
 
     public static IList<T> SingleListEntity<T>(
         ICollection<Condition<T>> conditions
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -408,7 +408,7 @@ public static class EntityAssist
 
     public static IList<T> SingleListEntity<T>(
         IList<Sort<T>> sorts
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -423,7 +423,7 @@ public static class EntityAssist
     public static IList<T> SingleListEntity<T>(
         ICollection<Condition<T>> conditions,
         IList<Sort<T>> sorts
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -442,7 +442,7 @@ public static class EntityAssist
         int pageSize,
         ICollection<Condition<T>>? conditions = null,
         IList<Sort<T>>? sorts = null
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -462,7 +462,7 @@ public static class EntityAssist
         int pageSize,
         ICollection<Condition<T>>? conditions = null,
         IList<Sort<T>>? sorts = null
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -477,7 +477,7 @@ public static class EntityAssist
         return result;
     }
 
-    public static long GetTotalCount<T>() where T : IEntityExtraSelf<T>, new()
+    public static long GetTotalCount<T>() where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -489,7 +489,7 @@ public static class EntityAssist
         return result;
     }
 
-    public static T? GetEntity<T>(Condition<T> condition) where T : IEntityExtraSelf<T>, new()
+    public static T? GetEntity<T>(Condition<T> condition) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -502,7 +502,7 @@ public static class EntityAssist
     }
 
     public static T? GetEntity<T>(ICollection<Condition<T>> conditions)
-        where T : IEntityExtraSelf<T>, new()
+        where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -516,7 +516,7 @@ public static class EntityAssist
 
     public static T? GetEntity<T>(ICollection<Condition<T>> conditions,
         IList<Sort<T>> sorts)
-        where T : IEntityExtraSelf<T>, new()
+        where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -530,7 +530,7 @@ public static class EntityAssist
 
     #region AddEntity
 
-    public static ExecutiveResult<T> Add<T>(T entity) where T : IEntityExtraSelf<T>, new()
+    public static ExecutiveResult<T> Add<T>(T entity) where T : IEntitySelf<T>, new()
     {
         if (entity == null) throw new Exception("执行对象不能为null");
 
@@ -543,7 +543,7 @@ public static class EntityAssist
     }
 
     public static ExecutiveResult<T> AddUniquer<T>(T entity, Condition<T> uniquerCondition)
-        where T : IEntityExtraSelf<T>, new()
+        where T : IEntitySelf<T>, new()
     {
         if (entity == null) throw new Exception("执行对象不能为null");
 
@@ -558,7 +558,7 @@ public static class EntityAssist
     public static ExecutiveResult<T> AddUniquer<T>(
         T entity,
         ICollection<Condition<T>> uniquerConditions
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         if (entity == null) throw new Exception("执行对象不能为null");
 
@@ -574,7 +574,7 @@ public static class EntityAssist
 
     #region UpdateEntity
 
-    public static ExecutiveResult<T> Update<T>(T entity) where T : IEntityExtraSelf<T>, new()
+    public static ExecutiveResult<T> Update<T>(T entity) where T : IEntitySelf<T>, new()
     {
         if (entity == null) throw new Exception("执行对象不能为null");
 
@@ -591,7 +591,7 @@ public static class EntityAssist
     public static bool UpdateWithCondition<T>(
         T entity,
         ICollection<Condition<T>> conditions
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         if (entity == null) throw new Exception("执行对象不能为null");
 
@@ -608,7 +608,7 @@ public static class EntityAssist
     public static ExecutiveResult<T> UpdatesSpecific<T>(
         T entity,
         ICollection<Expression<Func<T>>> listPropertyLambda
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         if (entity == null) throw new Exception("执行对象不能为null");
 
@@ -625,7 +625,7 @@ public static class EntityAssist
     public static ExecutiveResult<T> UpdatesSpecific<T>(
         T entity,
         ICollection<Expression<Func<T, object>>> listPropertyLambda
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         if (entity == null) throw new Exception("执行对象不能为null");
 
@@ -643,7 +643,7 @@ public static class EntityAssist
         T entity,
         ICollection<Expression<Func<T>>> listPropertyLambda,
         ICollection<Condition<T>> conditions
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         if (entity == null) throw new Exception("执行对象不能为null");
 
@@ -661,7 +661,7 @@ public static class EntityAssist
         T entity,
         ICollection<Expression<Func<T, object>>> listPropertyLambda,
         ICollection<Condition<T>> conditions
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         if (entity == null) throw new Exception("执行对象不能为null");
 
@@ -679,7 +679,7 @@ public static class EntityAssist
 
     #region SetEntity
 
-    public static ExecutiveResult<T> Set<T>(T entity) where T : IEntityExtraSelf<T>, new()
+    public static ExecutiveResult<T> Set<T>(T entity) where T : IEntitySelf<T>, new()
     {
         if (entity == null) throw new Exception("执行对象不能为null");
 
@@ -692,7 +692,7 @@ public static class EntityAssist
 
     #region DeleteEntity
 
-    public static ExecutiveResult<T> DeleteEntity<T>(T entity) where T : IEntityExtraSelf<T>, new()
+    public static ExecutiveResult<T> DeleteEntity<T>(T entity) where T : IEntitySelf<T>, new()
     {
         if (entity == null) throw new Exception("can not delete null data");
 
@@ -706,7 +706,7 @@ public static class EntityAssist
         return result;
     }
 
-    public static ExecutiveResult<T> DeleteEntity<T>(long id) where T : IEntityExtraSelf<T>, new()
+    public static ExecutiveResult<T> DeleteEntity<T>(long id) where T : IEntitySelf<T>, new()
     {
         var entity = GetEntity<T>(id, false);
 
@@ -730,7 +730,7 @@ public static class EntityAssist
     /// <returns></returns>
     public static ExecutiveResult<T> DeleteEntity<T>(
         Condition<T> condition
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var entity = GetEntity(condition);
 
@@ -754,7 +754,7 @@ public static class EntityAssist
     /// <returns></returns>
     public static ExecutiveResult<T> DeleteEntity<T>(
         ICollection<Condition<T>> conditions
-    ) where T : IEntityExtraSelf<T>, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var entity = GetEntity(conditions);
 
@@ -774,7 +774,7 @@ public static class EntityAssist
 
     #region DeleteMany
 
-    public static ExecutiveResult DeleteMany<T>(IEnumerable<long> keys) where T : IEntityExtraSelf<T>, new()
+    public static ExecutiveResult DeleteMany<T>(IEnumerable<long> keys) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -786,7 +786,7 @@ public static class EntityAssist
         return result;
     }
 
-    public static ExecutiveResult DeleteMany<T>(IEnumerable<T> models) where T : IEntityExtraSelf<T>, new()
+    public static ExecutiveResult DeleteMany<T>(IEnumerable<T> models) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),

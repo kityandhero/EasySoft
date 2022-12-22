@@ -53,7 +53,7 @@ public static class AdvanceSqlBuilderAllFieldsExtensions
 
             properties.ForEach(property =>
             {
-                var customColumnMapperAttribute = Tools.GetColumnAttribute(property, false);
+                var customColumnMapperAttribute = Tools.GetAdvanceColumnAttribute(property, false);
 
                 if (customColumnMapperAttribute == null) return;
 

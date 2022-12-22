@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Extensions;
-using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
-using EasySoft.Core.Sql.Common;
+﻿using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Enums;
 
 namespace EasySoft.Core.Sql.Assists;

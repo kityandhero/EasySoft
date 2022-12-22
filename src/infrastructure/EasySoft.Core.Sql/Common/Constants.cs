@@ -1,10 +1,12 @@
-﻿namespace EasySoft.Core.Sql.Common
-{
-    public static class Constants
-    {
-        public const string DefaultTablePrimaryKey = "id";
+﻿namespace EasySoft.Core.Sql.Common;
 
-        public static readonly DateTime DefaultDataColumnDataDateTime = UtilityTools.Standard.ConstCollection
-            .DbDefaultDateTime;
-    }
+/// <summary>
+/// 
+/// </summary>
+public static class Constants
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public const string DefaultTablePrimaryKey = "id";
 }

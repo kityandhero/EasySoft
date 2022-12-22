@@ -9,6 +9,8 @@ global using System.Dynamic;
 global using System.Linq.Expressions;
 global using System.Reflection;
 global using System.Text;
+global using EasySoft.Core.Infrastructure.Extensions;
+global using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
 global using EasySoft.UtilityTools.Standard;
 global using EasySoft.UtilityTools.Standard.Assists;
 global using EasySoft.UtilityTools.Standard.Entities.Interfaces;

@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Sql.Interfaces;
+﻿using EasySoft.Core.Sql.Assists;
+using EasySoft.Core.Sql.Common;
 
 namespace EasySoft.Core.Sql.Extensions;
 
@@ -8,10 +9,179 @@ namespace EasySoft.Core.Sql.Extensions;
 public static class EntityExtraExtension
 {
     /// <summary>
+    /// BuildNameValueList
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="nameList"></param>
+    /// <param name="valueList"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    internal static T BuildNameAndValueList<T>(
+        this T model,
+        out List<string> nameList,
+        out List<string> valueList
+    ) where T : IEntity
+    {
+        var names = new List<string>();
+        var values = new List<string>();
+
+        var fieldDecorateStart = model.GetSqlFieldDecorateStart();
+        var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
+
+        model.GetType().GetProperties().ForEach(p =>
+        {
+            if (!p.CanWrite) return;
+
+            var attribute = Tools.GetAdvanceColumnAttribute(p);
+
+            if (attribute == null) throw new Exception("AdvanceColumnAttribute is null");
+
+            names.Add($"{fieldDecorateStart}{attribute.Name}{fieldDecorateEnd}");
+
+            values.Add($"@{p.Name}");
+        });
+
+        nameList = names;
+        valueList = values;
+
+        return model;
+    }
+
+    /// <summary>
+    /// BuildNameValueList
+    /// </summary>
+    /// <param name="model"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    internal static List<string> BuildNameValueList<T>(
+        this T model
+    ) where T : IEntity
+    {
+        var nameValueList = new List<string>();
+
+        var fieldDecorateStart = model.GetSqlFieldDecorateStart();
+        var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
+
+        model.GetType().GetProperties().ForEach(p =>
+        {
+            if (!p.CanWrite) return;
+
+            var columnName = TransferAssist.GetColumnName(p);
+
+            if (string.IsNullOrWhiteSpace(columnName)) throw new Exception("AdvanceColumnAttribute is null");
+
+            if (!p.Name.ToLower().Equals(Constants.DefaultTablePrimaryKey))
+                nameValueList.Add(
+                    $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name}"
+                );
+        });
+
+        return nameValueList;
+    }
+
+    /// <summary>
+    /// BuildNameValueList
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="listPropertyLambda"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    internal static List<string> BuildNameValueList<T>(
+        this T model,
+        ICollection<Expression<Func<T>>> listPropertyLambda
+    ) where T : IEntity, new()
+    {
+        if (listPropertyLambda == null || !listPropertyLambda.Any()) throw new Exception("缺少指定的更新属性");
+
+        var nameValueList = new List<string>();
+
+        var listPropertyName = new List<string>();
+
+        listPropertyLambda.ForEach(expression =>
+        {
+            var propertyName = ReflectionAssist.GetPropertyName(expression);
+
+            listPropertyName.Add(propertyName);
+        });
+
+        var fieldDecorateStart = model.GetSqlFieldDecorateStart();
+        var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
+
+        model.GetType().GetProperties().ForEach(p =>
+        {
+            if (!p.CanWrite) return;
+
+            if (!listPropertyName.Contains(p.Name)) return;
+
+            var columnName = TransferAssist.GetColumnName(p);
+
+            if (string.IsNullOrWhiteSpace(columnName)) throw new Exception("AdvanceColumnAttribute is null");
+
+            if (!columnName.ToLower().Equals(Constants.DefaultTablePrimaryKey))
+                nameValueList.Add(
+                    $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name}"
+                );
+        });
+
+        return nameValueList;
+    }
+
+    /// <summary>
+    /// BuildNameValueList
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="listPropertyLambda"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    internal static List<string> BuildNameValueList<T>(
+        this T model,
+        ICollection<Expression<Func<T, object>>> listPropertyLambda
+    ) where T : IEntity, new()
+    {
+        if (listPropertyLambda == null || !listPropertyLambda.Any()) throw new Exception("缺少指定的更新属性");
+
+        var nameValueList = new List<string>();
+
+        var listPropertyName = new List<string>();
+
+        listPropertyLambda.ForEach(expression =>
+        {
+            var propertyName = ReflectionAssist.GetPropertyName(expression);
+
+            listPropertyName.Add(propertyName);
+        });
+
+        var fieldDecorateStart = model.GetSqlFieldDecorateStart();
+        var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
+
+        model.GetType().GetProperties().ForEach(p =>
+        {
+            if (!p.CanWrite) return;
+
+            if (!listPropertyName.Contains(p.Name)) return;
+
+            var columnName = TransferAssist.GetColumnName(p);
+
+            if (string.IsNullOrWhiteSpace(columnName)) throw new Exception("AdvanceColumnAttribute is null");
+
+            if (!columnName.ToLower().Equals(Constants.DefaultTablePrimaryKey))
+                nameValueList.Add(
+                    $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name}"
+                );
+        });
+
+        return nameValueList;
+    }
+
+    /// <summary>
     /// 转换为属性首字母小写的Object
     /// </summary>
     /// <returns></returns>
-    public static object? ToObject<T>(this T entity) where T : IEntityExtra
+    public static object? ToObject<T>(this T entity) where T : IEntity
     {
         var d = entity.ToExpandoObject();
 
@@ -34,7 +204,7 @@ public static class EntityExtraExtension
     /// <param name="expressions"></param>
     /// <returns></returns>
     public static object? ToSimpleObject<T>(this T entity, ICollection<Expression<Func<T, object>>> expressions)
-        where T : IEntityExtra
+        where T : IEntity
     {
         if (expressions.Count == 0) return entity.ToObject();
 
@@ -75,7 +245,7 @@ public static class EntityExtraExtension
     public static object? ToSimpleObject<T>(
         this T entity,
         ICollection<Expression<Func<object>>> expressions
-    ) where T : IEntityExtra
+    ) where T : IEntity
     {
         if (expressions.Count == 0) return entity.ToObject();
 
@@ -114,7 +284,7 @@ public static class EntityExtraExtension
     public static object? ToSimpleObjectIgnore<T>(
         this T entity,
         ICollection<Expression<Func<T, object>>>? expressions
-    ) where T : IEntityExtra
+    ) where T : IEntity
     {
         if (expressions == null || expressions.Count == 0) return entity.ToObject();
 
@@ -151,7 +321,7 @@ public static class EntityExtraExtension
     /// </summary>
     /// <returns></returns>
     public static object? ToSimpleObjectIgnore<T>(this T entity, ICollection<Expression<Func<object>>> expressions)
-        where T : IEntityExtra
+        where T : IEntity
     {
         if (expressions.Count == 0) return entity.ToObject();
 
@@ -181,7 +351,7 @@ public static class EntityExtraExtension
         return JsonConvert.DeserializeObject(JsonConvertAssist.SerializeAndKeyToLower(result));
     }
 
-    public static List<object> ToListObject<T>(this IEnumerable<T> list) where T : IEntityExtra
+    public static List<object> ToListObject<T>(this IEnumerable<T> list) where T : IEntity
     {
         return list.Select(o => (object)o.ToExpandoObject()).ToList();
     }
@@ -189,7 +359,7 @@ public static class EntityExtraExtension
     public static List<object> ToListSimpleObject<T>(
         this IEnumerable<T> list,
         ICollection<Expression<Func<object>>> expressions
-    ) where T : IEntityExtra
+    ) where T : IEntity
     {
         return list.Select(o => o.ToSimpleObject(expressions)).ToListFilterNullable();
     }
@@ -197,7 +367,7 @@ public static class EntityExtraExtension
     public static List<object> ToListSimpleObjectIgnore<T>(
         this IEnumerable<T> list,
         ICollection<Expression<Func<object>>> expressions
-    ) where T : IEntityExtra
+    ) where T : IEntity
     {
         return list.Select(o => o.ToSimpleObjectIgnore(expressions)).ToListFilterNullable();
     }

@@ -1,6 +1,9 @@
 ﻿using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.Interfaces;
+using EasySoft.Core.Infrastructure.Extensions;
+using EasySoft.Core.Sql.Builders;
 using EasySoft.Core.Sql.Extensions;
+using EasySoft.Core.Sql.Factories;
 using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 using EasySoft.UtilityTools.Standard.Result.Factories;
 using EasySoft.UtilityTools.Standard.Result.Implements;
@@ -8,7 +11,7 @@ using SqlExecuteType = EasySoft.UtilityTools.Standard.Enums.SqlExecuteType;
 
 namespace EasySoft.Core.Dapper.Base;
 
-public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
+public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 {
     private readonly IMapperChannel _mapperChannel;
 
@@ -1163,7 +1166,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
     /// <returns></returns>
     public ExecutiveResult DeleteMany(IEnumerable<long> keys)
     {
-        var sql = SqlAssist.DeleteManyByPrimaryKey<T>(keys);
+        var sql = SqlAssist.DeleteBatchByPrimaryKey<T>(keys);
 
         if (_mapperTransaction == null)
         {
@@ -1208,7 +1211,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
 
     public ExecutiveResult DeleteMany(IEnumerable<T> models)
     {
-        var sql = SqlAssist.DeleteMany(models);
+        var sql = SqlAssist.DeleteBatch(models);
 
         if (_mapperTransaction == null)
         {
@@ -1520,7 +1523,11 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
     public IList<T> SingleListEntity(ICollection<Condition<T>> conditions, IList<Sort<T>> sorts)
     {
         var model = new T();
-        var query = SqlAssist.Select().AllFields(model).From(model);
+        var query = new AdvanceSqlBuilder()
+            .Select()
+            .AllFields(model)
+            .From(model)
+            .Sql;
 
         if (conditions.Count > 0)
         {
@@ -1531,7 +1538,7 @@ public class BaseMapper<T> : IMapper where T : IEntityExtraSelf<T>, new()
                 {
                     c.Value = (ICollection)c.Value;
 
-                    query = query.LinkCondition(c);
+                    query = new AdvanceSqlBuilder(query).LinkCondition(c);
                 }
                 else
                 {

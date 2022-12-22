@@ -16,7 +16,6 @@ global using EasySoft.Core.Sql.Assists;
 global using EasySoft.Core.Sql.Common;
 global using EasySoft.Core.Sql.Entities;
 global using EasySoft.Core.Sql.Enums;
-global using EasySoft.Core.Sql.Interfaces;
 global using EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
 global using EasySoft.IdGenerator.Assists;
 global using EasySoft.UtilityTools.Core.Channels;

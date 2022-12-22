@@ -104,4 +104,29 @@ public static class AdvanceSqlBuilderAppendFieldExtensions
 
         return builder;
     }
+
+    /// <summary>
+    /// LinkAssignField
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="assignField"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static AdvanceSqlBuilder LinkAssignField<T>(
+        this AdvanceSqlBuilder builder,
+        AssignField<T> assignField
+    ) where T : IEntity, new()
+    {
+        var sql = builder.Sql;
+
+        var resultTransferAssignUpdate = TransferAssist.TransferAssignField(assignField);
+
+        var connector = SqlAssist.GetAssignFieldConnector(sql);
+
+        sql = "{0} {1} {2}".FormatValue(sql, connector, resultTransferAssignUpdate);
+
+        builder.Sql = sql;
+
+        return builder;
+    }
 }

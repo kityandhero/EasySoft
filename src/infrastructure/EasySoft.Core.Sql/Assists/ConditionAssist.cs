@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.Sql.Common;
-using EasySoft.Core.Sql.Interfaces;
 
 namespace EasySoft.Core.Sql.Assists;
 
@@ -20,7 +19,7 @@ public static class ConditionAssist
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static string Build<T>(IEnumerable<Condition<T>> conditions) where T : IEntityExtra, new()
+    public static string Build<T>(IEnumerable<Condition<T>> conditions) where T : IEntity, new()
     {
         var list = new List<string>();
 
@@ -39,7 +38,7 @@ public static class ConditionAssist
     /// </summary>
     /// <param name="condition"></param>
     /// <returns></returns>
-    public static string Build<T>(Condition<T> condition) where T : IEntityExtra, new()
+    public static string Build<T>(Condition<T> condition) where T : IEntity, new()
     {
         return Build(new[]
         {
@@ -53,7 +52,7 @@ public static class ConditionAssist
     /// <param name="condition"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static string TransferCondition<T>(Condition<T> condition) where T : IEntityExtra, new()
+    public static string TransferCondition<T>(Condition<T> condition) where T : IEntity, new()
     {
         return SqlAssist.TransferCondition(condition);
     }

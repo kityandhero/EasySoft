@@ -2,7 +2,6 @@
 using EasySoft.Core.Sql.Builders;
 using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Enums;
-using EasySoft.Core.Sql.Interfaces;
 
 namespace EasySoft.Core.Sql.Extensions;
 
@@ -135,7 +134,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     public static AdvanceSqlBuilder From<T>(
         this AdvanceSqlBuilder builder,
         T model
-    ) where T : IEntityExtra
+    ) where T : IEntity
     {
         var fieldDecorateStart = model.GetSqlFieldDecorateStart();
         var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
@@ -187,7 +186,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <param name="builder"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static AdvanceSqlBuilder InnerJoin<T>(this AdvanceSqlBuilder builder) where T : IEntityExtra, new()
+    public static AdvanceSqlBuilder InnerJoin<T>(this AdvanceSqlBuilder builder) where T : IEntity, new()
     {
         var model = new T();
 
@@ -204,7 +203,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     public static AdvanceSqlBuilder InnerJoin<T>(
         this AdvanceSqlBuilder builder,
         T model
-    ) where T : IEntityExtra
+    ) where T : IEntity
     {
         var schemaName = model.GetSqlSchemaName();
         var tableName = TransferAssist.GetTableName(model);
@@ -226,7 +225,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <param name="builder"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static AdvanceSqlBuilder LeftJoin<T>(this AdvanceSqlBuilder builder) where T : IEntityExtra, new()
+    public static AdvanceSqlBuilder LeftJoin<T>(this AdvanceSqlBuilder builder) where T : IEntity, new()
     {
         var model = new T();
 
@@ -243,7 +242,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     public static AdvanceSqlBuilder LeftJoin<T>(
         this AdvanceSqlBuilder builder,
         T model
-    ) where T : IEntityExtra
+    ) where T : IEntity
     {
         var schemaName = model.GetSqlSchemaName();
         var tableName = TransferAssist.GetTableName(model);
@@ -279,7 +278,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
         {
             var m = type1.Create();
 
-            var entity = m as IEntityExtra;
+            var entity = m as IEntity;
 
             var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
             var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -296,7 +295,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
         {
             var m = type2.Create();
 
-            var entity = m as IEntityExtra;
+            var entity = m as IEntity;
 
             var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
             var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -335,7 +334,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -373,7 +372,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -411,7 +410,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -449,7 +448,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -487,7 +486,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -522,14 +521,14 @@ public static class AdvanceSqlBuilderGrammarExtensions
         Expression<Func<T1>> propertyLambda,
         Expression<Func<T2>> propertyLambda2,
         ConditionType conditionType = ConditionType.Eq
-    ) where T1 : IEntityExtra, new() where T2 : IEntityExtra, new()
+    ) where T1 : IEntity, new() where T2 : IEntity, new()
     {
         var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type type1);
 
         {
             var m = type1.Create();
 
-            var entity = m as IEntityExtra;
+            var entity = m as IEntity;
 
             var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
             var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -546,7 +545,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
         {
             var m = type2.Create();
 
-            var entity = m as IEntityExtra;
+            var entity = m as IEntity;
 
             var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
             var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -585,7 +584,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -622,7 +621,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -662,7 +661,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -702,7 +701,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -742,7 +741,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
 
         var m = type.Create();
 
-        var entity = m as IEntityExtra;
+        var entity = m as IEntity;
 
         var schemaName = entity == null ? "" : entity.GetSqlSchemaName();
         var fieldDecorateStart = entity == null ? "" : entity.GetSqlFieldDecorateStart();
@@ -777,7 +776,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     public static AdvanceSqlBuilder And<T>(
         this AdvanceSqlBuilder builder,
         Condition<T> condition
-    ) where T : IEntityExtra, new()
+    ) where T : IEntity, new()
     {
         var transferCondition = SqlAssist.TransferCondition(condition);
 

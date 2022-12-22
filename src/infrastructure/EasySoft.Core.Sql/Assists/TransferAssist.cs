@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Extensions;
-using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
-using EasySoft.Core.Sql.Common;
+﻿using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Enums;
 using TypeExtensions = EasySoft.UtilityTools.Standard.Extensions.TypeExtensions;
 
@@ -13,7 +11,7 @@ public static class TransferAssist
 {
     public static string GetTableName<T>(T entity)
     {
-        var tableAttribute = Tools.GetTableAttribute(entity);
+        var tableAttribute = Tools.GetAdvanceTableAttribute(entity);
 
         if (tableAttribute == null) return typeof(T).Name;
 
@@ -25,7 +23,7 @@ public static class TransferAssist
 
     public static string GetTableName<T>()
     {
-        var tableAttribute = Tools.GetTableAttribute<T>();
+        var tableAttribute = Tools.GetAdvanceTableAttribute<T>();
 
         if (tableAttribute == null) return typeof(T).Name;
 
@@ -83,7 +81,7 @@ public static class TransferAssist
 
                     propertyInfo = propertyInfoTemp;
 
-                    var customColumnMapperAttribute = Tools.GetColumnAttribute(propertyInfo);
+                    var customColumnMapperAttribute = Tools.GetAdvanceColumnAttribute(propertyInfo);
 
                     if (customColumnMapperAttribute == null)
                         throw new Exception(
@@ -120,7 +118,7 @@ public static class TransferAssist
 
             propertyInfo = propertyInfoTemp;
 
-            var columnAttribute = Tools.GetColumnAttribute(propertyInfo);
+            var columnAttribute = Tools.GetAdvanceColumnAttribute(propertyInfo);
 
             string columnName;
 
@@ -197,7 +195,7 @@ public static class TransferAssist
 
                     propertyInfo = propertyInfoTemp;
 
-                    var columnAttribute = Tools.GetColumnAttribute(propertyInfo);
+                    var columnAttribute = Tools.GetAdvanceColumnAttribute(propertyInfo);
 
                     string columnName;
 
@@ -239,7 +237,7 @@ public static class TransferAssist
 
                         propertyInfo = propertyInfoTemp;
 
-                        var columnAttribute = Tools.GetColumnAttribute(propertyInfo);
+                        var columnAttribute = Tools.GetAdvanceColumnAttribute(propertyInfo);
 
                         string columnName;
 
@@ -311,7 +309,7 @@ public static class TransferAssist
 
                     propertyInfo = propertyInfoTemp;
 
-                    var columnAttribute = Tools.GetColumnAttribute(propertyInfo);
+                    var columnAttribute = Tools.GetAdvanceColumnAttribute(propertyInfo);
 
                     string columnName;
 
@@ -357,7 +355,7 @@ public static class TransferAssist
 
             propertyInfo = propertyInfoTemp;
 
-            var columnAttribute = Tools.GetColumnAttribute(propertyInfo);
+            var columnAttribute = Tools.GetAdvanceColumnAttribute(propertyInfo);
 
             string columnName;
 
@@ -439,7 +437,7 @@ public static class TransferAssist
 
                     propertyInfo = propertyInfoTemp;
 
-                    var columnAttribute = Tools.GetColumnAttribute(propertyInfo);
+                    var columnAttribute = Tools.GetAdvanceColumnAttribute(propertyInfo);
 
                     if (columnAttribute == null) return propertyInfo.Name;
 
@@ -476,7 +474,7 @@ public static class TransferAssist
 
             propertyInfo = propertyInfoTemp;
 
-            var columnAttribute = Tools.GetColumnAttribute(propertyInfo);
+            var columnAttribute = Tools.GetAdvanceColumnAttribute(propertyInfo);
 
             if (columnAttribute == null) return propertyInfo.Name;
 
@@ -896,6 +894,12 @@ public static class TransferAssist
 
     #endregion
 
+    /// <summary>
+    /// TransferSort
+    /// </summary>
+    /// <param name="sort"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static string TransferSort<T>(Sort<T> sort) where T : IEntity, new()
     {
         return SqlAssist.TransferSort(sort);
@@ -903,6 +907,12 @@ public static class TransferAssist
 
     #region TransferField
 
+    /// <summary>
+    /// TransferField
+    /// </summary>
+    /// <param name="fieldItem"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static string TransferField<T>(FieldItem<T> fieldItem)
     {
         var f = GetTableAndColumnName(fieldItem.PropertyLambda, out var type, out var propertyInfo);
@@ -923,6 +933,12 @@ public static class TransferAssist
         return f;
     }
 
+    /// <summary>
+    /// TransferField
+    /// </summary>
+    /// <param name="fieldItemSpecial"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static string TransferField<T>(FieldItemSpecial<T> fieldItemSpecial)
     {
         var f = GetTableAndColumnName(fieldItemSpecial.PropertyLambda, out var type, out var propertyInfo);

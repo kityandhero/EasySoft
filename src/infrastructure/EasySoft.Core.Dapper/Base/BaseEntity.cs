@@ -2,7 +2,7 @@
 
 namespace EasySoft.Core.Dapper.Base;
 
-public abstract class BaseEntityExtra<T> : IEntityExtraSelf<T> where T : BaseEntityExtra<T>
+public abstract class BaseEntity<T> : IEntitySelf<T> where T : BaseEntity<T>
 {
     public abstract object GetKeyValue();
 
@@ -59,7 +59,7 @@ public abstract class BaseEntityExtra<T> : IEntityExtraSelf<T> where T : BaseEnt
 
     public string GetTableName()
     {
-        var tableAttribute = Tools.GetTableAttribute(GetType());
+        var tableAttribute = Tools.GetAdvanceTableAttribute(GetType());
 
         return tableAttribute == null ? GetType().Name : tableAttribute.Name;
     }
@@ -70,7 +70,7 @@ public abstract class BaseEntityExtra<T> : IEntityExtraSelf<T> where T : BaseEnt
     {
         var lambda = GetPrimaryKeyLambda();
 
-        var columnAttribute = Tools.GetColumnAttribute(GetPropertyInfo(lambda));
+        var columnAttribute = Tools.GetAdvanceColumnAttribute(GetPropertyInfo(lambda));
 
         if (columnAttribute == null) return GetPropertyName(lambda);
 

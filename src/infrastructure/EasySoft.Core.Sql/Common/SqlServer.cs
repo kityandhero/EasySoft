@@ -1,7 +1,12 @@
-﻿namespace EasySoft.Core.Sql.Common
+﻿namespace EasySoft.Core.Sql.Common;
+
+/// <summary>
+/// ConstantSqlServer
+/// </summary>
+public class ConstantSqlServer
 {
-    public class ConstantSqlServer
-    {
-        public const string DefaultSchemaName = "dbo";
-    }
+    /// <summary>
+    /// DefaultSchemaName
+    /// </summary>
+    public const string DefaultSchemaName = "dbo";
 }

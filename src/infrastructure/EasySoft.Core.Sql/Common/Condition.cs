@@ -29,17 +29,32 @@ public class Condition<T> where T : new()
     /// </summary>
     public string CollaborationCondition { get; private set; }
 
+    /// <summary>
+    /// ColumnTransferMode
+    /// </summary>
     public ColumnTransferMode ColumnTransferMode { get; }
 
+    /// <summary>
+    /// Condition
+    /// </summary>
     public Condition() : this(ColumnTransferMode.ContainTableName, "")
     {
     }
 
+    /// <summary>
+    /// Condition
+    /// </summary>
+    /// <param name="columnTransferMode"></param>
     public Condition(ColumnTransferMode columnTransferMode) : this(columnTransferMode, "")
     {
         ColumnTransferMode = columnTransferMode;
     }
 
+    /// <summary>
+    /// Condition
+    /// </summary>
+    /// <param name="columnTransferMode"></param>
+    /// <param name="collaborationCondition"></param>
     public Condition(ColumnTransferMode columnTransferMode, string collaborationCondition)
     {
         ColumnTransferMode = columnTransferMode;
@@ -49,7 +64,7 @@ public class Condition<T> where T : new()
     private Condition<T> AppendCollaboration<T2>(
         CollaborationType collaborationType,
         Condition<T2> collaborationCondition
-    ) where T2 : IEntityExtra, new()
+    ) where T2 : IEntity, new()
     {
         var transferResult = TransferAssist.TransferCondition(collaborationCondition);
 
@@ -74,7 +89,7 @@ public class Condition<T> where T : new()
     private Condition<T> BuildCollaboration<T2>(
         CollaborationType collaborationType,
         Condition<T2> collaborationCondition
-    ) where T2 : IEntityExtra, new()
+    ) where T2 : IEntity, new()
     {
         var transferResult = TransferAssist.TransferCondition(collaborationCondition);
 
@@ -92,26 +107,56 @@ public class Condition<T> where T : new()
         return this;
     }
 
-    public Condition<T> AndCollaboration<T2>(Condition<T2> collaborationCondition) where T2 : IEntityExtra, new()
+    /// <summary>
+    /// AndCollaboration
+    /// </summary>
+    /// <param name="collaborationCondition"></param>
+    /// <typeparam name="T2"></typeparam>
+    /// <returns></returns>
+    public Condition<T> AndCollaboration<T2>(Condition<T2> collaborationCondition) where T2 : IEntity, new()
     {
         return BuildCollaboration(CollaborationType.And, collaborationCondition);
     }
 
-    public Condition<T> AppendAndCollaboration<T2>(Condition<T2> collaborationCondition) where T2 : IEntityExtra, new()
+    /// <summary>
+    /// AppendAndCollaboration
+    /// </summary>
+    /// <param name="collaborationCondition"></param>
+    /// <typeparam name="T2"></typeparam>
+    /// <returns></returns>
+    public Condition<T> AppendAndCollaboration<T2>(Condition<T2> collaborationCondition) where T2 : IEntity, new()
     {
         return AppendCollaboration(CollaborationType.And, collaborationCondition);
     }
 
-    public Condition<T> OrCollaboration<T2>(Condition<T2> collaborationCondition) where T2 : IEntityExtra, new()
+    /// <summary>
+    /// OrCollaboration
+    /// </summary>
+    /// <param name="collaborationCondition"></param>
+    /// <typeparam name="T2"></typeparam>
+    /// <returns></returns>
+    public Condition<T> OrCollaboration<T2>(Condition<T2> collaborationCondition) where T2 : IEntity, new()
     {
         return BuildCollaboration(CollaborationType.Or, collaborationCondition);
     }
 
-    public Condition<T> AppendOrCollaboration<T2>(Condition<T2> collaborationCondition) where T2 : IEntityExtra, new()
+    /// <summary>
+    /// AppendOrCollaboration
+    /// </summary>
+    /// <param name="collaborationCondition"></param>
+    /// <typeparam name="T2"></typeparam>
+    /// <returns></returns>
+    public Condition<T> AppendOrCollaboration<T2>(Condition<T2> collaborationCondition) where T2 : IEntity, new()
     {
         return AppendCollaboration(CollaborationType.Or, collaborationCondition);
     }
 
+    /// <summary>
+    /// TransferExpression
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public string TransferExpression(out Type type)
     {
         if (ColumnTransferMode == ColumnTransferMode.ContainTableName)
