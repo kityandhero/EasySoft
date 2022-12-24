@@ -41,12 +41,8 @@ public class RpcController : CustomControllerBase
     /// <returns></returns>
     [Route("maintainSuperRole")]
     [HttpPost]
-    public async Task<RpcResult<AccessWayModel>> MaintainSuperRole(int channel)
+    public async Task MaintainSuperRole(int channel)
     {
-        // var result = await _rpcService.MaintainSuperRole(channel);
-        //
-        // return result.ToRpcResult();
-
-        return new RpcResult<AccessWayModel>();
+        await _rpcService.MaintainSuperRole(channel);
     }
 }

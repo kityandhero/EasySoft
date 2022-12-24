@@ -119,7 +119,14 @@ public class RpcService : IRpcService
 
         if (result.Success) return;
 
-        throw new NotImplementedException();
+        var superRole = new PresetRole
+        {
+            Name = ConstCollection.SuperRoleName,
+            WhetherSuper = Whether.Yes.ToInt(),
+            Channel = channel
+        };
+
+        await _presetRoleRepository.AddAsync(superRole);
     }
 
     private static List<IRoleItem> GetCustomRoleItemList(RoleGroup roleGroup)

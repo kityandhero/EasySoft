@@ -44,5 +44,5 @@ public abstract class BaseRoleEntity : BaseEntity, IRoleEntity, IChannel, IStatu
     public long ModifyBy { get; set; }
 
     /// <inheritdoc />
-    public DateTime ModifyTime { get; set; } = DateTime.Now;
+    public DateTime ModifyTime { get; set; } = DateTimeOffset.Now.DateTime;
 }

@@ -18,6 +18,9 @@ public static class AppSecurityExtensions
 
         typeAdapterConfig.ForType<AppSecurity, AppSecurityDto>()
             .Map(
+                dest => dest.AppSecurityId, src => src.Id
+            )
+            .Map(
                 dest => dest.AppId, src => src.AppId
             ).Map(
                 dest => dest.AppSecret, src => src.AppSecret

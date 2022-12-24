@@ -162,10 +162,7 @@ public class AppSecurityService : IAppSecurityService
     /// <inheritdoc />
     public async Task SetSuperRoleNextMaintainTime(AppSecurityDto appSecurityDto)
     {
-        var result = await _appSecurityRepository.GetAsync(
-            o => o.AppId == appSecurityDto.AppId
-                 && o.Channel == appSecurityDto.Channel
-        );
+        var result = await _appSecurityRepository.GetAsync(appSecurityDto.AppSecurityId);
 
         if (result.Success && result.Data != null)
         {
