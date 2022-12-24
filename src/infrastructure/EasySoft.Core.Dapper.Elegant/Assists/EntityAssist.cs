@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.Dapper.Elegant.Configure;
-using EasySoft.UtilityTools.Standard.Result.Implements;
+using EasySoft.Core.Sql.Extensions;
+using EasySoft.Core.Sql.Interfaces;
 
 namespace EasySoft.Core.Dapper.Elegant.Assists;
 

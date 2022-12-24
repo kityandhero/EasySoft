@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Result.Implements;
-
-namespace EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
+﻿namespace EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
 
 /// <summary>
 /// 应用密钥服务
@@ -13,6 +11,12 @@ public interface IAppSecurityService : IBusinessService
     /// <param name="appSecurityDto"></param>
     /// <returns></returns>
     Task<ExecutiveResult<AppSecurityDto>> VerifyAsync(AppSecurityDto appSecurityDto);
+
+    /// <summary>
+    /// 维护主控配置
+    /// </summary>
+    /// <returns></returns>
+    Task<ExecutiveResult> MaintainMasterControlAsync();
 
     /// <summary>
     /// 创建

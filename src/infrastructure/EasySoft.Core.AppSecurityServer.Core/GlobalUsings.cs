@@ -41,6 +41,7 @@ global using EasySoft.UtilityTools.Standard.Extensions;
 global using EasySoft.UtilityTools.Standard.Params;
 global using EasySoft.UtilityTools.Standard.Result;
 global using EasySoft.UtilityTools.Standard.Result.Factories;
+global using EasySoft.UtilityTools.Standard.Result.Implements;
 global using Mapster;
 global using Masuit.Tools;
 global using Microsoft.AspNetCore.Builder;

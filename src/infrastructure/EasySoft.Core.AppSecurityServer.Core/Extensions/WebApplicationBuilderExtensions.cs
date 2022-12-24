@@ -38,6 +38,7 @@ internal static class WebApplicationBuilderExtensions
     {
         ApplicationConfigure.OnApplicationStart += async (serviceProvider) =>
         {
+            await MaintainMasterControl(serviceProvider);
             await DetectionAppPublicKey(serviceProvider, DateTime.Now);
         };
 
@@ -66,5 +67,22 @@ internal static class WebApplicationBuilderExtensions
         var appPublicKeyService = serviceProvider.GetRequiredService<IAppPublicKeyService>();
 
         await appPublicKeyService.DetectionAsync();
+    }
+
+    private static async Task MaintainMasterControl(IServiceProvider serviceProvider)
+    {
+        var environment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
+        var appSecurityService = serviceProvider.GetRequiredService<IAppSecurityService>();
+
+        if (environment.IsDevelopment())
+        {
+            var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<object>();
+
+            logger.LogAdvancePrompt(
+                "Maintain Master Control."
+            );
+        }
+
+        await appSecurityService.MaintainMasterControlAsync();
     }
 }

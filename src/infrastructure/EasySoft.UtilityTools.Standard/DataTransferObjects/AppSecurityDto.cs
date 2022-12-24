@@ -18,6 +18,9 @@ public class AppSecurityDto : IAppSecurity
     /// <inheritdoc />
     public string AppSecret { get; set; } = "";
 
+    /// <inheritdoc />
+    public int MasterControl { get; set; }
+
     /// <summary>
     /// Channel
     /// </summary>

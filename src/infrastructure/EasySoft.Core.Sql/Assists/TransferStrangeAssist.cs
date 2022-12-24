@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Enums;
+using EasySoft.Core.Sql.Extensions;
 
 namespace EasySoft.Core.Sql.Assists;
 

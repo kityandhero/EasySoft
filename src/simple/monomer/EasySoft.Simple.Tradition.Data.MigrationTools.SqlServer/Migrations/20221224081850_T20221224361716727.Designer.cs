@@ -4,6 +4,7 @@ using EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
 {
     [DbContext(typeof(DataMigrationContext))]
-    partial class DataMigrationContextModelSnapshot : ModelSnapshot
+    [Migration("20221224081850_T20221224361716727")]
+    partial class T20221224361716727
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,6 +113,7 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0)
                         .HasColumnName("deleted")
+                        .HasColumnOrder(2)
                         .HasComment("");
 
                     b.Property<string>("Ip")
@@ -123,9 +126,7 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                         .HasComment("");
 
                     b.Property<int>("MasterControl")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
                         .HasColumnName("master_control")
                         .HasComment("");
 
@@ -1139,11 +1140,11 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 367439668916231L,
+                            Id = 367430566260743L,
                             Motto = "",
                             Name = "",
                             Pseudonym = "",
-                            UserId = 367439668916230L
+                            UserId = 367430566260742L
                         });
                 });
 
@@ -1172,8 +1173,8 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 367439668916230L,
-                            UserId = 367439668916229L
+                            Id = 367430566260742L,
+                            UserId = 367430566260741L
                         });
                 });
 
@@ -1210,21 +1211,21 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 367439668916232L,
-                            BlogId = 367439668916231L,
-                            Title = "bdc09767992445efbe993435228045f5"
+                            Id = 367430566264837L,
+                            BlogId = 367430566260743L,
+                            Title = "08ff52cb2c014aafab0ae7ee37ca0252"
                         },
                         new
                         {
-                            Id = 367439668916233L,
-                            BlogId = 367439668916231L,
-                            Title = "1a9c3ef1deff4059b90074341ea01a58"
+                            Id = 367430566264838L,
+                            BlogId = 367430566260743L,
+                            Title = "d0f4fe1d31cf455ab136a61c8dadae4a"
                         },
                         new
                         {
-                            Id = 367439668916234L,
-                            BlogId = 367439668916231L,
-                            Title = "881bd928b7154d939bdda5c05d5e2617"
+                            Id = 367430566264839L,
+                            BlogId = 367430566260743L,
+                            Title = "333c389b1e6047adb00281201aa15783"
                         });
                 });
 
@@ -1287,7 +1288,7 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 367439668916229L,
+                            Id = 367430566260741L,
                             Alias = "种子用户",
                             LoginName = "first",
                             Password = "e10adc3949ba59abbe56e057f20f883e",

@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.AppSecurityServer.Core.Entities;
 using EasySoft.Core.AppSecurityServer.Core.Extensions;
 using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
-using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Services.Implements;
 
@@ -92,6 +91,28 @@ public class AppSecurityService : IAppSecurityService
             return new ExecutiveResult<AppSecurityDto>(ReturnCode.VerifyError.ToMessage("sign error"));
 
         return result.ToExecutiveResult(result.Data?.ToAppSecurityDto());
+    }
+
+    /// <inheritdoc />
+    public async Task<ExecutiveResult> MaintainMasterControlAsync()
+    {
+        var result = await _appSecurityRepository.GetAsync(
+            o => o.MasterControl == Whether.Yes.ToInt()
+        );
+
+        if (result.Success) return new ExecutiveResult(ReturnCode.Ok);
+
+        var appSecurity = new AppSecurity
+        {
+            AppId = UniqueIdAssist.CreateUUID(),
+            AppSecret = UniqueIdAssist.CreateUUID(),
+            MasterControl = Whether.Yes.ToInt(),
+            Channel = 0
+        };
+
+        var resultAdd = await _appSecurityRepository.AddAsync(appSecurity);
+
+        return resultAdd.ToExecutiveResult();
     }
 
     /// <inheritdoc />

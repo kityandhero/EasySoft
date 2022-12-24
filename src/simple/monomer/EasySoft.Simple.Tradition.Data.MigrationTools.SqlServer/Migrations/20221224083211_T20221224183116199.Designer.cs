@@ -4,6 +4,7 @@ using EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
 {
     [DbContext(typeof(DataMigrationContext))]
-    partial class DataMigrationContextModelSnapshot : ModelSnapshot
+    [Migration("20221224083211_T20221224183116199")]
+    partial class T20221224183116199
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,6 +113,7 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0)
                         .HasColumnName("deleted")
+                        .HasColumnOrder(2)
                         .HasComment("");
 
                     b.Property<string>("Ip")
@@ -1139,11 +1142,11 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 367439668916231L,
+                            Id = 367433846579207L,
                             Motto = "",
                             Name = "",
                             Pseudonym = "",
-                            UserId = 367439668916230L
+                            UserId = 367433846579206L
                         });
                 });
 
@@ -1172,8 +1175,8 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 367439668916230L,
-                            UserId = 367439668916229L
+                            Id = 367433846579206L,
+                            UserId = 367433846579205L
                         });
                 });
 
@@ -1210,21 +1213,21 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 367439668916232L,
-                            BlogId = 367439668916231L,
-                            Title = "bdc09767992445efbe993435228045f5"
+                            Id = 367433846579208L,
+                            BlogId = 367433846579207L,
+                            Title = "2cfd2f524bca441197ed6974f348b3ec"
                         },
                         new
                         {
-                            Id = 367439668916233L,
-                            BlogId = 367439668916231L,
-                            Title = "1a9c3ef1deff4059b90074341ea01a58"
+                            Id = 367433846579209L,
+                            BlogId = 367433846579207L,
+                            Title = "ae1a3f6f24cd4208bce8814405c7b6b9"
                         },
                         new
                         {
-                            Id = 367439668916234L,
-                            BlogId = 367439668916231L,
-                            Title = "881bd928b7154d939bdda5c05d5e2617"
+                            Id = 367433846579210L,
+                            BlogId = 367433846579207L,
+                            Title = "a50cd3b060bf4e909387b469aa356b36"
                         });
                 });
 
@@ -1287,7 +1290,7 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 367439668916229L,
+                            Id = 367433846579205L,
                             Alias = "种子用户",
                             LoginName = "first",
                             Password = "e10adc3949ba59abbe56e057f20f883e",

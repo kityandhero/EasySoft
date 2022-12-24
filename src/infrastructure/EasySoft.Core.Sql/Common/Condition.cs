@@ -7,7 +7,7 @@ namespace EasySoft.Core.Sql.Common;
 /// Condition
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class Condition<T> where T : new()
+public class Condition<T> where T : IEntity, new()
 {
     /// <summary>
     /// 指向表达式

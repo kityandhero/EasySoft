@@ -46,5 +46,7 @@ public class RpcController : CustomControllerBase
         // var result = await _rpcService.MaintainSuperRole(channel);
         //
         // return result.ToRpcResult();
+
+        return new RpcResult<AccessWayModel>();
     }
 }

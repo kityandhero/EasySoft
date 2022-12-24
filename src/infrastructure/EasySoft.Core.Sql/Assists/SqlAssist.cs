@@ -846,7 +846,7 @@ public static class SqlAssist
             "SET",
             $"{nameValueList.Join(",")}",
             "Where",
-            $"{model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
+            $"{model.GetPrimaryKeyName()} = {model.GetPrimaryKeyValue()}"
         };
 
         return list.Join(" ");
@@ -913,7 +913,7 @@ public static class SqlAssist
             "SET",
             $"{nameValueList.Join(",")}",
             "WHERE",
-            $"{model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
+            $"{model.GetPrimaryKeyName()} = {model.GetPrimaryKeyValue()}"
         };
 
         return list.Join(" ");
@@ -946,7 +946,7 @@ public static class SqlAssist
             "SET",
             $"{nameValueList.Join(",")}",
             "WHERE",
-            $"{model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
+            $"{model.GetPrimaryKeyName()} = {model.GetPrimaryKeyValue()}"
         };
 
         return list.Join(" ");
@@ -1054,7 +1054,7 @@ public static class SqlAssist
             "SET",
             $"{nameValueString}",
             "WHERE",
-            $"{model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
+            $"{model.GetPrimaryKeyName()} = {model.GetPrimaryKeyValue()}"
         };
 
         return list.Join(" ");
@@ -1089,7 +1089,7 @@ public static class SqlAssist
             "SET",
             $"{nameValueList}",
             "WHERE",
-            $"{model.GetPrimaryKeyName()} = {model.TransferPrimaryKeyValueToSql()}"
+            $"{model.GetPrimaryKeyName()} = {model.GetPrimaryKeyValue()}"
         };
 
         return list.Join(" ");
@@ -1132,7 +1132,7 @@ public static class SqlAssist
             "DELETE FROM",
             !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{tableName}" : tableName,
             "WHERE",
-            $"{fieldDecorateStart}{model.GetPrimaryKeyName()}{fieldDecorateEnd} = {model.TransferPrimaryKeyValueToSql()}"
+            $"{fieldDecorateStart}{model.GetPrimaryKeyName()}{fieldDecorateEnd} = {model.GetPrimaryKeyValue()}"
         };
 
         return list.Join(" ");
@@ -1207,7 +1207,7 @@ public static class SqlAssist
 
         if (modelList.Count == 1) return Delete(modelList[0]);
 
-        var values = modelList.Select(item => item.TransferPrimaryKeyValueToSql()).ToList();
+        var values = modelList.Select(item => item.GetPrimaryKeyValue()).ToList();
 
         var model = new T();
 

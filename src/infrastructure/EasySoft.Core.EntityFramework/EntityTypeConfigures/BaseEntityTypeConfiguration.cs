@@ -143,6 +143,6 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
             .HasDefaultValue(0)
             .HasColumnOrder(2);
 
-        builder.HasQueryFilter(d => !EF.Property<bool>(d, "Deleted"));
+        builder.HasQueryFilter(d => ((ISoftDelete)d).Deleted != Whether.No.ToInt());
     }
 }

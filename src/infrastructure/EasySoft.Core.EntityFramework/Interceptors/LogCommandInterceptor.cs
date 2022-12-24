@@ -20,14 +20,15 @@ public class LogCommandInterceptor : DbCommandInterceptor
         _serviceProvider = serviceProvider;
     }
 
-    /// <inheritdoc />
-    public override InterceptionResult<DbDataReader> ReaderExecuting(
-        DbCommand command,
-        CommandEventData eventData,
-        InterceptionResult<DbDataReader> result
-    )
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="eventData"></param>
+    /// <param name="result"></param>
+    /// <returns></returns>
+    public override DbCommand CommandCreated(CommandEndEventData eventData, DbCommand result)
     {
-        ManipulateCommand(command);
+        ManipulateCommand(result);
 
         return result;
     }
@@ -50,6 +51,8 @@ public class LogCommandInterceptor : DbCommandInterceptor
         if (!GeneralConfigAssist.GetRemoteSqlExecutionRecordSwitch()) return;
 
         var sql = command.CommandText.Replace("\r\n", " ");
+
+        if (string.IsNullOrWhiteSpace(sql)) return;
 
         if (sql.ToLower().Contains("insert", StringComparison.OrdinalIgnoreCase)) return;
 

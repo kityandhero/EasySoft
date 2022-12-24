@@ -1,13 +1,284 @@
 ﻿using EasySoft.Core.Sql.Assists;
 using EasySoft.Core.Sql.Common;
+using Newtonsoft.Json.Linq;
 
 namespace EasySoft.Core.Sql.Extensions;
 
 /// <summary>
 /// EntityExtraExtension
 /// </summary>
-public static class EntityExtraExtension
+public static class EntitySelfExtension
 {
+    /// <summary>
+    /// GetIdentificationWithModelNamePrefix
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="toLowerFirst"></param>
+    /// <returns></returns>
+    public static string GetIdentificationWithModelNamePrefix<T>(
+        this T entity,
+        bool toLowerFirst = false
+    ) where T : IEntity
+    {
+        var modelName = ReflectionAssist.GetClassName(entity);
+
+        if (toLowerFirst) modelName = modelName.ToLowerFirst();
+
+        var identification = ReflectionAssist.GetPropertyName(entity.GetPrimaryKeyLambda());
+
+        return $"{modelName}{identification}";
+    }
+
+    /// <summary>
+    /// GetKeyValue
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public static long GetKeyValue<T>(this T entity) where T : IEntity
+    {
+        return entity.Id;
+    }
+
+    /// <summary>
+    /// GetPrimaryKeyValue
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public static long GetPrimaryKeyValue<T>(this T entity) where T : IEntity
+    {
+        return entity.Id;
+    }
+
+    /// <summary>
+    /// SetPrimaryKeyValue
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="value"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    public static void SetPrimaryKeyValue<T>(this T entity, long value) where T : IEntity
+    {
+        entity.Id = value;
+    }
+
+    /// <summary>
+    /// GetTableName
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public static string GetTableName<T>(this T entity) where T : IEntity
+    {
+        var tableAttribute = Tools.GetAdvanceTableAttribute(entity.GetType());
+
+        return tableAttribute == null ? entity.GetType().Name : tableAttribute.Name;
+    }
+
+    /// <summary>
+    /// GetPrimaryKeyLambda
+    /// </summary>
+    /// <returns></returns>
+    public static Expression<Func<T, object>> GetPrimaryKeyLambda<T>(this T entity) where T : IEntity
+    {
+        return o => o.Id;
+    }
+
+    /// <summary>
+    /// GetPrimaryKeyName
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public static string GetPrimaryKeyName<T>(this T entity) where T : IEntity
+    {
+        var lambda = entity.GetPrimaryKeyLambda();
+
+        var columnAttribute = Tools.GetAdvanceColumnAttribute(GetPropertyInfo(lambda));
+
+        if (columnAttribute == null) return GetPropertyName(lambda);
+
+        if (string.IsNullOrWhiteSpace(columnAttribute.Name))
+            throw new Exception($"{nameof(columnAttribute)} disallow empty value");
+
+        return columnAttribute.Name;
+    }
+
+    /// <summary>
+    /// GetSqlSchemaName
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public static string GetSqlSchemaName<T>(this T entity) where T : IEntity
+    {
+        return "";
+    }
+
+    /// <summary>
+    /// GetSqlFieldDecorateStart
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public static string GetSqlFieldDecorateStart<T>(this T entity) where T : IEntity
+    {
+        return "[";
+    }
+
+    /// <summary>
+    /// GetSqlFieldDecorateEnd
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public static string GetSqlFieldDecorateEnd<T>(this T entity) where T : IEntity
+    {
+        return "]";
+    }
+
+    /// <summary>
+    /// GetSqlFieldStringValueDecorateStart
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public static string GetSqlFieldStringValueDecorateStart<T>(this T entity) where T : IEntity
+    {
+        return "'";
+    }
+
+    /// <summary>
+    /// GetSqlFieldStringValueDecorateEnd
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public static string GetSqlFieldStringValueDecorateEnd<T>(this T entity) where T : IEntity
+    {
+        return "'";
+    }
+
+    /// <summary>
+    /// GetSqlSchemaTableName
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public static string GetSqlSchemaTableName<T>(this T entity) where T : IEntity
+    {
+        var schemaName = entity.GetSqlSchemaName();
+
+        var tableAttribute = entity.GetType().GetCustomAttribute<TableAttribute>();
+
+        if (tableAttribute == null)
+            throw new Exception(
+                "缺少AdvanceTableAttribute特性"
+            );
+
+        var name = tableAttribute.Name;
+
+        return !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{name}" : name;
+    }
+
+    private static PropertyInfo GetPropertyInfo<T>(
+        Expression<Func<T, object>> propertyLambda
+    ) where T : IEntity
+    {
+        if (propertyLambda.Body.NodeType == ExpressionType.MemberAccess)
+        {
+            dynamic me = propertyLambda.Body;
+
+            if (me.Member != null)
+                if (me.Member.PropertyType != null)
+                {
+                    var propertyInfo = me.Member as PropertyInfo;
+
+                    if (propertyInfo == null) throw new ArgumentException("PropertyInfo is null'");
+
+                    return propertyInfo;
+                }
+        }
+
+        if (propertyLambda.Body.NodeType == ExpressionType.Convert)
+        {
+            if (propertyLambda.Body is not UnaryExpression cov)
+                throw new ArgumentException("Cannot analyze type get name ");
+
+            dynamic? me = cov.Operand as MemberExpression;
+
+            if (me == null)
+                throw new ArgumentException(
+                    "You must pass a lambda of the form: ' Class=> Class.Property' or 'object => object.Property'"
+                );
+
+            if (me.Member == null) throw new ArgumentException("Cannot analyze type get name ");
+
+            if (me.Member.PropertyType == null) throw new ArgumentException("Cannot analyze type get name ");
+
+            var propertyInfo = me.Member as PropertyInfo;
+
+            if (propertyInfo == null) throw new ArgumentException("PropertyInfo is null'");
+
+            return propertyInfo;
+        }
+
+        throw new ArgumentException("Cannot analyze type get name ");
+    }
+
+    /// <summary>
+    /// GetPropertyName
+    /// </summary>
+    /// <param name="expression"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static string GetPropertyName<T>(
+        Expression<Func<T, object>> expression
+    ) where T : IEntity
+    {
+        return ReflectionAssist.GetPropertyName(expression);
+    }
+
+    /// <summary>
+    /// 转换为属性首字母小写的Object
+    /// </summary>
+    /// <returns></returns>
+    public static ExpandoObject ToObject<T>(this T entity, Func<T, ExpandoObject> func) where T : IEntity
+    {
+        var additionalData = func(entity);
+
+        return entity.ToObject(additionalData);
+    }
+
+    /// <summary>
+    /// 转换为属性首字母小写的Object
+    /// </summary>
+    /// <returns></returns>
+    public static ExpandoObject ToObject<T>(this T entity, ExpandoObject? additionalData = null)
+        where T : IEntity
+    {
+        var d = entity.ToExpandoObject();
+
+        if (additionalData != null) d.Add(new KeyValuePair<string, object?>("additional", additionalData));
+
+        d.Add(new KeyValuePair<string, object?>("Key", entity.GetKeyValue().ToString()));
+
+        var modelName = ReflectionAssist.GetClassName(entity).ToLowerFirst();
+
+        var identification = ReflectionAssist.GetPropertyName(entity.GetPrimaryKeyLambda());
+
+        var json = JsonConvertAssist.SerializeAndKeyToLower(d).Replace(
+            $"\"{identification.ToLowerFirst()}\"",
+            $"\"{modelName}{identification}\""
+        );
+
+        var jObject = JsonConvert.DeserializeObject<JObject>(json);
+
+        if (jObject == null) throw new Exception("DeserializeObject result is null");
+
+        return jObject.ToExpandoObject();
+    }
+
     /// <summary>
     /// BuildNameValueList
     /// </summary>
@@ -178,33 +449,15 @@ public static class EntityExtraExtension
     }
 
     /// <summary>
-    /// 转换为属性首字母小写的Object
-    /// </summary>
-    /// <returns></returns>
-    public static object? ToObject<T>(this T entity) where T : IEntity
-    {
-        var d = entity.ToExpandoObject();
-
-        d.Add(new KeyValuePair<string, object?>("Key", entity.GetKeyValue()));
-
-        var modelName = ReflectionAssist.GetClassName(entity).ToLowerFirst();
-
-        return JsonConvert.DeserializeObject(
-            JsonConvertAssist.SerializeAndKeyToLower(d).Replace(
-                "\"id\"",
-                "\"" + modelName + "Id" + "\""
-            )
-        );
-    }
-
-    /// <summary>
     /// 转换为指定属性的首字母小写的Object
     /// </summary>
     /// <param name="entity"></param>
     /// <param name="expressions"></param>
     /// <returns></returns>
-    public static object? ToSimpleObject<T>(this T entity, ICollection<Expression<Func<T, object>>> expressions)
-        where T : IEntity
+    public static object? ToSimpleObject<T>(
+        this T entity,
+        ICollection<Expression<Func<T, object>>> expressions
+    ) where T : IEntity
     {
         if (expressions.Count == 0) return entity.ToObject();
 
@@ -320,8 +573,10 @@ public static class EntityExtraExtension
     /// 转换为排除指定属性的首字母小写的Object
     /// </summary>
     /// <returns></returns>
-    public static object? ToSimpleObjectIgnore<T>(this T entity, ICollection<Expression<Func<object>>> expressions)
-        where T : IEntity
+    public static object? ToSimpleObjectIgnore<T>(
+        this T entity,
+        ICollection<Expression<Func<object>>> expressions
+    ) where T : IEntity
     {
         if (expressions.Count == 0) return entity.ToObject();
 
@@ -351,11 +606,24 @@ public static class EntityExtraExtension
         return JsonConvert.DeserializeObject(JsonConvertAssist.SerializeAndKeyToLower(result));
     }
 
+    /// <summary>
+    /// ToListObject
+    /// </summary>
+    /// <param name="list"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static List<object> ToListObject<T>(this IEnumerable<T> list) where T : IEntity
     {
         return list.Select(o => (object)o.ToExpandoObject()).ToList();
     }
 
+    /// <summary>
+    /// ToListSimpleObject
+    /// </summary>
+    /// <param name="list"></param>
+    /// <param name="expressions"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static List<object> ToListSimpleObject<T>(
         this IEnumerable<T> list,
         ICollection<Expression<Func<object>>> expressions
@@ -364,6 +632,13 @@ public static class EntityExtraExtension
         return list.Select(o => o.ToSimpleObject(expressions)).ToListFilterNullable();
     }
 
+    /// <summary>
+    /// ToListSimpleObjectIgnore
+    /// </summary>
+    /// <param name="list"></param>
+    /// <param name="expressions"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static List<object> ToListSimpleObjectIgnore<T>(
         this IEnumerable<T> list,
         ICollection<Expression<Func<object>>> expressions

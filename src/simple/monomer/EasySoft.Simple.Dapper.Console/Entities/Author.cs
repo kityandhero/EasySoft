@@ -26,24 +26,4 @@ public class Author : AbstractFunctionEntity<Author>
 
     [Column("password")]
     public string Password { get; set; }
-
-    public override object GetKeyValue()
-    {
-        return Id;
-    }
-
-    public override object GetPrimaryKeyValue()
-    {
-        return Id;
-    }
-
-    public override void SetPrimaryKeyValue(object value)
-    {
-        Id = Convert.ToInt32(value);
-    }
-
-    public override Expression<Func<Author, object>> GetPrimaryKeyLambda()
-    {
-        return o => o.Id;
-    }
 }

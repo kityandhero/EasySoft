@@ -1,9 +1,9 @@
 ﻿using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.Interfaces;
-using EasySoft.Core.Infrastructure.Extensions;
 using EasySoft.Core.Sql.Builders;
 using EasySoft.Core.Sql.Extensions;
 using EasySoft.Core.Sql.Factories;
+using EasySoft.Core.Sql.Interfaces;
 using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 using EasySoft.UtilityTools.Standard.Result.Factories;
 using EasySoft.UtilityTools.Standard.Result.Implements;
@@ -141,24 +141,24 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
         if (conditions == null || conditions.Count < 1) throw new Exception("需要设定查询参数");
 
-        string query;
+        AdvanceSqlBuilder builder;
 
         if (transferWrapperQuery)
-            query = SqlAssist.Select()
+            builder = new AdvanceSqlBuilder().Select()
                 .AppendFragment($" {(transferWrapperQuery ? " TOP 1 " : "")}{model.GetPrimaryKeyName()} ")
                 .From(model);
         else
-            query = SqlAssist.Select().AppendFragment(" TOP 1 ").AllFields(model).From(model);
+            builder = new AdvanceSqlBuilder().Select().AppendFragment(" TOP 1 ").AllFields(model).From(model);
 
         if (conditions.Count > 0)
         {
-            query += " WHERE ";
+            builder.AppendFragment(" WHERE ");
 
             foreach (var c in conditions)
                 if (c.ConditionType == ConditionType.In || c.ConditionType == ConditionType.NotIn)
-                    query = query.LinkCondition(c);
+                    builder = builder.LinkCondition(c);
                 else
-                    query = query.LinkCondition(c);
+                    builder = builder.LinkCondition(c);
         }
 
         if (sorts is { Count: > 0 })
@@ -166,21 +166,21 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 var s = sorts[i];
 
-                query = i == 0
-                    ? query.OrderBy(s.Expression, s.SortType)
-                    : query.AndOrderBy(s.Expression, s.SortType);
+                builder = i == 0
+                    ? builder.OrderBy(s.Expression, s.SortType)
+                    : builder.AndOrderBy(s.Expression, s.SortType);
             }
 
         if (transferWrapperQuery)
-            query = SqlAssist.Select().AllFields(model).From(model)
-                .AppendFragment($" WHERE {model.GetPrimaryKeyName()} = ({query})");
+            builder = new AdvanceSqlBuilder().Select().AllFields(model).From(model)
+                .AppendFragment($" WHERE {model.GetPrimaryKeyName()} = ({builder})");
 
         if (_mapperTransaction == null)
         {
             using var conn = _mapperChannel.OpenConnection();
             try
             {
-                var data = conn.Query<T>(query).SingleOrDefault();
+                var data = conn.Query<T>(builder.Sql).SingleOrDefault();
 
                 LogSqlExecutionMessage();
 
@@ -188,7 +188,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             }
             catch (Exception e)
             {
-                e.Data.Add("query", query);
+                e.Data.Add("query", builder);
 
                 if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
 
@@ -201,7 +201,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                var data = dbTransaction.Connection.Query<T>(query, null, dbTransaction).SingleOrDefault();
+                var data = dbTransaction.Connection.Query<T>(builder.Sql, null, dbTransaction).SingleOrDefault();
 
                 LogSqlExecutionMessage();
 
@@ -209,7 +209,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             }
             catch (Exception e)
             {
-                e.Data.Add("query", query);
+                e.Data.Add("query", builder);
 
                 if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
 
@@ -264,65 +264,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
         var typeCode = Type.GetTypeCode(primaryKeyValue.GetType());
 
-        switch (typeCode)
-        {
-            case TypeCode.DateTime:
-                break;
-
-            case TypeCode.String:
-                if (string.IsNullOrWhiteSpace((string)primaryKeyValue))
-                    model.SetPrimaryKeyValue($"D{IdentifierAssist.Create()}");
-
-                break;
-
-            case TypeCode.Int16:
-                if (Convert.ToInt16(primaryKeyValue) == 0) throw new Exception("主键没有赋值");
-
-                break;
-
-            case TypeCode.Int32:
-                if (Convert.ToInt32(primaryKeyValue) == 0) throw new Exception("主键没有赋值");
-
-                break;
-
-            case TypeCode.Int64:
-                if (Convert.ToInt64(primaryKeyValue) == 0) model.SetPrimaryKeyValue(IdentifierAssist.Create());
-
-                break;
-
-            case TypeCode.UInt16:
-                if (Convert.ToUInt16(primaryKeyValue) == 0) throw new Exception("主键没有赋值");
-
-                break;
-
-            case TypeCode.UInt32:
-                if (Convert.ToUInt32(primaryKeyValue) == 0) throw new Exception("主键没有赋值");
-
-                break;
-
-            case TypeCode.UInt64:
-                if (Convert.ToUInt64(primaryKeyValue) == 0) throw new Exception("主键没有赋值");
-
-                break;
-
-            case TypeCode.Decimal:
-                if (Convert.ToDecimal(primaryKeyValue) == 0) throw new Exception("主键没有赋值");
-
-                break;
-
-            case TypeCode.Double:
-                if (Convert.ToInt32(primaryKeyValue) == 0) throw new Exception("主键没有赋值");
-
-                break;
-
-            case TypeCode.Single:
-                if (Convert.ToInt32(primaryKeyValue) == 0) throw new Exception("主键没有赋值");
-
-                break;
-
-            default:
-                throw new Exception("未知的主键值判断类型");
-        }
+        if (model.Id <= 0) model.Id = IdentifierAssist.Create();
 
         return SqlAssist.Insert(model);
     }
@@ -385,69 +327,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         model = PreSave(model);
         model = CheckNullValue(model);
 
-        var primaryKeyValue = model.GetPrimaryKeyValue();
-
-        var typeCode = Type.GetTypeCode(primaryKeyValue.GetType());
-
-        switch (typeCode)
-        {
-            case TypeCode.DateTime:
-                break;
-
-            case TypeCode.String:
-                if (string.IsNullOrWhiteSpace((string)primaryKeyValue))
-                    model.SetPrimaryKeyValue($"D{IdentifierAssist.Create()}");
-
-                break;
-
-            case TypeCode.Int16:
-                if (Convert.ToInt16(primaryKeyValue) == 0) throw new Exception("主键没有赋值");
-
-                break;
-
-            case TypeCode.Int32:
-                if (Convert.ToInt32(primaryKeyValue) == 0) throw new Exception("主键没有赋值");
-
-                break;
-
-            case TypeCode.Int64:
-                if (Convert.ToInt64(primaryKeyValue) == 0) model.SetPrimaryKeyValue(IdentifierAssist.Create());
-
-                break;
-
-            case TypeCode.UInt16:
-                if (Convert.ToUInt16(primaryKeyValue) == 0) throw new Exception("主键没有赋值");
-
-                break;
-
-            case TypeCode.UInt32:
-                if (Convert.ToUInt32(primaryKeyValue) == 0) throw new Exception("主键没有赋值");
-
-                break;
-
-            case TypeCode.UInt64:
-                if (Convert.ToUInt64(primaryKeyValue) == 0) throw new Exception("主键没有赋值");
-
-                break;
-
-            case TypeCode.Decimal:
-                if (Convert.ToDecimal(primaryKeyValue) == 0) throw new Exception("主键没有赋值");
-
-                break;
-
-            case TypeCode.Double:
-                if (Convert.ToInt32(primaryKeyValue) == 0) throw new Exception("主键没有赋值");
-
-                break;
-
-            case TypeCode.Single:
-                if (Convert.ToInt32(primaryKeyValue) == 0) throw new Exception("主键没有赋值");
-
-                break;
-
-            default:
-                throw new Exception("未知的主键值判断类型");
-        }
+        if (model.Id <= 0) model.Id = IdentifierAssist.Create();
 
         return SqlAssist.InsertUniquer(model, uniquerConditions);
     }
@@ -1166,7 +1046,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
     /// <returns></returns>
     public ExecutiveResult DeleteMany(IEnumerable<long> keys)
     {
-        var sql = SqlAssist.DeleteBatchByPrimaryKey<T>(keys);
+        var sql = SqlAssist.DeleteBatch<T>(keys);
 
         if (_mapperTransaction == null)
         {
@@ -1526,19 +1406,18 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         var query = new AdvanceSqlBuilder()
             .Select()
             .AllFields(model)
-            .From(model)
-            .Sql;
+            .From(model);
 
         if (conditions.Count > 0)
         {
-            query = query + " WHERE ";
+            query = query.AppendFragment(" WHERE ");
 
             foreach (var c in conditions)
                 if (c.ConditionType == ConditionType.In || c.ConditionType == ConditionType.NotIn)
                 {
                     c.Value = (ICollection)c.Value;
 
-                    query = new AdvanceSqlBuilder(query).LinkCondition(c);
+                    query = query.LinkCondition(c);
                 }
                 else
                 {
@@ -1562,7 +1441,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                var list = conn.Query<T>(query).ToList();
+                var list = conn.Query<T>(query.Sql).ToList();
 
                 LogSqlExecutionMessage();
 
@@ -1583,7 +1462,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                var list = dbTransaction.Connection.Query<T>(query, null, dbTransaction).ToList();
+                var list = dbTransaction.Connection.Query<T>(query.Sql, null, dbTransaction).ToList();
 
                 LogSqlExecutionMessage();
 
@@ -1870,9 +1749,9 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         var model = new T();
         var query = new StringBuilder();
 
-        var sqlCore = SqlAssist.BuildSelectCount().From(model);
+        var builder = new AdvanceSqlBuilder(SqlAssist.BuildSelectCount()).From(model);
 
-        sqlCore += " WHERE ";
+        builder.AppendFragment(" WHERE ");
 
         if (conditions != null)
             foreach (var c in conditions)
@@ -1880,14 +1759,14 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
                 {
                     c.Value = (ICollection<object>)c.Value;
 
-                    sqlCore = sqlCore.LinkCondition(c);
+                    builder = builder.LinkCondition(c);
                 }
                 else
                 {
-                    sqlCore = sqlCore.LinkCondition(c);
+                    builder = builder.LinkCondition(c);
                 }
 
-        query.AppendLine(sqlCore);
+        // query.AppendLine(builder);
 
         var result = 0L;
 

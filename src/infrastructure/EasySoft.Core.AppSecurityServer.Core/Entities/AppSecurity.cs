@@ -7,7 +7,7 @@ namespace EasySoft.Core.AppSecurityServer.Core.Entities;
 /// 应用安全
 /// </summary>
 [Description("应用安全")]
-public class AppSecurity : BaseEntity, IAppSecurity, ISuperRoleMaintain, IChannel, ISoftDelete, IIp, IOperate
+public class AppSecurity : BaseEntity, IAppSecurity, ISuperRoleMaintain, IChannel, IIp, IOperate
 {
     /// <inheritdoc />
     public string AppId { get; set; } = UniqueIdAssist.CreateUUID();
@@ -20,6 +20,9 @@ public class AppSecurity : BaseEntity, IAppSecurity, ISuperRoleMaintain, IChanne
 
     /// <inheritdoc />
     public DateTime SuperRoleNextMaintainTime { get; set; } = ConstCollection.DbDefaultDateTime;
+
+    /// <inheritdoc />
+    public int MasterControl { get; set; }
 
     /// <inheritdoc />
     public int Channel { get; set; }

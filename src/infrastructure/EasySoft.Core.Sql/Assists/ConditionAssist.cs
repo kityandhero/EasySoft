@@ -1,4 +1,6 @@
-﻿using EasySoft.Core.Sql.Common;
+﻿using EasySoft.Core.Sql.Builders;
+using EasySoft.Core.Sql.Common;
+using EasySoft.Core.Sql.Extensions;
 
 namespace EasySoft.Core.Sql.Assists;
 
@@ -25,8 +27,10 @@ public static class ConditionAssist
 
         var enumerable = conditions as Condition<T>[] ?? conditions.ToArray();
 
+        var builder = new AdvanceSqlBuilder();
+
         if (enumerable.Any())
-            list.AddRange(enumerable.Select(c => SqlAssist.LinkCondition("", c)));
+            list.AddRange(enumerable.Select(c => new AdvanceSqlBuilder().LinkCondition(c).Sql));
 
         if (list.Count == 0) throw new Exception("没有可以构造的Sql条件");
 
