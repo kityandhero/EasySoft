@@ -26,13 +26,7 @@ public class AppSecurityConfig : BaseEntityTypeConfiguration<AppSecurity>
         builder.Property(x => x.SuperRoleNextMaintainTime)
             .HasDefaultValue(ConstCollection.DbDefaultDateTime);
 
-        builder.Property(x => x.MasterControl)
-            .HasDefaultValue(0);
-
         builder.Property(x => x.Channel)
-            .HasDefaultValue(0);
-
-        builder.Property(x => x.Deleted)
             .HasDefaultValue(0);
 
         builder.Property(x => x.Ip)

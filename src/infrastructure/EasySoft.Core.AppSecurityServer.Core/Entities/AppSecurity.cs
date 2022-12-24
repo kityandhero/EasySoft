@@ -22,13 +22,7 @@ public class AppSecurity : BaseEntity, IAppSecurity, ISuperRoleMaintain, IChanne
     public DateTime SuperRoleNextMaintainTime { get; set; } = ConstCollection.DbDefaultDateTime;
 
     /// <inheritdoc />
-    public int MasterControl { get; set; }
-
-    /// <inheritdoc />
     public int Channel { get; set; }
-
-    /// <inheritdoc />
-    public int Deleted { get; set; }
 
     /// <inheritdoc />
     public string Ip { get; set; } = "";

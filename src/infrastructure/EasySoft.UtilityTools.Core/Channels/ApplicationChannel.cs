@@ -28,6 +28,15 @@ public class ApplicationChannel : IApplicationChannel
     }
 
     /// <summary>
+    /// ApplicationChannel
+    /// </summary>
+    public ApplicationChannel(int channel, string name)
+    {
+        _channel = channel;
+        _name = name;
+    }
+
+    /// <summary>
     /// GetChannel
     /// </summary>
     /// <returns></returns>

@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.AppSecurityServer.Core.Entities;
+﻿using EasySoft.Core.AppSecurityServer.Core.Channels;
+using EasySoft.Core.AppSecurityServer.Core.Entities;
 using EasySoft.Core.AppSecurityServer.Core.Extensions;
 using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
 
@@ -97,7 +98,7 @@ public class AppSecurityService : IAppSecurityService
     public async Task<ExecutiveResult> MaintainMasterControlAsync()
     {
         var result = await _appSecurityRepository.GetAsync(
-            o => o.MasterControl == Whether.Yes.ToInt()
+            o => o.Channel == InnerChannel.AppSecurityServerChannel.GetChannel()
         );
 
         if (result.Success) return new ExecutiveResult(ReturnCode.Ok);
@@ -106,8 +107,7 @@ public class AppSecurityService : IAppSecurityService
         {
             AppId = UniqueIdAssist.CreateUUID(),
             AppSecret = UniqueIdAssist.CreateUUID(),
-            MasterControl = Whether.Yes.ToInt(),
-            Channel = 0
+            Channel = InnerChannel.AppSecurityServerChannel.GetChannel()
         };
 
         var resultAdd = await _appSecurityRepository.AddAsync(appSecurity);
@@ -133,5 +133,49 @@ public class AppSecurityService : IAppSecurityService
         var result = await _appSecurityRepository.AddAsync(appSecurity);
 
         return result.ToExecutiveResult(result.Data?.ToAppSecurityDto());
+    }
+
+    /// <inheritdoc />
+    public async Task<ExecutiveResult<AppSecurityDto>> GerMainControlAppSecurity()
+    {
+        var result = await _appSecurityRepository.GetAsync(
+            o => o.Channel == InnerChannel.AppSecurityServerChannel.GetChannel()
+        );
+
+        return result.ToExecutiveResult(result.Data?.ToAppSecurityDto());
+    }
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<AppSecurityDto>> SingleListNeedMaintain()
+    {
+        var time = DateTimeOffset.Now.DateTime;
+
+        var result = await _appSecurityRepository.PageListAsync(
+            1,
+            20,
+            o => o.SuperRoleNextMaintainTime <= time
+        );
+
+        return result.List.Select(o => o.ToAppSecurityDto());
+    }
+
+    /// <inheritdoc />
+    public async Task SetSuperRoleNextMaintainTime(AppSecurityDto appSecurityDto)
+    {
+        var result = await _appSecurityRepository.GetAsync(
+            o => o.AppId == appSecurityDto.AppId
+                 && o.Channel == appSecurityDto.Channel
+        );
+
+        if (result.Success && result.Data != null)
+        {
+            var data = result.Data;
+
+            data.SuperRoleRecentlyMaintainTime = DateTimeOffset.Now.DateTime;
+            data.SuperRoleNextMaintainTime = DateTimeOffset.Now.DateTime.AddHours(12);
+            data.ModifyTime = DateTimeOffset.Now.DateTime;
+
+            await _appSecurityRepository.UpdateAsync(data);
+        }
     }
 }

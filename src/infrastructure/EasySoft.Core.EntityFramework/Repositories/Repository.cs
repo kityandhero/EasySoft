@@ -416,7 +416,7 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
 
         //如果实体没有被跟踪，必须指定需要更新的列
         if (entry.State == EntityState.Detached)
-            throw new ArgumentException($"实体没有被跟踪，需要指定更新的列");
+            Context.Update(entity);
 
         if (entry.State is EntityState.Added or EntityState.Deleted)
             throw new ArgumentException($"{nameof(entity)},实体状态为{nameof(entry.State)}");

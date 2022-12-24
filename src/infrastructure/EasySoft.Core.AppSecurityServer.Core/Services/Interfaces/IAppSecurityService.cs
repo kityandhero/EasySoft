@@ -24,4 +24,22 @@ public interface IAppSecurityService : IBusinessService
     /// <param name="appSecurityDto"></param>
     /// <returns></returns>
     Task<ExecutiveResult<AppSecurityDto>> CreateAsync(AppSecurityDto appSecurityDto);
+
+    /// <summary>
+    /// 创建
+    /// </summary>
+    /// <returns></returns>
+    Task<ExecutiveResult<AppSecurityDto>> GerMainControlAppSecurity();
+
+    /// <summary>
+    /// SingleListNeedMaintain
+    /// </summary>
+    /// <returns></returns>
+    Task<IEnumerable<AppSecurityDto>> SingleListNeedMaintain();
+
+    /// <summary>
+    /// SetSuperRoleNextMaintainTime
+    /// </summary>
+    /// <returns></returns>
+    Task SetSuperRoleNextMaintainTime(AppSecurityDto appSecurityDto);
 }
