@@ -1,18 +1,18 @@
 ﻿namespace EasySoft.Core.PermissionServer.Core.DataTransferObjects;
 
 /// <summary>
-/// RoleGroupSearchDto
+/// AccessWaySearchDto
 /// </summary>
-public class RoleGroupSearchDto : PageSearchParams
+public class AccessWaySearchDto : PageSearchParams
 {
     /// <summary>
-    /// RoleGroupId
+    /// AccessWayCId
     /// </summary>
-    public long RoleGroupId { get; set; }
+    public long AccessWayId { get; set; }
 
     /// <summary>
-    /// 角色组名
+    /// 模块组名
     /// </summary>
-    [Description("角色组名")]
+    [Description("模块组名")]
     public string Name { get; set; } = "";
 }

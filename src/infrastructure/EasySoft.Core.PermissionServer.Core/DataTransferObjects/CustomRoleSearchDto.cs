@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Params;
-
-namespace EasySoft.Core.PermissionServer.Core.DataTransferObjects;
+﻿namespace EasySoft.Core.PermissionServer.Core.DataTransferObjects;
 
 /// <summary>
 /// CustomRoleSearchDto

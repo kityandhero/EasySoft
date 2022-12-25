@@ -3,6 +3,7 @@
 /// <summary>
 /// AuthControllerCore
 /// </summary>
+[Operator]
 public abstract class AuthControllerCore : CustomControllerBase
 {
 }

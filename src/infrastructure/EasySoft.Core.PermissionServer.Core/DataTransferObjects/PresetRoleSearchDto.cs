@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Entities.Interfaces;
-using EasySoft.UtilityTools.Standard.Params;
 
 namespace EasySoft.Core.PermissionServer.Core.DataTransferObjects;
 

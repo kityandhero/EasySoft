@@ -175,7 +175,7 @@ public static class ControllerBaseExtensions
     /// <param name="camelCase"></param>
     public static IApiResult PagedData(
         this ControllerBase controller,
-        List<object> list,
+        IEnumerable<object> list,
         object? extraData = null,
         bool camelCase = true
     )
@@ -195,7 +195,7 @@ public static class ControllerBaseExtensions
     /// <param name="camelCase"></param>
     public static IApiResult PagedData(
         this ControllerBase controller,
-        List<object> list,
+        IEnumerable<object> list,
         int pageNo,
         int pageSize,
         long total,
@@ -219,6 +219,56 @@ public static class ControllerBaseExtensions
             };
 
         return controller.PagedData(list, extra, camelCase);
+    }
+
+    /// <summary>  
+    /// PagedData
+    /// </summary>
+    /// <param name="controller"></param>
+    /// <param name="pageListResult"></param>   
+    /// <param name="extraData"> 额外数据</param>
+    /// <param name="camelCase"></param>
+    public static IApiResult PagedData(
+        this ControllerBase controller,
+        IPageListResult<object> pageListResult,
+        object? extraData = null,
+        bool camelCase = true
+    )
+    {
+        return controller.PagedData(
+            pageListResult.List,
+            pageListResult.PageIndex,
+            pageListResult.PageSize,
+            pageListResult.TotalSize,
+            extraData,
+            camelCase
+        );
+    }
+
+    /// <summary>  
+    /// PagedData
+    /// </summary>
+    /// <param name="controller"></param>
+    /// <param name="pageListResult"></param>
+    /// <param name="trandfer"></param>
+    /// <param name="extraData"> 额外数据</param>
+    /// <param name="camelCase"></param>
+    public static IApiResult PagedData<T>(
+        this ControllerBase controller,
+        IPageListResult<T> pageListResult,
+        Func<T, object> trandfer,
+        object? extraData = null,
+        bool camelCase = true
+    )
+    {
+        return controller.PagedData(
+            pageListResult.List.Select(trandfer),
+            pageListResult.PageIndex,
+            pageListResult.PageSize,
+            pageListResult.TotalSize,
+            extraData,
+            camelCase
+        );
     }
 
     /// <summary>

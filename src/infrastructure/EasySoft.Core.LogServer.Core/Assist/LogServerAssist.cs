@@ -1,8 +1,10 @@
-﻿using EasySoft.Core.LogServer.Core.Entities;
+﻿using System.Reflection;
+using EasySoft.Core.LogServer.Core.Entities;
 using EasySoft.Core.LogServer.Core.Extensions;
 using EasySoft.Core.LogServer.Core.Services.Implements;
 using EasySoft.Core.LogServer.Core.Services.Interfaces;
 using EasySoft.Core.LogServer.Core.Subscribers;
+using EasySoft.Core.PermissionVerification.Configures;
 
 namespace EasySoft.Core.LogServer.Core.Assist;
 
@@ -16,6 +18,11 @@ public static class LogServerAssist
     /// </summary>
     public static void Init(bool embedMode)
     {
+        PermissionConfigure.AddRangeScanPermissionAssemblies(new List<Assembly>
+        {
+            typeof(ErrorLog).Assembly
+        });
+
         LogServerConfigure.EmbedMode = embedMode;
         ContextConfigure.AddEntityConfigureAssembly(typeof(ErrorLog).Assembly);
 

@@ -2,6 +2,7 @@
 using EasySoft.Core.AppSecurityServer.Core.Extensions;
 using EasySoft.Core.AppSecurityServer.Core.Services.Implements;
 using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
+using EasySoft.Core.PermissionVerification.Configures;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Assist;
 
@@ -15,6 +16,11 @@ public static class AppSecurityServerAssist
     /// </summary>
     public static void Init(bool embedMode)
     {
+        PermissionConfigure.AddRangeScanPermissionAssemblies(new List<Assembly>
+        {
+            typeof(AppSecurity).Assembly
+        });
+
         AppSecurityServerConfigure.EmbedMode = embedMode;
         ContextConfigure.AddEntityConfigureAssembly(typeof(AppSecurity).Assembly);
 

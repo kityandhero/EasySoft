@@ -2,13 +2,13 @@
 using EasySoft.Core.PermissionServer.Core.DataTransferObjects;
 using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
 using EasySoft.Core.PermissionVerification.Attributes;
-using EasySoft.UtilityTools.Core.Results.Interfaces;
 
 namespace EasySoft.Core.PermissionServer.Core.Controllers;
 
 /// <summary>
 /// RoleGroupController
 /// </summary>
+[Route("roleGroup")]
 public class RoleGroupController : AuthControllerCore
 {
     private const string ControllerDescription = "角色组管理/";

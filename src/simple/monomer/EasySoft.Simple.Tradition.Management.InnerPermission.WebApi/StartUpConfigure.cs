@@ -12,13 +12,6 @@ public class StartUpConfigure : IStartUpConfigure
     /// </summary>
     public void Init()
     {
-        PermissionConfigure.AddRangeScanPermissionAssemblies(new List<Assembly>
-        {
-            typeof(Core.Assists.ApplicationAssist).Assembly,
-            typeof(ErrorLog).Assembly,
-            typeof(AppSecurity).Assembly
-        });
-
         AppSecurityServerAssist.Init(true);
 
         PermissionServerAssist.Init(true);

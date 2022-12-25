@@ -102,11 +102,11 @@ public static class WebApplicationExtensions
             var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<object>();
 
             logger.LogAdvancePrompt(
-                $"Execute errorLog send experiment start."
+                "Execute errorLog send experiment start."
             );
 
             logger.LogAdvancePrompt(
-                $"Experiment ErrorLog -> \"Ignore\":\"1\"."
+                "Experiment ErrorLog -> \"Ignore\":\"1\"."
             );
         }
 
@@ -119,7 +119,7 @@ public static class WebApplicationExtensions
             var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<object>();
 
             logger.LogAdvancePrompt(
-                $"Execute errorLog send experiment end."
+                "Execute errorLog send experiment end."
             );
         }
     }
@@ -140,11 +140,11 @@ public static class WebApplicationExtensions
             var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<object>();
 
             logger.LogAdvancePrompt(
-                $"Execute generalLog send experiment start."
+                "Execute generalLog send experiment start."
             );
 
             logger.LogAdvancePrompt(
-                $"Experiment GeneralLog -> \"Ignore\":\"1\"."
+                "Experiment GeneralLog -> \"Ignore\":\"1\"."
             );
         }
 
@@ -157,7 +157,7 @@ public static class WebApplicationExtensions
             var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<object>();
 
             logger.LogAdvancePrompt(
-                $"Execute generalLog send experiment end."
+                "Execute generalLog send experiment end."
             );
         }
     }
@@ -178,11 +178,11 @@ public static class WebApplicationExtensions
             var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<object>();
 
             logger.LogAdvancePrompt(
-                $"Execute sqlExecutionRecord send experiment start."
+                "Execute sqlExecutionRecord send experiment start."
             );
 
             logger.LogAdvancePrompt(
-                $"Experiment SqlExecutionRecord -> \"Ignore\":\"1\"."
+                "Experiment SqlExecutionRecord -> \"Ignore\":\"1\"."
             );
         }
 
@@ -195,7 +195,7 @@ public static class WebApplicationExtensions
             var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<object>();
 
             logger.LogAdvancePrompt(
-                $"Execute sqlExecutionRecord send experiment end."
+                "Execute sqlExecutionRecord send experiment end."
             );
         }
     }
