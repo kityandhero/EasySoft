@@ -29,6 +29,7 @@ global using EasySoft.UtilityTools.Core.Extensions;
 global using EasySoft.UtilityTools.Standard;
 global using EasySoft.UtilityTools.Standard.Assists;
 global using EasySoft.UtilityTools.Standard.Competence;
+global using EasySoft.UtilityTools.Standard.DataTransferObjects;
 global using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 global using EasySoft.UtilityTools.Standard.Exceptions;
 global using EasySoft.UtilityTools.Standard.Extensions;

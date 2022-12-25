@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Result.Implements;
-
-namespace EasySoft.UtilityTools.Standard.Result.Interfaces;
+﻿namespace EasySoft.UtilityTools.Standard.Result.Interfaces;
 
 /// <summary>
 /// executive result

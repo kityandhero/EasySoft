@@ -7,34 +7,34 @@ using EasySoft.UtilityTools.Core.Results.Interfaces;
 namespace EasySoft.Core.PermissionServer.Core.Controllers;
 
 /// <summary>
-/// PresetRoleController
+/// RoleGroupController
 /// </summary>
-public class PresetRoleController : AuthControllerCore
+public class RoleGroupController : AuthControllerCore
 {
-    private const string ControllerDescription = "预设角色管理/";
+    private const string ControllerDescription = "角色组管理/";
 
-    private readonly IPresetRoleService _presetRoleService;
+    private readonly IRoleGroupService _roleGroupService;
 
     /// <summary>
     /// PresetRoleController
     /// </summary>
-    /// <param name="presetRoleService"></param>
-    public PresetRoleController(IPresetRoleService presetRoleService)
+    /// <param name="roleGroupService"></param>
+    public RoleGroupController(IRoleGroupService roleGroupService)
     {
-        _presetRoleService = presetRoleService;
+        _roleGroupService = roleGroupService;
     }
 
     /// <summary>
     /// PageList
     /// </summary>
-    /// <param name="presetRoleSearchDto"></param>
+    /// <param name="roleGroupSearchDto"></param>
     /// <returns></returns>
     [Route("pageList")]
     [HttpPost]
-    [Permission(ControllerDescription + "角色列表", "c8830d0f-3140-466b-bea5-0d997d166d6d")]
-    public async Task<IApiResult> PageList(PresetRoleSearchDto presetRoleSearchDto)
+    [Permission(ControllerDescription + "角色组列表", "027af027-cbcc-48b6-a853-844fd240d40d")]
+    public async Task<IApiResult> PageList(RoleGroupSearchDto roleGroupSearchDto)
     {
-        var result = await _presetRoleService.PageListAsync(presetRoleSearchDto);
+        var result = await _roleGroupService.PageListAsync(roleGroupSearchDto);
 
         return this.Success(
             result.List,
