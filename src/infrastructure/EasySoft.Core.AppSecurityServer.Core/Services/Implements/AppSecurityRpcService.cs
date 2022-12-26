@@ -33,6 +33,38 @@ public class AppSecurityRpcService : IAppSecurityRpcService
     }
 
     /// <inheritdoc />
+    public async Task<ExecutiveResult> ChannelCheckAsync(int channel)
+    {
+        var result = await _appSecurityRepository.GetAsync(
+            o => o.Channel == channel
+        );
+
+        if (!result.Success)
+        {
+            if (_environment.IsDevelopment())
+                _loggerFactory.CreateLogger<object>().LogAdvanceError(result.Message);
+
+            return new ExecutiveResult(
+                result.Code
+            );
+        }
+
+        if (result.Data == null)
+        {
+            var message = $"channel -> {channel} check error.";
+
+            if (_environment.IsDevelopment())
+                _loggerFactory.CreateLogger<object>().LogAdvanceError(message);
+
+            return new ExecutiveResult(
+                result.Code
+            );
+        }
+
+        return ExecutiveResultAssist.CreateOk();
+    }
+
+    /// <inheritdoc />
     public async Task<ExecutiveResult<AppPublicKeyDto>> CredentialVerifyAsync(AppSecurityDto appSecurityDto)
     {
         if (appSecurityDto.UnixTime < 0)

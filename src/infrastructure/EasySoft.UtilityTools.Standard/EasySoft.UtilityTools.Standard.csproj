@@ -30,4 +30,8 @@
         <ProjectReference Include="..\EasySoft.Dependence.Standard\EasySoft.Dependence.Standard.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Securities\Certificates" />
+    </ItemGroup>
+
 </Project>

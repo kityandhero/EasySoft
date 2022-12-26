@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.AccessWayTransmitter.Entities;
 using EasySoft.Core.AccessWayTransmitter.Interfaces;
 using EasySoft.Core.Infrastructure.Transmitters;
-using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 namespace EasySoft.Core.AccessWayTransmitter.Producers;
 

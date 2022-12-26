@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.AppSecurityVerification.Clients;
-using EasySoft.Core.AppSecurityVerification.Detectors;
 using EasySoft.Core.AppSecurityVerification.Detectors.Implements;
 using EasySoft.Core.AppSecurityVerification.Detectors.Interfaces;
 
@@ -49,41 +48,9 @@ public static class WebApplicationBuilderExtensions
             });
         });
 
-        builder.Services.AddTransient(
-            typeof(IAppSecurityDetector),
-            provider =>
-            {
-                var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
-                var environment = provider.GetRequiredService<IWebHostEnvironment>();
-                var mediator = provider.GetRequiredService<IMediator>();
-                var applicationChannel = provider.GetRequiredService<IApplicationChannel>();
-                var appSecurityClient = provider.GetRequiredService<IAppSecurityClient>();
+        builder.Services.AddTransient<IAppSecurityDetector, AppSecurityDetector>();
 
-                var interceptors = new List<Type> { typeof(LogRecordInterceptor) }
-                    .ConvertAll(interceptorType => { return provider.GetService(interceptorType) as IInterceptor; })
-                    .ToArray();
-                var proxyGenerator = provider.GetService<ProxyGenerator>();
-
-                if (proxyGenerator == null)
-                    throw new UnknownException(
-                        "provider.GetService<ProxyGenerator>() result is null"
-                    );
-
-                var proxy = proxyGenerator.CreateInterfaceProxyWithTargetInterface(
-                    typeof(IAppSecurityDetector),
-                    new AppSecurityDetector(
-                        loggerFactory,
-                        environment,
-                        mediator,
-                        applicationChannel,
-                        appSecurityClient
-                    ),
-                    interceptors
-                );
-
-                return proxy;
-            }
-        );
+        builder.AddChannelCheckTransmitter();
 
         builder.Services.AddMediatR(typeof(IAppSecurityDetector).Assembly);
 

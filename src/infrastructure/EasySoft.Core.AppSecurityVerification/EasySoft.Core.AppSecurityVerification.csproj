@@ -16,6 +16,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\domain\EasySoft.Ddd.Service.DependencyInjection\EasySoft.Ddd.Service.DependencyInjection.csproj" />
+      <ProjectReference Include="..\EasySoft.Core.ChannelCheckTransmitter\EasySoft.Core.ChannelCheckTransmitter.csproj" />
       <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
       <ProjectReference Include="..\EasySoft.Core.Refit\EasySoft.Core.Refit.csproj" />
       <ProjectReference Include="..\EasySoft.Dependence.Core\EasySoft.Dependence.Core.csproj" />

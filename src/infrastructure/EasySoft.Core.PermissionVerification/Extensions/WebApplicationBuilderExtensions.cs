@@ -17,7 +17,7 @@ namespace EasySoft.Core.PermissionVerification.Extensions;
 /// </summary>
 public static class WebApplicationBuilderExtensions
 {
-    private const string UniqueIdentifierAddPermissionVerification = "d3dd59e3-0a28-488f-b434-9db031e5c66f";
+    private const string IdentifierAddPermissionVerification = "d3dd59e3-0a28-488f-b434-9db031e5c66f";
 
     /// <summary>
     /// 配置操作者验证以及操作权限验证, 需要配置在 UseEasyToken/UseAdvanceJsonWebToken 之后
@@ -30,7 +30,7 @@ public static class WebApplicationBuilderExtensions
         bool middlewareMode = true
     ) where TPermissionObserver : IPermissionObserver
     {
-        if (builder.HasRegistered(UniqueIdentifierAddPermissionVerification))
+        if (builder.HasRegistered(IdentifierAddPermissionVerification))
             return builder;
 
         StartupDescriptionMessageAssist.AddExecute(

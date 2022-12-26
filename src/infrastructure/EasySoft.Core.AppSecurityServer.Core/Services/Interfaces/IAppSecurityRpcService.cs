@@ -6,6 +6,13 @@
 public interface IAppSecurityRpcService : IBusinessService
 {
     /// <summary>
+    /// 通道存在性检验
+    /// </summary>
+    /// <param name="channel"></param>
+    /// <returns></returns>
+    Task<ExecutiveResult> ChannelCheckAsync(int channel);
+
+    /// <summary>
     /// 安全凭据校验
     /// </summary>
     /// <param name="appSecurityDto"></param>

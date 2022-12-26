@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.AppSecurityVerification.Clients;
 using EasySoft.Core.AppSecurityVerification.Detectors.Interfaces;
+using EasySoft.Core.ChannelCheckTransmitter.Producers;
 
 namespace EasySoft.Core.AppSecurityVerification.Detectors.Implements;
 
@@ -15,6 +16,7 @@ public class AppSecurityDetector : IAppSecurityDetector
     private readonly IApplicationChannel _applicationChannel;
 
     private readonly IAppSecurityClient _appSecurityClient;
+    private readonly IChannelCheckProducer _channelCheckProducer;
 
     /// <summary>
     /// 访问探测器
@@ -24,12 +26,14 @@ public class AppSecurityDetector : IAppSecurityDetector
     /// <param name="mediator"></param>
     /// <param name="applicationChannel"></param>
     /// <param name="appSecurityClient"></param>
+    /// <param name="channelCheckProducer"></param>
     public AppSecurityDetector(
         ILoggerFactory loggerFactory,
         IWebHostEnvironment environment,
         IMediator mediator,
         IApplicationChannel applicationChannel,
-        IAppSecurityClient appSecurityClient
+        IAppSecurityClient appSecurityClient,
+        IChannelCheckProducer channelCheckProducer
     )
     {
         _loggerFactory = loggerFactory;
@@ -37,6 +41,13 @@ public class AppSecurityDetector : IAppSecurityDetector
         _mediator = mediator;
         _applicationChannel = applicationChannel;
         _appSecurityClient = appSecurityClient;
+        _channelCheckProducer = channelCheckProducer;
+    }
+
+    /// <inheritdoc />
+    public async Task ChannelCheck()
+    {
+        await _channelCheckProducer.SendAsync();
     }
 
     /// <inheritdoc />

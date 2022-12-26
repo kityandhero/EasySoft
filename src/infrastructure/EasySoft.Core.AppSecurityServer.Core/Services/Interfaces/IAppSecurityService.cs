@@ -13,6 +13,13 @@ public interface IAppSecurityService : IBusinessService
     Task<ExecutiveResult<AppSecurityDto>> CreateAsync(AppSecurityDto appSecurityDto);
 
     /// <summary>
+    /// 创建
+    /// </summary>
+    /// <param name="channel"></param>
+    /// <returns></returns>
+    Task<ExecutiveResult> TryCreateAsync(int channel);
+
+    /// <summary>
     /// 获取应用安全主控端, 即AppSecurityServer应用对应的应用配置
     /// </summary>
     /// <returns></returns>

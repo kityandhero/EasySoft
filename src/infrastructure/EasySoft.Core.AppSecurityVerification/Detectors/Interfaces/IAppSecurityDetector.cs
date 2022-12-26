@@ -6,9 +6,14 @@
 public interface IAppSecurityDetector
 {
     /// <summary>
+    /// 通道检验
+    /// </summary>
+    /// <returns></returns>
+    public Task ChannelCheck();
+
+    /// <summary>
     /// 凭据校验
     /// </summary>
     /// <returns></returns>
-    [LogRecord]
     public Task CredentialVerify();
 }

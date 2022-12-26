@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Entities.Interfaces;
-
-namespace EasySoft.Core.AccessWayTransmitter.Interfaces;
+﻿namespace EasySoft.Core.AccessWayTransmitter.Interfaces;
 
 /// <summary>
 /// IAccessWayExchange

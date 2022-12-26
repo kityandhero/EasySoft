@@ -396,6 +396,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.AppSecuritySe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.AppSecurityVerification", "infrastructure\EasySoft.Core.AppSecurityVerification\EasySoft.Core.AppSecurityVerification.csproj", "{648050D2-EAAE-409B-9689-8C2F563CDB25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.ChannelCheckTransmitter", "infrastructure\EasySoft.Core.ChannelCheckTransmitter\EasySoft.Core.ChannelCheckTransmitter.csproj", "{67B792D0-C4B5-4014-ACEA-4A918B941700}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -882,6 +884,10 @@ Global
 		{648050D2-EAAE-409B-9689-8C2F563CDB25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{648050D2-EAAE-409B-9689-8C2F563CDB25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{648050D2-EAAE-409B-9689-8C2F563CDB25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67B792D0-C4B5-4014-ACEA-4A918B941700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67B792D0-C4B5-4014-ACEA-4A918B941700}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67B792D0-C4B5-4014-ACEA-4A918B941700}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67B792D0-C4B5-4014-ACEA-4A918B941700}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1073,6 +1079,7 @@ Global
 		{EDAE387F-5D5D-4C80-9B66-86280CEA81D5} = {E29F4070-C588-4878-9F82-F1AAC205DB2D}
 		{0FFCCE03-A5B7-4FC8-965B-EB7D07B66B33} = {EDAE387F-5D5D-4C80-9B66-86280CEA81D5}
 		{648050D2-EAAE-409B-9689-8C2F563CDB25} = {217C060B-95D6-4350-A2CD-D8E7D6309E3D}
+		{67B792D0-C4B5-4014-ACEA-4A918B941700} = {A4A52E96-6D09-4234-BD3F-FF1EEFBBAEC2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

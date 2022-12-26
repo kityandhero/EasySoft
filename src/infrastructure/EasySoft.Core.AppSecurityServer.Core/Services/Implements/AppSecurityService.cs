@@ -42,6 +42,23 @@ public class AppSecurityService : IAppSecurityService
     }
 
     /// <inheritdoc />
+    public async Task<ExecutiveResult> TryCreateAsync(int channel)
+    {
+        var result = await _appSecurityRepository.GetAsync(
+            o => o.Channel == channel
+        );
+
+        if (result.Success)
+        {
+            if (result.Data != null) return ExecutiveResultAssist.CreateOk();
+
+            return new ExecutiveResult(ReturnCode.DataError.ToMessage("查询无返回"));
+        }
+
+        return result.ToExecutiveResult();
+    }
+
+    /// <inheritdoc />
     public async Task<ExecutiveResult<AppSecurityDto>> GetMainControlAppSecurity()
     {
         var result = await _appSecurityRepository.GetAsync(

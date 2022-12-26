@@ -10,5 +10,6 @@ global using EasySoft.Core.Infrastructure.Configures;
 global using EasySoft.UtilityTools.Core.Channels;
 global using EasySoft.UtilityTools.Core.Extensions;
 global using EasySoft.UtilityTools.Standard.Competence;
+global using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.DependencyInjection;

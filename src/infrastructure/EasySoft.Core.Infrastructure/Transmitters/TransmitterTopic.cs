@@ -24,4 +24,9 @@ public static class TransmitterTopic
     /// SqlExecutionRecordExchange
     /// </summary>
     public const string SqlExecutionRecordExchange = "SqlExecutionRecordExchange";
+
+    /// <summary>
+    /// ChannelCheckExchange
+    /// </summary>
+    public const string ChannelCheckExchange = "ChannelCheckExchange";
 }
