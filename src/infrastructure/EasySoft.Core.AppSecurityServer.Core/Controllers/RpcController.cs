@@ -32,6 +32,7 @@ public class RpcController : CustomControllerBase
     /// <returns></returns>
     [Route("credentialVerify")]
     [HttpPost]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public async Task<RpcResult<AppPublicKeyDto>> CredentialVerify([FromBody] AppSecurityDto appSecurityDto)
     {
         try

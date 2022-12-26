@@ -1,5 +1,6 @@
 ﻿// Global using directives
 
+global using System.Reflection;
 global using DotNetCore.CAP;
 global using EasySoft.Core.AutoFac.IocAssists;
 global using EasySoft.Core.Cap.ExtensionMethods;
@@ -22,6 +23,7 @@ global using EasySoft.Core.Infrastructure.Services;
 global using EasySoft.Core.Infrastructure.Startup;
 global using EasySoft.Core.Infrastructure.Transmitters;
 global using EasySoft.Core.PermissionVerification.Attributes;
+global using EasySoft.Core.PermissionVerification.Configures;
 global using EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
 global using EasySoft.Core.Web.Framework.Controllers;
 global using EasySoft.UtilityTools.Core.Assists;

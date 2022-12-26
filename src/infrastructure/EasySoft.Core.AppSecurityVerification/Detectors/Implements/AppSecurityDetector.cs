@@ -8,13 +8,9 @@ namespace EasySoft.Core.AppSecurityVerification.Detectors.Implements;
 public class AppSecurityDetector : IAppSecurityDetector
 {
     private readonly ILoggerFactory _loggerFactory;
-
     private readonly IWebHostEnvironment _environment;
-
     private readonly IMediator _mediator;
-
     private readonly IApplicationChannel _applicationChannel;
-
     private readonly IAppSecurityClient _appSecurityClient;
     private readonly IChannelCheckProducer _channelCheckProducer;
 
@@ -47,6 +43,15 @@ public class AppSecurityDetector : IAppSecurityDetector
     /// <inheritdoc />
     public async Task ChannelCheck()
     {
+        if (_environment.IsDevelopment())
+        {
+            var logger = _loggerFactory.CreateLogger<AppSecurityDetector>();
+
+            logger.LogAdvancePrompt(
+                $"send channel check exchange -> \"channel\":{_applicationChannel.GetChannel()}"
+            );
+        }
+
         await _channelCheckProducer.SendAsync();
     }
 

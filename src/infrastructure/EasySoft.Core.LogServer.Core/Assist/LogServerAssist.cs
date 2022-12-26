@@ -1,10 +1,7 @@
-﻿using System.Reflection;
-using EasySoft.Core.LogServer.Core.Entities;
+﻿using EasySoft.Core.LogServer.Core.Entities;
 using EasySoft.Core.LogServer.Core.Extensions;
 using EasySoft.Core.LogServer.Core.Services.Implements;
 using EasySoft.Core.LogServer.Core.Services.Interfaces;
-using EasySoft.Core.LogServer.Core.Subscribers;
-using EasySoft.Core.PermissionVerification.Configures;
 
 namespace EasySoft.Core.LogServer.Core.Assist;
 
@@ -33,12 +30,7 @@ public static class LogServerAssist
         ApplicationConfigure.AddWebApplicationBuilderExtraActions(
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("")
-                .SetAction(applicationBuilder =>
-                {
-                    applicationBuilder.AddCapSubscriber<ErrorLogExchangeSubscriber>();
-                    applicationBuilder.AddCapSubscriber<GeneralLogExchangeSubscriber>();
-                    applicationBuilder.AddCapSubscriber<SqlExecutionRecordExchangeSubscriber>();
-                })
+                .SetAction(applicationBuilder => { applicationBuilder.AddLogServerCore(); })
         );
 
         // 配置额外的应用项目

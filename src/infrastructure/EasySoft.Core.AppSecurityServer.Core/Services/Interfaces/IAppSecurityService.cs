@@ -41,5 +41,5 @@ public interface IAppSecurityService : IBusinessService
     /// SetSuperRoleNextMaintainTime
     /// </summary>
     /// <returns></returns>
-    Task SetSuperRoleNextMaintainTime(AppSecurityDto appSecurityDto);
+    Task SetSuperNextMaintainTime(AppSecurityDto appSecurityDto);
 }

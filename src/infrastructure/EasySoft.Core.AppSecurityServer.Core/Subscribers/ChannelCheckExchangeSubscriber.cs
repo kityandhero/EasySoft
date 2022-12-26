@@ -44,7 +44,7 @@ public class ChannelCheckExchangeSubscriber : ICapSubscribe
             _logger.LogAdvanceExecute($"{GetType().Name}.{nameof(Process)}");
 
             _logger.LogAdvancePrompt(
-                $"Save SqlExecutionRecordExchange -> {exchange.BuildInfo()}."
+                $"Save ChannelCheckExchange -> {exchange.BuildInfo()}."
             );
         }
 

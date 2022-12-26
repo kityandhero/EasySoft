@@ -27,6 +27,7 @@ public class RpcController : CustomControllerBase
     /// <returns></returns>
     [Route("findAccessWay")]
     [HttpPost]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public async Task<RpcResult<AccessWayModel>> FindAccessWay(string guidTag)
     {
         var result = await _permissionRpcService.FindAccessWayAsync(guidTag);
@@ -39,9 +40,10 @@ public class RpcController : CustomControllerBase
     /// </summary>
     /// <param name="channel"></param>
     /// <returns></returns>
-    [Route("maintainSuperRole")]
+    [Route("maintainSuper")]
     [HttpPost]
-    public async Task MaintainSuperRole(int channel)
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public async Task MaintainSuper(int channel)
     {
         await _permissionRpcService.MaintainSuper(channel);
     }

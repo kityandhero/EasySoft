@@ -30,7 +30,7 @@ public class ChannelCheckProducer : IChannelCheckProducer
             Channel = _applicationChannel.GetChannel()
         };
 
-        await _capPublisher.PublishAsync(TransmitterTopic.AccessWayExchange, entity);
+        await _capPublisher.PublishAsync(TransmitterTopic.ChannelCheckExchange, entity);
 
         return entity;
     }

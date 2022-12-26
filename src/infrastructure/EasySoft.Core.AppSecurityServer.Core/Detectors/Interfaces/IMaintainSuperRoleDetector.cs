@@ -11,5 +11,5 @@ public interface IMaintainSuperRoleDetector
     /// 安全校验
     /// </summary>
     /// <returns></returns>
-    public Task MaintainSuperRole();
+    public Task MaintainSuper();
 }

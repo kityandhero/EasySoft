@@ -55,7 +55,12 @@ public class AppSecurityService : IAppSecurityService
             return new ExecutiveResult(ReturnCode.DataError.ToMessage("查询无返回"));
         }
 
-        return result.ToExecutiveResult();
+        var resultAdd = await CreateAsync(new AppSecurityDto
+        {
+            Channel = channel
+        });
+
+        return resultAdd.ToExecutiveResult();
     }
 
     /// <inheritdoc />
@@ -104,7 +109,7 @@ public class AppSecurityService : IAppSecurityService
     }
 
     /// <inheritdoc />
-    public async Task SetSuperRoleNextMaintainTime(AppSecurityDto appSecurityDto)
+    public async Task SetSuperNextMaintainTime(AppSecurityDto appSecurityDto)
     {
         var result = await _appSecurityRepository.GetAsync(appSecurityDto.AppSecurityId);
 

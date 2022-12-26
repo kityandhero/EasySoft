@@ -7,26 +7,33 @@ namespace EasySoft.Core.AppSecurityServer.Core.Detectors.Implements;
 /// <inheritdoc />
 public class MaintainSuperRoleDetector : IMaintainSuperRoleDetector
 {
+    private readonly ILoggerFactory _loggerFactory;
+    private readonly IWebHostEnvironment _environment;
     private readonly IMaintainSuperRoleClient _maintainSuperRoleClient;
-
     private readonly IAppSecurityService _appSecurityService;
 
     /// <summary>
     /// 访问探测器
     /// </summary>
+    /// <param name="loggerFactory"></param>
+    /// <param name="environment"></param>
     /// <param name="maintainSuperRoleClient"></param>
     /// <param name="appSecurityService"></param>
     public MaintainSuperRoleDetector(
+        ILoggerFactory loggerFactory,
+        IWebHostEnvironment environment,
         IMaintainSuperRoleClient maintainSuperRoleClient,
         IAppSecurityService appSecurityService
     )
     {
+        _loggerFactory = loggerFactory;
+        _environment = environment;
         _maintainSuperRoleClient = maintainSuperRoleClient;
         _appSecurityService = appSecurityService;
     }
 
     /// <inheritdoc />
-    public async Task MaintainSuperRole()
+    public async Task MaintainSuper()
     {
         var resultGetMainControlAppSecurity = await _appSecurityService.GetMainControlAppSecurity();
 
@@ -42,18 +49,21 @@ public class MaintainSuperRoleDetector : IMaintainSuperRoleDetector
             salt
         );
 
-        var list = await _appSecurityService.SingleListNeedMaintain();
+        var list = (await _appSecurityService.SingleListNeedMaintain()).ToList();
 
-        list.ForEach(async o =>
+        if (_environment.IsDevelopment())
+            if (list.Any())
+                _loggerFactory.CreateLogger<object>().LogAdvancePrompt(
+                    $"Maintain super role, total count {list.Count()}"
+                );
+
+        async void MaintainEvery(AppSecurityDto o)
         {
-            await _maintainSuperRoleClient.MaintainSuperRole(
-                o.Channel,
-                appId,
-                sign,
-                salt
-            );
+            await _maintainSuperRoleClient.MaintainSuper(o.Channel, appId, sign, salt);
 
-            await _appSecurityService.SetSuperRoleNextMaintainTime(o);
-        });
+            await _appSecurityService.SetSuperNextMaintainTime(o);
+        }
+
+        list.ForEach(MaintainEvery);
     }
 }

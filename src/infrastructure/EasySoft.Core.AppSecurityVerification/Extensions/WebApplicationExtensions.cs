@@ -32,6 +32,8 @@ public static class WebApplicationExtensions
 
             try
             {
+                await appSecurityDetector.ChannelCheck();
+
                 await appSecurityDetector.CredentialVerify();
             }
             catch (Exception e)

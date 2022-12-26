@@ -2,6 +2,7 @@
 using EasySoft.Core.AppSecurityServer.Core.Detectors.Implements;
 using EasySoft.Core.AppSecurityServer.Core.Detectors.Interfaces;
 using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
+using EasySoft.Core.AppSecurityServer.Core.Subscribers;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Extensions;
 
@@ -42,6 +43,8 @@ internal static class WebApplicationBuilderExtensions
 
         builder.Services.AddTransient<IMaintainSuperRoleDetector, MaintainSuperRoleDetector>();
 
+        builder.AddCapSubscriber<ChannelCheckExchangeSubscriber>();
+
         builder.AddDetectionAppPublicKey();
 
         return builder;
@@ -71,7 +74,7 @@ internal static class WebApplicationBuilderExtensions
     {
         await DetectionAppPublicKey(serviceProvider, e.SignalTime);
 
-        await MaintainSuperRole(serviceProvider);
+        await MaintainSuper(serviceProvider);
     }
 
     private static async Task DetectionAppPublicKey(IServiceProvider serviceProvider, DateTime time)
@@ -91,21 +94,11 @@ internal static class WebApplicationBuilderExtensions
         await appPublicKeyService.DetectionAsync();
     }
 
-    private static async Task MaintainSuperRole(IServiceProvider serviceProvider)
+    private static async Task MaintainSuper(IServiceProvider serviceProvider)
     {
-        var environment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
         var dataDetector = serviceProvider.GetRequiredService<IMaintainSuperRoleDetector>();
 
-        if (environment.IsDevelopment())
-        {
-            var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<object>();
-
-            logger.LogAdvancePrompt(
-                "Maintain super role."
-            );
-        }
-
-        await dataDetector.MaintainSuperRole();
+        await dataDetector.MaintainSuper();
     }
 
     private static async Task MaintainMasterControl(IServiceProvider serviceProvider)
