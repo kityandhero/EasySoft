@@ -40,7 +40,7 @@ public class AppSecurityDetector : IAppSecurityDetector
     }
 
     /// <inheritdoc />
-    public async Task Verify()
+    public async Task CredentialVerify()
     {
         var appSecurityDto = new AppSecurityDto
         {
@@ -60,11 +60,11 @@ public class AppSecurityDetector : IAppSecurityDetector
                 $"Will verify AppSecurityDto -> {appSecurityDto.BuildInfo()}"
             );
 
-        var apiResponse = await _appSecurityClient.VerifyAsync(appSecurityDto);
+        var apiResponse = await _appSecurityClient.CredentialVerifyAsync(appSecurityDto);
 
         if (!apiResponse.IsSuccessStatusCode || apiResponse.Content == null)
         {
-            var message = $"rpc {GetType().Name}.{nameof(Verify)} call fail";
+            var message = $"rpc {GetType().Name}.{nameof(CredentialVerify)} call fail";
 
             logger.LogAdvanceError(message);
 

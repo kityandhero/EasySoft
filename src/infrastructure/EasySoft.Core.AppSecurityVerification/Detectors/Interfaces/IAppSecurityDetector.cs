@@ -6,9 +6,9 @@
 public interface IAppSecurityDetector
 {
     /// <summary>
-    /// 安全校验
+    /// 凭据校验
     /// </summary>
     /// <returns></returns>
     [LogRecord]
-    public Task Verify();
+    public Task CredentialVerify();
 }

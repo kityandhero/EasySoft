@@ -1,7 +1,7 @@
 ﻿namespace EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 /// <summary>
-/// IChannel
+/// channel
 /// </summary>
 public interface IChannel
 {

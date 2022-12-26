@@ -1,7 +1,7 @@
 ﻿namespace EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 /// <summary>
-/// IAppSecurity
+/// app security
 /// </summary>
 public interface IAppSecurity
 {

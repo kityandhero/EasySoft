@@ -1,12 +1,13 @@
 ﻿namespace EasySoft.UtilityTools.Standard.Entities.Interfaces;
 
 /// <summary>
-/// 应用验证公钥
+/// app public key
+/// [应用全局校验公钥]
 /// </summary>
 public interface IAppPublicKey
 {
     /// <summary>
-    /// 验证公钥
+    /// key, 验证公钥 
     /// </summary>
     [Description("Key")]
     string Key { get; set; }

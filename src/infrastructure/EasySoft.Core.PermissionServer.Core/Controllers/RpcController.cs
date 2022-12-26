@@ -6,18 +6,18 @@ namespace EasySoft.Core.PermissionServer.Core.Controllers;
 /// <summary>
 /// rpc controller
 /// </summary>
-[Route("rpc")]
+[Route("permissionRpc")]
 public class RpcController : CustomControllerBase
 {
-    private readonly IRpcService _rpcService;
+    private readonly IPermissionRpcService _permissionRpcService;
 
     /// <summary>
     /// EntranceController
     /// </summary>
-    /// <param name="rpcService"></param>
-    public RpcController(IRpcService rpcService)
+    /// <param name="permissionRpcService"></param>
+    public RpcController(IPermissionRpcService permissionRpcService)
     {
-        _rpcService = rpcService;
+        _permissionRpcService = permissionRpcService;
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ public class RpcController : CustomControllerBase
     [HttpPost]
     public async Task<RpcResult<AccessWayModel>> FindAccessWay(string guidTag)
     {
-        var result = await _rpcService.FindAccessWayAsync(guidTag);
+        var result = await _permissionRpcService.FindAccessWayAsync(guidTag);
 
         return result.ToRpcResult();
     }
@@ -43,6 +43,6 @@ public class RpcController : CustomControllerBase
     [HttpPost]
     public async Task MaintainSuperRole(int channel)
     {
-        await _rpcService.MaintainSuperRole(channel);
+        await _permissionRpcService.MaintainSuper(channel);
     }
 }

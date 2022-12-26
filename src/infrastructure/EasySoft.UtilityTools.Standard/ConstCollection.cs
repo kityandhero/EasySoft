@@ -69,6 +69,11 @@ public static class ConstCollection
     public const string SuperRoleName = "超级管理员";
 
     /// <summary>
+    /// SuperRoleGroupName
+    /// </summary>
+    public const string SuperRoleGroupName = "超级管理组";
+
+    /// <summary>
     /// SuperRoleGuidTag
     /// </summary>
     public const string SuperRoleGuidTag = "super";

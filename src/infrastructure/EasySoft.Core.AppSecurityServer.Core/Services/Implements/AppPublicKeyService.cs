@@ -7,22 +7,16 @@ namespace EasySoft.Core.AppSecurityServer.Core.Services.Implements;
 /// <inheritdoc />
 public class AppPublicKeyService : IAppPublicKeyService
 {
-    private readonly IEventPublisher _eventPublisher;
-
     private readonly IRepository<AppPublicKey> _appPublicKeyRepository;
 
     /// <summary>
     /// UserService
     /// </summary>
-    /// <param name="eventPublisher"></param>
     /// <param name="appPublicKeyRepository"></param>
     public AppPublicKeyService(
-        IEventPublisher eventPublisher,
         IRepository<AppPublicKey> appPublicKeyRepository
     )
     {
-        _eventPublisher = eventPublisher;
-
         _appPublicKeyRepository = appPublicKeyRepository;
     }
 

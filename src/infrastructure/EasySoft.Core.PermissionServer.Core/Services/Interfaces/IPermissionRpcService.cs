@@ -1,9 +1,11 @@
-﻿namespace EasySoft.Core.PermissionServer.Core.Services.Interfaces;
+﻿using EasySoft.Core.Data.Attributes;
+
+namespace EasySoft.Core.PermissionServer.Core.Services.Interfaces;
 
 /// <summary>
 /// ISecurityService
 /// </summary>
-public interface IRpcService : IBusinessService
+public interface IPermissionRpcService : IBusinessService
 {
     /// <summary>
     /// get competence entity collection
@@ -20,8 +22,9 @@ public interface IRpcService : IBusinessService
     Task<ExecutiveResult<AccessWayModel>> FindAccessWayAsync(string guidTag);
 
     /// <summary>
-    /// maintain super role
+    /// 维护超级管理角色以及角色组
     /// </summary>
     /// <returns></returns>
-    Task MaintainSuperRole(int channel);
+    [UnitOfWork]
+    Task MaintainSuper(int channel);
 }

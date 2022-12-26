@@ -17,7 +17,7 @@ public interface IPermissionClient
     /// <param name="originAppSign">请求源签名</param>
     /// <param name="originAppSalt">请求源混淆字符串</param>
     /// <returns></returns>
-    [Post("/rpc/findAccessWay")]
+    [Post("/permissionRpc/findAccessWay")]
     public Task<ApiResponse<RpcResult<AccessWayModel>>> FindAccessWayModel(
         string guidTag,
         [Header("originId")] string originAppId,

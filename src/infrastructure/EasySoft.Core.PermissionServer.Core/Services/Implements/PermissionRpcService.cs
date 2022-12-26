@@ -1,17 +1,14 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Entities;
 using EasySoft.Core.PermissionServer.Core.Extensions;
 using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
-using EasySoft.UtilityTools.Standard.Enums;
 
 namespace EasySoft.Core.PermissionServer.Core.Services.Implements;
 
 /// <summary>
 /// PermissionService
 /// </summary>
-public class RpcService : IRpcService
+public class PermissionRpcService : IPermissionRpcService
 {
-    private readonly IEventPublisher _eventPublisher;
-
     private readonly IRepository<RoleGroup> _roleGroupRepository;
 
     private readonly IRepository<PresetRole> _presetRoleRepository;
@@ -23,21 +20,17 @@ public class RpcService : IRpcService
     /// <summary>
     /// UserService
     /// </summary>
-    /// <param name="eventPublisher"></param>
     /// <param name="customRoleRepository"></param>
     /// <param name="roleGroupRepository"></param>
     /// <param name="presetRoleRepository"></param>
     /// <param name="accessWayRepository"></param>
-    public RpcService(
-        IEventPublisher eventPublisher,
+    public PermissionRpcService(
         IRepository<RoleGroup> roleGroupRepository,
         IRepository<PresetRole> presetRoleRepository,
         IRepository<CustomRole> customRoleRepository,
         IRepository<AccessWay> accessWayRepository
     )
     {
-        _eventPublisher = eventPublisher;
-
         _roleGroupRepository = roleGroupRepository;
         _presetRoleRepository = presetRoleRepository;
         _customRoleRepository = customRoleRepository;
@@ -111,23 +104,63 @@ public class RpcService : IRpcService
     }
 
     /// <inheritdoc />
-    public async Task MaintainSuperRole(int channel)
+    public async Task MaintainSuper(int channel)
     {
-        var result = await _presetRoleRepository.GetAsync(
+        var resultGetPresetRole = await _presetRoleRepository.GetAsync(
             o => o.Channel == channel && o.WhetherSuper == Whether.Yes.ToInt()
         );
 
-        if (result.Success) return;
+        PresetRole superRole;
 
-        var superRole = new PresetRole
+        if (resultGetPresetRole.Success)
         {
-            Name = ConstCollection.SuperRoleName,
-            WhetherSuper = Whether.Yes.ToInt(),
-            Channel = channel
-        };
+            superRole = resultGetPresetRole.Data ?? throw new UnknownException("preset role is null, it is not allow.");
+        }
+        else
+        {
+            superRole = new PresetRole
+            {
+                Name = ConstCollection.SuperRoleName,
+                WhetherSuper = Whether.Yes.ToInt(),
+                Channel = channel
+            };
 
-        await _presetRoleRepository.AddAsync(superRole);
+            await _presetRoleRepository.AddAsync(superRole);
+        }
+
+        RoleGroup roleGroup;
+
+        var resultGetRoleGroup = await _roleGroupRepository.GetAsync(
+            o => o.Channel == channel && o.WhetherSuper == Whether.Yes.ToInt()
+        );
+
+        if (resultGetRoleGroup.Success)
+        {
+            roleGroup = resultGetRoleGroup.Data ?? throw new UnknownException("role group is null, it is not allow.");
+        }
+        else
+        {
+            roleGroup = new RoleGroup
+            {
+                Name = ConstCollection.SuperRoleGroupName,
+                PresetRoleCollection = JsonConvert.SerializeObject(
+                    new List<RoleItem>
+                    {
+                        new()
+                        {
+                            Id = superRole.Id
+                        }
+                    }
+                ),
+                WhetherSuper = Whether.Yes.ToInt(),
+                Channel = channel
+            };
+
+            await _roleGroupRepository.AddAsync(roleGroup);
+        }
     }
+
+    #region private static methods
 
     private static List<IRoleItem> GetCustomRoleItemList(RoleGroup roleGroup)
     {
@@ -175,4 +208,6 @@ public class RpcService : IRpcService
             o => o.GuidTag.In(competenceEntities.Select(c => c.GuidTag).ToArray())
         );
     }
+
+    #endregion
 }

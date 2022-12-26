@@ -25,6 +25,7 @@ global using EasySoft.Core.Infrastructure.Startup;
 global using EasySoft.Core.Infrastructure.Transmitters;
 global using EasySoft.Core.PermissionVerification.Detectors;
 global using EasySoft.Core.PermissionVerification.Observers;
+global using EasySoft.Core.Refit.ExtensionMethods;
 global using EasySoft.Core.Web.Framework.Controllers;
 global using EasySoft.UtilityTools.Core.Channels;
 global using EasySoft.UtilityTools.Core.Extensions;

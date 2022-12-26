@@ -28,7 +28,7 @@ public class MaintainSuperRoleDetector : IMaintainSuperRoleDetector
     /// <inheritdoc />
     public async Task MaintainSuperRole()
     {
-        var resultGetMainControlAppSecurity = await _appSecurityService.GerMainControlAppSecurity();
+        var resultGetMainControlAppSecurity = await _appSecurityService.GetMainControlAppSecurity();
 
         if (!resultGetMainControlAppSecurity.Success || resultGetMainControlAppSecurity.Data == null) return;
 

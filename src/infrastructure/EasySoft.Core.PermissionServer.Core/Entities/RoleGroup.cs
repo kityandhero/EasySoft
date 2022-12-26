@@ -26,6 +26,12 @@ public class RoleGroup : BaseEntity, IChannel, IStatus, IIp, IOperate
     [Description("预设角色集合")]
     public string PresetRoleCollection { get; set; } = "";
 
+    /// <summary>
+    /// 超级管理角色组
+    /// </summary>
+    [Description("超级管理角色组")]
+    public int WhetherSuper { get; set; } = 0;
+
     /// <inheritdoc />
     public int Channel { get; set; }
 

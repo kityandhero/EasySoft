@@ -5,7 +5,7 @@ namespace EasySoft.Core.PermissionServer.Core.Services.Interfaces;
 /// <summary>
 /// access way service
 /// </summary>
-public interface IAccessWayService
+public interface IAccessWayService : IBusinessService
 {
     /// <summary>
     /// PageListAsync

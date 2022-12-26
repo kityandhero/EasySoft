@@ -1,11 +1,7 @@
-﻿using Castle.DynamicProxy;
-using EasySoft.Core.AppSecurityServer.Core.Clients;
+﻿using EasySoft.Core.AppSecurityServer.Core.Clients;
 using EasySoft.Core.AppSecurityServer.Core.Detectors.Implements;
 using EasySoft.Core.AppSecurityServer.Core.Detectors.Interfaces;
 using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
-using EasySoft.Core.Refit.ExtensionMethods;
-using EasySoft.UtilityTools.Core.Interceptors;
-using MediatR;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Extensions;
 

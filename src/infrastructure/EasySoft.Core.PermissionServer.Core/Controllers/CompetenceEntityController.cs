@@ -8,15 +8,15 @@ namespace EasySoft.Core.PermissionServer.Core.Controllers;
 [Route("competenceEntity")]
 public class CompetenceEntityController : CustomControllerBase
 {
-    private readonly IRpcService _rpcService;
+    private readonly IPermissionRpcService _permissionRpcService;
 
     /// <summary>
     /// EntranceController
     /// </summary>
-    /// <param name="rpcService"></param>
-    public CompetenceEntityController(IRpcService rpcService)
+    /// <param name="permissionRpcService"></param>
+    public CompetenceEntityController(IPermissionRpcService permissionRpcService)
     {
-        _rpcService = rpcService;
+        _permissionRpcService = permissionRpcService;
     }
 
     /// <summary>
@@ -28,6 +28,6 @@ public class CompetenceEntityController : CustomControllerBase
     [HttpPost]
     public async Task<List<CompetenceEntity>> GetCompetenceEntityCollectionAsync(long roleGroupId)
     {
-        return await _rpcService.GetCompetenceEntityCollectionAsync(roleGroupId);
+        return await _permissionRpcService.GetCompetenceEntityCollectionAsync(roleGroupId);
     }
 }

@@ -27,8 +27,8 @@ public static class PermissionServerAssist
 
         ContextConfigure.AddEntityConfigureAssembly(typeof(RoleGroup).Assembly);
 
-        BusinessServiceConfigure.AddBusinessServiceInterfaceAssembly(typeof(IRpcService).Assembly);
-        BusinessServiceConfigure.AddBusinessServiceImplementationAssembly(typeof(RpcService).Assembly);
+        BusinessServiceConfigure.AddBusinessServiceInterfaceAssembly(typeof(IPermissionRpcService).Assembly);
+        BusinessServiceConfigure.AddBusinessServiceImplementationAssembly(typeof(PermissionRpcService).Assembly);
 
         // 配置额外的构建项目
         ApplicationConfigure.AddWebApplicationBuilderExtraActions(

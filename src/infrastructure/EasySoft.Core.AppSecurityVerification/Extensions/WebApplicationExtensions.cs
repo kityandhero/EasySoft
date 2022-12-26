@@ -32,7 +32,7 @@ public static class WebApplicationExtensions
 
             try
             {
-                await appSecurityDetector.Verify();
+                await appSecurityDetector.CredentialVerify();
             }
             catch (Exception e)
             {

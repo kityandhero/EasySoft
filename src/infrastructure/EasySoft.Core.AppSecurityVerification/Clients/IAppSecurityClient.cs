@@ -13,6 +13,6 @@ public interface IAppSecurityClient
     /// </summary>
     /// <param name="appSecurityDto"></param>
     /// <returns></returns>
-    [Post("/appSecurity/verify")]
-    public Task<ApiResponse<RpcResult<AppPublicKeyDto>>> VerifyAsync([Body] AppSecurityDto appSecurityDto);
+    [Post("/appSecurityRpc/credentialVerify")]
+    public Task<ApiResponse<RpcResult<AppPublicKeyDto>>> CredentialVerifyAsync([Body] AppSecurityDto appSecurityDto);
 }
