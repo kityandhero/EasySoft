@@ -5,6 +5,9 @@ using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
+/// <summary>
+/// PayCallbackConfigAssist
+/// </summary>
 public static class PayCallbackConfigAssist
 {
     private static readonly string ConfigFile = $"{nameof(PayCallbackConfig).ToLowerFirst()}.json";
@@ -28,15 +31,26 @@ public static class PayCallbackConfigAssist
         Configuration.Bind(PayCallbackConfig.Instance);
     }
 
+    /// <summary>
+    /// Init
+    /// </summary>
     public static void Init()
     {
     }
 
+    /// <summary>
+    /// 获取配置文件路径
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFilePath()
     {
         return FilePath;
     }
 
+    /// <summary>
+    /// 获取配置文件内容
+    /// </summary>
+    /// <returns></returns>
     public static async Task<string> GetConfigFileContent()
     {
         var content = await GetConfigFilePath().ReadFile();
@@ -44,6 +58,10 @@ public static class PayCallbackConfigAssist
         return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
+    /// <summary>
+    /// 获取配置文件信息
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFileInfo()
     {
         return $"[{ConfigFile}](./configures/{ConfigFile})";
@@ -54,6 +72,11 @@ public static class PayCallbackConfigAssist
         return PayCallbackConfig.Instance;
     }
 
+    /// <summary>
+    /// GetCallbackHost
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static string GetCallbackHost()
     {
         var v = GetConfig().CallbackHost;

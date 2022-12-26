@@ -6,6 +6,9 @@ using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
+/// <summary>
+/// ConsulRegistrationCenterConfigAssist
+/// </summary>
 public static class ConsulRegistrationCenterConfigAssist
 {
     // ReSharper disable once UnusedMember.Local
@@ -32,15 +35,26 @@ public static class ConsulRegistrationCenterConfigAssist
         ConsulConfiguration.Bind(ConsulRegistrationCenterConfig.Instance);
     }
 
+    /// <summary>
+    /// Init
+    /// </summary>
     public static void Init()
     {
     }
 
+    /// <summary>
+    /// 获取配置文件路径
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFilePath()
     {
         return FilePath;
     }
 
+    /// <summary>
+    /// 获取配置文件内容
+    /// </summary>
+    /// <returns></returns>
     public static async Task<string> GetConfigFileContent()
     {
         var content = await GetConfigFilePath().ReadFile();
@@ -48,11 +62,20 @@ public static class ConsulRegistrationCenterConfigAssist
         return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
+    /// <summary>
+    /// 获取配置文件信息
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFileInfo()
     {
         return $"[{ConfigFile}](./configures/{ConfigFile})";
     }
 
+    /// <summary>
+    /// SetConfiguration
+    /// </summary>
+    /// <param name="configuration"></param>
+    /// <returns></returns>
     public static IConfiguration SetConfiguration(IConfiguration configuration)
     {
         Configuration = configuration;
@@ -60,6 +83,11 @@ public static class ConsulRegistrationCenterConfigAssist
         return Configuration;
     }
 
+    /// <summary>
+    /// GetConfiguration
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static IConfiguration GetConfiguration()
     {
         if (Configuration == null) throw new Exception("ConsulConfig has not been established.");
@@ -67,11 +95,21 @@ public static class ConsulRegistrationCenterConfigAssist
         return Configuration;
     }
 
+    /// <summary>
+    /// GetSection
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public static IConfigurationSection GetSection(string key)
     {
         return GetConfiguration().GetSection(key);
     }
 
+    /// <summary>
+    /// GetValue
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public static string GetValue(string key)
     {
         return GetConfiguration().GetSection(key).Value;
@@ -82,6 +120,11 @@ public static class ConsulRegistrationCenterConfigAssist
         return ConsulRegistrationCenterConfig.Instance;
     }
 
+    /// <summary>
+    /// GetCenterAddress
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static string GetCenterAddress()
     {
         var v = GetConsulConfig().CenterAddress.Trim();
@@ -97,6 +140,11 @@ public static class ConsulRegistrationCenterConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetServiceName
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static string GetServiceName()
     {
         var v = GetConsulConfig().ServiceName.Trim();
@@ -112,6 +160,11 @@ public static class ConsulRegistrationCenterConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetServiceIP
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static string GetServiceIP()
     {
         var v = GetConsulConfig().ServiceIP.Trim();
@@ -127,6 +180,11 @@ public static class ConsulRegistrationCenterConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetServicePort
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static int GetServicePort()
     {
         var v = GetConsulConfig().ServicePort.Trim();
@@ -202,6 +260,10 @@ public static class ConsulRegistrationCenterConfigAssist
         return value;
     }
 
+    /// <summary>
+    /// GetServiceHealthCheck
+    /// </summary>
+    /// <returns></returns>
     public static string GetServiceHealthCheck()
     {
         var v = GetConsulConfig().ServiceHealthCheck.Trim();

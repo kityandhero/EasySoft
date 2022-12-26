@@ -6,19 +6,19 @@ using EasySoft.UtilityTools.Standard.Extensions;
 namespace EasySoft.Core.Config.ConfigAssist;
 
 /// <summary>
-/// ServiceConfigAssist
+/// SuperConfigAssist
 /// </summary>
-public static class ServiceConfigAssist
+public static class SuperConfigAssist
 {
-    private static readonly string ConfigFile = $"{nameof(ServiceConfig).ToLowerFirst()}.json";
+    private static readonly string ConfigFile = $"{nameof(SuperConfig).ToLowerFirst()}.json";
 
     private static IConfiguration Configuration { get; set; }
 
-    static ServiceConfigAssist()
+    static SuperConfigAssist()
     {
         var directory = Tools.GetConfigureDirectory();
 
-        var filePath = $"{directory}{nameof(ServiceConfig).ToLowerFirst()}.json";
+        var filePath = $"{directory}{nameof(SuperConfig).ToLowerFirst()}.json";
 
         var builder = new ConfigurationBuilder();
 
@@ -26,7 +26,7 @@ public static class ServiceConfigAssist
 
         Configuration = builder.Build();
 
-        Configuration.Bind(ServiceConfig.Instance);
+        Configuration.Bind(SuperConfig.Instance);
     }
 
     /// <summary>
@@ -45,17 +45,17 @@ public static class ServiceConfigAssist
         return $"[{ConfigFile}](./configures/{ConfigFile})";
     }
 
-    private static ServiceConfig GetConfig()
+    private static SuperConfig GetConfig()
     {
-        return ServiceConfig.Instance;
+        return SuperConfig.Instance;
     }
 
     /// <summary>
-    /// 获取服务配应用安装前缀配置
+    /// 获取超级密码
     /// </summary>
-    public static string GetServicePrefix()
+    public static string GetPassword()
     {
-        var v = GetConfig().Prefix;
+        var v = GetConfig().Password;
 
         v = v.Remove(" ").Trim();
 

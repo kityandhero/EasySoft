@@ -30,15 +30,26 @@ public static class ConsulConfigCenterConfigAssist
         ConsulConfiguration.Bind(ConsulConfigCenterConfig.Instance);
     }
 
+    /// <summary>
+    /// Init
+    /// </summary>
     public static void Init()
     {
     }
 
+    /// <summary>
+    /// 获取配置文件路径
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFilePath()
     {
         return FilePath;
     }
 
+    /// <summary>
+    /// 获取配置文件内容
+    /// </summary>
+    /// <returns></returns>
     public static async Task<string> GetConfigFileContent()
     {
         var content = await GetConfigFilePath().ReadFile();
@@ -46,11 +57,20 @@ public static class ConsulConfigCenterConfigAssist
         return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
+    /// <summary>
+    /// 获取配置文件信息
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFileInfo()
     {
         return $"[{ConfigFile}](./configures/{ConfigFile})";
     }
 
+    /// <summary>
+    /// SetConfiguration
+    /// </summary>
+    /// <param name="configuration"></param>
+    /// <returns></returns>
     public static IConfiguration SetConfiguration(IConfiguration configuration)
     {
         Configuration = configuration;
@@ -58,6 +78,11 @@ public static class ConsulConfigCenterConfigAssist
         return Configuration;
     }
 
+    /// <summary>
+    /// GetConfiguration
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static IConfiguration GetConfiguration()
     {
         if (Configuration == null) throw new Exception("ConsulConfig has not been established.");
@@ -65,11 +90,21 @@ public static class ConsulConfigCenterConfigAssist
         return Configuration;
     }
 
+    /// <summary>
+    /// GetSection
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public static IConfigurationSection GetSection(string key)
     {
         return GetConfiguration().GetSection(key);
     }
 
+    /// <summary>
+    /// GetValue
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public static string GetValue(string key)
     {
         return GetConfiguration().GetSection(key).Value;
@@ -80,6 +115,11 @@ public static class ConsulConfigCenterConfigAssist
         return ConsulConfigCenterConfig.Instance;
     }
 
+    /// <summary>
+    /// GetCenterAddress
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static string GetCenterAddress()
     {
         var v = GetConsulConfig().CenterAddress.Trim();

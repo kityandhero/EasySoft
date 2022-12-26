@@ -5,6 +5,9 @@ using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
+/// <summary>
+/// MaintainConfigAssist
+/// </summary>
 public static class MaintainConfigAssist
 {
     private static readonly string ConfigFile = $"{nameof(MaintainConfig).ToLowerFirst()}.json";
@@ -28,15 +31,26 @@ public static class MaintainConfigAssist
         Configuration.Bind(MaintainConfig.Instance);
     }
 
+    /// <summary>
+    /// Init
+    /// </summary>
     public static void Init()
     {
     }
 
+    /// <summary>
+    /// 获取配置文件路径
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFilePath()
     {
         return FilePath;
     }
 
+    /// <summary>
+    /// 获取配置文件内容
+    /// </summary>
+    /// <returns></returns>
     public static async Task<string> GetConfigFileContent()
     {
         var content = await GetConfigFilePath().ReadFile();
@@ -44,6 +58,10 @@ public static class MaintainConfigAssist
         return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
+    /// <summary>
+    /// 获取配置文件信息
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFileInfo()
     {
         return $"[{ConfigFile}](./configures/{ConfigFile})";
@@ -54,6 +72,10 @@ public static class MaintainConfigAssist
         return MaintainConfig.Instance;
     }
 
+    /// <summary>
+    /// GetUrlPollingRequests
+    /// </summary>
+    /// <returns></returns>
     public static List<string> GetUrlPollingRequests()
     {
         var list = GetConfig().UrlPollingRequests.Remove(" ").Trim().Split(',')

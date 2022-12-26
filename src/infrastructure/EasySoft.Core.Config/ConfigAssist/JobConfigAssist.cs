@@ -6,6 +6,9 @@ using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
+/// <summary>
+/// JobConfigAssist
+/// </summary>
 public static class JobConfigAssist
 {
     private static readonly string ConfigFile = $"{nameof(JobConfig).ToLowerFirst()}.json";
@@ -29,15 +32,26 @@ public static class JobConfigAssist
         Configuration.Bind(JobConfig.Instance);
     }
 
+    /// <summary>
+    /// Init
+    /// </summary>
     public static void Init()
     {
     }
 
+    /// <summary>
+    /// 获取配置文件路径
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFilePath()
     {
         return FilePath;
     }
 
+    /// <summary>
+    /// 获取配置文件内容
+    /// </summary>
+    /// <returns></returns>
     public static async Task<string> GetConfigFileContent()
     {
         var content = await GetConfigFilePath().ReadFile();
@@ -45,6 +59,10 @@ public static class JobConfigAssist
         return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
+    /// <summary>
+    /// 获取配置文件信息
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFileInfo()
     {
         return $"[{ConfigFile}](./configures/{ConfigFile})";

@@ -6,6 +6,9 @@ using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
+/// <summary>
+/// MongoConfigAssist
+/// </summary>
 public static class MongoConfigAssist
 {
     private static readonly string ConfigFile = $"{nameof(MongoConfig).ToLowerFirst()}.json";
@@ -29,15 +32,26 @@ public static class MongoConfigAssist
         Configuration.Bind(MongoConfig.Instance);
     }
 
+    /// <summary>
+    /// Init
+    /// </summary>
     public static void Init()
     {
     }
 
+    /// <summary>
+    /// 获取配置文件路径
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFilePath()
     {
         return FilePath;
     }
 
+    /// <summary>
+    /// 获取配置文件内容
+    /// </summary>
+    /// <returns></returns>
     public static async Task<string> GetConfigFileContent()
     {
         var content = await GetConfigFilePath().ReadFile();
@@ -45,6 +59,10 @@ public static class MongoConfigAssist
         return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
+    /// <summary>
+    /// 获取配置文件信息
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFileInfo()
     {
         return $"[{ConfigFile}](./configures/{ConfigFile})";
@@ -55,6 +73,11 @@ public static class MongoConfigAssist
         return MongoConfig.Instance;
     }
 
+    /// <summary>
+    /// GetConnection
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static string GetConnection()
     {
         var v = GetConfig().Connection;
@@ -68,6 +91,11 @@ public static class MongoConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetDatabase
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static string GetDatabase()
     {
         var v = GetConfig().Database;

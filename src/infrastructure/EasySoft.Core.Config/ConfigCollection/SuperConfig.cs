@@ -3,17 +3,17 @@
 namespace EasySoft.Core.Config.ConfigCollection;
 
 /// <summary>
-/// MaintainConfig
+/// 超级账户配置
 /// </summary>
-public class MaintainConfig : IConfig
+public class SuperConfig : IConfig
 {
     /// <summary>
     /// 单例实例
     /// </summary>
-    public static readonly MaintainConfig Instance = new();
+    public static readonly SuperConfig Instance = new();
 
     /// <summary>
-    /// UrlPollingRequests
+    /// 密码
     /// </summary>
-    public string UrlPollingRequests { get; set; } = "";
+    public string Password { get; set; } = "";
 }

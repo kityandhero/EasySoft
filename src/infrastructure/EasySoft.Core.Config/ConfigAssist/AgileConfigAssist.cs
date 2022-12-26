@@ -5,6 +5,9 @@ using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
+/// <summary>
+/// AgileConfigAssist
+/// </summary>
 public static class AgileConfigAssist
 {
     private static readonly string ConfigFile = $"{nameof(ConfigCollection.AgileConfig).ToLowerFirst()}.json";
@@ -26,10 +29,17 @@ public static class AgileConfigAssist
         Configuration.Bind(ConfigCollection.AgileConfig.Instance);
     }
 
+    /// <summary>
+    /// Init
+    /// </summary>
     public static void Init()
     {
     }
 
+    /// <summary>
+    /// 获取配置文件信息
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFileInfo()
     {
         return $"[{ConfigFile}](./configures/{ConfigFile})";

@@ -2,17 +2,23 @@
 
 namespace EasySoft.Core.Config.ConfigCollection;
 
+/// <summary>
+/// MongoConfig
+/// </summary>
 public class MongoConfig : IConfig
 {
+    /// <summary>
+    /// 单例实例
+    /// </summary>
     public static readonly MongoConfig Instance = new();
 
-    public string Connection { get; set; }
+    /// <summary>
+    /// Connection
+    /// </summary>
+    public string Connection { get; set; } = "";
 
-    public string Database { get; set; }
-
-    public MongoConfig()
-    {
-        Connection = "";
-        Database = "";
-    }
+    /// <summary>
+    /// Database
+    /// </summary>
+    public string Database { get; set; } = "";
 }

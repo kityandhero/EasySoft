@@ -40,7 +40,7 @@ public static class RefitConfigAssist
     }
 
     /// <summary>
-    /// GetConfigFilePath
+    /// 获取配置文件路径
     /// </summary>
     /// <returns></returns>
     public static string GetConfigFilePath()
@@ -49,7 +49,7 @@ public static class RefitConfigAssist
     }
 
     /// <summary>
-    /// GetConfigFileContent
+    /// 获取配置文件内容
     /// </summary>
     /// <returns></returns>
     public static async Task<string> GetConfigFileContent()

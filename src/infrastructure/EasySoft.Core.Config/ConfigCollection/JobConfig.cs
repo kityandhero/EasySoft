@@ -2,29 +2,43 @@
 
 namespace EasySoft.Core.Config.ConfigCollection;
 
+/// <summary>
+/// job 配置
+/// </summary>
 public class JobConfig : IConfig
 {
+    /// <summary>
+    /// 单例实例
+    /// </summary>
     public static readonly JobConfig Instance = new();
 
-    public string MaxThread { get; set; }
+    /// <summary>
+    /// 最大线程数
+    /// </summary>
+    public string MaxThread { get; set; } = "1";
 
-    public string TimeInterval { get; set; }
+    /// <summary>
+    /// 轮询时间间隔 (秒)
+    /// </summary>
+    public string TimeInterval { get; set; } = "600";
 
-    public string SpecifiedHour { get; set; }
+    /// <summary>
+    /// 特定小时
+    /// </summary>
+    public string SpecifiedHour { get; set; } = "-1";
 
-    public string SpecifiedMinute { get; set; }
+    /// <summary>
+    /// 特定分钟 
+    /// </summary>
+    public string SpecifiedMinute { get; set; } = "-1";
 
-    public string SpecifiedSecond { get; set; }
+    /// <summary>
+    /// 特定秒钟
+    /// </summary>
+    public string SpecifiedSecond { get; set; } = "-1";
 
-    public string CurtailHour { get; set; }
-
-    public JobConfig()
-    {
-        MaxThread = "1";
-        TimeInterval = "600";
-        SpecifiedHour = "-1";
-        SpecifiedMinute = "-1";
-        SpecifiedSecond = "-1";
-        CurtailHour = "-1";
-    }
+    /// <summary>
+    /// 限时时间
+    /// </summary>
+    public string CurtailHour { get; set; } = "-1";
 }

@@ -2,29 +2,43 @@
 
 namespace EasySoft.Core.Config.ConfigCollection;
 
+/// <summary>
+/// RabbitMQConfig
+/// </summary>
 public class RabbitMQConfig : IConfig
 {
+    /// <summary>
+    /// 单例实例
+    /// </summary>
     public static readonly RabbitMQConfig Instance = new();
 
-    public string HostName { get; set; }
+    /// <summary>
+    /// HostName
+    /// </summary>
+    public string HostName { get; set; } = "";
 
-    public string UserName { get; set; }
+    /// <summary>
+    /// HostName
+    /// </summary>
+    public string UserName { get; set; } = "";
 
-    public string Password { get; set; }
+    /// <summary>
+    /// Password
+    /// </summary>
+    public string Password { get; set; } = "";
 
-    public string VirtualHost { get; set; }
+    /// <summary>
+    /// VirtualHost
+    /// </summary>
+    public string VirtualHost { get; set; } = "/";
 
-    public string Port { get; set; }
+    /// <summary>
+    /// Port
+    /// </summary>
+    public string Port { get; set; } = "5672";
 
-    public string ConnectionTimeout { get; set; }
-
-    public RabbitMQConfig()
-    {
-        HostName = "";
-        UserName = "";
-        Password = "";
-        VirtualHost = "/";
-        Port = "5672";
-        ConnectionTimeout = "30";
-    }
+    /// <summary>
+    /// ConnectionTimeout
+    /// </summary>
+    public string ConnectionTimeout { get; set; } = "30";
 }

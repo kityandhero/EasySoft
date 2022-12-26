@@ -5,6 +5,9 @@ using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
+/// <summary>
+/// LogConfigAssist
+/// </summary>
 public static class LogConfigAssist
 {
     private static readonly string ConfigFile = $"{nameof(LogConfig).ToLowerFirst()}.json";
@@ -28,15 +31,26 @@ public static class LogConfigAssist
         Configuration.Bind(LogConfig.Instance);
     }
 
+    /// <summary>
+    /// Init
+    /// </summary>
     public static void Init()
     {
     }
 
+    /// <summary>
+    /// 获取配置文件路径
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFilePath()
     {
         return FilePath;
     }
 
+    /// <summary>
+    /// 获取配置文件内容
+    /// </summary>
+    /// <returns></returns>
     public static async Task<string> GetConfigFileContent()
     {
         var content = await GetConfigFilePath().ReadFile();
@@ -44,21 +58,39 @@ public static class LogConfigAssist
         return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
+    /// <summary>
+    /// 获取配置文件信息
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFileInfo()
     {
         return $"[{ConfigFile}](./configures/{ConfigFile})";
     }
 
+    /// <summary>
+    /// GetConfiguration
+    /// </summary>
+    /// <returns></returns>
     public static IConfiguration GetConfiguration()
     {
         return Configuration;
     }
 
+    /// <summary>
+    /// GetSection
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public static IConfigurationSection GetSection(string key)
     {
         return Configuration.GetSection(key);
     }
 
+    /// <summary>
+    /// GetValue
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public static string GetValue(string key)
     {
         return Configuration.GetSection(key).Value;

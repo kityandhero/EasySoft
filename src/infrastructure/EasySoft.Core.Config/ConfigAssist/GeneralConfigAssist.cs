@@ -8,6 +8,9 @@ using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
+/// <summary>
+/// GeneralConfigAssist
+/// </summary>
 public static class GeneralConfigAssist
 {
     private static readonly string ConfigFile = $"{nameof(GeneralConfig).ToLowerFirst()}.json";
@@ -31,15 +34,26 @@ public static class GeneralConfigAssist
         Configuration.Bind(GeneralConfig.Instance);
     }
 
+    /// <summary>
+    /// Init
+    /// </summary>
     public static void Init()
     {
     }
 
+    /// <summary>
+    /// 获取配置文件路径
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFilePath()
     {
         return FilePath;
     }
 
+    /// <summary>
+    /// 获取配置文件内容
+    /// </summary>
+    /// <returns></returns>
     public static async Task<string> GetConfigFileContent()
     {
         var content = await GetConfigFilePath().ReadFile();
@@ -47,26 +61,48 @@ public static class GeneralConfigAssist
         return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
+    /// <summary>
+    /// GetConfigFileName
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFileName()
     {
         return ConfigFile;
     }
 
+    /// <summary>
+    /// 获取配置文件信息
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFileInfo()
     {
         return $"[{ConfigFile}](./configures/{ConfigFile})";
     }
 
+    /// <summary>
+    /// GetConfiguration
+    /// </summary>
+    /// <returns></returns>
     public static IConfiguration GetConfiguration()
     {
         return Configuration;
     }
 
+    /// <summary>
+    /// GetSection
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public static IConfigurationSection GetSection(string key)
     {
         return Configuration.GetSection(key);
     }
 
+    /// <summary>
+    /// GetValue
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public static string GetValue(string key)
     {
         return Configuration.GetSection(key).Value;
@@ -77,11 +113,19 @@ public static class GeneralConfigAssist
         return GeneralConfig.Instance;
     }
 
+    /// <summary>
+    /// GetRemoteLogSwitch
+    /// </summary>
+    /// <returns></returns>
     public static bool GetRemoteLogSwitch()
     {
         return GetRemoteErrorLogSwitch() || GetRemoteGeneralLogSwitch();
     }
 
+    /// <summary>
+    /// GetId
+    /// </summary>
+    /// <returns></returns>
     public static string GetId()
     {
         var ticks = DateTime.Now.GetTotalMilliseconds();
@@ -91,6 +135,11 @@ public static class GeneralConfigAssist
         return $"{name}-{EnvironmentAssist.GetEnvironmentAliasName()}-{ticksHex}";
     }
 
+    /// <summary>
+    /// GetName
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static string GetName()
     {
         var startAssembly = Assembly.GetEntryAssembly();

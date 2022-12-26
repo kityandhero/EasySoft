@@ -2,14 +2,18 @@
 
 namespace EasySoft.Core.Config.ConfigCollection;
 
+/// <summary>
+/// PayCallbackConfig
+/// </summary>
 public class PayCallbackConfig : IConfig
 {
+    /// <summary>
+    /// 单例实例
+    /// </summary>
     public static readonly PayCallbackConfig Instance = new();
 
-    public string CallbackHost { get; set; }
-
-    public PayCallbackConfig()
-    {
-        CallbackHost = "";
-    }
+    /// <summary>
+    /// CallbackHost
+    /// </summary>
+    public string CallbackHost { get; set; } = "";
 }

@@ -6,6 +6,9 @@ using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
+/// <summary>
+/// DatabaseConfigAssist
+/// </summary>
 public static class DatabaseConfigAssist
 {
     private static readonly string ConfigFile = $"{nameof(DatabaseConfig).ToLowerFirst()}.json";
@@ -29,15 +32,26 @@ public static class DatabaseConfigAssist
         Configuration.Bind(DatabaseConfig.Instance);
     }
 
+    /// <summary>
+    /// Init
+    /// </summary>
     public static void Init()
     {
     }
 
+    /// <summary>
+    /// 获取配置文件路径
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFilePath()
     {
         return FilePath;
     }
 
+    /// <summary>
+    /// 获取配置文件内容
+    /// </summary>
+    /// <returns></returns>
     public static async Task<string> GetConfigFileContent()
     {
         var content = await GetConfigFilePath().ReadFile();
@@ -45,6 +59,10 @@ public static class DatabaseConfigAssist
         return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
+    /// <summary>
+    /// 获取配置文件信息
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFileInfo()
     {
         return $"[{ConfigFile}](./configures/{ConfigFile})";
@@ -55,6 +73,11 @@ public static class DatabaseConfigAssist
         return DatabaseConfig.Instance;
     }
 
+    /// <summary>
+    /// GetMainConnection
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static string GetMainConnection()
     {
         var v = GetConfig().MainConnection;
@@ -68,6 +91,11 @@ public static class DatabaseConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetMirrorConnection
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static string GetMirrorConnection()
     {
         var v = GetConfig().MirrorConnection;
@@ -81,6 +109,11 @@ public static class DatabaseConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetHistoryConnection
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static string GetHistoryConnection()
     {
         var v = GetConfig().HistoryConnection;
@@ -94,6 +127,11 @@ public static class DatabaseConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetHistoryErrorConnection
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static string GetHistoryErrorConnection()
     {
         var v = GetConfig().HistoryErrorConnection;

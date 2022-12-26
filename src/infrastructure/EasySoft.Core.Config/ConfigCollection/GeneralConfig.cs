@@ -3,20 +3,38 @@ using EasySoft.Core.Config.ConfigInterface;
 
 namespace EasySoft.Core.Config.ConfigCollection;
 
+/// <summary>
+/// GeneralConfig
+/// </summary>
 public class GeneralConfig : IConfig
 {
+    /// <summary>
+    /// 单例实例
+    /// </summary>
     public static readonly GeneralConfig Instance = new();
 
+    /// <summary>
+    /// CacheMode
+    /// </summary>
     public string CacheMode { get; set; } = CacheModeCollection.InMemory.ToString();
 
     #region Start Port
 
+    /// <summary>
+    /// HttpPort
+    /// </summary>
     public string HttpPort { get; set; } = "0";
 
+    /// <summary>
+    /// HttpsPort
+    /// </summary>
     public string HttpsPort { get; set; } = "0";
 
     #endregion
 
+    /// <summary>
+    /// HstsSwitch
+    /// </summary>
     public string HstsSwitch { get; set; } = "0";
 
     #region Compression

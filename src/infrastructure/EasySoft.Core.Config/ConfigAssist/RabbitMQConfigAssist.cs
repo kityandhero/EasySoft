@@ -6,6 +6,9 @@ using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
+/// <summary>
+/// RabbitMQConfigAssist
+/// </summary>
 public static class RabbitMQConfigAssist
 {
     private static readonly string ConfigFile = $"{nameof(RabbitMQConfig).ToLowerFirst()}.json";
@@ -29,15 +32,26 @@ public static class RabbitMQConfigAssist
         Configuration.Bind(RabbitMQConfig.Instance);
     }
 
+    /// <summary>
+    /// Init
+    /// </summary>
     public static void Init()
     {
     }
 
+    /// <summary>
+    /// 获取配置文件路径
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFilePath()
     {
         return FilePath;
     }
 
+    /// <summary>
+    /// 获取配置文件内容
+    /// </summary>
+    /// <returns></returns>
     public static async Task<string> GetConfigFileContent()
     {
         var content = await GetConfigFilePath().ReadFile();
@@ -45,6 +59,10 @@ public static class RabbitMQConfigAssist
         return string.IsNullOrWhiteSpace(content) ? content : JsonConvertAssist.FormatText(content);
     }
 
+    /// <summary>
+    /// 获取配置文件信息
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigFileInfo()
     {
         return $"[generalConfig.json](./configures/{ConfigFile})";
@@ -55,6 +73,11 @@ public static class RabbitMQConfigAssist
         return RabbitMQConfig.Instance;
     }
 
+    /// <summary>
+    /// 获取域名
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static string GetHostName()
     {
         var v = GetConfig().HostName.Remove(" ").Trim();
@@ -68,6 +91,11 @@ public static class RabbitMQConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// 获取用户名
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static string GetUserName()
     {
         var v = GetConfig().UserName.Remove(" ").Trim();
@@ -81,6 +109,11 @@ public static class RabbitMQConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// 获取密码
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static string GetPassword()
     {
         var v = GetConfig().Password.Remove(" ").Trim();
@@ -94,6 +127,11 @@ public static class RabbitMQConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// 获取VirtualHost
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static string GetVirtualHost()
     {
         var v = GetConfig().VirtualHost.Remove(" ").Trim();
@@ -107,6 +145,11 @@ public static class RabbitMQConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// 获取端口
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static int GetPort()
     {
         var v = GetConfig().Port.Remove(" ").Trim();
@@ -122,6 +165,11 @@ public static class RabbitMQConfigAssist
         return value;
     }
 
+    /// <summary>
+    /// 获取超时时间
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static int GetConnectionTimeout()
     {
         var v = GetConfig().ConnectionTimeout.Remove(" ").Trim();
