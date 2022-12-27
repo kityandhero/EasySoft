@@ -79,6 +79,11 @@ public static class ConstCollection
     public const string SuperRoleGuidTag = "super";
 
     /// <summary>
+    /// SelfGuidTag
+    /// </summary>
+    public const string SelfGuidTag = "self";
+
+    /// <summary>
     /// UploadMaxSize
     /// </summary>
     public const decimal UploadMaxSize = 10;

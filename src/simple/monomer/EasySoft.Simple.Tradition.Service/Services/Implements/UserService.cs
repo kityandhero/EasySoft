@@ -168,14 +168,14 @@ public class UserService : IUserService
     /// <returns></returns>
     public async Task<ExecutiveResult<UserDto>> SignInAsync(SignInDto signInDto)
     {
-        if (string.IsNullOrWhiteSpace(signInDto.LoginName))
+        if (string.IsNullOrWhiteSpace(signInDto.AccountName))
             return new ExecutiveResult<UserDto>(ReturnCode.ParamError.ToMessage("登录名不能为空白"));
 
         if (string.IsNullOrWhiteSpace(signInDto.Password))
             return new ExecutiveResult<UserDto>(ReturnCode.ParamError.ToMessage("密码不能为空白"));
 
         var result = await _userRepository.GetAsync(
-            o => o.LoginName == signInDto.LoginName && o.Password == signInDto.Password.ToMd5()
+            o => o.LoginName == signInDto.AccountName && o.Password == signInDto.Password.ToMd5()
         );
 
         if (result.Success && result.Data != null)

@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.AppSecurityVerification\EasySoft.Core.AppSecurityVerification.csproj" />
       <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.PermissionVerification\EasySoft.Core.PermissionVerification.csproj" />
+      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.UserLogicCore\EasySoft.Core.UserLogicCore.csproj" />
       <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj" />
       <ProjectReference Include="..\EasySoft.Simple.Tradition.ApplicationConfig\EasySoft.Simple.Tradition.ApplicationConfig.csproj" />
       <ProjectReference Include="..\EasySoft.Simple.Tradition.Service\EasySoft.Simple.Tradition.Service.csproj" />

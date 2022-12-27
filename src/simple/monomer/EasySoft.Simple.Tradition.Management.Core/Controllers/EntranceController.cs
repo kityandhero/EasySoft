@@ -1,6 +1,4 @@
 ﻿using EasySoft.Simple.Tradition.Management.Core.Common;
-using EasySoft.UtilityTools.Core.Extensions;
-using EasySoft.UtilityTools.Core.Results.Interfaces;
 
 namespace EasySoft.Simple.Tradition.Management.Core.Controllers;
 
@@ -32,14 +30,38 @@ public class EntranceController : ControllerCore
     // [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IApiResult> SignIn(SignInDto signInDto)
     {
+        if (signInDto.AccountName == UserConstCollection.SuperAdministrator) return await SuperSignIn(signInDto);
+
         var result = await _userService.SignInAsync(signInDto);
 
         return this.WrapperExecutiveResult(
             result,
             o => new
             {
-                token = o.UserId.ToToken()
+                token = o.UserId.ToToken(),
+                authorities = new List<string>()
             }
         );
+    }
+
+    /// <summary>
+    /// 超级登录
+    /// </summary>
+    /// <param name="signInDto"></param>
+    /// <returns></returns>
+    [Route("superSignIn")]
+    [HttpPost]
+    protected Task<IApiResult> SuperSignIn(SignInDto signInDto)
+    {
+        var result = SuperAdministratorAssist.SuperSignIn(signInDto, out var authorities);
+
+        return Task.FromResult(this.WrapperExecutiveResult(
+            result,
+            o => new
+            {
+                token = UserConstCollection.SuperAdministratorId.ToToken(),
+                authorities
+            }
+        ));
     }
 }
