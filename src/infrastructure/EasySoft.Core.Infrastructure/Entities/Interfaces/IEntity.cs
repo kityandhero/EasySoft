@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
+﻿namespace EasySoft.Core.Infrastructure.Entities.Interfaces;
 
 /// <summary>
 /// IEntity

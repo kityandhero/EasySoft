@@ -5,7 +5,6 @@ global using System.Linq.Expressions;
 global using System.Reflection;
 global using Castle.DynamicProxy;
 global using EasySoft.Core.Infrastructure.Assists;
-global using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
 global using EasySoft.Core.Infrastructure.Services;
 global using EasySoft.UtilityTools.Core.Assists;
 global using EasySoft.UtilityTools.Standard.Result;

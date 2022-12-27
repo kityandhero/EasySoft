@@ -8,6 +8,7 @@ internal class PrepareCovertStartWork : IPrepareCovertStartWork
     {
         PrepareStartAssist.ToWork();
 
+        SuperConfigAssist.Init();
         AgileConfigAssist.Init();
         AppSettingAssist.Init();
         DatabaseConfigAssist.Init();

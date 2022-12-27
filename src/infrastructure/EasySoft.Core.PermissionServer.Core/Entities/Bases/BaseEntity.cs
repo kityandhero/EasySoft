@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Repositories.Entities.Implements;
+﻿using EasySoft.Core.Infrastructure.Entities.Implements;
 
 namespace EasySoft.Core.PermissionServer.Core.Entities.Bases;
 

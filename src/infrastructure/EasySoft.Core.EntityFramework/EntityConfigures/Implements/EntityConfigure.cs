@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
-using EasySoft.Core.Infrastructure.Repositories.Entities.Implements;
+using EasySoft.Core.Infrastructure.Entities.Implements;
 using Masuit.Tools;
 using Assembly = System.Reflection.Assembly;
 

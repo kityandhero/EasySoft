@@ -159,6 +159,10 @@ public static class GeneralConfigAssist
         return name;
     }
 
+    /// <summary>
+    /// GetVersion
+    /// </summary>
+    /// <returns></returns>
     public static string GetVersion()
     {
         var startAssembly = Assembly.GetEntryAssembly();
@@ -174,6 +178,11 @@ public static class GeneralConfigAssist
         return version;
     }
 
+    /// <summary>
+    /// GetHttpPort
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static int GetHttpPort()
     {
         var v = GetConfig().HttpPort;
@@ -188,6 +197,11 @@ public static class GeneralConfigAssist
         return value;
     }
 
+    /// <summary>
+    /// GetHttpsPort
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static int GetHttpsPort()
     {
         var v = GetConfig().HttpsPort;
@@ -223,6 +237,11 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetCompressionSwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetCompressionSwitch()
     {
         var v = GetConfig().CompressionSwitch;
@@ -238,6 +257,11 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetCacheMode
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static string GetCacheMode()
     {
         var v = GetConfig().CacheMode;
@@ -255,6 +279,10 @@ public static class GeneralConfigAssist
 
     #region AppSecurity
 
+    /// <summary>
+    /// GetAppId
+    /// </summary>
+    /// <returns></returns>
     public static string GetAppId()
     {
         if (AppSecurityServerConfigure.EmbedMode)
@@ -267,6 +295,10 @@ public static class GeneralConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetAppSecret
+    /// </summary>
+    /// <returns></returns>
     public static string GetAppSecret()
     {
         if (AppSecurityServerConfigure.EmbedMode)
@@ -279,6 +311,10 @@ public static class GeneralConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetAppSecurityServerHostUrl
+    /// </summary>
+    /// <returns></returns>
     public static string GetAppSecurityServerHostUrl()
     {
         var v = GetConfig().AppSecurityServerHostUrl;
@@ -297,6 +333,11 @@ public static class GeneralConfigAssist
 
     #endregion
 
+    /// <summary>
+    /// GetAccessWayDetectSwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetAccessWayDetectSwitch()
     {
         var v = GetConfig().AccessWayDetectSwitch;
@@ -320,6 +361,11 @@ public static class GeneralConfigAssist
         return true;
     }
 
+    /// <summary>
+    /// GetRemoteGeneralLogSwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetRemoteGeneralLogSwitch()
     {
         var v = GetConfig().RemoteGeneralLogSwitch;
@@ -335,6 +381,11 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetRemoteErrorLogSwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetRemoteErrorLogSwitch()
     {
         var v = GetConfig().RemoteErrorLogSwitch;
@@ -350,6 +401,11 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetRemoteSqlExecutionRecordSwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetRemoteSqlExecutionRecordSwitch()
     {
         var v = GetConfig().RemoteSqlExecutionRecordSwitch;
@@ -365,6 +421,11 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetUseStaticFilesSwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetUseStaticFilesSwitch()
     {
         var v = GetConfig().UseStaticFilesSwitch;
@@ -380,6 +441,11 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetUseAuthentication
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetUseAuthentication()
     {
         var v = GetConfig().UseAuthentication;
@@ -395,6 +461,11 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetUseAuthorization
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetUseAuthorization()
     {
         var v = GetConfig().UseAuthorization;
@@ -410,6 +481,11 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetCorsSwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetCorsSwitch()
     {
         var v = GetConfig().CorsSwitch;
@@ -425,6 +501,10 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetCorsPolicies
+    /// </summary>
+    /// <returns></returns>
     public static List<string> GetCorsPolicies()
     {
         var v = GetConfig().CorsPolicies.Trim()
@@ -530,6 +610,10 @@ public static class GeneralConfigAssist
         return value;
     }
 
+    /// <summary>
+    /// GetTokenName
+    /// </summary>
+    /// <returns></returns>
     public static string GetTokenName()
     {
         var v = GetConfig().TokenName.Remove(" ").Trim();
@@ -936,6 +1020,11 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetNlogConsoleMessageLimit
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static int GetNlogConsoleMessageLimit()
     {
         var v = GetConfig().NlogEmbedConfigConsoleMessageLimit;
@@ -999,6 +1088,11 @@ public static class GeneralConfigAssist
 
     #endregion
 
+    /// <summary>
+    /// GetMiniProFileSwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetMiniProFileSwitch()
     {
         var v = GetConfig().MiniProFileSwitch;
@@ -1028,6 +1122,10 @@ public static class GeneralConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetCapSwitch
+    /// </summary>
+    /// <returns></returns>
     public static string GetCapSwitch()
     {
         var v = GetConfig().CapSwitch.Remove(" ").Trim().ToLower();
@@ -1037,6 +1135,11 @@ public static class GeneralConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// CheckCapSwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool CheckCapSwitch()
     {
         var v = GetConfig().CapSwitch.Remove(" ").Trim().ToLower();
@@ -1058,6 +1161,10 @@ public static class GeneralConfigAssist
         return false;
     }
 
+    /// <summary>
+    /// GetCapPrefix
+    /// </summary>
+    /// <returns></returns>
     public static string GetCapPrefix()
     {
         var v = GetConfig().CapPrefix.Remove(" ").Trim();
@@ -1065,6 +1172,10 @@ public static class GeneralConfigAssist
         return string.IsNullOrWhiteSpace(v) ? "" : v;
     }
 
+    /// <summary>
+    /// GetCapPersistentType
+    /// </summary>
+    /// <returns></returns>
     public static string GetCapPersistentType()
     {
         var v = GetConfig().CapPersistentType;
@@ -1074,6 +1185,10 @@ public static class GeneralConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetCapTransportType
+    /// </summary>
+    /// <returns></returns>
     public static string GetCapTransportType()
     {
         var v = GetConfig().CapTransportType;
@@ -1083,6 +1198,10 @@ public static class GeneralConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetCapPersistentConnection
+    /// </summary>
+    /// <returns></returns>
     public static string GetCapPersistentConnection()
     {
         var v = GetConfig().CapPersistentConnection;
@@ -1090,6 +1209,11 @@ public static class GeneralConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetCapDashboardSwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetCapDashboardSwitch()
     {
         var v = GetConfig().CapDashboardSwitch;
@@ -1105,6 +1229,11 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetCapDiscoverySwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetCapDiscoverySwitch()
     {
         var v = GetConfig().CapDiscoverySwitch;
@@ -1120,6 +1249,11 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetRegistrationCenterSwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetRegistrationCenterSwitch()
     {
         var v = GetConfig().RegistrationCenterSwitch;
@@ -1135,6 +1269,11 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetRegistrationCenterType
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static RegistrationCenterType GetRegistrationCenterType()
     {
         var v = GetConfig().RegistrationCenterType;
@@ -1150,6 +1289,11 @@ public static class GeneralConfigAssist
         return Enum.Parse<RegistrationCenterType>(v);
     }
 
+    /// <summary>
+    /// GetConfigCenterSwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetConfigCenterSwitch()
     {
         var v = GetConfig().ConfigCenterSwitch;
@@ -1165,6 +1309,11 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetConfigCenterType
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static ConfigCenterType GetConfigCenterType()
     {
         var v = GetConfig().ConfigCenterType;
@@ -1180,6 +1329,11 @@ public static class GeneralConfigAssist
         return Enum.Parse<ConfigCenterType>(v);
     }
 
+    /// <summary>
+    /// GetGatewaySwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetGatewaySwitch()
     {
         var v = GetConfig().GatewaySwitch;
@@ -1195,6 +1349,11 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetGatewayType
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static GatewayType GetGatewayType()
     {
         var v = GetConfig().GatewayType;
@@ -1210,6 +1369,11 @@ public static class GeneralConfigAssist
         return Enum.Parse<GatewayType>(v);
     }
 
+    /// <summary>
+    /// GetGatewayWithConsulSwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetGatewayWithConsulSwitch()
     {
         var v = GetConfig().GatewayWithConsulSwitch;
@@ -1225,6 +1389,11 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetGatewayConfigInConsulSwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetGatewayConfigInConsulSwitch()
     {
         if (!GetGatewayWithConsulSwitch()) return false;
@@ -1242,6 +1411,11 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetExceptionlessSwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetExceptionlessSwitch()
     {
         var v = GetConfig().ExceptionlessSwitch;
@@ -1257,6 +1431,11 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetExceptionlessServerUrl
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static string GetExceptionlessServerUrl()
     {
         var v = GetConfig().ExceptionlessServerUrl;
@@ -1272,6 +1451,11 @@ public static class GeneralConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetExceptionlessApiKey
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static string GetExceptionlessApiKey()
     {
         var v = GetConfig().ExceptionlessApiKey;
@@ -1287,6 +1471,11 @@ public static class GeneralConfigAssist
         return v;
     }
 
+    /// <summary>
+    /// GetSkyApmSwitch
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
     public static bool GetSkyApmSwitch()
     {
         var v = GetConfig().SkyApmSwitch;
@@ -1302,6 +1491,10 @@ public static class GeneralConfigAssist
         return value == 1;
     }
 
+    /// <summary>
+    /// GetPermissionServerHostUrl
+    /// </summary>
+    /// <returns></returns>
     public static string GetPermissionServerHostUrl()
     {
         var v = GetConfig().PermissionServerHostUrl;

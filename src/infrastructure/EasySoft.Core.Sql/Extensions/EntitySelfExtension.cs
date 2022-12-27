@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Sql.Assists;
+﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
+using EasySoft.Core.Sql.Assists;
 using EasySoft.Core.Sql.Common;
 using Newtonsoft.Json.Linq;
 

@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.Domain.Base.Entities.Implements;
 using EasySoft.Core.EntityFramework.EntityConfigures.Implements;
-using EasySoft.Core.Infrastructure.Repositories.Entities.Implements;
+using EasySoft.Core.Infrastructure.Entities.Implements;
 
 namespace EasySoft.Core.Domain.Share.EntityConfigures.Implements;
 

@@ -1,6 +1,6 @@
-﻿using EasySoft.Core.Infrastructure.Repositories.Entities.Interfaces;
+﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
 
-namespace EasySoft.Core.Infrastructure.Repositories.Entities.Implements;
+namespace EasySoft.Core.Infrastructure.Entities.Implements;
 
 /// <summary>
 /// Entity

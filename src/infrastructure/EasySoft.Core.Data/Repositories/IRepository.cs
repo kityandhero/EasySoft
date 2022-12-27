@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Standard.Result.Implements;
+﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
+using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.Data.Repositories;
 

@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Infrastructure.Repositories.Entities.Implements;
+﻿namespace EasySoft.Core.Infrastructure.Entities.Implements;
 
 /// <summary>
 /// 事件跟踪

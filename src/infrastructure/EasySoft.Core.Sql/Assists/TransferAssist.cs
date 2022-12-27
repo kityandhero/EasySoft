@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Sql.Common;
+﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
+using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Enums;
 using EasySoft.Core.Sql.Extensions;
 using TypeExtensions = EasySoft.UtilityTools.Standard.Extensions.TypeExtensions;
