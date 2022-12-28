@@ -29,7 +29,7 @@ public class AuthorController : AreaControllerCore
             return this.Fail(resultActualOperator.Code);
 
         var result = await _blogService.GetBlogDtoAsync(
-            Convert.ToInt32(resultActualOperator.Data.GetIdentification())
+            Convert.ToInt32(resultActualOperator.Data.GetIdentity())
         );
 
         return this.WrapperExecutiveResult(result);

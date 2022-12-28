@@ -5,18 +5,18 @@
 /// </summary>
 public abstract class ActualOperator : IActualOperator
 {
-    private object? _identification;
+    private string _identification = "";
 
     private string _token = "";
 
     /// <summary>
     /// 设置身份标识，仅能设置一次
     /// </summary>
-    /// <param name="identification"></param>
+    /// <param name="identity"></param>
     /// <exception cref="Exception"></exception>
-    public void SetIdentification(object identification)
+    public void SetIdentity(string identity)
     {
-        _identification = identification;
+        _identification = identity;
     }
 
     /// <summary>
@@ -24,7 +24,7 @@ public abstract class ActualOperator : IActualOperator
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public object? GetIdentification()
+    public string GetIdentity()
     {
         return _identification;
     }

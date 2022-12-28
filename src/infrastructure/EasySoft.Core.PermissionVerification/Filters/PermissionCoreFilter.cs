@@ -53,7 +53,7 @@ public abstract class PermissionCoreFilter : OperateOfficerCore, IPermissionFilt
     {
         AdjustAccessPermission(context);
 
-        var result = await TryVerificationAsync();
+        var result = await TryVerifyAsync();
 
         if (!result.Success) context.Result = result.Data;
     }

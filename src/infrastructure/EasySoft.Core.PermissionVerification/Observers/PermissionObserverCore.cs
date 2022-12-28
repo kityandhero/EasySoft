@@ -1,5 +1,7 @@
-﻿using EasySoft.Core.PermissionVerification.Attributes;
+﻿using EasySoft.Core.Infrastructure;
+using EasySoft.Core.PermissionVerification.Attributes;
 using EasySoft.UtilityTools.Standard.Result.Implements;
+using Senparc.Weixin.MP.AdvancedAPIs;
 
 namespace EasySoft.Core.PermissionVerification.Observers;
 
@@ -38,7 +40,7 @@ public abstract class PermissionObserverCore : IPermissionObserver
     /// get competence entity collection
     /// </summary>
     /// <returns></returns>
-    public abstract Task<IList<CompetenceEntity>> GetCompetenceEntityCollectionAsync();
+    public abstract Task<IList<CompetenceEntity>> GetCompetenceEntityCollectionAsync(string identity);
 
     /// <summary>
     /// 检测访问权限
@@ -54,7 +56,12 @@ public abstract class PermissionObserverCore : IPermissionObserver
                 )
             );
 
-        var listCompetenceEntity = await GetCompetenceEntityCollectionAsync();
+        var identity = GetActualOperator().GetIdentity();
+
+        if (identity == SuperConstCollection.SuperAdministratorId.ToString())
+            return new ExecutiveResult(ReturnCode.Ok);
+
+        var listCompetenceEntity = await GetCompetenceEntityCollectionAsync(identity);
 
         foreach (var ce in listCompetenceEntity)
             if (ce.GuidTag == guidTag.Remove("-") || ce.GuidTag == ConstCollection.SuperRoleGuidTag)

@@ -1,9 +1,9 @@
-﻿namespace EasySoft.Core.UserLogicCore;
+﻿namespace EasySoft.Core.Infrastructure;
 
 /// <summary>
 /// UserConstCollection
 /// </summary>
-public static class UserConstCollection
+public static class SuperConstCollection
 {
     /// <summary>
     /// SuperAdministrator

@@ -99,7 +99,7 @@ public class EasyTokenMiddleware : IMiddleware
 
             actualOperator.SetToken(token);
 
-            actualOperator.SetIdentification(identity);
+            actualOperator.SetIdentity(identity);
 
             if (!actualOperator.IsAnonymous())
                 await next.Invoke(context);

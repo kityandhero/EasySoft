@@ -8,30 +8,30 @@ public interface IActualOperator
     /// <summary>
     /// SetIdentification
     /// </summary>
-    /// <param name="identification"></param>
-    public void SetIdentification(object identification);
+    /// <param name="identity"></param>
+    void SetIdentity(string identity);
 
     /// <summary>
     /// SetToken
     /// </summary>
     /// <param name="token"></param>
-    public void SetToken(string token);
+    void SetToken(string token);
 
     /// <summary>
     /// GetIdentification
     /// </summary>
     /// <returns></returns>
-    public object? GetIdentification();
+    string GetIdentity();
 
     /// <summary>
     /// GetToken
     /// </summary>
     /// <returns></returns>
-    public string GetToken();
+    string GetToken();
 
     /// <summary>
     /// IsAnonymous
     /// </summary>
     /// <returns></returns>
-    public bool IsAnonymous();
+    bool IsAnonymous();
 }

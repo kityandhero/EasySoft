@@ -46,7 +46,7 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
 
         actualOperator.SetToken(token);
 
-        actualOperator.SetIdentification(identification);
+        actualOperator.SetIdentity(identification);
 
         if (actualOperator.IsAnonymous())
             filterContext.Result = new ApiResult(

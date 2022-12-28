@@ -104,7 +104,7 @@ public class JsonWebTokenMiddleware : IMiddleware
 
         actualOperator.SetToken(token);
 
-        actualOperator.SetIdentification(identification);
+        actualOperator.SetIdentity(identification);
 
         if (!actualOperator.IsAnonymous())
             await next.Invoke(context);

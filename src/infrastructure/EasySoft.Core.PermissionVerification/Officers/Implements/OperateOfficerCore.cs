@@ -64,14 +64,14 @@ public abstract class OperateOfficerCore : AccessWayOfficer
         return _permissionObserver;
     }
 
-    private void PrePareVerification()
+    private void PrePareVerify()
     {
         if (Environment.IsDevelopment())
         {
             var logger = LoggerFactory.CreateLogger<OperateOfficerCore>();
 
             logger.LogAdvanceExecute(
-                $"{nameof(OperateOfficerCore)}.{nameof(PrePareVerification)}"
+                $"{nameof(OperateOfficerCore)}.{nameof(PrePareVerify)}"
             );
         }
 
@@ -113,20 +113,20 @@ public abstract class OperateOfficerCore : AccessWayOfficer
     /// TryVerification
     /// </summary>
     /// <returns></returns>
-    protected async Task<ExecutiveResult<ApiResult>> TryVerificationAsync()
+    protected async Task<ExecutiveResult<ApiResult>> TryVerifyAsync()
     {
         if (Environment.IsDevelopment())
         {
             var logger = LoggerFactory.CreateLogger<OperateOfficerCore>();
 
             logger.LogAdvanceExecute(
-                $"{nameof(OperateOfficerCore)}.{nameof(TryVerificationAsync)}"
+                $"{nameof(OperateOfficerCore)}.{nameof(TryVerifyAsync)}"
             );
         }
 
         await CollectAccessWay();
 
-        PrePareVerification();
+        PrePareVerify();
 
         var result = await CheckAccessPermissionAsync();
 

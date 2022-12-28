@@ -41,11 +41,10 @@ public class ApplicationPermissionObserver : PermissionObserverCore
     /// </summary>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public override async Task<IList<CompetenceEntity>> GetCompetenceEntityCollectionAsync()
+    public override async Task<IList<CompetenceEntity>> GetCompetenceEntityCollectionAsync(string identity)
     {
-        var identification = GetActualOperator().GetIdentification();
-
-        if (identification == null || !identification.IsInt64(out var id)) return new List<CompetenceEntity>();
+        if (string.IsNullOrWhiteSpace(identity) || !identity.IsInt64(out var id))
+            return new List<CompetenceEntity>();
 
         var result = await _userService.GetRoleGroupIdAsync(id);
 

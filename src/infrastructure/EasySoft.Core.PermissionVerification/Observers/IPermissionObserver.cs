@@ -11,24 +11,24 @@ public interface IPermissionObserver
     /// GetActualOperator
     /// </summary>
     /// <returns></returns>
-    public IActualOperator GetActualOperator();
+    IActualOperator GetActualOperator();
 
     /// <summary>
     /// OnJudging
     /// </summary>
     /// <returns></returns>
-    public bool OnJudging();
+    bool OnJudging();
 
     /// <summary>
     /// GetCompetenceEntityCollection
     /// </summary>
     /// <returns></returns>
-    public Task<IList<CompetenceEntity>> GetCompetenceEntityCollectionAsync();
+    Task<IList<CompetenceEntity>> GetCompetenceEntityCollectionAsync(string identity);
 
     /// <summary>
     /// CheckAccessPermission
     /// </summary>
     /// <param name="guidTag"></param>
     /// <returns></returns>
-    public Task<ExecutiveResult> CheckAccessPermissionAsync(string guidTag);
+    Task<ExecutiveResult> CheckAccessPermissionAsync(string guidTag);
 }

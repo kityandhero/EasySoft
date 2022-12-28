@@ -38,7 +38,7 @@ public static class ActualOperatorAssist
 
             actualOperator.SetToken(token);
 
-            actualOperator.SetIdentification(identity);
+            actualOperator.SetIdentity(identity);
 
             if (actualOperator.IsAnonymous())
                 return new ExecutiveResult<IActualOperator>(

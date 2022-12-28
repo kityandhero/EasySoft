@@ -57,6 +57,6 @@ public class OperateOfficer : OperateOfficerCore, IOperateOfficer
     {
         AdjustAccessPermission(httpContext);
 
-        return await TryVerificationAsync();
+        return await TryVerifyAsync();
     }
 }

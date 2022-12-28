@@ -1,4 +1,5 @@
-﻿using EasySoft.Simple.Tradition.Management.Core.Common;
+﻿using EasySoft.Core.Infrastructure;
+using EasySoft.Simple.Tradition.Management.Core.Common;
 
 namespace EasySoft.Simple.Tradition.Management.Core.Controllers;
 
@@ -30,7 +31,7 @@ public class EntranceController : ControllerCore
     // [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IApiResult> SignIn(SignInDto signInDto)
     {
-        if (signInDto.AccountName == UserConstCollection.SuperAdministrator) return await SuperSignIn(signInDto);
+        if (signInDto.AccountName == SuperConstCollection.SuperAdministrator) return await SuperSignIn(signInDto);
 
         var result = await _userService.SignInAsync(signInDto);
 
@@ -59,7 +60,7 @@ public class EntranceController : ControllerCore
             result,
             o => new
             {
-                token = UserConstCollection.SuperAdministratorId.ToToken(),
+                token = SuperConstCollection.SuperAdministratorId.ToToken(),
                 authorities
             }
         ));

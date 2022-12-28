@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.UserLogicCore.Entities.implements;
+﻿using EasySoft.Core.Infrastructure;
+using EasySoft.Core.UserLogicCore.Entities.implements;
 using EasySoft.Core.UserLogicCore.Entities.Interfaces;
 
 namespace EasySoft.Core.UserLogicCore.Assists;
@@ -16,7 +17,7 @@ public static class SuperAdministratorAssist
     /// <returns></returns>
     public static ExecutiveResult<IConsumer> SuperSignIn(IAccount account, out IEnumerable<string> authorities)
     {
-        if (account.AccountName != UserConstCollection.SuperAdministrator ||
+        if (account.AccountName != SuperConstCollection.SuperAdministrator ||
             account.Password != SuperConfigAssist.GetPassword())
         {
             authorities = new List<string>();
