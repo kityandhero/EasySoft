@@ -14,13 +14,19 @@ public static class DynamicConfigAssist
     {
         var defaultTokenExpires = GeneralConfigAssist.GetTokenExpires();
 
-        if (!GeneralConfigAssist.GetConfigCenterSwitch()) return defaultTokenExpires;
+        if (!GeneralConfigAssist.GetConfigCenterSwitch())
+        {
+            return defaultTokenExpires;
+        }
 
         var remoteConfigCache = AgileConfigClientAssist.GetConfigClient().Data;
 
         var remoteTokenExpires = remoteConfigCache[ConstCollection.TokenExpiresKey] ?? "";
 
-        if (remoteTokenExpires.IsInt(out var value) && value > 0) return value;
+        if (remoteTokenExpires.IsInt(out var value) && value > 0)
+        {
+            return value;
+        }
 
         return defaultTokenExpires;
     }
@@ -32,26 +38,36 @@ public static class DynamicConfigAssist
             string remoteNLogJsonConfig;
 
             if (!GeneralConfigAssist.GetConfigCenterSwitch())
+            {
                 return new ExecutiveResult<string>(ReturnCode.Ok)
                 {
                     Data = ""
                 };
+            }
 
             if (GeneralConfigAssist.GetConfigCenterType() == ConfigCenterType.AgileConfig)
+            {
                 remoteNLogJsonConfig = GetJsonConfigFromAgileConfig();
+            }
             else if (GeneralConfigAssist.GetConfigCenterType() == ConfigCenterType.Consul)
+            {
                 remoteNLogJsonConfig = GetJsonConfigFromConsul();
+            }
             else
+            {
                 return new ExecutiveResult<string>(ReturnCode.Ok)
                 {
                     Data = ""
                 };
+            }
 
             if (string.IsNullOrWhiteSpace(remoteNLogJsonConfig))
+            {
                 return new ExecutiveResult<string>(ReturnCode.Ok)
                 {
                     Data = ""
                 };
+            }
 
             try
             {
@@ -136,10 +152,15 @@ public static class DynamicConfigAssist
             var consulClient = ConsulConfigCenterClientAssist.GetConfigClient();
 
             var v = consulClient.KV.Get(
-                $"{applicationChannel.GetChannel()}/config.{EnvironmentAssist.GetEnvironment().EnvironmentName}.json"
-            ).Result;
+                    $"{applicationChannel.GetChannel()}/config.{EnvironmentAssist.GetEnvironment().EnvironmentName}.json"
+                )
+                .Result;
 
-            var config = Encoding.UTF8.GetString(v.Response.Value, 0, v.Response.Value.Length);
+            var config = Encoding.UTF8.GetString(
+                v.Response.Value,
+                0,
+                v.Response.Value.Length
+            );
 
             return config;
         }

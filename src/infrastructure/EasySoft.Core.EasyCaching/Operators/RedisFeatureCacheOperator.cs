@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.EasyCaching.interfaces;
+using EasySoft.Core.EasyCaching.Operators.Bases;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
@@ -13,18 +14,21 @@ public class RedisFeatureCacheOperator : BaseCacheOperator, IRedisFeatureCacheOp
         _provider = provider;
     }
 
-    protected override ExecutiveResult<T> GetCore<T>(string key)
+    protected override ExecutiveResult<string> GetSerializedValue(string key)
     {
         var value = _provider.StringGet(key);
 
         return string.IsNullOrEmpty(value)
-            ? new ExecutiveResult<T>(ReturnCode.NoData)
-            : ConvertAssist.StringTo<T>(value);
+            ? new ExecutiveResult<string>(ReturnCode.NoData)
+            : ConvertAssist.StringTo<string>(value);
     }
 
     private string ValueToString<T>(T value)
     {
-        if (value == null) throw new Exception("do not set null to cache");
+        if (value == null)
+        {
+            throw new Exception("do not set null to cache");
+        }
 
         string valueAdjust;
 
@@ -46,24 +50,37 @@ public class RedisFeatureCacheOperator : BaseCacheOperator, IRedisFeatureCacheOp
 
     public override void Set<T>(string key, T value, TimeSpan expiration)
     {
-        _provider.StringSet(key, ValueToString(value), expiration);
+        _provider.StringSet(
+            key,
+            ValueToString(value),
+            expiration
+        );
     }
 
-    public override void Remove(string key)
+    public override bool Remove(string key)
     {
         _provider.KeyDel(key);
+
+        return true;
     }
 
-    public override void RemoveBatch(IEnumerable<string> keys)
+    public override bool RemoveBatch(IEnumerable<string> keys)
     {
-        foreach (var key in keys) _provider.KeyDel(key);
+        foreach (var key in keys)
+        {
+            _provider.KeyDel(key);
+        }
+
+        return true;
     }
 
-    public override void RemoveByPrefix(string prefix)
+    public override bool RemoveByPrefix(string prefix)
     {
         var keys = _provider.SearchKeys(prefix);
 
         RemoveBatch(keys);
+
+        return true;
     }
 
     #region async
@@ -79,7 +96,11 @@ public class RedisFeatureCacheOperator : BaseCacheOperator, IRedisFeatureCacheOp
 
     public override async Task SetAsync<T>(string key, T value, TimeSpan expiration)
     {
-        await _provider.StringSetAsync(key, ValueToString(value), expiration);
+        await _provider.StringSetAsync(
+            key,
+            ValueToString(value),
+            expiration
+        );
     }
 
     public override async Task RemoveAsync(string key)
@@ -89,7 +110,10 @@ public class RedisFeatureCacheOperator : BaseCacheOperator, IRedisFeatureCacheOp
 
     public override async Task RemoveBatchAsync(IEnumerable<string> keys)
     {
-        foreach (var key in keys) await RemoveAsync(key);
+        foreach (var key in keys)
+        {
+            await RemoveAsync(key);
+        }
     }
 
     public override async Task RemoveByPrefixAsync(string prefix)

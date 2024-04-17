@@ -37,8 +37,16 @@ public class GeneralConfig : IConfig
     /// </summary>
     public string HstsSwitch { get; set; } = "0";
 
+    /// <summary>
+    /// 键名前缀，用于标记缓存键前缀, 队列名前缀等等, 以便于在复杂部署中隔离数据
+    /// </summary>
+    public string KeyPrefix { get; set; } = "";
+
     #region Compression
 
+    /// <summary>
+    /// 压缩传输开关
+    /// </summary>
     public string CompressionSwitch { get; set; } = "0";
 
     #endregion
@@ -50,6 +58,9 @@ public class GeneralConfig : IConfig
     /// </summary>
     public string TokenServerDumpSwitch { get; set; } = "1";
 
+    /// <summary>
+    /// Http Header 中 Token 的键名, 默认 “token”
+    /// </summary>
     public string TokenName { get; set; } = "token";
 
     /// <summary>

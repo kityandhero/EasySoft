@@ -12,26 +12,27 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AspectCore.Extensions.Autofac" Version="2.2.0" />
-        <PackageReference Include="Autofac" Version="6.4.0" />
-        <PackageReference Include="EasyCaching.Core" Version="1.7.0" />
-        <PackageReference Include="EasyCaching.CSRedis" Version="1.7.0" />
-        <PackageReference Include="EasyCaching.InMemory" Version="1.7.0" />
-        <PackageReference Include="EasyCaching.Interceptor.AspectCore" Version="1.7.0" />
-        <PackageReference Include="EasyCaching.Serialization.Json" Version="1.7.0" />
+        <PackageReference Include="AspectCore.Extensions.Autofac" Version="2.2.0"/>
+        <PackageReference Include="Autofac" Version="6.4.0"/>
+        <PackageReference Include="EasyCaching.Core" Version="1.7.0"/>
+        <PackageReference Include="EasyCaching.CSRedis" Version="1.7.0"/>
+        <PackageReference Include="EasyCaching.InMemory" Version="1.7.0"/>
+        <PackageReference Include="EasyCaching.Interceptor.AspectCore" Version="1.7.0"/>
+        <PackageReference Include="EasyCaching.Serialization.Json" Version="1.7.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.CacheCore\EasySoft.Core.CacheCore.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.CacheCore\EasySoft.Core.CacheCore.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.ErrorLogTransmitter\EasySoft.Core.ErrorLogTransmitter.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Assists" />
+        <Folder Include="Assists"/>
     </ItemGroup>
 
 </Project>

@@ -154,7 +154,10 @@ public static class GeneralConfigAssist
             name = fullName.Replace(".", "-");
         }
 
-        if (string.IsNullOrWhiteSpace(name)) throw new Exception("EntryAssembly not exist");
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new Exception("EntryAssembly not exist");
+        }
 
         return name;
     }
@@ -169,7 +172,10 @@ public static class GeneralConfigAssist
 
         var version = "1.0.0.0";
 
-        if (startAssembly == null) return version;
+        if (startAssembly == null)
+        {
+            return version;
+        }
 
         var assemblyName = startAssembly.GetName();
 
@@ -190,9 +196,11 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value) || value < 0)
+        {
             throw new ConfigErrorException(
                 $"请配置 HttpPort: {ConfigFile} -> HttpPort,请设置数字 value > 0"
             );
+        }
 
         return value;
     }
@@ -207,9 +215,11 @@ public static class GeneralConfigAssist
         var v = GetConfig().HttpsPort;
 
         if (!v.IsInt(out var value) || value < 0)
+        {
             throw new ConfigErrorException(
                 $"请配置 HttpsPort: {ConfigFile} -> HttpsPort,请设置数字 value > 0"
             );
+        }
 
         return value;
     }
@@ -229,12 +239,28 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 HstsSwitch: {ConfigFile} -> HstsSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
+    }
+
+    /// <summary>
+    /// GetKeyPrefix
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
+    public static string GetKeyPrefix()
+    {
+        var v = GetConfig().KeyPrefix;
+
+        v = string.IsNullOrWhiteSpace(v) ? "" : v;
+
+        return v;
     }
 
     /// <summary>
@@ -249,10 +275,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 CompressionSwitch: {ConfigFile} -> CompressionSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -269,10 +297,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "InMemory" : v;
 
         if (!v.In("InMemory", "Redis"))
+        {
             throw new ConfigErrorException(
                 $"请配置 CacheMode: {ConfigFile} -> CacheMode,请设置 InMemory/Redis",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -286,7 +316,9 @@ public static class GeneralConfigAssist
     public static string GetAppId()
     {
         if (AppSecurityServerConfigure.EmbedMode)
+        {
             return AppSecurityAssist.EmbedAppId;
+        }
 
         var v = GetConfig().AppId;
 
@@ -302,7 +334,9 @@ public static class GeneralConfigAssist
     public static string GetAppSecret()
     {
         if (AppSecurityServerConfigure.EmbedMode)
+        {
             return AppSecurityAssist.EmbedAppSecret;
+        }
 
         var v = GetConfig().AppSecret;
 
@@ -319,7 +353,10 @@ public static class GeneralConfigAssist
     {
         var v = GetConfig().AppSecurityServerHostUrl;
 
-        if (!string.IsNullOrWhiteSpace(v)) return v;
+        if (!string.IsNullOrWhiteSpace(v))
+        {
+            return v;
+        }
 
         v = FlagAssist.StartupDisplayUrls.First();
 
@@ -345,18 +382,25 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 AccessWayDetectSwitch: {ConfigFile} -> AccessWayDetectSwitch,请设置 0/1,开启后将在请求进入时校验持久数据存在性",
                 GetConfigFileInfo()
             );
+        }
 
-        if (value != 1) return false;
+        if (value != 1)
+        {
+            return false;
+        }
 
         if (!FlagAssist.PermissionVerificationSwitch)
+        {
             throw new ConfigErrorException(
                 "AccessWayDetectSwitch work with UsePermissionVerification, if you do not use UsePermissionVerification, do not set it to enable",
                 GetConfigFileInfo()
             );
+        }
 
         return true;
     }
@@ -373,10 +417,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 RemoteGeneralLogSwitch: {ConfigFile} -> RemoteGeneralLogSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -393,10 +439,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 RemoteErrorLogSwitch: {ConfigFile} -> RemoteErrorLogSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -413,10 +461,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 RemoteSqlExecutionRecordSwitch: {ConfigFile} -> RemoteSqlExecutionRecordSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -433,10 +483,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 UseStaticFiles: {ConfigFile} -> UseStaticFiles,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -453,10 +505,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 UseAuthentication: {ConfigFile} -> UseAuthentication,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -473,10 +527,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 UseAuthorization: {ConfigFile} -> UseAuthorization,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -493,10 +549,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 CorsSwitch: {ConfigFile} -> CorsSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -507,7 +565,8 @@ public static class GeneralConfigAssist
     /// <returns></returns>
     public static List<string> GetCorsPolicies()
     {
-        var v = GetConfig().CorsPolicies.Trim()
+        var v = GetConfig()
+            .CorsPolicies.Trim()
             .Split(",")
             .Where(o => !string.IsNullOrWhiteSpace(o))
             .ToList();
@@ -527,10 +586,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 ForwardedHeadersSwitch: {ConfigFile} -> ForwardedHeadersSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -548,9 +609,11 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 TokenServerDumpSwitch: {ConfigFile} -> TokenServerDumpSwitch,请设置 0/1"
             );
+        }
 
         return value == 1;
     }
@@ -566,9 +629,11 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 TokenParseFromUrlSwitch: {ConfigFile} -> TokenParseFromUrlSwitch,请设置 0/1"
             );
+        }
 
         return value == 1;
     }
@@ -584,9 +649,11 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 TokenParseFromCookieSwitch: {ConfigFile} -> TokenParseFromCookieSwitch,请设置 0/1"
             );
+        }
 
         return value == 1;
     }
@@ -603,9 +670,11 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "7200" : v;
 
         if (!v.IsInt(out var value) || value < 0)
+        {
             throw new ConfigErrorException(
                 $"请配置 JsonWebTokenExpires: {ConfigFile} -> JsonWebTokenExpires,请设置数字 value > 0"
             );
+        }
 
         return value;
     }
@@ -636,9 +705,11 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value) || value < 0)
+        {
             throw new ConfigErrorException(
                 $"请配置 JsonWebTokenClockSkew: {ConfigFile} -> JsonWebTokenClockSkew,请设置数字 value >= 0"
             );
+        }
 
         return value;
     }
@@ -652,9 +723,11 @@ public static class GeneralConfigAssist
         var v = GetConfig().JsonWebTokenValidIssuer.Remove(" ").Trim();
 
         if (string.IsNullOrEmpty(v))
+        {
             throw new ConfigErrorException(
                 $"请配置 JsonWebTokenValidIssuer: {ConfigFile} -> JsonWebTokenValidIssuer,请设置颁发者"
             );
+        }
 
         return v;
     }
@@ -670,9 +743,11 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 JsonWebTokenValidateIssuer: {ConfigFile} -> JsonWebTokenValidateIssuer,请设置 0/1"
             );
+        }
 
         return value == 1;
     }
@@ -686,9 +761,11 @@ public static class GeneralConfigAssist
         var v = GetConfig().JsonWebTokenValidAudience.Remove(" ").Trim();
 
         if (string.IsNullOrEmpty(v))
+        {
             throw new ConfigErrorException(
                 $"请配置 JsonWebTokenValidAudience: {ConfigFile} -> JsonWebTokenValidAudience,请设置访问群体"
             );
+        }
 
         return v;
     }
@@ -704,9 +781,11 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 JsonWebTokenValidateAudience: {ConfigFile} -> JsonWebTokenValidateAudience, 请设置 0/1"
             );
+        }
 
         return value == 1;
     }
@@ -720,9 +799,11 @@ public static class GeneralConfigAssist
         var v = GetConfig().JsonWebTokenIssuerSigningKey.Remove(" ").Trim();
 
         if (string.IsNullOrWhiteSpace(v))
+        {
             throw new ConfigErrorException(
                 $"请配置 JsonWebTokenIssuerSigningKey: {ConfigFile} -> JsonWebTokenIssuerSigningKey"
             );
+        }
 
         return v;
     }
@@ -738,9 +819,11 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 JsonWebTokenValidateIssuerSigningKey: {ConfigFile} -> JsonWebTokenValidateIssuerSigningKey,请设置 0/1"
             );
+        }
 
         return value == 1;
     }
@@ -756,9 +839,11 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 JsonWebTokenValidateLifetime: {ConfigFile} -> JsonWebTokenValidateLifetime,请设置 0/1"
             );
+        }
 
         return value == 1;
     }
@@ -779,10 +864,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 HttpRedirectionHttpsSwitch: {ConfigFile} -> HttpRedirectionHttpsSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -803,10 +890,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "Off" : v;
 
         if (string.IsNullOrWhiteSpace(v))
+        {
             throw new ConfigErrorException(
                 $"请配置 NlogEmbedConfigInternalLogLevel: {ConfigFile} -> NlogEmbedConfigInternalLogLevel",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -823,10 +912,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 NlogEmbedConfigInternalLogToFileSwitch: {ConfigFile} -> NlogEmbedConfigInternalLogToFileSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -843,10 +934,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "Off" : v;
 
         if (string.IsNullOrWhiteSpace(v))
+        {
             throw new ConfigErrorException(
                 $"请配置 NlogEmbedConfigInternalLogFile: {ConfigFile} -> NlogEmbedConfigInternalLogFile",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -867,10 +960,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 NlogEmbedConfigProductionLogFileSwitch: {ConfigFile} -> NlogEmbedConfigProductionLogFileSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -887,10 +982,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
+        {
             throw new ConfigErrorException(
                 $"请配置 NlogEmbedConfigProductionLogLevel: {ConfigFile} -> NlogEmbedConfigProductionLogLevel",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -907,10 +1004,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
+        {
             throw new ConfigErrorException(
                 $"请配置 NlogEmbedConfigProductionLogFileName: {ConfigFile} -> NlogEmbedConfigProductionLogFileName",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -927,10 +1026,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
+        {
             throw new ConfigErrorException(
                 $"请配置 NlogEmbedConfigProductionLogArchiveFileName: {ConfigFile} -> NlogEmbedConfigProductionLogArchiveFileName",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -949,10 +1050,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 NlogEmbedConfigTraceToFileSwitch: {ConfigFile} -> NlogEmbedConfigTraceToFileSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -969,10 +1072,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 NlogEmbedConfigTraceToConsoleSwitch: {ConfigFile} -> NlogEmbedConfigTraceToConsoleSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -989,10 +1094,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 NlogEmbedConfigDebugToFileSwitch: {ConfigFile} -> NlogEmbedConfigDebugToFileSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -1005,17 +1112,22 @@ public static class GeneralConfigAssist
     /// <exception cref="Exception"></exception>
     public static bool GetNlogEmbedConfigDebugToConsoleSwitch()
     {
-        if (GetNlogEmbedConfigTraceToConsoleSwitch()) return true;
+        if (GetNlogEmbedConfigTraceToConsoleSwitch())
+        {
+            return true;
+        }
 
         var v = GetConfig().NlogEmbedConfigDebugToConsoleSwitch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 NlogEmbedConfigDebugToConsoleSwitch: {ConfigFile} -> NlogEmbedConfigDebugToConsoleSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -1032,10 +1144,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 NlogConsoleMessageLimit: {ConfigFile} -> NlogConsoleMessageLimit, 请设置",
                 GetConfigFileInfo()
             );
+        }
 
         return value;
     }
@@ -1047,17 +1161,22 @@ public static class GeneralConfigAssist
     /// <exception cref="Exception"></exception>
     public static bool GetNlogConsoleLimitingWrapperSwitch()
     {
-        if (GetNlogEmbedConfigTraceToConsoleSwitch()) return true;
+        if (GetNlogEmbedConfigTraceToConsoleSwitch())
+        {
+            return true;
+        }
 
         var v = GetConfig().NlogEmbedConfigConsoleLimitingWrapperSwitch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 NlogConsoleLimitingWrapperSwitch: {ConfigFile} -> NlogConsoleLimitingWrapperSwitch, 请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -1069,19 +1188,27 @@ public static class GeneralConfigAssist
     /// <exception cref="Exception"></exception>
     public static bool GetNlogConsoleRepeatedFilterSwitch()
     {
-        if (GetNlogConsoleLimitingWrapperSwitch()) return false;
+        if (GetNlogConsoleLimitingWrapperSwitch())
+        {
+            return false;
+        }
 
-        if (GetNlogEmbedConfigTraceToConsoleSwitch()) return true;
+        if (GetNlogEmbedConfigTraceToConsoleSwitch())
+        {
+            return true;
+        }
 
         var v = GetConfig().NlogEmbedConfigConsoleRepeatedFilterSwitch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 NlogConsoleRepeatedFilterSwitch: {ConfigFile} -> NlogConsoleRepeatedFilterSwitch, 请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -1100,10 +1227,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 MiniProFileSwitch: {ConfigFile} -> MiniProFileSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -1146,17 +1275,28 @@ public static class GeneralConfigAssist
 
         v = string.IsNullOrWhiteSpace(v) ? "auto" : v;
 
-        if (!v.In("0", "1", "auto"))
+        if (!v.In(
+                "0",
+                "1",
+                "auto"
+            ))
+        {
             throw new ConfigErrorException(
                 $"请配置 CapSwitch: {ConfigFile} -> CapSwitch,请设置 0/1/auto",
                 GetConfigFileInfo()
             );
+        }
 
-        if (v == 1.ToString()) return true;
+        if (v == 1.ToString())
+        {
+            return true;
+        }
 
         if (v == "auto")
+        {
             return GetAccessWayDetectSwitch() || GetRemoteErrorLogSwitch() || GetRemoteGeneralLogSwitch() ||
                    GetRemoteSqlExecutionRecordSwitch();
+        }
 
         return false;
     }
@@ -1221,10 +1361,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 CapDashboardSwitch: {ConfigFile} -> CapDashboardSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -1241,10 +1383,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 CapDiscoverySwitch: {ConfigFile} -> CapDiscoverySwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -1261,10 +1405,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 RegistrationCenterSwitch: {ConfigFile} -> RegistrationCenterSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -1281,10 +1427,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
+        {
             throw new ConfigErrorException(
                 $"请配置 RegistrationCenterType: {ConfigFile} -> RegistrationCenterType,请设置 {RegistrationCenterType.Consul.ToString()}",
                 GetConfigFileInfo()
             );
+        }
 
         return Enum.Parse<RegistrationCenterType>(v);
     }
@@ -1301,10 +1449,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 ConfigCenterSwitch: {ConfigFile} -> ConfigCenterSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -1321,10 +1471,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
+        {
             throw new ConfigErrorException(
                 $"请配置 ConfigCenterType: {ConfigFile} -> ConfigCenterType,请设置 {ConfigCenterType.AgileConfig.ToString()}/{ConfigCenterType.Consul.ToString()}",
                 GetConfigFileInfo()
             );
+        }
 
         return Enum.Parse<ConfigCenterType>(v);
     }
@@ -1341,10 +1493,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 GatewaySwitch: {ConfigFile} -> GatewaySwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -1361,10 +1515,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
+        {
             throw new ConfigErrorException(
                 $"请配置 GatewayType: {ConfigFile} -> GatewayType,请设置 {GatewayType.Ocelot.ToString()}",
                 GetConfigFileInfo()
             );
+        }
 
         return Enum.Parse<GatewayType>(v);
     }
@@ -1381,10 +1537,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 GatewayWithConsulSwitch: {ConfigFile} -> GatewayWithConsulSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -1396,17 +1554,22 @@ public static class GeneralConfigAssist
     /// <exception cref="ConfigErrorException"></exception>
     public static bool GetGatewayConfigInConsulSwitch()
     {
-        if (!GetGatewayWithConsulSwitch()) return false;
+        if (!GetGatewayWithConsulSwitch())
+        {
+            return false;
+        }
 
         var v = GetConfig().GatewayConfigInConsulSwitch;
 
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 GatewayConfigInConsulSwitch: {ConfigFile} -> GatewayConfigInConsulSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -1423,10 +1586,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 ExceptionlessSwitch: {ConfigFile} -> ExceptionlessSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -1443,10 +1608,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (GetExceptionlessSwitch() && string.IsNullOrWhiteSpace(v))
+        {
             throw new ConfigErrorException(
                 $"开启Exceptionless时, 请配置 ExceptionlessServerUrl: {ConfigFile} -> ExceptionlessServerUrl",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -1463,10 +1630,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (GetExceptionlessSwitch() && string.IsNullOrWhiteSpace(v))
+        {
             throw new ConfigErrorException(
                 $"开启Exceptionless时, 请配置 ExceptionlessApiKey: {ConfigFile} -> ExceptionlessApiKey",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -1483,10 +1652,12 @@ public static class GeneralConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt(out var value))
+        {
             throw new ConfigErrorException(
                 $"请配置 SkyApmSwitch: {ConfigFile} -> SkyApmSwitch,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return value == 1;
     }
@@ -1499,7 +1670,10 @@ public static class GeneralConfigAssist
     {
         var v = GetConfig().PermissionServerHostUrl;
 
-        if (!string.IsNullOrWhiteSpace(v)) return v;
+        if (!string.IsNullOrWhiteSpace(v))
+        {
+            return v;
+        }
 
         v = FlagAssist.StartupDisplayUrls.First();
 
