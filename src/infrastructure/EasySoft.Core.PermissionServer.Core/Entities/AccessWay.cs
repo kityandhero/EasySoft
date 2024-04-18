@@ -18,7 +18,19 @@ public class AccessWay : BaseEntity, IAccessWay, IIp, IStatus, IOperate
     public string RelativePath { get; set; } = "";
 
     /// <inheritdoc />
+    public int RelativePathLevel { get; set; }
+
+    /// <inheritdoc />
+    public string RelativeParentPath { get; set; } = "";
+
+    /// <inheritdoc />
+    public int RelativeParentPathLevel { get; set; }
+
+    /// <inheritdoc />
     public string Expand { get; set; } = "";
+
+    /// <inheritdoc />
+    public string ResultType { get; set; } = "";
 
     /// <inheritdoc />
     public string Group { get; set; } = "";
@@ -43,4 +55,7 @@ public class AccessWay : BaseEntity, IAccessWay, IIp, IStatus, IOperate
 
     /// <inheritdoc />
     public DateTime ModifyTime { get; set; } = DateTimeOffset.Now.DateTime;
+
+    /// <inheritdoc />
+    public int TriggerChannel { get; set; }
 }

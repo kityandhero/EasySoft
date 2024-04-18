@@ -51,7 +51,7 @@ public static class TransferAssist
 
         var tableName = model.GetType().Name;
 
-        var advanceTableMapperAttribute = Tools.GetAdvanceTableMapperAttribute<T>(
+        var advanceTableMapperAttribute = Tools.GetAdvanceTableMapperAttribute(
             model,
             false
         );
@@ -144,7 +144,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string GetColumnName<T>(Expression<Func<T>> propertyLambda)
     {
-        return GetColumnName(propertyLambda, out Type _);
+        return GetColumnName(propertyLambda, out Type? _);
     }
 
     /// <summary>
@@ -217,7 +217,7 @@ public static class TransferAssist
         Expression<Func<T, object>> propertyLambda
     )
     {
-        return GetColumnName(propertyLambda, out Type _);
+        return GetColumnName(propertyLambda, out Type? _);
     }
 
     /// <summary>
@@ -369,7 +369,7 @@ public static class TransferAssist
         Expression<Func<T, object>> propertyLambda
     )
     {
-        return GetTableAndColumnName(propertyLambda, out Type _);
+        return GetTableAndColumnName(propertyLambda, out Type? _);
     }
 
     /// <summary>

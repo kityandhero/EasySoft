@@ -4,6 +4,7 @@ using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Enums;
 using EasySoft.Core.Sql.Extensions;
 using EasySoft.Core.Sql.Factories;
+using EasySoft.Core.Sql.Interfaces;
 
 namespace EasySoft.Core.Sql.Assists;
 
@@ -240,7 +241,7 @@ public static class SqlAssist
         ICollection<Condition<T>> listCondition,
         ICollection<Sort<T>> listSort,
         int? top = null
-    ) where T : IEntity, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var model = new T();
 
@@ -299,7 +300,7 @@ public static class SqlAssist
         ICollection<Condition<T>> listCondition,
         ICollection<Sort<T>> listSort,
         int? top = null
-    ) where T : IEntity, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var fieldItems = FieldItemSpecialFactory.BuildFieldItems(listPropertyLambda.ToArray());
 
@@ -325,7 +326,7 @@ public static class SqlAssist
         ICollection<Condition<T>> listCondition,
         ICollection<Sort<T>> listSort,
         int? top = null
-    ) where T : IEntity, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var model = new T();
 
@@ -518,7 +519,7 @@ public static class SqlAssist
         int pageSize,
         ICollection<Condition<T>>? listCondition,
         ICollection<Sort<T>>? listSort
-    ) where T : IEntity, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var start = (pageIndex - 1) * pageSize + 1;
         var end = start + pageSize - 1;
@@ -828,9 +829,9 @@ public static class SqlAssist
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     public static string InsertUniquer<T>(
-        IEntity model,
+        T model,
         ICollection<Condition<T>> uniquerConditions
-    ) where T : IEntity, new()
+    ) where T : IEntitySelf<T>, new()
     {
         model.BuildNameAndValueList(out var nameList, out var valueList);
 
@@ -865,7 +866,7 @@ public static class SqlAssist
     /// <param name="model"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static string Update(IEntity model)
+    public static string Update<T>(T model) where T : IEntitySelf<T>
     {
         var schemaName = model.GetSqlSchemaName();
         var nameValueList = model.BuildNameValueList();
@@ -900,7 +901,7 @@ public static class SqlAssist
     public static string UpdateWithCondition<T>(
         T model,
         ICollection<Condition<T>> conditions
-    ) where T : IEntity, new()
+    ) where T : IEntitySelf<T>, new()
     {
         if (conditions == null || conditions.Count == 0)
         {
@@ -939,7 +940,7 @@ public static class SqlAssist
     public static string UpdateSpecific<T>(
         T model,
         ICollection<Expression<Func<T>>> listPropertyLambda
-    ) where T : IEntity, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var nameValueList = model.BuildNameValueList(listPropertyLambda);
         var schemaName = model.GetSqlSchemaName();
@@ -974,7 +975,7 @@ public static class SqlAssist
     public static string UpdateSpecific<T>(
         T model,
         ICollection<Expression<Func<T, object>>> listPropertyLambda
-    ) where T : IEntity, new()
+    ) where T : IEntitySelf<T>, new()
     {
         var nameValueList = model.BuildNameValueList(listPropertyLambda);
         var schemaName = model.GetSqlSchemaName();
@@ -1091,7 +1092,7 @@ public static class SqlAssist
     public static string UpdateAssignField<T>(
         T model,
         ICollection<AssignField<T>>? listAssignField
-    ) where T : IEntity, new()
+    ) where T : IEntitySelf<T>, new()
     {
         if (listAssignField == null || !listAssignField.Any())
         {
@@ -1132,7 +1133,7 @@ public static class SqlAssist
     public static string UpdatesAssignField<T>(
         T model,
         ICollection<Expression<Func<T, object>>> listPropertyLambda
-    ) where T : IEntity, new()
+    ) where T : IEntitySelf<T>, new()
     {
         if (listPropertyLambda == null || !listPropertyLambda.Any())
         {
@@ -1171,7 +1172,7 @@ public static class SqlAssist
     /// <param name="key"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static string Delete<T>(long key) where T : IEntity, new()
+    public static string Delete<T>(long key) where T : IEntitySelf<T>, new()
     {
         var model = new T();
 
@@ -1186,7 +1187,7 @@ public static class SqlAssist
     /// <param name="model"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static string Delete<T>(T model) where T : IEntity, new()
+    public static string Delete<T>(T model) where T : IEntitySelf<T>, new()
     {
         var schemaName = model.GetSqlSchemaName();
         var tableName = TransferAssist.GetTableName(model);
@@ -1245,7 +1246,7 @@ public static class SqlAssist
     /// <param name="keys"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static string DeleteBatch<T>(IEnumerable<long> keys) where T : IEntity, new()
+    public static string DeleteBatch<T>(IEnumerable<long> keys) where T : IEntitySelf<T>, new()
     {
         var list = new List<T>();
 
@@ -1268,7 +1269,7 @@ public static class SqlAssist
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static string DeleteBatch<T>(IEnumerable<T> models) where T : IEntity, new()
+    public static string DeleteBatch<T>(IEnumerable<T> models) where T : IEntitySelf<T>, new()
     {
         var modelList = models.ToList();
 

@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
 using EasySoft.Core.Sql.Assists;
 using EasySoft.Core.Sql.Common;
+using EasySoft.Core.Sql.Interfaces;
 using Newtonsoft.Json.Linq;
 
 namespace EasySoft.Core.Sql.Extensions;
@@ -19,7 +20,7 @@ public static class EntitySelfExtension
     public static string GetIdentificationWithModelNamePrefix<T>(
         this T entity,
         bool toLowerFirst = false
-    ) where T : IEntity
+    ) where T : IEntitySelf<T>
     {
         var modelName = ReflectionAssist.GetClassName(entity);
 
@@ -83,7 +84,7 @@ public static class EntitySelfExtension
     /// GetPrimaryKeyLambda
     /// </summary>
     /// <returns></returns>
-    public static Expression<Func<T, object>> GetPrimaryKeyLambda<T>(this T entity) where T : IEntity
+    public static Expression<Func<T, object>> GetPrimaryKeyLambda<T>(this T entity) where T : IEntitySelf<T>
     {
         return o => o.Id;
     }
@@ -94,7 +95,7 @@ public static class EntitySelfExtension
     /// <param name="entity"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public static string GetPrimaryKeyName<T>(this T entity) where T : IEntity
+    public static string GetPrimaryKeyName<T>(this T entity) where T : IEntitySelf<T>
     {
         var lambda = entity.GetPrimaryKeyLambda();
 
@@ -192,7 +193,7 @@ public static class EntitySelfExtension
         return !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{name}" : name;
     }
 
-    private static PropertyInfo? GetPropertyInfo<T>(
+    private static PropertyInfo GetPropertyInfo<T>(
         Expression<Func<T, object>> propertyLambda
     ) where T : IEntity
     {
@@ -272,7 +273,10 @@ public static class EntitySelfExtension
     /// 转换为属性首字母小写的Object
     /// </summary>
     /// <returns></returns>
-    public static ExpandoObject ToObject<T>(this T entity, Func<T, ExpandoObject> func) where T : IEntity
+    public static ExpandoObject ToObject<T>(
+        this T entity,
+        Func<T, ExpandoObject> func
+    ) where T : IEntitySelf<T>
     {
         var additionalData = func(entity);
 
@@ -283,8 +287,10 @@ public static class EntitySelfExtension
     /// 转换为属性首字母小写的Object
     /// </summary>
     /// <returns></returns>
-    public static ExpandoObject ToObject<T>(this T entity, ExpandoObject? additionalData = null)
-        where T : IEntity
+    public static ExpandoObject ToObject<T>(
+        this T entity,
+        ExpandoObject? additionalData = null
+    ) where T : IEntitySelf<T>
     {
         var d = entity.ToExpandoObject();
 
@@ -555,7 +561,7 @@ public static class EntitySelfExtension
     public static object? ToSimpleObject<T>(
         this T entity,
         ICollection<Expression<Func<T, object>>> expressions
-    ) where T : IEntity
+    ) where T : IEntitySelf<T>
     {
         if (expressions.Count == 0)
         {
@@ -604,7 +610,7 @@ public static class EntitySelfExtension
     public static object? ToSimpleObject<T>(
         this T entity,
         ICollection<Expression<Func<object>>> expressions
-    ) where T : IEntity
+    ) where T : IEntitySelf<T>
     {
         if (expressions.Count == 0)
         {
@@ -651,7 +657,7 @@ public static class EntitySelfExtension
     public static object? ToSimpleObjectIgnore<T>(
         this T entity,
         ICollection<Expression<Func<T, object>>>? expressions
-    ) where T : IEntity
+    ) where T : IEntitySelf<T>
     {
         if (expressions == null || expressions.Count == 0)
         {
@@ -698,7 +704,7 @@ public static class EntitySelfExtension
     public static object? ToSimpleObjectIgnore<T>(
         this T entity,
         ICollection<Expression<Func<object>>> expressions
-    ) where T : IEntity
+    ) where T : IEntitySelf<T>
     {
         if (expressions.Count == 0)
         {
@@ -757,7 +763,7 @@ public static class EntitySelfExtension
     public static List<object> ToListSimpleObject<T>(
         this IEnumerable<T> list,
         ICollection<Expression<Func<object>>> expressions
-    ) where T : IEntity
+    ) where T : IEntitySelf<T>
     {
         return list.Select(o => o.ToSimpleObject(expressions)).ToListFilterNullable();
     }
@@ -772,7 +778,7 @@ public static class EntitySelfExtension
     public static List<object> ToListSimpleObjectIgnore<T>(
         this IEnumerable<T> list,
         ICollection<Expression<Func<object>>> expressions
-    ) where T : IEntity
+    ) where T : IEntitySelf<T>
     {
         return list.Select(o => o.ToSimpleObjectIgnore(expressions)).ToListFilterNullable();
     }

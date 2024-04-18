@@ -9,13 +9,13 @@ using EasySoft.Core.Dapper.Elegant.Configure;
 using EasySoft.Core.EasyCaching.ExtensionMethods;
 using EasySoft.Core.EasyCaching.interfaces;
 using EasySoft.Core.EasyCaching.Operators;
-using EasySoft.Simple.Dapper.Console.Entities;
+using EasySoft.Core.Project.DataEntity.Dapper.Infrastructure.Entities;
 using EasySoft.Simple.Dapper.Console.Enums;
 using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.Assists;
 using CacheModeCollection = EasySoft.Core.EasyCaching.Enums.CacheModeCollection;
 
-var serviceProvider = AutoFacConsoleAssist.CreateServiceProvider(
+AutoFacConsoleAssist.CreateServiceProvider(
     services =>
     {
         var cacheMode = GeneralConfigAssist.GetCacheMode();
@@ -70,7 +70,7 @@ var serviceProvider = AutoFacConsoleAssist.CreateServiceProvider(
 
 DapperElegantConfigurator.SetCacheOperator(AutofacAssist.Instance.Resolve<IAsyncCacheOperator>());
 
-var author = EntityAssist.GetEntity<Author>(1);
+var author = EntityAssist.GetEntity<AccessWay>(1);
 
 if (author != null)
 {

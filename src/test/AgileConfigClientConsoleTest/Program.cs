@@ -9,20 +9,34 @@ Console.WriteLine("Hello World!");
 var appId = "console_test_app";
 var secret = "console_test_app";
 var nodes = "http://localhost:15000/";
+
 //使用有参构造函数，手动传入appid等信息
-var client = new ConfigClient(appId, secret, nodes, "DEV");
-Task.Run(async () =>
-{
-    while (true)
+var client = new ConfigClient(
+    appId,
+    secret,
+    nodes,
+    "DEV"
+);
+
+Task.Run(
+    async () =>
     {
-        await Task.Delay(5000);
-        foreach (var key in client.Data.Keys)
+        while (true)
         {
-            var val = client[key];
-            Console.WriteLine("{0} : {1}", key, val);
+            await Task.Delay(5000);
+
+            foreach (var key in client.Data.Keys)
+            {
+                var val = client[key];
+                Console.WriteLine(
+                    "{0} : {1}",
+                    key,
+                    val
+                );
+            }
         }
     }
-});
+);
 
 client.ConnectAsync(); //如果不是mvc项目，不使用AddAgileConfig方法的话，需要手动调用ConnectAsync方法来跟服务器建立连接
 

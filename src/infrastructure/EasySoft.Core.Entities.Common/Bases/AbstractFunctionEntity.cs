@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Dapper.Base;
+﻿using System.Linq.Expressions;
+using EasySoft.Core.Dapper.Base;
 using EasySoft.Core.Sql.Common;
 using EasySoft.UtilityTools.Standard.Attributes;
 
@@ -10,7 +11,7 @@ public abstract class AbstractFunctionEntity<T> : BaseEntity<T> where T : BaseEn
 
     [AdvanceColumnInformation("主键标识")]
     [AdvanceColumnMapper(Constants.DefaultTablePrimaryKey)]
-    public override long Id { get; set; }
+    public override long Id { get; set; } = 0;
 
     #endregion
 }

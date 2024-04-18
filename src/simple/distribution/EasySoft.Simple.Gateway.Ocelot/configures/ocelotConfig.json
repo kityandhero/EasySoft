@@ -6,7 +6,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "oneservice.b.com",
+          "Host": "oneservice.local.com",
           "Port": 80
         }
       ],

@@ -1,7 +1,7 @@
 {
-  "HostName": "rabbit.b.com",
+  "HostName": "rabbit.local.com",
   "UserName": "pandora",
   "Password": "123456",
   "VirtualHost": "/",
-  "PersistentConnection": "server=database.b.com; User ID=pandora;Password=!@#$1234;database=cap"
+  "PersistentConnection": "server=database.local.com; User ID=pandora;Password=!@#$1234;database=cap"
 }

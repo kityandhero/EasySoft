@@ -8,11 +8,11 @@ namespace EasySoft.Core.Sql.Common;
 /// Condition
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class Condition<T> where T : IEntity, new()
+public class Condition<T> where T : new()
 {
     /// <summary>
     /// 指向表达式
-    /// </summary>
+    /// </summary>  
     public Expression<Func<T, object>> Expression { get; set; } = null!;
 
     /// <summary>

@@ -6,6 +6,11 @@ namespace EasySoft.Core.Sql.Interfaces;
 /// IEntitySelf
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public interface IEntitySelf<T> : IEntity
+public interface IEntitySelf<T> : IEntity where T : IEntity
 {
+    /// <summary>
+    /// GetPrimaryKeyLambda
+    /// </summary>
+    /// <returns></returns>
+    Expression<Func<T, object>> GetPrimaryKeyLambda();
 }

@@ -16,6 +16,7 @@
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Dapper\EasySoft.Core.Dapper.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EasyCaching\EasySoft.Core.EasyCaching.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Entities.Common\EasySoft.Core.Entities.Common.csproj"/>
+        <ProjectReference Include="..\..\..\project-framework\EasySoft.Core.Project.DataEntity.Dapper.Infrastructure\EasySoft.Core.Project.DataEntity.Dapper.Infrastructure.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

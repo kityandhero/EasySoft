@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>11</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Dapper\EasySoft.Core.Dapper.csproj"/>
+        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Entities.Common\EasySoft.Core.Entities.Common.csproj"/>
+    </ItemGroup>
+
+</Project>

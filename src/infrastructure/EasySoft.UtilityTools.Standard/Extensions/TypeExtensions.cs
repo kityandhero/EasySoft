@@ -1,5 +1,6 @@
 ﻿using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Attributes;
+using EasySoft.UtilityTools.Standard.Exceptions;
 
 namespace EasySoft.UtilityTools.Standard.Extensions;
 
@@ -240,6 +241,11 @@ public static class TypeExtensions
         MemberTypes memberTypes = MemberTypes.All
     )
     {
+        if (source == null)
+        {
+            throw new UnhandledException("source not allow fail");
+        }
+
         if (source as PropertyInfo != null)
         {
             var tryPropertyInfo = source as PropertyInfo;

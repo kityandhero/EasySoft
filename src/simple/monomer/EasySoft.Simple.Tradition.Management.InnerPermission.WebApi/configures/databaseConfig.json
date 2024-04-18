@@ -1,5 +1,5 @@
 {
-  "RoleConnection": "server=database.b.com; User ID=pandora;Password=!@#$1234;database=easy_soft_simple_tradition_role;Encrypt=False",
-  "MainConnection": "server=database.b.com; User ID=pandora;Password=!@#$1234;database=easy_soft_simple_tradition;Encrypt=False",
-  "MirrorConnection": "server=database.b.com; User ID=pandora;Password=!@#$1234;database=easy_soft_simple_tradition;Encrypt=False"
+  "RoleConnection": "server=database.local.com; User ID=pandora;Password=!@#$1234;database=easy_soft_simple_tradition_role;Encrypt=False",
+  "MainConnection": "server=database.local.com; User ID=pandora;Password=!@#$1234;database=easy_soft_simple_tradition;Encrypt=False",
+  "MirrorConnection": "server=database.local.com; User ID=pandora;Password=!@#$1234;database=easy_soft_simple_tradition;Encrypt=False"
 }

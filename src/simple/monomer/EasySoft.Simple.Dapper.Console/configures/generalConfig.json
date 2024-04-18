@@ -10,7 +10,7 @@
   "TokenServerDumpSwitch": "1",
   "TokenParseFromUrlSwitch": "1",
   "TokenParseFromCookieSwitch": "1",
-  "JsonWebTokenValidIssuer": "www.b.com",
+  "JsonWebTokenValidIssuer": "www.local.com",
   "JsonWebTokenValidAudience": "user",
   "JsonWebTokenIssuerSigningKey": "fcebbeb8c5ce4b108aa6e241d57cf6d8",
   "AgileConfigSwitch": "0",
