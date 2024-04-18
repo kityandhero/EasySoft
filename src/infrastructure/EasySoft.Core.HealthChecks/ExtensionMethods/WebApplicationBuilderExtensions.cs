@@ -13,7 +13,9 @@ public static class WebApplicationBuilderExtensions
     )
     {
         if (builder.HasRegistered(UniqueIdentifierAddAdvanceHealthChecks))
+        {
             return builder;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceHealthChecks)}."
@@ -22,20 +24,25 @@ public static class WebApplicationBuilderExtensions
         var healthChecksBuilder = builder.Services.AddHealthChecks();
 
         foreach (var item in healthCheckList)
+        {
             healthChecksBuilder.AddCheck(
                 item.GetName(),
                 item.GetCheckAction(),
                 item.GetTags(),
                 item.GetTimeout()
             );
+        }
 
-        builder.Services.AddHealthChecksUI(settings =>
-        {
-            settings.AddHealthCheckEndpoint("internal", ConstCollection.HealthChecksEndpoint);
+        builder.Services.AddHealthChecksUI(
+                settings =>
+                {
+                    settings.AddHealthCheckEndpoint("internal", ConstCollection.HealthChecksEndpoint);
 
-            settings.SetEvaluationTimeInSeconds(10);
-            settings.SetMinimumSecondsBetweenFailureNotifications(60);
-        }).AddInMemoryStorage();
+                    settings.SetEvaluationTimeInSeconds(10);
+                    settings.SetMinimumSecondsBetweenFailureNotifications(60);
+                }
+            )
+            .AddInMemoryStorage();
 
         ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()

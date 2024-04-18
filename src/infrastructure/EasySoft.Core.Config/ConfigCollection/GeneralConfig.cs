@@ -126,36 +126,75 @@ public class GeneralConfig : IConfig
 
     #region AppSecurity
 
+    /// <summary>
+    /// AppId
+    /// </summary>
     public string AppId { get; set; } = "";
 
+    /// <summary>
+    /// AppSecret
+    /// </summary>
     public string AppSecret { get; set; } = "";
 
+    /// <summary>
+    /// AppSecurityServerHostUrl
+    /// </summary>
     public string AppSecurityServerHostUrl { get; set; } = "";
 
     #endregion
 
+    /// <summary>
+    /// AccessWayDetectSwitch
+    /// </summary>
     public string AccessWayDetectSwitch { get; set; } = "0";
 
+    /// <summary>
+    /// RemoteGeneralLogSwitch
+    /// </summary>
     public string RemoteGeneralLogSwitch { get; set; } = "0";
 
+    /// <summary>
+    /// RemoteErrorLogSwitch
+    /// </summary>
     public string RemoteErrorLogSwitch { get; set; } = "0";
 
+    /// <summary>
+    /// RemoteSqlExecutionRecordSwitch
+    /// </summary>
     public string RemoteSqlExecutionRecordSwitch { get; set; } = "0";
 
+    /// <summary>
+    /// UseStaticFilesSwitch
+    /// </summary>
     public string UseStaticFilesSwitch { get; set; } = "1";
 
+    /// <summary>
+    /// UseAuthentication
+    /// </summary>
     public string UseAuthentication { get; set; } = "0";
 
+    /// <summary>
+    /// UseAuthorization
+    /// </summary>
     public string UseAuthorization { get; set; } = "0";
 
     #region Cors
 
+    /// <summary>
+    /// CorsSwitch
+    /// </summary>
     public string CorsSwitch { get; set; } = "0";
 
+    /// <summary>
+    /// CorsPolicies
+    /// </summary>
     public string CorsPolicies { get; set; } = "*";
 
     #endregion
 
+    /// <summary>
+    /// HttpRedirectionHttpsSwitch
+    /// </summary>
     public string HttpRedirectionHttpsSwitch { get; set; } = "0";
 
     /// <summary>
@@ -247,47 +286,113 @@ public class GeneralConfig : IConfig
 
     #endregion
 
+    /// <summary>
+    /// MiniProFileSwitch
+    /// </summary>
     public string MiniProFileSwitch { get; set; } = "0";
 
+    /// <summary>
+    /// WebRootPath
+    /// </summary>
     public string WebRootPath { get; set; } = "";
 
+    /// <summary>
+    /// CapSwitch
+    /// </summary>
     public string CapSwitch { get; set; } = "auto";
 
+    /// <summary>
+    /// CapPrefix
+    /// </summary>
     public string CapPrefix { get; set; } = "EasySoft";
 
+    /// <summary>
+    /// CapTransportType
+    /// </summary>
     public string CapTransportType { get; set; } = TransportType.InMemoryMessageQueue.ToString();
 
+    /// <summary>
+    /// CapPersistentType
+    /// </summary>
     public string CapPersistentType { get; set; } = PersistentType.ImMemory.ToString();
 
+    /// <summary>
+    /// CapPersistentConnection
+    /// </summary>
     public string CapPersistentConnection { get; set; } = "";
 
+    /// <summary>
+    /// CapDashboardSwitch
+    /// </summary>
     public string CapDashboardSwitch { get; set; } = "0";
 
+    /// <summary>
+    /// CapDiscoverySwitch
+    /// </summary>
     public string CapDiscoverySwitch { get; set; } = "0";
 
+    /// <summary>
+    /// RegistrationCenterSwitch
+    /// </summary>
     public string RegistrationCenterSwitch { get; set; } = "0";
 
+    /// <summary>
+    /// RegistrationCenterType
+    /// </summary>
     public string RegistrationCenterType { get; set; } = "";
 
+    /// <summary>
+    /// ConfigCenterSwitch
+    /// </summary>
     public string ConfigCenterSwitch { get; set; } = "0";
 
+    /// <summary>
+    /// ConfigCenterType
+    /// </summary>
     public string ConfigCenterType { get; set; } = "";
 
+    /// <summary>
+    /// GatewaySwitch
+    /// </summary>
     public string GatewaySwitch { get; set; } = "0";
 
+    /// <summary>
+    /// GatewayType
+    /// </summary>
     public string GatewayType { get; set; } = "";
 
+    /// <summary>
+    /// GatewayWithConsulSwitch
+    /// </summary>
     public string GatewayWithConsulSwitch { get; set; } = "0";
 
+    /// <summary>
+    /// GatewayConfigInConsulSwitch
+    /// </summary>
     public string GatewayConfigInConsulSwitch { get; set; } = "0";
 
+    /// <summary>
+    /// 
+    /// </summary>
     public string ExceptionlessSwitch { get; set; } = "0";
 
+    /// <summary>
+    /// ExceptionlessServerUrl
+    /// </summary>
     public string ExceptionlessServerUrl { get; set; } = "";
 
+    /// <summary>
+    /// ExceptionlessApiKey
+    /// </summary>
     public string ExceptionlessApiKey { get; set; } = "";
 
+    /// <summary>
+    /// SkyApmSwitch
+    /// </summary>
     public string SkyApmSwitch { get; set; } = "0";
 
+    /// <summary>
+    /// PermissionServerHostUrl
+    /// </summary>
     public string PermissionServerHostUrl { get; set; } = "";
 }

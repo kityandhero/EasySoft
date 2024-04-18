@@ -1,7 +1,16 @@
 ﻿namespace EasySoft.Core.Config.ExtensionMethods;
 
+/// <summary>
+/// ConfigurationBuilderExtensions
+/// </summary>
 public static class ConfigurationBuilderExtensions
 {
+    /// <summary>
+    /// AddMultiJsonFile
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="filePath"></param>
+    /// <returns></returns>
     public static IConfigurationBuilder AddMultiJsonFile(
         this IConfigurationBuilder builder,
         string filePath

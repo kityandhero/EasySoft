@@ -14,12 +14,13 @@ public static class EntityAssist
 
     private static string GetEntityCacheKey<T>(long id) where T : IEntitySelf<T>, new()
     {
-        return DapperElegantConfigurator.GetCacheOperator()?.BuildKey(
-            "entityCache",
-            typeof(T).Name.ToLowerFirst(),
-            "key",
-            id.ToString()
-        ) ?? "";
+        return DapperElegantConfigurator.GetCacheOperator()
+            ?.BuildKey(
+                "entityCache",
+                typeof(T).Name.ToLowerFirst(),
+                "key",
+                id.ToString()
+            ) ?? "";
     }
 
     public static T? RefreshCache<T>(long id) where T : IEntitySelf<T>, new()
@@ -35,32 +36,57 @@ public static class EntityAssist
     /// <returns></returns>
     public static T? GetEntity<T>(long id, bool enableCache = true) where T : IEntitySelf<T>, new()
     {
-        if (id <= 0) return default;
+        if (id <= 0)
+        {
+            return default;
+        }
 
-        if (!enableCache) return GetEntityCore<T>(id);
+        if (!enableCache)
+        {
+            return GetEntityCore<T>(id);
+        }
 
         var cacheOperator = DapperElegantConfigurator.GetCacheOperator();
 
-        if (cacheOperator == null) return GetEntityCore<T>(id);
+        if (cacheOperator == null)
+        {
+            return GetEntityCore<T>(id);
+        }
 
         var key = GetEntityCacheKey<T>(id);
 
-        if (string.IsNullOrWhiteSpace(key)) return GetEntityCore<T>(id);
+        if (string.IsNullOrWhiteSpace(key))
+        {
+            return GetEntityCore<T>(id);
+        }
 
         var result = cacheOperator.Get<T>(key);
 
-        if (result.Success) return result.Data;
+        if (result.Success)
+        {
+            return result.Data;
+        }
 
         var data = GetEntityCore<T>(id);
 
-        if (data != null) cacheOperator.Set(key, data, EntityCacheExpireTime);
+        if (data != null)
+        {
+            cacheOperator.Set(
+                key,
+                data,
+                EntityCacheExpireTime
+            );
+        }
 
         return data;
     }
 
     private static T? GetEntityCore<T>(long id) where T : IEntitySelf<T>, new()
     {
-        if (id <= 0) return default;
+        if (id <= 0)
+        {
+            return default;
+        }
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -77,11 +103,17 @@ public static class EntityAssist
     {
         var result = new ExecutiveResult(ReturnCode.NoChange);
 
-        if (id <= 0) return result;
+        if (id <= 0)
+        {
+            return result;
+        }
 
         var cacheOperator = DapperElegantConfigurator.GetCacheOperator();
 
-        if (cacheOperator == null) return result;
+        if (cacheOperator == null)
+        {
+            return result;
+        }
 
         var key = GetEntityCacheKey<T>(id);
 
@@ -96,7 +128,10 @@ public static class EntityAssist
     {
         var result = new ExecutiveResult(ReturnCode.NoChange);
 
-        if (entity.GetPrimaryKeyValue().ConvertTo<long>() <= 0) return result;
+        if (entity.GetPrimaryKeyValue().ConvertTo<long>() <= 0)
+        {
+            return result;
+        }
 
         var id = Convert.ToInt64(entity.GetPrimaryKeyValue());
 
@@ -134,7 +169,8 @@ public static class EntityAssist
     #region SingleListObject
 
     public static IList<ExpandoObject> SingleListEntity<T>(
-        ICollection<FieldItemSpecial<T>> fieldItems, Condition<T> condition,
+        ICollection<FieldItemSpecial<T>> fieldItems,
+        Condition<T> condition,
         Sort<T> sort
     ) where T : IEntitySelf<T>, new()
     {
@@ -154,7 +190,8 @@ public static class EntityAssist
 
     public static IList<ExpandoObject> SingleListObject<T>(
         ICollection<Expression<Func<T, object>>> listPropertyLambda,
-        ICollection<Condition<T>> conditions, Sort<T> sort
+        ICollection<Condition<T>> conditions,
+        Sort<T> sort
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
@@ -172,7 +209,8 @@ public static class EntityAssist
     }
 
     public static IList<ExpandoObject> SingleListObject<T>(
-        ICollection<FieldItemSpecial<T>> fieldItems, Condition<T> condition
+        ICollection<FieldItemSpecial<T>> fieldItems,
+        Condition<T> condition
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
@@ -189,7 +227,8 @@ public static class EntityAssist
     }
 
     public static IList<ExpandoObject> SingleListObject<T>(
-        ICollection<Expression<Func<T, object>>> listPropertyLambda, Condition<T> condition,
+        ICollection<Expression<Func<T, object>>> listPropertyLambda,
+        Condition<T> condition,
         IList<Sort<T>> sorts
     ) where T : IEntitySelf<T>, new()
     {
@@ -208,7 +247,8 @@ public static class EntityAssist
     }
 
     public static IList<ExpandoObject> SingleListObject<T>(
-        ICollection<FieldItemSpecial<T>> fieldItems, Condition<T> condition,
+        ICollection<FieldItemSpecial<T>> fieldItems,
+        Condition<T> condition,
         IList<Sort<T>> sorts
     ) where T : IEntitySelf<T>, new()
     {
@@ -302,7 +342,10 @@ public static class EntityAssist
 
     public static IList<T> SingleListEntity<T>(ICollection<object> listId) where T : IEntitySelf<T>, new()
     {
-        if (!listId.Any()) return new List<T>();
+        if (!listId.Any())
+        {
+            return new List<T>();
+        }
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -313,12 +356,17 @@ public static class EntityAssist
 
         if (mapper.GetUseLogSqlExecutionMessage())
         {
-            listId.ForEach(o =>
-            {
-                var data = mapper.Get(o);
+            listId.ForEach(
+                o =>
+                {
+                    var data = mapper.Get(o);
 
-                if (data != null) result.Add(data);
-            });
+                    if (data != null)
+                    {
+                        result.Add(data);
+                    }
+                }
+            );
         }
         else
         {
@@ -453,7 +501,12 @@ public static class EntityAssist
         var conditionsAdjust = conditions ?? new List<Condition<T>>();
         var sortsAdjust = sorts ?? new List<Sort<T>>();
 
-        var result = mapper.PageListWithTotalSize(pageNo, pageSize, conditionsAdjust, sortsAdjust);
+        var result = mapper.PageListWithTotalSize(
+            pageNo,
+            pageSize,
+            conditionsAdjust,
+            sortsAdjust
+        );
 
         return result;
     }
@@ -473,7 +526,12 @@ public static class EntityAssist
         var conditionsAdjust = conditions ?? new List<Condition<T>>();
         var sortsAdjust = sorts ?? new List<Sort<T>>();
 
-        var result = mapper.PageList(pageNo, pageSize, conditionsAdjust, sortsAdjust);
+        var result = mapper.PageList(
+            pageNo,
+            pageSize,
+            conditionsAdjust,
+            sortsAdjust
+        );
 
         return result;
     }
@@ -515,9 +573,10 @@ public static class EntityAssist
         return result;
     }
 
-    public static T? GetEntity<T>(ICollection<Condition<T>> conditions,
-        IList<Sort<T>> sorts)
-        where T : IEntitySelf<T>, new()
+    public static T? GetEntity<T>(
+        ICollection<Condition<T>> conditions,
+        IList<Sort<T>> sorts
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -533,7 +592,10 @@ public static class EntityAssist
 
     public static ExecutiveResult<T> Add<T>(T entity) where T : IEntitySelf<T>, new()
     {
-        if (entity == null) throw new Exception("执行对象不能为null");
+        if (entity == null)
+        {
+            throw new Exception("执行对象不能为null");
+        }
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -546,7 +608,10 @@ public static class EntityAssist
     public static ExecutiveResult<T> AddUniquer<T>(T entity, Condition<T> uniquerCondition)
         where T : IEntitySelf<T>, new()
     {
-        if (entity == null) throw new Exception("执行对象不能为null");
+        if (entity == null)
+        {
+            throw new Exception("执行对象不能为null");
+        }
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -561,7 +626,10 @@ public static class EntityAssist
         ICollection<Condition<T>> uniquerConditions
     ) where T : IEntitySelf<T>, new()
     {
-        if (entity == null) throw new Exception("执行对象不能为null");
+        if (entity == null)
+        {
+            throw new Exception("执行对象不能为null");
+        }
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -577,9 +645,15 @@ public static class EntityAssist
 
     public static ExecutiveResult<T> Update<T>(T entity) where T : IEntitySelf<T>, new()
     {
-        if (entity == null) throw new Exception("执行对象不能为null");
+        if (entity == null)
+        {
+            throw new Exception("执行对象不能为null");
+        }
 
-        if (Convert.ToInt64(entity.GetPrimaryKeyValue()) <= 0) throw new Exception("执行对象主键数据错误");
+        if (Convert.ToInt64(entity.GetPrimaryKeyValue()) <= 0)
+        {
+            throw new Exception("执行对象主键数据错误");
+        }
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -594,9 +668,15 @@ public static class EntityAssist
         ICollection<Condition<T>> conditions
     ) where T : IEntitySelf<T>, new()
     {
-        if (entity == null) throw new Exception("执行对象不能为null");
+        if (entity == null)
+        {
+            throw new Exception("执行对象不能为null");
+        }
 
-        if (Convert.ToInt64(entity.GetPrimaryKeyValue()) <= 0) throw new Exception("执行对象主键数据错误");
+        if (Convert.ToInt64(entity.GetPrimaryKeyValue()) <= 0)
+        {
+            throw new Exception("执行对象主键数据错误");
+        }
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -611,9 +691,15 @@ public static class EntityAssist
         ICollection<Expression<Func<T>>> listPropertyLambda
     ) where T : IEntitySelf<T>, new()
     {
-        if (entity == null) throw new Exception("执行对象不能为null");
+        if (entity == null)
+        {
+            throw new Exception("执行对象不能为null");
+        }
 
-        if (Convert.ToInt64(entity.GetPrimaryKeyValue()) <= 0) throw new Exception("执行对象主键数据错误");
+        if (Convert.ToInt64(entity.GetPrimaryKeyValue()) <= 0)
+        {
+            throw new Exception("执行对象主键数据错误");
+        }
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -628,9 +714,15 @@ public static class EntityAssist
         ICollection<Expression<Func<T, object>>> listPropertyLambda
     ) where T : IEntitySelf<T>, new()
     {
-        if (entity == null) throw new Exception("执行对象不能为null");
+        if (entity == null)
+        {
+            throw new Exception("执行对象不能为null");
+        }
 
-        if (Convert.ToInt64(entity.GetPrimaryKeyValue()) <= 0) throw new Exception("执行对象主键数据错误");
+        if (Convert.ToInt64(entity.GetPrimaryKeyValue()) <= 0)
+        {
+            throw new Exception("执行对象主键数据错误");
+        }
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -646,16 +738,26 @@ public static class EntityAssist
         ICollection<Condition<T>> conditions
     ) where T : IEntitySelf<T>, new()
     {
-        if (entity == null) throw new Exception("执行对象不能为null");
+        if (entity == null)
+        {
+            throw new Exception("执行对象不能为null");
+        }
 
-        if (Convert.ToInt64(entity.GetPrimaryKeyValue()) <= 0) throw new Exception("执行对象主键数据错误");
+        if (Convert.ToInt64(entity.GetPrimaryKeyValue()) <= 0)
+        {
+            throw new Exception("执行对象主键数据错误");
+        }
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
             DapperElegantConfigurator.GetSqlLogRecordJudge()
         );
 
-        return mapper.UpdateSpecificWithCondition(entity, listPropertyLambda, conditions);
+        return mapper.UpdateSpecificWithCondition(
+            entity,
+            listPropertyLambda,
+            conditions
+        );
     }
 
     public static bool UpdateSpecificWithCondition<T>(
@@ -664,16 +766,26 @@ public static class EntityAssist
         ICollection<Condition<T>> conditions
     ) where T : IEntitySelf<T>, new()
     {
-        if (entity == null) throw new Exception("执行对象不能为null");
+        if (entity == null)
+        {
+            throw new Exception("执行对象不能为null");
+        }
 
-        if (Convert.ToInt64(entity.GetPrimaryKeyValue()) <= 0) throw new Exception("执行对象主键数据错误");
+        if (Convert.ToInt64(entity.GetPrimaryKeyValue()) <= 0)
+        {
+            throw new Exception("执行对象主键数据错误");
+        }
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
             DapperElegantConfigurator.GetSqlLogRecordJudge()
         );
 
-        return mapper.UpdateSpecificWithCondition(entity, listPropertyLambda, conditions);
+        return mapper.UpdateSpecificWithCondition(
+            entity,
+            listPropertyLambda,
+            conditions
+        );
     }
 
     #endregion
@@ -682,9 +794,15 @@ public static class EntityAssist
 
     public static ExecutiveResult<T> Set<T>(T entity) where T : IEntitySelf<T>, new()
     {
-        if (entity == null) throw new Exception("执行对象不能为null");
+        if (entity == null)
+        {
+            throw new Exception("执行对象不能为null");
+        }
 
-        if (Convert.ToInt64(entity.GetPrimaryKeyValue()) == 0) return Add(entity);
+        if (Convert.ToInt64(entity.GetPrimaryKeyValue()) == 0)
+        {
+            return Add(entity);
+        }
 
         return Update(entity);
     }
@@ -695,7 +813,10 @@ public static class EntityAssist
 
     public static ExecutiveResult<T> DeleteEntity<T>(T entity) where T : IEntitySelf<T>, new()
     {
-        if (entity == null) throw new Exception("can not delete null data");
+        if (entity == null)
+        {
+            throw new Exception("can not delete null data");
+        }
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -711,7 +832,10 @@ public static class EntityAssist
     {
         var entity = GetEntity<T>(id, false);
 
-        if (entity == null) return new ExecutiveResult<T>(ReturnCode.NoData.ToMessage());
+        if (entity == null)
+        {
+            return new ExecutiveResult<T>(ReturnCode.NoData.ToMessage());
+        }
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -735,7 +859,10 @@ public static class EntityAssist
     {
         var entity = GetEntity(condition);
 
-        if (entity == null) return new ExecutiveResult<T>(ReturnCode.NoData);
+        if (entity == null)
+        {
+            return new ExecutiveResult<T>(ReturnCode.NoData);
+        }
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
@@ -759,7 +886,10 @@ public static class EntityAssist
     {
         var entity = GetEntity(conditions);
 
-        if (entity == null) return new ExecutiveResult<T>(ReturnCode.NoData);
+        if (entity == null)
+        {
+            return new ExecutiveResult<T>(ReturnCode.NoData);
+        }
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),

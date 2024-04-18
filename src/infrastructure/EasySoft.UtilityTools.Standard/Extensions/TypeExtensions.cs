@@ -21,7 +21,10 @@ public static class TypeExtensions
 
         var fieldInfo = type.GetField(t.ToString() ?? string.Empty);
 
-        if (fieldInfo == null) throw new Exception("未找到KeyValueDefinitionAttribute");
+        if (fieldInfo == null)
+        {
+            throw new Exception("未找到KeyValueDefinitionAttribute");
+        }
 
         var keyValueDefinitionAttribute = fieldInfo.GetCustomAttribute<KeyValueDefinitionAttribute>(
             "",
@@ -30,7 +33,9 @@ public static class TypeExtensions
         );
 
         if (keyValueDefinitionAttribute == null)
+        {
             throw new Exception($"{nameof(KeyValueDefinitionAttribute)} do not exist");
+        }
 
         return keyValueDefinitionAttribute;
     }
@@ -46,7 +51,11 @@ public static class TypeExtensions
     {
         var field = source.GetType().GetField(source.ToString());
 
-        return field != null && field.ContainAttribute<T>("", false, MemberTypes.Field);
+        return field != null && field.ContainAttribute<T>(
+            "",
+            false,
+            MemberTypes.Field
+        );
     }
 
     /// <summary>
@@ -60,9 +69,16 @@ public static class TypeExtensions
     {
         var field = source.GetType().GetField(source.ToString());
 
-        if (field == null) throw new Exception("field not allow null");
+        if (field == null)
+        {
+            throw new Exception("field not allow null");
+        }
 
-        return field.GetCustomAttribute<T>(nameFilter, false, MemberTypes.Field);
+        return field.GetCustomAttribute<T>(
+            nameFilter,
+            false,
+            MemberTypes.Field
+        );
     }
 
     /// <summary>
@@ -75,9 +91,16 @@ public static class TypeExtensions
     {
         var field = source.GetType().GetField(source.ToString());
 
-        if (field == null) throw new Exception("field not allow null");
+        if (field == null)
+        {
+            throw new Exception("field not allow null");
+        }
 
-        return field.GetCustomAttribute(nameFilter, false, MemberTypes.Field);
+        return field.GetCustomAttribute(
+            nameFilter,
+            false,
+            MemberTypes.Field
+        );
     }
 
     #endregion
@@ -93,7 +116,10 @@ public static class TypeExtensions
     /// <exception cref="Exception"></exception>
     public static string GetClassName<T>(this T o)
     {
-        if (o == null) throw new Exception("o not allow null");
+        if (o == null)
+        {
+            throw new Exception("o not allow null");
+        }
 
         return o.GetType().Name;
     }
@@ -123,9 +149,16 @@ public static class TypeExtensions
     ) where T : class
     {
         var result = default(T);
-        var list = source.GetCustomAttribute(nameFilter, inherit, memberTypes);
+        var list = source.GetCustomAttribute(
+            nameFilter,
+            inherit,
+            memberTypes
+        );
 
-        foreach (var attr in list.Where(attr => attr.GetType().FullName == typeof(T).FullName)) result = (T)attr;
+        foreach (var attr in list.Where(attr => attr.GetType().FullName == typeof(T).FullName))
+        {
+            result = (T)attr;
+        }
 
         return result != null;
     }
@@ -140,16 +173,23 @@ public static class TypeExtensions
     /// <param name="memberTypes">成员类型</param>
     /// <returns></returns>
     public static T? TryGetCustomAttribute<T>(
-        this object source,
+        this object? source,
         string nameFilter = "",
         bool inherit = false,
         MemberTypes memberTypes = MemberTypes.All
     ) where T : class
     {
         var result = default(T);
-        var list = source.GetCustomAttribute(nameFilter, inherit, memberTypes);
+        var list = source.GetCustomAttribute(
+            nameFilter,
+            inherit,
+            memberTypes
+        );
 
-        foreach (var attr in list.Where(attr => attr.GetType().FullName == typeof(T).FullName)) result = (T)attr;
+        foreach (var attr in list.Where(attr => attr.GetType().FullName == typeof(T).FullName))
+        {
+            result = (T)attr;
+        }
 
         return result;
     }
@@ -171,9 +211,16 @@ public static class TypeExtensions
     ) where T : class
     {
         var result = default(T);
-        var list = source.GetCustomAttribute(nameFilter, inherit, memberTypes);
+        var list = source.GetCustomAttribute(
+            nameFilter,
+            inherit,
+            memberTypes
+        );
 
-        foreach (var attr in list.Where(attr => attr.GetType().FullName == typeof(T).FullName)) result = (T)attr;
+        foreach (var attr in list.Where(attr => attr.GetType().FullName == typeof(T).FullName))
+        {
+            result = (T)attr;
+        }
 
         return result;
     }
@@ -187,7 +234,7 @@ public static class TypeExtensions
     /// <param name="memberTypes">成员类型</param>
     /// <returns></returns>
     public static List<object> GetCustomAttribute(
-        this object source,
+        this object? source,
         string nameFilter = "",
         bool inherit = false,
         MemberTypes memberTypes = MemberTypes.All
@@ -321,15 +368,30 @@ public static class TypeExtensions
     {
         var properties = target.GetType().GetProperties();
 
-        if (!properties.Any()) return "";
-
-        var list = properties.Select(o =>
+        if (!properties.Any())
         {
-            var value = o.GetValue(target);
+            return "";
+        }
 
-            return $"\"{o.Name}\": \"{value}\"";
-        });
+        var list = properties.Select(
+            o =>
+            {
+                var value = o.GetValue(target);
+
+                return $"\"{o.Name}\": \"{value}\"";
+            }
+        );
 
         return list.Join(",");
+    }
+
+    /// <summary>
+    /// GetTypeCode
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public static TypeCode GetTypeCode(this Type type)
+    {
+        return Type.GetTypeCode(type);
     }
 }

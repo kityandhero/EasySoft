@@ -158,13 +158,17 @@ public class Condition<T> where T : IEntity, new()
     /// <param name="type"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public string TransferExpression(out Type type)
+    public string TransferExpression(out Type? type)
     {
         if (ColumnTransferMode == ColumnTransferMode.ContainTableName)
+        {
             return TransferAssist.GetTableAndColumnName(Expression, out type);
+        }
 
         if (ColumnTransferMode == ColumnTransferMode.ExclusiveTableName)
+        {
             return TransferAssist.GetColumnName(Expression, out type);
+        }
 
         throw new Exception("unknown ColumnTransferMode");
     }

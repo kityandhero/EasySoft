@@ -20,7 +20,10 @@ public static class ExpandoObjectExtensions
 
         var result = new ExpandoObject();
 
-        foreach (var d in data) result.TryAdd(d.Key, d.Value);
+        foreach (var d in data)
+        {
+            result.TryAdd(d.Key, d.Value);
+        }
 
         return result;
     }
@@ -33,7 +36,7 @@ public static class ExpandoObjectExtensions
     /// <returns></returns>
     public static ExpandoObject Add(
         this ExpandoObject source,
-        IEnumerable<KeyValuePair<string, object?>> keyValuePairCollection
+        ICollection<KeyValuePair<string, object?>> keyValuePairCollection
     )
     {
         return source.AddKeyValuePairCollection(keyValuePairCollection);
@@ -42,15 +45,18 @@ public static class ExpandoObjectExtensions
     /// <summary>
     /// AddKeyValuePairCollection
     /// </summary>
-    /// <param name="source"></param>
+    /// <param name="source"></param>    
     /// <param name="keyValuePairCollection"></param>
     /// <returns></returns>
     public static ExpandoObject AddKeyValuePairCollection(
         this ExpandoObject source,
-        IEnumerable<KeyValuePair<string, object?>> keyValuePairCollection
+        ICollection<KeyValuePair<string, object?>> keyValuePairCollection
     )
     {
-        foreach (var keyValuePair in keyValuePairCollection) source.AddKeyValuePair(keyValuePair);
+        foreach (var keyValuePair in keyValuePairCollection)
+        {
+            source.AddKeyValuePair(keyValuePair);
+        }
 
         return source;
     }
@@ -84,9 +90,11 @@ public static class ExpandoObjectExtensions
         var resultAdd = source.TryAdd(keyValuePair.Key, keyValuePair.Value ?? "");
 
         if (!resultAdd)
+        {
             throw new Exception(
                 $"ExpandoObject TryAdd Fail -> key: {keyValuePair.Key}, value: {keyValuePair.Value ?? ""}"
             );
+        }
 
         return source;
     }
@@ -107,7 +115,10 @@ public static class ExpandoObjectExtensions
         {
             var resultAdd = source.TryAdd(item.Key, item.Value ?? "");
 
-            if (!resultAdd) throw new Exception("ExpandoObject TryAdd Fail");
+            if (!resultAdd)
+            {
+                throw new Exception("ExpandoObject TryAdd Fail");
+            }
         }
 
         return source;
@@ -130,13 +141,19 @@ public static class ExpandoObjectExtensions
 
         var resultAdd = temp.TryAdd(key, value);
 
-        if (!resultAdd) throw new Exception("ExpandoObject TryAdd Fail");
+        if (!resultAdd)
+        {
+            throw new Exception("ExpandoObject TryAdd Fail");
+        }
 
         var data = source.Merge(temp);
 
         var result = new ExpandoObject();
 
-        foreach (var d in data) result.TryAdd(d.Key, d.Value);
+        foreach (var d in data)
+        {
+            result.TryAdd(d.Key, d.Value);
+        }
 
         return result;
     }

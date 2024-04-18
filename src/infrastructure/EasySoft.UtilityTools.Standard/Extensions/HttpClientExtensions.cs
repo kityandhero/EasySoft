@@ -20,7 +20,7 @@ public static class HttpClientExtensions
         IDictionary<string, object> dictionary
     )
     {
-        var content = JsonConvertAssist.Serialize(dictionary);
+        var content = JsonConvertAssist.SerializeObject(dictionary);
 
         var stringContent = new StringContent(content, Encoding.UTF8);
 

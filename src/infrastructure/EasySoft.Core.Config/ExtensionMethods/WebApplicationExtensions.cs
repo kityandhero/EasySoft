@@ -4,22 +4,32 @@ using EasySoft.Core.Infrastructure.Startup;
 
 namespace EasySoft.Core.Config.ExtensionMethods;
 
+/// <summary>
+/// WebApplicationExtensions
+/// </summary>
 public static class WebApplicationExtensions
 {
-    private const string UniqueIdentifierUseDevelopAuxiliary = "e84ad243-6571-4e74-aa77-02a3a8bb4ef1";
+    private const string IdentifierUseDevelopAuxiliary = "e84ad243-6571-4e74-aa77-02a3a8bb4ef1";
 
+    /// <summary>
+    /// UseAdvanceStaticFiles
+    /// </summary>
+    /// <param name="application"></param>
+    /// <returns></returns>
     public static WebApplication UseAdvanceStaticFiles(
         this WebApplication application
     )
     {
-        if (!application.UseHostFiltering().ApplicationServices.GetAutofacRoot()
+        if (!application.UseHostFiltering()
+                .ApplicationServices.GetAutofacRoot()
                 .IsRegistered<AdvanceStaticFileOptions>())
         {
             application.UseStaticFiles();
         }
         else
         {
-            var staticFileOptions = application.UseHostFiltering().ApplicationServices.GetAutofacRoot()
+            var staticFileOptions = application.UseHostFiltering()
+                .ApplicationServices.GetAutofacRoot()
                 .Resolve<AdvanceStaticFileOptions>();
 
             application.UseStaticFiles(staticFileOptions);
@@ -30,16 +40,29 @@ public static class WebApplicationExtensions
         return application;
     }
 
+    /// <summary>
+    /// UseConfigureTemplate
+    /// </summary>
+    /// <param name="application"></param>
+    /// <returns></returns>
     public static WebApplication UseConfigureTemplate(
         this WebApplication application
     )
     {
-        if (!AuxiliaryConfigure.PromptConfigFileInfo) return application;
-
-        if (application.HasUsed(UniqueIdentifierUseDevelopAuxiliary))
+        if (!AuxiliaryConfigure.PromptConfigFileInfo)
+        {
             return application;
+        }
 
-        if (!EnvironmentAssist.IsDevelopment()) return application;
+        if (application.HasUsed(IdentifierUseDevelopAuxiliary))
+        {
+            return application;
+        }
+
+        if (!EnvironmentAssist.IsDevelopment())
+        {
+            return application;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseConfigureTemplate)}."

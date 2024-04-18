@@ -20,6 +20,7 @@ public class RabbitMqProducer : IDisposable
     /// <param name="message"></param>
     /// <param name="properties"></param>
     /// <param name="mandatory"></param>
+
     //public virtual void BasicPublish<TMessage>(string queueName, TMessage message)
     //{
     //    _logger.LogInformation($"PushMessage,queueName:{queueName}");
@@ -50,32 +51,56 @@ public class RabbitMqProducer : IDisposable
             .WaitAndRetry(
                 3,
                 _ => TimeSpan.FromSeconds(1),
-                (ex, _, retryCount, _) =>
+                (
+                    ex,
+                    _,
+                    retryCount,
+                    _
+                ) =>
                 {
-                    _logger.LogError(ex, "{RetryCount}:{Arg1Message}", retryCount, ex.Message);
+                    _logger.LogError(
+                        ex,
+                        "{RetryCount}:{Arg1Message}",
+                        retryCount,
+                        ex.Message
+                    );
                 }
             )
-            .Execute(() =>
-            {
-                var content = message as string;
+            .Execute(
+                () =>
+                {
+                    var content = message as string;
 
-                if (content == null && message != null) content = JsonConvertAssist.Serialize(message);
+                    if (content == null && message != null)
+                    {
+                        content = JsonConvertAssist.SerializeObject(message);
+                    }
 
-                if (content == null) return;
+                    if (content == null)
+                    {
+                        return;
+                    }
 
-                var body = Encoding.UTF8.GetBytes(content);
+                    var body = Encoding.UTF8.GetBytes(content);
 
-                //当mandatory标志位设置为true时，如果exchange根据自身类型和消息routingKey无法找到一个合适的queue存储消息
-                //那么broker会调用basic.return方法将消息返还给生产者;
-                //当mandatory设置为false时，出现上述情况broker会直接将消息丢弃
+                    //当mandatory标志位设置为true时，如果exchange根据自身类型和消息routingKey无法找到一个合适的queue存储消息
+                    //那么broker会调用basic.return方法将消息返还给生产者;
+                    //当mandatory设置为false时，出现上述情况broker会直接将消息丢弃
 
-                _channel.BasicPublish(exchange, routingKey, mandatory, properties, body);
+                    _channel.BasicPublish(
+                        exchange,
+                        routingKey,
+                        mandatory,
+                        properties,
+                        body
+                    );
 
-                //开启发布消息确认模式
-                //_channel.ConfirmSelect();
-                //消息是否到达服务器
-                //bool publishStatus = _channel.WaitForConfirms();
-            });
+                    //开启发布消息确认模式
+                    //_channel.ConfirmSelect();
+                    //消息是否到达服务器
+                    //bool publishStatus = _channel.WaitForConfirms();
+                }
+            );
     }
 
     public virtual IBasicProperties CreateBasicProperties()
@@ -91,6 +116,9 @@ public class RabbitMqProducer : IDisposable
 
     protected virtual void Dispose(bool disposing)
     {
-        if (disposing) _channel.Dispose();
+        if (disposing)
+        {
+            _channel.Dispose();
+        }
     }
 }

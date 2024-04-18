@@ -17,16 +17,23 @@ public static class ReflectionExtensions
     /// <returns></returns>
     public static bool HasProperty(this object source, string propertyName, bool ignoringCase = false)
     {
-        if (propertyName.IsNullOrEmpty()) throw new Exception("必须指定属性名");
+        if (propertyName.IsNullOrEmpty())
+        {
+            throw new Exception("必须指定属性名");
+        }
 
         var result = false;
         var type = source.GetType();
         var properties = type.GetProperties();
 
         foreach (var p in properties)
+        {
             if (!ignoringCase)
             {
-                if (p.Name != propertyName) continue;
+                if (p.Name != propertyName)
+                {
+                    continue;
+                }
 
                 result = true;
 
@@ -34,12 +41,16 @@ public static class ReflectionExtensions
             }
             else
             {
-                if (p.Name.ToLower() != propertyName.ToLower()) continue;
+                if (p.Name.ToLower() != propertyName.ToLower())
+                {
+                    continue;
+                }
 
                 result = true;
 
                 break;
             }
+        }
 
         return result;
     }
@@ -64,26 +75,42 @@ public static class ReflectionExtensions
             var properties = source.GetType().GetProperties();
 
             foreach (var p in properties)
+            {
                 if (!ignoringCase)
                 {
-                    if (p.Name != propertyName) continue;
+                    if (p.Name != propertyName)
+                    {
+                        continue;
+                    }
 
                     var v = Convert.ChangeType(propertyValue, p.PropertyType);
 
-                    p.SetValue(source, v, null);
+                    p.SetValue(
+                        source,
+                        v,
+                        null
+                    );
 
                     break;
                 }
                 else
                 {
-                    if (p.Name.ToLower() != propertyName.ToLower()) continue;
+                    if (p.Name.ToLower() != propertyName.ToLower())
+                    {
+                        continue;
+                    }
 
                     var v = Convert.ChangeType(propertyValue, p.PropertyType);
 
-                    p.SetValue(source, v, null);
+                    p.SetValue(
+                        source,
+                        v,
+                        null
+                    );
 
                     break;
                 }
+            }
         }
         else
         {
@@ -101,39 +128,58 @@ public static class ReflectionExtensions
     /// <returns></returns>
     public static T GetValueByPropertyName<T>(this object source, string propertyName, bool ignoringCase = false)
     {
-        if (!source.HasProperty(propertyName, ignoringCase)) throw new Exception("该属性不存在");
+        if (!source.HasProperty(propertyName, ignoringCase))
+        {
+            throw new Exception("该属性不存在");
+        }
 
         var type = typeof(T);
 
         var properties = source.GetType().GetProperties();
 
         foreach (var p in properties)
+        {
             if (!ignoringCase)
             {
-                if (p.Name != propertyName) continue;
+                if (p.Name != propertyName)
+                {
+                    continue;
+                }
 
                 var v = p.GetValue(source, null);
 
                 var r = Convert.ChangeType(v, type);
 
                 if (r == null)
+                {
                     throw new Exception("Convert.ChangeType not allow return null in GetValueByPropertyName");
+                }
 
                 return (T)r;
             }
             else
             {
-                if (!string.Equals(p.Name, propertyName, StringComparison.CurrentCultureIgnoreCase)) continue;
+                if (!string.Equals(
+                        p.Name,
+                        propertyName,
+                        StringComparison.CurrentCultureIgnoreCase
+                    ))
+                {
+                    continue;
+                }
 
                 var v = p.GetValue(source, null);
 
                 var r = Convert.ChangeType(v, type);
 
                 if (r == null)
+                {
                     throw new Exception("Convert.ChangeType not allow return null in GetValueByPropertyName");
+                }
 
                 return (T)r;
             }
+        }
 
         throw new Exception("该属性不存在");
     }
@@ -155,11 +201,18 @@ public static class ReflectionExtensions
         foreach (var tp in propertyInfos)
         foreach (var p in properties)
         {
-            if (tp.Name != p.Name || tp.PropertyType != p.PropertyType) continue;
+            if (tp.Name != p.Name || tp.PropertyType != p.PropertyType)
+            {
+                continue;
+            }
 
             var v = p.GetValue(sources, null);
 
-            tp.SetValue(target, v, null);
+            tp.SetValue(
+                target,
+                v,
+                null
+            );
         }
     }
 
@@ -181,38 +234,59 @@ public static class ReflectionExtensions
         var sourcePropertyList = sourceType?.GetProperties();
         var targetPropertyList = targetType.GetProperties();
 
-        if (sourcePropertyList == null) return false;
+        if (sourcePropertyList == null)
+        {
+            return false;
+        }
 
         foreach (var propertyItem in sourcePropertyList)
         {
             var v = propertyItem.GetValue(sources, null);
 
-            if (v == null) continue;
+            if (v == null)
+            {
+                continue;
+            }
 
             var contain = false;
 
             foreach (var t in targetPropertyList)
             {
                 //比较属性和属性类型
-                if (t.Name != propertyItem.Name || t.PropertyType != propertyItem.PropertyType) continue;
+                if (t.Name != propertyItem.Name || t.PropertyType != propertyItem.PropertyType)
+                {
+                    continue;
+                }
 
                 contain = true;
 
                 var tv = t.GetValue(target, null);
 
-                if (tv == null) continue;
+                if (tv == null)
+                {
+                    continue;
+                }
 
                 if (v.IsDefinedBaseType())
                 {
-                    if (!v.Equals(tv)) return false;
+                    if (!v.Equals(tv))
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
-                    if (!v.EqualsByProperty(tv)) return false;
+                    if (!v.EqualsByProperty(tv))
+                    {
+                        return false;
+                    }
                 }
             }
 
-            if (!contain) return false;
+            if (!contain)
+            {
+                return false;
+            }
         }
 
         return true;
@@ -231,11 +305,17 @@ public static class ReflectionExtensions
     {
         var result = sources.Clone() as Array ?? Array.Empty<object>();
 
-        if (sources.Length <= 0) return result;
+        if (sources.Length <= 0)
+        {
+            return result;
+        }
 
         var first = sources.GetValue(0);
 
-        if (first == null) return result;
+        if (first == null)
+        {
+            return result;
+        }
 
         result = Array.CreateInstance(first.GetType(), sources.Length);
 
@@ -255,11 +335,17 @@ public static class ReflectionExtensions
     /// <returns></returns>
     private static IList GetCloneByList(this IEnumerable? sources)
     {
-        if (sources == null) return new ArrayList();
+        if (sources == null)
+        {
+            return new ArrayList();
+        }
 
         var result = sources.GetType().Create() as IList ?? new ArrayList();
 
-        foreach (var item in sources) result.Add(item.GetClone());
+        foreach (var item in sources)
+        {
+            result.Add(item.GetClone());
+        }
 
         return result;
     }
@@ -273,14 +359,23 @@ public static class ReflectionExtensions
         var type = sources.GetType();
         var typeName = type.FullName;
 
-        if (typeName == null) throw new Exception("typeName is null");
+        if (typeName == null)
+        {
+            throw new Exception("typeName is null");
+        }
 
         //判断数组
         if (type.IsArray)
         {
-            if (sources is not Array array) throw new Exception("error");
+            if (sources is not Array array)
+            {
+                throw new Exception("error");
+            }
 
-            if (GetCloneByArray(array) is not T result) throw new Exception("GetClone result is null");
+            if (GetCloneByArray(array) is not T result)
+            {
+                throw new Exception("GetClone result is null");
+            }
 
             return result;
         }
@@ -294,7 +389,10 @@ public static class ReflectionExtensions
         {
             var result = GetCloneByList(sources as IList) as T;
 
-            if (result == null) throw new Exception("GetClone result is null");
+            if (result == null)
+            {
+                throw new Exception("GetClone result is null");
+            }
 
             return result;
         }
@@ -307,10 +405,17 @@ public static class ReflectionExtensions
         foreach (var propertyInfo in properties)
         {
             var value = propertyInfo.GetValue(sources, null);
-            propertyInfo.SetValue(obj, value, null);
+            propertyInfo.SetValue(
+                obj,
+                value,
+                null
+            );
         }
 
-        if (obj == null) throw new Exception("GetClone result is null");
+        if (obj == null)
+        {
+            throw new Exception("GetClone result is null");
+        }
 
         return obj;
     }
@@ -368,20 +473,31 @@ public static class ReflectionExtensions
         params object[] inputVariables
     )
     {
-        if (source.IsNull()) throw new ArgumentNullException(nameof(source));
+        if (source.IsNull())
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
 
-        if (methodName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(methodName));
+        if (methodName.IsNullOrEmpty())
+        {
+            throw new ArgumentNullException(nameof(methodName));
+        }
 
         var objectType = source.GetType();
         var methodInputTypes = new Type[inputVariables.Length];
-        for (var x = 0; x < inputVariables.Length; ++x) methodInputTypes[x] = inputVariables[x].GetType();
+        for (var x = 0; x < inputVariables.Length; ++x)
+        {
+            methodInputTypes[x] = inputVariables[x].GetType();
+        }
 
         var method = objectType.GetMethod(methodName, methodInputTypes);
 
         if (method == null)
+        {
             throw new InvalidOperationException(
                 "Could not find method " + methodName + " with the appropriate input variables."
             );
+        }
 
         return (TReturnType)method.Invoke(source, inputVariables)!;
     }
@@ -399,7 +515,10 @@ public static class ReflectionExtensions
     /// <returns>The newly created instance of the type</returns>
     public static TClassType Create<TClassType>(this Type type, params object[] args)
     {
-        if (type.IsNull()) throw new ArgumentNullException(nameof(type));
+        if (type.IsNull())
+        {
+            throw new ArgumentNullException(nameof(type));
+        }
 
         return (TClassType)type.Create(args)!;
     }
@@ -410,9 +529,12 @@ public static class ReflectionExtensions
     /// <param name="type">Type to create an instance of</param>
     /// <param name="args">Arguments sent into the constructor</param>
     /// <returns>The newly created instance of the type</returns>
-    public static object? Create(this Type type, params object[] args)
+    public static object? Create(this Type? type, params object[] args)
     {
-        if (type.IsNull()) throw new ArgumentNullException(nameof(type));
+        if (type.IsNull())
+        {
+            throw new ArgumentNullException(nameof(type));
+        }
 
         return Activator.CreateInstance(type, args);
     }
@@ -426,7 +548,10 @@ public static class ReflectionExtensions
     /// <returns>The newly created instance of the types</returns>
     public static IEnumerable<TClassType?> Create<TClassType>(this IEnumerable<Type> types, params object[] args)
     {
-        if (types.IsNull()) throw new ArgumentNullException(nameof(types));
+        if (types.IsNull())
+        {
+            throw new ArgumentNullException(nameof(types));
+        }
 
         return types.ForEach(x => x.Create<TClassType>(args));
     }
@@ -439,7 +564,10 @@ public static class ReflectionExtensions
     /// <returns>The newly created instance of the types</returns>
     public static IEnumerable<object?> Create(this IEnumerable<Type> types, params object[] args)
     {
-        if (types.IsNull()) throw new ArgumentNullException(nameof(types));
+        if (types.IsNull())
+        {
+            throw new ArgumentNullException(nameof(types));
+        }
 
         return types.ForEach(x => x.Create(args));
     }
@@ -456,7 +584,10 @@ public static class ReflectionExtensions
     /// <returns>string name of the type</returns>
     public static string GetName(this Type objectType)
     {
-        if (objectType.IsNull()) throw new ArgumentNullException(nameof(objectType));
+        if (objectType.IsNull())
+        {
+            throw new ArgumentNullException(nameof(objectType));
+        }
 
         var output = new StringBuilder();
         if (objectType.Name == "Void")
@@ -502,7 +633,10 @@ public static class ReflectionExtensions
     /// <returns>True if it does, false otherwise</returns>
     public static bool HasDefaultConstructor(this Type type)
     {
-        if (type.IsNull()) throw new ArgumentNullException(nameof(type));
+        if (type.IsNull())
+        {
+            throw new ArgumentNullException(nameof(type));
+        }
 
         return type.GetConstructors(BindingFlags.Public | BindingFlags.Instance)
             .Any(x => x.GetParameters().Length == 0);
@@ -520,9 +654,15 @@ public static class ReflectionExtensions
     /// <returns>True if it is, false otherwise</returns>
     public static bool Is(this object source, Type type)
     {
-        if (source.IsNull()) throw new ArgumentNullException(nameof(source));
+        if (source.IsNull())
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
 
-        if (type.IsNull()) throw new ArgumentNullException(nameof(type));
+        if (type.IsNull())
+        {
+            throw new ArgumentNullException(nameof(type));
+        }
 
         return source.GetType().Is(type);
     }
@@ -535,11 +675,20 @@ public static class ReflectionExtensions
     /// <returns>True if it is, false otherwise</returns>
     public static bool Is(this Type? objectType, Type type)
     {
-        if (type.IsNull()) throw new ArgumentNullException(nameof(type));
+        if (type.IsNull())
+        {
+            throw new ArgumentNullException(nameof(type));
+        }
 
-        if (objectType == null) return false;
+        if (objectType == null)
+        {
+            return false;
+        }
 
-        if (type == objectType || objectType.GetInterfaces().Any(x => x == type)) return true;
+        if (type == objectType || objectType.GetInterfaces().Any(x => x == type))
+        {
+            return true;
+        }
 
         return objectType.BaseType != null && objectType.BaseType.Is(type);
     }
@@ -635,7 +784,10 @@ public static class ReflectionExtensions
     /// <returns>The assembly specified if it exists</returns>
     public static Assembly? Load(this AssemblyName name)
     {
-        if (name.IsNull()) throw new ArgumentNullException(nameof(name));
+        if (name.IsNull())
+        {
+            throw new ArgumentNullException(nameof(name));
+        }
 
         try
         {
@@ -665,17 +817,22 @@ public static class ReflectionExtensions
                      "*.dll",
                      recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly
                  ))
+        {
             try
             {
                 var assembly = AssemblyName.GetAssemblyName(file.FullName).Load();
 
-                if (assembly == null) continue;
+                if (assembly == null)
+                {
+                    continue;
+                }
 
                 assemblies.Add(assembly);
             }
             catch (BadImageFormatException)
             {
             }
+        }
 
         return assemblies;
     }
@@ -712,26 +869,50 @@ public static class ReflectionExtensions
     /// <returns>A copy of the object</returns>
     public static T? MakeShallowCopy<T>(this T source, bool simpleTypesOnly = false)
     {
-        if (source == null) return default;
+        if (source == null)
+        {
+            return default;
+        }
 
         var objectType = source.GetType();
         var classInstance = objectType.Create<T>();
 
         foreach (var property in objectType.GetProperties())
+        {
             if (property.CanRead
                 && property.CanWrite
                 && simpleTypesOnly
                 && property.PropertyType.IsValueType)
-                property.SetValue(classInstance, property.GetValue(source, null), null);
+            {
+                property.SetValue(
+                    classInstance,
+                    property.GetValue(source, null),
+                    null
+                );
+            }
             else if (!simpleTypesOnly
                      && property.CanRead
                      && property.CanWrite)
-                property.SetValue(classInstance, property.GetValue(source, null), null);
+            {
+                property.SetValue(
+                    classInstance,
+                    property.GetValue(source, null),
+                    null
+                );
+            }
+        }
 
         foreach (var field in objectType.GetFields())
+        {
             if (simpleTypesOnly && field.IsPublic)
+            {
                 field.SetValue(classInstance, field.GetValue(source));
-            else if (!simpleTypesOnly && field.IsPublic) field.SetValue(classInstance, field.GetValue(source));
+            }
+            else if (!simpleTypesOnly && field.IsPublic)
+            {
+                field.SetValue(classInstance, field.GetValue(source));
+            }
+        }
 
         return classInstance;
     }
@@ -749,7 +930,10 @@ public static class ReflectionExtensions
     /// <returns>A list of objects that are of the type specified</returns>
     public static IEnumerable<TClassType?> Objects<TClassType>(this Assembly assembly)
     {
-        if (assembly.IsNull()) throw new ArgumentNullException(nameof(assembly));
+        if (assembly.IsNull())
+        {
+            throw new ArgumentNullException(nameof(assembly));
+        }
 
         return assembly.Types<TClassType>().Where(x => !x.ContainsGenericParameters).Create<TClassType>();
     }
@@ -763,11 +947,17 @@ public static class ReflectionExtensions
     /// <returns>A list of objects that are of the type specified</returns>
     public static IEnumerable<TClassType?> Objects<TClassType>(this IEnumerable<Assembly> assemblies)
     {
-        if (assemblies.IsNull()) throw new ArgumentNullException(nameof(assemblies));
+        if (assemblies.IsNull())
+        {
+            throw new ArgumentNullException(nameof(assemblies));
+        }
 
         var returnValues = new List<TClassType?>();
 
-        foreach (var assembly in assemblies) returnValues.AddRange(assembly.Objects<TClassType>());
+        foreach (var assembly in assemblies)
+        {
+            returnValues.AddRange(assembly.Objects<TClassType>());
+        }
 
         return returnValues;
     }
@@ -782,7 +972,10 @@ public static class ReflectionExtensions
     /// <returns>A list of objects that are of the type specified</returns>
     public static IEnumerable<TClassType?> Objects<TClassType>(this DirectoryInfo directory, bool recursive = false)
     {
-        if (directory.IsNull()) throw new ArgumentNullException(nameof(directory));
+        if (directory.IsNull())
+        {
+            throw new ArgumentNullException(nameof(directory));
+        }
 
         return directory.LoadAssemblies(recursive).Objects<TClassType>();
     }
@@ -799,9 +992,15 @@ public static class ReflectionExtensions
     /// <returns>Returns the property's value</returns>
     public static object? Property(this object source, PropertyInfo? property)
     {
-        if (source.IsNull()) throw new ArgumentNullException(nameof(source));
+        if (source.IsNull())
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
 
-        if (property.IsNull()) throw new ArgumentNullException(nameof(property));
+        if (property.IsNull())
+        {
+            throw new ArgumentNullException(nameof(property));
+        }
 
         return property?.GetValue(source, null);
     }
@@ -814,9 +1013,15 @@ public static class ReflectionExtensions
     /// <returns>Returns the property's value</returns>
     public static object? Property(this object source, string property)
     {
-        if (source.IsNull()) throw new ArgumentNullException(nameof(source));
+        if (source.IsNull())
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
 
-        if (property.IsNullOrEmpty()) throw new ArgumentNullException(nameof(property));
+        if (property.IsNullOrEmpty())
+        {
+            throw new ArgumentNullException(nameof(property));
+        }
 
         var properties = property.Split(new[] { "." }, StringSplitOptions.None);
         var tempObject = source;
@@ -827,12 +1032,18 @@ public static class ReflectionExtensions
         {
             destinationProperty = tempObjectType.GetProperty(properties[x]);
 
-            if (destinationProperty == null) continue;
+            if (destinationProperty == null)
+            {
+                continue;
+            }
 
             tempObjectType = destinationProperty.PropertyType;
             tempObject = destinationProperty.GetValue(tempObject, null);
 
-            if (tempObject == null) return null;
+            if (tempObject == null)
+            {
+                return null;
+            }
         }
 
         destinationProperty = tempObjectType.GetProperty(properties[properties.Length - 1]);
@@ -852,22 +1063,32 @@ public static class ReflectionExtensions
     /// <param name="property">Property</param>
     /// <returns>A lambda expression that calls a specific property's getter function</returns>
     public static Expression<Func<TClassType, TDataType>> PropertyGetter<TClassType, TDataType>(
-        this PropertyInfo property)
+        this PropertyInfo property
+    )
     {
         if (!property.PropertyType.Is(typeof(TDataType)))
+        {
             throw new ArgumentException("Property is not of the type specified");
+        }
 
         if (property.DeclaringType != null && !property.DeclaringType.Is(typeof(TClassType)) &&
             !typeof(TClassType).Is(property.DeclaringType))
+        {
             throw new ArgumentException("Property is not from the declaring class type specified");
+        }
 
-        if (property.DeclaringType == null) throw new Exception("property.DeclaringType is null");
+        if (property.DeclaringType == null)
+        {
+            throw new Exception("property.DeclaringType is null");
+        }
 
         var objectInstance = Expression.Parameter(property.DeclaringType, "x");
         var propertyGet = Expression.Property(objectInstance, property);
 
         if (property.PropertyType == typeof(TDataType))
+        {
             return Expression.Lambda<Func<TClassType, TDataType>>(propertyGet, objectInstance);
+        }
 
         var convert = Expression.Convert(propertyGet, typeof(TDataType));
 
@@ -901,15 +1122,22 @@ public static class ReflectionExtensions
         {
             var temp = (MemberExpression)unaryExpression.Operand;
 
-            if (temp.Expression != null) return temp.Expression.PropertyName() + temp.Member.Name;
+            if (temp.Expression != null)
+            {
+                return temp.Expression.PropertyName() + temp.Member.Name;
+            }
         }
 
         if (expression.Body is not MemberExpression memberExpression)
+        {
             throw new ArgumentException("Expression.Body is not a MemberExpression");
+        }
 
         if (memberExpression.Expression != null)
+        {
             return memberExpression.Expression.PropertyName() +
                    memberExpression.Member.Name;
+        }
 
         throw new Exception("memberExpression.Expression is null");
     }
@@ -921,10 +1149,15 @@ public static class ReflectionExtensions
     /// <returns>The name of the property</returns>
     public static string PropertyName(this Expression expression)
     {
-        if (expression is not MemberExpression tempExpression) return "";
+        if (expression is not MemberExpression tempExpression)
+        {
+            return "";
+        }
 
         if (tempExpression.Expression != null)
+        {
             return tempExpression.Expression.PropertyName() + tempExpression.Member.Name + ".";
+        }
 
         throw new Exception("tempExpression.Expression is null");
     }
@@ -944,15 +1177,24 @@ public static class ReflectionExtensions
         this Expression<Func<TClassType, TDataType>> property
     )
     {
-        if (property.IsNull()) throw new ArgumentNullException(nameof(property));
+        if (property.IsNull())
+        {
+            throw new ArgumentNullException(nameof(property));
+        }
 
         var propertyName = property.PropertyName();
         var splitName = propertyName.Split(new[] { "." }, StringSplitOptions.RemoveEmptyEntries);
         var propertyInfo = typeof(TClassType).GetProperty(splitName[0]);
 
-        if (propertyInfo == null) throw new Exception("propertyInfo is null");
+        if (propertyInfo == null)
+        {
+            throw new Exception("propertyInfo is null");
+        }
 
-        if (propertyInfo.DeclaringType == null) throw new Exception("propertyInfo.DeclaringType is null");
+        if (propertyInfo.DeclaringType == null)
+        {
+            throw new Exception("propertyInfo.DeclaringType is null");
+        }
 
         var objectInstance = Expression.Parameter(propertyInfo.DeclaringType, "x");
         var propertySet = Expression.Parameter(typeof(TDataType), "y");
@@ -967,36 +1209,72 @@ public static class ReflectionExtensions
             {
                 propertyInfo = propertyInfo?.PropertyType.GetProperty(splitName[x]);
 
-                if (propertyInfo != null) propertyGet = Expression.Property(propertyGet, propertyInfo);
+                if (propertyInfo != null)
+                {
+                    propertyGet = Expression.Property(propertyGet, propertyInfo);
+                }
             }
 
             propertyInfo = propertyInfo?.PropertyType.GetProperty(splitName[^1]);
         }
 
-        if (propertyInfo == null) throw new Exception("propertyInfo is null");
+        if (propertyInfo == null)
+        {
+            throw new Exception("propertyInfo is null");
+        }
 
-        if (propertyInfo.PropertyType == null) throw new Exception("propertyInfo.PropertyType is null");
+        if (propertyInfo.PropertyType == null)
+        {
+            throw new Exception("propertyInfo.PropertyType is null");
+        }
 
         var setMethod = propertyInfo.GetSetMethod();
 
-        if (setMethod == null) throw new Exception("setMethod is null");
+        if (setMethod == null)
+        {
+            throw new Exception("setMethod is null");
+        }
 
         if (propertyInfo.PropertyType != typeof(TDataType))
         {
             var convert = Expression.Convert(propertySet, propertyInfo.PropertyType);
 
             setterCall = propertyGet == null
-                ? Expression.Call(objectInstance, setMethod, convert)
-                : Expression.Call(propertyGet, setMethod, convert);
+                ? Expression.Call(
+                    objectInstance,
+                    setMethod,
+                    convert
+                )
+                : Expression.Call(
+                    propertyGet,
+                    setMethod,
+                    convert
+                );
 
-            return Expression.Lambda<Action<TClassType, TDataType>>(setterCall, objectInstance, propertySet);
+            return Expression.Lambda<Action<TClassType, TDataType>>(
+                setterCall,
+                objectInstance,
+                propertySet
+            );
         }
 
         setterCall = propertyGet == null
-            ? Expression.Call(objectInstance, setMethod, propertySet)
-            : Expression.Call(propertyGet, setMethod, propertySet);
+            ? Expression.Call(
+                objectInstance,
+                setMethod,
+                propertySet
+            )
+            : Expression.Call(
+                propertyGet,
+                setMethod,
+                propertySet
+            );
 
-        return Expression.Lambda<Action<TClassType, TDataType>>(setterCall, objectInstance, propertySet);
+        return Expression.Lambda<Action<TClassType, TDataType>>(
+            setterCall,
+            objectInstance,
+            propertySet
+        );
     }
 
     /// <summary>
@@ -1006,7 +1284,8 @@ public static class ReflectionExtensions
     /// <param name="property">Property</param>
     /// <returns>A lambda expression that calls a specific property's setter function</returns>
     public static Expression<Action<TClassType, object>> PropertySetter<TClassType>(
-        this Expression<Func<TClassType, object>> property)
+        this Expression<Func<TClassType, object>> property
+    )
     {
         return property.PropertySetter<TClassType, object>();
     }
@@ -1025,7 +1304,10 @@ public static class ReflectionExtensions
     /// <returns>The type of the property specified or null if it can not be reached.</returns>
     public static Type? PropertyType(this object? source, string propertyPath)
     {
-        if (source == null || string.IsNullOrEmpty(propertyPath)) return null;
+        if (source == null || string.IsNullOrEmpty(propertyPath))
+        {
+            return null;
+        }
 
         return source.GetType().PropertyType(propertyPath);
     }
@@ -1040,7 +1322,10 @@ public static class ReflectionExtensions
     /// <returns>The type of the property specified or null if it can not be reached.</returns>
     public static Type? PropertyType(this Type? objectType, string propertyPath)
     {
-        if (objectType == null || string.IsNullOrEmpty(propertyPath)) return null;
+        if (objectType == null || string.IsNullOrEmpty(propertyPath))
+        {
+            return null;
+        }
 
         var sourceProperties = propertyPath.Split(new[] { "." }, StringSplitOptions.None);
 
@@ -1066,13 +1351,22 @@ public static class ReflectionExtensions
     /// <returns>The version information as a string</returns>
     public static string? ToString(this Assembly assembly, VersionInfo infoType)
     {
-        if (assembly.IsNull()) throw new ArgumentNullException(nameof(assembly));
+        if (assembly.IsNull())
+        {
+            throw new ArgumentNullException(nameof(assembly));
+        }
 
-        if (!infoType.HasFlag(VersionInfo.ShortVersion)) return assembly.GetName().Version?.ToString();
+        if (!infoType.HasFlag(VersionInfo.ShortVersion))
+        {
+            return assembly.GetName().Version?.ToString();
+        }
 
         var version = assembly.GetName().Version;
 
-        if (version != null) return version.Major + "." + version.Minor;
+        if (version != null)
+        {
+            return version.Major + "." + version.Minor;
+        }
 
         throw new Exception("version is null");
     }
@@ -1117,19 +1411,25 @@ public static class ReflectionExtensions
     /// <returns>An HTML formatted table containing the information about the object</returns>
     public static string ToString(this object source, bool htmlOutput)
     {
-        if (source.IsNull()) throw new ArgumentNullException(nameof(source));
+        if (source.IsNull())
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
 
         var tempValue = new StringBuilder();
 
-        tempValue.Append(htmlOutput
-            ? "<table><thead><tr><th>Property Name</th><th>Property Value</th></tr></thead><tbody>"
-            : "Property Name\t\t\t\tProperty Value");
+        tempValue.Append(
+            htmlOutput
+                ? "<table><thead><tr><th>Property Name</th><th>Property Value</th></tr></thead><tbody>"
+                : "Property Name\t\t\t\tProperty Value"
+        );
 
         var objectType = source.GetType();
 
         foreach (var property in objectType.GetProperties())
         {
-            tempValue.Append(htmlOutput ? "<tr><td>" : "").Append(property.Name)
+            tempValue.Append(htmlOutput ? "<tr><td>" : "")
+                .Append(property.Name)
                 .Append(htmlOutput ? "</td><td>" : "\t\t\t\t");
             var parameters = property.GetIndexParameters();
             if (property.CanRead && parameters.Length == 0)
@@ -1154,23 +1454,33 @@ public static class ReflectionExtensions
     /// <returns>An HTML formatted table containing the information about the object type</returns>
     public static string ToString(this Type objectType, bool htmlOutput)
     {
-        if (objectType.IsNull()) throw new ArgumentNullException(nameof(objectType));
+        if (objectType.IsNull())
+        {
+            throw new ArgumentNullException(nameof(objectType));
+        }
 
         var tempValue = new StringBuilder();
 
-        tempValue.Append(htmlOutput
-            ? "<table><thead><tr><th>Property Name</th><th>Property Value</th></tr></thead><tbody>"
-            : "Property Name\t\t\t\tProperty Value");
+        tempValue.Append(
+            htmlOutput
+                ? "<table><thead><tr><th>Property Name</th><th>Property Value</th></tr></thead><tbody>"
+                : "Property Name\t\t\t\tProperty Value"
+        );
         var properties = objectType.GetProperties();
 
         foreach (var property in properties)
         {
-            tempValue.Append(htmlOutput ? "<tr><td>" : "").Append(property.Name)
+            tempValue.Append(htmlOutput ? "<tr><td>" : "")
+                .Append(property.Name)
                 .Append(htmlOutput ? "</td><td>" : "\t\t\t\t");
             if (property.GetIndexParameters().Length == 0)
-                tempValue.Append(property.GetValue(null, null) == null
-                    ? "null"
-                    : property.GetValue(null, null)?.ToString());
+            {
+                tempValue.Append(
+                    property.GetValue(null, null) == null
+                        ? "null"
+                        : property.GetValue(null, null)?.ToString()
+                );
+            }
 
             tempValue.Append(htmlOutput ? "</td></tr>" : "");
         }
@@ -1192,7 +1502,10 @@ public static class ReflectionExtensions
     /// <returns>List of types that use the interface</returns>
     public static IEnumerable<Type> Types<TBaseType>(this Assembly assembly)
     {
-        if (assembly.IsNull()) throw new ArgumentNullException(nameof(assembly));
+        if (assembly.IsNull())
+        {
+            throw new ArgumentNullException(nameof(assembly));
+        }
 
         return assembly.Types(typeof(TBaseType));
     }
@@ -1205,9 +1518,15 @@ public static class ReflectionExtensions
     /// <returns>List of types that use the interface</returns>
     public static IEnumerable<Type> Types(this Assembly assembly, Type baseType)
     {
-        if (assembly.IsNull()) throw new ArgumentNullException(nameof(assembly));
+        if (assembly.IsNull())
+        {
+            throw new ArgumentNullException(nameof(assembly));
+        }
 
-        if (baseType.IsNull()) throw new ArgumentNullException(nameof(baseType));
+        if (baseType.IsNull())
+        {
+            throw new ArgumentNullException(nameof(baseType));
+        }
 
         try
         {
@@ -1227,7 +1546,10 @@ public static class ReflectionExtensions
     /// <returns>List of types that use the interface</returns>
     public static IEnumerable<Type> Types<TBaseType>(this IEnumerable<Assembly> assemblies)
     {
-        if (assemblies.IsNull()) throw new ArgumentNullException(nameof(assemblies));
+        if (assemblies.IsNull())
+        {
+            throw new ArgumentNullException(nameof(assemblies));
+        }
 
         return assemblies.Types(typeof(TBaseType));
     }
@@ -1240,9 +1562,15 @@ public static class ReflectionExtensions
     /// <returns>List of types that use the interface</returns>
     public static IEnumerable<Type> Types(this IEnumerable<Assembly> assemblies, Type baseType)
     {
-        if (assemblies.IsNull()) throw new ArgumentNullException(nameof(assemblies));
+        if (assemblies.IsNull())
+        {
+            throw new ArgumentNullException(nameof(assemblies));
+        }
 
-        if (baseType.IsNull()) throw new ArgumentNullException(nameof(baseType));
+        if (baseType.IsNull())
+        {
+            throw new ArgumentNullException(nameof(baseType));
+        }
 
         var returnValues = new List<Type>();
 
@@ -1300,15 +1628,21 @@ public static class ReflectionExtensions
     public static bool IsNotAbstractClass(this Type type, bool publicOnly)
     {
         if (type.IsSpecialName)
+        {
             return false;
+        }
 
         if (type.IsClass && !type.IsAbstract)
         {
             if (type.HasAttribute<CompilerGeneratedAttribute>())
+            {
                 return false;
+            }
 
             if (publicOnly)
+            {
                 return type.IsPublic || type.IsNestedPublic;
+            }
 
             return true;
         }

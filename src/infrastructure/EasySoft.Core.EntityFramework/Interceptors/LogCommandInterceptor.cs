@@ -48,13 +48,22 @@ public class LogCommandInterceptor : DbCommandInterceptor
 
     private void ManipulateCommand(DbCommand command)
     {
-        if (!GeneralConfigAssist.GetRemoteSqlExecutionRecordSwitch()) return;
+        if (!GeneralConfigAssist.GetRemoteSqlExecutionRecordSwitch())
+        {
+            return;
+        }
 
         var sql = command.CommandText.Replace("\r\n", " ");
 
-        if (string.IsNullOrWhiteSpace(sql)) return;
+        if (string.IsNullOrWhiteSpace(sql))
+        {
+            return;
+        }
 
-        if (sql.ToLower().Contains("insert", StringComparison.OrdinalIgnoreCase)) return;
+        if (sql.ToLower().Contains("insert", StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
 
         var loggerFactory = _serviceProvider.GetRequiredService<ILoggerFactory>();
         var environment = _serviceProvider.GetRequiredService<IWebHostEnvironment>();
@@ -70,18 +79,22 @@ public class LogCommandInterceptor : DbCommandInterceptor
         {
             var commandParameter = command.Parameters[i];
 
-            sqlTimingParameters.Add(new SqlTimingParameter
-            {
-                Name = commandParameter.ParameterName,
-                Value = commandParameter.Value?.ToString() ?? "",
-                DbType = commandParameter.Value?.GetType().ToDbType().ToString()
-            });
+            sqlTimingParameters.Add(
+                new SqlTimingParameter
+                {
+                    Name = commandParameter.ParameterName,
+                    Value = commandParameter.Value?.ToString() ?? "",
+                    DbType = commandParameter.Value?.GetType().ToDbType().ToString()
+                }
+            );
 
-            nameValues.Add(new
-            {
-                name = commandParameter.ParameterName,
-                value = commandParameter.Value ?? ""
-            });
+            nameValues.Add(
+                new
+                {
+                    name = commandParameter.ParameterName,
+                    value = commandParameter.Value ?? ""
+                }
+            );
         }
 
         var sqlAdjust = new StackExchange.Profiling.SqlFormatters.InlineFormatter().FormatSql(sql, sqlTimingParameters);
@@ -98,12 +111,14 @@ public class LogCommandInterceptor : DbCommandInterceptor
             new SqlExecutionRecordExchange
             {
                 ExecuteGuid = UniqueIdAssist.CreateUUID(),
-                CommandString = JsonConvertAssist.Serialize(new
-                {
-                    sql,
-                    paramList = nameValues,
-                    sqlAdjust
-                }),
+                CommandString = JsonConvertAssist.SerializeObject(
+                    new
+                    {
+                        sql,
+                        paramList = nameValues,
+                        sqlAdjust
+                    }
+                ),
                 Channel = applicationChannel.GetChannel()
             }
         );

@@ -59,7 +59,10 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <exception cref="Exception"></exception>
     public static AdvanceSqlBuilder Top(this AdvanceSqlBuilder builder, int top)
     {
-        if (top <= 0) throw new Exception("top not allow 0");
+        if (top <= 0)
+        {
+            throw new Exception("top not allow 0");
+        }
 
         var sql = builder.Sql;
 
@@ -98,7 +101,11 @@ public static class AdvanceSqlBuilderGrammarExtensions
     {
         var sql = builder.Sql;
 
-        sql = "{0} ISNULL(SUM(ISNULL({1},{2})),{2}) ".FormatValue(sql, fragment, valueWhenNUll);
+        sql = "{0} ISNULL(SUM(ISNULL({1},{2})),{2}) ".FormatValue(
+            sql,
+            fragment,
+            valueWhenNUll
+        );
 
         builder.Sql = sql;
 
@@ -145,7 +152,10 @@ public static class AdvanceSqlBuilderGrammarExtensions
 
         tableName = $"{fieldDecorateStart}{tableName}{fieldDecorateEnd}";
 
-        if (!string.IsNullOrWhiteSpace(schemaName)) tableName = schemaName + "." + tableName;
+        if (!string.IsNullOrWhiteSpace(schemaName))
+        {
+            tableName = schemaName + "." + tableName;
+        }
 
         var sql = builder.Sql;
 
@@ -170,11 +180,18 @@ public static class AdvanceSqlBuilderGrammarExtensions
         string aliasInnerQueryResult = "t"
     )
     {
-        if (string.IsNullOrWhiteSpace(innerQuery)) throw new Exception("内查询语句不能为空");
+        if (string.IsNullOrWhiteSpace(innerQuery))
+        {
+            throw new Exception("内查询语句不能为空");
+        }
 
         var sql = builder.Sql;
 
-        sql = "{0} FROM ({1}){2}".FormatValue(sql, innerQuery, aliasInnerQueryResult);
+        sql = "{0} FROM ({1}){2}".FormatValue(
+            sql,
+            innerQuery,
+            aliasInnerQueryResult
+        );
 
         builder.Sql = sql;
 
@@ -209,7 +226,10 @@ public static class AdvanceSqlBuilderGrammarExtensions
         var schemaName = model.GetSqlSchemaName();
         var tableName = TransferAssist.GetTableName(model);
 
-        if (!string.IsNullOrWhiteSpace(schemaName)) tableName = schemaName + "." + tableName;
+        if (!string.IsNullOrWhiteSpace(schemaName))
+        {
+            tableName = schemaName + "." + tableName;
+        }
 
         var sql = builder.Sql;
 
@@ -248,7 +268,10 @@ public static class AdvanceSqlBuilderGrammarExtensions
         var schemaName = model.GetSqlSchemaName();
         var tableName = TransferAssist.GetTableName(model);
 
-        if (!string.IsNullOrWhiteSpace(schemaName)) tableName = schemaName + "." + tableName;
+        if (!string.IsNullOrWhiteSpace(schemaName))
+        {
+            tableName = schemaName + "." + tableName;
+        }
 
         var sql = builder.Sql;
 
@@ -274,7 +297,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
         Expression<Func<T2>> propertyLambda2
     )
     {
-        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type type1);
+        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type? type1);
 
         {
             var m = type1.Create();
@@ -288,10 +311,13 @@ public static class AdvanceSqlBuilderGrammarExtensions
             var t = p1.Split('.');
             p1 = $"{t[0]}.{fieldDecorateStart}{t[1]}{fieldDecorateEnd}";
 
-            if (!string.IsNullOrWhiteSpace(schemaName)) p1 = $"{schemaName}.{p1}";
+            if (!string.IsNullOrWhiteSpace(schemaName))
+            {
+                p1 = $"{schemaName}.{p1}";
+            }
         }
 
-        var p2 = TransferAssist.GetTableAndColumnName(propertyLambda2, out Type type2);
+        var p2 = TransferAssist.GetTableAndColumnName(propertyLambda2, out Type? type2);
 
         {
             var m = type2.Create();
@@ -305,12 +331,19 @@ public static class AdvanceSqlBuilderGrammarExtensions
             var t = p2.Split('.');
             p2 = $"{t[0]}.{fieldDecorateStart}{t[1]}{fieldDecorateEnd}";
 
-            if (!string.IsNullOrWhiteSpace(schemaName)) p2 = $"{schemaName}.{p2}";
+            if (!string.IsNullOrWhiteSpace(schemaName))
+            {
+                p2 = $"{schemaName}.{p2}";
+            }
         }
 
         var sql = builder.Sql;
 
-        sql = "{0} ON {1} = {2}".FormatValue(sql, p1, p2);
+        sql = "{0} ON {1} = {2}".FormatValue(
+            sql,
+            p1,
+            p2
+        );
 
         builder.Sql = sql;
 
@@ -331,7 +364,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
         string p2
     )
     {
-        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type type);
+        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type? type);
 
         var m = type.Create();
 
@@ -344,11 +377,18 @@ public static class AdvanceSqlBuilderGrammarExtensions
         var t = p1.Split('.');
         p1 = $"{t[0]}.{fieldDecorateStart}{t[1]}{fieldDecorateEnd}";
 
-        if (!string.IsNullOrWhiteSpace(schemaName)) p1 = $"{schemaName}.{p1}";
+        if (!string.IsNullOrWhiteSpace(schemaName))
+        {
+            p1 = $"{schemaName}.{p1}";
+        }
 
         var sql = builder.Sql;
 
-        sql = "{0} ON {1} = '{2}'".FormatValue(sql, p1, p2);
+        sql = "{0} ON {1} = '{2}'".FormatValue(
+            sql,
+            p1,
+            p2
+        );
 
         builder.Sql = sql;
 
@@ -369,7 +409,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
         Guid p2
     )
     {
-        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type type);
+        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type? type);
 
         var m = type.Create();
 
@@ -382,11 +422,18 @@ public static class AdvanceSqlBuilderGrammarExtensions
         var t = p1.Split('.');
         p1 = $"{t[0]}.{fieldDecorateStart}{t[1]}{fieldDecorateEnd}";
 
-        if (!string.IsNullOrWhiteSpace(schemaName)) p1 = $"{schemaName}.{p1}";
+        if (!string.IsNullOrWhiteSpace(schemaName))
+        {
+            p1 = $"{schemaName}.{p1}";
+        }
 
         var sql = builder.Sql;
 
-        sql = "{0} ON {1} = '{2}'".FormatValue(sql, p1, p2.ToString());
+        sql = "{0} ON {1} = '{2}'".FormatValue(
+            sql,
+            p1,
+            p2.ToString()
+        );
 
         builder.Sql = sql;
 
@@ -407,7 +454,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
         int p2
     )
     {
-        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type type);
+        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type? type);
 
         var m = type.Create();
 
@@ -420,11 +467,18 @@ public static class AdvanceSqlBuilderGrammarExtensions
         var t = p1.Split('.');
         p1 = $"{t[0]}.{fieldDecorateStart}{t[1]}{fieldDecorateEnd}";
 
-        if (!string.IsNullOrWhiteSpace(schemaName)) p1 = $"{schemaName}.{p1}";
+        if (!string.IsNullOrWhiteSpace(schemaName))
+        {
+            p1 = $"{schemaName}.{p1}";
+        }
 
         var sql = builder.Sql;
 
-        sql = "{0} ON {1} = {2}".FormatValue(sql, p1, p2);
+        sql = "{0} ON {1} = {2}".FormatValue(
+            sql,
+            p1,
+            p2
+        );
 
         builder.Sql = sql;
 
@@ -445,7 +499,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
         long p2
     )
     {
-        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type type);
+        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type? type);
 
         var m = type.Create();
 
@@ -458,11 +512,18 @@ public static class AdvanceSqlBuilderGrammarExtensions
         var t = p1.Split('.');
         p1 = $"{t[0]}.{fieldDecorateStart}{t[1]}{fieldDecorateEnd}";
 
-        if (!string.IsNullOrWhiteSpace(schemaName)) p1 = $"{schemaName}.{p1}";
+        if (!string.IsNullOrWhiteSpace(schemaName))
+        {
+            p1 = $"{schemaName}.{p1}";
+        }
 
         var sql = builder.Sql;
 
-        sql = "{0} ON {1} = {2}".FormatValue(sql, p1, p2);
+        sql = "{0} ON {1} = {2}".FormatValue(
+            sql,
+            p1,
+            p2
+        );
 
         builder.Sql = sql;
 
@@ -483,7 +544,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
         DateTime p2
     )
     {
-        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type type);
+        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type? type);
 
         var m = type.Create();
 
@@ -496,11 +557,18 @@ public static class AdvanceSqlBuilderGrammarExtensions
         var t = p1.Split('.');
         p1 = $"{t[0]}.{fieldDecorateStart}{t[1]}{fieldDecorateEnd}";
 
-        if (!string.IsNullOrWhiteSpace(schemaName)) p1 = $"{schemaName}.{p1}";
+        if (!string.IsNullOrWhiteSpace(schemaName))
+        {
+            p1 = $"{schemaName}.{p1}";
+        }
 
         var sql = builder.Sql;
 
-        sql = "{0} ON {1} = '{2}'".FormatValue(sql, p1, p2.ToString("yyyy-MM-dd HH:mm:ss"));
+        sql = "{0} ON {1} = '{2}'".FormatValue(
+            sql,
+            p1,
+            p2.ToString("yyyy-MM-dd HH:mm:ss")
+        );
 
         builder.Sql = sql;
 
@@ -524,7 +592,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
         ConditionType conditionType = ConditionType.Eq
     ) where T1 : IEntity, new() where T2 : IEntity, new()
     {
-        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type type1);
+        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type? type1);
 
         {
             var m = type1.Create();
@@ -538,10 +606,13 @@ public static class AdvanceSqlBuilderGrammarExtensions
             var t = p1.Split('.');
             p1 = $"{t[0]}.{fieldDecorateStart}{t[1]}{fieldDecorateEnd}";
 
-            if (!string.IsNullOrWhiteSpace(schemaName)) p1 = $"{schemaName}.{p1}";
+            if (!string.IsNullOrWhiteSpace(schemaName))
+            {
+                p1 = $"{schemaName}.{p1}";
+            }
         }
 
-        var p2 = TransferAssist.GetTableAndColumnName(propertyLambda2, out Type type2);
+        var p2 = TransferAssist.GetTableAndColumnName(propertyLambda2, out Type? type2);
 
         {
             var m = type2.Create();
@@ -555,12 +626,20 @@ public static class AdvanceSqlBuilderGrammarExtensions
             var t = p2.Split('.');
             p2 = $"{t[0]}.{fieldDecorateStart}{t[1]}{fieldDecorateEnd}";
 
-            if (!string.IsNullOrWhiteSpace(schemaName)) p2 = $"{schemaName}.{p2}";
+            if (!string.IsNullOrWhiteSpace(schemaName))
+            {
+                p2 = $"{schemaName}.{p2}";
+            }
         }
 
         var sql = builder.Sql;
 
-        sql = "{0} AND {1} {3} {2}".FormatValue(sql, p1, p2, SqlAssist.TranslationConditionType(conditionType));
+        sql = "{0} AND {1} {3} {2}".FormatValue(
+            sql,
+            p1,
+            p2,
+            SqlAssist.TranslationConditionType(conditionType)
+        );
 
         builder.Sql = sql;
 
@@ -581,7 +660,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
         string p2
     )
     {
-        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type type);
+        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type? type);
 
         var m = type.Create();
 
@@ -594,11 +673,18 @@ public static class AdvanceSqlBuilderGrammarExtensions
         var t = p1.Split('.');
         p1 = $"{t[0]}.{fieldDecorateStart}{t[1]}{fieldDecorateEnd}";
 
-        if (!string.IsNullOrWhiteSpace(schemaName)) p1 = $"{schemaName}.{p1}";
+        if (!string.IsNullOrWhiteSpace(schemaName))
+        {
+            p1 = $"{schemaName}.{p1}";
+        }
 
         var sql = builder.Sql;
 
-        sql = "{0} AND {1} = '{2}'".FormatValue(sql, p1, p2);
+        sql = "{0} AND {1} = '{2}'".FormatValue(
+            sql,
+            p1,
+            p2
+        );
 
         builder.Sql = sql;
 
@@ -613,12 +699,13 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <param name="p2"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static AdvanceSqlBuilder And<T>(this AdvanceSqlBuilder builder,
+    public static AdvanceSqlBuilder And<T>(
+        this AdvanceSqlBuilder builder,
         Expression<Func<T>> propertyLambda,
         Guid p2
     )
     {
-        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type type);
+        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type? type);
 
         var m = type.Create();
 
@@ -631,11 +718,18 @@ public static class AdvanceSqlBuilderGrammarExtensions
         var t = p1.Split('.');
         p1 = $"{t[0]}.{fieldDecorateStart}{t[1]}{fieldDecorateEnd}";
 
-        if (!string.IsNullOrWhiteSpace(schemaName)) p1 = $"{schemaName}.{p1}";
+        if (!string.IsNullOrWhiteSpace(schemaName))
+        {
+            p1 = $"{schemaName}.{p1}";
+        }
 
         var sql = builder.Sql;
 
-        sql = "{0} AND {1} = '{2}'".FormatValue(sql, p1, p2.ToString());
+        sql = "{0} AND {1} = '{2}'".FormatValue(
+            sql,
+            p1,
+            p2.ToString()
+        );
 
         builder.Sql = sql;
 
@@ -658,7 +752,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
         ConditionType conditionType = ConditionType.Eq
     )
     {
-        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type type);
+        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type? type);
 
         var m = type.Create();
 
@@ -671,11 +765,19 @@ public static class AdvanceSqlBuilderGrammarExtensions
         var t = p1.Split('.');
         p1 = $"{t[0]}.{fieldDecorateStart}{t[1]}{fieldDecorateEnd}";
 
-        if (!string.IsNullOrWhiteSpace(schemaName)) p1 = $"{schemaName}.{p1}";
+        if (!string.IsNullOrWhiteSpace(schemaName))
+        {
+            p1 = $"{schemaName}.{p1}";
+        }
 
         var sql = builder.Sql;
 
-        sql = "{0} AND {1} {3} {2}".FormatValue(sql, p1, p2, SqlAssist.TranslationConditionType(conditionType));
+        sql = "{0} AND {1} {3} {2}".FormatValue(
+            sql,
+            p1,
+            p2,
+            SqlAssist.TranslationConditionType(conditionType)
+        );
 
         builder.Sql = sql;
 
@@ -698,7 +800,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
         ConditionType conditionType = ConditionType.Eq
     )
     {
-        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type type);
+        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type? type);
 
         var m = type.Create();
 
@@ -711,11 +813,19 @@ public static class AdvanceSqlBuilderGrammarExtensions
         var t = p1.Split('.');
         p1 = $"{t[0]}.{fieldDecorateStart}{t[1]}{fieldDecorateEnd}";
 
-        if (!string.IsNullOrWhiteSpace(schemaName)) p1 = $"{schemaName}.{p1}";
+        if (!string.IsNullOrWhiteSpace(schemaName))
+        {
+            p1 = $"{schemaName}.{p1}";
+        }
 
         var sql = builder.Sql;
 
-        sql = "{0} AND {1} {3} {2}".FormatValue(sql, p1, p2, SqlAssist.TranslationConditionType(conditionType));
+        sql = "{0} AND {1} {3} {2}".FormatValue(
+            sql,
+            p1,
+            p2,
+            SqlAssist.TranslationConditionType(conditionType)
+        );
 
         builder.Sql = sql;
 
@@ -738,7 +848,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
         ConditionType conditionType = ConditionType.Eq
     )
     {
-        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type type);
+        var p1 = TransferAssist.GetTableAndColumnName(propertyLambda, out Type? type);
 
         var m = type.Create();
 
@@ -751,7 +861,10 @@ public static class AdvanceSqlBuilderGrammarExtensions
         var t = p1.Split('.');
         p1 = $"{t[0]}.{fieldDecorateStart}{t[1]}{fieldDecorateEnd}";
 
-        if (!string.IsNullOrWhiteSpace(schemaName)) p1 = $"{schemaName}.{p1}";
+        if (!string.IsNullOrWhiteSpace(schemaName))
+        {
+            p1 = $"{schemaName}.{p1}";
+        }
 
         var sql = builder.Sql;
 

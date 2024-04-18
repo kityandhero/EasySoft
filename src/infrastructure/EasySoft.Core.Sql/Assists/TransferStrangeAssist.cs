@@ -33,11 +33,15 @@ public static class TransferStrangeAssist
         out Type entityType
     )
     {
-        return GetPropertyName(propertyLambda, out entityType, out var _);
+        return GetPropertyName(
+            propertyLambda,
+            out entityType,
+            out _
+        );
     }
 
     /// <summary>
-    /// GetPropertyName
+    /// GetPropertyName   
     /// </summary>
     /// <param name="propertyLambda"></param>
     /// <param name="propertyInfo"></param>
@@ -48,7 +52,11 @@ public static class TransferStrangeAssist
         out PropertyInfo propertyInfo
     )
     {
-        return GetPropertyName(propertyLambda, out var _, out propertyInfo);
+        return GetPropertyName(
+            propertyLambda,
+            out _,
+            out propertyInfo
+        );
     }
 
     /// <summary>
@@ -73,54 +81,73 @@ public static class TransferStrangeAssist
             me = propertyLambda.Body as MemberExpression;
 
             if (me == null)
+            {
                 throw new ArgumentException(
                     "You must pass a lambda of the form: '() => Class.Property' or '() => object.Property'"
                 );
+            }
 
             var classLam = me.Expression;
 
             if (me.Member != null)
+            {
                 if (me.Member.PropertyType != null)
                 {
                     entityType = classLam.Type;
 
                     var propertyInfoTemp = me.Member as PropertyInfo;
 
-                    if (propertyInfoTemp == null) throw new ArgumentException("PropertyInfo is null'");
+                    if (propertyInfoTemp == null)
+                    {
+                        throw new ArgumentException("PropertyInfo is null'");
+                    }
 
                     propertyInfo = propertyInfoTemp;
 
-                    if (propertyInfo == null) throw new ArgumentException("PropertyInfo is null'");
+                    if (propertyInfo == null)
+                    {
+                        throw new ArgumentException("PropertyInfo is null'");
+                    }
 
                     return propertyInfo.Name;
                 }
+            }
         }
 
         if (propertyLambda.Body.NodeType == ExpressionType.Convert)
+        {
             if (propertyLambda.Body is UnaryExpression cov)
             {
                 me = cov.Operand as MemberExpression;
 
                 if (me == null)
+                {
                     throw new ArgumentException(
                         "You must pass a lambda of the form: ' Class=> Class.Property' or 'object => object.Property'"
                     );
+                }
 
                 var classLam = me.Expression;
 
                 if (me.Member == null || me.Member.PropertyType == null)
+                {
                     throw new ArgumentException("Cannot analyze type get name ");
+                }
 
                 entityType = classLam.Type;
 
                 var propertyInfoTemp = me.Member as PropertyInfo;
 
-                if (propertyInfoTemp == null) throw new ArgumentException("PropertyInfo is null'");
+                if (propertyInfoTemp == null)
+                {
+                    throw new ArgumentException("PropertyInfo is null'");
+                }
 
                 propertyInfo = propertyInfoTemp;
 
                 return propertyInfo.Name;
             }
+        }
 
         throw new ArgumentException("Cannot analyze type get name ");
     }
@@ -137,7 +164,10 @@ public static class TransferStrangeAssist
     {
         var transferResult = TransferConditionCore(condition);
 
-        if (string.IsNullOrWhiteSpace(condition.CollaborationCondition)) return transferResult;
+        if (string.IsNullOrWhiteSpace(condition.CollaborationCondition))
+        {
+            return transferResult;
+        }
 
         return $"({transferResult} {condition.CollaborationCondition})";
     }
@@ -157,7 +187,10 @@ public static class TransferStrangeAssist
 
             p1 = $"{fieldDecorateStart}{p1}{fieldDecorateEnd}";
 
-            if (!string.IsNullOrWhiteSpace(schemaName)) p1 = $"{schemaName}.{p1}";
+            if (!string.IsNullOrWhiteSpace(schemaName))
+            {
+                p1 = $"{schemaName}.{p1}";
+            }
         }
 
         var valueType = condition.Value.GetType();
@@ -180,7 +213,10 @@ public static class TransferStrangeAssist
                 {
                     var value = Convert.ToString(v);
 
-                    if (string.IsNullOrWhiteSpace(value)) throw new Exception("value disallow empty");
+                    if (string.IsNullOrWhiteSpace(value))
+                    {
+                        throw new Exception("value disallow empty");
+                    }
 
                     listValueString.Add(value);
 
@@ -278,12 +314,16 @@ public static class TransferStrangeAssist
             switch (condition.ConditionType)
             {
                 case ConditionType.In:
-                    return "{0} IN ({1})".FormatValue(p1,
-                        listValueString.Join(",", "'{0}'"));
+                    return "{0} IN ({1})".FormatValue(
+                        p1,
+                        listValueString.Join(",", "'{0}'")
+                    );
 
                 case ConditionType.NotIn:
-                    return "{0} NOT IN ({1})".FormatValue(p1,
-                        listValueString.Join(",", "'{0}'"));
+                    return "{0} NOT IN ({1})".FormatValue(
+                        p1,
+                        listValueString.Join(",", "'{0}'")
+                    );
 
                 default:
                     throw new Exception($"未提供此条件的构建:{condition.ConditionType.ToString()}");
@@ -299,7 +339,10 @@ public static class TransferStrangeAssist
 
                 var v = Convert.ToString(condition.Value);
 
-                if (string.IsNullOrWhiteSpace(v)) throw new Exception("value disallow empty");
+                if (string.IsNullOrWhiteSpace(v))
+                {
+                    throw new Exception("value disallow empty");
+                }
 
                 switch (condition.ConditionType)
                 {
@@ -378,6 +421,7 @@ public static class TransferStrangeAssist
             if (typeCode == TypeCode.Int32 || typeCode == TypeCode.Int64 || typeCode == TypeCode.Decimal ||
                 typeCode == TypeCode.Double || typeCode == TypeCode.Int16 || typeCode == TypeCode.Single ||
                 typeCode == TypeCode.UInt16 || typeCode == TypeCode.UInt32 || typeCode == TypeCode.UInt64)
+            {
                 switch (condition.ConditionType)
                 {
                     case ConditionType.Eq:
@@ -409,8 +453,10 @@ public static class TransferStrangeAssist
 
                     default:
                         throw new Exception(
-                            $"未提供此条件的构建:{condition.ConditionType.ToString()},value:{condition.Value}");
+                            $"未提供此条件的构建:{condition.ConditionType.ToString()},value:{condition.Value}"
+                        );
                 }
+            }
 
             throw new Exception(
                 $"未提供的Sql构建方式，typeName:{type.Name}，typeCode:{typeCode}，condition：{JsonConvert.SerializeObject(condition)}"

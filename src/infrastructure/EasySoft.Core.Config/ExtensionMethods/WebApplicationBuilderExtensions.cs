@@ -2,6 +2,9 @@
 
 namespace EasySoft.Core.Config.ExtensionMethods;
 
+/// <summary>
+/// WebApplicationBuilderExtensions
+/// </summary>
 public static class WebApplicationBuilderExtensions
 {
     /// <summary>
@@ -14,10 +17,9 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     ) where T : AdvanceStaticFileOptions
     {
-        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-        {
-            containerBuilder.RegisterType<T>().As<AdvanceStaticFileOptions>().SingleInstance();
-        });
+        builder.Host.ConfigureContainer<ContainerBuilder>(
+            containerBuilder => { containerBuilder.RegisterType<T>().As<AdvanceStaticFileOptions>().SingleInstance(); }
+        );
 
         return builder;
     }

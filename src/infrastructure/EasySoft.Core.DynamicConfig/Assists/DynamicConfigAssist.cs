@@ -85,7 +85,7 @@ public static class DynamicConfigAssist
                     };
                 }
 
-                if (JsonConvertAssist.Serialize(o) == "{}")
+                if (JsonConvertAssist.SerializeObject(o) == "{}")
                 {
                     LogAssist.Warning(
                         "The “NLogJsonConfig” received dot not have any config items, config will not accept it, please check in agileConfig node, will use local config."

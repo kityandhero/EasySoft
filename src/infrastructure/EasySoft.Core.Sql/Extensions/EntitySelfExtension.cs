@@ -23,7 +23,10 @@ public static class EntitySelfExtension
     {
         var modelName = ReflectionAssist.GetClassName(entity);
 
-        if (toLowerFirst) modelName = modelName.ToLowerFirst();
+        if (toLowerFirst)
+        {
+            modelName = modelName.ToLowerFirst();
+        }
 
         var identification = ReflectionAssist.GetPropertyName(entity.GetPrimaryKeyLambda());
 
@@ -71,7 +74,7 @@ public static class EntitySelfExtension
     /// <exception cref="NotImplementedException"></exception>
     public static string GetTableName<T>(this T entity) where T : IEntity
     {
-        var tableAttribute = Tools.GetAdvanceTableAttribute(entity.GetType());
+        var tableAttribute = Tools.GetAdvanceTableMapperAttribute(entity.GetType());
 
         return tableAttribute == null ? entity.GetType().Name : tableAttribute.Name;
     }
@@ -95,12 +98,17 @@ public static class EntitySelfExtension
     {
         var lambda = entity.GetPrimaryKeyLambda();
 
-        var columnAttribute = Tools.GetAdvanceColumnAttribute(GetPropertyInfo(lambda));
+        var columnAttribute = Tools.GetAdvanceColumnMapperAttribute(GetPropertyInfo(lambda));
 
-        if (columnAttribute == null) return GetPropertyName(lambda);
+        if (columnAttribute == null)
+        {
+            return GetPropertyName(lambda);
+        }
 
         if (string.IsNullOrWhiteSpace(columnAttribute.Name))
+        {
             throw new Exception($"{nameof(columnAttribute)} disallow empty value");
+        }
 
         return columnAttribute.Name;
     }
@@ -173,16 +181,18 @@ public static class EntitySelfExtension
         var tableAttribute = entity.GetType().GetCustomAttribute<TableAttribute>();
 
         if (tableAttribute == null)
+        {
             throw new Exception(
                 "缺少AdvanceTableAttribute特性"
             );
+        }
 
         var name = tableAttribute.Name;
 
         return !string.IsNullOrWhiteSpace(schemaName) ? $"{schemaName}.{name}" : name;
     }
 
-    private static PropertyInfo GetPropertyInfo<T>(
+    private static PropertyInfo? GetPropertyInfo<T>(
         Expression<Func<T, object>> propertyLambda
     ) where T : IEntity
     {
@@ -191,35 +201,53 @@ public static class EntitySelfExtension
             dynamic me = propertyLambda.Body;
 
             if (me.Member != null)
+            {
                 if (me.Member.PropertyType != null)
                 {
                     var propertyInfo = me.Member as PropertyInfo;
 
-                    if (propertyInfo == null) throw new ArgumentException("PropertyInfo is null'");
+                    if (propertyInfo == null)
+                    {
+                        throw new ArgumentException("PropertyInfo is null'");
+                    }
 
                     return propertyInfo;
                 }
+            }
         }
 
         if (propertyLambda.Body.NodeType == ExpressionType.Convert)
         {
             if (propertyLambda.Body is not UnaryExpression cov)
+            {
                 throw new ArgumentException("Cannot analyze type get name ");
+            }
 
             dynamic? me = cov.Operand as MemberExpression;
 
             if (me == null)
+            {
                 throw new ArgumentException(
                     "You must pass a lambda of the form: ' Class=> Class.Property' or 'object => object.Property'"
                 );
+            }
 
-            if (me.Member == null) throw new ArgumentException("Cannot analyze type get name ");
+            if (me.Member == null)
+            {
+                throw new ArgumentException("Cannot analyze type get name ");
+            }
 
-            if (me.Member.PropertyType == null) throw new ArgumentException("Cannot analyze type get name ");
+            if (me.Member.PropertyType == null)
+            {
+                throw new ArgumentException("Cannot analyze type get name ");
+            }
 
             var propertyInfo = me.Member as PropertyInfo;
 
-            if (propertyInfo == null) throw new ArgumentException("PropertyInfo is null'");
+            if (propertyInfo == null)
+            {
+                throw new ArgumentException("PropertyInfo is null'");
+            }
 
             return propertyInfo;
         }
@@ -260,7 +288,10 @@ public static class EntitySelfExtension
     {
         var d = entity.ToExpandoObject();
 
-        if (additionalData != null) d.Add(new KeyValuePair<string, object?>("additional", additionalData));
+        if (additionalData != null)
+        {
+            d.Add(new KeyValuePair<string, object?>("additional", additionalData));
+        }
 
         d.Add(new KeyValuePair<string, object?>("Key", entity.GetKeyValue().ToString()));
 
@@ -268,14 +299,18 @@ public static class EntitySelfExtension
 
         var identification = ReflectionAssist.GetPropertyName(entity.GetPrimaryKeyLambda());
 
-        var json = JsonConvertAssist.SerializeAndKeyToLower(d).Replace(
-            $"\"{identification.ToLowerFirst()}\"",
-            $"\"{modelName}{identification}\""
-        );
+        var json = JsonConvertAssist.SerializeAndKeyToLower(d)
+            .Replace(
+                $"\"{identification.ToLowerFirst()}\"",
+                $"\"{modelName}{identification}\""
+            );
 
         var jObject = JsonConvert.DeserializeObject<JObject>(json);
 
-        if (jObject == null) throw new Exception("DeserializeObject result is null");
+        if (jObject == null)
+        {
+            throw new Exception("DeserializeObject result is null");
+        }
 
         return jObject.ToExpandoObject();
     }
@@ -301,18 +336,28 @@ public static class EntitySelfExtension
         var fieldDecorateStart = model.GetSqlFieldDecorateStart();
         var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
 
-        model.GetType().GetProperties().ForEach(p =>
-        {
-            if (!p.CanWrite) return;
+        model.GetType()
+            .GetProperties()
+            .ForEach(
+                p =>
+                {
+                    if (!p.CanWrite)
+                    {
+                        return;
+                    }
 
-            var attribute = Tools.GetAdvanceColumnAttribute(p);
+                    var attribute = Tools.GetAdvanceColumnMapperAttribute(p);
 
-            if (attribute == null) throw new Exception("AdvanceColumnAttribute is null");
+                    if (attribute == null)
+                    {
+                        throw new Exception("AdvanceColumnMapperAttribute is null");
+                    }
 
-            names.Add($"{fieldDecorateStart}{attribute.Name}{fieldDecorateEnd}");
+                    names.Add($"{fieldDecorateStart}{attribute.Name}{fieldDecorateEnd}");
 
-            values.Add($"@{p.Name}");
-        });
+                    values.Add($"@{p.Name}");
+                }
+            );
 
         nameList = names;
         valueList = values;
@@ -336,19 +381,31 @@ public static class EntitySelfExtension
         var fieldDecorateStart = model.GetSqlFieldDecorateStart();
         var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
 
-        model.GetType().GetProperties().ForEach(p =>
-        {
-            if (!p.CanWrite) return;
+        model.GetType()
+            .GetProperties()
+            .ForEach(
+                p =>
+                {
+                    if (!p.CanWrite)
+                    {
+                        return;
+                    }
 
-            var columnName = TransferAssist.GetColumnName(p);
+                    var columnName = TransferAssist.GetColumnName(p);
 
-            if (string.IsNullOrWhiteSpace(columnName)) throw new Exception("AdvanceColumnAttribute is null");
+                    if (string.IsNullOrWhiteSpace(columnName))
+                    {
+                        throw new Exception("AdvanceColumnMapperAttribute is null");
+                    }
 
-            if (!p.Name.ToLower().Equals(Constants.DefaultTablePrimaryKey))
-                nameValueList.Add(
-                    $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name}"
-                );
-        });
+                    if (!p.Name.ToLower().Equals(Constants.DefaultTablePrimaryKey))
+                    {
+                        nameValueList.Add(
+                            $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name}"
+                        );
+                    }
+                }
+            );
 
         return nameValueList;
     }
@@ -366,37 +423,57 @@ public static class EntitySelfExtension
         ICollection<Expression<Func<T>>> listPropertyLambda
     ) where T : IEntity, new()
     {
-        if (listPropertyLambda == null || !listPropertyLambda.Any()) throw new Exception("缺少指定的更新属性");
+        if (listPropertyLambda == null || !listPropertyLambda.Any())
+        {
+            throw new Exception("缺少指定的更新属性");
+        }
 
         var nameValueList = new List<string>();
 
         var listPropertyName = new List<string>();
 
-        listPropertyLambda.ForEach(expression =>
-        {
-            var propertyName = ReflectionAssist.GetPropertyName(expression);
+        listPropertyLambda.ForEach(
+            expression =>
+            {
+                var propertyName = ReflectionAssist.GetPropertyName(expression);
 
-            listPropertyName.Add(propertyName);
-        });
+                listPropertyName.Add(propertyName);
+            }
+        );
 
         var fieldDecorateStart = model.GetSqlFieldDecorateStart();
         var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
 
-        model.GetType().GetProperties().ForEach(p =>
-        {
-            if (!p.CanWrite) return;
+        model.GetType()
+            .GetProperties()
+            .ForEach(
+                p =>
+                {
+                    if (!p.CanWrite)
+                    {
+                        return;
+                    }
 
-            if (!listPropertyName.Contains(p.Name)) return;
+                    if (!listPropertyName.Contains(p.Name))
+                    {
+                        return;
+                    }
 
-            var columnName = TransferAssist.GetColumnName(p);
+                    var columnName = TransferAssist.GetColumnName(p);
 
-            if (string.IsNullOrWhiteSpace(columnName)) throw new Exception("AdvanceColumnAttribute is null");
+                    if (string.IsNullOrWhiteSpace(columnName))
+                    {
+                        throw new Exception("AdvanceColumnMapperAttribute is null");
+                    }
 
-            if (!columnName.ToLower().Equals(Constants.DefaultTablePrimaryKey))
-                nameValueList.Add(
-                    $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name}"
-                );
-        });
+                    if (!columnName.ToLower().Equals(Constants.DefaultTablePrimaryKey))
+                    {
+                        nameValueList.Add(
+                            $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name}"
+                        );
+                    }
+                }
+            );
 
         return nameValueList;
     }
@@ -414,37 +491,57 @@ public static class EntitySelfExtension
         ICollection<Expression<Func<T, object>>> listPropertyLambda
     ) where T : IEntity, new()
     {
-        if (listPropertyLambda == null || !listPropertyLambda.Any()) throw new Exception("缺少指定的更新属性");
+        if (listPropertyLambda == null || !listPropertyLambda.Any())
+        {
+            throw new Exception("缺少指定的更新属性");
+        }
 
         var nameValueList = new List<string>();
 
         var listPropertyName = new List<string>();
 
-        listPropertyLambda.ForEach(expression =>
-        {
-            var propertyName = ReflectionAssist.GetPropertyName(expression);
+        listPropertyLambda.ForEach(
+            expression =>
+            {
+                var propertyName = ReflectionAssist.GetPropertyName(expression);
 
-            listPropertyName.Add(propertyName);
-        });
+                listPropertyName.Add(propertyName);
+            }
+        );
 
         var fieldDecorateStart = model.GetSqlFieldDecorateStart();
         var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
 
-        model.GetType().GetProperties().ForEach(p =>
-        {
-            if (!p.CanWrite) return;
+        model.GetType()
+            .GetProperties()
+            .ForEach(
+                p =>
+                {
+                    if (!p.CanWrite)
+                    {
+                        return;
+                    }
 
-            if (!listPropertyName.Contains(p.Name)) return;
+                    if (!listPropertyName.Contains(p.Name))
+                    {
+                        return;
+                    }
 
-            var columnName = TransferAssist.GetColumnName(p);
+                    var columnName = TransferAssist.GetColumnName(p);
 
-            if (string.IsNullOrWhiteSpace(columnName)) throw new Exception("AdvanceColumnAttribute is null");
+                    if (string.IsNullOrWhiteSpace(columnName))
+                    {
+                        throw new Exception("AdvanceColumnMapperAttribute is null");
+                    }
 
-            if (!columnName.ToLower().Equals(Constants.DefaultTablePrimaryKey))
-                nameValueList.Add(
-                    $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name}"
-                );
-        });
+                    if (!columnName.ToLower().Equals(Constants.DefaultTablePrimaryKey))
+                    {
+                        nameValueList.Add(
+                            $"{fieldDecorateStart}{columnName}{fieldDecorateEnd} = @{p.Name}"
+                        );
+                    }
+                }
+            );
 
         return nameValueList;
     }
@@ -460,7 +557,10 @@ public static class EntitySelfExtension
         ICollection<Expression<Func<T, object>>> expressions
     ) where T : IEntity
     {
-        if (expressions.Count == 0) return entity.ToObject();
+        if (expressions.Count == 0)
+        {
+            return entity.ToObject();
+        }
 
         var className = entity.GetType().Name;
         var eo = entity.ToExpandoObject(false);
@@ -478,11 +578,16 @@ public static class EntitySelfExtension
 
         foreach (var item in eo)
         {
-            if (!propertyList.Contains(item.Key)) continue;
+            if (!propertyList.Contains(item.Key))
+            {
+                continue;
+            }
 
-            result.Add(item.Key.Equals("Id")
-                ? new KeyValuePair<string, object?>(className + ".Id", item.Value)
-                : item);
+            result.Add(
+                item.Key.Equals("Id")
+                    ? new KeyValuePair<string, object?>(className + ".Id", item.Value)
+                    : item
+            );
         }
 
         result.Add(new KeyValuePair<string, object?>("Key", entity.GetKeyValue()));
@@ -501,7 +606,10 @@ public static class EntitySelfExtension
         ICollection<Expression<Func<object>>> expressions
     ) where T : IEntity
     {
-        if (expressions.Count == 0) return entity.ToObject();
+        if (expressions.Count == 0)
+        {
+            return entity.ToObject();
+        }
 
         var className = entity.GetType().Name;
         var eo = entity.ToExpandoObject(false);
@@ -519,11 +627,16 @@ public static class EntitySelfExtension
 
         foreach (var item in eo)
         {
-            if (!propertyList.Contains(item.Key)) continue;
+            if (!propertyList.Contains(item.Key))
+            {
+                continue;
+            }
 
-            result.Add(item.Key.Equals("Id")
-                ? new KeyValuePair<string, object?>(className + ".Id", item.Value)
-                : item);
+            result.Add(
+                item.Key.Equals("Id")
+                    ? new KeyValuePair<string, object?>(className + ".Id", item.Value)
+                    : item
+            );
         }
 
         result.Add(new KeyValuePair<string, object?>("Key", entity.GetKeyValue()));
@@ -540,7 +653,10 @@ public static class EntitySelfExtension
         ICollection<Expression<Func<T, object>>>? expressions
     ) where T : IEntity
     {
-        if (expressions == null || expressions.Count == 0) return entity.ToObject();
+        if (expressions == null || expressions.Count == 0)
+        {
+            return entity.ToObject();
+        }
 
         var className = entity.GetType().Name;
         var eo = entity.ToExpandoObject(false);
@@ -558,11 +674,16 @@ public static class EntitySelfExtension
 
         foreach (var item in eo)
         {
-            if (propertyList.Contains(item.Key)) continue;
+            if (propertyList.Contains(item.Key))
+            {
+                continue;
+            }
 
-            result.Add(item.Key.Equals("Id")
-                ? new KeyValuePair<string, object?>(className + ".Id", item.Value)
-                : item);
+            result.Add(
+                item.Key.Equals("Id")
+                    ? new KeyValuePair<string, object?>(className + ".Id", item.Value)
+                    : item
+            );
         }
 
         result.Add(new KeyValuePair<string, object?>("Key", entity.GetKeyValue()));
@@ -579,7 +700,10 @@ public static class EntitySelfExtension
         ICollection<Expression<Func<object>>> expressions
     ) where T : IEntity
     {
-        if (expressions.Count == 0) return entity.ToObject();
+        if (expressions.Count == 0)
+        {
+            return entity.ToObject();
+        }
 
         var className = entity.GetType().Name;
         var eo = entity.ToExpandoObject(false);
@@ -595,11 +719,16 @@ public static class EntitySelfExtension
 
         foreach (var item in eo)
         {
-            if (propertyList.Contains(item.Key)) continue;
+            if (propertyList.Contains(item.Key))
+            {
+                continue;
+            }
 
-            result.Add(item.Key.Equals("Id")
-                ? new KeyValuePair<string, object?>(className + ".Id", item.Value)
-                : item);
+            result.Add(
+                item.Key.Equals("Id")
+                    ? new KeyValuePair<string, object?>(className + ".Id", item.Value)
+                    : item
+            );
         }
 
         result.Add(new KeyValuePair<string, object?>("Key", entity.GetKeyValue()));

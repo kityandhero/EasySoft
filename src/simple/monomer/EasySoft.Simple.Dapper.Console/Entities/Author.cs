@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq.Expressions;
 using EasySoft.Core.Dapper.Base;
+using EasySoft.Core.Entities.Common.Bases;
 
 namespace EasySoft.Simple.Dapper.Console.Entities;
 

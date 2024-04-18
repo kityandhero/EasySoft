@@ -8,13 +8,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="6.4.0" />
+        <PackageReference Include="Autofac" Version="6.4.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Dapper.Elegant\EasySoft.Core.Dapper.Elegant.csproj" />
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Dapper\EasySoft.Core.Dapper.csproj" />
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EasyCaching\EasySoft.Core.EasyCaching.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Dapper.Elegant\EasySoft.Core.Dapper.Elegant.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Dapper\EasySoft.Core.Dapper.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EasyCaching\EasySoft.Core.EasyCaching.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Entities.Common\EasySoft.Core.Entities.Common.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

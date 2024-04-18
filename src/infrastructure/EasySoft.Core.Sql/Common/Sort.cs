@@ -8,14 +8,6 @@ namespace EasySoft.Core.Sql.Common;
 /// <typeparam name="T"></typeparam>
 public class Sort<T>
 {
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public Sort()
-    {
-        SortType = SortType.Asc;
-    }
-
     /// <summary>  
     /// 指向表达式
     /// </summary>
@@ -25,4 +17,12 @@ public class Sort<T>
     /// 判断条件
     /// </summary>
     public SortType SortType { get; set; }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public Sort()
+    {
+        SortType = SortType.Asc;
+    }
 }

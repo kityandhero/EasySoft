@@ -14,14 +14,22 @@ public static class LoggerExtensions
     /// </summary>
     public static void LogAdvanceInfo(this ILogger logger, params string?[] logs)
     {
-        if (!logs.Any()) return;
-
-        logs.ForEach(o =>
+        if (!logs.Any())
         {
-            if (string.IsNullOrWhiteSpace(o)) return;
+            return;
+        }
 
-            logger.LogInformation("{Log}", o.Trim());
-        });
+        logs.ForEach(
+            o =>
+            {
+                if (string.IsNullOrWhiteSpace(o))
+                {
+                    return;
+                }
+
+                logger.LogInformation("{Log}", o.Trim());
+            }
+        );
     }
 
     /// <summary>
@@ -41,14 +49,22 @@ public static class LoggerExtensions
     /// </summary>
     public static void LogAdvanceDebug(this ILogger logger, params string?[] logs)
     {
-        if (!logs.Any()) return;
-
-        logs.ForEach(o =>
+        if (!logs.Any())
         {
-            if (string.IsNullOrWhiteSpace(o)) return;
+            return;
+        }
 
-            logger.LogDebug("{Log}", o.Trim());
-        });
+        logs.ForEach(
+            o =>
+            {
+                if (string.IsNullOrWhiteSpace(o))
+                {
+                    return;
+                }
+
+                logger.LogDebug("{Log}", o.Trim());
+            }
+        );
     }
 
     /// <summary>
@@ -68,14 +84,22 @@ public static class LoggerExtensions
     /// </summary>
     public static void LogAdvanceCritical(this ILogger logger, params string?[] logs)
     {
-        if (!logs.Any()) return;
-
-        logs.ForEach(o =>
+        if (!logs.Any())
         {
-            if (string.IsNullOrWhiteSpace(o)) return;
+            return;
+        }
 
-            logger.LogCritical("{Log}", o.Trim());
-        });
+        logs.ForEach(
+            o =>
+            {
+                if (string.IsNullOrWhiteSpace(o))
+                {
+                    return;
+                }
+
+                logger.LogCritical("{Log}", o.Trim());
+            }
+        );
     }
 
     /// <summary>
@@ -95,14 +119,22 @@ public static class LoggerExtensions
     /// </summary>
     public static void LogAdvanceWarning(this ILogger logger, params string?[] logs)
     {
-        if (!logs.Any()) return;
-
-        logs.ForEach(o =>
+        if (!logs.Any())
         {
-            if (string.IsNullOrWhiteSpace(o)) return;
+            return;
+        }
 
-            logger.LogWarning("{Log}", o.Trim());
-        });
+        logs.ForEach(
+            o =>
+            {
+                if (string.IsNullOrWhiteSpace(o))
+                {
+                    return;
+                }
+
+                logger.LogWarning("{Log}", o.Trim());
+            }
+        );
     }
 
     /// <summary>
@@ -122,14 +154,22 @@ public static class LoggerExtensions
     /// </summary>
     public static void LogAdvanceTrace(this ILogger logger, params string?[] logs)
     {
-        if (!logs.Any()) return;
-
-        logs.ForEach(o =>
+        if (!logs.Any())
         {
-            if (string.IsNullOrWhiteSpace(o)) return;
+            return;
+        }
 
-            logger.LogTrace("{Log}", o.Trim());
-        });
+        logs.ForEach(
+            o =>
+            {
+                if (string.IsNullOrWhiteSpace(o))
+                {
+                    return;
+                }
+
+                logger.LogTrace("{Log}", o.Trim());
+            }
+        );
     }
 
     /// <summary>
@@ -149,14 +189,22 @@ public static class LoggerExtensions
     /// </summary>
     public static void LogAdvanceError(this ILogger logger, params string?[] logs)
     {
-        if (!logs.Any()) return;
-
-        logs.ForEach(o =>
+        if (!logs.Any())
         {
-            if (string.IsNullOrWhiteSpace(o)) return;
+            return;
+        }
 
-            logger.LogError("{Log}", o.Trim());
-        });
+        logs.ForEach(
+            o =>
+            {
+                if (string.IsNullOrWhiteSpace(o))
+                {
+                    return;
+                }
+
+                logger.LogError("{Log}", o.Trim());
+            }
+        );
     }
 
     /// <summary>
@@ -176,7 +224,11 @@ public static class LoggerExtensions
     /// </summary>
     public static void LogAdvanceException(this ILogger logger, Exception exception)
     {
-        logger.LogError(0, exception, null);
+        logger.LogError(
+            0,
+            exception,
+            null
+        );
     }
 
     #endregion
@@ -188,7 +240,10 @@ public static class LoggerExtensions
     /// </summary>
     public static void LogAdvanceExecute(this ILogger logger, string? log, bool supplementRoundBracket = false)
     {
-        if (string.IsNullOrWhiteSpace(log)) return;
+        if (string.IsNullOrWhiteSpace(log))
+        {
+            return;
+        }
 
         logger.LogAdvanceTrace(
             $"EXEC: {log.Trim()}{(supplementRoundBracket ? "()" : "")}"
@@ -204,7 +259,10 @@ public static class LoggerExtensions
     /// </summary>
     public static void LogAdvancePrompt(this ILogger logger, string? log)
     {
-        if (string.IsNullOrWhiteSpace(log)) return;
+        if (string.IsNullOrWhiteSpace(log))
+        {
+            return;
+        }
 
         logger.LogAdvanceTrace($"DESC: {log.Trim()}");
     }
@@ -218,12 +276,20 @@ public static class LoggerExtensions
     /// </summary>
     public static void LogAdvanceHint(this ILogger logger, params string[] logs)
     {
-        if (!logs.Any()) return;
-
-        logs.ForEach(log =>
+        if (!logs.Any())
         {
-            if (!string.IsNullOrWhiteSpace(log)) logger.LogAdvanceTrace($"HINT: {log.Trim()}");
-        });
+            return;
+        }
+
+        logs.ForEach(
+            log =>
+            {
+                if (!string.IsNullOrWhiteSpace(log))
+                {
+                    logger.LogAdvanceTrace($"HINT: {log.Trim()}");
+                }
+            }
+        );
     }
 
     #endregion
@@ -235,12 +301,15 @@ public static class LoggerExtensions
     /// </summary>
     public static void InfoData(this ILogger logger, object? log, string prefix = "")
     {
-        if (log == null) return;
+        if (log == null)
+        {
+            return;
+        }
 
         logger.LogInformation(
             "{Prefix}{Log}",
             prefix,
-            JsonConvertAssist.Serialize(log)
+            JsonConvertAssist.SerializeObject(log)
         );
     }
 
@@ -257,12 +326,15 @@ public static class LoggerExtensions
     /// </summary>
     public static void DebugData(this ILogger logger, object? log, string prefix = "")
     {
-        if (log == null) return;
+        if (log == null)
+        {
+            return;
+        }
 
         logger.LogDebug(
             "{Prefix}{Log}",
             prefix,
-            JsonConvertAssist.Serialize(log)
+            JsonConvertAssist.SerializeObject(log)
         );
     }
 
@@ -279,12 +351,15 @@ public static class LoggerExtensions
     /// </summary>
     public static void CriticalData(this ILogger logger, object? log, string prefix = "")
     {
-        if (log == null) return;
+        if (log == null)
+        {
+            return;
+        }
 
         logger.LogCritical(
             "{Prefix}{Log}",
             prefix,
-            JsonConvertAssist.Serialize(log)
+            JsonConvertAssist.SerializeObject(log)
         );
     }
 
@@ -301,12 +376,15 @@ public static class LoggerExtensions
     /// </summary>
     public static void WarningData(this ILogger logger, object? log, string prefix = "")
     {
-        if (log == null) return;
+        if (log == null)
+        {
+            return;
+        }
 
         logger.LogWarning(
             "{Prefix}{Log}",
             prefix,
-            JsonConvertAssist.Serialize(log)
+            JsonConvertAssist.SerializeObject(log)
         );
     }
 
@@ -323,12 +401,15 @@ public static class LoggerExtensions
     /// </summary>
     public static void TraceData(this ILogger logger, object? log, string prefix = "")
     {
-        if (log == null) return;
+        if (log == null)
+        {
+            return;
+        }
 
         logger.LogTrace(
             "{Prefix}{Log}",
             prefix,
-            JsonConvertAssist.Serialize(log)
+            JsonConvertAssist.SerializeObject(log)
         );
     }
 
@@ -345,12 +426,15 @@ public static class LoggerExtensions
     /// </summary>
     public static void ErrorData(this ILogger logger, object? log, string prefix = "")
     {
-        if (log == null) return;
+        if (log == null)
+        {
+            return;
+        }
 
         logger.LogError(
             "{Prefix}{Log}",
             prefix,
-            JsonConvertAssist.Serialize(log)
+            JsonConvertAssist.SerializeObject(log)
         );
     }
 
@@ -379,7 +463,10 @@ public static class LoggerExtensions
         params string?[] logs
     ) where TMiddleware : IMiddleware
     {
-        if (!environment.IsDevelopment()) return;
+        if (!environment.IsDevelopment())
+        {
+            return;
+        }
 
         logger.LogAdvanceExecute($"{typeof(TMiddleware).Name} InvokeAsync Before");
 
@@ -399,7 +486,10 @@ public static class LoggerExtensions
         params string?[] logs
     ) where TMiddleware : IMiddleware
     {
-        if (!environment.IsDevelopment()) return;
+        if (!environment.IsDevelopment())
+        {
+            return;
+        }
 
         logger.LogAdvanceExecute($"{typeof(TMiddleware).Name} InvokeAsync After");
 

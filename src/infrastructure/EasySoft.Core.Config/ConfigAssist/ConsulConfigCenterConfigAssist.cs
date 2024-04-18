@@ -5,6 +5,9 @@ using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Config.ConfigAssist;
 
+/// <summary>
+/// ConsulConfigCenterConfigAssist
+/// </summary>
 public static class ConsulConfigCenterConfigAssist
 {
     private static readonly string ConfigFile = $"{nameof(ConsulConfigCenterConfig).ToLowerFirst()}.json";
@@ -85,7 +88,10 @@ public static class ConsulConfigCenterConfigAssist
     /// <exception cref="Exception"></exception>
     public static IConfiguration GetConfiguration()
     {
-        if (Configuration == null) throw new Exception("ConsulConfig has not been established.");
+        if (Configuration == null)
+        {
+            throw new Exception("ConsulConfig has not been established.");
+        }
 
         return Configuration;
     }
@@ -127,9 +133,11 @@ public static class ConsulConfigCenterConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
+        {
             throw new Exception(
                 $"You've enabled the configuration Center setting and set it to Consul type, please continue config CenterAddress, it in {ConfigFile} -> CenterAddress"
             );
+        }
 
         return v;
     }

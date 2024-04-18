@@ -24,7 +24,10 @@ public static class SqlAssist
         RelationDatabaseType relationDatabaseType
     )
     {
-        if (string.IsNullOrWhiteSpace(connectionString)) throw new Exception("无效的数据库连接");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            throw new Exception("无效的数据库连接");
+        }
 
         DbConnection dbConnection;
 
@@ -120,7 +123,7 @@ public static class SqlAssist
     /// <returns></returns>
     public static string TransferSort<T>(Expression<Func<T, object>> propertyLambda, SortType sortType)
     {
-        var p = TransferAssist.GetTableAndColumnName(propertyLambda, out Type type);
+        var p = TransferAssist.GetTableAndColumnName(propertyLambda, out Type? type);
 
         var m = type.Create();
 
@@ -196,7 +199,7 @@ public static class SqlAssist
     /// <returns></returns>
     public static string TransferGroup<T>(Expression<Func<T, object>> propertyLambda)
     {
-        var p = TransferAssist.GetTableAndColumnName(propertyLambda, out Type type);
+        var p = TransferAssist.GetTableAndColumnName(propertyLambda, out Type? type);
 
         var m = type.Create();
 
@@ -247,11 +250,17 @@ public static class SqlAssist
 
         var where = "";
 
-        if (listCondition.Count > 0) where = ConditionAssist.Build(listCondition);
+        if (listCondition.Count > 0)
+        {
+            where = ConditionAssist.Build(listCondition);
+        }
 
         var sort = "";
 
-        if (listSort.Count > 0) sort = SortAssist.Build(listSort);
+        if (listSort.Count > 0)
+        {
+            sort = SortAssist.Build(listSort);
+        }
 
         if (top.HasValue)
         {
@@ -330,7 +339,10 @@ public static class SqlAssist
 
         var where = "";
 
-        if (listCondition.Count > 0) where = ConditionAssist.Build(listCondition);
+        if (listCondition.Count > 0)
+        {
+            where = ConditionAssist.Build(listCondition);
+        }
 
         var sort = listSort.Count > 0
             ? SortAssist.Build(listSort)
@@ -374,7 +386,13 @@ public static class SqlAssist
         uint? top
     )
     {
-        return BuildListSql(fields, where, "", tableName, top);
+        return BuildListSql(
+            fields,
+            where,
+            "",
+            tableName,
+            top
+        );
     }
 
     /// <summary>
@@ -394,7 +412,14 @@ public static class SqlAssist
         uint? top
     )
     {
-        return BuildListSql(fields, where, order, "", tableName, top);
+        return BuildListSql(
+            fields,
+            where,
+            order,
+            "",
+            tableName,
+            top
+        );
     }
 
     /// <summary>
@@ -421,7 +446,10 @@ public static class SqlAssist
             "SELECT"
         };
 
-        if (top is > 0) list.Add($"TOP {top}");
+        if (top is > 0)
+        {
+            list.Add($"TOP {top}");
+        }
 
         list.Add($"{fields}");
         list.Add($"FROM {tableName}");
@@ -501,7 +529,10 @@ public static class SqlAssist
 
         var where = "";
 
-        if (listCondition is { Count: > 0 }) where = ConditionAssist.Build(listCondition);
+        if (listCondition is { Count: > 0 })
+        {
+            where = ConditionAssist.Build(listCondition);
+        }
 
         var sort = listSort is { Count: > 0 }
             ? SortAssist.Build(listSort)
@@ -559,7 +590,10 @@ public static class SqlAssist
 
         var where = "";
 
-        if (listCondition.Count > 0) where = ConditionAssist.Build(listCondition);
+        if (listCondition.Count > 0)
+        {
+            where = ConditionAssist.Build(listCondition);
+        }
 
         var sort = listSort.Count > 0 ? SortAssist.Build(listSort) : $"ORDER BY {model.GetPrimaryKeyValue()} DESC";
 
@@ -838,7 +872,9 @@ public static class SqlAssist
         var tableName = TransferAssist.GetTableName(model);
 
         if (nameValueList.Count <= 0)
+        {
             throw new Exception("更新字段不能空缺！");
+        }
 
         var list = new List<string>
         {
@@ -866,14 +902,19 @@ public static class SqlAssist
         ICollection<Condition<T>> conditions
     ) where T : IEntity, new()
     {
-        if (conditions == null || conditions.Count == 0) throw new Exception("条件更新不能缺少条件语句！");
+        if (conditions == null || conditions.Count == 0)
+        {
+            throw new Exception("条件更新不能缺少条件语句！");
+        }
 
         var nameValueList = model.BuildNameValueList();
         var schemaName = model.GetSqlSchemaName();
         var tableName = TransferAssist.GetTableName(model);
 
         if (nameValueList.Count <= 0)
+        {
             throw new Exception("更新字段不能空缺！");
+        }
 
         var list = new List<string>
         {
@@ -905,7 +946,9 @@ public static class SqlAssist
         var tableName = TransferAssist.GetTableName(model);
 
         if (nameValueList.Count <= 0)
+        {
             throw new Exception("更新字段不能空缺！");
+        }
 
         var list = new List<string>
         {
@@ -938,7 +981,9 @@ public static class SqlAssist
         var tableName = TransferAssist.GetTableName(model);
 
         if (nameValueList.Count <= 0)
+        {
             throw new Exception("更新字段不能空缺！");
+        }
 
         var list = new List<string>
         {
@@ -968,14 +1013,19 @@ public static class SqlAssist
         ICollection<Condition<T>> conditions
     ) where T : IEntity, new()
     {
-        if (conditions == null || conditions.Count == 0) throw new Exception("条件更新不能缺少条件语句！");
+        if (conditions == null || conditions.Count == 0)
+        {
+            throw new Exception("条件更新不能缺少条件语句！");
+        }
 
         var schemaName = model.GetSqlSchemaName();
         var nameValueList = model.BuildNameValueList(listPropertyLambda);
         var tableName = TransferAssist.GetTableName(model);
 
         if (nameValueList.Count <= 0)
+        {
             throw new Exception("更新字段不能空缺！");
+        }
 
         var list = new List<string>
         {
@@ -1004,14 +1054,19 @@ public static class SqlAssist
         ICollection<Condition<T>> conditions
     ) where T : IEntity, new()
     {
-        if (conditions == null || conditions.Count == 0) throw new Exception("条件更新不能缺少条件语句！");
+        if (conditions == null || conditions.Count == 0)
+        {
+            throw new Exception("条件更新不能缺少条件语句！");
+        }
 
         var schemaName = model.GetSqlSchemaName();
         var nameValueList = model.BuildNameValueList(listPropertyLambda);
         var tableName = TransferAssist.GetTableName(model);
 
         if (nameValueList.Count <= 0)
+        {
             throw new Exception("更新字段不能空缺！");
+        }
 
         var list = new List<string>
         {
@@ -1038,7 +1093,10 @@ public static class SqlAssist
         ICollection<AssignField<T>>? listAssignField
     ) where T : IEntity, new()
     {
-        if (listAssignField == null || !listAssignField.Any()) throw new Exception("缺少指定的更新属性");
+        if (listAssignField == null || !listAssignField.Any())
+        {
+            throw new Exception("缺少指定的更新属性");
+        }
 
         var schemaName = model.GetSqlSchemaName();
         var tableName = TransferAssist.GetTableName(model);
@@ -1046,7 +1104,9 @@ public static class SqlAssist
         var nameValueString = AssignFieldAssist.Build(listAssignField);
 
         if (string.IsNullOrWhiteSpace(nameValueString))
+        {
             throw new Exception("更新字段不能空缺！");
+        }
 
         var list = new List<string>
         {
@@ -1074,14 +1134,19 @@ public static class SqlAssist
         ICollection<Expression<Func<T, object>>> listPropertyLambda
     ) where T : IEntity, new()
     {
-        if (listPropertyLambda == null || !listPropertyLambda.Any()) throw new Exception("缺少指定的更新属性");
+        if (listPropertyLambda == null || !listPropertyLambda.Any())
+        {
+            throw new Exception("缺少指定的更新属性");
+        }
 
         var schemaName = model.GetSqlSchemaName();
         var nameValueList = model.BuildNameValueList(listPropertyLambda);
         var tableName = TransferAssist.GetTableName(model);
 
         if (nameValueList.Count <= 0)
+        {
             throw new Exception("更新字段不能空缺！");
+        }
 
         var list = new List<string>
         {
@@ -1152,7 +1217,10 @@ public static class SqlAssist
         ICollection<Condition<T>> conditions
     ) where T : IEntity, new()
     {
-        if (conditions == null || conditions.Count == 0) throw new Exception("条件更新不能缺少条件语句！");
+        if (conditions == null || conditions.Count == 0)
+        {
+            throw new Exception("条件更新不能缺少条件语句！");
+        }
 
         var schemaName = model.GetSqlSchemaName();
         var tableName = TransferAssist.GetTableName(model);
@@ -1204,9 +1272,15 @@ public static class SqlAssist
     {
         var modelList = models.ToList();
 
-        if (!modelList.Any()) throw new Exception("多条件In匹配中未找到任何条件");
+        if (!modelList.Any())
+        {
+            throw new Exception("多条件In匹配中未找到任何条件");
+        }
 
-        if (modelList.Count == 1) return Delete(modelList[0]);
+        if (modelList.Count == 1)
+        {
+            return Delete(modelList[0]);
+        }
 
         var values = modelList.Select(item => item.GetPrimaryKeyValue()).ToList();
 
@@ -1248,18 +1322,34 @@ public static class SqlAssist
         var onLastIndex = sqlTrim.LastIndexOf(" on", StringComparison.OrdinalIgnoreCase);
 
         if (whereLastIndex <= 0 && onLastIndex <= 0)
+        {
             if (!string.IsNullOrWhiteSpace(sql))
+            {
                 connector = "WHERE";
+            }
+        }
 
         if (whereLastIndex >= 0 || onLastIndex >= 0)
+        {
             if ((whereLastIndex >= 0 && whereLastIndex > andLastIndex) ||
                 (onLastIndex >= 0 && onLastIndex > andLastIndex))
+            {
                 if (andLastIndex >= 0)
+                {
                     connector = "AND";
+                }
+            }
+        }
 
-        if (whereLastIndex <= 0) return connector;
+        if (whereLastIndex <= 0)
+        {
+            return connector;
+        }
 
-        if (connector == "AND" && whereLastIndex == sqlTrim.Length - 6) connector = "";
+        if (connector == "AND" && whereLastIndex == sqlTrim.Length - 6)
+        {
+            connector = "";
+        }
 
         return connector;
     }

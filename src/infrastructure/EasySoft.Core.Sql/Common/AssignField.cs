@@ -29,7 +29,7 @@ public class AssignField<T> where T : new()
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public string TransferExpression(out Type type)
+    public string TransferExpression(out Type? type)
     {
         return TransferAssist.GetTableAndColumnName(Expression, out type);
     }

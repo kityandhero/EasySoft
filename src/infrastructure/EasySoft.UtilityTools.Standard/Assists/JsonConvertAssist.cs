@@ -1,9 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using EasySoft.UtilityTools.Standard.JsonConverters;
+﻿using EasySoft.UtilityTools.Standard.JsonConverters;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace EasySoft.UtilityTools.Standard.Assists;
@@ -21,6 +17,36 @@ public static class JsonConvertAssist
     public static JsonSerializerSettings CreateJsonSerializerSettings(bool camelCase = true)
     {
         return CreateJsonSerializerSettings(camelCase, Array.Empty<JsonConverter>());
+    }
+
+    /// <summary>
+    /// CreateJsonSerializerSettings
+    /// </summary>
+    /// <param name="camelCase"></param>
+    /// <param name="converters"></param>
+    /// <returns></returns>
+    public static JsonSerializerSettings CreateJsonSerializerSettings(
+        bool camelCase = true,
+        params JsonConverter[] converters
+    )
+    {
+        var serializerSettings = new JsonSerializerSettings();
+
+        return AdjustJsonSerializerSettings(
+            serializerSettings,
+            o =>
+            {
+                if (converters.Any())
+                {
+                    converters.ToList().ForEach(c => { o.Converters.Add(c); });
+                }
+
+                if (!camelCase)
+                {
+                    o.ContractResolver = null;
+                }
+            }
+        );
     }
 
     /// <summary>
@@ -50,37 +76,70 @@ public static class JsonConvertAssist
     }
 
     /// <summary>
-    /// CreateJsonSerializerSettings
+    /// DeserializeObject
     /// </summary>
-    /// <param name="camelCase"></param>
-    /// <param name="converters"></param>
+    /// <param name="data"></param>
     /// <returns></returns>
-    public static JsonSerializerSettings CreateJsonSerializerSettings(
-        bool camelCase = true,
-        params JsonConverter[] converters
-    )
+    public static object? DeserializeObject(string data)
     {
-        var serializerSettings = new JsonSerializerSettings();
-
-        return AdjustJsonSerializerSettings(serializerSettings, o =>
-        {
-            if (converters.Any())
-                converters.ToList().ForEach(c => { o.Converters.Add(c); });
-
-            if (!camelCase)
-                o.ContractResolver = null;
-        });
+        return JsonConvert.DeserializeObject(data, CreateJsonSerializerSettings(false));
     }
 
     /// <summary>
     /// DeserializeObject
     /// </summary>
     /// <param name="data"></param>
+    /// <returns></returns>
+    public static object? DeserializeObjectLegacy(string data)
+    {
+        return JsonConvert.DeserializeObject(data);
+    }
+
+    /// <summary>
+    /// DeserializeObject  
+    /// </summary>
+    /// <param name="data"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static T? DeserializeObject<T>(string data)
     {
+        return JsonConvert.DeserializeObject<T>(
+            data,
+            CreateJsonSerializerSettings(false)
+        );
+    }
+
+    /// <summary>
+    /// DeserializeObject     
+    /// </summary>
+    /// <param name="data"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static T? DeserializeObjectLegacy<T>(string data)
+    {
         return JsonConvert.DeserializeObject<T>(data);
+    }
+
+    /// <summary>
+    /// DeserializeObject  
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="converters"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static T? DeserializeObject<T>(string data, params JsonConverter[] converters)
+    {
+        return JsonConvert.DeserializeObject<T>(data, converters);
+    }
+
+    /// <summary>
+    /// Serialize by JsonConvert.SerializeObject()
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public static string SerializeObjectLegacy(object data)
+    {
+        return JsonConvert.SerializeObject(data);
     }
 
     /// <summary>
@@ -88,9 +147,21 @@ public static class JsonConvertAssist
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static string Serialize(object data)
+    public static string SerializeObject(object data)
     {
-        return JsonConvert.SerializeObject(data);
+        return JsonConvert.SerializeObject(data, CreateJsonSerializerSettings(false));
+    }
+
+    /// <summary>
+    /// 序列化
+    /// 基于Newtonsoft.Json
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="converters"></param>
+    /// <returns></returns>
+    public static string SerializeObject(object data, params JsonConverter[] converters)
+    {
+        return JsonConvert.SerializeObject(data, CreateJsonSerializerSettings(false, converters));
     }
 
     /// <summary>
@@ -111,10 +182,10 @@ public static class JsonConvertAssist
     /// <returns></returns>
     public static string SerializeAndKeyToLower(object data)
     {
-        return JsonConvert.SerializeObject(data, CreateJsonSerializerSettings(true));
+        return JsonConvert.SerializeObject(data, CreateJsonSerializerSettings());
     }
 
-    /// <summary>
+    /// <summary>  
     /// 序列化
     /// 基于Newtonsoft.Json
     /// </summary>
@@ -143,7 +214,10 @@ public static class JsonConvertAssist
             var jsonTextReader = new JsonTextReader(tr);
             var deserialize = serializer.Deserialize(jsonTextReader);
 
-            if (deserialize == null) return source;
+            if (deserialize == null)
+            {
+                return source;
+            }
 
             var textWriter = new StringWriter();
             var jsonWriter = new JsonTextWriter(textWriter)
@@ -159,7 +233,11 @@ public static class JsonConvertAssist
         }
         catch (Exception e)
         {
-            logger?.LogError(e, "format error: {Message}", e.Message ?? "");
+            logger?.LogError(
+                e,
+                "format error: {Message}",
+                e.Message ?? ""
+            );
 
             return source;
         }

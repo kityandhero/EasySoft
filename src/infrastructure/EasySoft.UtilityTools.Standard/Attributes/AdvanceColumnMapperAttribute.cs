@@ -3,7 +3,7 @@
 /// <summary>
 /// advance column
 /// </summary>
-public class AdvanceColumnAttribute : Attribute
+public class AdvanceColumnMapperAttribute : DescriptionAttribute
 {
     /// <summary>
     /// 列名
@@ -14,7 +14,8 @@ public class AdvanceColumnAttribute : Attribute
     /// 构造函数
     /// </summary>
     /// <param name="name"></param>
-    public AdvanceColumnAttribute(string name)
+    /// <param name="description"></param>  
+    public AdvanceColumnMapperAttribute(string name, string description = "") : base(description)
     {
         Name = name;
     }

@@ -37,7 +37,7 @@ public class RedisFeatureCacheOperator : BaseCacheOperator, IRedisFeatureCacheOp
         switch (typeCode)
         {
             case TypeCode.Object:
-                valueAdjust = JsonConvertAssist.Serialize(value);
+                valueAdjust = JsonConvertAssist.SerializeObject(value);
                 break;
 
             default:

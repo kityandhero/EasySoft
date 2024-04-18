@@ -9,4 +9,9 @@ public static class Constants
     /// 
     /// </summary>
     public const string DefaultTablePrimaryKey = "id";
+
+    /// <summary>
+    /// DefaultDataColumnDataDateTime
+    /// </summary>
+    public static readonly DateTime DefaultDataColumnDataDateTime = ConstCollection.DbDefaultDateTime;
 }

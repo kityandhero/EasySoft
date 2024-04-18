@@ -5,5 +5,5 @@ namespace EasySoft.Core.Dapper.Base;
 
 public abstract class BaseEntity<T> : IEntitySelf<T> where T : BaseEntity<T>
 {
-    public long Id { get; set; }
+    public virtual long Id { get; set; }
 }

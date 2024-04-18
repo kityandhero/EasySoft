@@ -3,8 +3,15 @@ using EasySoft.Core.Config.ConfigCollection;
 
 namespace EasySoft.Core.Config.Controllers;
 
+/// <summary>
+/// ElasticSearchConfigAuxiliaryController
+/// </summary>
 public class ElasticSearchConfigAuxiliaryController : BasicController
 {
+    /// <summary>
+    /// GetTemplate
+    /// </summary>
+    /// <returns></returns>
     public IActionResult GetTemplate()
     {
         var data = new ElasticSearchConfig();
@@ -19,6 +26,10 @@ public class ElasticSearchConfigAuxiliaryController : BasicController
         );
     }
 
+    /// <summary>
+    /// GetCurrent
+    /// </summary>
+    /// <returns></returns>
     public async Task<IActionResult> GetCurrent()
     {
         return Content(await ElasticSearchConfigAssist.GetConfigFileContent());

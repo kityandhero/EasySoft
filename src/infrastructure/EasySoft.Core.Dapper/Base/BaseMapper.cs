@@ -147,7 +147,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             builder = new AdvanceSqlBuilder().Select()
                 .AppendFragment($" {(transferWrapperQuery ? " TOP 1 " : "")}{model.GetPrimaryKeyName()} ")
                 .From(model);
-        else
+        else  
             builder = new AdvanceSqlBuilder().Select().AppendFragment(" TOP 1 ").AllFields(model).From(model);
 
         if (conditions.Count > 0)

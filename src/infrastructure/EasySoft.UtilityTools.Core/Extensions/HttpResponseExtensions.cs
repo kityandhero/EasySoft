@@ -18,7 +18,10 @@ public static class HttpResponseExtensions
         TValue value
     )
     {
-        if (response == null) throw new ArgumentNullException(nameof(response));
+        if (response == null)
+        {
+            throw new ArgumentNullException(nameof(response));
+        }
 
         response.ContentType = MimeCollection.ApplicationJson.ContentType;
 
@@ -26,7 +29,7 @@ public static class HttpResponseExtensions
         {
             await using var streamWriter = new StreamWriter(response.Body);
 
-            await streamWriter.WriteAsync(JsonConvertAssist.Serialize(value));
+            await streamWriter.WriteAsync(JsonConvertAssist.SerializeObject(value));
         }
     }
 
@@ -41,7 +44,10 @@ public static class HttpResponseExtensions
         object value
     )
     {
-        if (response == null) throw new ArgumentNullException(nameof(response));
+        if (response == null)
+        {
+            throw new ArgumentNullException(nameof(response));
+        }
 
         response.ContentType = MimeCollection.ApplicationJson.ContentType;
 
@@ -58,7 +64,11 @@ public static class HttpResponseExtensions
     /// <param name="value"></param>
     public static void SetCookie(this HttpResponse response, string key, string value)
     {
-        response.SetCookie(key, value, new CookieOptions());
+        response.SetCookie(
+            key,
+            value,
+            new CookieOptions()
+        );
     }
 
     /// <summary>
@@ -68,8 +78,17 @@ public static class HttpResponseExtensions
     /// <param name="key"></param>
     /// <param name="value"></param>
     /// <param name="options"></param>
-    public static void SetCookie(this HttpResponse response, string key, string value, CookieOptions options)
+    public static void SetCookie(
+        this HttpResponse response,
+        string key,
+        string value,
+        CookieOptions options
+    )
     {
-        response.Cookies.Append(key, value, options);
+        response.Cookies.Append(
+            key,
+            value,
+            options
+        );
     }
 }

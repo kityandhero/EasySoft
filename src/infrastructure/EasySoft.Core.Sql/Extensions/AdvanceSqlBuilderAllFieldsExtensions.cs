@@ -46,24 +46,31 @@ public static class AdvanceSqlBuilderAllFieldsExtensions
     {
         var list = new List<string>();
 
-        models.ForEach(model =>
-        {
-            var tableName = TransferAssist.GetTableName(model);
-
-            var properties = model.GetType().GetProperties();
-
-            properties.ForEach(property =>
+        models.ForEach(
+            model =>
             {
-                var customColumnMapperAttribute = Tools.GetAdvanceColumnAttribute(property, false);
+                var tableName = TransferAssist.GetTableName(model);
 
-                if (customColumnMapperAttribute == null) return;
+                var properties = model.GetType().GetProperties();
 
-                var v =
-                    $"{TransferAssist.BuildIsNullFragment(property, $"{(string.IsNullOrWhiteSpace(model.GetSqlSchemaName()) ? "" : $"{model.GetSqlFieldDecorateStart()}{model.GetSqlSchemaName()}{model.GetSqlFieldDecorateEnd()}" + ".")}{model.GetSqlFieldDecorateStart()}{tableName}{model.GetSqlFieldDecorateEnd()}.{model.GetSqlFieldDecorateStart()}{customColumnMapperAttribute.Name}{model.GetSqlFieldDecorateEnd()}", true)} AS {model.GetSqlFieldDecorateStart()}{property.Name}{model.GetSqlFieldDecorateEnd()}";
+                properties.ForEach(
+                    property =>
+                    {
+                        var customColumnMapperAttribute = Tools.GetAdvanceColumnMapperAttribute(property, false);
 
-                list.Add(v);
-            });
-        });
+                        if (customColumnMapperAttribute == null)
+                        {
+                            return;
+                        }
+
+                        var v =
+                            $"{TransferAssist.BuildIsNullFragment(property, $"{(string.IsNullOrWhiteSpace(model.GetSqlSchemaName()) ? "" : $"{model.GetSqlFieldDecorateStart()}{model.GetSqlSchemaName()}{model.GetSqlFieldDecorateEnd()}" + ".")}{model.GetSqlFieldDecorateStart()}{tableName}{model.GetSqlFieldDecorateEnd()}.{model.GetSqlFieldDecorateStart()}{customColumnMapperAttribute.Name}{model.GetSqlFieldDecorateEnd()}", true)} AS {model.GetSqlFieldDecorateStart()}{property.Name}{model.GetSqlFieldDecorateEnd()}";
+
+                        list.Add(v);
+                    }
+                );
+            }
+        );
 
         var f = list.Join(",");
 

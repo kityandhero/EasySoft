@@ -15,16 +15,23 @@ using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.Assists;
 using CacheModeCollection = EasySoft.Core.EasyCaching.Enums.CacheModeCollection;
 
-var serviceProvider = AutoFacConsoleAssist.CreateServiceProvider(services =>
+var serviceProvider = AutoFacConsoleAssist.CreateServiceProvider(
+    services =>
     {
         var cacheMode = GeneralConfigAssist.GetCacheMode();
 
         if (cacheMode == CacheModeCollection.InMemory.ToString())
+        {
             services.AddAdvanceEasyCachingInMemory();
+        }
         else if (cacheMode == CacheModeCollection.Redis.ToString())
+        {
             services.AddAdvanceEasyCachingRedis();
+        }
         else
+        {
             throw new Exception("not found available cache mode");
+        }
     },
     containerBuilder =>
     {
@@ -42,7 +49,8 @@ var serviceProvider = AutoFacConsoleAssist.CreateServiceProvider(services =>
 
             containerBuilder.RegisterType<RedisCacheOperator>().As<IAsyncCacheOperator>().SingleInstance();
 
-            containerBuilder.RegisterType<RedisFeatureCacheOperator>().As<IRedisFeatureCacheOperator>()
+            containerBuilder.RegisterType<RedisFeatureCacheOperator>()
+                .As<IRedisFeatureCacheOperator>()
                 .SingleInstance();
         }
         else
@@ -55,7 +63,8 @@ var serviceProvider = AutoFacConsoleAssist.CreateServiceProvider(services =>
                     .SetChannel(ApplicationChannelCollection.DapperTestApplication.ToInt())
                     .SetName(ApplicationChannelCollection.DapperTestApplication.GetDescription())
             )
-            .As<IApplicationChannel>().SingleInstance();
+            .As<IApplicationChannel>()
+            .SingleInstance();
     }
 );
 
@@ -63,4 +72,7 @@ DapperElegantConfigurator.SetCacheOperator(AutofacAssist.Instance.Resolve<IAsync
 
 var author = EntityAssist.GetEntity<Author>(1);
 
-if (author != null) Console.WriteLine(JsonConvertAssist.Serialize(author));
+if (author != null)
+{
+    Console.WriteLine(JsonConvertAssist.SerializeObject(author));
+}

@@ -3,18 +3,19 @@
 Console.WriteLine("Hello, World!");
 
 var o = new ConfigurationBuilder().AddJsonContent(
-    JsonConvertAssist.Serialize(new { a = 1 }),
-    out var source
-).Build();
+        JsonConvertAssist.SerializeObject(new { a = 1 }),
+        out var source
+    )
+    .Build();
 
 _ = ChangeToken.OnChange(() => o.GetReloadToken(), () => { Console.WriteLine("changed"); });
 
 Thread.Sleep(1000);
 
-source.SetJsonContent(JsonConvertAssist.Serialize(new { a = 2 }));
+source.SetJsonContent(JsonConvertAssist.SerializeObject(new { a = 2 }));
 
 Thread.Sleep(1000);
 
-source.SetJsonContent(JsonConvertAssist.Serialize(new { a = 3 }));
+source.SetJsonContent(JsonConvertAssist.SerializeObject(new { a = 3 }));
 
 Thread.Sleep(1000);

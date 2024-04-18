@@ -3,8 +3,15 @@ using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Config.Utils;
 
+/// <summary>
+/// Tools
+/// </summary>
 public static class Tools
 {
+    /// <summary>
+    /// GetConfigureDirectory
+    /// </summary>
+    /// <returns></returns>
     public static string GetConfigureDirectory()
     {
         var configureFolderPath = $"{AppContextAssist.GetBaseDirectory()}/configures/";
@@ -12,6 +19,10 @@ public static class Tools
         return configureFolderPath;
     }
 
+    /// <summary>
+    /// GetNlogEmbedConfig
+    /// </summary>
+    /// <returns></returns>
     public static string GetNlogEmbedConfig()
     {
         var mainConfig = GetNlogDefaultMainConfig();
@@ -43,7 +54,10 @@ public static class Tools
         return GetEmbeddedResourceFileContent("/nlog.debug.target.txt");
     }
 
-    // ReSharper disable once MemberCanBePrivate.Global
+    /// <summary>
+    /// GetNlogDefaultTraceRuleConfig
+    /// </summary>
+    /// <returns></returns>
     public static string GetNlogDefaultTraceRuleConfig()
     {
         return GetEmbeddedResourceFileContent("/nlog.trace.rule.txt");
@@ -135,32 +149,39 @@ public static class Tools
         var nlogEmbedConfigProductionLogFileSwitch = GeneralConfigAssist.GetNlogEmbedConfigProductionLogFileSwitch();
 
         if (!nlogEmbedConfigProductionLogFileSwitch)
+        {
             return config.Replace(
-                "###production-file-target###",
-                ""
-            ).Replace(
-                "###production-file-rule###",
-                ""
+                    "###production-file-target###",
+                    ""
+                )
+                .Replace(
+                    "###production-file-rule###",
+                    ""
+                );
+        }
+
+        var target = GetEmbeddedResourceFileContent("/nlog.production.file.target.txt")
+            .Replace(
+                "###file-name###",
+                GeneralConfigAssist.GetNlogEmbedConfigProductionLogFileName()
+            )
+            .Replace(
+                "###archive-file-name###",
+                GeneralConfigAssist.GetNlogEmbedConfigProductionLogArchiveFileName()
             );
 
-        var target = GetEmbeddedResourceFileContent("/nlog.production.file.target.txt").Replace(
-            "###file-name###",
-            GeneralConfigAssist.GetNlogEmbedConfigProductionLogFileName()
-        ).Replace(
-            "###archive-file-name###",
-            GeneralConfigAssist.GetNlogEmbedConfigProductionLogArchiveFileName()
-        );
-
-        var rule = GetEmbeddedResourceFileContent("/nlog.production.file.rule.txt").Replace(
-            "###level###",
-            GeneralConfigAssist.GetNlogEmbedConfigProductionLogLevel()
-        );
+        var rule = GetEmbeddedResourceFileContent("/nlog.production.file.rule.txt")
+            .Replace(
+                "###level###",
+                GeneralConfigAssist.GetNlogEmbedConfigProductionLogLevel()
+            );
 
         return config
             .Replace(
                 "###production-file-target###",
                 target
-            ).Replace(
+            )
+            .Replace(
                 "###production-file-rule###",
                 rule
             );
@@ -202,10 +223,14 @@ public static class Tools
         string configAdjust;
 
         if (GeneralConfigAssist.GetNlogConsoleLimitingWrapperSwitch())
+        {
             configAdjust = config.Replace("###console-config###", nlogConsoleTarget);
+        }
         else
+        {
             configAdjust = config.Replace("###console-config###", nlogConsoleLimitingWrapper)
                 .Replace("###console-target###", nlogConsoleTarget);
+        }
 
         var consoleMinLevel = nlogDefaultConfigTraceToConsoleSwitch ? "Trace" :
             nlogDefaultConfigDebugToConsoleSwitch ? "Debug" : "Info";
@@ -224,7 +249,10 @@ public static class Tools
 
         var consoleFilters = new List<string>();
 
-        if (nlogConsoleRepeatedFilterSwitch) consoleFilters.Add(GetNlogConsoleFilterRepeated());
+        if (nlogConsoleRepeatedFilterSwitch)
+        {
+            consoleFilters.Add(GetNlogConsoleFilterRepeated());
+        }
 
         return configAdjust
             .Replace("###console-minLevel###", consoleMinLevel)
@@ -255,9 +283,11 @@ public static class Tools
             nlogDefaultConfigDebugToExceptionlessSwitch ? GetNlogDefaultExceptionlessTargetConfig() : "";
 
         if (nlogDefaultConfigDebugToExceptionlessSwitch)
+        {
             exceptionlessTarget = exceptionlessTarget
                 .Replace("###exceptionless-apiKey###", nlogDefaultConfigExceptionlessApiKey)
                 .Replace("###exceptionless-serverUrl###", nlogDefaultConfigExceptionlessServerUrl);
+        }
 
         exceptionlessExtensions =
             string.IsNullOrWhiteSpace(exceptionlessExtensions) ? "" : $"{exceptionlessExtensions},";
