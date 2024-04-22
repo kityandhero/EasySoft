@@ -12,7 +12,7 @@ public static class WebApplicationExtensions
         return application
             .UseErrorLogSendExperiment()
             .UseGeneralLogSendExperiment()
-            .UseSqlExecutionRecordSendExperiment();
+            .UseSqlLogSendExperiment();
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public static class WebApplicationExtensions
     /// </summary>
     /// <param name="application"></param>
     /// <returns></returns>
-    internal static WebApplication UseSqlExecutionRecordSendExperiment(
+    internal static WebApplication UseSqlLogSendExperiment(
         this WebApplication application
     )
     {
@@ -82,7 +82,7 @@ public static class WebApplicationExtensions
         }
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(UseSqlExecutionRecordSendExperiment)}."
+            $"{nameof(UseSqlLogSendExperiment)}."
         );
 
         ApplicationConfigure.OnApplicationStart += async (serviceProvider) =>

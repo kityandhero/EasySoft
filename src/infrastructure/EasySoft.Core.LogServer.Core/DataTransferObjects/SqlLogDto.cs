@@ -1,14 +1,14 @@
 ﻿namespace EasySoft.Core.LogServer.Core.DataTransferObjects;
 
 /// <summary>
-/// SqlExecutionRecordDto
+/// SqlLogDto
 /// </summary>
-public class SqlExecutionRecordDto
+public class SqlLogDto
 {
     /// <summary>
-    /// SqlExecutionRecordId
+    /// SqlLogId
     /// </summary>
-    public long SqlExecutionRecordId { get; set; }
+    public long SqlLogId { get; set; }
 
     /// <summary>
     /// 

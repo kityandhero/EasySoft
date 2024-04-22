@@ -519,7 +519,7 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.ToTable("general_log", (string)null);
                 });
 
-            modelBuilder.Entity("EasySoft.Core.LogServer.Core.Entities.SqlExecutionRecord", b =>
+            modelBuilder.Entity("EasySoft.Core.LogServer.Core.Entities.SqlLog", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint")

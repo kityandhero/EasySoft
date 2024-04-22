@@ -96,7 +96,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.HealthChecks"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationTest", "test\ConfigurationTest\ConfigurationTest.csproj", "{159CECE3-508F-4127-9D4A-ACB42B392DA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.SqlExecutionRecordTransmitter", "infrastructure\EasySoft.Core.SqlExecutionRecordTransmitter\EasySoft.Core.SqlExecutionRecordTransmitter.csproj", "{1A93F2C3-8A08-4416-85A0-8DBBFC986AEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.SqlLogTransmitter", "infrastructure\EasySoft.Core.SqlLogTransmitter\EasySoft.Core.SqlLogTransmitter.csproj", "{1A93F2C3-8A08-4416-85A0-8DBBFC986AEB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "b-data", "b-data", "{3E4998D6-8F35-4340-9F9E-AA686E6E72D3}"
 EndProject

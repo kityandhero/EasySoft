@@ -1,6 +1,6 @@
 ﻿using EasySoft.UtilityTools.Standard.Extensions;
 
-namespace EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
+namespace EasySoft.Core.SqlLogTransmitter.Producers;
 
 /// <inheritdoc />
 public class SqlLogProducer : ISqlLogProducer

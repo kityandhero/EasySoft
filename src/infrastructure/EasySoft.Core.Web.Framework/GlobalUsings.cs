@@ -40,7 +40,7 @@ global using EasySoft.Core.NLog.ExtensionMethods;
 global using EasySoft.Core.PermissionVerification.Extensions;
 global using EasySoft.Core.PermissionVerification.Filters;
 global using EasySoft.Core.PrepareStartWork.ExtensionMethods;
-global using EasySoft.Core.SqlExecutionRecordTransmitter.Extensions;
+global using EasySoft.Core.SqlLogTransmitter.Extensions;
 global using EasySoft.Core.Swagger.Configures;
 global using EasySoft.Core.Swagger.ExtensionMethods;
 global using EasySoft.Core.Swagger.ModelConventions;

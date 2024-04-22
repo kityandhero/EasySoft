@@ -1,7 +1,7 @@
-﻿using EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
+﻿using EasySoft.Core.SqlLogTransmitter.Producers;
 using EasySoft.UtilityTools.Standard.Assists;
 
-namespace EasySoft.Core.SqlExecutionRecordTransmitter.Extensions;
+namespace EasySoft.Core.SqlLogTransmitter.Extensions;
 
 /// <summary>
 /// WebApplicationExtensions
@@ -13,7 +13,7 @@ public static class WebApplicationExtensions
     /// </summary>
     /// <param name="application"></param>
     /// <returns></returns>
-    internal static WebApplication UseSqlExecutionRecordProducer(
+    internal static WebApplication UseSqlLogProducer(
         this WebApplication application
     )
     {
@@ -23,7 +23,7 @@ public static class WebApplicationExtensions
         }
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(UseSqlExecutionRecordProducer)}."
+            $"{nameof(UseSqlLogProducer)}."
         );
 
         ApplicationConfigure.AddTimer(
@@ -52,11 +52,11 @@ public static class WebApplicationExtensions
                     );
                 }
 
-                var sqlExecutionRecordProducer = serviceProvider.GetRequiredService<ISqlLogProducer>();
+                var sqlLogProducer = serviceProvider.GetRequiredService<ISqlLogProducer>();
 
                 while (SqlLogInnerQueue.GetQueue().TryDequeue(out var sqlLog))
                 {
-                    sqlExecutionRecordProducer.SendAsync(sqlLog);
+                    sqlLogProducer.SendAsync(sqlLog);
                 }
             }
         );

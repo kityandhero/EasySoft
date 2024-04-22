@@ -1,13 +1,13 @@
-﻿using EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
+﻿using EasySoft.Core.SqlLogTransmitter.Producers;
 
-namespace EasySoft.Core.SqlExecutionRecordTransmitter.Extensions;
+namespace EasySoft.Core.SqlLogTransmitter.Extensions;
 
 /// <summary>
 /// 
 /// </summary>
 public static class ServiceCollectionExtension
 {
-    internal static IServiceCollection AddSqlExecutionRecordTransmitter(
+    internal static IServiceCollection AddSqlLogTransmitter(
         this IServiceCollection service
     )
     {

@@ -18,7 +18,7 @@ global using EasySoft.Core.Infrastructure.Startup;
 global using EasySoft.Core.Infrastructure.Transmitters;
 global using EasySoft.Core.PermissionVerification.Attributes;
 global using EasySoft.Core.PermissionVerification.Configures;
-global using EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
+global using EasySoft.Core.SqlLogTransmitter.Producers;
 global using EasySoft.Core.Web.Framework.Controllers;
 global using EasySoft.UtilityTools.Core.Extensions;
 global using EasySoft.UtilityTools.Standard;

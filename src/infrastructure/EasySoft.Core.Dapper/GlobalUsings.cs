@@ -12,7 +12,7 @@ global using EasySoft.Core.AutoFac.IocAssists;
 global using EasySoft.Core.Sql.Assists;
 global using EasySoft.Core.Sql.Common;
 global using EasySoft.Core.Sql.Enums;
-global using EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
+global using EasySoft.Core.SqlLogTransmitter.Producers;
 global using EasySoft.IdGenerator.Assists;
 global using EasySoft.UtilityTools.Standard;
 global using EasySoft.UtilityTools.Standard.Assists;

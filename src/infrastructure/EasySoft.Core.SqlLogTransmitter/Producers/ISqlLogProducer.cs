@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
+﻿namespace EasySoft.Core.SqlLogTransmitter.Producers;
 
 /// <summary>
 /// SqlLogProducer

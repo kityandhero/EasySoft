@@ -3,11 +3,11 @@
 namespace EasySoft.Core.LogServer.Core.Subscribers;
 
 /// <summary>
-/// SqlExecutionRecordExchangeSubscriber
+/// SqlLogExchangeSubscriber
 /// </summary>
-public class SqlExecutionRecordExchangeSubscriber : ICapSubscribe
+public class SqlLogExchangeSubscriber : ICapSubscribe
 {
-    private readonly ILogger<SqlExecutionRecordExchangeSubscriber> _logger;
+    private readonly ILogger<SqlLogExchangeSubscriber> _logger;
     private readonly IWebHostEnvironment _environment;
     private readonly ISqlLogService _sqlLogService;
 
@@ -17,8 +17,8 @@ public class SqlExecutionRecordExchangeSubscriber : ICapSubscribe
     /// <param name="logger"></param>
     /// <param name="environment"></param>
     /// <param name="sqlLogService"></param>
-    public SqlExecutionRecordExchangeSubscriber(
-        ILogger<SqlExecutionRecordExchangeSubscriber> logger,
+    public SqlLogExchangeSubscriber(
+        ILogger<SqlLogExchangeSubscriber> logger,
         IWebHostEnvironment environment,
         ISqlLogService sqlLogService
     )

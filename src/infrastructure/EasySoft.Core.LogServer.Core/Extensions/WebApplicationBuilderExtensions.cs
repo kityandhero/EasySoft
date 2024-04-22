@@ -22,7 +22,7 @@ internal static class WebApplicationBuilderExtensions
 
         builder.AddCapSubscriber<ErrorLogExchangeSubscriber>();
         builder.AddCapSubscriber<GeneralLogExchangeSubscriber>();
-        builder.AddCapSubscriber<SqlExecutionRecordExchangeSubscriber>();
+        builder.AddCapSubscriber<SqlLogExchangeSubscriber>();
 
         return builder;
     }

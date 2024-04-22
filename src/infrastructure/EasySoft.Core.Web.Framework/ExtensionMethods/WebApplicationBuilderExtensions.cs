@@ -201,7 +201,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.AddErrorLogTransmitter();
 
-        builder.AddSqlExecutionRecordTransmitter();
+        builder.AddSqlLogTransmitter();
 
         builder.AddAdvanceCap();
 

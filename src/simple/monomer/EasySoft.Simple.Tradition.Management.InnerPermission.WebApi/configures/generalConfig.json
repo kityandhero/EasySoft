@@ -7,7 +7,7 @@
   "CacheMode": "Redis",
   "RemoteGeneralLogSwitch": "1",
   "RemoteErrorLogSwitch": "1",
-  "RemoteSqlExecutionRecordSwitch": "1",
+  "RemoteSqlLogSwitch": "1",
   "TokenServerDumpSwitch": "1",
   "TokenParseFromUrlSwitch": "1",
   "TokenParseFromCookieSwitch": "1",

@@ -6,10 +6,10 @@ using EasySoft.UtilityTools.Core.Results.Interfaces;
 namespace EasySoft.Core.LogServer.Core.Controllers;
 
 /// <summary>
-/// SqlExecutionRecordController
+/// SqlLogController
 /// </summary>
 [Route("sqlLog")]
-public class SqlExecutionRecordController : AuthControllerCore
+public class SqlLogController : AuthControllerCore
 {
     private const string ControllerDescription = "Sql日志管理/";
 
@@ -19,7 +19,7 @@ public class SqlExecutionRecordController : AuthControllerCore
     /// ErrorLogController
     /// </summary>
     /// <param name="sqlLogService"></param>
-    public SqlExecutionRecordController(ISqlLogService sqlLogService)
+    public SqlLogController(ISqlLogService sqlLogService)
     {
         _sqlLogService = sqlLogService;
     }

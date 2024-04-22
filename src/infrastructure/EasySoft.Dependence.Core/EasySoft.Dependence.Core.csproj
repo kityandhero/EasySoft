@@ -28,7 +28,7 @@
         <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
         <PackageReference Include="Grpc.AspNetCore" Version="2.49.0" />
         <PackageReference Include="Hangfire.AspNetCore" Version="1.7.31" />
-        <PackageReference Include="HtmlSanitizer" Version="8.0.601" />
+        <PackageReference Include="HtmlSanitizer" Version="8.0.865" />
         <PackageReference Include="IGeekFan.AspNetCore.Knife4jUI" Version="0.0.12" />
         <PackageReference Include="IP2Region.Net" Version="1.0.10" />
         <PackageReference Include="Masuit.Tools.AspNetCore" Version="1.1.7.1" />

@@ -4,7 +4,7 @@ using EasySoft.Core.ChannelCheckTransmitter.Entities.implements;
 namespace EasySoft.Core.AppSecurityServer.Core.Subscribers;
 
 /// <summary>
-/// SqlExecutionRecordExchangeSubscriber
+/// ChannelCheckExchangeSubscriber
 /// </summary>
 public class ChannelCheckExchangeSubscriber : ICapSubscribe
 {
