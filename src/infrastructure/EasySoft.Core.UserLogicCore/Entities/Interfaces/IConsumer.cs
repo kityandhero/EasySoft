@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.UserLogicCore.Entities.Interfaces;
+﻿using EasySoft.UtilityTools.Standard.Interfaces;
+
+namespace EasySoft.Core.UserLogicCore.Entities.Interfaces;
 
 /// <summary>
 /// 用户

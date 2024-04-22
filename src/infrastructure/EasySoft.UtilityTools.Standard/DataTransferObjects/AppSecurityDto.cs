@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Standard.Entities.Interfaces;
+﻿using EasySoft.UtilityTools.Standard.Extensions;
+using EasySoft.UtilityTools.Standard.Interfaces;
 
 namespace EasySoft.UtilityTools.Standard.DataTransferObjects;
 
@@ -24,7 +25,7 @@ public class AppSecurityDto : IAppSecurity
     /// <summary>
     /// Channel
     /// </summary>
-    public int Channel { get; set; }
+    public string Channel { get; set; } = Models.Channel.Unknown.ToValue();
 
     /// <summary>
     /// UnixTime

@@ -6,7 +6,7 @@ namespace EasySoft.Core.PermissionServer.Core.Entities;
 /// 角色组
 /// </summary>
 [Description("角色组")]
-public class RoleGroup : BaseEntity, IChannel, IStatus, IIp, IOperate
+public class RoleGroup : BaseEntity, IChannelStore, IStatus, IIp, IOperate
 {
     /// <summary>
     /// 角色组名
@@ -30,10 +30,10 @@ public class RoleGroup : BaseEntity, IChannel, IStatus, IIp, IOperate
     /// 超级管理角色组
     /// </summary>
     [Description("超级管理角色组")]
-    public int WhetherSuper { get; set; } = 0;
+    public int WhetherSuper { get; set; } = Whether.No.ToInt();
 
     /// <inheritdoc />
-    public int Channel { get; set; }
+    public string Channel { get; set; } = UtilityTools.Standard.Models.Channel.Unknown.ToValue();
 
     /// <inheritdoc />
     public int Status { get; set; }

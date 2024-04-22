@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.AccessWayTransmitter.Interfaces;
-
-namespace EasySoft.Core.AccessWayTransmitter.Producers;
+﻿namespace EasySoft.Core.AccessWayTransmitter.Producers;
 
 /// <summary>
 /// Access Way Producer
@@ -12,7 +10,7 @@ public interface IAccessWayProducer
     /// </summary>
     /// <param name="accessWay"></param>
     /// <returns></returns>
-    public Task<IAccessWayExchange> SendAsync(
+    public Task<IAccessWayMessage> SendAsync(
         IAccessWay accessWay
     );
 }

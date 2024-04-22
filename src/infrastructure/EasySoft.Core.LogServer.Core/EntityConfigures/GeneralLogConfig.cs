@@ -34,11 +34,6 @@ public class GeneralLogConfig : BaseEntityTypeConfiguration<GeneralLog>
         builder.Property(x => x.Status)
             .HasDefaultValue(0);
 
-        builder.Property(x => x.Ip)
-            .HasColumnType(DatabaseConstant.Nvarchar)
-            .HasMaxLength(40)
-            .HasDefaultValue(string.Empty);
-
         builder.Property(x => x.CreateBy)
             .HasDefaultValue(0L);
 

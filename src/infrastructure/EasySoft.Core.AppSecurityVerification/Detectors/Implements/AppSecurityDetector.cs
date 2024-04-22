@@ -64,7 +64,7 @@ public class AppSecurityDetector : IAppSecurityDetector
             AppSecret = GeneralConfigAssist.GetAppSecret(),
             UnixTime = AppSecurityAssist.GetUnixTime(),
             Salt = AppSecurityAssist.GetSalt(),
-            Channel = _applicationChannel.GetChannel()
+            Channel = _applicationChannel.GetChannel().ToValue()
         };
 
         appSecurityDto = AppSecurityAssist.SignVerify(appSecurityDto);
@@ -72,9 +72,11 @@ public class AppSecurityDetector : IAppSecurityDetector
         var logger = _loggerFactory.CreateLogger<AppSecurityDetector>();
 
         if (_environment.IsDevelopment())
+        {
             logger.LogAdvancePrompt(
                 $"Will verify AppSecurityDto -> {appSecurityDto.BuildInfo()}"
             );
+        }
 
         var apiResponse = await _appSecurityClient.CredentialVerifyAsync(appSecurityDto);
 
@@ -103,9 +105,11 @@ public class AppSecurityDetector : IAppSecurityDetector
         var appSecurityFirstVerifyNotification = new AppSecurityFirstVerifyNotification(true);
 
         if (_environment.IsDevelopment())
+        {
             logger.LogAdvancePrompt(
                 $"Send mediator Notification {nameof(AppSecurityFirstVerifyNotification)} -> {appSecurityFirstVerifyNotification.BuildInfo()}"
             );
+        }
 
         await _mediator.Publish(appSecurityFirstVerifyNotification);
     }

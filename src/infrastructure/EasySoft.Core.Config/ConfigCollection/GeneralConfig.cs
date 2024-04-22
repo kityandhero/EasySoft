@@ -159,11 +159,6 @@ public class GeneralConfig : IConfig
     public string RemoteErrorLogSwitch { get; set; } = "0";
 
     /// <summary>
-    /// RemoteSqlExecutionRecordSwitch
-    /// </summary>
-    public string RemoteSqlExecutionRecordSwitch { get; set; } = "0";
-
-    /// <summary>
     /// UseStaticFilesSwitch
     /// </summary>
     public string UseStaticFilesSwitch { get; set; } = "1";

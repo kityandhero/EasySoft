@@ -1,62 +1,37 @@
-﻿namespace EasySoft.Simple.DomainDrivenDesign.Domain.Shared.Enums;
+﻿using EasySoft.UtilityTools.Standard.Interfaces;
+using EasySoft.UtilityTools.Standard.Models;
+
+namespace EasySoft.Simple.DomainDrivenDesign.Domain.Shared.Enums;
 
 /// <summary>
 ///     ApplicationChannelCollection
 /// </summary>
-public enum ApplicationChannelCollection
+public abstract class ApplicationChannelCollection
 {
     /// <summary>
     /// 账户中心
     /// </summary>
-    [Description("账户中心")]
-    AccountCenter = 100,
+    public static readonly Channel AccountCenter = new(
+        "4c1d1b3592cd494d8a4ccba38245c071",
+        "AccountCenter",
+        "AccountCenter"
+    );
 
     /// <summary>
     /// 客户中心
     /// </summary>
-    [Description("客户中心")]
-    CustomerCenter = 200,
+    public static readonly Channel CustomerCenter = new(
+        "d8aeca4aa43046c892d7ec43f050703a",
+        "CustomerCenter",
+        "CustomerCenter"
+    );
 
     /// <summary>
     /// 博客
     /// </summary>
-    [Description("博客")]
-    WebBlog = 300
-}
-
-/// <summary>
-/// </summary>
-public static class ApplicationChannelCollectionExtensions
-{
-    /// <summary>
-    ///     ToInt
-    /// </summary>
-    /// <param name="source"></param>
-    /// <returns></returns>
-    public static int ToInt(this ApplicationChannelCollection source)
-    {
-        return (int)source;
-    }
-
-    /// <summary>
-    ///     GetDescription
-    /// </summary>
-    /// <param name="source"></param>
-    /// <returns></returns>
-    public static string GetDescription(this ApplicationChannelCollection source)
-    {
-        var descriptionAttribute = source.GetCustomAttribute<DescriptionAttribute>();
-
-        return descriptionAttribute == null ? "" : descriptionAttribute.Description;
-    }
-
-    /// <summary>
-    ///     ToApplicationChannel
-    /// </summary>
-    /// <param name="source"></param>
-    /// <returns></returns>
-    public static IApplicationChannel ToApplicationChannel(this ApplicationChannelCollection source)
-    {
-        return new ApplicationChannel().SetChannel(source.ToInt()).SetName(source.GetDescription());
-    }
+    public static readonly Channel WebBlog = new(
+        "7311e5625c674843a1686b8967ab82da",
+        "WebBlog",
+        "WebBlog"
+    );
 }

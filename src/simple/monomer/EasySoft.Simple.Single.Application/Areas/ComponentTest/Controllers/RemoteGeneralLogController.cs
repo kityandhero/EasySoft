@@ -1,7 +1,4 @@
-﻿using EasySoft.Core.ExchangeRegulation.Extensions;
-using EasySoft.UtilityTools.Standard.Extensions;
-
-namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
+﻿namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 
 /// <summary>
 /// RemoteGeneralLogController
@@ -32,20 +29,22 @@ public class RemoteGeneralLogController : AreaControllerCore
     public async Task<IActionResult> Test()
     {
         if (!GeneralConfigAssist.GetRemoteGeneralLogSwitch())
+        {
             return this.Fail(ReturnCode.NoChange.ToMessage("RemoteGeneralLogEnable switch is not open"));
+        }
 
         var log = await _generalLogProducer.SendAsync("Test");
 
-        return this.Success(log.ToObject());
+        return this.Success(log.ToExpandoObject());
     }
 
     /// <summary>
     /// SubscribeMessage
     /// </summary>
-    /// <param name="generalLogExchange"></param>
+    /// <param name="generalLogMessage"></param>
     [CapSubscribe("EasySoft.GeneralLog")]
-    public void SubscribeMessage(GeneralLogExchange generalLogExchange)
+    public void SubscribeMessage(IGeneralLogMessage generalLogMessage)
     {
-        Console.WriteLine("message is:" + generalLogExchange.Message);
+        Console.WriteLine("message is:" + generalLogMessage.Message);
     }
 }

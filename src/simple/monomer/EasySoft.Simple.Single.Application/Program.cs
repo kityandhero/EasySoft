@@ -4,7 +4,7 @@ using EasySoft.Simple.Single.Application.Hubs;
 
 var app = WebApplicationBuilderAssist
     .CreateBuilder<StartUpConfigure>(
-        ApplicationChannelCollection.TestApplication.ToApplicationChannel(),
+        ApplicationChannelCollection.TestApplication,
         args.ToArray()
     )
     .EasyBuild();

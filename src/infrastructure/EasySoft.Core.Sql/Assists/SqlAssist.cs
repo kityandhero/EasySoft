@@ -5,6 +5,8 @@ using EasySoft.Core.Sql.Enums;
 using EasySoft.Core.Sql.Extensions;
 using EasySoft.Core.Sql.Factories;
 using EasySoft.Core.Sql.Interfaces;
+using EasySoft.UtilityTools.Standard.Attributes;
+using EasySoft.UtilityTools.Standard.Exceptions;
 
 namespace EasySoft.Core.Sql.Assists;
 
@@ -1304,6 +1306,251 @@ public static class SqlAssist
         };
 
         return list.Join(" ");
+    }
+
+    #endregion
+
+    #region Create
+
+    /// <summary>
+    /// Create
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static string Create<T>() where T : IEntitySelf<T>, new()
+    {
+        var model = new T();
+
+        return Create(model);
+    }
+
+    /// <summary>
+    /// Create
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    /// <exception cref="UnhandledException"></exception>
+    public static string Create(Type type)
+    {
+        if (type is not { IsPublic: true, IsVisible: true })
+        {
+            throw new UnhandledException("type must be Public and Visible");
+        }
+
+        var model = type.Create<IEntity>();
+
+        if (model == null)
+        {
+            throw new UnhandledException("无法创建无参数的类实例");
+        }
+
+        return Create(model);
+    }
+
+    /// <summary>
+    /// Create Sql
+    /// </summary>
+    /// <param name="model"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="UnhandledException"></exception>
+    public static string Create<T>(T model) where T : IEntity
+    {
+        if (model == null)
+        {
+            throw new UnhandledException("参数不能为null");
+        }
+
+        var modelType = model.GetType();
+
+        var schemaName = model.GetSqlSchemaName();
+        var fieldDecorateStart = model.GetSqlFieldDecorateStart();
+        var fieldDecorateEnd = model.GetSqlFieldDecorateEnd();
+        var tableName = TransferAssist.TransferTableName(model);
+        var tableNamePure = TransferAssist.GetTableName(model);
+
+        var result = new StringBuilder();
+
+        result.AppendLine("SET ANSI_NULLS ON");
+        result.AppendLine("GO");
+        result.AppendLine();
+        result.AppendLine("SET QUOTED_IDENTIFIER ON");
+        result.AppendLine("GO");
+        result.AppendLine();
+
+        result.Append("CREATE TABLE ");
+
+        result.Append(tableName);
+
+        result.AppendLine(" ( ");
+
+        var itemString = new StringBuilder();
+        var commentString = new StringBuilder();
+
+        var primaryKeyName = model.GetPrimaryKeyName();
+
+        var defaultValueBuilder = new StringBuilder();
+
+        var propertiesSorted = new List<PropertyInfo>();
+
+        var properties = modelType.GetProperties();
+
+        properties.ForEach(
+            p =>
+            {
+                var columnName = TransferAssist.GetColumnName(p);
+
+                if (columnName == primaryKeyName)
+                {
+                    propertiesSorted.Add(p);
+                }
+            }
+        );
+
+        properties.ForEach(
+            p =>
+            {
+                var columnName = TransferAssist.GetColumnName(p);
+
+                if (columnName != primaryKeyName)
+                {
+                    propertiesSorted.Add(p);
+                }
+            }
+        );
+
+        foreach (var p in propertiesSorted)
+        {
+            var columnName = TransferAssist.GetColumnName(p);
+
+            var columnBuilder = new StringBuilder();
+
+            columnBuilder.Append($"{fieldDecorateStart}{columnName}{fieldDecorateEnd} ");
+
+            columnBuilder.Append(
+                TransferAssist.GetColumnDatabaseType(
+                    p,
+                    fieldDecorateStart,
+                    fieldDecorateEnd
+                )
+            );
+
+            columnBuilder.Append(" NOT NULL,");
+
+            itemString.AppendLine(columnBuilder.ToString());
+
+            var columnDefaultValueAttribute = p.GetCustomAttribute<AdvanceColumnDefaultValueAttribute>();
+
+            var typeCode = p.PropertyType.GetTypeCode();
+
+            if (columnDefaultValueAttribute == null)
+            {
+                var defaultValue = typeCode switch
+                {
+                    TypeCode.String => "''",
+                    TypeCode.Single => "0",
+                    TypeCode.Int16 => "0",
+                    TypeCode.Int32 => "0",
+                    TypeCode.Int64 => "0",
+                    TypeCode.Decimal => "0",
+                    TypeCode.Double => "0",
+                    TypeCode.UInt16 => "0",
+                    TypeCode.UInt32 => "0",
+                    TypeCode.UInt64 => "0",
+                    _ => ""
+                };
+
+                if (string.IsNullOrWhiteSpace(defaultValue))
+                {
+                    continue;
+                }
+
+                defaultValueBuilder
+                    .Append("ALTER TABLE")
+                    .Append($" {tableName} ")
+                    .Append("ADD CONSTRAINT")
+                    .Append($" [DF_{(columnName == primaryKeyName ? "CORE_" : "")}{tableNamePure}_{columnName}]  ")
+                    .Append("DEFAULT")
+                    .Append($" ({defaultValue}) ")
+                    .Append($"FOR {fieldDecorateStart}{columnName}{fieldDecorateEnd}")
+                    .AppendLine();
+
+                defaultValueBuilder.AppendLine("GO");
+                defaultValueBuilder.AppendLine();
+            }
+            else
+            {
+                var defaultValue = typeCode switch
+                {
+                    TypeCode.DateTime => $"'{columnDefaultValueAttribute.Value}'",
+                    _ => columnDefaultValueAttribute.Value
+                };
+
+                defaultValueBuilder
+                    .Append("ALTER TABLE")
+                    .Append($" {tableName} ")
+                    .Append("ADD CONSTRAINT")
+                    .Append($" [DF_{(columnName == primaryKeyName ? "CORE_" : "")}{tableNamePure}_{columnName}]  ")
+                    .Append("DEFAULT")
+                    .Append($" ({defaultValue}) ")
+                    .Append($"FOR {fieldDecorateStart}{columnName}{fieldDecorateEnd}")
+                    .AppendLine();
+
+                defaultValueBuilder.AppendLine("GO");
+                defaultValueBuilder.AppendLine();
+            }
+
+            if (columnName == primaryKeyName)
+            {
+                commentString.AppendLine(
+                    $"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'主键标识' , @level0type=N'SCHEMA',@level0name=N'{schemaName}', @level1type=N'TABLE',@level1name=N'{tableNamePure}', @level2type=N'COLUMN',@level2name=N'{primaryKeyName}'"
+                );
+                commentString.AppendLine();
+            }
+            else
+            {
+                var customColumnInformationAttribute = p.GetCustomAttribute<AdvanceColumnInformationAttribute>();
+
+                var label = customColumnInformationAttribute?.Label ?? "";
+                var description = customColumnInformationAttribute?.Description ?? "";
+
+                var comment = StringAssist.MergeWithSymbol(
+                    new List<string> { description, label },
+                    ","
+                );
+
+                if (string.IsNullOrWhiteSpace(comment))
+                {
+                    continue;
+                }
+
+                commentString.AppendLine(
+                    $"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{comment}' , @level0type=N'SCHEMA',@level0name=N'{schemaName}', @level1type=N'TABLE',@level1name=N'{tableNamePure}', @level2type=N'COLUMN',@level2name=N'{columnName}'"
+                );
+                commentString.AppendLine();
+            }
+        }
+
+        itemString.AppendLine($"CONSTRAINT [PK_{tableNamePure}] PRIMARY KEY CLUSTERED");
+        itemString.AppendLine($" ({fieldDecorateStart}{primaryKeyName}{fieldDecorateEnd} ASC)");
+        itemString.AppendLine(
+            "WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]"
+        );
+
+        result.AppendLine(itemString.ToString());
+
+        result.AppendLine(" ) ON [PRIMARY]");
+        result.AppendLine("GO");
+
+        result.AppendLine();
+
+        result.AppendLine(defaultValueBuilder.ToString());
+
+        result.AppendLine(commentString.ToString());
+
+        result.AppendLine("GO");
+
+        return result.ToString();
     }
 
     #endregion

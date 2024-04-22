@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.ErrorLogTransmitter.Entities;
-using EasySoft.Core.ErrorLogTransmitter.Extensions;
-using EasySoft.Core.ErrorLogTransmitter.Interfaces;
+﻿using EasySoft.UtilityTools.Standard.Messages;
 
 namespace EasySoft.Core.ErrorLogTransmitter.Producers;
 
@@ -24,32 +22,36 @@ public class ErrorLogProducer : IErrorLogProducer
     }
 
     /// <inheritdoc />
-    public async Task SendAsync(IErrorLogExchange errorLogExchange)
+    public async Task SendAsync(IErrorLogMessage errorLogExchange)
     {
-        await _capPublisher.PublishAsync(TransmitterTopic.ErrorLogExchange, errorLogExchange);
+        await _capPublisher.PublishAsync(TransmitterTopic.ErrorLogMessage, errorLogExchange);
     }
 
     /// <inheritdoc />
-    public async Task<IErrorLogExchange> SendAsync(Exception ex)
+    public async Task<IErrorLogMessage> SendAsync(Exception ex)
     {
         return await SendAsync(ex, 0);
     }
 
     /// <inheritdoc />
-    public async Task<IErrorLogExchange> SendAsync(
+    public async Task<IErrorLogMessage> SendAsync(
         Exception ex,
         long operatorId,
         IRequestInfo? requestInfo = null
     )
     {
-        var entity = new ErrorLogExchange
+        var entity = new ErrorLogMessage
         {
-            Channel = _applicationChannel.GetChannel()
+            TriggerChannel = _applicationChannel.GetChannel().ToValue()
         };
 
-        entity.Fill(ex, operatorId, requestInfo);
+        entity.Fill(
+            ex,
+            operatorId,
+            requestInfo
+        );
 
-        await _capPublisher.PublishAsync(TransmitterTopic.ErrorLogExchange, entity);
+        await _capPublisher.PublishAsync(TransmitterTopic.ErrorLogMessage, entity);
 
         return entity;
     }

@@ -1,6 +1,5 @@
 ﻿// Global using directives
 
-global using System.ComponentModel;
 global using System.Dynamic;
 global using System.Linq.Expressions;
 global using EasySoft.UtilityTools.Standard.Assists;

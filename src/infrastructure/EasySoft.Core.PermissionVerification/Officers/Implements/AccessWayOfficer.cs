@@ -53,9 +53,9 @@ public abstract class AccessWayOfficer : OfficerCore
         };
     }
 
-    private int GetChannel()
+    private string GetChannel()
     {
-        return Channel.GetChannel();
+        return Channel.GetChannel().ToValue();
     }
 
     /// <summary>
@@ -72,9 +72,15 @@ public abstract class AccessWayOfficer : OfficerCore
     /// </summary>
     protected async Task CollectAccessWay()
     {
-        if (!GeneralConfigAssist.GetAccessWayDetectSwitch()) return;
+        if (!GeneralConfigAssist.GetAccessWayDetectSwitch())
+        {
+            return;
+        }
 
-        if (string.IsNullOrWhiteSpace(AccessPermission.GuidTag)) return;
+        if (string.IsNullOrWhiteSpace(AccessPermission.GuidTag))
+        {
+            return;
+        }
 
         if (Environment.IsDevelopment())
         {
@@ -89,13 +95,18 @@ public abstract class AccessWayOfficer : OfficerCore
             );
         }
 
-        CompetenceCollection.GetInstance().SetCompetenceSets(
-            CompetenceCollection.BuildCompetenceKey(AccessPermission.Url),
-            AccessPermission.Competence
-        );
+        CompetenceCollection.GetInstance()
+            .SetCompetenceSets(
+                CompetenceCollection.BuildCompetenceKey(AccessPermission.Url),
+                AccessPermission.Competence
+            );
 
         var accessWayModel = AccessPermission.ToAccessWayModel();
 
-        await PermissionAssists.AddAccessWayModelScanHistory(Mediator, accessWayModel.GuidTag, accessWayModel);
+        await PermissionAssists.AddAccessWayModelScanHistory(
+            Mediator,
+            accessWayModel.GuidTag,
+            accessWayModel
+        );
     }
 }

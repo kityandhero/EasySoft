@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.LogServer.Core.DataTransferObjects;
 using EasySoft.Core.LogServer.Core.Entities;
 using EasySoft.Core.LogServer.Core.Services.Interfaces;
-using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.LogServer.Core.Services.Implements;
 
@@ -28,35 +27,47 @@ public class GeneralLogService : IGeneralLogService
     }
 
     /// <inheritdoc />
-    public async Task<PageListResult<GeneralLog>> PageListAsync(GeneralLogSearchDto blogSearchDto)
+    public async Task<PageListResult<IGeneralLogStore>> PageListAsync(
+        GeneralLogSearchDto generalLogSearchDto
+    )
     {
-        return await _generalLogRepository.PageListAsync(
-            blogSearchDto.PageNo,
-            blogSearchDto.PageSize
+        var pageListResult = await _generalLogRepository.PageListAsync(
+            generalLogSearchDto.PageNo,
+            generalLogSearchDto.PageSize
         );
+
+        return new PageListResult<IGeneralLogStore>(pageListResult.Code)
+        {
+            List = pageListResult.List.Cast<IGeneralLogStore>().ToList(),
+            PageIndex = pageListResult.PageIndex,
+            PageSize = pageListResult.PageSize
+        };
     }
 
     /// <inheritdoc />
-    public async Task SaveAsync(IGeneralLogExchange generalLogExchange)
+    public async Task SaveAsync(IGeneralLogMessage generalLogMessage)
     {
         var generalLog = new GeneralLog
         {
-            Message = generalLogExchange.Message,
-            MessageType = generalLogExchange.MessageType,
-            Content = generalLogExchange.Content,
-            ContentType = generalLogExchange.ContentType,
-            Type = generalLogExchange.Type,
-            Channel = generalLogExchange.Channel,
-            Ip = generalLogExchange.Ip,
+            Message = generalLogMessage.Message,
+            MessageType = generalLogMessage.MessageType,
+            Content = generalLogMessage.Content,
+            ContentType = generalLogMessage.ContentType,
+            Type = generalLogMessage.Type,
+            TriggerChannel = generalLogMessage.TriggerChannel,
+            Channel = ChannelAssist.GetCurrentChannel().ToValue(),
             Status = 0,
-            CreateBy = generalLogExchange.CreateBy,
-            CreateTime = generalLogExchange.CreateTime,
-            ModifyBy = generalLogExchange.CreateBy,
-            ModifyTime = generalLogExchange.CreateTime
+            CreateBy = 0,
+            CreateTime = DateTimeOffset.Now.DateTime,
+            ModifyBy = 0,
+            ModifyTime = DateTimeOffset.Now.DateTime
         };
 
         var resultAdd = await _generalLogRepository.AddAsync(generalLog);
 
-        if (!resultAdd.Success) throw new UnknownException(resultAdd.Message);
+        if (!resultAdd.Success)
+        {
+            throw new UnknownException(resultAdd.Message);
+        }
     }
 }

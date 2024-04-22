@@ -1,5 +1,4 @@
 ﻿using EasySoft.Simple.Single.Application.Models;
-using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 
@@ -30,13 +29,19 @@ public class RedisFeatureCachingController : AreaControllerCore
     /// <returns></returns>
     public IActionResult Set(string value, string key = TestKey)
     {
-        _cacheOperator.Set(key, value, new TimeSpan(TimeSpan.TicksPerSecond * 360));
-
-        return this.Success(new
-        {
+        _cacheOperator.Set(
+            key,
             value,
-            time = DateTime.Now.ToUnixTime()
-        });
+            new TimeSpan(TimeSpan.TicksPerSecond * 360)
+        );
+
+        return this.Success(
+            new
+            {
+                value,
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     /// <summary>
@@ -48,14 +53,19 @@ public class RedisFeatureCachingController : AreaControllerCore
     {
         var result = _cacheOperator.Get<string>(key);
 
-        if (!result.Success) return this.Fail(result.Code);
-
-        return this.Success(new
+        if (!result.Success)
         {
-            cacheMode = GeneralConfigAssist.GetCacheMode(),
-            value = result.Data,
-            time = DateTime.Now.ToUnixTime()
-        });
+            return this.Fail(result.Code);
+        }
+
+        return this.Success(
+            new
+            {
+                cacheMode = GeneralConfigAssist.GetCacheMode(),
+                value = result.Data,
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     /// <summary>
@@ -71,13 +81,19 @@ public class RedisFeatureCachingController : AreaControllerCore
             Date = DateTime.Now
         };
 
-        _cacheOperator.Set(key, value, new TimeSpan(TimeSpan.TicksPerSecond * 360));
-
-        return this.Success(new
-        {
+        _cacheOperator.Set(
+            key,
             value,
-            time = DateTime.Now.ToUnixTime()
-        });
+            new TimeSpan(TimeSpan.TicksPerSecond * 360)
+        );
+
+        return this.Success(
+            new
+            {
+                value,
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     /// <summary>
@@ -89,13 +105,18 @@ public class RedisFeatureCachingController : AreaControllerCore
     {
         var result = _cacheOperator.Get<Hello>(key);
 
-        if (!result.Success) return this.Fail(result.Code);
-
-        return this.Success(new
+        if (!result.Success)
         {
-            cacheMode = GeneralConfigAssist.GetCacheMode(),
-            value = result.Data,
-            time = DateTime.Now.ToUnixTime()
-        });
+            return this.Fail(result.Code);
+        }
+
+        return this.Success(
+            new
+            {
+                cacheMode = GeneralConfigAssist.GetCacheMode(),
+                value = result.Data,
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 }

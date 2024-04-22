@@ -2,6 +2,7 @@
 using EasySoft.UtilityTools.Core.Results.Implements;
 using EasySoft.UtilityTools.Core.Results.Interfaces;
 using EasySoft.UtilityTools.Standard.Extensions;
+using EasySoft.UtilityTools.Standard.Interfaces;
 
 namespace EasySoft.UtilityTools.Core.Extensions;
 
@@ -21,12 +22,17 @@ public static class ControllerBaseExtensions
         ExecutiveResult result
     )
     {
-        if (!result.Success) return controller.Fail(result.Code);
-
-        return controller.Success(new
+        if (!result.Success)
         {
-            time = DateTime.Now.ToUnixTime()
-        });
+            return controller.Fail(result.Code);
+        }
+
+        return controller.Success(
+            new
+            {
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     /// <summary>
@@ -96,7 +102,11 @@ public static class ControllerBaseExtensions
 
         return !result.Success
             ? controller.Fail(result.Code)
-            : controller.Success(data, extra, false);
+            : controller.Success(
+                data,
+                extra,
+                false
+            );
     }
 
     /// <summary>
@@ -112,7 +122,13 @@ public static class ControllerBaseExtensions
         bool camelCase = true
     )
     {
-        var result = new ApiResult(code, success, message, data, extraData);
+        var result = new ApiResult(
+            code,
+            success,
+            message,
+            data,
+            extraData
+        );
 
         result.SetCamelCase(camelCase);
 
@@ -129,7 +145,14 @@ public static class ControllerBaseExtensions
         bool camelCase = true
     )
     {
-        return controller.Data(ReturnCode.Ok, true, "success", data, extraData, camelCase);
+        return controller.Data(
+            ReturnCode.Ok,
+            true,
+            "success",
+            data,
+            extraData,
+            camelCase
+        );
     }
 
     /// <summary>
@@ -145,7 +168,13 @@ public static class ControllerBaseExtensions
     {
         var messageAdjust = string.IsNullOrWhiteSpace(message) ? code.ToMessage().Message : message;
 
-        return controller.Data(code, false, messageAdjust, data, extraData);
+        return controller.Data(
+            code,
+            false,
+            messageAdjust,
+            data,
+            extraData
+        );
     }
 
     /// <summary>
@@ -163,7 +192,13 @@ public static class ControllerBaseExtensions
         object? extraData = null
     )
     {
-        return controller.Data((ReturnCode)returnMessage.Code, false, returnMessage.Message, data, extraData);
+        return controller.Data(
+            (ReturnCode)returnMessage.Code,
+            false,
+            returnMessage.Message,
+            data,
+            extraData
+        );
     }
 
     /// <summary>  
@@ -180,7 +215,11 @@ public static class ControllerBaseExtensions
         bool camelCase = true
     )
     {
-        return controller.Success(list, extraData, camelCase);
+        return controller.Success(
+            list,
+            extraData,
+            camelCase
+        );
     }
 
     /// <summary>
@@ -218,7 +257,11 @@ public static class ControllerBaseExtensions
                 other
             };
 
-        return controller.PagedData(list, extra, camelCase);
+        return controller.PagedData(
+            list,
+            extra,
+            camelCase
+        );
     }
 
     /// <summary>  
@@ -294,18 +337,37 @@ public static class ControllerBaseExtensions
         var errors = new List<string>(4);
         var value = await c.GetParamValueAsync(param);
 
-        if (value == string.Empty && defaultValue != string.Empty) value = defaultValue;
+        if (value == string.Empty && defaultValue != string.Empty)
+        {
+            value = defaultValue;
+        }
 
         if (string.IsNullOrWhiteSpace(value) && required)
         {
-            if (value.Length < minLength) errors.Add($"[{param}]至少需要{minLength}个字符");
+            if (value.Length < minLength)
+            {
+                errors.Add($"[{param}]至少需要{minLength}个字符");
+            }
 
-            if (value.Length > maxLength) errors.Add($"[{param}]不能多于{maxLength}个字符");
+            if (value.Length > maxLength)
+            {
+                errors.Add($"[{param}]不能多于{maxLength}个字符");
+            }
 
-            if (!Regex.IsMatch(value, pattern)) errors.Add($"[{param}]输入字符格式不正确");
+            if (!Regex.IsMatch(value, pattern))
+            {
+                errors.Add($"[{param}]输入字符格式不正确");
+            }
         }
 
-        if (errors.Count > 0) throw new ParamException(param, true, errors.ToArray());
+        if (errors.Count > 0)
+        {
+            throw new ParamException(
+                param,
+                true,
+                errors.ToArray()
+            );
+        }
 
         return value;
     }
@@ -339,6 +401,7 @@ public static class ControllerBaseExtensions
         }
 
         if (input != null)
+        {
             try
             {
                 value = input.ConvertTo<T>();
@@ -347,15 +410,29 @@ public static class ControllerBaseExtensions
             {
                 value = defaultValue;
             }
+        }
 
         if (value is IComparable<T> cValue)
         {
-            if (cValue.CompareTo(min) < 0) errors.Add($"[{param}]不应小于{min}");
+            if (cValue.CompareTo(min) < 0)
+            {
+                errors.Add($"[{param}]不应小于{min}");
+            }
 
-            if (cValue.CompareTo(max) > 0) errors.Add($"[{param}]不应大于{max}");
+            if (cValue.CompareTo(max) > 0)
+            {
+                errors.Add($"[{param}]不应大于{max}");
+            }
         }
 
-        if (errors.Count > 0) throw new ParamException(param, true, errors.ToArray());
+        if (errors.Count > 0)
+        {
+            throw new ParamException(
+                param,
+                true,
+                errors.ToArray()
+            );
+        }
 
         return value;
     }
@@ -387,6 +464,7 @@ public static class ControllerBaseExtensions
         }
 
         if (input != null)
+        {
             try
             {
                 value = input.ConvertTo<T>();
@@ -395,12 +473,24 @@ public static class ControllerBaseExtensions
             {
                 value = defaultValue;
             }
+        }
 
         if (value is IComparable<T> cValue)
+        {
             if (cValue.CompareTo(min) < 0)
+            {
                 errors.Add($"值不应小于{min}");
+            }
+        }
 
-        if (errors.Count > 0) throw new ParamException(param, true, errors.ToArray());
+        if (errors.Count > 0)
+        {
+            throw new ParamException(
+                param,
+                true,
+                errors.ToArray()
+            );
+        }
 
         return value;
     }
@@ -429,20 +519,42 @@ public static class ControllerBaseExtensions
     {
         var errors = new List<string>(4);
 
-        if (value == null && required) throw new ParamException(param, $"[{param}]不能为空");
+        if (value == null && required)
+        {
+            throw new ParamException(param, $"[{param}]不能为空");
+        }
 
-        if (value == "" && canEmpty) return;
+        if (value == "" && canEmpty)
+        {
+            return;
+        }
 
         if (value != null)
         {
-            if (value.Length < minLength) errors.Add($"[{param}]至少需要{minLength}个字符");
+            if (value.Length < minLength)
+            {
+                errors.Add($"[{param}]至少需要{minLength}个字符");
+            }
 
-            if (value.Length > maxLength) errors.Add($"[{param}]不能多于{maxLength}个字符");
+            if (value.Length > maxLength)
+            {
+                errors.Add($"[{param}]不能多于{maxLength}个字符");
+            }
 
-            if (!Regex.IsMatch(value, pattern)) errors.Add($"[{param}]输入字符格式不正确");
+            if (!Regex.IsMatch(value, pattern))
+            {
+                errors.Add($"[{param}]输入字符格式不正确");
+            }
         }
 
-        if (errors.Count > 0) throw new ParamException(param, true, errors.ToArray());
+        if (errors.Count > 0)
+        {
+            throw new ParamException(
+                param,
+                true,
+                errors.ToArray()
+            );
+        }
     }
 
     /// <summary>
@@ -452,11 +564,30 @@ public static class ControllerBaseExtensions
     /// <param name="param">参数名称</param>
     /// <param name="value">参数值</param>
     /// <param name="pattern"></param>
-    public static void CheckPassword(this ControllerBase c, string param, string value, string pattern = "^.*$")
+    public static void CheckPassword(
+        this ControllerBase c,
+        string param,
+        string value,
+        string pattern = "^.*$"
+    )
     {
-        if (string.IsNullOrEmpty(value) || value.Length < 6) throw new ParamException(param, "密码需要至少6个字符！", true);
+        if (string.IsNullOrEmpty(value) || value.Length < 6)
+        {
+            throw new ParamException(
+                param,
+                "密码需要至少6个字符！",
+                true
+            );
+        }
 
-        if (!Regex.IsMatch(value, pattern)) throw new ParamException(param, "请使用多种字符组合的密码！", true);
+        if (!Regex.IsMatch(value, pattern))
+        {
+            throw new ParamException(
+                param,
+                "请使用多种字符组合的密码！",
+                true
+            );
+        }
     }
 
     /// <summary>
@@ -467,15 +598,30 @@ public static class ControllerBaseExtensions
     /// <param name="param">参数名称</param>
     /// <param name="value">参数值</param>
     /// <param name="min">  最小值</param>
-    public static void Check<T>(this ControllerBase c, string param, T value, T min)
+    public static void Check<T>(
+        this ControllerBase c,
+        string param,
+        T value,
+        T min
+    )
     {
         var error = "";
 
         var cValue = value as IComparable<T>;
 
-        if (cValue?.CompareTo(min) < 0) error = $"[{param}]不应小于{min}";
+        if (cValue?.CompareTo(min) < 0)
+        {
+            error = $"[{param}]不应小于{min}";
+        }
 
-        if (error != null) throw new ParamException(param, true, new[] { error });
+        if (error != null)
+        {
+            throw new ParamException(
+                param,
+                true,
+                new[] { error }
+            );
+        }
     }
 
     /// <summary>
@@ -487,18 +633,37 @@ public static class ControllerBaseExtensions
     /// <param name="value">参数值</param>
     /// <param name="min">  最小值</param>
     /// <param name="max">  最大值</param>
-    public static void Check<T>(this ControllerBase c, string param, T value, T min, T max)
+    public static void Check<T>(
+        this ControllerBase c,
+        string param,
+        T value,
+        T min,
+        T max
+    )
     {
         var errors = new List<string>(4);
 
         if (value is IComparable<T> cValue)
         {
-            if (cValue.CompareTo(min) < 0) errors.Add($"[{param}]不应小于{min}");
+            if (cValue.CompareTo(min) < 0)
+            {
+                errors.Add($"[{param}]不应小于{min}");
+            }
 
-            if (cValue.CompareTo(max) > 0) errors.Add($"[{param}]不应大于{max}");
+            if (cValue.CompareTo(max) > 0)
+            {
+                errors.Add($"[{param}]不应大于{max}");
+            }
         }
 
-        if (errors.Count > 0) throw new ParamException(param, true, errors.ToArray());
+        if (errors.Count > 0)
+        {
+            throw new ParamException(
+                param,
+                true,
+                errors.ToArray()
+            );
+        }
     }
 
     /// <summary>
@@ -509,13 +674,28 @@ public static class ControllerBaseExtensions
     /// <param name="param">参数名称</param>
     /// <param name="value">参数值</param>
     /// <param name="list"> 值范围列表</param>
-    public static void CheckInList<T>(this ControllerBase c, string param, T value, params T[] list)
+    public static void CheckInList<T>(
+        this ControllerBase c,
+        string param,
+        T value,
+        params T[] list
+    )
     {
         var error = "";
 
-        if (!list.ToList().Contains(value)) error = $"[{param}]不在指定范围";
+        if (!list.ToList().Contains(value))
+        {
+            error = $"[{param}]不在指定范围";
+        }
 
-        if (error != null) throw new ParamException(param, true, error);
+        if (error != null)
+        {
+            throw new ParamException(
+                param,
+                true,
+                error
+            );
+        }
     }
 
     /// <summary>
@@ -527,15 +707,31 @@ public static class ControllerBaseExtensions
     /// <param name="param2">参数2名称</param>
     /// <param name="value1">参数1值</param>
     /// <param name="value2">参数2值</param>
-    public static void CheckGreaterThan<T>(this ControllerBase c, string param1, string param2, T value1, T value2)
+    public static void CheckGreaterThan<T>(
+        this ControllerBase c,
+        string param1,
+        string param2,
+        T value1,
+        T value2
+    )
     {
         var error = "";
 
         var cValue = value1 as IComparable<T>;
 
-        if (cValue?.CompareTo(value2) <= 0) error = $"[{param1}]不应小于[{param2}]";
+        if (cValue?.CompareTo(value2) <= 0)
+        {
+            error = $"[{param1}]不应小于[{param2}]";
+        }
 
-        if (error != null) throw new ParamException(param1, true, new string[] { error });
+        if (error != null)
+        {
+            throw new ParamException(
+                param1,
+                true,
+                new string[] { error }
+            );
+        }
     }
 
     /// <summary>
@@ -599,7 +795,10 @@ public static class ControllerBaseExtensions
 
         var result = "";
 
-        if (nv.AllKeys.ToList().Contains(param)) result = nv[param];
+        if (nv.AllKeys.ToList().Contains(param))
+        {
+            result = nv[param];
+        }
 
         return result ?? "";
     }
@@ -633,7 +832,11 @@ public static class ControllerBaseExtensions
     /// <param name="value"></param>
     public static void SetCookie(this ControllerBase controller, string key, string value)
     {
-        controller.HttpContext.SetCookie(key, value, new CookieOptions());
+        controller.HttpContext.SetCookie(
+            key,
+            value,
+            new CookieOptions()
+        );
     }
 
     /// <summary>
@@ -643,8 +846,17 @@ public static class ControllerBaseExtensions
     /// <param name="key"></param>
     /// <param name="value"></param>
     /// <param name="options"></param>
-    public static void SetCookie(this ControllerBase controller, string key, string value, CookieOptions options)
+    public static void SetCookie(
+        this ControllerBase controller,
+        string key,
+        string value,
+        CookieOptions options
+    )
     {
-        controller.HttpContext.Response.Cookies.Append(key, value, options);
+        controller.HttpContext.Response.Cookies.Append(
+            key,
+            value,
+            options
+        );
     }
 }

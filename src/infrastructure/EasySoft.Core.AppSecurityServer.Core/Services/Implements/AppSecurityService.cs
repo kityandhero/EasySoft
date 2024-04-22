@@ -24,12 +24,14 @@ public class AppSecurityService : IAppSecurityService
     /// <inheritdoc />
     public async Task<ExecutiveResult<AppSecurityDto>> CreateAsync(AppSecurityDto appSecurityDto)
     {
-        if (appSecurityDto.Channel < 0)
+        if (string.IsNullOrWhiteSpace(appSecurityDto.Channel))
+        {
             return new ExecutiveResult<AppSecurityDto>(
                 ReturnCode.ParamError.ToMessage(
-                    "channel must greater than 0 or equal to 0."
+                    "channel must be not null or empty."
                 )
             );
+        }
 
         var appSecurity = new AppSecurity
         {
@@ -42,7 +44,7 @@ public class AppSecurityService : IAppSecurityService
     }
 
     /// <inheritdoc />
-    public async Task<ExecutiveResult> TryCreateAsync(int channel)
+    public async Task<ExecutiveResult> TryCreateAsync(string channel)
     {
         var result = await _appSecurityRepository.GetAsync(
             o => o.Channel == channel
@@ -50,15 +52,20 @@ public class AppSecurityService : IAppSecurityService
 
         if (result.Success)
         {
-            if (result.Data != null) return ExecutiveResultAssist.CreateOk();
+            if (result.Data != null)
+            {
+                return ExecutiveResultAssist.CreateOk();
+            }
 
             return new ExecutiveResult(ReturnCode.DataError.ToMessage("查询无返回"));
         }
 
-        var resultAdd = await CreateAsync(new AppSecurityDto
-        {
-            Channel = channel
-        });
+        var resultAdd = await CreateAsync(
+            new AppSecurityDto
+            {
+                Channel = channel
+            }
+        );
 
         return resultAdd.ToExecutiveResult();
     }
@@ -67,7 +74,7 @@ public class AppSecurityService : IAppSecurityService
     public async Task<ExecutiveResult<AppSecurityDto>> GetMainControlAppSecurity()
     {
         var result = await _appSecurityRepository.GetAsync(
-            o => o.Channel == InnerChannel.AppSecurityServerChannel.GetChannel()
+            o => o.Channel == InnerChannel.AppSecurityServer.ToValue()
         );
 
         return result.ToExecutiveResult(result.Data?.ToAppSecurityDto());
@@ -91,16 +98,19 @@ public class AppSecurityService : IAppSecurityService
     public async Task<ExecutiveResult> MaintainMasterControlAsync()
     {
         var result = await _appSecurityRepository.GetAsync(
-            o => o.Channel == InnerChannel.AppSecurityServerChannel.GetChannel()
+            o => o.Channel == InnerChannel.AppSecurityServer.ToValue()
         );
 
-        if (result.Success) return new ExecutiveResult(ReturnCode.Ok);
+        if (result.Success)
+        {
+            return new ExecutiveResult(ReturnCode.Ok);
+        }
 
         var appSecurity = new AppSecurity
         {
             AppId = UniqueIdAssist.CreateUUID(),
             AppSecret = UniqueIdAssist.CreateUUID(),
-            Channel = InnerChannel.AppSecurityServerChannel.GetChannel()
+            Channel = InnerChannel.AppSecurityServer.ToValue()
         };
 
         var resultAdd = await _appSecurityRepository.AddAsync(appSecurity);

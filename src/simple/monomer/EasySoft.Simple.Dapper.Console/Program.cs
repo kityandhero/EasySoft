@@ -10,7 +10,7 @@ using EasySoft.Core.EasyCaching.ExtensionMethods;
 using EasySoft.Core.EasyCaching.interfaces;
 using EasySoft.Core.EasyCaching.Operators;
 using EasySoft.Core.Project.DataEntity.Dapper.Infrastructure.Entities;
-using EasySoft.Simple.Dapper.Console.Enums;
+using EasySoft.Simple.Dapper.Console;
 using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.Assists;
 using CacheModeCollection = EasySoft.Core.EasyCaching.Enums.CacheModeCollection;
@@ -59,9 +59,7 @@ AutoFacConsoleAssist.CreateServiceProvider(
         }
 
         containerBuilder.RegisterInstance(
-                new ApplicationChannel()
-                    .SetChannel(ApplicationChannelCollection.DapperTestApplication.ToInt())
-                    .SetName(ApplicationChannelCollection.DapperTestApplication.GetDescription())
+                new ApplicationChannel().SetChannel(ChannelCollection.DapperTestApplication)
             )
             .As<IApplicationChannel>()
             .SingleInstance();
@@ -70,7 +68,7 @@ AutoFacConsoleAssist.CreateServiceProvider(
 
 DapperElegantConfigurator.SetCacheOperator(AutofacAssist.Instance.Resolve<IAsyncCacheOperator>());
 
-var author = EntityAssist.GetEntity<AccessWay>(1);
+var author = EntityAssist.GetEntity<AccessWay>(1767475361169412096);
 
 if (author != null)
 {

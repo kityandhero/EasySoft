@@ -17,7 +17,7 @@ public interface IAppSecurityService : IBusinessService
     /// </summary>
     /// <param name="channel"></param>
     /// <returns></returns>
-    Task<ExecutiveResult> TryCreateAsync(int channel);
+    Task<ExecutiveResult> TryCreateAsync(string channel);
 
     /// <summary>
     /// 获取应用安全主控端, 即AppSecurityServer应用对应的应用配置

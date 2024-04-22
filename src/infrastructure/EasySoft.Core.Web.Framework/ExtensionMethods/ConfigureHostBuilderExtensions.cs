@@ -7,8 +7,7 @@ public static class ConfigureHostBuilderExtensions
     )
     {
         builder.AddAdvanceApplicationChannel(
-            ApplicationChannel.DefaultChannel,
-            ApplicationChannel.DefaultName
+            ApplicationChannel.DefaultChannel
         );
 
         return builder;
@@ -16,18 +15,20 @@ public static class ConfigureHostBuilderExtensions
 
     internal static ConfigureHostBuilder AddAdvanceApplicationChannel(
         this ConfigureHostBuilder builder,
-        int channel,
-        string name
+        IChannel channel
     )
     {
-        builder.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-        {
-            containerBuilder.RegisterInstance(new ApplicationChannel().SetChannel(channel).SetName(name))
-                .As<IApplicationChannel>().SingleInstance();
-        });
+        builder.ConfigureContainer<ContainerBuilder>(
+            containerBuilder =>
+            {
+                containerBuilder.RegisterInstance(new ApplicationChannel().SetChannel(channel))
+                    .As<IApplicationChannel>()
+                    .SingleInstance();
+            }
+        );
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"ApplicationChannel name is {name}, identification is {channel}."
+            $"ApplicationChannel name is {channel.Name}, identification is {channel.Value}."
         );
 
         return builder;

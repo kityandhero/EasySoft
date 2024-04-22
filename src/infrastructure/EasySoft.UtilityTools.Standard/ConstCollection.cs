@@ -106,7 +106,14 @@ public static class ConstCollection
     /// <summary>
     /// ProductRankingWeightBeginTime
     /// </summary>
-    public static readonly DateTime ProductRankingWeightBeginTime = new(2019, 1, 1, 0, 0, 0);
+    public static readonly DateTime ProductRankingWeightBeginTime = new(
+        2019,
+        1,
+        1,
+        0,
+        0,
+        0
+    );
 
     /// <summary>
     /// ProductRankingWeightBeginUnixTime
@@ -116,7 +123,14 @@ public static class ConstCollection
     /// <summary>
     /// UserCouponRankingWeightBeginTime
     /// </summary>
-    public static readonly DateTime UserCouponRankingWeightBeginTime = new(2020, 1, 1, 0, 0, 0);
+    public static readonly DateTime UserCouponRankingWeightBeginTime = new(
+        2020,
+        1,
+        1,
+        0,
+        0,
+        0
+    );
 
     /// <summary>
     /// UserCouponRankingWeightBeginUnixTime
@@ -146,7 +160,19 @@ public static class ConstCollection
     /// <summary>
     /// DateTimeDefault
     /// </summary>
-    public static readonly DateTime DateTimeDefault = new(2010, 1, 1, 0, 0, 0);
+    public static readonly DateTime DateTimeDefault = new(
+        2010,
+        1,
+        1,
+        0,
+        0,
+        0
+    );
+
+    /// <summary>
+    /// DatabaseDefaultDateTime
+    /// </summary>
+    public const string DatabaseDefaultDateTime = "1970-01-01 00:00:00";
 
     /// <summary>
     /// DateTimeDefaultString
@@ -173,7 +199,7 @@ public static class ConstCollection
     /// Db默认日期： 1970/1/1 0:00:00
     /// </summary>
     [Description("Db默认日期： 1970/1/1 0:00:00")]
-    public static DateTime DbDefaultDateTime = Convert.ToDateTime("1970/1/1 0:00:00");
+    public static DateTime DbDefaultDateTime = Convert.ToDateTime(DatabaseDefaultDateTime);
 
     /// <summary>
     /// 最大日期：9999/12/31 23:59:59

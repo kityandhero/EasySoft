@@ -1,4 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Entities.Implements;
+﻿using EasySoft.UtilityTools.Standard.Messages;
 
 namespace EasySoft.Core.EntityFramework.Interceptors;
 
@@ -48,7 +48,7 @@ public class LogCommandInterceptor : DbCommandInterceptor
 
     private void ManipulateCommand(DbCommand command)
     {
-        if (!GeneralConfigAssist.GetRemoteSqlExecutionRecordSwitch())
+        if (!SqlLogSwitchAssist.GetCurrentSwitch())
         {
             return;
         }
@@ -108,9 +108,9 @@ public class LogCommandInterceptor : DbCommandInterceptor
         }
 
         SqlLogInnerQueue.Enqueue(
-            new SqlExecutionRecordExchange
+            new SqlLogMessage
             {
-                ExecuteGuid = UniqueIdAssist.CreateUUID(),
+                Flag = UniqueIdAssist.CreateUUID(),
                 CommandString = JsonConvertAssist.SerializeObject(
                     new
                     {
@@ -119,7 +119,7 @@ public class LogCommandInterceptor : DbCommandInterceptor
                         sqlAdjust
                     }
                 ),
-                Channel = applicationChannel.GetChannel()
+                TriggerChannel = ChannelAssist.GetCurrentChannel().ToValue()
             }
         );
     }

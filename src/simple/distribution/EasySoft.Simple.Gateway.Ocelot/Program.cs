@@ -4,7 +4,7 @@ using EasySoft.Simple.Distribute.Common.Enums;
 
 var app = WebApplicationBuilderAssist
     .CreateBuilder(
-        ApplicationChannelCollection.GateWayOcelot.ToApplicationChannel(),
+        ApplicationChannelCollection.GateWayOcelot,
         args.ToArray()
     )
     .EasyBuild();

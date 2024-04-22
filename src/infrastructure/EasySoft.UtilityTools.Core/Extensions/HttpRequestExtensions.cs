@@ -1,6 +1,6 @@
-﻿using EasySoft.UtilityTools.Standard.Entities;
-using EasySoft.UtilityTools.Standard.Entities.Implements;
-using EasySoft.UtilityTools.Standard.Extensions;
+﻿using EasySoft.UtilityTools.Standard.Extensions;
+using EasySoft.UtilityTools.Standard.Interfaces;
+using EasySoft.UtilityTools.Standard.Models;
 
 namespace EasySoft.UtilityTools.Core.Extensions;
 
@@ -28,7 +28,10 @@ public static class HttpRequestExtensions
     {
         var result = new NameValueCollection();
 
-        if (string.IsNullOrWhiteSpace(request.QueryString.Value ?? "")) return result;
+        if (string.IsNullOrWhiteSpace(request.QueryString.Value ?? ""))
+        {
+            return result;
+        }
 
         var url = $"https://www.a.com?{request.QueryString.Value ?? ""}";
 
@@ -46,11 +49,17 @@ public static class HttpRequestExtensions
     {
         var result = new NameValueCollection();
 
-        if (!request.HasFormContentType) return result;
+        if (!request.HasFormContentType)
+        {
+            return result;
+        }
 
         var f = request.Form;
 
-        foreach (var item in f) result[(string?)item.Key] = item.Value;
+        foreach (var item in f)
+        {
+            result[(string?)item.Key] = item.Value;
+        }
 
         return result;
     }
@@ -66,14 +75,20 @@ public static class HttpRequestExtensions
 
         var contentType = request.ContentType;
 
-        if (contentType == null || !contentType.Contains(MimeCollection.ApplicationJson.ContentType)) return result;
+        if (contentType == null || !contentType.Contains(MimeCollection.ApplicationJson.ContentType))
+        {
+            return result;
+        }
 
         //操作Request.Body之前加上EnableBuffering即可
         request.EnableBuffering();
 
         var stream = request.Body;
 
-        if (stream.Length == 0) return result;
+        if (stream.Length == 0)
+        {
+            return result;
+        }
 
         using var streamReader = new StreamReader(
             stream,

@@ -4,10 +4,10 @@ using EasySoft.Core.Sql.Builders;
 using EasySoft.Core.Sql.Extensions;
 using EasySoft.Core.Sql.Factories;
 using EasySoft.Core.Sql.Interfaces;
-using EasySoft.UtilityTools.Standard.Entities.Interfaces;
+using EasySoft.UtilityTools.Standard.Interfaces;
+using EasySoft.UtilityTools.Standard.Messages;
 using EasySoft.UtilityTools.Standard.Result.Factories;
 using EasySoft.UtilityTools.Standard.Result.Implements;
-using SqlExecuteType = EasySoft.UtilityTools.Standard.Enums.SqlExecuteType;
 
 namespace EasySoft.Core.Dapper.Base;
 
@@ -17,43 +17,29 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
     private readonly IMapperTransaction? _mapperTransaction;
 
-    private readonly Func<int, bool>? _sqlLogRecordJudge;
+    private readonly bool _sqlLogRecordSwitch;
 
     #region Constructor
 
-    public BaseMapper(IMapperChannel mapperChannel)
+    public BaseMapper(IMapperChannel mapperChannel, bool logSql = true)
     {
         _mapperChannel = mapperChannel ?? throw new Exception("无效的mapperChannel");
 
-        _sqlLogRecordJudge = null;
+        _sqlLogRecordSwitch = logSql && SqlLogSwitchAssist.GetCurrentSwitch();
     }
 
-    public BaseMapper(IMapperChannel mapperChannel, Func<int, bool> sqlLogRecordJudge)
-    {
-        _mapperChannel = mapperChannel ?? throw new Exception("无效的mapperChannel");
-
-        _sqlLogRecordJudge = sqlLogRecordJudge;
-    }
-
-    public BaseMapper(IMapperTransaction mapperTransaction, Func<int, bool> sqlLogRecordJudge)
+    public BaseMapper(IMapperTransaction mapperTransaction, bool logSql = true)
     {
         _mapperTransaction = mapperTransaction ?? throw new Exception("无效的mapperTransaction");
 
         _mapperChannel = _mapperTransaction.GetMapperChannel();
 
-        _sqlLogRecordJudge = sqlLogRecordJudge;
+        _sqlLogRecordSwitch = logSql && SqlLogSwitchAssist.GetCurrentSwitch();
     }
 
     #endregion Constructor
 
     #region Method
-
-    public bool GetUseLogSqlExecutionMessage()
-    {
-        var applicationChannel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
-
-        return _sqlLogRecordJudge != null && _sqlLogRecordJudge(applicationChannel.GetChannel());
-    }
 
     #region Get
 
@@ -93,42 +79,62 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
     public T? GetBy(Condition<T> conditions, bool transferWrapperQuery = true)
     {
-        return GetBy(new List<Condition<T>>
-        {
-            conditions
-        }, new List<Sort<T>>(), transferWrapperQuery);
+        return GetBy(
+            new List<Condition<T>>
+            {
+                conditions
+            },
+            new List<Sort<T>>(),
+            transferWrapperQuery
+        );
     }
 
     public T? GetBy(Condition<T> conditions, Sort<T> sort, bool transferWrapperQuery = true)
     {
-        return GetBy(new List<Condition<T>>
-        {
-            conditions
-        }, new List<Sort<T>>
-        {
-            sort
-        }, transferWrapperQuery);
+        return GetBy(
+            new List<Condition<T>>
+            {
+                conditions
+            },
+            new List<Sort<T>>
+            {
+                sort
+            },
+            transferWrapperQuery
+        );
     }
 
     public T? GetBy(Condition<T> conditions, IList<Sort<T>> sorts, bool transferWrapperQuery = true)
     {
-        return GetBy(new List<Condition<T>>
-        {
-            conditions
-        }, sorts, transferWrapperQuery);
+        return GetBy(
+            new List<Condition<T>>
+            {
+                conditions
+            },
+            sorts,
+            transferWrapperQuery
+        );
     }
 
     public T? GetBy(ICollection<Condition<T>> conditions, bool transferWrapperQuery = true)
     {
-        return GetBy(conditions, new List<Sort<T>>(), transferWrapperQuery);
+        return GetBy(
+            conditions,
+            new List<Sort<T>>(),
+            transferWrapperQuery
+        );
     }
 
     public T? GetBy(ICollection<Condition<T>> conditions, Sort<T> sort, bool transferWrapperQuery = true)
     {
-        return GetBy(conditions, new List<Sort<T>>
-        {
-            sort
-        }, transferWrapperQuery);
+        return GetBy(
+            conditions,
+            new List<Sort<T>>
+            {
+                sort
+            },
+            transferWrapperQuery
+        );
     }
 
     /// <summary>
@@ -139,29 +145,43 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
     {
         var model = new T();
 
-        if (conditions == null || conditions.Count < 1) throw new Exception("需要设定查询参数");
+        if (conditions == null || conditions.Count < 1)
+        {
+            throw new Exception("需要设定查询参数");
+        }
 
         AdvanceSqlBuilder builder;
 
         if (transferWrapperQuery)
+        {
             builder = new AdvanceSqlBuilder().Select()
                 .AppendFragment($" {(transferWrapperQuery ? " TOP 1 " : "")}{model.GetPrimaryKeyName()} ")
                 .From(model);
-        else  
+        }
+        else
+        {
             builder = new AdvanceSqlBuilder().Select().AppendFragment(" TOP 1 ").AllFields(model).From(model);
+        }
 
         if (conditions.Count > 0)
         {
             builder.AppendFragment(" WHERE ");
 
             foreach (var c in conditions)
+            {
                 if (c.ConditionType == ConditionType.In || c.ConditionType == ConditionType.NotIn)
+                {
                     builder = builder.LinkCondition(c);
+                }
                 else
+                {
                     builder = builder.LinkCondition(c);
+                }
+            }
         }
 
         if (sorts is { Count: > 0 })
+        {
             for (var i = 0; i < sorts.Count; i++)
             {
                 var s = sorts[i];
@@ -170,10 +190,15 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
                     ? builder.OrderBy(s.Expression, s.SortType)
                     : builder.AndOrderBy(s.Expression, s.SortType);
             }
+        }
 
         if (transferWrapperQuery)
-            builder = new AdvanceSqlBuilder().Select().AllFields(model).From(model)
+        {
+            builder = new AdvanceSqlBuilder().Select()
+                .AllFields(model)
+                .From(model)
                 .AppendFragment($" WHERE {model.GetPrimaryKeyName()} = ({builder})");
+        }
 
         if (_mapperTransaction == null)
         {
@@ -190,7 +215,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", builder);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -201,7 +229,12 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                var data = dbTransaction.Connection.Query<T>(builder.Sql, null, dbTransaction).SingleOrDefault();
+                var data = dbTransaction.Connection.Query<T>(
+                        builder.Sql,
+                        null,
+                        dbTransaction
+                    )
+                    .SingleOrDefault();
 
                 LogSqlExecutionMessage();
 
@@ -211,7 +244,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", builder);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -260,11 +296,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         model = PreSave(model);
         model = CheckNullValue(model);
 
-        var primaryKeyValue = model.GetPrimaryKeyValue();
-
-        var typeCode = Type.GetTypeCode(primaryKeyValue.GetType());
-
-        if (model.Id <= 0) model.Id = IdentifierAssist.Create();
+        if (model.Id <= 0)
+        {
+            model.Id = IdentifierAssist.Create();
+        }
 
         return SqlAssist.Insert(model);
     }
@@ -280,6 +315,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         if (_mapperTransaction == null)
         {
             using var conn = _mapperChannel.OpenConnection();
+
             try
             {
                 conn.ExecuteScalar(sql, model);
@@ -290,7 +326,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -301,7 +340,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                dbTransaction.Connection.ExecuteScalar(sql, model, dbTransaction);
+                dbTransaction.Connection.ExecuteScalar(
+                    sql,
+                    model,
+                    dbTransaction
+                );
 
                 LogSqlExecutionMessage();
             }
@@ -309,7 +352,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -327,17 +373,23 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         model = PreSave(model);
         model = CheckNullValue(model);
 
-        if (model.Id <= 0) model.Id = IdentifierAssist.Create();
+        if (model.Id <= 0)
+        {
+            model.Id = IdentifierAssist.Create();
+        }
 
         return SqlAssist.InsertUniquer(model, uniquerConditions);
     }
 
     public ExecutiveResult<T> AddUniquer(T model, Condition<T> uniquerCondition)
     {
-        return AddUniquer(model, new List<Condition<T>>
-        {
-            uniquerCondition
-        });
+        return AddUniquer(
+            model,
+            new List<Condition<T>>
+            {
+                uniquerCondition
+            }
+        );
     }
 
     /// <summary>
@@ -358,7 +410,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 var result = conn.Execute(sql, model);
 
-                if (result <= 0) return new ExecutiveResult<T>(ReturnCode.NoChange.ToMessage("执行失败"));
+                if (result <= 0)
+                {
+                    return new ExecutiveResult<T>(ReturnCode.NoChange.ToMessage("执行失败"));
+                }
 
                 LogSqlExecutionMessage();
             }
@@ -366,7 +421,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -377,9 +435,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                var result = dbTransaction.Connection.Execute(sql, model, dbTransaction);
+                var result = dbTransaction.Connection.Execute(
+                    sql,
+                    model,
+                    dbTransaction
+                );
 
-                if (result <= 0) return new ExecutiveResult<T>(ReturnCode.NoChange.ToMessage("执行失败"));
+                if (result <= 0)
+                {
+                    return new ExecutiveResult<T>(ReturnCode.NoChange.ToMessage("执行失败"));
+                }
 
                 LogSqlExecutionMessage();
             }
@@ -387,7 +452,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -436,7 +504,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
                     try
                     {
-                        dbTransaction.Connection.ExecuteScalar(sql, model, dbTransaction);
+                        dbTransaction.Connection.ExecuteScalar(
+                            sql,
+                            model,
+                            dbTransaction
+                        );
 
                         LogSqlExecutionMessage();
 
@@ -447,13 +519,18 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
                         e.Data.Add("query", sql);
 
                         if (MiniProfiler.Current != null)
-                            e.Data.Add("sqlProfile", new
-                            {
-                                channel = _mapperChannel.GetChannel(),
-                                data = JsonConvert.DeserializeObject(
-                                    MiniProfiler.Current.Head.CustomTimingsJson
-                                )
-                            });
+                        {
+                            e.Data.Add(
+                                "sqlProfile",
+                                new
+                                {
+                                    channel = _mapperChannel.GetChannel(),
+                                    data = JsonConvert.DeserializeObject(
+                                        MiniProfiler.Current.Head.CustomTimingsJson
+                                    )
+                                }
+                            );
+                        }
 
                         throw;
                     }
@@ -471,7 +548,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
                 try
                 {
-                    dbTransaction.Connection.ExecuteScalar(sql, model, dbTransaction);
+                    dbTransaction.Connection.ExecuteScalar(
+                        sql,
+                        model,
+                        dbTransaction
+                    );
 
                     LogSqlExecutionMessage();
                 }
@@ -480,7 +561,9 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
                     e.Data.Add("query", sql);
 
                     if (MiniProfiler.Current != null)
+                    {
                         e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                    }
 
                     throw;
                 }
@@ -518,7 +601,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -529,7 +615,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                dbTransaction.Connection.Execute(sql, model, dbTransaction);
+                dbTransaction.Connection.Execute(
+                    sql,
+                    model,
+                    dbTransaction
+                );
 
                 LogSqlExecutionMessage();
             }
@@ -537,7 +627,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -570,7 +663,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", query);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -581,7 +677,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                dbTransaction.Connection.Execute(query, data, dbTransaction);
+                dbTransaction.Connection.Execute(
+                    query,
+                    data,
+                    dbTransaction
+                );
 
                 LogSqlExecutionMessage();
             }
@@ -589,7 +689,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", query);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -623,7 +726,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -634,7 +740,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                dbTransaction.Connection.Execute(sql, model, dbTransaction);
+                dbTransaction.Connection.Execute(
+                    sql,
+                    model,
+                    dbTransaction
+                );
 
                 LogSqlExecutionMessage();
             }
@@ -642,7 +752,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -679,7 +792,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -690,7 +806,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                dbTransaction.Connection.Execute(sql, model, dbTransaction);
+                dbTransaction.Connection.Execute(
+                    sql,
+                    model,
+                    dbTransaction
+                );
 
                 LogSqlExecutionMessage();
             }
@@ -698,7 +818,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -735,7 +858,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -746,7 +872,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                dbTransaction.Connection.Execute(sql, model, dbTransaction);
+                dbTransaction.Connection.Execute(
+                    sql,
+                    model,
+                    dbTransaction
+                );
 
                 LogSqlExecutionMessage();
             }
@@ -754,7 +884,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -776,7 +909,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         ICollection<Condition<T>> conditions
     )
     {
-        var query = SqlAssist.UpdateSpecificWithCondition(data, listPropertyLambda, conditions);
+        var query = SqlAssist.UpdateSpecificWithCondition(
+            data,
+            listPropertyLambda,
+            conditions
+        );
 
         if (_mapperTransaction == null)
         {
@@ -791,7 +928,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", query);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -802,7 +942,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                dbTransaction.Connection.Execute(query, data, dbTransaction);
+                dbTransaction.Connection.Execute(
+                    query,
+                    data,
+                    dbTransaction
+                );
 
                 LogSqlExecutionMessage();
             }
@@ -810,7 +954,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", query);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -829,7 +976,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         ICollection<Condition<T>> conditions
     )
     {
-        var query = SqlAssist.UpdateSpecificWithCondition(data, listPropertyLambda, conditions);
+        var query = SqlAssist.UpdateSpecificWithCondition(
+            data,
+            listPropertyLambda,
+            conditions
+        );
 
         if (_mapperTransaction == null)
         {
@@ -844,7 +995,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", query);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -855,7 +1009,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                dbTransaction.Connection.Execute(query, data, dbTransaction);
+                dbTransaction.Connection.Execute(
+                    query,
+                    data,
+                    dbTransaction
+                );
 
                 LogSqlExecutionMessage();
             }
@@ -863,7 +1021,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", query);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -900,7 +1061,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -911,7 +1075,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                dbTransaction.Connection.Execute(sql, model, dbTransaction);
+                dbTransaction.Connection.Execute(
+                    sql,
+                    model,
+                    dbTransaction
+                );
 
                 LogSqlExecutionMessage();
             }
@@ -919,7 +1087,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -948,7 +1119,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -959,7 +1133,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                dbTransaction.Connection.Execute(sql, model, dbTransaction);
+                dbTransaction.Connection.Execute(
+                    sql,
+                    model,
+                    dbTransaction
+                );
 
                 LogSqlExecutionMessage();
             }
@@ -967,7 +1145,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1061,7 +1242,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1072,7 +1256,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                dbTransaction.Connection.Execute(sql, null, dbTransaction);
+                dbTransaction.Connection.Execute(
+                    sql,
+                    null,
+                    dbTransaction
+                );
 
                 LogSqlExecutionMessage();
             }
@@ -1080,7 +1268,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1106,7 +1297,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1117,7 +1311,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                dbTransaction.Connection.Execute(sql, null, dbTransaction);
+                dbTransaction.Connection.Execute(
+                    sql,
+                    null,
+                    dbTransaction
+                );
 
                 LogSqlExecutionMessage();
             }
@@ -1125,7 +1323,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1278,7 +1479,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", query);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1289,7 +1493,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                var reader = dbTransaction.Connection.ExecuteReader(query, null, dbTransaction);
+                var reader = dbTransaction.Connection.ExecuteReader(
+                    query,
+                    null,
+                    dbTransaction
+                );
 
                 var list = ConvertAssist.DataReaderToExpandoObjectList(reader);
 
@@ -1301,7 +1509,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", query);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1336,13 +1547,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
     /// <returns></returns>
     public IList<T> SingleListEntity(Condition<T> condition, Sort<T> sort)
     {
-        return SingleListEntity(new List<Condition<T>>
-        {
-            condition
-        }, new List<Sort<T>>
-        {
-            sort
-        });
+        return SingleListEntity(
+            new List<Condition<T>>
+            {
+                condition
+            },
+            new List<Sort<T>>
+            {
+                sort
+            }
+        );
     }
 
     /// <summary>
@@ -1351,10 +1565,13 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
     /// <returns></returns>
     public IList<T> SingleListEntity(ICollection<Condition<T>> conditions, Sort<T> sort)
     {
-        return SingleListEntity(conditions, new List<Sort<T>>
-        {
-            sort
-        });
+        return SingleListEntity(
+            conditions,
+            new List<Sort<T>>
+            {
+                sort
+            }
+        );
     }
 
     /// <summary>
@@ -1372,10 +1589,13 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
     /// <returns></returns>
     public IList<T> SingleListEntity(Condition<T> condition, IList<Sort<T>> sorts)
     {
-        return SingleListEntity(new List<Condition<T>>
-        {
-            condition
-        }, sorts);
+        return SingleListEntity(
+            new List<Condition<T>>
+            {
+                condition
+            },
+            sorts
+        );
     }
 
     /// <summary>
@@ -1413,6 +1633,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             query = query.AppendFragment(" WHERE ");
 
             foreach (var c in conditions)
+            {
                 if (c.ConditionType == ConditionType.In || c.ConditionType == ConditionType.NotIn)
                 {
                     c.Value = (ICollection)c.Value;
@@ -1423,9 +1644,11 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
                 {
                     query = query.LinkCondition(c);
                 }
+            }
         }
 
         if (sorts is { Count: > 0 })
+        {
             for (var i = 0; i < sorts.Count; i++)
             {
                 var s = sorts[i];
@@ -1434,6 +1657,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
                     ? query.OrderBy(s.Expression, s.SortType)
                     : query.AndOrderBy(s.Expression, s.SortType);
             }
+        }
 
         if (_mapperTransaction == null)
         {
@@ -1451,7 +1675,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", query);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1462,7 +1689,12 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                var list = dbTransaction.Connection.Query<T>(query.Sql, null, dbTransaction).ToList();
+                var list = dbTransaction.Connection.Query<T>(
+                        query.Sql,
+                        null,
+                        dbTransaction
+                    )
+                    .ToList();
 
                 LogSqlExecutionMessage();
 
@@ -1472,7 +1704,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", query);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1487,11 +1722,17 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         int pageNo,
         int pageSize,
         ICollection<Condition<T>>? conditions = null,
-        IList<Sort<T>>? sorts = null)
+        IList<Sort<T>>? sorts = null
+    )
     {
         var total = TotalCount(conditions);
 
-        var list = PageList(pageNo, pageSize, conditions, sorts);
+        var list = PageList(
+            pageNo,
+            pageSize,
+            conditions,
+            sorts
+        );
 
         return new PageListResult<T>(ReturnCode.Ok)
         {
@@ -1517,7 +1758,12 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         IList<Sort<T>>? sorts = null
     )
     {
-        var query = SqlAssist.BuildPageListSql(pageNo, pageSize, conditions, sorts);
+        var query = SqlAssist.BuildPageListSql(
+            pageNo,
+            pageSize,
+            conditions,
+            sorts
+        );
 
         if (_mapperTransaction == null)
         {
@@ -1534,7 +1780,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", query);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1545,7 +1794,12 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                var list = dbTransaction.Connection.Query<T>(query, null, dbTransaction).ToList();
+                var list = dbTransaction.Connection.Query<T>(
+                        query,
+                        null,
+                        dbTransaction
+                    )
+                    .ToList();
 
                 LogSqlExecutionMessage();
 
@@ -1555,7 +1809,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", query);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1584,7 +1841,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1595,7 +1855,12 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                result = dbTransaction.Connection.Query<T>(sql, null, dbTransaction).ToList();
+                result = dbTransaction.Connection.Query<T>(
+                        sql,
+                        null,
+                        dbTransaction
+                    )
+                    .ToList();
 
                 LogSqlExecutionMessage();
             }
@@ -1603,7 +1868,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1624,9 +1892,15 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         int pageNo,
         int pageSize,
         ICollection<Condition<T>> conditions,
-        IList<Sort<T>> sorts)
+        IList<Sort<T>> sorts
+    )
     {
-        var pageListResult = PageListWithTotalSize(pageNo, pageSize, conditions, sorts);
+        var pageListResult = PageListWithTotalSize(
+            pageNo,
+            pageSize,
+            conditions,
+            sorts
+        );
 
         return new PageListResult<object>(pageListResult.Code)
         {
@@ -1645,9 +1919,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         int pageNo,
         int pageSize,
         ICollection<Condition<T>> conditions,
-        IList<Sort<T>> sorts)
+        IList<Sort<T>> sorts
+    )
     {
-        return PageList(pageNo, pageSize, conditions, sorts).ToListObject();
+        return PageList(
+                pageNo,
+                pageSize,
+                conditions,
+                sorts
+            )
+            .ToListObject();
     }
 
     #endregion ListObject
@@ -1663,9 +1944,15 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         int pageSize,
         ICollection<Condition<T>> conditions,
         IList<Sort<T>> sorts,
-        ICollection<Expression<Func<object>>> expressions)
+        ICollection<Expression<Func<object>>> expressions
+    )
     {
-        var pageListResult = PageListWithTotalSize(pageNo, pageSize, conditions, sorts);
+        var pageListResult = PageListWithTotalSize(
+            pageNo,
+            pageSize,
+            conditions,
+            sorts
+        );
 
         var list = pageListResult.List.ToListSimpleObject(expressions);
 
@@ -1687,9 +1974,15 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         int pageSize,
         ICollection<Condition<T>> conditions,
         IList<Sort<T>> sorts,
-        ICollection<Expression<Func<object>>> expressions)
+        ICollection<Expression<Func<object>>> expressions
+    )
     {
-        var list = PageList(pageNo, pageSize, conditions, sorts);
+        var list = PageList(
+            pageNo,
+            pageSize,
+            conditions,
+            sorts
+        );
 
         return list.ToListSimpleObject(expressions);
     }
@@ -1707,9 +2000,15 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         int pageSize,
         ICollection<Condition<T>> conditions,
         IList<Sort<T>> sorts,
-        ICollection<Expression<Func<object>>> expressions)
+        ICollection<Expression<Func<object>>> expressions
+    )
     {
-        var pageListResult = PageListWithTotalSize(pageNo, pageSize, conditions, sorts);
+        var pageListResult = PageListWithTotalSize(
+            pageNo,
+            pageSize,
+            conditions,
+            sorts
+        );
 
         var list = pageListResult.List.ToListSimpleObjectIgnore(expressions);
 
@@ -1731,9 +2030,15 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         int pageSize,
         ICollection<Condition<T>> conditions,
         IList<Sort<T>> sorts,
-        ICollection<Expression<Func<object>>> expressions)
+        ICollection<Expression<Func<object>>> expressions
+    )
     {
-        var list = PageList(pageNo, pageSize, conditions, sorts);
+        var list = PageList(
+            pageNo,
+            pageSize,
+            conditions,
+            sorts
+        );
 
         return list.ToListSimpleObjectIgnore(expressions);
     }
@@ -1754,7 +2059,9 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         builder.AppendFragment(" WHERE ");
 
         if (conditions != null)
+        {
             foreach (var c in conditions)
+            {
                 if (c.ConditionType == ConditionType.In || c.ConditionType == ConditionType.NotIn)
                 {
                     c.Value = (ICollection<object>)c.Value;
@@ -1765,6 +2072,8 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
                 {
                     builder = builder.LinkCondition(c);
                 }
+            }
+        }
 
         // query.AppendLine(builder);
 
@@ -1778,7 +2087,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 var r = conn.ExecuteReader(query.ToString());
 
-                if (r.Read()) result = r[0].ConvertTo<long>();
+                if (r.Read())
+                {
+                    result = r[0].ConvertTo<long>();
+                }
 
                 LogSqlExecutionMessage();
 
@@ -1788,7 +2100,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", query);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1807,7 +2122,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
                 LogSqlExecutionMessage();
 
-                if (r.Read()) result = r[0].ConvertTo<long>();
+                if (r.Read())
+                {
+                    result = r[0].ConvertTo<long>();
+                }
 
                 return result;
             }
@@ -1815,7 +2133,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", query);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1844,7 +2165,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1865,7 +2189,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1895,13 +2222,19 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
                 var list = ConvertAssist.DataReaderToExpandoObjectList(reader);
 
-                foreach (var item in list) result.Add(item);
+                foreach (var item in list)
+                {
+                    result.Add(item);
+                }
             }
             catch (Exception e)
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1914,7 +2247,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                if (dbTransaction.Connection == null) throw new Exception("dbTransaction.Connection is null");
+                if (dbTransaction.Connection == null)
+                {
+                    throw new Exception("dbTransaction.Connection is null");
+                }
 
                 var cmd = dbTransaction.Connection.CreateCommand();
 
@@ -1928,7 +2264,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
                 var list = ConvertAssist.DataReaderToExpandoObjectList(reader);
 
-                foreach (var item in list) result.Add(item);
+                foreach (var item in list)
+                {
+                    result.Add(item);
+                }
 
                 return result;
             }
@@ -1936,7 +2275,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("query", sql);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1955,7 +2297,13 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             using var conn = _mapperChannel.OpenConnection();
             try
             {
-                var r = conn.ExecuteReader(procName, ps, null, null, CommandType.StoredProcedure);
+                var r = conn.ExecuteReader(
+                    procName,
+                    ps,
+                    null,
+                    null,
+                    CommandType.StoredProcedure
+                );
 
                 LogSqlExecutionMessage();
 
@@ -1967,7 +2315,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("procName", procName);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -1976,8 +2327,13 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         {
             var dbTransaction = _mapperTransaction.GetTransaction();
 
-            using var r = dbTransaction.Connection.ExecuteReader(procName, ps, dbTransaction, null,
-                CommandType.StoredProcedure);
+            using var r = dbTransaction.Connection.ExecuteReader(
+                procName,
+                ps,
+                dbTransaction,
+                null,
+                CommandType.StoredProcedure
+            );
             try
             {
                 LogSqlExecutionMessage();
@@ -1990,7 +2346,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("procName", procName);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -2006,7 +2365,13 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         {
             using var conn = _mapperChannel.OpenConnection();
 
-            using var r = conn.ExecuteReader(procName, ps, null, null, CommandType.StoredProcedure);
+            using var r = conn.ExecuteReader(
+                procName,
+                ps,
+                null,
+                null,
+                CommandType.StoredProcedure
+            );
 
             try
             {
@@ -2018,7 +2383,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("procName", procName);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -2029,8 +2397,13 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
-                var r = dbTransaction.Connection.ExecuteReader(procName, ps, dbTransaction, null,
-                    CommandType.StoredProcedure);
+                var r = dbTransaction.Connection.ExecuteReader(
+                    procName,
+                    ps,
+                    dbTransaction,
+                    null,
+                    CommandType.StoredProcedure
+                );
 
                 LogSqlExecutionMessage();
 
@@ -2040,7 +2413,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("procName", procName);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -2057,7 +2433,13 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             using var conn = _mapperChannel.OpenConnection();
             try
             {
-                var result = conn.Execute(procName, ps, null, null, CommandType.StoredProcedure);
+                var result = conn.Execute(
+                    procName,
+                    ps,
+                    null,
+                    null,
+                    CommandType.StoredProcedure
+                );
 
                 LogSqlExecutionMessage();
 
@@ -2067,7 +2449,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("procName", procName);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -2094,7 +2479,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("procName", procName);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -2127,7 +2515,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("procName", procName);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -2154,7 +2545,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             {
                 e.Data.Add("procName", procName);
 
-                if (MiniProfiler.Current != null) e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                if (MiniProfiler.Current != null)
+                {
+                    e.Data.Add("sqlProfile", BuildErrorDataValue(MiniProfiler.Current));
+                }
 
                 throw;
             }
@@ -2187,11 +2581,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
         foreach (var p in plist)
         {
-            if (!p.CanWrite) continue;
+            if (!p.CanWrite)
+            {
+                continue;
+            }
 
             if (p.PropertyType.Name != nameof(DateTime) &&
                 p.PropertyType.Name != typeof(DateTime?).Name)
+            {
                 continue;
+            }
 
             var v = p.GetValue(model);
             var needSetValue = false;
@@ -2207,7 +2606,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
                 needSetValue = true;
             }
 
-            if (needSetValue) p.SetValue(model, v);
+            if (needSetValue)
+            {
+                p.SetValue(model, v);
+            }
         }
 
         return model;
@@ -2222,7 +2624,10 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
     public IMapperTransaction GetDbTransaction()
     {
-        if (_mapperTransaction == null) throw new Exception("IMapperTransaction is null");
+        if (_mapperTransaction == null)
+        {
+            throw new Exception("IMapperTransaction is null");
+        }
 
         return _mapperTransaction;
     }
@@ -2230,11 +2635,15 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
     private object BuildErrorDataValue(MiniProfiler? miniProfiler)
     {
         if (miniProfiler != null)
-            return JsonConvert.SerializeObject(new
-            {
-                channel = _mapperChannel.GetChannel(),
-                data = JsonConvert.DeserializeObject(MiniProfiler.Current.Head.CustomTimingsJson)
-            });
+        {
+            return JsonConvert.SerializeObject(
+                new
+                {
+                    channel = _mapperChannel.GetChannel(),
+                    data = JsonConvert.DeserializeObject(MiniProfiler.Current.Head.CustomTimingsJson)
+                }
+            );
+        }
 
         return "";
     }
@@ -2244,67 +2653,80 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
     /// </summary>
     private void LogSqlExecutionMessage()
     {
-        if (_sqlLogRecordJudge == null) return;
+        if (!_sqlLogRecordSwitch)
+        {
+            return;
+        }
 
-        var applicationChannel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
+        if (MiniProfiler.Current == null)
+        {
+            return;
+        }
 
-        if (!GetUseLogSqlExecutionMessage()) return;
+        if (!SqlLogSwitchAssist.GetCurrentSwitch())
+        {
+            return;
+        }
 
-        if (MiniProfiler.Current == null) return;
-
-        if (!GeneralConfigAssist.GetRemoteSqlExecutionRecordSwitch()) return;
-
-        var listCustomTiming = new List<SqlExecutionMessage>();
+        var listCustomTiming = new List<SqlLogMessage>();
 
         var dictionary = MiniProfiler.Current.Head.CustomTimings;
 
         foreach (var item in dictionary)
-            listCustomTiming.AddRange(item.Value.Select(
-                one => new SqlExecutionMessage
-                {
-                    ExecuteGuid = one.Id.ToString(),
-                    CommandString = one.CommandString,
-                    ExecuteType = SqlExecuteType.MiniProfiler.ToInt(),
-                    ExecuteTypeSource = one.ExecuteType,
-                    StackTraceSnippet = one.StackTraceSnippet,
-                    StartMilliseconds = one.StartMilliseconds,
-                    DurationMilliseconds = one.DurationMilliseconds ?? 0m,
-                    FirstFetchDurationMilliseconds = one.FirstFetchDurationMilliseconds ?? 0m,
-                    Errored = one.Errored ? 1 : 0,
-                    Channel = applicationChannel.GetChannel(),
-                    CollectMode = CollectMode.MiniProfiler.ToInt(),
-                    DatabaseChannel = GetMapperChannel().GetChannel()
-                }
-            ));
+        {
+            listCustomTiming.AddRange(
+                item.Value.Select(
+                    one => new SqlLogMessage
+                    {
+                        Flag = one.Id.ToString(),
+                        CommandString = one.CommandString,
+                        ExecuteType = one.ExecuteType,
+                        StackTraceSnippet = one.StackTraceSnippet,
+                        StartMilliseconds = one.StartMilliseconds,
+                        DurationMilliseconds = one.DurationMilliseconds ?? 0m,
+                        FirstFetchDurationMilliseconds = one.FirstFetchDurationMilliseconds ?? 0m,
+                        Errored = one.Errored ? 1 : 0,
+                        TriggerChannel = ChannelAssist.GetCurrentChannel().ToValue(),
+                        CollectMode = CollectMode.MiniProfiler.ToInt(),
+                        DatabaseChannel = GetMapperChannel().GetChannel()
+                    }
+                )
+            );
+        }
 
-        if (listCustomTiming.Count <= 0) return;
+        if (listCustomTiming.Count <= 0)
+        {
+            return;
+        }
 
-        foreach (var item in listCustomTiming) LogSqlExecutionMessage(item);
+        foreach (var item in listCustomTiming)
+        {
+            LogSqlExecutionMessage(item);
+        }
     }
 
     /// <summary>
     /// 记录执行的sql
     /// </summary>
     /// <param name="sqlExecutionMessage">sql</param>
-    private void LogSqlExecutionMessage(ISqlExecutionRecord sqlExecutionMessage)
+    private void LogSqlExecutionMessage(ISqlLog sqlExecutionMessage)
     {
-        if (_sqlLogRecordJudge == null) return;
+        if (!_sqlLogRecordSwitch)
+        {
+            return;
+        }
 
-        var applicationChannel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
-
-        if (!_sqlLogRecordJudge(applicationChannel.GetChannel())) return;
-
-        AutofacAssist.Instance.Resolve<ISqlExecutionRecordProducer>().SendAsync(
-            sqlExecutionMessage.CommandString,
-            sqlExecutionMessage.ExecuteType,
-            sqlExecutionMessage.StackTraceSnippet,
-            sqlExecutionMessage.StartMilliseconds,
-            sqlExecutionMessage.DurationMilliseconds,
-            sqlExecutionMessage.FirstFetchDurationMilliseconds,
-            sqlExecutionMessage.Errored,
-            sqlExecutionMessage.Channel,
-            sqlExecutionMessage.CollectMode,
-            sqlExecutionMessage.DatabaseChannel
-        );
+        AutofacAssist.Instance.Resolve<ISqlLogProducer>()
+            .SendAsync(
+                sqlExecutionMessage.CommandString,
+                sqlExecutionMessage.ExecuteType,
+                sqlExecutionMessage.StackTraceSnippet,
+                sqlExecutionMessage.StartMilliseconds,
+                sqlExecutionMessage.DurationMilliseconds,
+                sqlExecutionMessage.FirstFetchDurationMilliseconds,
+                sqlExecutionMessage.Errored,
+                sqlExecutionMessage.CollectMode,
+                sqlExecutionMessage.DatabaseChannel
+            );
     }
 }

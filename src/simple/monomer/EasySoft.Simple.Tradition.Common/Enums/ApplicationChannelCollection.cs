@@ -1,56 +1,27 @@
-﻿namespace EasySoft.Simple.Tradition.Common.Enums;
+﻿using EasySoft.UtilityTools.Standard.Models;
+
+namespace EasySoft.Simple.Tradition.Common.Enums;
 
 /// <summary>
 /// ApplicationChannelCollection
 /// </summary>
-public enum ApplicationChannelCollection
+public abstract class ApplicationChannelCollection
 {
     /// <summary>
     /// 客户端接口
     /// </summary>
-    [Description("客户端接口")]
-    ClientWebApi = 100,
+    public static readonly Channel ClientWebApi = new(
+        "8de67b08a9c944a48b6260fbfe590173",
+        "ClientWebApi",
+        "客户端接口"
+    );
 
     /// <summary>
     /// 管理端接口
     /// </summary>
-    [Description("管理端接口")]
-    ManagementWebApi = 200
-}
-
-/// <summary>
-/// </summary>
-public static class ApplicationChannelCollectionExtensions
-{
-    /// <summary>
-    ///     ToInt
-    /// </summary>
-    /// <param name="source"></param>
-    /// <returns></returns>
-    public static int ToInt(this ApplicationChannelCollection source)
-    {
-        return (int)source;
-    }
-
-    /// <summary>
-    ///     GetDescription
-    /// </summary>
-    /// <param name="source"></param>
-    /// <returns></returns>
-    public static string GetDescription(this ApplicationChannelCollection source)
-    {
-        var descriptionAttribute = source.GetCustomAttribute<DescriptionAttribute>();
-
-        return descriptionAttribute == null ? "" : descriptionAttribute.Description;
-    }
-
-    /// <summary>
-    ///     ToApplicationChannel
-    /// </summary>
-    /// <param name="source"></param>
-    /// <returns></returns>
-    public static IApplicationChannel ToApplicationChannel(this ApplicationChannelCollection source)
-    {
-        return new ApplicationChannel().SetChannel(source.ToInt()).SetName(source.GetDescription());
-    }
+    public static readonly Channel ManagementWebApi = new(
+        "43d9abf1dce54c24a998a0411c9b3a7b",
+        "ManagementWebApi",
+        "管理端接口"
+    );
 }

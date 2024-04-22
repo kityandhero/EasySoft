@@ -1,4 +1,7 @@
-﻿namespace EasySoft.UtilityTools.Core.Channels;
+﻿using EasySoft.UtilityTools.Standard.Interfaces;
+using EasySoft.UtilityTools.Standard.Models;
+
+namespace EasySoft.UtilityTools.Core.Channels;
 
 /// <summary>
 /// ApplicationChannel
@@ -8,39 +11,32 @@ public class ApplicationChannel : IApplicationChannel
     /// <summary>
     /// DefaultChannel
     /// </summary>
-    public const int DefaultChannel = 0;
+    public static readonly IChannel DefaultChannel = Channel.Unknown;
 
-    /// <summary>
-    /// DefaultName
-    /// </summary>
-    public const string DefaultName = "默认应用";
-
-    private int _channel;
-
-    private string _name;
+    private IChannel _channel = Channel.Unknown;
 
     /// <summary>
     /// ApplicationChannel
     /// </summary>
     public ApplicationChannel()
     {
-        _name = "";
     }
 
     /// <summary>
     /// ApplicationChannel
     /// </summary>
-    public ApplicationChannel(int channel, string name)
+    public ApplicationChannel(IChannel channel)
     {
         _channel = channel;
-        _name = name;
+
+        ChannelAssist.SetCurrentChannel(channel);
     }
 
     /// <summary>
     /// GetChannel
     /// </summary>
     /// <returns></returns>
-    public int GetChannel()
+    public IChannel GetChannel()
     {
         return _channel;
     }
@@ -51,7 +47,7 @@ public class ApplicationChannel : IApplicationChannel
     /// <returns></returns>
     public string GetName()
     {
-        return _name;
+        return _channel.Name;
     }
 
     /// <summary>
@@ -59,21 +55,9 @@ public class ApplicationChannel : IApplicationChannel
     /// </summary>
     /// <param name="channel"></param>
     /// <returns></returns>
-    public IApplicationChannel SetChannel(int channel)
+    public IApplicationChannel SetChannel(IChannel channel)
     {
         _channel = channel;
-
-        return this;
-    }
-
-    /// <summary>
-    /// SetName
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public IApplicationChannel SetName(string name)
-    {
-        _name = name;
 
         return this;
     }

@@ -32,30 +32,32 @@ public sealed class ErrorLogExchangeSubscriber : ICapSubscribe
     /// <summary>
     /// 订阅充值事件
     /// </summary>
-    /// <param name="errorLogExchange"></param>
+    /// <param name="errorLogMessage"></param>
     /// <returns></returns>
-    [CapSubscribe(TransmitterTopic.ErrorLogExchange)]
-    public async Task Process(ErrorLogExchange errorLogExchange)
+    [CapSubscribe(TransmitterTopic.ErrorLogMessage)]
+    public async Task Process(IErrorLogMessage errorLogMessage)
     {
-        if (errorLogExchange.Ignore > 0)
+        if (errorLogMessage.Ignore > 0)
         {
             if (_environment.IsDevelopment())
+            {
                 _logger.LogAdvancePrompt(
                     "ErrorLog ignore process."
                 );
+            }
 
             return;
-        }   
+        }
 
         if (_environment.IsDevelopment())
         {
             _logger.LogAdvanceExecute($"{GetType().Name}.{nameof(Process)}");
 
             _logger.LogAdvancePrompt(
-                $"Save ErrorLogExchange -> {errorLogExchange.BuildInfo()}."
+                $"Save IErrorLogMessage -> {errorLogMessage.BuildInfo()}."
             );
         }
 
-        await _errorLogService.SaveAsync(errorLogExchange);
+        await _errorLogService.SaveAsync(errorLogMessage);
     }
 }

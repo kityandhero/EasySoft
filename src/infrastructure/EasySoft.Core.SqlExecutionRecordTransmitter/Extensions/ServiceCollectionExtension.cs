@@ -11,7 +11,7 @@ public static class ServiceCollectionExtension
         this IServiceCollection service
     )
     {
-        service.AddSingleton<ISqlExecutionRecordProducer, SqlExecutionRecordProducer>();
+        service.AddSingleton<ISqlLogProducer, SqlLogProducer>();
 
         return service;
     }

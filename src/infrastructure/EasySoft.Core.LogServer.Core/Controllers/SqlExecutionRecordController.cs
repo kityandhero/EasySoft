@@ -8,33 +8,33 @@ namespace EasySoft.Core.LogServer.Core.Controllers;
 /// <summary>
 /// SqlExecutionRecordController
 /// </summary>
-[Route("sqlExecutionRecord")]
+[Route("sqlLog")]
 public class SqlExecutionRecordController : AuthControllerCore
 {
     private const string ControllerDescription = "Sql日志管理/";
 
-    private readonly ISqlExecutionRecordService _sqlExecutionRecordService;
+    private readonly ISqlLogService _sqlLogService;
 
     /// <summary>
     /// ErrorLogController
     /// </summary>
-    /// <param name="sqlExecutionRecordService"></param>
-    public SqlExecutionRecordController(ISqlExecutionRecordService sqlExecutionRecordService)
+    /// <param name="sqlLogService"></param>
+    public SqlExecutionRecordController(ISqlLogService sqlLogService)
     {
-        _sqlExecutionRecordService = sqlExecutionRecordService;
+        _sqlLogService = sqlLogService;
     }
 
     /// <summary>
     /// PageList
     /// </summary>
-    /// <param name="sqlExecutionRecordSearchDto"></param>
+    /// <param name="sqlLogSearchDto"></param>
     /// <returns></returns>
     [Route("pageList")]
     [HttpPost]
     [Permission(ControllerDescription + "日志列表", "ca07db32-6086-4db4-a7bd-f852135bf539")]
-    public async Task<IApiResult> PageList(SqlExecutionRecordSearchDto sqlExecutionRecordSearchDto)
+    public async Task<IApiResult> PageList(SqlLogSearchDto sqlLogSearchDto)
     {
-        var result = await _sqlExecutionRecordService.PageListAsync(sqlExecutionRecordSearchDto);
+        var result = await _sqlLogService.PageListAsync(sqlLogSearchDto);
 
         return this.Success(
             result.List,

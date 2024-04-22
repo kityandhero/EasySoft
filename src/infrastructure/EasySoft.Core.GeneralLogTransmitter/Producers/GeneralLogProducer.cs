@@ -1,7 +1,4 @@
-﻿using EasySoft.Core.GeneralLogTransmitter.Entities;
-using EasySoft.Core.GeneralLogTransmitter.Interfaces;
-
-namespace EasySoft.Core.GeneralLogTransmitter.Producers;
+﻿namespace EasySoft.Core.GeneralLogTransmitter.Producers;
 
 /// <inheritdoc />
 public class GeneralLogProducer : IGeneralLogProducer
@@ -23,7 +20,7 @@ public class GeneralLogProducer : IGeneralLogProducer
     }
 
     /// <inheritdoc />
-    public async Task<IGeneralLogExchange> SendAsync(string message)
+    public async Task<IGeneralLogMessage> SendAsync(string message)
     {
         return await SendAsync(
             message,
@@ -34,15 +31,15 @@ public class GeneralLogProducer : IGeneralLogProducer
     }
 
     /// <inheritdoc />
-    public async Task<IGeneralLogExchange> SendAsync(IGeneralLogExchange generalLogExchange)
+    public async Task<IGeneralLogMessage> SendAsync(IGeneralLogMessage generalLogExchange)
     {
-        await _capPublisher.PublishAsync(TransmitterTopic.GeneralLogExchange, generalLogExchange);
+        await _capPublisher.PublishAsync(TransmitterTopic.GeneralLogMessage, generalLogExchange);
 
         return generalLogExchange;
     }
 
     /// <inheritdoc />
-    public async Task<IGeneralLogExchange> SendAsync(object message, CustomValueType messageValueType)
+    public async Task<IGeneralLogMessage> SendAsync(object message, CustomValueType messageValueType)
     {
         return await SendAsync(
             message,
@@ -53,18 +50,18 @@ public class GeneralLogProducer : IGeneralLogProducer
     }
 
     /// <inheritdoc />
-    public async Task<IGeneralLogExchange> SendAsync(
+    public async Task<IGeneralLogMessage> SendAsync(
         object message,
         CustomValueType messageValueType,
         object content,
         CustomValueType contentValueType
     )
     {
-        var entity = new GeneralLogExchange
+        var entity = new GeneralLogMessage
         {
             MessageType = messageValueType.ToInt(),
             ContentType = contentValueType.ToInt(),
-            Channel = _applicationChannel.GetChannel()
+            TriggerChannel = _applicationChannel.GetChannel().ToValue()
         };
 
         switch (messageValueType)
@@ -89,7 +86,7 @@ public class GeneralLogProducer : IGeneralLogProducer
                 break;
         }
 
-        await _capPublisher.PublishAsync(TransmitterTopic.GeneralLogExchange, entity);
+        await _capPublisher.PublishAsync(TransmitterTopic.GeneralLogMessage, entity);
 
         return entity;
     }

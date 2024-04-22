@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Entities;
 using EasySoft.Core.PermissionServer.Core.Extensions;
 using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
+using EasySoft.UtilityTools.Standard.Models;
 
 namespace EasySoft.Core.PermissionServer.Core.Services.Implements;
 
@@ -44,7 +45,10 @@ public class PermissionRpcService : IPermissionRpcService
 
         var roelGroupResult = await _roleGroupRepository.GetAsync(roleGroupId);
 
-        if (!roelGroupResult.Success || roelGroupResult.Data == null) return ceList;
+        if (!roelGroupResult.Success || roelGroupResult.Data == null)
+        {
+            return ceList;
+        }
 
         var roleGroup = roelGroupResult.Data;
 
@@ -61,7 +65,10 @@ public class PermissionRpcService : IPermissionRpcService
             {
                 var r = await _customRoleRepository.GetAsync(o.Id);
 
-                if (r.Success && r.Data != null) list.Add(r.Data);
+                if (r.Success && r.Data != null)
+                {
+                    list.Add(r.Data);
+                }
             }
 
             customRoleItemList.ForEach(GetCustomRole);
@@ -79,7 +86,10 @@ public class PermissionRpcService : IPermissionRpcService
             {
                 var r = await _presetRoleRepository.GetAsync(o.Id);
 
-                if (r.Success && r.Data != null) list.Add(r.Data);
+                if (r.Success && r.Data != null)
+                {
+                    list.Add(r.Data);
+                }
             }
 
             presetRoleItemList.ForEach(GetPresetRole);
@@ -87,8 +97,16 @@ public class PermissionRpcService : IPermissionRpcService
             presetRoles.AddRange(list);
         }
 
-        ceList = await RoleAssist.MergeCompetenceCollectionAsync(presetRoles, ceList, GetAccessWayPersistenceList);
-        ceList = await RoleAssist.MergeCompetenceCollectionAsync(customRoles, ceList, GetAccessWayPersistenceList);
+        ceList = await RoleAssist.MergeCompetenceCollectionAsync(
+            presetRoles,
+            ceList,
+            GetAccessWayPersistenceList
+        );
+        ceList = await RoleAssist.MergeCompetenceCollectionAsync(
+            customRoles,
+            ceList,
+            GetAccessWayPersistenceList
+        );
 
         return ceList;
     }
@@ -104,7 +122,7 @@ public class PermissionRpcService : IPermissionRpcService
     }
 
     /// <inheritdoc />
-    public async Task MaintainSuper(int channel)
+    public async Task MaintainSuper(string channel)
     {
         var resultGetPresetRole = await _presetRoleRepository.GetAsync(
             o => o.Channel == channel && o.WhetherSuper == Whether.Yes.ToInt()
@@ -136,7 +154,9 @@ public class PermissionRpcService : IPermissionRpcService
 
         if (resultGetRoleGroup.Success)
         {
-            roleGroup = resultGetRoleGroup.Data ?? throw new UnknownException("role group is null, it is not allow.");
+            roleGroup = resultGetRoleGroup.Data ?? throw new UnknownException(
+                "role group is null, it is not allow."
+            );
         }
         else
         {

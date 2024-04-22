@@ -32,17 +32,19 @@ public sealed class GeneralLogExchangeSubscriber : ICapSubscribe
     /// <summary>
     /// 订阅充值事件
     /// </summary>
-    /// <param name="generalLogExchange"></param>
+    /// <param name="generalLogMessage"></param>
     /// <returns></returns>
-    [CapSubscribe(TransmitterTopic.GeneralLogExchange)]
-    public async Task Process(GeneralLogExchange generalLogExchange)
+    [CapSubscribe(TransmitterTopic.GeneralLogMessage)]
+    public async Task Process(IGeneralLogMessage generalLogMessage)
     {
-        if (generalLogExchange.Ignore > 0)
+        if (generalLogMessage.Ignore > 0)
         {
             if (_environment.IsDevelopment())
+            {
                 _logger.LogAdvancePrompt(
                     "GeneralLog ignore process."
                 );
+            }
 
             return;
         }
@@ -52,10 +54,10 @@ public sealed class GeneralLogExchangeSubscriber : ICapSubscribe
             _logger.LogAdvanceExecute($"{GetType().Name}.{nameof(Process)}");
 
             _logger.LogAdvancePrompt(
-                $"Save GeneralLogExchange -> {generalLogExchange.BuildInfo()}."
+                $"Save GeneralLogMessage -> {generalLogMessage.BuildInfo()}."
             );
         }
 
-        await _generalLogService.SaveAsync(generalLogExchange);
+        await _generalLogService.SaveAsync(generalLogMessage);
     }
 }

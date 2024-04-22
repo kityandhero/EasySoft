@@ -1,16 +1,10 @@
 ﻿using EasySoft.Core.Dapper.Elegant.Configure;
-using EasySoft.Core.Sql.Extensions;
-using EasySoft.Core.Sql.Interfaces;
 
 namespace EasySoft.Core.Dapper.Elegant.Assists;
 
 public static class EntityAssist
 {
     #region EntityCache
-
-    private static TimeSpan EntityCacheExpireTime => new(
-        TimeSpan.TicksPerSecond * 12 * RandomEx.ThreadSafeNext(36000, 72000)
-    );
 
     private static string GetEntityCacheKey<T>(long id) where T : IEntitySelf<T>, new()
     {
@@ -23,65 +17,74 @@ public static class EntityAssist
             ) ?? "";
     }
 
-    public static T? RefreshCache<T>(long id) where T : IEntitySelf<T>, new()
+    public static T? RefreshCache<T>(
+        long id,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
     {
         RemoveEntityCache<T>(id);
 
-        return GetEntity<T>(id);
+        return GetEntity<T>(id, logSql);
+    }
+
+    /// <summary>
+    /// GetEntityCache 
+    /// </summary>
+    /// <returns></returns>
+    public static T? GetEntity<T>(
+        long id,
+        bool allowFromCache = true,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
+    {
+        return GetEntity<T>(
+            id,
+            out _,
+            allowFromCache,
+            logSql
+        );
     }
 
     /// <summary>
     /// GetEntityCache
     /// </summary>
     /// <returns></returns>
-    public static T? GetEntity<T>(long id, bool enableCache = true) where T : IEntitySelf<T>, new()
+    public static T? GetEntity<T>(
+        long id,
+        out CacheKeyValue<T?>? cacheValue,
+        bool allowFromCache = true,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
     {
+        cacheValue = null;
+
         if (id <= 0)
         {
             return default;
-        }
-
-        if (!enableCache)
-        {
-            return GetEntityCore<T>(id);
         }
 
         var cacheOperator = DapperElegantConfigurator.GetCacheOperator();
 
         if (cacheOperator == null)
         {
-            return GetEntityCore<T>(id);
+            throw new UnhandledException("cacheOperator is null");
         }
 
-        var key = GetEntityCacheKey<T>(id);
+        cacheValue = cacheOperator.TryGetWithSteadyStorage(
+            id,
+            logSql,
+            (o, _) => GetEntityCacheKey<T>(o),
+            GetEntityCore<T>,
+            !allowFromCache
+        );
 
-        if (string.IsNullOrWhiteSpace(key))
-        {
-            return GetEntityCore<T>(id);
-        }
-
-        var result = cacheOperator.Get<T>(key);
-
-        if (result.Success)
-        {
-            return result.Data;
-        }
-
-        var data = GetEntityCore<T>(id);
-
-        if (data != null)
-        {
-            cacheOperator.Set(
-                key,
-                data,
-                EntityCacheExpireTime
-            );
-        }
-
-        return data;
+        return cacheValue.Value;
     }
 
-    private static T? GetEntityCore<T>(long id) where T : IEntitySelf<T>, new()
+    private static T? GetEntityCore<T>(
+        long id,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
     {
         if (id <= 0)
         {
@@ -90,7 +93,7 @@ public static class EntityAssist
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         return mapper.Get(id);
@@ -122,8 +125,6 @@ public static class EntityAssist
         return new ExecutiveResult(ReturnCode.Ok);
     }
 
-    #endregion EntityCache
-
     public static ExecutiveResult RemoveEntityCache<T>(T entity) where T : IEntitySelf<T>, new()
     {
         var result = new ExecutiveResult(ReturnCode.NoChange);
@@ -140,26 +141,48 @@ public static class EntityAssist
         return result;
     }
 
+    #endregion EntityCache
+
     #region CheckExist
 
-    public static bool CheckExist<T>(long id, bool enableCache = true) where T : IEntitySelf<T>, new()
+    public static bool CheckExist<T>(
+        long id,
+        bool enableCache = true,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
     {
-        var entity = GetEntity<T>(id, enableCache);
+        var entity = GetEntity<T>(
+            id,
+            enableCache,
+            logSql
+        );
 
         return entity != null;
     }
 
-    public static bool CheckExist<T>(Condition<T> condition) where T : IEntitySelf<T>, new()
+    public static bool CheckExist<T>(
+        Condition<T> condition,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
     {
-        var entity = GetEntity(condition);
+        var entity = GetEntity(
+            condition,
+            logSql
+        );
 
         return entity != null;
     }
 
-    public static bool CheckExist<T>(ICollection<Condition<T>> conditions)
+    public static bool CheckExist<T>(
+        ICollection<Condition<T>> conditions,
+        bool logSql = true
+    )
         where T : IEntitySelf<T>, new()
     {
-        var entity = GetEntity(conditions);
+        var entity = GetEntity(
+            conditions,
+            logSql
+        );
 
         return entity != null;
     }
@@ -171,12 +194,13 @@ public static class EntityAssist
     public static IList<ExpandoObject> SingleListEntity<T>(
         ICollection<FieldItemSpecial<T>> fieldItems,
         Condition<T> condition,
-        Sort<T> sort
+        Sort<T> sort,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.SingleListObject(
@@ -191,12 +215,13 @@ public static class EntityAssist
     public static IList<ExpandoObject> SingleListObject<T>(
         ICollection<Expression<Func<T, object>>> listPropertyLambda,
         ICollection<Condition<T>> conditions,
-        Sort<T> sort
+        Sort<T> sort,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.SingleListObject(
@@ -210,12 +235,13 @@ public static class EntityAssist
 
     public static IList<ExpandoObject> SingleListObject<T>(
         ICollection<FieldItemSpecial<T>> fieldItems,
-        Condition<T> condition
+        Condition<T> condition,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.SingleListObject(
@@ -229,12 +255,13 @@ public static class EntityAssist
     public static IList<ExpandoObject> SingleListObject<T>(
         ICollection<Expression<Func<T, object>>> listPropertyLambda,
         Condition<T> condition,
-        IList<Sort<T>> sorts
+        IList<Sort<T>> sorts,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.SingleListObject(
@@ -249,12 +276,13 @@ public static class EntityAssist
     public static IList<ExpandoObject> SingleListObject<T>(
         ICollection<FieldItemSpecial<T>> fieldItems,
         Condition<T> condition,
-        IList<Sort<T>> sorts
+        IList<Sort<T>> sorts,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.SingleListObject(
@@ -268,12 +296,13 @@ public static class EntityAssist
 
     public static IList<ExpandoObject> SingleListObject<T>(
         ICollection<Expression<Func<T, object>>> listPropertyLambda,
-        ICollection<Condition<T>> conditions
+        ICollection<Condition<T>> conditions,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.SingleListObject(
@@ -287,12 +316,13 @@ public static class EntityAssist
     public static IList<ExpandoObject> SingleListObject<T>(
         ICollection<Expression<Func<T, object>>> listPropertyLambda,
         ICollection<Condition<T>> conditions,
-        IList<Sort<T>> sorts
+        IList<Sort<T>> sorts,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.SingleListObject(
@@ -307,12 +337,13 @@ public static class EntityAssist
     public static IList<ExpandoObject> SingleListObject<T>(
         ICollection<FieldItemSpecial<T>> fieldItems,
         ICollection<Condition<T>> conditions,
-        IList<Sort<T>> sorts
+        IList<Sort<T>> sorts,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.SingleListObject(
@@ -328,11 +359,14 @@ public static class EntityAssist
 
     #region SingleListEntity
 
-    public static IList<T> SingleListEntity<T>(Sort<T> sort) where T : IEntitySelf<T>, new()
+    public static IList<T> SingleListEntity<T>(
+        Sort<T> sort,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.SingleListEntity(sort);
@@ -340,57 +374,35 @@ public static class EntityAssist
         return result;
     }
 
-    public static IList<T> SingleListEntity<T>(ICollection<object> listId) where T : IEntitySelf<T>, new()
+    public static IList<T> SingleListEntity<T>(
+        ICollection<object> listId,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
     {
         if (!listId.Any())
         {
             return new List<T>();
         }
 
-        var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
-        );
-
-        IList<T> result = new List<T>();
-
-        if (mapper.GetUseLogSqlExecutionMessage())
+        var condition = new Condition<T>
         {
-            listId.ForEach(
-                o =>
-                {
-                    var data = mapper.Get(o);
+            ConditionType = ConditionType.In,
+            Expression = new T().GetPrimaryKeyLambda(),
+            Value = listId
+        };
 
-                    if (data != null)
-                    {
-                        result.Add(data);
-                    }
-                }
-            );
-        }
-        else
-        {
-            var condition = new Condition<T>
-            {
-                ConditionType = ConditionType.In,
-                Expression = new T().GetPrimaryKeyLambda(),
-                Value = listId
-            };
-
-            result = SingleListEntity(condition);
-        }
-
-        return result;
+        return SingleListEntity(condition, logSql);
     }
 
     public static IList<T> SingleListEntity<T>(
         Condition<T> condition,
-        Sort<T> sort
+        Sort<T> sort,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.SingleListEntity(condition, sort);
@@ -400,12 +412,13 @@ public static class EntityAssist
 
     public static IList<T> SingleListEntity<T>(
         ICollection<Condition<T>> conditions,
-        Sort<T> sort
+        Sort<T> sort,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.SingleListEntity(conditions, sort);
@@ -413,12 +426,14 @@ public static class EntityAssist
         return result;
     }
 
-    public static IList<T> SingleListEntity<T>(Condition<T> condition)
-        where T : IEntitySelf<T>, new()
+    public static IList<T> SingleListEntity<T>(
+        Condition<T> condition,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.SingleListEntity(condition);
@@ -428,12 +443,13 @@ public static class EntityAssist
 
     public static IList<T> SingleListEntity<T>(
         Condition<T> condition,
-        IList<Sort<T>> sorts
+        IList<Sort<T>> sorts,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.SingleListEntity(condition, sorts);
@@ -442,12 +458,13 @@ public static class EntityAssist
     }
 
     public static IList<T> SingleListEntity<T>(
-        ICollection<Condition<T>> conditions
+        ICollection<Condition<T>> conditions,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.SingleListEntity(conditions);
@@ -456,12 +473,13 @@ public static class EntityAssist
     }
 
     public static IList<T> SingleListEntity<T>(
-        IList<Sort<T>> sorts
+        IList<Sort<T>> sorts,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.SingleListEntity(sorts);
@@ -471,12 +489,13 @@ public static class EntityAssist
 
     public static IList<T> SingleListEntity<T>(
         ICollection<Condition<T>> conditions,
-        IList<Sort<T>> sorts
+        IList<Sort<T>> sorts,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.SingleListEntity(conditions, sorts);
@@ -490,12 +509,13 @@ public static class EntityAssist
         int pageNo,
         int pageSize,
         ICollection<Condition<T>>? conditions = null,
-        IList<Sort<T>>? sorts = null
+        IList<Sort<T>>? sorts = null,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var conditionsAdjust = conditions ?? new List<Condition<T>>();
@@ -515,12 +535,13 @@ public static class EntityAssist
         int pageNo,
         int pageSize,
         ICollection<Condition<T>>? conditions = null,
-        IList<Sort<T>>? sorts = null
+        IList<Sort<T>>? sorts = null,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var conditionsAdjust = conditions ?? new List<Condition<T>>();
@@ -536,11 +557,13 @@ public static class EntityAssist
         return result;
     }
 
-    public static long GetTotalCount<T>() where T : IEntitySelf<T>, new()
+    public static long GetTotalCount<T>(
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.TotalCount();
@@ -548,11 +571,14 @@ public static class EntityAssist
         return result;
     }
 
-    public static T? GetEntity<T>(Condition<T> condition) where T : IEntitySelf<T>, new()
+    public static T? GetEntity<T>(
+        Condition<T> condition,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.GetBy(condition);
@@ -560,12 +586,14 @@ public static class EntityAssist
         return result;
     }
 
-    public static T? GetEntity<T>(ICollection<Condition<T>> conditions)
-        where T : IEntitySelf<T>, new()
+    public static T? GetEntity<T>(
+        ICollection<Condition<T>> conditions,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.GetBy(conditions);
@@ -575,12 +603,13 @@ public static class EntityAssist
 
     public static T? GetEntity<T>(
         ICollection<Condition<T>> conditions,
-        IList<Sort<T>> sorts
+        IList<Sort<T>> sorts,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.GetBy(conditions, sorts);
@@ -590,40 +619,9 @@ public static class EntityAssist
 
     #region AddEntity
 
-    public static ExecutiveResult<T> Add<T>(T entity) where T : IEntitySelf<T>, new()
-    {
-        if (entity == null)
-        {
-            throw new Exception("执行对象不能为null");
-        }
-
-        var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
-        );
-
-        return mapper.Add(entity);
-    }
-
-    public static ExecutiveResult<T> AddUniquer<T>(T entity, Condition<T> uniquerCondition)
-        where T : IEntitySelf<T>, new()
-    {
-        if (entity == null)
-        {
-            throw new Exception("执行对象不能为null");
-        }
-
-        var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
-        );
-
-        return mapper.AddUniquer(entity, uniquerCondition);
-    }
-
-    public static ExecutiveResult<T> AddUniquer<T>(
+    public static ExecutiveResult<T> Add<T>(
         T entity,
-        ICollection<Condition<T>> uniquerConditions
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         if (entity == null)
@@ -633,7 +631,45 @@ public static class EntityAssist
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
+        );
+
+        return mapper.Add(entity);
+    }
+
+    public static ExecutiveResult<T> AddUniquer<T>(
+        T entity,
+        Condition<T> uniquerCondition,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
+    {
+        if (entity == null)
+        {
+            throw new Exception("执行对象不能为null");
+        }
+
+        var mapper = new BaseMapper<T>(
+            MapperChannelFactory.GetMainMapperChannel(),
+            logSql
+        );
+
+        return mapper.AddUniquer(entity, uniquerCondition);
+    }
+
+    public static ExecutiveResult<T> AddUniquer<T>(
+        T entity,
+        ICollection<Condition<T>> uniquerConditions,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
+    {
+        if (entity == null)
+        {
+            throw new Exception("执行对象不能为null");
+        }
+
+        var mapper = new BaseMapper<T>(
+            MapperChannelFactory.GetMainMapperChannel(),
+            logSql
         );
 
         return mapper.AddUniquer(entity, uniquerConditions);
@@ -643,7 +679,10 @@ public static class EntityAssist
 
     #region UpdateEntity
 
-    public static ExecutiveResult<T> Update<T>(T entity) where T : IEntitySelf<T>, new()
+    public static ExecutiveResult<T> Update<T>(
+        T entity,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
     {
         if (entity == null)
         {
@@ -657,7 +696,7 @@ public static class EntityAssist
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         return mapper.Update(entity);
@@ -665,7 +704,8 @@ public static class EntityAssist
 
     public static bool UpdateWithCondition<T>(
         T entity,
-        ICollection<Condition<T>> conditions
+        ICollection<Condition<T>> conditions,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         if (entity == null)
@@ -680,7 +720,7 @@ public static class EntityAssist
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         return mapper.UpdateWithCondition(entity, conditions);
@@ -688,7 +728,8 @@ public static class EntityAssist
 
     public static ExecutiveResult<T> UpdatesSpecific<T>(
         T entity,
-        ICollection<Expression<Func<T>>> listPropertyLambda
+        ICollection<Expression<Func<T>>> listPropertyLambda,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         if (entity == null)
@@ -703,7 +744,7 @@ public static class EntityAssist
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         return mapper.UpdatesSpecific(entity, listPropertyLambda);
@@ -711,7 +752,8 @@ public static class EntityAssist
 
     public static ExecutiveResult<T> UpdatesSpecific<T>(
         T entity,
-        ICollection<Expression<Func<T, object>>> listPropertyLambda
+        ICollection<Expression<Func<T, object>>> listPropertyLambda,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         if (entity == null)
@@ -726,7 +768,7 @@ public static class EntityAssist
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         return mapper.UpdatesSpecific(entity, listPropertyLambda);
@@ -735,7 +777,8 @@ public static class EntityAssist
     public static bool UpdateSpecificWithCondition<T>(
         T entity,
         ICollection<Expression<Func<T>>> listPropertyLambda,
-        ICollection<Condition<T>> conditions
+        ICollection<Condition<T>> conditions,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         if (entity == null)
@@ -750,7 +793,7 @@ public static class EntityAssist
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         return mapper.UpdateSpecificWithCondition(
@@ -763,7 +806,8 @@ public static class EntityAssist
     public static bool UpdateSpecificWithCondition<T>(
         T entity,
         ICollection<Expression<Func<T, object>>> listPropertyLambda,
-        ICollection<Condition<T>> conditions
+        ICollection<Condition<T>> conditions,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         if (entity == null)
@@ -778,7 +822,7 @@ public static class EntityAssist
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         return mapper.UpdateSpecificWithCondition(
@@ -792,7 +836,10 @@ public static class EntityAssist
 
     #region SetEntity
 
-    public static ExecutiveResult<T> Set<T>(T entity) where T : IEntitySelf<T>, new()
+    public static ExecutiveResult<T> Set<T>(
+        T entity,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
     {
         if (entity == null)
         {
@@ -801,17 +848,20 @@ public static class EntityAssist
 
         if (Convert.ToInt64(entity.GetPrimaryKeyValue()) == 0)
         {
-            return Add(entity);
+            return Add(entity, logSql);
         }
 
-        return Update(entity);
+        return Update(entity, logSql);
     }
 
     #endregion
 
     #region DeleteEntity
 
-    public static ExecutiveResult<T> DeleteEntity<T>(T entity) where T : IEntitySelf<T>, new()
+    public static ExecutiveResult<T> DeleteEntity<T>(
+        T entity,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
     {
         if (entity == null)
         {
@@ -820,7 +870,7 @@ public static class EntityAssist
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.Delete(entity);
@@ -828,7 +878,10 @@ public static class EntityAssist
         return result;
     }
 
-    public static ExecutiveResult<T> DeleteEntity<T>(long id) where T : IEntitySelf<T>, new()
+    public static ExecutiveResult<T> DeleteEntity<T>(
+        long id,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
     {
         var entity = GetEntity<T>(id, false);
 
@@ -839,7 +892,7 @@ public static class EntityAssist
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.Delete(entity);
@@ -851,10 +904,12 @@ public static class EntityAssist
     /// 为安全起见,条件删除仅删除第一个满足检索条件的数据，批量删除请使用其他方式
     /// </summary>
     /// <param name="condition"></param>
+    /// <param name="logSql"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static ExecutiveResult<T> DeleteEntity<T>(
-        Condition<T> condition
+        Condition<T> condition,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var entity = GetEntity(condition);
@@ -866,7 +921,7 @@ public static class EntityAssist
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.Delete(entity);
@@ -878,10 +933,12 @@ public static class EntityAssist
     /// 为安全起见,条件删除仅删除第一个满足检索条件的数据，批量删除请使用其他方式
     /// </summary>
     /// <param name="conditions"></param>
+    /// <param name="logSql"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static ExecutiveResult<T> DeleteEntity<T>(
-        ICollection<Condition<T>> conditions
+        ICollection<Condition<T>> conditions,
+        bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
         var entity = GetEntity(conditions);
@@ -893,7 +950,7 @@ public static class EntityAssist
 
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.Delete(entity);
@@ -905,26 +962,38 @@ public static class EntityAssist
 
     #region DeleteMany
 
-    public static ExecutiveResult DeleteMany<T>(IEnumerable<long> keys) where T : IEntitySelf<T>, new()
+    public static ExecutiveResult DeleteMany<T>(
+        IEnumerable<long> keys,
+        Action? callback = null,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.DeleteMany(keys);
 
+        callback?.Invoke();
+
         return result;
     }
 
-    public static ExecutiveResult DeleteMany<T>(IEnumerable<T> models) where T : IEntitySelf<T>, new()
+    public static ExecutiveResult DeleteMany<T>(
+        IEnumerable<T> models,
+        Action? callback = null,
+        bool logSql = true
+    ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
             MapperChannelFactory.GetMainMapperChannel(),
-            DapperElegantConfigurator.GetSqlLogRecordJudge()
+            logSql
         );
 
         var result = mapper.DeleteMany(models);
+
+        callback?.Invoke();
 
         return result;
     }

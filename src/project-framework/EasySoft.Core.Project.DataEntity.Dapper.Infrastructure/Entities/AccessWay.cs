@@ -1,9 +1,4 @@
-﻿using System.Linq.Expressions;
-using EasySoft.Core.Entities.Common.Bases;
-using EasySoft.UtilityTools.Standard.Attributes;
-using EasySoft.UtilityTools.Standard.Entities.Interfaces;
-
-namespace EasySoft.Core.Project.DataEntity.Dapper.Infrastructure.Entities;
+﻿namespace EasySoft.Core.Project.DataEntity.Dapper.Infrastructure.Entities;
 
 /// <summary>
 /// 访问模块
@@ -55,14 +50,16 @@ public class AccessWay : AbstractFunctionEntity<AccessWay>, IAccessWayPure
     [AdvanceColumnLength(80)]
     public string ResultType { get; set; } = "";
 
-    [AdvanceColumnInformation("扩展权限")]
-    [AdvanceColumnMapper("expand")]
+    [AdvanceColumnInformation("分组标识")]
+    [AdvanceColumnMapper("group")]
     [AdvanceColumnLength(500)]
     public string Group { get; set; } = "";
 
-    [AdvanceColumnInformation("渠道码")]
-    [AdvanceColumnMapper("channel")]
-    public int Channel { get; set; }
+    [AdvanceColumnInformation("触发渠道码")]
+    [AdvanceColumnMapper("trigger_channel")]
+    [AdvanceColumnLength(200)]
+    [AdvanceColumnNational]
+    public string TriggerChannel { get; set; } = UtilityTools.Standard.Models.Channel.Unknown.ToValue();
 
     [AdvanceColumnInformation("Ip")]
     [AdvanceColumnMapper("ip")]
@@ -70,9 +67,4 @@ public class AccessWay : AbstractFunctionEntity<AccessWay>, IAccessWayPure
     public string Ip { get; set; } = "";
 
     #endregion Properties
-
-    public sealed override Expression<Func<AccessWay, object>> GetPrimaryKeyLambda()
-    {
-        return o => o.Id;
-    }
 }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using EasySoft.UtilityTools.Standard.Competence;
-using EasySoft.UtilityTools.Standard.Entities.Interfaces;
+using EasySoft.UtilityTools.Standard.Interfaces;
 
 namespace EasySoft.Simple.Tradition.Data.Entities.Bases;
 

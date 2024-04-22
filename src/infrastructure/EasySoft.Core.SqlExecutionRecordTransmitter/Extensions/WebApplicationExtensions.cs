@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.SqlExecutionRecordTransmitter.Producers;
+using EasySoft.UtilityTools.Standard.Assists;
 
 namespace EasySoft.Core.SqlExecutionRecordTransmitter.Extensions;
 
@@ -16,7 +17,10 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        if (!GeneralConfigAssist.GetRemoteSqlExecutionRecordSwitch()) return application;
+        if (!SqlLogSwitchAssist.GetCurrentSwitch())
+        {
+            return application;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseSqlExecutionRecordProducer)}."
@@ -48,10 +52,12 @@ public static class WebApplicationExtensions
                     );
                 }
 
-                var sqlExecutionRecordProducer = serviceProvider.GetRequiredService<ISqlExecutionRecordProducer>();
+                var sqlExecutionRecordProducer = serviceProvider.GetRequiredService<ISqlLogProducer>();
 
-                while (SqlLogInnerQueue.GetQueue().TryDequeue(out var sqlExecutionRecord))
-                    sqlExecutionRecordProducer.SendAsync(sqlExecutionRecord);
+                while (SqlLogInnerQueue.GetQueue().TryDequeue(out var sqlLog))
+                {
+                    sqlExecutionRecordProducer.SendAsync(sqlLog);
+                }
             }
         );
 

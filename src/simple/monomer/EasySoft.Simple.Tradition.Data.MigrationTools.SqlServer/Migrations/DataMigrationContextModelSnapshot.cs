@@ -386,7 +386,7 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                         .HasColumnName("url_params")
                         .HasComment("");
 
-                    b.Property<long>("UserId")
+                    b.Property<long>("OperatorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasDefaultValue(0L)
@@ -502,7 +502,7 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                     b.ToTable("general_log", (string)null);
                 });
 
-            modelBuilder.Entity("EasySoft.Core.LogServer.Core.Entities.SqlExecutionRecord", b =>
+            modelBuilder.Entity("EasySoft.Core.LogServer.Core.Entities.SqlLog", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint")
@@ -569,7 +569,7 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                         .HasColumnName("errored")
                         .HasComment("");
 
-                    b.Property<string>("ExecuteGuid")
+                    b.Property<string>("Flag")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("execute_guid")
@@ -1113,7 +1113,7 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                         .HasColumnName("pseudonym")
                         .HasComment("笔名");
 
-                    b.Property<long>("UserId")
+                    b.Property<long>("OperatorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasDefaultValue(0L)
@@ -1146,7 +1146,7 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                         .HasColumnOrder(1)
                         .HasComment("数据标识");
 
-                    b.Property<long>("UserId")
+                    b.Property<long>("OperatorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasDefaultValue(0L)

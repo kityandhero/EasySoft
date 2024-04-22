@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.Infrastructure.Entities.Interfaces;
+﻿using System.Linq.Expressions;
+
+namespace EasySoft.Core.Infrastructure.Entities.Interfaces;
 
 /// <summary>
 /// IEntity
@@ -17,4 +19,40 @@ public interface IEntity<TKey>
     /// Id
     /// </summary>
     TKey Id { get; set; }
+
+    /// <summary>
+    /// GetPrimaryKeyName
+    /// </summary>
+    /// <returns></returns>
+    string GetPrimaryKeyName();
+
+    /// <summary>
+    /// GetSqlSchemaName
+    /// </summary>
+    /// <returns></returns>
+    string GetSqlSchemaName();
+
+    /// <summary>
+    /// GetSqlFieldStringValueDecorateStart
+    /// </summary>
+    /// <returns></returns>
+    string GetSqlFieldStringValueDecorateStart();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    string GetSqlFieldStringValueDecorateEnd();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    string GetSqlFieldDecorateStart();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    string GetSqlFieldDecorateEnd();
 }

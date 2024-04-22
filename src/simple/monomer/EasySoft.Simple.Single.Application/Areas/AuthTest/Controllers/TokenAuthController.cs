@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Extensions;
-
-namespace EasySoft.Simple.Single.Application.Areas.AuthTest.Controllers;
+﻿namespace EasySoft.Simple.Single.Application.Areas.AuthTest.Controllers;
 
 /// <summary>
 /// TokenAuth
@@ -15,15 +13,17 @@ public class TokenAuthController : AreaControllerCore
     {
         var token = 123456.ToToken();
 
-        return this.Success(new
-        {
-            tokenMode = FlagAssist.TokenMode,
-            token,
-            expires = DynamicConfigAssist.GetTokenExpires(),
-            tokenServerDump = GeneralConfigAssist.GetTokenServerDumpSwitch(),
-            tokenParseFromUrlSwitch = GeneralConfigAssist.GetTokenParseFromUrlSwitch(),
-            tokenParseFromCookieSwitch = GeneralConfigAssist.GetTokenParseFromCookieSwitch()
-        });
+        return this.Success(
+            new
+            {
+                tokenMode = FlagAssist.TokenMode,
+                token,
+                expires = DynamicConfigAssist.GetTokenExpires(),
+                tokenServerDump = GeneralConfigAssist.GetTokenServerDumpSwitch(),
+                tokenParseFromUrlSwitch = GeneralConfigAssist.GetTokenParseFromUrlSwitch(),
+                tokenParseFromCookieSwitch = GeneralConfigAssist.GetTokenParseFromCookieSwitch()
+            }
+        );
     }
 
     /// <summary>
@@ -34,15 +34,17 @@ public class TokenAuthController : AreaControllerCore
     {
         var token = HttpContext.GetToken();
 
-        return this.Success(new
-        {
-            tokenMode = FlagAssist.TokenMode,
-            token,
-            expires = DynamicConfigAssist.GetTokenExpires(),
-            tokenServerDump = GeneralConfigAssist.GetTokenServerDumpSwitch(),
-            tokenParseFromUrlSwitch = GeneralConfigAssist.GetTokenParseFromUrlSwitch(),
-            tokenParseFromCookieSwitch = GeneralConfigAssist.GetTokenParseFromCookieSwitch()
-        });
+        return this.Success(
+            new
+            {
+                tokenMode = FlagAssist.TokenMode,
+                token,
+                expires = DynamicConfigAssist.GetTokenExpires(),
+                tokenServerDump = GeneralConfigAssist.GetTokenServerDumpSwitch(),
+                tokenParseFromUrlSwitch = GeneralConfigAssist.GetTokenParseFromUrlSwitch(),
+                tokenParseFromCookieSwitch = GeneralConfigAssist.GetTokenParseFromCookieSwitch()
+            }
+        );
     }
 
     /// <summary>
@@ -52,10 +54,12 @@ public class TokenAuthController : AreaControllerCore
     [Operator]
     public IActionResult NeedAuth()
     {
-        return this.Success(new
-        {
-            time = DateTime.Now.ToUnixTime()
-        });
+        return this.Success(
+            new
+            {
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     /// <summary>
@@ -65,10 +69,12 @@ public class TokenAuthController : AreaControllerCore
     [Permission("356316bbf81e4cda93ab9a1238765878")]
     public IActionResult ConfigErrorPermission()
     {
-        return this.Success(new
-        {
-            time = DateTime.Now.ToUnixTime()
-        });
+        return this.Success(
+            new
+            {
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     /// <summary>
@@ -79,9 +85,11 @@ public class TokenAuthController : AreaControllerCore
     [Permission("356316bbf81e4cda93ab9a1238765875")]
     public IActionResult NeedPermission()
     {
-        return this.Success(new
-        {
-            time = DateTime.Now.ToUnixTime()
-        });
+        return this.Success(
+            new
+            {
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 }

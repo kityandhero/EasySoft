@@ -15,7 +15,7 @@ public interface IMaintainSuperRoleClient
     /// <returns></returns>
     [Post("/permissionRpc/maintainSuper")]
     public Task<ApiResponse<RpcResult<AppSecurityDto>>> MaintainSuper(
-        int channel,
+        string channel,
         [Header("originId")] string originAppId,
         [Header("originSign")] string originAppSign,
         [Header("originSalt")] string originAppSalt

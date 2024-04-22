@@ -17,7 +17,7 @@ public interface IAccessWayService : IBusinessService
     /// <summary>
     /// SaveAccessWayModelAsync
     /// </summary>
-    /// <param name="accessWayExchange"></param>
+    /// <param name="accessWayMessage"></param>
     /// <returns></returns>
-    Task SaveAccessWayAsync(AccessWayExchange accessWayExchange);
+    Task SaveAccessWayAsync(IAccessWayMessage accessWayMessage);
 }

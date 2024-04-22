@@ -34,15 +34,15 @@ public sealed class AccessWayExchangeSubscriber : ICapSubscribe
     /// </summary>
     /// <param name="accessWayExchange"></param>
     /// <returns></returns>
-    [CapSubscribe(TransmitterTopic.AccessWayExchange)]
-    public async Task Process(AccessWayExchange accessWayExchange)
+    [CapSubscribe(TransmitterTopic.AccessWayMessage)]
+    public async Task Process(IAccessWayMessage accessWayExchange)
     {
         if (_environment.IsDevelopment())
         {
             _logger.LogAdvanceExecute($"{GetType().Name}.{nameof(Process)}");
 
             _logger.LogAdvancePrompt(
-                $"Save AccessWayExchange -> {accessWayExchange.BuildInfo()}."
+                $"Save AccessWayMessage -> {accessWayExchange.BuildInfo()}."
             );
         }
 

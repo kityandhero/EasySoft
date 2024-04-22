@@ -450,28 +450,6 @@ public static class GeneralConfigAssist
     }
 
     /// <summary>
-    /// GetRemoteSqlExecutionRecordSwitch
-    /// </summary>
-    /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
-    public static bool GetRemoteSqlExecutionRecordSwitch()
-    {
-        var v = GetConfig().RemoteSqlExecutionRecordSwitch;
-
-        v = string.IsNullOrWhiteSpace(v) ? "0" : v;
-
-        if (!v.IsInt(out var value))
-        {
-            throw new ConfigErrorException(
-                $"请配置 RemoteSqlExecutionRecordSwitch: {ConfigFile} -> RemoteSqlExecutionRecordSwitch,请设置 0/1",
-                GetConfigFileInfo()
-            );
-        }
-
-        return value == 1;
-    }
-
-    /// <summary>
     /// GetUseStaticFilesSwitch
     /// </summary>
     /// <returns></returns>
@@ -1294,8 +1272,7 @@ public static class GeneralConfigAssist
 
         if (v == "auto")
         {
-            return GetAccessWayDetectSwitch() || GetRemoteErrorLogSwitch() || GetRemoteGeneralLogSwitch() ||
-                   GetRemoteSqlExecutionRecordSwitch();
+            return true;
         }
 
         return false;

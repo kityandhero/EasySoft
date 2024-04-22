@@ -1,5 +1,4 @@
-﻿using EasySoft.UtilityTools.Core.Attributes;
-using EasySoft.UtilityTools.Core.Extensions;
+﻿using EasySoft.UtilityTools.Core.Extensions;
 using EasySoft.UtilityTools.Standard.Attributes;
 
 namespace EasySoft.UtilityTools.Core.Interceptors;
@@ -61,9 +60,11 @@ public sealed class LogRecordAsyncInterceptor : IAsyncInterceptor
         var attribute = GetCustomAttribute(invocation);
 
         if (attribute != null)
+        {
             _loggerFactory
                 .CreateLogger<LogRecordAsyncInterceptor>()
                 .LogAdvanceExecute($"{invocation.TargetType.Name}.{invocation.Method.Name}");
+        }
 
         invocation.Proceed();
 
@@ -83,9 +84,11 @@ public sealed class LogRecordAsyncInterceptor : IAsyncInterceptor
         var attribute = GetCustomAttribute(invocation);
 
         if (attribute != null)
+        {
             _loggerFactory
                 .CreateLogger<LogRecordAsyncInterceptor>()
                 .LogAdvanceExecute($"{invocation.TargetType.Name}.{invocation.Method.Name}");
+        }
 
         invocation.Proceed();
 

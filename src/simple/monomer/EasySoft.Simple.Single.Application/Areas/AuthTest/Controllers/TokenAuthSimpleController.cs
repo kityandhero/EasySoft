@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Extensions;
-
-namespace EasySoft.Simple.Single.Application.Areas.AuthTest.Controllers;
+﻿namespace EasySoft.Simple.Single.Application.Areas.AuthTest.Controllers;
 
 /// <summary>
 /// TokenAuthSimpleController
@@ -14,10 +12,12 @@ public class TokenAuthSimpleController : AreaControllerCore
     /// <returns></returns>
     public IActionResult NeedAuth()
     {
-        return this.Success(new
-        {
-            time = DateTime.Now.ToUnixTime()
-        });
+        return this.Success(
+            new
+            {
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     /// <summary>
@@ -27,9 +27,11 @@ public class TokenAuthSimpleController : AreaControllerCore
     [Permission("356316bbf81e4cda93ab9a1238765875")]
     public IActionResult NeedPermission()
     {
-        return this.Success(new
-        {
-            time = DateTime.Now.ToUnixTime()
-        });
+        return this.Success(
+            new
+            {
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 }

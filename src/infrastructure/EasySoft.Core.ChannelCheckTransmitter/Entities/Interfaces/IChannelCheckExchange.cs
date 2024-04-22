@@ -8,5 +8,5 @@ public interface IChannelCheckExchange
     /// <summary>
     /// channel
     /// </summary>
-    int Channel { get; set; }
+    string Channel { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Dapper.Elegant.Configure;
+using EasySoft.UtilityTools.Standard.Messages;
 
 namespace EasySoft.Core.Dapper.Elegant.Assists;
 
@@ -31,7 +32,11 @@ public class QueryAssist
             }
             catch (Exception ex)
             {
-                LogError(ex, sql, mapperChannel);
+                LogError(
+                    ex,
+                    sql,
+                    mapperChannel
+                );
 
                 throw;
             }
@@ -39,10 +44,13 @@ public class QueryAssist
 
         public void ExecuteSql(string sql, IMapperChannel mapperChannel)
         {
-            ExecuteSql(new List<string>()
-            {
-                sql
-            }, mapperChannel);
+            ExecuteSql(
+                new List<string>()
+                {
+                    sql
+                },
+                mapperChannel
+            );
         }
 
         public void ExecuteSql(
@@ -68,18 +76,28 @@ public class QueryAssist
             try
             {
                 foreach (var sql in listSql)
+                {
                     try
                     {
                         LogSql(mapperChannel, sql);
 
-                        dbTransaction.Connection.Execute(sql, null, dbTransaction);
+                        dbTransaction.Connection.Execute(
+                            sql,
+                            null,
+                            dbTransaction
+                        );
                     }
                     catch (Exception e)
                     {
-                        LogError(e, sql, mapperChannel);
+                        LogError(
+                            e,
+                            sql,
+                            mapperChannel
+                        );
 
                         throw;
                     }
+                }
 
                 mapperTransaction.Commit();
             }
@@ -117,7 +135,11 @@ public class QueryAssist
             }
             catch (Exception ex)
             {
-                LogError(ex, sql, mapperChannel);
+                LogError(
+                    ex,
+                    sql,
+                    mapperChannel
+                );
 
                 throw;
             }
@@ -147,7 +169,11 @@ public class QueryAssist
             }
             catch (Exception ex)
             {
-                LogError(ex, sql, mapperChannel);
+                LogError(
+                    ex,
+                    sql,
+                    mapperChannel
+                );
 
                 throw;
             }
@@ -204,7 +230,11 @@ public class QueryAssist
             }
             catch (Exception ex)
             {
-                LogError(ex, countSql, mapperChannel);
+                LogError(
+                    ex,
+                    countSql,
+                    mapperChannel
+                );
 
                 throw;
             }
@@ -229,7 +259,14 @@ public class QueryAssist
             try
             {
                 using var conn = mapperChannel.OpenConnection();
-                sql = SqlAssist.BuildSingleTableListSql(primaryKey, where, "", tableName, primaryKey, 1);
+                sql = SqlAssist.BuildSingleTableListSql(
+                    primaryKey,
+                    where,
+                    "",
+                    tableName,
+                    primaryKey,
+                    1
+                );
 
                 var reader = conn.ExecuteReader(sql);
 
@@ -241,7 +278,11 @@ public class QueryAssist
             }
             catch (Exception ex)
             {
-                LogError(ex, sql, mapperChannel);
+                LogError(
+                    ex,
+                    sql,
+                    mapperChannel
+                );
 
                 throw;
             }
@@ -297,7 +338,14 @@ public class QueryAssist
             {
                 using var conn = mapperChannel.OpenConnection();
                 sql =
-                    SqlAssist.BuildSingleTableListSql(fields, where, sort, tableName, primaryKey, 1);
+                    SqlAssist.BuildSingleTableListSql(
+                        fields,
+                        where,
+                        sort,
+                        tableName,
+                        primaryKey,
+                        1
+                    );
 
                 var reader = conn.ExecuteReader(sql);
 
@@ -309,7 +357,11 @@ public class QueryAssist
             }
             catch (Exception ex)
             {
-                LogError(ex, sql, mapperChannel);
+                LogError(
+                    ex,
+                    sql,
+                    mapperChannel
+                );
 
                 throw;
             }
@@ -390,7 +442,11 @@ public class QueryAssist
             }
             catch (Exception ex)
             {
-                LogError(ex, sql, mapperChannel);
+                LogError(
+                    ex,
+                    sql,
+                    mapperChannel
+                );
 
                 throw;
             }
@@ -447,7 +503,11 @@ public class QueryAssist
             }
             catch (Exception ex)
             {
-                LogError(ex, countSql, mapperChannel);
+                LogError(
+                    ex,
+                    countSql,
+                    mapperChannel
+                );
 
                 throw;
             }
@@ -478,7 +538,11 @@ public class QueryAssist
             }
             catch (Exception ex)
             {
-                LogError(ex, sql, mapperChannel);
+                LogError(
+                    ex,
+                    sql,
+                    mapperChannel
+                );
 
                 throw;
             }
@@ -532,7 +596,11 @@ public class QueryAssist
             }
             catch (Exception ex)
             {
-                LogError(ex, pageSql, mapperChannel);
+                LogError(
+                    ex,
+                    pageSql,
+                    mapperChannel
+                );
 
                 throw;
             }
@@ -567,9 +635,20 @@ public class QueryAssist
             long minTotalCacheSustainSecond = 30
         )
         {
-            return ExecuteSingleTableObjectListPage(pageSize, pageIndex, fields, where, order, "", tableName,
+            return ExecuteSingleTableObjectListPage(
+                pageSize,
+                pageIndex,
+                fields,
+                where,
+                order,
+                "",
+                tableName,
                 primaryKey,
-                mapperChannel, enableTotalCache, totalCountCacheThreshold, minTotalCacheSustainSecond);
+                mapperChannel,
+                enableTotalCache,
+                totalCountCacheThreshold,
+                minTotalCacheSustainSecond
+            );
         }
 
         /// <summary>
@@ -645,8 +724,13 @@ public class QueryAssist
 
                         LogSql(mapperChannel, pageSql);
 
-                        return new PageListResult<ExpandoObject>(ReturnCode.Ok, list, pageIndex, pageSize,
-                            totalCount);
+                        return new PageListResult<ExpandoObject>(
+                            ReturnCode.Ok,
+                            list,
+                            pageIndex,
+                            pageSize,
+                            totalCount
+                        );
                     }
                 }
                 else
@@ -667,11 +751,18 @@ public class QueryAssist
 
                     var list = ConvertAssist.DataReaderToExpandoObjectList(reader);
 
-                    if (!reader.IsClosed) reader.Close();
+                    if (!reader.IsClosed)
+                    {
+                        reader.Close();
+                    }
 
                     var totalCount = Convert.ToInt32(conn.ExecuteScalar(countSql));
 
-                    LogSql(mapperChannel, pageSql, countSql);
+                    LogSql(
+                        mapperChannel,
+                        pageSql,
+                        countSql
+                    );
 
                     return new PageListResult<ExpandoObject>(
                         ReturnCode.Ok,
@@ -684,7 +775,11 @@ public class QueryAssist
             }
             catch (Exception ex)
             {
-                LogError(ex, new List<string> { countSql, pageSql }, mapperChannel);
+                LogError(
+                    ex,
+                    new List<string> { countSql, pageSql },
+                    mapperChannel
+                );
 
                 throw;
             }
@@ -717,7 +812,14 @@ public class QueryAssist
             {
                 using var conn = mapperChannel.OpenConnection();
 
-                pageSql = SqlAssist.BuildPageListSql(pageSize, pageIndex, fields, where, order, tableName);
+                pageSql = SqlAssist.BuildPageListSql(
+                    pageSize,
+                    pageIndex,
+                    fields,
+                    where,
+                    order,
+                    tableName
+                );
 
                 var reader = conn.ExecuteReader(pageSql);
 
@@ -729,7 +831,11 @@ public class QueryAssist
             }
             catch (Exception ex)
             {
-                LogError(ex, pageSql, mapperChannel);
+                LogError(
+                    ex,
+                    pageSql,
+                    mapperChannel
+                );
 
                 throw;
             }
@@ -874,11 +980,18 @@ public class QueryAssist
 
                     var list = ConvertAssist.DataReaderToExpandoObjectList(reader);
 
-                    if (!reader.IsClosed) reader.Close();
+                    if (!reader.IsClosed)
+                    {
+                        reader.Close();
+                    }
 
                     var totalCount = Convert.ToInt32(conn.ExecuteScalar(countSql));
 
-                    LogSql(mapperChannel, pageSql, countSql);
+                    LogSql(
+                        mapperChannel,
+                        pageSql,
+                        countSql
+                    );
 
                     return new PageListResult<ExpandoObject>(
                         ReturnCode.Ok,
@@ -891,7 +1004,11 @@ public class QueryAssist
             }
             catch (Exception ex)
             {
-                LogError(ex, new List<string> { countSql, pageSql }, mapperChannel);
+                LogError(
+                    ex,
+                    new List<string> { countSql, pageSql },
+                    mapperChannel
+                );
 
                 throw;
             }
@@ -899,63 +1016,69 @@ public class QueryAssist
 
         private static void LogSql(IMapperChannel mapperChannel, params string[] sqlArray)
         {
-            if (sqlArray.Length <= 0) return;
+            if (sqlArray.Length <= 0)
+            {
+                return;
+            }
 
-            if (GeneralConfigAssist.GetRemoteGeneralLogSwitch()) return;
-
-            var applicationChannel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
-
-            if (!DapperElegantConfigurator.GetSqlLogRecordJudge()(applicationChannel.GetChannel())) return;
+            if (GeneralConfigAssist.GetRemoteGeneralLogSwitch())
+            {
+                return;
+            }
 
             var listRecord = (
                 from sql in sqlArray
                 where !string.IsNullOrWhiteSpace(sql)
-                select new SqlExecutionMessage
+                select new SqlLogMessage
                 {
                     CommandString = sql,
-                    ExecuteType = SqlExecuteType.Unknown.ToInt(),
+                    ExecuteType = "",
                     StackTraceSnippet = "",
                     StartMilliseconds = 0,
                     DurationMilliseconds = 0,
                     FirstFetchDurationMilliseconds = 0,
                     Errored = 0,
-                    Channel = applicationChannel.GetChannel(),
+                    TriggerChannel = ChannelAssist.GetCurrentChannel().ToValue(),
                     CollectMode = CollectMode.MiniProfiler.ToInt(),
                     DatabaseChannel = mapperChannel.GetChannel()
                 }
             ).ToList();
 
-            if (listRecord.Count > 0) listRecord.ForEach(LogSqlExecutionMessage);
+            if (listRecord.Count > 0)
+            {
+                listRecord.ForEach(LogSqlExecutionMessage);
+            }
         }
 
         /// <summary>
         /// 记录执行的sql
         /// </summary>
-        /// <param name="sqlExecutionMessage">sql</param>
-        private static void LogSqlExecutionMessage(SqlExecutionMessage sqlExecutionMessage)
+        /// <param name="sqlLogMessage">sql</param>
+        private static void LogSqlExecutionMessage(SqlLogMessage sqlLogMessage)
         {
-            AutofacAssist.Instance.Resolve<ISqlExecutionRecordProducer>().SendAsync(
-                sqlExecutionMessage.CommandString,
-                sqlExecutionMessage.ExecuteType,
-                sqlExecutionMessage.StackTraceSnippet,
-                sqlExecutionMessage.StartMilliseconds,
-                sqlExecutionMessage.DurationMilliseconds,
-                sqlExecutionMessage.FirstFetchDurationMilliseconds,
-                sqlExecutionMessage.Errored,
-                sqlExecutionMessage.Channel,
-                sqlExecutionMessage.CollectMode,
-                sqlExecutionMessage.DatabaseChannel
-            );
+            AutofacAssist.Instance.Resolve<ISqlLogProducer>()
+                .SendAsync(
+                    sqlLogMessage.CommandString,
+                    sqlLogMessage.ExecuteType,
+                    sqlLogMessage.StackTraceSnippet,
+                    sqlLogMessage.StartMilliseconds,
+                    sqlLogMessage.DurationMilliseconds,
+                    sqlLogMessage.FirstFetchDurationMilliseconds,
+                    sqlLogMessage.Errored,
+                    sqlLogMessage.CollectMode,
+                    sqlLogMessage.DatabaseChannel
+                );
         }
 
         private static void LogError(
             Exception exception
         )
         {
-            AutofacAssist.Instance.Resolve<IErrorLogProducer>().SendAsync(
-                exception,
-                0
-            );
+            AutofacAssist.Instance.Resolve<IErrorLogProducer>()
+                .SendAsync(
+                    exception,
+                    0
+                );
         }
 
         /// <summary>
@@ -970,7 +1093,11 @@ public class QueryAssist
             IMapperChannel mapperChannel
         )
         {
-            LogError(exception, new List<string> { sql }, mapperChannel);
+            LogError(
+                exception,
+                new List<string> { sql },
+                mapperChannel
+            );
         }
 
         /// <summary>
@@ -985,7 +1112,10 @@ public class QueryAssist
             IMapperChannel mapperChannel
         )
         {
-            if (GeneralConfigAssist.GetRemoteErrorLogSwitch()) return;
+            if (GeneralConfigAssist.GetRemoteErrorLogSwitch())
+            {
+                return;
+            }
 
             var sqlList = sqlCollection.ToListFilterNullOrWhiteSpace();
 
@@ -1014,22 +1144,24 @@ public class QueryAssist
                 exception.Data.Add("mapperChannel", mapperChannel.GetChannel());
             }
 
-            AutofacAssist.Instance.Resolve<IErrorLogProducer>().SendAsync(
-                exception,
-                0
-            );
+            AutofacAssist.Instance.Resolve<IErrorLogProducer>()
+                .SendAsync(
+                    exception,
+                    0
+                );
         }
 
         private static string BuildTotalCountResultCacheKey(string key, IMapperChannel mapperChannel)
         {
-            return DapperElegantConfigurator.GetCacheOperator()?.BuildKey(
-                "sql",
-                "executor",
-                "countSql",
-                "result",
-                key,
-                mapperChannel.GetChannel()
-            ) ?? "";
+            return DapperElegantConfigurator.GetCacheOperator()
+                ?.BuildKey(
+                    "sql",
+                    "executor",
+                    "countSql",
+                    "result",
+                    key,
+                    mapperChannel.GetChannel()
+                ) ?? "";
         }
 
         private static TimeSpan GetRandomTotalCountCacheExpireTime(
@@ -1041,7 +1173,10 @@ public class QueryAssist
         {
             needSetCatch = true;
 
-            if (count <= totalCountCacheThreshold) needSetCatch = false;
+            if (count <= totalCountCacheThreshold)
+            {
+                needSetCatch = false;
+            }
 
             if (count > totalCountCacheThreshold && count <= totalCountCacheThreshold + 500)
             {
@@ -1104,7 +1239,10 @@ public class QueryAssist
 
             var resultCache = cacheOperator.Get<int>(key);
 
-            if (resultCache.Success) return resultCache.Data;
+            if (resultCache.Success)
+            {
+                return resultCache.Data;
+            }
 
             result = calculateFunc();
 
@@ -1115,7 +1253,14 @@ public class QueryAssist
                 out var needSetCatch
             );
 
-            if (needSetCatch) cacheOperator.Set(key, result, timeSpan);
+            if (needSetCatch)
+            {
+                cacheOperator.Set(
+                    key,
+                    result,
+                    timeSpan
+                );
+            }
 
             return result;
         }

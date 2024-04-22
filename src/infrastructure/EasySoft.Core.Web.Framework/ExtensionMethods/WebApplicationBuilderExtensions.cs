@@ -7,7 +7,7 @@ namespace EasySoft.Core.Web.Framework.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
-    private const string UniqueIdentifierAddAdvanceApplicationChannel = "9ef8c9f4-08b9-4755-912c-6ff80988f513";
+    private const string IdentifierAddAdvanceApplicationChannel = "9ef8c9f4-08b9-4755-912c-6ff80988f513";
 
     /// <summary>
     /// 标记当前应用通道值, 用于远程日志等数据中, 便于数据辨认, 不使用此方法标记, 框架将采用内置值 0 代替
@@ -19,35 +19,39 @@ public static class WebApplicationBuilderExtensions
     /// <exception cref="Exception"></exception>
     internal static WebApplicationBuilder AddAdvanceApplicationChannel(
         this WebApplicationBuilder builder,
-        int channel,
+        IChannel channel,
         string name
     )
     {
-        if (builder.HasRegistered(UniqueIdentifierAddAdvanceApplicationChannel))
+        if (builder.HasRegistered(IdentifierAddAdvanceApplicationChannel))
+        {
             return builder;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceApplicationChannel)}."
         );
 
-        builder.Host.AddAdvanceApplicationChannel(channel, name);
+        builder.Host.AddAdvanceApplicationChannel(channel);
 
         return builder;
     }
 
     internal static WebApplicationBuilder AddAdvanceApplicationChannel<T>(
         this WebApplicationBuilder builder,
-        T applicationChannel
-    ) where T : IApplicationChannel
+        T channel
+    ) where T : IChannel
     {
-        if (builder.HasRegistered(UniqueIdentifierAddAdvanceApplicationChannel))
+        if (builder.HasRegistered(IdentifierAddAdvanceApplicationChannel))
+        {
             return builder;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceApplicationChannel)}<{typeof(T).Name}>."
         );
 
-        builder.Host.AddAdvanceApplicationChannel(applicationChannel.GetChannel(), applicationChannel.GetName());
+        builder.Host.AddAdvanceApplicationChannel(channel);
 
         return builder;
     }
@@ -79,15 +83,19 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddRouting(o => { o.LowercaseUrls = true; });
 
-        builder.Services.AddApiVersioning(o =>
-        {
-            //return versions in a response header
-            o.ReportApiVersions = true;
-            //default version select 
-            o.DefaultApiVersion = new ApiVersion(1, 0);
-            //if not specifying an api version,show the default version
-            o.AssumeDefaultVersionWhenUnspecified = true;
-        });
+        builder.Services.AddApiVersioning(
+            o =>
+            {
+                //return versions in a response header
+                o.ReportApiVersions = true;
+
+                //default version select 
+                o.DefaultApiVersion = new ApiVersion(1, 0);
+
+                //if not specifying an api version,show the default version
+                o.AssumeDefaultVersionWhenUnspecified = true;
+            }
+        );
 
         // AddMvc 最为全面， 涵盖 AddControllers 等的全部功能
         builder.Services.AddMvc(
@@ -99,18 +107,27 @@ public static class WebApplicationBuilderExtensions
 
                     if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.EasyToken &&
                         !FlagAssist.EasyTokenMiddlewareModeSwitch)
+
                         // 设置及接口数据返回格式
+                    {
                         option.Filters.Add<EasyToken.Filters.OperatorFilter>();
+                    }
 
                     if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.JsonWebToken &&
                         !FlagAssist.JsonWebTokenMiddlewareModeSwitch)
+
                         // 设置及接口数据返回格式
+                    {
                         option.Filters.Add<JsonWebToken.Filters.OperatorFilter>();
+                    }
 
                     if (FlagAssist.PermissionVerificationSwitch &&
                         !FlagAssist.PermissionVerificationMiddlewareModeSwitch)
+
                         // 设置及接口数据返回格式
+                    {
                         option.Filters.Add<PermissionFilter>();
+                    }
 
                     // 设置及接口数据返回格式
                     option.Filters.Add<ApiResultFilterAttribute>();
@@ -121,8 +138,10 @@ public static class WebApplicationBuilderExtensions
                     WeaveMvcOptionExtraAction(option);
                 }
             )
+
             // 爆露ApplicationPartManager 实例给外部工具，用以实现某些特定功能
             .ConfigureApplicationPartManager(ApplicationPartManagerAssist.SetApplicationPartManager)
+
             // 通过AddControllersAsServices方法，将控制器交给 autofac 容器来处理，可以使“属性注入”
             .AddControllersAsServices()
             .AddNewtonsoftJson(
@@ -135,30 +154,36 @@ public static class WebApplicationBuilderExtensions
         // builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         // builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
-        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-        {
-            containerBuilder.RegisterType<HostingEnvironment>().As<IHostEnvironment>().SingleInstance();
-            containerBuilder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
-            containerBuilder.RegisterType<ActionContextAccessor>().As<IActionContextAccessor>().SingleInstance();
-        });
+        builder.Host.ConfigureContainer<ContainerBuilder>(
+            containerBuilder =>
+            {
+                containerBuilder.RegisterType<HostingEnvironment>().As<IHostEnvironment>().SingleInstance();
+                containerBuilder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
+                containerBuilder.RegisterType<ActionContextAccessor>().As<IActionContextAccessor>().SingleInstance();
+            }
+        );
 
         // 注入IHttpClientFactory 
         builder.Services.AddHttpClient();
 
         if (GeneralConfigAssist.GetCorsSwitch())
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy(
-                    ConstCollection.DefaultSpecificOrigins,
-                    configPolicy =>
-                    {
-                        configPolicy.WithOrigins(GeneralConfigAssist.GetCorsPolicies().ToArray());
-                        configPolicy.AllowAnyHeader();
-                        configPolicy.AllowAnyMethod();
-                        configPolicy.AllowCredentials();
-                    }
-                );
-            });
+        {
+            builder.Services.AddCors(
+                options =>
+                {
+                    options.AddPolicy(
+                        ConstCollection.DefaultSpecificOrigins,
+                        configPolicy =>
+                        {
+                            configPolicy.WithOrigins(GeneralConfigAssist.GetCorsPolicies().ToArray());
+                            configPolicy.AllowAnyHeader();
+                            configPolicy.AllowAnyMethod();
+                            configPolicy.AllowCredentials();
+                        }
+                    );
+                }
+            );
+        }
 
         builder.Services.AddEndpointsApiExplorer();
 
@@ -211,10 +236,12 @@ public static class WebApplicationBuilderExtensions
             // 配置反向代理服务器, 需要在调用其他中间件之前 
             // https://docs.microsoft.com/zh-cn/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-6.0
             // https: //learn.microsoft.com/zh-cn/aspnet/core/host-and-deploy/proxy-load-balancer?view=aspnetcore-6.0
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
+            app.UseForwardedHeaders(
+                new ForwardedHeadersOptions
+                {
+                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+                }
+            );
 
             StartupConfigMessageAssist.AddConfig(
                 "ForwardedHeadersSwitch: enable.",
@@ -232,9 +259,14 @@ public static class WebApplicationBuilderExtensions
         app.UsePrepareStartWork();
 
         if (!app.Environment.IsDevelopment())
+
             // app.UseExceptionHandler("/Error");
+        {
             if (GeneralConfigAssist.GetHstsSwitch())
+            {
                 app.UseHsts();
+            }
+        }
 
         if (GeneralConfigAssist.GetHttpRedirectionHttpsSwitch())
         {
@@ -261,7 +293,9 @@ public static class WebApplicationBuilderExtensions
             var staticFileOptionsTypeName = "";
 
             if (FlagAssist.GetAdvanceStaticFileOptionsSwitch())
+            {
                 staticFileOptionsTypeName = AutofacAssist.Instance.Resolve<AdvanceStaticFileOptions>().GetType().Name;
+            }
 
             StartupConfigMessageAssist.AddConfig(
                 $"UseStaticFilesSwitch: enable, mode: {(FlagAssist.GetAdvanceStaticFileOptionsSwitch() ? $"custom, config class is \"{staticFileOptionsTypeName}\"" : "default")}.",
@@ -312,33 +346,47 @@ public static class WebApplicationBuilderExtensions
 
         if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.EasyToken &&
             FlagAssist.EasyTokenMiddlewareModeSwitch)
+
             // 设置及接口数据返回格式
+        {
             app.UseEasyTokenMiddleware();
+        }
 
         if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.JsonWebToken &&
             FlagAssist.JsonWebTokenMiddlewareModeSwitch)
+        {
             app.UseJsonWebTokenMiddleware();
+        }
 
         if (!string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
         {
             if (FlagAssist.EasyTokenMiddlewareModeSwitch || FlagAssist.JsonWebTokenMiddlewareModeSwitch)
+            {
                 StartupConfigMessageAssist.AddConfig(
                     $"TokenMode: {FlagAssist.TokenMode}, use middleware mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}.",
                     GeneralConfigAssist.GetConfigFileInfo()
                 );
+            }
             else
+            {
                 StartupConfigMessageAssist.AddConfig(
                     $"TokenMode: {FlagAssist.TokenMode}, use filter mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}.",
                     GeneralConfigAssist.GetConfigFileInfo()
                 );
+            }
         }
 
         if (FlagAssist.PermissionVerificationSwitch)
         {
             if (string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
+            {
                 throw new Exception("use PermissionVerification need config one of token mode");
+            }
 
-            if (FlagAssist.PermissionVerificationMiddlewareModeSwitch) app.UsePermissionVerificationMiddleware();
+            if (FlagAssist.PermissionVerificationMiddlewareModeSwitch)
+            {
+                app.UsePermissionVerificationMiddleware();
+            }
 
             StartupConfigMessageAssist.AddConfig(
                 FlagAssist.PermissionVerificationMiddlewareModeSwitch
@@ -370,7 +418,10 @@ public static class WebApplicationBuilderExtensions
             );
         }
 
-        if (app.Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
 
         app.UseAdvanceEnvironmentAuxiliary();
 
@@ -435,9 +486,15 @@ public static class WebApplicationBuilderExtensions
     {
         var result = EnvironmentAssist.GetEnvironment().WebRootPath;
 
-        if (!FlagAssist.GetAdvanceStaticFileOptionsSwitch()) return result;
+        if (!FlagAssist.GetAdvanceStaticFileOptionsSwitch())
+        {
+            return result;
+        }
 
-        if (!FlagAssist.GetAdvanceStaticFileOptionsSwitch()) return result;
+        if (!FlagAssist.GetAdvanceStaticFileOptionsSwitch())
+        {
+            return result;
+        }
 
         return string.IsNullOrWhiteSpace(GeneralConfigAssist.GetWebRootPath())
             ? result
@@ -453,7 +510,10 @@ public static class WebApplicationBuilderExtensions
     {
         var extraActions = ApplicationConfigure.GetAllWebApplicationBuilderExtraActions().ToList();
 
-        if (extraActions.Count <= 0) return;
+        if (extraActions.Count <= 0)
+        {
+            return;
+        }
 
         var startMessage = new StartupMessage()
             .SetLevel(LogLevel.Information)
@@ -465,29 +525,34 @@ public static class WebApplicationBuilderExtensions
 
         var i = 1;
 
-        extraActions.ForEach(extraAction =>
-        {
-            var action = extraAction.GetAction();
-
-            if (action == null) return;
-
-            var name = extraAction.GetName();
-
-            if (!string.IsNullOrWhiteSpace(name))
+        extraActions.ForEach(
+            extraAction =>
             {
-                StartupBuilderExtraActionMessageAssist.Add(
-                    new StartupMessage()
-                        .SetLevel(LogLevel.Information)
-                        .SetMessage(
-                            $"{i}: {name}"
-                        )
-                );
+                var action = extraAction.GetAction();
 
-                i += 1;
+                if (action == null)
+                {
+                    return;
+                }
+
+                var name = extraAction.GetName();
+
+                if (!string.IsNullOrWhiteSpace(name))
+                {
+                    StartupBuilderExtraActionMessageAssist.Add(
+                        new StartupMessage()
+                            .SetLevel(LogLevel.Information)
+                            .SetMessage(
+                                $"{i}: {name}"
+                            )
+                    );
+
+                    i += 1;
+                }
+
+                action(builder);
             }
-
-            action(builder);
-        });
+        );
     }
 
     /// <summary>
@@ -499,7 +564,10 @@ public static class WebApplicationBuilderExtensions
     {
         var extraActions = ApplicationConfigure.GetAllWebApplicationExtraActions().ToList();
 
-        if (extraActions.Count <= 0) return;
+        if (extraActions.Count <= 0)
+        {
+            return;
+        }
 
         var startMessage = new StartupMessage()
             .SetLevel(LogLevel.Information)
@@ -511,29 +579,34 @@ public static class WebApplicationBuilderExtensions
 
         var i = 1;
 
-        extraActions.ForEach(extraAction =>
-        {
-            var action = extraAction.GetAction();
-
-            if (action == null) return;
-
-            var name = extraAction.GetName();
-
-            if (!string.IsNullOrWhiteSpace(name))
+        extraActions.ForEach(
+            extraAction =>
             {
-                StartupApplicationExtraActionMessageAssist.Add(
-                    new StartupMessage()
-                        .SetLevel(LogLevel.Information)
-                        .SetMessage(
-                            $"{i}: {name}"
-                        )
-                );
+                var action = extraAction.GetAction();
 
-                i += 1;
+                if (action == null)
+                {
+                    return;
+                }
+
+                var name = extraAction.GetName();
+
+                if (!string.IsNullOrWhiteSpace(name))
+                {
+                    StartupApplicationExtraActionMessageAssist.Add(
+                        new StartupMessage()
+                            .SetLevel(LogLevel.Information)
+                            .SetMessage(
+                                $"{i}: {name}"
+                            )
+                    );
+
+                    i += 1;
+                }
+
+                action(application);
             }
-
-            action(application);
-        });
+        );
     }
 
     /// <summary>
@@ -545,7 +618,10 @@ public static class WebApplicationBuilderExtensions
     {
         var extraActions = ApplicationConfigure.GetAllMvcOptionExtraActions().ToList();
 
-        if (extraActions.Count <= 0) return;
+        if (extraActions.Count <= 0)
+        {
+            return;
+        }
 
         var startMessage = new StartupMessage()
             .SetLevel(LogLevel.Information)
@@ -557,28 +633,33 @@ public static class WebApplicationBuilderExtensions
 
         var i = 1;
 
-        extraActions.ForEach(extraAction =>
-        {
-            var action = extraAction.GetAction();
-
-            if (action == null) return;
-
-            var name = extraAction.GetName();
-
-            if (!string.IsNullOrWhiteSpace(name))
+        extraActions.ForEach(
+            extraAction =>
             {
-                StartupMvcOptionExtraActionMessageAssist.Add(
-                    new StartupMessage()
-                        .SetLevel(LogLevel.Information)
-                        .SetMessage(
-                            $"{i}: {name}"
-                        )
-                );
+                var action = extraAction.GetAction();
 
-                i += 1;
+                if (action == null)
+                {
+                    return;
+                }
+
+                var name = extraAction.GetName();
+
+                if (!string.IsNullOrWhiteSpace(name))
+                {
+                    StartupMvcOptionExtraActionMessageAssist.Add(
+                        new StartupMessage()
+                            .SetLevel(LogLevel.Information)
+                            .SetMessage(
+                                $"{i}: {name}"
+                            )
+                    );
+
+                    i += 1;
+                }
+
+                action(option);
             }
-
-            action(option);
-        });
+        );
     }
 }

@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
-using EasySoft.UtilityTools.Core.Results.Implements;
 
 namespace EasySoft.Core.PermissionServer.Core.Controllers;
 
@@ -43,7 +42,7 @@ public class RpcController : CustomControllerBase
     [Route("maintainSuper")]
     [HttpPost]
     [ApiExplorerSettings(IgnoreApi = true)]
-    public async Task MaintainSuper(int channel)
+    public async Task MaintainSuper(string channel)
     {
         await _permissionRpcService.MaintainSuper(channel);
     }

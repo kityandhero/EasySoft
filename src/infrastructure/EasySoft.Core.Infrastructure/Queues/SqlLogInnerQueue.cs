@@ -1,12 +1,14 @@
-﻿namespace EasySoft.Core.Infrastructure.Queues;
+﻿using EasySoft.UtilityTools.Standard.Interfaces;
+
+namespace EasySoft.Core.Infrastructure.Queues;
 
 /// <summary>
 /// SqlLogInnerQueue
 /// </summary>
 public static class SqlLogInnerQueue
 {
-    private static readonly ConcurrentQueue<ISqlExecutionRecord> Queue =
-        new ConcurrentLimitedQueue<ISqlExecutionRecord>(10000);
+    private static readonly ConcurrentQueue<ISqlLogMessage> Queue =
+        new ConcurrentLimitedQueue<ISqlLogMessage>(10000);
 
     /// <summary>
     /// 批量发送时间间隔
@@ -17,7 +19,7 @@ public static class SqlLogInnerQueue
     /// GetQueue
     /// </summary>
     /// <returns></returns>
-    public static ConcurrentQueue<ISqlExecutionRecord> GetQueue()
+    public static ConcurrentQueue<ISqlLogMessage> GetQueue()
     {
         return Queue;
     }
@@ -25,9 +27,9 @@ public static class SqlLogInnerQueue
     /// <summary>
     /// Enqueue
     /// </summary>
-    /// <param name="sqlExecutionRecord"></param>
-    public static void Enqueue(ISqlExecutionRecord sqlExecutionRecord)
+    /// <param name="sqlLogMessage"></param>
+    public static void Enqueue(ISqlLogMessage sqlLogMessage)
     {
-        Queue.Enqueue(sqlExecutionRecord);
+        Queue.Enqueue(sqlLogMessage);
     }
 }

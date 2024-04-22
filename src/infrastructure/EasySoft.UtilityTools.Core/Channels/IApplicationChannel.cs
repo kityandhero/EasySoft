@@ -1,4 +1,6 @@
-﻿namespace EasySoft.UtilityTools.Core.Channels;
+﻿using EasySoft.UtilityTools.Standard.Interfaces;
+
+namespace EasySoft.UtilityTools.Core.Channels;
 
 /// <summary>
 /// IApplicationChannel
@@ -9,7 +11,7 @@ public interface IApplicationChannel
     /// GetChannel
     /// </summary>
     /// <returns></returns>
-    public int GetChannel();
+    public IChannel GetChannel();
 
     /// <summary>
     /// GetName
@@ -22,12 +24,5 @@ public interface IApplicationChannel
     /// </summary>
     /// <param name="channel"></param>
     /// <returns></returns>
-    public IApplicationChannel SetChannel(int channel);
-
-    /// <summary>
-    /// SetName
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public IApplicationChannel SetName(string name);
+    public IApplicationChannel SetChannel(IChannel channel);
 }

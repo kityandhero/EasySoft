@@ -1,4 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Entities.Interfaces;
+﻿using EasySoft.UtilityTools.Standard.Interfaces;
 
 namespace EasySoft.Core.ExchangeRegulation.Query;
 
@@ -6,7 +6,7 @@ namespace EasySoft.Core.ExchangeRegulation.Query;
 /// IQuery
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public interface IQuery<in T> where T : IExchangeEntity
+public interface IQuery<in T> where T : IQueueMessage
 {
     /// <summary>
     /// Send

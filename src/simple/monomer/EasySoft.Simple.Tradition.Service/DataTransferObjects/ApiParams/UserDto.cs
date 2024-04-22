@@ -6,7 +6,7 @@
 public class UserDto
 {
     /// <summary>
-    /// UserId
+    /// OperatorId
     /// </summary>
     public int UserId { get; set; }
 

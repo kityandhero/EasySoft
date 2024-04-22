@@ -10,7 +10,7 @@ namespace EasySoft.Core.GeneralLogTransmitter.Extensions;
 /// </summary>
 public static class WebApplicationBuilderExtensions
 {
-    private const string UniqueIdentifierAddGeneralLogTransmitter = "eb34705d-9ab6-4def-a853-41d3ff47c2b8";
+    private const string IdentifierAddGeneralLogTransmitter = "eb34705d-9ab6-4def-a853-41d3ff47c2b8";
 
     /// <summary>
     /// 配置远程普通日志传输
@@ -21,7 +21,7 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        if (builder.HasRegistered(UniqueIdentifierAddGeneralLogTransmitter))
+        if (builder.HasRegistered(IdentifierAddGeneralLogTransmitter))
             return builder;
 
         StartupConfigMessageAssist.AddConfig(

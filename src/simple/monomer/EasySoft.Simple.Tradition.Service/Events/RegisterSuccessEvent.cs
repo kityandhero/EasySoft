@@ -23,7 +23,11 @@ public class RegisterSuccessEvent : EventEntity<RegisterSuccessEvent.EventData>
         long id,
         EventData eventData,
         string source
-    ) : base(id, eventData, source)
+    ) : base(
+        id,
+        eventData,
+        source
+    )
     {
     }
 
@@ -33,7 +37,7 @@ public class RegisterSuccessEvent : EventEntity<RegisterSuccessEvent.EventData>
     public class EventData
     {
         /// <summary>
-        /// UserId
+        /// OperatorId
         /// </summary>
         public long UserId { get; set; }
     }

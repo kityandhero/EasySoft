@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.Web.Framework.ExtensionMethods;
-using EasySoft.UtilityTools.Standard.Result.Implements;
 using NLog;
 
 namespace EasySoft.Core.Web.Framework.BuilderAssists;
@@ -18,9 +17,7 @@ public static class WebApplicationBuilderAssist
     ) where TStartUpConfigure : IStartUpConfigure
     {
         var builder = CreateBuilder<TStartUpConfigure>(
-            new ApplicationChannel()
-                .SetChannel(ApplicationChannel.DefaultChannel)
-                .SetName(ApplicationChannel.DefaultName),
+            Channel.Unknown,
             args
         );
 
@@ -28,23 +25,25 @@ public static class WebApplicationBuilderAssist
     }
 
     public static WebApplicationBuilder CreateBuilder(
-        IApplicationChannel applicationChannel,
+        IChannel channel,
         string[] args
     )
     {
-        return CreateBuilder<DefaultStartUpConfigure>(applicationChannel, args);
+        return CreateBuilder<DefaultStartUpConfigure>(channel, args);
     }
 
     public static WebApplicationBuilder CreateBuilder<TStartUpConfigure>(
-        IApplicationChannel applicationChannel,
+        IChannel channel,
         string[] args
     ) where TStartUpConfigure : IStartUpConfigure
     {
-        var builder = WebApplication.CreateBuilder(new WebApplicationOptions
-        {
-            Args = args,
-            ContentRootPath = AppContext.BaseDirectory
-        });
+        var builder = WebApplication.CreateBuilder(
+            new WebApplicationOptions
+            {
+                Args = args,
+                ContentRootPath = AppContext.BaseDirectory
+            }
+        );
 
         EnvironmentAssist.SetEnvironment(builder.Environment);
 
@@ -56,15 +55,17 @@ public static class WebApplicationBuilderAssist
             $"{nameof(CreateBuilder)}<{typeof(TStartUpConfigure).Name}>."
         );
 
-        builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
-        {
-            config
-                .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
-                .AddMultiJsonFile("appsettings.json")
-                .AddEnvironmentVariables();
-        });
+        builder.Host.ConfigureAppConfiguration(
+            (hostingContext, config) =>
+            {
+                config
+                    .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
+                    .AddMultiJsonFile("appsettings.json")
+                    .AddEnvironmentVariables();
+            }
+        );
 
-        return CreateCore(builder, applicationChannel);
+        return CreateCore(builder, channel);
     }
 
     private static void StartUpConfigureInit<TStartUpConfigure>() where TStartUpConfigure : IStartUpConfigure
@@ -80,7 +81,7 @@ public static class WebApplicationBuilderAssist
 
     private static WebApplicationBuilder CreateCore(
         WebApplicationBuilder builder,
-        IApplicationChannel applicationChannel
+        IChannel channel
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
@@ -88,19 +89,21 @@ public static class WebApplicationBuilderAssist
         );
 
         if (!string.IsNullOrWhiteSpace(EnvironmentAssist.GetEnvironmentAliasName()))
+        {
             StartupDescriptionMessageAssist.AddPrompt(
                 "Current loading custom config file both with normal and special env, like generalConfig.json and generalConfig.dev.json."
             );
+        }
 
         builder.AddAdvanceUrls()
             .AddAdvanceAutoFac()
             .AddCovertInjection()
             .AddAdvanceMapster();
 
-        builder.AddAdvanceApplicationChannel(applicationChannel);
+        builder.AddAdvanceApplicationChannel(channel);
 
         builder.AddRegistrationCenter();
-        builder.AddConfigCenter(applicationChannel);
+        builder.AddConfigCenter(channel);
         builder.AddGateway();
 
         return builder;
@@ -135,16 +138,20 @@ public static class WebApplicationBuilderAssist
         );
 
         if (GeneralConfigAssist.GetRegistrationCenterType() == RegistrationCenterType.Consul)
+        {
             builder.AddAdvanceConsulRegistrationCenter();
+        }
         else
+        {
             throw new Exception($"Unknown registration center: {GeneralConfigAssist.GetRegistrationCenterType()}.");
+        }
 
         return builder;
     }
 
     private static WebApplicationBuilder AddConfigCenter(
         this WebApplicationBuilder builder,
-        IApplicationChannel applicationChannel
+        IChannel channel
     )
     {
         StartupDescriptionMessageAssist.AddExecute(
@@ -169,19 +176,21 @@ public static class WebApplicationBuilderAssist
 
             if (GeneralConfigAssist.GetConfigCenterType() == ConfigCenterType.AgileConfig)
             {
-                builder.AddAgileConfigClient(_ =>
-                {
-                    var result = DynamicConfigAssist.GetNLogJsonConfig();
+                builder.AddAgileConfigClient(
+                    _ =>
+                    {
+                        var result = DynamicConfigAssist.GetNLogJsonConfig();
 
-                    LoadDynamicNLogJsonConfig(result);
-                });
+                        LoadDynamicNLogJsonConfig(result);
+                    }
+                );
 
                 builder.AddAdvanceNLog(BuildDefaultConfig);
             }
             else if (GeneralConfigAssist.GetConfigCenterType() == ConfigCenterType.Consul)
             {
                 builder.AddAdvanceConsulConfigCenter(
-                    applicationChannel,
+                    channel,
                     _ =>
                     {
                         var result = DynamicConfigAssist.GetNLogJsonConfig();
@@ -238,9 +247,13 @@ public static class WebApplicationBuilderAssist
         );
 
         if (GeneralConfigAssist.GetGatewayType() == GatewayType.Ocelot)
+        {
             builder.AddAdvanceOcelot();
+        }
         else
+        {
             throw new Exception($"Unknown registration center: {GeneralConfigAssist.GetGatewayType()}.");
+        }
 
         return builder;
     }
@@ -260,14 +273,19 @@ public static class WebApplicationBuilderAssist
         {
             var hasChanged = NLogAssist.CheckChange(executiveResult.Data);
 
-            if (!hasChanged) return;
+            if (!hasChanged)
+            {
+                return;
+            }
 
             try
             {
                 LogManager.Configuration = new NLogLoggingConfiguration(
                     new ConfigurationBuilder().AddJsonContent(
-                        executiveResult.Data
-                    ).Build().GetSection("NLog")
+                            executiveResult.Data
+                        )
+                        .Build()
+                        .GetSection("NLog")
                 );
 
                 LogManager.Configuration.Reload();
@@ -298,13 +316,19 @@ public static class WebApplicationBuilderAssist
         var configurationSection = LogConfigAssist.GetSection("NLog");
 
         if (configurationSection.GetChildren().Any())
+        {
             configuration = new NLogLoggingConfiguration(configurationSection);
+        }
         else
+        {
             configuration = new NLogLoggingConfiguration(
                 new ConfigurationBuilder().AddJsonContent(
-                    Tools.GetNlogEmbedConfig()
-                ).Build().GetSection("NLog")
+                        Tools.GetNlogEmbedConfig()
+                    )
+                    .Build()
+                    .GetSection("NLog")
             );
+        }
 
         return configuration;
     }

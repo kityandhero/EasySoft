@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
 using EasySoft.Core.ChannelCheckTransmitter.Entities.implements;
-using EasySoft.UtilityTools.Standard.Entities.Implements;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Subscribers;
 
@@ -36,7 +35,7 @@ public class ChannelCheckExchangeSubscriber : ICapSubscribe
     /// </summary>
     /// <param name="exchange"></param>
     /// <returns></returns>
-    [CapSubscribe(TransmitterTopic.ChannelCheckExchange)]
+    [CapSubscribe(TransmitterTopic.ChannelCheckMessage)]
     public async Task Process(ChannelCheckExchange exchange)
     {
         if (_environment.IsDevelopment())
@@ -44,7 +43,7 @@ public class ChannelCheckExchangeSubscriber : ICapSubscribe
             _logger.LogAdvanceExecute($"{GetType().Name}.{nameof(Process)}");
 
             _logger.LogAdvancePrompt(
-                $"Save ChannelCheckExchange -> {exchange.BuildInfo()}."
+                $"Save ChannelCheckMessage -> {exchange.BuildInfo()}."
             );
         }
 

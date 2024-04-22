@@ -10,7 +10,6 @@ global using EasySoft.Core.Infrastructure.Controllers;
 global using EasySoft.Core.Infrastructure.Startup;
 global using EasySoft.UtilityTools.Core.Assists;
 global using EasySoft.UtilityTools.Core.Extensions;
-global using EasySoft.UtilityTools.Core.Results;
 global using EasySoft.UtilityTools.Standard.Assists;
 global using EasySoft.UtilityTools.Standard.Mime;
 global using IGeekFan.AspNetCore.Knife4jUI;

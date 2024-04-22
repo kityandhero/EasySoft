@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.LogServer.Core.DataTransferObjects;
 using EasySoft.Core.LogServer.Core.Entities;
-using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.LogServer.Core.Services.Interfaces;
 
@@ -12,14 +11,14 @@ public interface IErrorLogService : IBusinessService
     /// <summary>
     /// PageListAsync
     /// </summary>
-    /// <param name="blogSearchDto"></param>
+    /// <param name="errorLogSearchDto"></param>
     /// <returns></returns>
-    public Task<PageListResult<ErrorLog>> PageListAsync(ErrorLogSearchDto blogSearchDto);
+    public Task<PageListResult<IErrorLogStore>> PageListAsync(ErrorLogSearchDto errorLogSearchDto);
 
-    /// <summary>
+    /// <summary>   
     /// SaveAccessWayModelAsync
     /// </summary>
-    /// <param name="errorLogExchange"></param>
+    /// <param name="errorLogMessage"></param>
     /// <returns></returns>
-    Task SaveAsync(IErrorLogExchange errorLogExchange);
+    Task SaveAsync(IErrorLogMessage errorLogMessage);
 }

@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.LogServer.Core.Services.Interfaces;
-using EasySoft.UtilityTools.Standard.Entities.Implements;
 
 namespace EasySoft.Core.LogServer.Core.Subscribers;
 
@@ -10,40 +9,42 @@ public class SqlExecutionRecordExchangeSubscriber : ICapSubscribe
 {
     private readonly ILogger<SqlExecutionRecordExchangeSubscriber> _logger;
     private readonly IWebHostEnvironment _environment;
-    private readonly ISqlExecutionRecordService _sqlExecutionRecordService;
+    private readonly ISqlLogService _sqlLogService;
 
     /// <summary>
     /// GeneralLogExchangeSubscriber
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="environment"></param>
-    /// <param name="sqlExecutionRecordService"></param>
+    /// <param name="sqlLogService"></param>
     public SqlExecutionRecordExchangeSubscriber(
         ILogger<SqlExecutionRecordExchangeSubscriber> logger,
         IWebHostEnvironment environment,
-        ISqlExecutionRecordService sqlExecutionRecordService
+        ISqlLogService sqlLogService
     )
     {
         _logger = logger;
         _environment = environment;
 
-        _sqlExecutionRecordService = sqlExecutionRecordService;
+        _sqlLogService = sqlLogService;
     }
 
     /// <summary>
     /// 订阅充值事件
     /// </summary>
-    /// <param name="exchange"></param>
+    /// <param name="message"></param>
     /// <returns></returns>
-    [CapSubscribe(TransmitterTopic.SqlExecutionRecordExchange)]
-    public async Task Process(SqlExecutionRecordExchange exchange)
+    [CapSubscribe(TransmitterTopic.SqlLogMessage)]
+    public async Task Process(ISqlLogMessage message)
     {
-        if (exchange.Ignore > 0)
+        if (message.Ignore > 0)
         {
             if (_environment.IsDevelopment())
+            {
                 _logger.LogAdvancePrompt(
-                    "SqlExecutionRecord ignore process."
+                    "SqlLog ignore process."
                 );
+            }
 
             return;
         }
@@ -53,10 +54,10 @@ public class SqlExecutionRecordExchangeSubscriber : ICapSubscribe
             _logger.LogAdvanceExecute($"{GetType().Name}.{nameof(Process)}");
 
             _logger.LogAdvancePrompt(
-                $"Save SqlExecutionRecordExchange -> {exchange.BuildInfo()}."
+                $"Save SqlLogExchange -> {message.BuildInfo()}."
             );
         }
 
-        await _sqlExecutionRecordService.SaveAsync(exchange);
+        await _sqlLogService.SaveAsync(message);
     }
 }

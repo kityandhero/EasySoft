@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.LogServer.Core.DataTransferObjects;
 using EasySoft.Core.LogServer.Core.Entities;
 using EasySoft.Core.LogServer.Core.Services.Interfaces;
-using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.LogServer.Core.Services.Implements;
 
@@ -30,49 +29,60 @@ public class ErrorLogService : IErrorLogService
     }
 
     /// <inheritdoc />
-    public async Task<PageListResult<ErrorLog>> PageListAsync(ErrorLogSearchDto blogSearchDto)
+    public async Task<PageListResult<IErrorLogStore>> PageListAsync(
+        ErrorLogSearchDto errorLogSearchDto
+    )
     {
-        return await _errorLogRepository.PageListAsync(
-            blogSearchDto.PageNo,
-            blogSearchDto.PageSize
+        var pageListResult = await _errorLogRepository.PageListAsync(
+            errorLogSearchDto.PageNo,
+            errorLogSearchDto.PageSize
         );
+
+        return new PageListResult<IErrorLogStore>(pageListResult.Code)
+        {
+            List = pageListResult.List.Cast<IErrorLogStore>().ToList(),
+            PageIndex = pageListResult.PageIndex,
+            PageSize = pageListResult.PageSize
+        };
     }
 
     /// <inheritdoc />
-    public async Task SaveAsync(IErrorLogExchange errorLogExchange)
+    public async Task SaveAsync(IErrorLogMessage errorLogMessage)
     {
         var errorLog = new ErrorLog
         {
-            UserId = errorLogExchange.UserId,
-            Url = errorLogExchange.Url,
-            Message = errorLogExchange.Message,
-            StackTrace = errorLogExchange.StackTrace,
-            Source = errorLogExchange.Source,
-            Scene = errorLogExchange.Scene,
-            Type = errorLogExchange.Type,
-            Degree = errorLogExchange.Degree,
-            Header = errorLogExchange.Header,
-            UrlParams = errorLogExchange.UrlParams,
-            PayloadParams = errorLogExchange.PayloadParams,
-            FormParams = errorLogExchange.FormParams,
-            Host = errorLogExchange.Host,
-            Port = errorLogExchange.Port,
-            CustomLog = errorLogExchange.CustomLog,
-            CustomData = errorLogExchange.CustomData,
-            CustomDataType = errorLogExchange.CustomDataType,
-            ExceptionTypeName = errorLogExchange.ExceptionTypeName,
-            ExceptionTypeFullName = errorLogExchange.ExceptionTypeFullName,
-            Channel = errorLogExchange.Channel,
-            Ip = errorLogExchange.Ip,
+            OperatorId = errorLogMessage.OperatorId,
+            Url = errorLogMessage.Url,
+            Message = errorLogMessage.Message,
+            StackTrace = errorLogMessage.StackTrace,
+            Source = errorLogMessage.Source,
+            Scene = errorLogMessage.Scene,
+            Type = errorLogMessage.Type,
+            Degree = errorLogMessage.Degree,
+            Header = errorLogMessage.Header,
+            UrlParams = errorLogMessage.UrlParams,
+            PayloadParams = errorLogMessage.PayloadParams,
+            FormParams = errorLogMessage.FormParams,
+            Host = errorLogMessage.Host,
+            Port = errorLogMessage.Port,
+            CustomLog = errorLogMessage.CustomLog,
+            CustomData = errorLogMessage.CustomData,
+            CustomDataType = errorLogMessage.CustomDataType,
+            ExceptionTypeName = errorLogMessage.ExceptionTypeName,
+            ExceptionTypeFullName = errorLogMessage.ExceptionTypeFullName,
+            Channel = ChannelAssist.GetCurrentChannel().ToValue(),
             Status = 0,
-            CreateBy = errorLogExchange.CreateBy,
-            CreateTime = errorLogExchange.CreateTime,
-            ModifyBy = errorLogExchange.CreateBy,
-            ModifyTime = errorLogExchange.CreateTime
+            CreateBy = errorLogMessage.OperatorId,
+            CreateTime = DateTimeOffset.Now.DateTime,
+            ModifyBy = errorLogMessage.OperatorId,
+            ModifyTime = DateTimeOffset.Now.DateTime
         };
 
         var resultAdd = await _errorLogRepository.AddAsync(errorLog);
 
-        if (!resultAdd.Success) throw new UnknownException(resultAdd.Message);
+        if (!resultAdd.Success)
+        {
+            throw new UnknownException(resultAdd.Message);
+        }
     }
 }

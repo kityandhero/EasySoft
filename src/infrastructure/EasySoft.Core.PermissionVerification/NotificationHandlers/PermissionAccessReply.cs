@@ -30,12 +30,19 @@ public class PermissionAccessReply : INotificationHandler<PermissionAccessNotifi
     }
 
     /// <inheritdoc />
-    public async Task Handle(PermissionAccessNotification notification, CancellationToken cancellationToken)
+    public async Task Handle(
+        PermissionAccessNotification notification,
+        CancellationToken cancellationToken
+    )
     {
         if (_environment.IsDevelopment())
-            _loggerFactory.CreateLogger<object>().LogAdvancePrompt(
-                $"Receive {nameof(PermissionAccessNotification)} -> {notification.BuildInfo()}"
-            );
+        {
+            _loggerFactory
+                .CreateLogger<object>()
+                .LogAdvancePrompt(
+                    $"Receive {nameof(PermissionAccessNotification)} -> {notification.BuildInfo()}"
+                );
+        }
 
         var accessWayPersistence = notification.AccessWay;
 
@@ -61,9 +68,12 @@ public class PermissionAccessReply : INotificationHandler<PermissionAccessNotifi
             if (accessWayModel.Name.ToLower() == accessWayPersistence.Name.ToLower() &&
                 accessWayModel.RelativePath.ToLower() == accessWayPersistence.RelativePath.ToLower() &&
                 accessWayModel.Expand.ToLower() == accessWayPersistence.Expand.ToLower() &&
-                accessWayModel.Channel == accessWayPersistence.Channel)
+                accessWayModel.Channel == accessWayPersistence.TriggerChannel)
             {
-                if (!_environment.IsDevelopment()) return;
+                if (!_environment.IsDevelopment())
+                {
+                    return;
+                }
 
                 var logger = _loggerFactory.CreateLogger<PermissionAccessReply>();
 

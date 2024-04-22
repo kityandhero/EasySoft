@@ -1,5 +1,4 @@
-﻿using EasySoft.UtilityTools.Core.Results;
-using EasySoft.UtilityTools.Core.Results.Implements;
+﻿using EasySoft.UtilityTools.Core.Results.Implements;
 
 namespace EasySoft.UtilityTools.Core.Extensions;
 
@@ -32,13 +31,20 @@ public static class ApiResultExtensions
                 IEnumerable? list = result.Data as IList;
 
                 if (list != null)
+                {
                     data.list = list;
+                }
                 else
+                {
                     data.data = result.Data;
+                }
             }
         }
 
-        if (result.ExtraData != null) data.extra = result.ExtraData;
+        if (result.ExtraData != null)
+        {
+            data.extra = result.ExtraData;
+        }
 
         return data;
     }

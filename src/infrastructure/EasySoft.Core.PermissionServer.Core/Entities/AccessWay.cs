@@ -6,9 +6,11 @@ namespace EasySoft.Core.PermissionServer.Core.Entities;
 /// 访问模块
 /// </summary>
 [Description("访问模块")]
-public class AccessWay : BaseEntity, IAccessWay, IIp, IStatus, IOperate
+public class AccessWay : BaseEntity, IAccessWayStore
 {
-    /// <inheritdoc />
+    #region Properties
+
+    /// <inheritdoc />  
     public string Name { get; set; } = "";
 
     /// <inheritdoc />
@@ -36,13 +38,10 @@ public class AccessWay : BaseEntity, IAccessWay, IIp, IStatus, IOperate
     public string Group { get; set; } = "";
 
     /// <inheritdoc />
-    public int Channel { get; set; }
+    public string Channel { get; set; } = UtilityTools.Standard.Models.Channel.Unknown.ToValue();
 
     /// <inheritdoc />
     public int Status { get; set; }
-
-    /// <inheritdoc />
-    public string Ip { get; set; } = "";
 
     /// <inheritdoc />
     public long CreateBy { get; set; }
@@ -57,5 +56,26 @@ public class AccessWay : BaseEntity, IAccessWay, IIp, IStatus, IOperate
     public DateTime ModifyTime { get; set; } = DateTimeOffset.Now.DateTime;
 
     /// <inheritdoc />
-    public int TriggerChannel { get; set; }
+    public string TriggerChannel { get; set; } = UtilityTools.Standard.Models.Channel.Unknown.ToValue();
+
+    /// <inheritdoc />
+    public string Ip { get; set; } = "";
+
+    #endregion
+
+    #region Methods
+
+    /// <inheritdoc />
+    public string GetId()
+    {
+        return Id.ToString();
+    }
+
+    /// <inheritdoc />
+    public string GetIdentificationName()
+    {
+        return ReflectionAssist.GetPropertyName(() => Id);
+    }
+
+    #endregion
 }

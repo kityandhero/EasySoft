@@ -1,8 +1,4 @@
-﻿using EasySoft.Core.AccessWayTransmitter.Entities;
-using EasySoft.Core.AccessWayTransmitter.Interfaces;
-using EasySoft.Core.Infrastructure.Transmitters;
-
-namespace EasySoft.Core.AccessWayTransmitter.Producers;
+﻿namespace EasySoft.Core.AccessWayTransmitter.Producers;
 
 /// <inheritdoc />
 public class AccessWayProducer : IAccessWayProducer
@@ -24,21 +20,21 @@ public class AccessWayProducer : IAccessWayProducer
     }
 
     /// <inheritdoc />
-    public async Task<IAccessWayExchange> SendAsync(
+    public async Task<IAccessWayMessage> SendAsync(
         IAccessWay accessWay
     )
     {
-        var entity = new AccessWayExchange
+        var entity = new AccessWayMessage
         {
             Name = accessWay.Name,
             GuidTag = accessWay.GuidTag,
             RelativePath = accessWay.RelativePath,
             Expand = accessWay.Expand,
             Group = accessWay.Group,
-            Channel = _applicationChannel.GetChannel()
+            TriggerChannel = _applicationChannel.GetChannel().ToValue()
         };
 
-        await _capPublisher.PublishAsync(TransmitterTopic.AccessWayExchange, entity);
+        await _capPublisher.PublishAsync(TransmitterTopic.AccessWayMessage, entity);
 
         return entity;
     }

@@ -2,7 +2,7 @@ using EasySoft.Simple.Tradition.Management.WebApi;
 
 var app = WebApplicationBuilderAssist
     .CreateBuilder<StartUpConfigure>(
-        ApplicationChannelCollection.ManagementWebApi.ToApplicationChannel(),
+        ApplicationChannelCollection.ManagementWebApi,
         args.ToArray()
     )
     .EasyBuild();

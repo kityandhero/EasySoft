@@ -1,7 +1,7 @@
 ﻿using EasySoft.Core.EntityFramework.ValueGenerators;
 using EasySoft.Core.Infrastructure.Entities.Implements;
 using EasySoft.Core.Infrastructure.Entities.Interfaces;
-using EasySoft.UtilityTools.Standard.Entities.Interfaces;
+using EasySoft.UtilityTools.Standard.Interfaces;
 
 namespace EasySoft.Core.EntityFramework.EntityTypeConfigures;
 
@@ -40,11 +40,17 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
     {
         var tableName = BuildTableName(entityType);
 
-        if (!string.IsNullOrWhiteSpace(tableName)) builder.ToTable(tableName);
+        if (!string.IsNullOrWhiteSpace(tableName))
+        {
+            builder.ToTable(tableName);
+        }
 
         var tableComment = BuildTableComment(entityType);
 
-        if (!string.IsNullOrWhiteSpace(tableName)) builder.HasComment(tableComment);
+        if (!string.IsNullOrWhiteSpace(tableName))
+        {
+            builder.HasComment(tableComment);
+        }
     }
 
     /// <summary>
@@ -76,7 +82,8 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
     {
         builder.HasKey(x => x.Id);
 
-        builder.Property(x => x.Id).HasColumnOrder(1)
+        builder.Property(x => x.Id)
+            .HasColumnOrder(1)
             .HasColumnName(DatabaseConstant.KeyName)
             .ValueGeneratedNever()
             .HasValueGenerator<IdentifierGenerator>();
@@ -108,11 +115,13 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
     protected virtual void ConfigureConcurrency(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
         if (typeof(IConcurrency).IsAssignableFrom(entityType))
+        {
             builder.Property("RowVersion")
                 .HasColumnName("row_version")
                 .IsRequired()
                 .IsRowVersion()
                 .ValueGeneratedOnAddOrUpdate();
+        }
     }
 
     /// <summary>
@@ -123,10 +132,12 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
     protected virtual void ConfigureTenant(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
         if (typeof(ITenant).IsAssignableFrom(entityType))
+        {
             builder.Property(o => ((ITenant)o).TenantId)
                 .HasColumnName("row_version")
                 .IsRequired()
                 .HasDefaultValue(0);
+        }
     }
 
     /// <summary>
@@ -136,7 +147,10 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
     /// <param name="entityType"></param>
     protected virtual void ConfigureQueryFilter(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
-        if (!typeof(ISoftDelete).IsAssignableFrom(entityType)) return;
+        if (!typeof(ISoftDelete).IsAssignableFrom(entityType))
+        {
+            return;
+        }
 
         builder.Property(o => ((ISoftDelete)o).Deleted)
             .HasColumnName("deleted")

@@ -14,7 +14,8 @@ public class AccessWayService : IAccessWayService
     /// AccessWayService
     /// </summary>
     /// <param name="accessWayRepository"></param>
-    public AccessWayService(IRepository<AccessWay> accessWayRepository
+    public AccessWayService(
+        IRepository<AccessWay> accessWayRepository
     )
     {
         _accessWayRepository = accessWayRepository;
@@ -32,32 +33,41 @@ public class AccessWayService : IAccessWayService
     }
 
     /// <inheritdoc />
-    public async Task SaveAccessWayAsync(AccessWayExchange accessWayExchange)
+    public async Task SaveAccessWayAsync(IAccessWayMessage accessWayMessage)
     {
-        if (string.IsNullOrWhiteSpace(accessWayExchange.GuidTag)) return;
+        if (string.IsNullOrWhiteSpace(accessWayMessage.GuidTag))
+        {
+            return;
+        }
 
         var resultGet = await _accessWayRepository.GetAsync(
-            o => o.GuidTag == accessWayExchange.GuidTag
+            o => o.GuidTag == accessWayMessage.GuidTag
         );
 
-        if (resultGet.Success) return;
+        if (resultGet.Success)
+        {
+            return;
+        }
 
         var accessWay = new AccessWay
         {
-            Name = accessWayExchange.Name.ToLower(),
-            GuidTag = accessWayExchange.GuidTag.ToLower(),
-            RelativePath = accessWayExchange.RelativePath.ToLower(),
-            Expand = accessWayExchange.Expand.ToLower(),
-            Group = accessWayExchange.Group.ToLower(),
-            Channel = accessWayExchange.Channel,
+            Name = accessWayMessage.Name.ToLower(),
+            GuidTag = accessWayMessage.GuidTag.ToLower(),
+            RelativePath = accessWayMessage.RelativePath.ToLower(),
+            Expand = accessWayMessage.Expand.ToLower(),
+            Group = accessWayMessage.Group.ToLower(),
+            TriggerChannel = accessWayMessage.TriggerChannel,
+            Channel = ChannelAssist.GetCurrentChannel().ToValue(),
             Status = 0,
-            Ip = accessWayExchange.Ip.ToLower(),
             CreateTime = DateTimeOffset.Now.DateTime,
             ModifyTime = DateTimeOffset.Now.DateTime
         };
 
         var resultAdd = await _accessWayRepository.AddAsync(accessWay);
 
-        if (!resultAdd.Success) throw new UnknownException(resultAdd.Message);
+        if (!resultAdd.Success)
+        {
+            throw new UnknownException(resultAdd.Message);
+        }
     }
 }

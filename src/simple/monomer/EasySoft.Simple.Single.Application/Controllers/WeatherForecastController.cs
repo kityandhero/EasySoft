@@ -1,7 +1,6 @@
 using EasySoft.Simple.Single.Application.Common;
 using EasySoft.UtilityTools.Core.Results.Implements;
 using EasySoft.UtilityTools.Core.Results.Interfaces;
-using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Simple.Single.Application.Controllers;
 
@@ -35,12 +34,15 @@ public class WeatherForecastController : ControllerCore
     [HttpGet("get", Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
+        return Enumerable.Range(1, 5)
+            .Select(
+                index => new WeatherForecast
+                {
+                    Date = DateTime.Now.AddDays(index),
+                    TemperatureC = Random.Shared.Next(-20, 55),
+                    Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+                }
+            )
             .ToArray();
     }
 
@@ -53,12 +55,15 @@ public class WeatherForecastController : ControllerCore
     [HttpGet("get1", Name = "GetWeatherForecast1")]
     public IEnumerable<WeatherForecast> Get1()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
+        return Enumerable.Range(1, 5)
+            .Select(
+                index => new WeatherForecast
+                {
+                    Date = DateTime.Now.AddDays(index),
+                    TemperatureC = Random.Shared.Next(-20, 55),
+                    Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+                }
+            )
             .ToArray();
     }
 
@@ -73,7 +78,11 @@ public class WeatherForecastController : ControllerCore
 
         var o = ReturnCode.Ok.ToMessage();
 
-        return new ApiResult(ReturnCode.Ok, o.Success, o.Message)
+        return new ApiResult(
+            ReturnCode.Ok,
+            o.Success,
+            o.Message
+        )
         {
             Data = new
             {
@@ -91,9 +100,11 @@ public class WeatherForecastController : ControllerCore
     {
         var a = this.ParamAsync("a", 0);
 
-        return this.Success(new
-        {
-            value = a
-        });
+        return this.Success(
+            new
+            {
+                value = a
+            }
+        );
     }
 }

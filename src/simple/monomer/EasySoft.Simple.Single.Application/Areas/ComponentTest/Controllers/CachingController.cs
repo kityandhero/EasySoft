@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.CacheCore.interfaces;
 using EasySoft.Simple.Single.Application.Models;
-using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 
@@ -38,13 +37,19 @@ public class CachingController : AreaControllerCore
     /// <returns></returns>
     public IActionResult Set(string value = "test", string key = TestKey)
     {
-        _cacheOperator.Set(key, value, new TimeSpan(TimeSpan.TicksPerSecond * 360));
-
-        return this.Success(new
-        {
+        _cacheOperator.Set(
+            key,
             value,
-            time = DateTime.Now.ToUnixTime()
-        });
+            new TimeSpan(TimeSpan.TicksPerSecond * 360)
+        );
+
+        return this.Success(
+            new
+            {
+                value,
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     /// <summary>
@@ -56,14 +61,19 @@ public class CachingController : AreaControllerCore
     {
         var result = _cacheOperator.Get<string>(key);
 
-        if (!result.Success) return this.Fail(result.Code);
-
-        return this.Success(new
+        if (!result.Success)
         {
-            cacheMode = GeneralConfigAssist.GetCacheMode(),
-            value = result.Data,
-            time = DateTime.Now.ToUnixTime()
-        });
+            return this.Fail(result.Code);
+        }
+
+        return this.Success(
+            new
+            {
+                cacheMode = GeneralConfigAssist.GetCacheMode(),
+                value = result.Data,
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     #endregion
@@ -83,13 +93,19 @@ public class CachingController : AreaControllerCore
             Date = DateTime.Now
         };
 
-        _cacheOperator.Set(key, value, new TimeSpan(TimeSpan.TicksPerSecond * 360));
-
-        return this.Success(new
-        {
+        _cacheOperator.Set(
+            key,
             value,
-            time = DateTime.Now.ToUnixTime()
-        });
+            new TimeSpan(TimeSpan.TicksPerSecond * 360)
+        );
+
+        return this.Success(
+            new
+            {
+                value,
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     /// <summary>
@@ -101,14 +117,19 @@ public class CachingController : AreaControllerCore
     {
         var result = _cacheOperator.Get<Hello>(key);
 
-        if (!result.Success) return this.Fail(result.Code);
-
-        return this.Success(new
+        if (!result.Success)
         {
-            cacheMode = GeneralConfigAssist.GetCacheMode(),
-            value = result.Data,
-            time = DateTime.Now.ToUnixTime()
-        });
+            return this.Fail(result.Code);
+        }
+
+        return this.Success(
+            new
+            {
+                cacheMode = GeneralConfigAssist.GetCacheMode(),
+                value = result.Data,
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     #endregion
@@ -130,11 +151,13 @@ public class CachingController : AreaControllerCore
             new TimeSpan(TimeSpan.TicksPerSecond * 30)
         );
 
-        return this.Success(new
-        {
-            value,
-            time = DateTime.Now.ToUnixTime()
-        });
+        return this.Success(
+            new
+            {
+                value,
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     /// <summary>
@@ -146,14 +169,19 @@ public class CachingController : AreaControllerCore
     {
         var result = _cacheOperator.Get<string>(key);
 
-        if (!result.Success) return this.Fail(result.Code);
-
-        return this.Success(new
+        if (!result.Success)
         {
-            cacheMode = GeneralConfigAssist.GetCacheMode(),
-            value = result.Data,
-            time = DateTime.Now.ToUnixTime()
-        });
+            return this.Fail(result.Code);
+        }
+
+        return this.Success(
+            new
+            {
+                cacheMode = GeneralConfigAssist.GetCacheMode(),
+                value = result.Data,
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     #endregion
@@ -168,13 +196,19 @@ public class CachingController : AreaControllerCore
     /// <returns></returns>
     public async Task<IActionResult> AsyncSet(string value = "test", string key = TestAsyncKey)
     {
-        await _cacheOperator.SetAsync(key, value, new TimeSpan(TimeSpan.TicksPerSecond * 360));
-
-        return this.Success(new
-        {
+        await _cacheOperator.SetAsync(
+            key,
             value,
-            time = DateTime.Now.ToUnixTime()
-        });
+            new TimeSpan(TimeSpan.TicksPerSecond * 360)
+        );
+
+        return this.Success(
+            new
+            {
+                value,
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     /// <summary>
@@ -186,14 +220,19 @@ public class CachingController : AreaControllerCore
     {
         var result = await _cacheOperator.GetAsync<string>(key);
 
-        if (!result.Success) return this.Fail(result.Code);
-
-        return this.Success(new
+        if (!result.Success)
         {
-            cacheMode = GeneralConfigAssist.GetCacheMode(),
-            value = result.Data,
-            time = DateTime.Now.ToUnixTime()
-        });
+            return this.Fail(result.Code);
+        }
+
+        return this.Success(
+            new
+            {
+                cacheMode = GeneralConfigAssist.GetCacheMode(),
+                value = result.Data,
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     #endregion
@@ -213,13 +252,19 @@ public class CachingController : AreaControllerCore
             Date = DateTime.Now
         };
 
-        await _cacheOperator.SetAsync(key, value, new TimeSpan(TimeSpan.TicksPerSecond * 360));
-
-        return this.Success(new
-        {
+        await _cacheOperator.SetAsync(
+            key,
             value,
-            time = DateTime.Now.ToUnixTime()
-        });
+            new TimeSpan(TimeSpan.TicksPerSecond * 360)
+        );
+
+        return this.Success(
+            new
+            {
+                value,
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     /// <summary>
@@ -231,14 +276,19 @@ public class CachingController : AreaControllerCore
     {
         var result = await _cacheOperator.GetAsync<Hello>(key);
 
-        if (!result.Success) return this.Fail(result.Code);
-
-        return this.Success(new
+        if (!result.Success)
         {
-            cacheMode = GeneralConfigAssist.GetCacheMode(),
-            value = result.Data,
-            time = DateTime.Now.ToUnixTime()
-        });
+            return this.Fail(result.Code);
+        }
+
+        return this.Success(
+            new
+            {
+                cacheMode = GeneralConfigAssist.GetCacheMode(),
+                value = result.Data,
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     #endregion
@@ -260,11 +310,13 @@ public class CachingController : AreaControllerCore
             new TimeSpan(TimeSpan.TicksPerSecond * 30)
         );
 
-        return this.Success(new
-        {
-            value,
-            time = DateTime.Now.ToUnixTime()
-        });
+        return this.Success(
+            new
+            {
+                value,
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     /// <summary>
@@ -276,14 +328,19 @@ public class CachingController : AreaControllerCore
     {
         var result = await _cacheOperator.GetAsync<string>(key);
 
-        if (!result.Success) return this.Fail(result.Code);
-
-        return this.Success(new
+        if (!result.Success)
         {
-            cacheMode = GeneralConfigAssist.GetCacheMode(),
-            value = result.Data,
-            time = DateTime.Now.ToUnixTime()
-        });
+            return this.Fail(result.Code);
+        }
+
+        return this.Success(
+            new
+            {
+                cacheMode = GeneralConfigAssist.GetCacheMode(),
+                value = result.Data,
+                time = DateTime.Now.ToUnixTime()
+            }
+        );
     }
 
     #endregion

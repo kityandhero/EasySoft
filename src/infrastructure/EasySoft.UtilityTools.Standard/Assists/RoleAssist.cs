@@ -1,7 +1,7 @@
 ﻿using EasySoft.UtilityTools.Standard.Competence;
-using EasySoft.UtilityTools.Standard.Entities.Interfaces;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.Extensions;
+using EasySoft.UtilityTools.Standard.Interfaces;
 
 namespace EasySoft.UtilityTools.Standard.Assists;
 
@@ -27,13 +27,16 @@ public static class RoleAssist
         var listCompetenceEntity = ceList.Select(o => o.GetClone()).ToList();
 
         foreach (var role in list)
+        {
             if (role.WhetherSuper == (int)Whether.Yes)
             {
-                listCompetenceEntity.Add(new CompetenceEntity
-                {
-                    Name = ConstCollection.SuperRoleName,
-                    GuidTag = ConstCollection.SuperRoleGuidTag
-                });
+                listCompetenceEntity.Add(
+                    new CompetenceEntity
+                    {
+                        Name = ConstCollection.SuperRoleName,
+                        GuidTag = ConstCollection.SuperRoleGuidTag
+                    }
+                );
             }
             else
             {
@@ -46,7 +49,10 @@ public static class RoleAssist
                     {
                         var ce = listCompetenceEntity[index];
 
-                        if (ce.GuidTag != c.GuidTag) continue;
+                        if (ce.GuidTag != c.GuidTag)
+                        {
+                            continue;
+                        }
 
                         exist = true;
 
@@ -55,9 +61,13 @@ public static class RoleAssist
                         listCompetenceEntity[index] = ce;
                     }
 
-                    if (!exist) listCompetenceEntity.Add(c);
+                    if (!exist)
+                    {
+                        listCompetenceEntity.Add(c);
+                    }
                 }
             }
+        }
 
         return listCompetenceEntity;
     }
@@ -121,12 +131,17 @@ public static class RoleAssist
                 var listAccessWay = new List<IAccessWay>();
 
                 if (list.Count > 0)
+                {
                     listAccessWay = (await accessWayPersistenceListGetter(result)).ToList();
+                }
 
                 foreach (var c in result)
                 foreach (var aw in listAccessWay)
                 {
-                    if (aw.GuidTag != c.GuidTag) continue;
+                    if (aw.GuidTag != c.GuidTag)
+                    {
+                        continue;
+                    }
 
                     c.Name = aw.Name;
                     c.Explain = aw.Expand;
@@ -136,9 +151,10 @@ public static class RoleAssist
         }
 
         result = result.SortByPropertyValue(
-            SortRule.Asc,
-            ReflectionAssist.GetPropertyName<CompetenceEntity>(o => o.Name)
-        ).ToList();
+                SortRule.Asc,
+                ReflectionAssist.GetPropertyName<CompetenceEntity>(o => o.Name)
+            )
+            .ToList();
 
         return result;
     }

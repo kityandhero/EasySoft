@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Entities.Interfaces;
-
-namespace EasySoft.Core.PermissionVerification.Entities;
+﻿namespace EasySoft.Core.PermissionVerification.Entities;
 
 /// <summary>
 /// AccessWayModel
@@ -35,8 +33,8 @@ public class AccessWayModel : IAccessWay
     public string Group { get; set; } = "";
 
     /// <inheritdoc />
-    public int Channel { get; set; } = 0;
+    public string Channel { get; set; } = UtilityTools.Standard.Models.Channel.Unknown.ToValue();
 
     /// <inheritdoc />
-    public int TriggerChannel { get; set; }
+    public string TriggerChannel { get; set; } = UtilityTools.Standard.Models.Channel.Unknown.ToValue();
 }

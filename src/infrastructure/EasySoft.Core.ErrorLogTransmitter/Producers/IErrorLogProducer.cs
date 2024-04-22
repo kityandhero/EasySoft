@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.ErrorLogTransmitter.Interfaces;
-
-namespace EasySoft.Core.ErrorLogTransmitter.Producers;
+﻿namespace EasySoft.Core.ErrorLogTransmitter.Producers;
 
 /// <summary>
 /// 错误日志生产者
@@ -11,14 +9,14 @@ public interface IErrorLogProducer
     /// 发送
     /// </summary>
     /// <param name="errorLogExchange"></param>
-    Task SendAsync(IErrorLogExchange errorLogExchange);
+    Task SendAsync(IErrorLogMessage errorLogExchange);
 
     /// <summary>
     /// 发送
     /// </summary>
     /// <param name="ex"></param>
     /// <returns></returns>
-    Task<IErrorLogExchange> SendAsync(Exception ex);
+    Task<IErrorLogMessage> SendAsync(Exception ex);
 
     /// <summary>
     /// 发送
@@ -27,5 +25,5 @@ public interface IErrorLogProducer
     /// <param name="operatorId"></param>
     /// <param name="requestInfo"></param>
     /// <returns></returns>
-    Task<IErrorLogExchange> SendAsync(Exception ex, long operatorId, IRequestInfo? requestInfo = null);
+    Task<IErrorLogMessage> SendAsync(Exception ex, long operatorId, IRequestInfo? requestInfo = null);
 }

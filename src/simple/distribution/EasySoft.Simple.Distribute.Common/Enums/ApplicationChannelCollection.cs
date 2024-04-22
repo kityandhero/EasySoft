@@ -3,55 +3,23 @@
 /// <summary>
 /// ApplicationChannelCollection
 /// </summary>
-public enum ApplicationChannelCollection
+public abstract class ApplicationChannelCollection
 {
     /// <summary>
     /// Ocelot网关
     /// </summary>
-    [Description("Ocelot网关")]
-    GateWayOcelot = 10,
+    public static readonly Channel GateWayOcelot = new(
+        "aedf0ca1353c47dd9beb7a4ea34adc38",
+        "GateWayOcelot",
+        "Ocelot网关"
+    );
 
     /// <summary>
     /// OneService
     /// </summary>
-    [Description("OneService")]
-    OneService = 20
-}
-
-/// <summary>
-/// 
-/// </summary>
-public static class ApplicationChannelCollectionExtensions
-{
-    /// <summary>
-    /// ToInt
-    /// </summary>
-    /// <param name="source"></param>
-    /// <returns></returns>
-    public static int ToInt(this ApplicationChannelCollection source)
-    {
-        return (int)source;
-    }
-
-    /// <summary>
-    /// GetDescription
-    /// </summary>
-    /// <param name="source"></param>
-    /// <returns></returns>
-    public static string GetDescription(this ApplicationChannelCollection source)
-    {
-        var descriptionAttribute = source.GetCustomAttribute<DescriptionAttribute>();
-
-        return descriptionAttribute == null ? "" : descriptionAttribute.Description;
-    }
-
-    /// <summary>
-    /// ToApplicationChannel
-    /// </summary>
-    /// <param name="source"></param>
-    /// <returns></returns>
-    public static IApplicationChannel ToApplicationChannel(this ApplicationChannelCollection source)
-    {
-        return new ApplicationChannel().SetChannel(source.ToInt()).SetName(source.GetDescription());
-    }
+    public static readonly Channel OneService = new(
+        "64a4d0c69aa248bb91b2e7f24416fab4",
+        "OneService",
+        "OneService"
+    );
 }

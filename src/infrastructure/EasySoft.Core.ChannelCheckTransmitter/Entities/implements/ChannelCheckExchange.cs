@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.ChannelCheckTransmitter.Entities.Interfaces;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.ChannelCheckTransmitter.Entities.implements;
 
@@ -6,5 +7,5 @@ namespace EasySoft.Core.ChannelCheckTransmitter.Entities.implements;
 public class ChannelCheckExchange : IChannelCheckExchange
 {
     /// <inheritdoc />
-    public int Channel { get; set; }
+    public string Channel { get; set; } = UtilityTools.Standard.Models.Channel.Unknown.ToValue();
 }

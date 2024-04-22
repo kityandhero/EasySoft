@@ -38,7 +38,7 @@ public class AccessPermission
     /// <summary>
     /// Channel
     /// </summary>
-    public int Channel { get; set; }
+    public string Channel { get; set; } = UtilityTools.Standard.Models.Channel.Unknown.ToValue();
 
     /// <summary>
     /// ChannelName

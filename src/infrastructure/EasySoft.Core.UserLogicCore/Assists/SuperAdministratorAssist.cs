@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.Infrastructure;
 using EasySoft.Core.UserLogicCore.Entities.implements;
 using EasySoft.Core.UserLogicCore.Entities.Interfaces;
+using EasySoft.UtilityTools.Standard.Interfaces;
 
 namespace EasySoft.Core.UserLogicCore.Assists;
 

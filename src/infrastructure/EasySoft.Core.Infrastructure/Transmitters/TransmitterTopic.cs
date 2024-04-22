@@ -6,27 +6,27 @@
 public static class TransmitterTopic
 {
     /// <summary>
-    /// AccessWayExchange
+    /// AccessWayMessage
     /// </summary>
-    public const string AccessWayExchange = "AccessWayExchange";
+    public const string AccessWayMessage = "AccessWayMessage";
 
     /// <summary>
-    /// ErrorLogExchange
+    /// IErrorLogMessage
     /// </summary>
-    public const string ErrorLogExchange = "ErrorLogExchange";
+    public const string ErrorLogMessage = "IErrorLogMessage";
 
     /// <summary>
-    /// GeneralLogExchange
+    /// GeneralLogMessage
     /// </summary>
-    public const string GeneralLogExchange = "GeneralLogExchange";
+    public const string GeneralLogMessage = "GeneralLogMessage";
 
     /// <summary>
-    /// SqlExecutionRecordExchange
+    /// SqlLogExchange
     /// </summary>
-    public const string SqlExecutionRecordExchange = "SqlExecutionRecordExchange";
+    public const string SqlLogMessage = "SqlLogExchange";
 
     /// <summary>
-    /// ChannelCheckExchange
+    /// ChannelCheckMessage
     /// </summary>
-    public const string ChannelCheckExchange = "ChannelCheckExchange";
+    public const string ChannelCheckMessage = "ChannelCheckMessage";
 }

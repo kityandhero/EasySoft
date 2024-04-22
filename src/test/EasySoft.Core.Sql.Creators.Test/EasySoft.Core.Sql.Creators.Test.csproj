@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Content Include="..\..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Sql\EasySoft.Core.Sql.csproj"/>
+        <ProjectReference Include="..\..\project-framework\EasySoft.Core.Project.DataEntity.Dapper.Infrastructure\EasySoft.Core.Project.DataEntity.Dapper.Infrastructure.csproj"/>
+    </ItemGroup>
+
+</Project>

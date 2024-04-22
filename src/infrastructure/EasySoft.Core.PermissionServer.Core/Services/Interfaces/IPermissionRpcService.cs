@@ -26,5 +26,5 @@ public interface IPermissionRpcService : IBusinessService
     /// </summary>
     /// <returns></returns>
     [UnitOfWork]
-    Task MaintainSuper(int channel);
+    Task MaintainSuper(string channel);
 }

@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.ChannelCheckTransmitter.Entities.implements;
 using EasySoft.Core.ChannelCheckTransmitter.Entities.Interfaces;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.ChannelCheckTransmitter.Producers;
 
@@ -27,10 +28,10 @@ public class ChannelCheckProducer : IChannelCheckProducer
     {
         var entity = new ChannelCheckExchange
         {
-            Channel = _applicationChannel.GetChannel()
+            Channel = _applicationChannel.GetChannel().ToValue()
         };
 
-        await _capPublisher.PublishAsync(TransmitterTopic.ChannelCheckExchange, entity);
+        await _capPublisher.PublishAsync(TransmitterTopic.ChannelCheckMessage, entity);
 
         return entity;
     }

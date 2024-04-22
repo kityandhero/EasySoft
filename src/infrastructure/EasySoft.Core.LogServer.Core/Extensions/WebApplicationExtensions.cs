@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Entities.Implements;
-
-namespace EasySoft.Core.LogServer.Core.Extensions;
+﻿namespace EasySoft.Core.LogServer.Core.Extensions;
 
 /// <summary>
 /// WebApplicationExtensions
@@ -26,7 +24,10 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        if (!GeneralConfigAssist.GetRemoteErrorLogSwitch()) return application;
+        if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
+        {
+            return application;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseErrorLogSendExperiment)}."
@@ -49,7 +50,10 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        if (!GeneralConfigAssist.GetRemoteGeneralLogSwitch()) return application;
+        if (!GeneralConfigAssist.GetRemoteGeneralLogSwitch())
+        {
+            return application;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseGeneralLogSendExperiment)}."
@@ -72,7 +76,10 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        if (!GeneralConfigAssist.GetRemoteSqlExecutionRecordSwitch()) return application;
+        if (!SqlLogSwitchAssist.GetCurrentSwitch())
+        {
+            return application;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseSqlExecutionRecordSendExperiment)}."
@@ -80,7 +87,7 @@ public static class WebApplicationExtensions
 
         ApplicationConfigure.OnApplicationStart += async (serviceProvider) =>
         {
-            await DoSqlExecutionRecordSendExperiment(serviceProvider);
+            await DoSqlLogSendExperiment(serviceProvider);
         };
 
         return application;
@@ -92,9 +99,9 @@ public static class WebApplicationExtensions
 
         var isDevelopment = environment.IsDevelopment();
 
-        var errorLogExchange = new ErrorLogExchange
+        var errorLogExchange = new ErrorLogMessage
         {
-            Ignore = 1
+            Ignore = Whether.Yes.ToInt()
         };
 
         if (isDevelopment)
@@ -110,9 +117,10 @@ public static class WebApplicationExtensions
             );
         }
 
-        await serviceProvider.GetRequiredService<IErrorLogProducer>().SendAsync(
-            errorLogExchange
-        );
+        await serviceProvider.GetRequiredService<IErrorLogProducer>()
+            .SendAsync(
+                errorLogExchange
+            );
 
         if (isDevelopment)
         {
@@ -130,9 +138,9 @@ public static class WebApplicationExtensions
 
         var isDevelopment = environment.IsDevelopment();
 
-        var generalLogExchange = new GeneralLogExchange
+        var generalLogMessage = new GeneralLogMessage
         {
-            Ignore = 1
+            Ignore = Whether.Yes.ToInt()
         };
 
         if (isDevelopment)
@@ -148,9 +156,10 @@ public static class WebApplicationExtensions
             );
         }
 
-        await serviceProvider.GetRequiredService<IGeneralLogProducer>().SendAsync(
-            generalLogExchange
-        );
+        await serviceProvider.GetRequiredService<IGeneralLogProducer>()
+            .SendAsync(
+                generalLogMessage
+            );
 
         if (isDevelopment)
         {
@@ -162,15 +171,15 @@ public static class WebApplicationExtensions
         }
     }
 
-    private static async Task DoSqlExecutionRecordSendExperiment(IServiceProvider serviceProvider)
+    private static async Task DoSqlLogSendExperiment(IServiceProvider serviceProvider)
     {
         var environment = serviceProvider.GetService<IWebHostEnvironment>();
 
         var isDevelopment = environment.IsDevelopment();
 
-        var exchange = new SqlExecutionRecordExchange
+        var exchange = new SqlLogMessage
         {
-            Ignore = 1
+            Ignore = Whether.Yes.ToInt()
         };
 
         if (isDevelopment)
@@ -178,24 +187,25 @@ public static class WebApplicationExtensions
             var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<object>();
 
             logger.LogAdvancePrompt(
-                "Execute sqlExecutionRecord send experiment start."
+                "Execute sqlLog send experiment start."
             );
 
             logger.LogAdvancePrompt(
-                "Experiment SqlExecutionRecord -> \"Ignore\":\"1\"."
+                "Experiment SqlLog -> \"Ignore\":\"1\"."
             );
         }
 
-        await serviceProvider.GetRequiredService<ISqlExecutionRecordProducer>().SendAsync(
-            exchange
-        );
+        await serviceProvider.GetRequiredService<ISqlLogProducer>()
+            .SendAsync(
+                exchange
+            );
 
         if (isDevelopment)
         {
             var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<object>();
 
             logger.LogAdvancePrompt(
-                "Execute sqlExecutionRecord send experiment end."
+                "Execute sqlLog send experiment end."
             );
         }
     }

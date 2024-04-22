@@ -1,4 +1,6 @@
-﻿namespace EasySoft.UtilityTools.Core.Extensions;
+﻿using EasySoft.UtilityTools.Standard.Interfaces;
+
+namespace EasySoft.UtilityTools.Core.Extensions;
 
 /// <summary>
 /// HttpContextExtensions
@@ -12,15 +14,24 @@ public static class HttpContextExtensions
     {
         var ip = httpContext.Request.Headers["Cdn-Src-Ip"].FirstOrDefault();
 
-        if (!string.IsNullOrEmpty(ip)) return IpReplace(ip);
+        if (!string.IsNullOrEmpty(ip))
+        {
+            return IpReplace(ip);
+        }
 
         ip = httpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
 
-        if (!string.IsNullOrEmpty(ip)) return IpReplace(ip);
+        if (!string.IsNullOrEmpty(ip))
+        {
+            return IpReplace(ip);
+        }
 
         ip = httpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString() ?? "";
 
-        if (ip == "::1") ip = "127.0.0.1";
+        if (ip == "::1")
+        {
+            ip = "127.0.0.1";
+        }
 
         return ip;
     }
@@ -34,11 +45,15 @@ public static class HttpContextExtensions
     {
         var ip = context.Request.Headers["Cdn-Src-Ip"].FirstOrDefault();
         if (!string.IsNullOrEmpty(ip))
+        {
             return IpReplace(ip);
+        }
 
         ip = context.Request.Headers["X-Forwarded-For"].FirstOrDefault();
         if (!string.IsNullOrEmpty(ip))
+        {
             return IpReplace(ip);
+        }
 
         ip = context.Connection.RemoteIpAddress?.ToString() ?? "";
 
@@ -49,7 +64,10 @@ public static class HttpContextExtensions
     {
         //::ffff:
         //::ffff:192.168.2.131 这种IP处理
-        if (ip.Contains("::ffff:")) ip = ip.Replace("::ffff:", "");
+        if (ip.Contains("::ffff:"))
+        {
+            ip = ip.Replace("::ffff:", "");
+        }
 
         return ip;
     }
@@ -132,7 +150,11 @@ public static class HttpContextExtensions
     /// <param name="value"></param>
     public static void SetCookie(this HttpContext httpContext, string key, string value)
     {
-        httpContext.SetCookie(key, value, new CookieOptions());
+        httpContext.SetCookie(
+            key,
+            value,
+            new CookieOptions()
+        );
     }
 
     /// <summary>
@@ -142,8 +164,17 @@ public static class HttpContextExtensions
     /// <param name="key"></param>
     /// <param name="value"></param>
     /// <param name="options"></param>
-    public static void SetCookie(this HttpContext httpContext, string key, string value, CookieOptions options)
+    public static void SetCookie(
+        this HttpContext httpContext,
+        string key,
+        string value,
+        CookieOptions options
+    )
     {
-        httpContext.Response.Cookies.Append(key, value, options);
+        httpContext.Response.Cookies.Append(
+            key,
+            value,
+            options
+        );
     }
 }

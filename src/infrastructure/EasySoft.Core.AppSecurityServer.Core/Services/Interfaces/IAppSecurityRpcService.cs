@@ -10,7 +10,7 @@ public interface IAppSecurityRpcService : IBusinessService
     /// </summary>
     /// <param name="channel"></param>
     /// <returns></returns>
-    Task<ExecutiveResult> ChannelCheckAsync(int channel);
+    Task<ExecutiveResult> ChannelCheckAsync(string channel);
 
     /// <summary>
     /// 安全凭据校验

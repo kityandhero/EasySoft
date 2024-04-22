@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Infrastructure.Startup;
+using EasySoft.UtilityTools.Standard.Assists;
 
 namespace EasySoft.Core.SqlExecutionRecordTransmitter.Extensions;
 
@@ -19,12 +20,14 @@ public static class WebApplicationBuilderExtensions
     )
     {
         if (builder.HasRegistered(UniqueIdentifierAddSqlExecutionRecordTransmitter))
+        {
             return builder;
+        }
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddSqlExecutionRecordTransmitter)}");
 
         StartupConfigMessageAssist.AddConfig(
-            GeneralConfigAssist.GetRemoteSqlExecutionRecordSwitch()
+            SqlLogSwitchAssist.GetCurrentSwitch()
                 ? "RemoteSqlExecutionRecordEnable: enable."
                 : "RemoteSqlExecutionRecordEnable: disable.",
             GeneralConfigAssist.GetConfigFileInfo()

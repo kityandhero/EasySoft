@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.AppSecurityServer.Core.Entities;
 using EasySoft.Core.AppSecurityServer.Core.Extensions;
 using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
+using EasySoft.UtilityTools.Standard.Interfaces;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Services.Implements;
 
@@ -33,7 +34,7 @@ public class AppSecurityRpcService : IAppSecurityRpcService
     }
 
     /// <inheritdoc />
-    public async Task<ExecutiveResult> ChannelCheckAsync(int channel)
+    public async Task<ExecutiveResult> ChannelCheckAsync(string channel)
     {
         var result = await _appSecurityRepository.GetAsync(
             o => o.Channel == channel
@@ -42,7 +43,9 @@ public class AppSecurityRpcService : IAppSecurityRpcService
         if (!result.Success)
         {
             if (_environment.IsDevelopment())
+            {
                 _loggerFactory.CreateLogger<object>().LogAdvanceError(result.Message);
+            }
 
             return new ExecutiveResult(
                 result.Code
@@ -54,7 +57,9 @@ public class AppSecurityRpcService : IAppSecurityRpcService
             var message = $"channel -> {channel} check error.";
 
             if (_environment.IsDevelopment())
+            {
                 _loggerFactory.CreateLogger<object>().LogAdvanceError(message);
+            }
 
             return new ExecutiveResult(
                 result.Code
@@ -68,39 +73,49 @@ public class AppSecurityRpcService : IAppSecurityRpcService
     public async Task<ExecutiveResult<AppPublicKeyDto>> CredentialVerifyAsync(AppSecurityDto appSecurityDto)
     {
         if (appSecurityDto.UnixTime < 0)
+        {
             return new ExecutiveResult<AppPublicKeyDto>(
                 ReturnCode.ParamError.ToMessage(
                     $"unixTime params error -> {appSecurityDto.BuildInfo()}"
                 )
             );
+        }
 
         if (string.IsNullOrWhiteSpace(appSecurityDto.Salt))
+        {
             return new ExecutiveResult<AppPublicKeyDto>(
                 ReturnCode.ParamError.ToMessage(
                     $"salt params error -> {appSecurityDto.BuildInfo()}"
                 )
             );
+        }
 
         if (string.IsNullOrWhiteSpace(appSecurityDto.AppId))
+        {
             return new ExecutiveResult<AppPublicKeyDto>(
                 ReturnCode.ParamError.ToMessage(
                     $"appId params error -> {appSecurityDto.BuildInfo()}"
                 )
             );
+        }
 
-        if (appSecurityDto.Channel < 0)
+        if (string.IsNullOrWhiteSpace(appSecurityDto.Channel))
+        {
             return new ExecutiveResult<AppPublicKeyDto>(
                 ReturnCode.ParamError.ToMessage(
                     $"channel params error -> {appSecurityDto.BuildInfo()}"
                 )
             );
+        }
 
         if (string.IsNullOrWhiteSpace(appSecurityDto.Sign))
+        {
             return new ExecutiveResult<AppPublicKeyDto>(
                 ReturnCode.ParamError.ToMessage(
                     $"sign params error -> {appSecurityDto.BuildInfo()}"
                 )
             );
+        }
 
         IAppSecurity appSecurity;
 
@@ -124,7 +139,9 @@ public class AppSecurityRpcService : IAppSecurityRpcService
             if (!result.Success)
             {
                 if (_environment.IsDevelopment())
+                {
                     _loggerFactory.CreateLogger<object>().LogAdvanceError(result.Message);
+                }
 
                 return new ExecutiveResult<AppPublicKeyDto>(
                     result.Code
@@ -136,7 +153,9 @@ public class AppSecurityRpcService : IAppSecurityRpcService
                 var message = $"appid {appSecurityDto.AppId} do not exist.";
 
                 if (_environment.IsDevelopment())
+                {
                     _loggerFactory.CreateLogger<object>().LogAdvanceError(message);
+                }
 
                 return new ExecutiveResult<AppPublicKeyDto>(
                     result.Code
@@ -146,10 +165,16 @@ public class AppSecurityRpcService : IAppSecurityRpcService
             appSecurity = result.Data;
         }
 
-        var sign = AppSecurityAssist.SignVerify(appSecurity, appSecurityDto.UnixTime, appSecurityDto.Salt);
+        var sign = AppSecurityAssist.SignVerify(
+            appSecurity,
+            appSecurityDto.UnixTime,
+            appSecurityDto.Salt
+        );
 
         if (appSecurityDto.Sign != sign)
+        {
             return new ExecutiveResult<AppPublicKeyDto>(ReturnCode.VerifyError.ToMessage("sign error"));
+        }
 
         #region get public key after sign verify success
 
@@ -158,7 +183,10 @@ public class AppSecurityRpcService : IAppSecurityRpcService
             1
         );
 
-        if (!pageListResult.Success) return new ExecutiveResult<AppPublicKeyDto>(pageListResult.Code);
+        if (!pageListResult.Success)
+        {
+            return new ExecutiveResult<AppPublicKeyDto>(pageListResult.Code);
+        }
 
         if (pageListResult.Count() > 0)
         {
@@ -180,10 +208,14 @@ public class AppSecurityRpcService : IAppSecurityRpcService
         );
 
         if (resultGetPublicKey.Success)
+        {
             return resultGetPublicKey.ToExecutiveResult(resultGetPublicKey.Data?.ToAppPublicKeyDto());
+        }
 
         if (_environment.IsDevelopment())
+        {
             _loggerFactory.CreateLogger<object>().LogAdvanceError(resultGetPublicKey.Message);
+        }
 
         return resultGetPublicKey.ToExecutiveResult(resultGetPublicKey.Data?.ToAppPublicKeyDto());
 
