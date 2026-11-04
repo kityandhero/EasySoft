@@ -47,41 +47,65 @@ public class GenericEqualityComparer<T> : IEqualityComparer<T>
     /// True if they are, false otherwise
     /// 相等返回true,否则返回false
     /// </returns>
-    public bool Equals(T? x, T y)
+    public bool Equals(T x, T y)
     {
         if (!typeof(T).IsValueType
             || (typeof(T).IsGenericType
                 && typeof(T).GetGenericTypeDefinition().IsAssignableFrom(typeof(Nullable<>))))
         {
-            if (object.Equals(x, default(T))) return object.Equals(y, default(T));
+            if (object.Equals(x, default(T)))
+            {
+                return object.Equals(y, default(T));
+            }
 
-            if (object.Equals(y, default(T))) return false;
+            if (object.Equals(y, default(T)))
+            {
+                return false;
+            }
         }
 
-        if (x?.GetType() != y?.GetType()) return false;
+        if (x?.GetType() != y?.GetType())
+        {
+            return false;
+        }
 
         if (x is IEnumerable enumerableX && y is IEnumerable enumerableY)
         {
             var comparer = new GenericEqualityComparer<object>();
             var xEnumerator = enumerableX.GetEnumerator();
             var yEnumerator = enumerableY.GetEnumerator();
+
             while (true)
             {
                 var xFinished = !xEnumerator.MoveNext();
                 var yFinished = !yEnumerator.MoveNext();
 
-                if (xFinished || yFinished) return xFinished & yFinished;
+                if (xFinished || yFinished)
+                {
+                    return xFinished & yFinished;
+                }
 
                 if (yEnumerator.Current != null && !comparer.Equals(xEnumerator.Current, yEnumerator.Current))
+                {
                     return false;
+                }
             }
         }
 
-        if (x is IEqualityComparer<T> tempEquality) return tempEquality.Equals(y);
+        if (x is IEqualityComparer<T> tempEquality)
+        {
+            return tempEquality.Equals(y);
+        }
 
-        if (x is IComparable<T> tempComparable) return tempComparable.CompareTo(y) == 0;
+        if (x is IComparable<T> tempComparable)
+        {
+            return tempComparable.CompareTo(y) == 0;
+        }
 
-        if (x is IComparable tempComparable2) return tempComparable2.CompareTo(y) == 0;
+        if (x is IComparable tempComparable2)
+        {
+            return tempComparable2.CompareTo(y) == 0;
+        }
 
         return x != null && x.Equals(y);
     }

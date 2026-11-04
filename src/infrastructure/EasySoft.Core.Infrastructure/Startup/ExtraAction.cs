@@ -8,7 +8,7 @@ public class ExtraAction<T> : IExtraAction<T>
 {
     private string _name;
 
-    private Action<T>? _action;
+    private Action<T> _action;
 
     /// <summary>
     /// ExtraAction
@@ -55,7 +55,7 @@ public class ExtraAction<T> : IExtraAction<T>
     /// GetAction
     /// </summary>
     /// <returns></returns>
-    public Action<T>? GetAction()
+    public Action<T> GetAction()
     {
         return _action;
     }

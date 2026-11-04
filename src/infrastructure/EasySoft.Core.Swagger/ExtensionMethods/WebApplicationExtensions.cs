@@ -9,61 +9,36 @@ namespace EasySoft.Core.Swagger.ExtensionMethods;
 public static class WebApplicationExtensions
 {
     /// <summary>
-    /// UseAdvanceSwagger
+    /// AddAdvanceSwagger
     /// </summary>
     /// <param name="application"></param>
     /// <returns></returns>
     public static WebApplication UseAdvanceSwagger(this WebApplication application)
     {
-        if (!SwaggerConfigAssist.GetSwitch()) return application;
+        if (!SwaggerConfigAssist.GetSwitch())
+        {
+            return application;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseAdvanceSwagger)}."
         );
 
-        application.UseSwagger();
-
-        application.UseSwaggerUI();
+        application.MapOpenApi(); // 输出 openapi.json
+        application.MapScalarApiReference(); // ✅ Scalar UI 在这里，不是Services.AddXXX
 
         StartupDescriptionMessageAssist.AddPrompt(
             $"You can access swagger api document by {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/swagger/index.html").Join(" ")}."
         );
 
         if (EnvironmentAssist.IsDevelopment() && AuxiliaryConfigure.PromptConfigFileInfo)
+        {
             ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
                 new ExtraAction<IEndpointRouteBuilder>()
                     .SetName("")
                     .SetAction(endpoints => { endpoints.MapSwaggerConfigFile(); })
             );
-
-        return application;
-    }
-
-    /// <summary>
-    /// UseAdvanceKnife4UI
-    /// </summary>
-    /// <param name="application"></param>
-    /// <returns></returns>
-    public static WebApplication UseAdvanceKnife4UI(this WebApplication application)
-    {
-        if (!SwaggerConfigAssist.GetSwitch()) return application;
-
-        StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(UseAdvanceKnife4UI)}."
-        );
-
-        const string routePrefix = "knife4";
-
-        application.UseKnife4UI(c =>
-        {
-            c.RoutePrefix = routePrefix; // serve the UI at root
-
-            c.SwaggerEndpoint($"../swagger/v1/swagger.json", SwaggerConfigAssist.GetTitle());
-        });
-
-        StartupDescriptionMessageAssist.AddPrompt(
-            $"You can access swagger knife4UI by {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/{routePrefix}").Join(" ")}."
-        );
+        }
 
         return application;
     }

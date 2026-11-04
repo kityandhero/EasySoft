@@ -25,9 +25,8 @@ public abstract class MySqlAbstractDesignTimeContextFactory<TMySqlContext> : IDe
     {
         var optionsBuilder = new DbContextOptionsBuilder<MySqlContext>();
 
-        optionsBuilder.UseMySql(
-            DatabaseConfigAssist.GetMainConnection(),
-            ServerVersion.AutoDetect(DatabaseConfigAssist.GetMainConnection())
+        optionsBuilder.UseMySQL(
+            DatabaseConfigAssist.GetMainConnection()
         );
 
         optionsBuilder.UseSnakeCaseNamingConvention();

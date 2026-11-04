@@ -1,7 +1,7 @@
 ﻿using EasySoft.Core.Infrastructure;
 using EasySoft.Core.PermissionVerification.Attributes;
 using EasySoft.UtilityTools.Standard.Result.Implements;
-using Senparc.Weixin.MP.AdvancedAPIs;
+ 
 
 namespace EasySoft.Core.PermissionVerification.Observers;
 

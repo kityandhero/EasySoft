@@ -28,7 +28,7 @@ public class CapConfig
     /// <summary>
     /// Discovery 配置
     /// </summary>
-    public DiscoveryOptions DiscoveryOptions { get; set; }
+    public ConsulDiscoveryOptions ConsulDiscoveryOptions { get; set; }
 
     /// <summary>
     /// Cap 配置
@@ -43,7 +43,7 @@ public class CapConfig
 
         DashboardOptions = new DashboardOptions();
 
-        DiscoveryOptions = new DiscoveryOptions();
+        ConsulDiscoveryOptions = new ConsulDiscoveryOptions();
     }
 }
 
@@ -55,37 +55,37 @@ public class Transport
     /// <summary>
     /// AmazonSQS
     /// </summary>
-    public AmazonSQSOptions? AmazonSQS { get; set; }
+    public AmazonSQSOptions AmazonSQS { get; set; }
 
     /// <summary>
     /// Kafka
     /// </summary>
-    public KafkaOptions? Kafka { get; set; }
+    public KafkaOptions Kafka { get; set; }
 
     /// <summary>
     /// Pulsar
     /// </summary>
-    public PulsarOptions? Pulsar { get; set; }
+    public PulsarOptions Pulsar { get; set; }
 
     /// <summary>
     /// AzureServiceBus
     /// </summary>
-    public AzureServiceBusOptions? AzureServiceBus { get; set; }
+    public AzureServiceBusOptions AzureServiceBus { get; set; }
 
     /// <summary>
     /// NATS
     /// </summary>
-    public NATSOptions? NATS { get; set; }
+    public NATSOptions NATS { get; set; }
 
     /// <summary>
     /// RabbitMQ
     /// </summary>
-    public RabbitMQOptions? RabbitMQ { get; set; }
+    public RabbitMQOptions RabbitMQ { get; set; }
 
     /// <summary>
     /// Redis
     /// </summary>
-    public CapRedisOptions? Redis { get; set; }
+    public CapRedisOptions Redis { get; set; }
 
     /// <summary>
     /// 传输配置

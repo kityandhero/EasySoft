@@ -35,7 +35,7 @@ public sealed class XMLSerializer : ISerializer<string>
     /// Constructor
     /// </summary>
     /// <param name="encoding">Encoding that the serializer should use (defaults to ASCII)</param>
-    public XMLSerializer(Encoding? encoding = null)
+    public XMLSerializer(Encoding encoding = null)
     {
         EncodingUsing = encoding ?? new ASCIIEncoding();
     }
@@ -78,7 +78,7 @@ public sealed class XMLSerializer : ISerializer<string>
     /// <param name="objectType">Object type</param>
     /// <param name="data">Data to deserialize</param>
     /// <returns>The resulting object</returns>
-    public object? Deserialize(string data, Type objectType)
+    public object Deserialize(string data, Type objectType)
     {
         if (string.IsNullOrEmpty(data)) throw new Exception("data disallow null");
 

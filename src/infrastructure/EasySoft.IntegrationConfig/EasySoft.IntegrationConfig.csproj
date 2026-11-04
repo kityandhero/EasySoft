@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <LangVersion>11</LangVersion>
+        <Nullable>warnings</Nullable>
+        <LangVersion>14</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>EasySoft.IntegrationConfig</Title>
         <Description>EasySoft.IntegrationConfig</Description>
@@ -20,6 +20,10 @@
     <ItemGroup>
         <None Remove="configures\logConfig.json"/>
         <None Remove="configures\messageQueueConfig.json"/>
+    </ItemGroup>
+
+    <ItemGroup>
+
     </ItemGroup>
 
 </Project>

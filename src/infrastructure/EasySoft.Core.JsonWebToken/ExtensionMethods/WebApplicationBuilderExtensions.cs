@@ -35,7 +35,9 @@ public static class WebApplicationBuilderExtensions
     ) where TOperator : ActualOperator
     {
         if (!string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
+        {
             throw new Exception("token mode disallow use more than one");
+        }
 
         if (builder.HasRegistered(UniqueIdentifierAddAdvanceJsonWebToken))
         {
@@ -52,10 +54,31 @@ public static class WebApplicationBuilderExtensions
 
         builder.AddOperator<TOperator>();
 
-        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = TokenAssist.GenerateTokenValidationParameters();
-        });
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = TokenAssist.GenerateTokenValidationParameters();
+                    options.SaveToken = true;
+
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnChallenge = ctx =>
+                        {
+                            ctx.HandleResponse();
+
+                            ctx.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                            ctx.Response.ContentType = "application/json";
+
+                            return ctx.Response.WriteAsJsonAsync(
+                                new
+                                {
+                                    code = 401, msg = "Token 无效或缺失"
+                                }
+                            );
+                        }
+                    };
+                }
+            );
 
         if (middlewareMode)
         {

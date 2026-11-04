@@ -14,7 +14,7 @@ public static class Tools
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static AdvanceTableMapperAttribute? GetAdvanceTableMapperAttribute<T>(
+    public static AdvanceTableMapperAttribute GetAdvanceTableMapperAttribute<T>(
         bool triggerExceptionWhenNonexistence = true
     )
     {
@@ -55,8 +55,8 @@ public static class Tools
     /// <returns></returns>
     /// <exception cref="UnhandledException"></exception>
     /// <exception cref="Exception"></exception>
-    public static AdvanceTableMapperAttribute? GetAdvanceTableMapperAttribute<T>(
-        T? model,
+    public static AdvanceTableMapperAttribute GetAdvanceTableMapperAttribute<T>(
+        T model,
         bool triggerExceptionWhenNonexistence = true
     )
     {
@@ -94,8 +94,8 @@ public static class Tools
     /// <param name="throwExceptionWhenNoAttribute"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static AdvanceColumnMapperAttribute? GetAdvanceColumnMapperAttribute(
-        PropertyInfo? property,
+    public static AdvanceColumnMapperAttribute GetAdvanceColumnMapperAttribute(
+        PropertyInfo property,
         bool throwExceptionWhenNoAttribute = true
     )
     {

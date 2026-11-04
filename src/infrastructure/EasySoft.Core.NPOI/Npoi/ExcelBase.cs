@@ -12,22 +12,22 @@ public abstract class ExcelBase : IExcel
     /// <summary>
     /// Excel工作薄
     /// </summary>
-    private IWorkbook? _workbook;
+    private IWorkbook _workbook;
 
     /// <summary>
     /// Excel工作表
     /// </summary>
-    private ISheet? _sheet;
+    private ISheet _sheet;
 
     /// <summary>
     /// 当前行
     /// </summary>
-    private IRow? _row;
+    private IRow _row;
 
     /// <summary>
     /// 当前单元格
     /// </summary>
-    private ICell? _cell;
+    private ICell _cell;
 
     /// <summary>
     /// 日期格式
@@ -37,22 +37,22 @@ public abstract class ExcelBase : IExcel
     /// <summary>
     /// 表头样式
     /// </summary>
-    private ICellStyle? _headStyle;
+    private ICellStyle _headStyle;
 
     /// <summary>
     /// 正文样式
     /// </summary>
-    private ICellStyle? _bodyStyle;
+    private ICellStyle _bodyStyle;
 
     /// <summary>
     /// 页脚样式
     /// </summary>
-    private ICellStyle? _footStyle;
+    private ICellStyle _footStyle;
 
     /// <summary>
     /// 日期样式
     /// </summary>
-    private ICellStyle? _dateStyle;
+    private ICellStyle _dateStyle;
 
     /// <summary>
     /// 初始化Npoi操作
@@ -102,7 +102,7 @@ public abstract class ExcelBase : IExcel
     /// <summary>
     /// 获取行，如果不存在则创建
     /// </summary>
-    private IRow? GetOrCreateRow(int rowIndex)
+    private IRow GetOrCreateRow(int rowIndex)
     {
         return _sheet?.GetRow(rowIndex) ?? _sheet?.CreateRow(rowIndex);
     }
@@ -113,9 +113,15 @@ public abstract class ExcelBase : IExcel
     /// <param name="cell">单元格</param>
     public IExcel CreateCell(Cell cell)
     {
-        if (cell.IsNull()) return this;
+        if (cell.IsNull())
+        {
+            return this;
+        }
 
-        if (_row != null) _cell = GetOrCreateCell(_row, cell.ColumnIndex);
+        if (_row != null)
+        {
+            _cell = GetOrCreateCell(_row, cell.ColumnIndex);
+        }
 
         SetCellValue(cell.Value);
         MergeCell(cell);
@@ -144,7 +150,10 @@ public abstract class ExcelBase : IExcel
             case "System.DateTime":
                 _cell?.SetCellValue(ConvertAssist.ToDate(value));
 
-                if (_cell != null) _cell.CellStyle = CreateDateStyle();
+                if (_cell != null)
+                {
+                    _cell.CellStyle = CreateDateStyle();
+                }
 
                 break;
             case "System.Boolean":
@@ -173,9 +182,19 @@ public abstract class ExcelBase : IExcel
     /// <param name="endRowIndex">结束行索引</param>
     /// <param name="startColumnIndex">起始列索引</param>
     /// <param name="endColumnIndex">结束列索引</param>
-    public IExcel MergeCell(int startRowIndex, int endRowIndex, int startColumnIndex, int endColumnIndex)
+    public IExcel MergeCell(
+        int startRowIndex,
+        int endRowIndex,
+        int startColumnIndex,
+        int endColumnIndex
+    )
     {
-        var region = new CellRangeAddress(startRowIndex, endRowIndex, startColumnIndex, endColumnIndex);
+        var region = new CellRangeAddress(
+            startRowIndex,
+            endRowIndex,
+            startColumnIndex,
+            endColumnIndex
+        );
 
         _sheet?.AddMergedRegion(region);
 
@@ -188,7 +207,15 @@ public abstract class ExcelBase : IExcel
     /// <param name="cell">单元格</param>
     public IExcel MergeCell(Cell cell)
     {
-        if (cell.NeedMerge) MergeCell(cell.RowIndex, cell.EndRowIndex, cell.ColumnIndex, cell.EndColumnIndex);
+        if (cell.NeedMerge)
+        {
+            MergeCell(
+                cell.RowIndex,
+                cell.EndRowIndex,
+                cell.ColumnIndex,
+                cell.EndColumnIndex
+            );
+        }
 
         return this;
     }
@@ -209,9 +236,15 @@ public abstract class ExcelBase : IExcel
     /// </summary>
     private ICellStyle CreateDateStyle()
     {
-        if (_dateStyle != null) return _dateStyle;
+        if (_dateStyle != null)
+        {
+            return _dateStyle;
+        }
 
-        if (_workbook == null) throw new Exception("workbook dis allow null");
+        if (_workbook == null)
+        {
+            throw new Exception("workbook dis allow null");
+        }
 
         _dateStyle = CellStyleResolver.Resolve(_workbook, CellStyle.Body());
 
@@ -235,7 +268,7 @@ public abstract class ExcelBase : IExcel
         int endRowIndex,
         int startColumnIndex,
         int endColumnIndex,
-        ICellStyle? style
+        ICellStyle style
     )
     {
         for (var i = startRowIndex; i <= endRowIndex; i++)
@@ -243,8 +276,12 @@ public abstract class ExcelBase : IExcel
             var row = GetOrCreateRow(i);
 
             for (var j = startColumnIndex; j <= endColumnIndex; j++)
+            {
                 if (row != null)
+                {
                     GetOrCreateCell(row, j).CellStyle = style;
+                }
+            }
         }
 
         return this;
@@ -257,9 +294,18 @@ public abstract class ExcelBase : IExcel
     /// <param name="style">单元格样式</param>
     public IExcel HeadStyle(Table table, CellStyle style)
     {
-        if (_headStyle == null && _workbook != null) _headStyle = CellStyleResolver.Resolve(_workbook, style);
+        if (_headStyle == null && _workbook != null)
+        {
+            _headStyle = CellStyleResolver.Resolve(_workbook, style);
+        }
 
-        Style(0, table.HeadRowCount - 1, 0, table.ColumnNumber - 1, _headStyle);
+        Style(
+            0,
+            table.HeadRowCount - 1,
+            0,
+            table.ColumnNumber - 1,
+            _headStyle
+        );
 
         return this;
     }
@@ -271,9 +317,18 @@ public abstract class ExcelBase : IExcel
     /// <param name="style">单元格样式</param>
     public IExcel BodyStyle(Table table, CellStyle style)
     {
-        if (_bodyStyle == null && _workbook != null) _bodyStyle = CellStyleResolver.Resolve(_workbook, style);
+        if (_bodyStyle == null && _workbook != null)
+        {
+            _bodyStyle = CellStyleResolver.Resolve(_workbook, style);
+        }
 
-        Style(table.HeadRowCount, table.HeadRowCount + table.BodyRowCount - 1, 0, table.ColumnNumber - 1, _bodyStyle);
+        Style(
+            table.HeadRowCount,
+            table.HeadRowCount + table.BodyRowCount - 1,
+            0,
+            table.ColumnNumber - 1,
+            _bodyStyle
+        );
 
         return this;
     }
@@ -285,9 +340,18 @@ public abstract class ExcelBase : IExcel
     /// <param name="style">单元格样式</param>
     public IExcel FootStyle(Table table, CellStyle style)
     {
-        if (_footStyle == null && _workbook != null) _footStyle = CellStyleResolver.Resolve(_workbook, style);
+        if (_footStyle == null && _workbook != null)
+        {
+            _footStyle = CellStyleResolver.Resolve(_workbook, style);
+        }
 
-        Style(table.HeadRowCount + table.BodyRowCount, table.Count - 1, 0, table.ColumnNumber - 1, _footStyle);
+        Style(
+            table.HeadRowCount + table.BodyRowCount,
+            table.Count - 1,
+            0,
+            table.ColumnNumber - 1,
+            _footStyle
+        );
 
         return this;
     }

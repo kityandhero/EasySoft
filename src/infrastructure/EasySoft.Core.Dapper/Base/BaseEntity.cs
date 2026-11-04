@@ -7,7 +7,7 @@ public abstract class BaseEntity<T> : IEntitySelf<T> where T : BaseEntity<T>
 {
     [AdvanceColumnInformation("主键标识")]
     [AdvanceColumnMapper(Constants.DefaultTablePrimaryKey)]
-    public long Id { get; set; } = 0;
+    public long Id { get; set; }
 
     public abstract Expression<Func<T, object>> GetPrimaryKeyLambda();
 

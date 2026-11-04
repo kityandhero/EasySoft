@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>warnings</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>EasySoft.Core.EasyCaching</Title>
+        <Description>EasySoft.Core.EasyCaching</Description>
+        <PackageProjectUrl>https://github.com/kityandhero/EasySoft</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/kityandhero/EasySoft</RepositoryUrl>
+        <AssemblyName>EasySoft.Core.CacheImplementation</AssemblyName>
+        <RootNamespace>EasySoft.Core.CacheImplementation</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AspectCore.Abstractions"/>
+        <PackageReference Include="AspectCore.Core"/>
+        <PackageReference Include="AspectCore.Extensions.DependencyInjection"/>
+        <PackageReference Include="AspectCore.Extensions.Reflection"/>
+        <PackageReference Include="Autofac"/>
+        <PackageReference Include="Castle.Core"/>
+        <PackageReference Include="CSRedisCore"/>
+        <PackageReference Include="ZiggyCreatures.FusionCache"/>
+        <PackageReference Include="ZiggyCreatures.FusionCache.Serialization.NewtonsoftJson"/>
+        <PackageReference Include="ZiggyCreatures.FusionCache.Backplane.StackExchangeRedis"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis"/>
+        <PackageReference Include="StackExchange.Redis"/>
+        <PackageReference Include="Autofac.Extras.DynamicProxy"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\EasySoft.Core.CacheCore\EasySoft.Core.CacheCore.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Assists"/>
+        <Folder Include="Enums\"/>
+        <Folder Include="interfaces\"/>
+    </ItemGroup>
+
+</Project>

@@ -113,7 +113,7 @@ public static class HttpContextExtensions
     /// <param name="context"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static T? TryGetMetadata<T>(this HttpContext context) where T : class
+    public static T TryGetMetadata<T>(this HttpContext context) where T : class
     {
         var endpoint = context.GetEndpoint();
 

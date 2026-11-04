@@ -16,7 +16,7 @@ public static class ServiceCollectionExtension
     /// <returns></returns>
     public static IServiceCollection AddAdvanceRefitClient<TAdvanceRefitClient>(
         this IServiceCollection services,
-        Action<IHttpClientBuilder>? action = null
+        Action<IHttpClientBuilder> action = null
     ) where TAdvanceRefitClient : class
     {
         var policies = RefitAssist.GenerateRefitPolicies();

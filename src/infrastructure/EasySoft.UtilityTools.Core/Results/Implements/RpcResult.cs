@@ -15,5 +15,5 @@ public class RpcResult<T> : IRpcResult<T>
     public string Message { get; set; } = "";
 
     /// <inheritdoc />
-    public T? Data { get; set; }
+    public T Data { get; set; }
 }

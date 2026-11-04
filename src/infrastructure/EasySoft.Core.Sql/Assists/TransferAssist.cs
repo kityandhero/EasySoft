@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
 using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Enums;
-using EasySoft.Core.Sql.Extensions;
 using EasySoft.UtilityTools.Standard.Attributes;
 using EasySoft.UtilityTools.Standard.Exceptions;
 
@@ -121,7 +120,7 @@ public static class TransferAssist
     /// </summary>
     /// <param name="propertyInfo"></param>
     /// <returns></returns>
-    public static string GetColumnName(PropertyInfo? propertyInfo)
+    public static string GetColumnName(PropertyInfo propertyInfo)
     {
         if (propertyInfo == null)
         {
@@ -144,7 +143,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string GetColumnName<T>(Expression<Func<T>> propertyLambda)
     {
-        return GetColumnName(propertyLambda, out Type? _);
+        return GetColumnName(propertyLambda, out Type _);
     }
 
     /// <summary>
@@ -156,7 +155,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string GetColumnName<T>(
         Expression<Func<T>> propertyLambda,
-        out PropertyInfo? propertyInfo
+        out PropertyInfo propertyInfo
     )
     {
         return GetColumnName(
@@ -175,7 +174,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string GetColumnName<T>(
         Expression<Func<T>> propertyLambda,
-        out Type? entityType
+        out Type entityType
     )
     {
         return GetColumnName(
@@ -195,8 +194,8 @@ public static class TransferAssist
     /// <returns></returns>
     public static string GetColumnName<T>(
         Expression<Func<T>> propertyLambda,
-        out Type? entityType,
-        out PropertyInfo? propertyInfo
+        out Type entityType,
+        out PropertyInfo propertyInfo
     )
     {
         return HandlerColumnName(
@@ -217,7 +216,7 @@ public static class TransferAssist
         Expression<Func<T, object>> propertyLambda
     )
     {
-        return GetColumnName(propertyLambda, out Type? _);
+        return GetColumnName(propertyLambda, out Type _);
     }
 
     /// <summary>
@@ -229,7 +228,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string GetColumnName<T>(
         Expression<Func<T, object>> propertyLambda,
-        out Type? entityType
+        out Type entityType
     )
     {
         return GetColumnName(
@@ -248,7 +247,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string GetColumnName<T>(
         Expression<Func<T, object>> propertyLambda,
-        out PropertyInfo? propertyInfo
+        out PropertyInfo propertyInfo
     )
     {
         return GetColumnName(
@@ -268,8 +267,8 @@ public static class TransferAssist
     /// <returns></returns>`
     public static string GetColumnName<T>(
         Expression<Func<T, object>> propertyLambda,
-        out Type? entityType,
-        out PropertyInfo? propertyInfo
+        out Type entityType,
+        out PropertyInfo propertyInfo
     )
     {
         return HandlerColumnName(
@@ -308,7 +307,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string GetTableAndColumnName<T>(
         Expression<Func<T>> propertyLambda,
-        out PropertyInfo? propertyInfo
+        out PropertyInfo propertyInfo
     )
     {
         return GetTableAndColumnName(
@@ -327,7 +326,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string GetTableAndColumnName<T>(
         Expression<Func<T>> propertyLambda,
-        out Type? entityType
+        out Type entityType
     )
     {
         return GetTableAndColumnName(
@@ -347,8 +346,8 @@ public static class TransferAssist
     /// <returns></returns>
     public static string GetTableAndColumnName<T>(
         Expression<Func<T>> propertyLambda,
-        out Type? entityType,
-        out PropertyInfo? propertyInfo
+        out Type entityType,
+        out PropertyInfo propertyInfo
     )
     {
         return HandlerTableAndColumnName(
@@ -369,7 +368,7 @@ public static class TransferAssist
         Expression<Func<T, object>> propertyLambda
     )
     {
-        return GetTableAndColumnName(propertyLambda, out Type? _);
+        return GetTableAndColumnName(propertyLambda, out Type _);
     }
 
     /// <summary>
@@ -381,7 +380,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string GetTableAndColumnName<T>(
         Expression<Func<T, object>> propertyLambda,
-        out Type? entityType
+        out Type entityType
     )
     {
         return GetTableAndColumnName(
@@ -400,7 +399,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string GetTableAndColumnName<T>(
         Expression<Func<T, object>> propertyLambda,
-        out PropertyInfo? propertyInfo
+        out PropertyInfo propertyInfo
     )
     {
         return GetTableAndColumnName(
@@ -420,8 +419,8 @@ public static class TransferAssist
     /// <returns></returns>
     public static string GetTableAndColumnName<T>(
         Expression<Func<T, object>> propertyLambda,
-        out Type? entityType,
-        out PropertyInfo? propertyInfo
+        out Type entityType,
+        out PropertyInfo propertyInfo
     )
     {
         return HandlerTableAndColumnName(
@@ -460,7 +459,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string TransferColumnName<T>(
         Expression<Func<T>> propertyLambda,
-        out PropertyInfo? propertyInfo
+        out PropertyInfo propertyInfo
     )
     {
         return TransferColumnName(
@@ -479,7 +478,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string TransferColumnName<T>(
         Expression<Func<T>> propertyLambda,
-        out Type? entityType
+        out Type entityType
     )
     {
         return TransferColumnName(
@@ -499,8 +498,8 @@ public static class TransferAssist
     /// <returns></returns>
     public static string TransferColumnName<T>(
         Expression<Func<T>> propertyLambda,
-        out Type? entityType,
-        out PropertyInfo? propertyInfo
+        out Type entityType,
+        out PropertyInfo propertyInfo
     )
     {
         var columnName = GetColumnName(
@@ -543,7 +542,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string TransferColumnName<T>(
         Expression<Func<T, object>> propertyLambda,
-        out PropertyInfo? propertyInfo
+        out PropertyInfo propertyInfo
     )
     {
         return TransferColumnName(
@@ -562,7 +561,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string TransferColumnName<T>(
         Expression<Func<T, object>> propertyLambda,
-        out Type? entityType
+        out Type entityType
     )
     {
         return TransferColumnName(
@@ -582,8 +581,8 @@ public static class TransferAssist
     /// <returns></returns>
     public static string TransferColumnName<T>(
         Expression<Func<T, object>> propertyLambda,
-        out Type? entityType,
-        out PropertyInfo? propertyInfo
+        out Type entityType,
+        out PropertyInfo propertyInfo
     )
     {
         var columnName = GetColumnName(
@@ -720,7 +719,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string TransferTableAndColumnName<T>(
         Expression<Func<T>> propertyLambda,
-        out PropertyInfo? propertyInfo
+        out PropertyInfo propertyInfo
     )
     {
         return TransferTableAndColumnName(
@@ -739,7 +738,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string TransferTableAndColumnName<T>(
         Expression<Func<T>> propertyLambda,
-        out Type? entityType
+        out Type entityType
     )
     {
         return TransferTableAndColumnName(
@@ -759,8 +758,8 @@ public static class TransferAssist
     /// <returns></returns>
     public static string TransferTableAndColumnName<T>(
         Expression<Func<T>> propertyLambda,
-        out Type? entityType,
-        out PropertyInfo? propertyInfo
+        out Type entityType,
+        out PropertyInfo propertyInfo
     )
     {
         return HandlerTableAndColumnName(
@@ -795,7 +794,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string TransferTableAndColumnName<T>(
         Expression<Func<T, object>> propertyLambda,
-        out PropertyInfo? propertyInfo
+        out PropertyInfo propertyInfo
     )
     {
         return TransferTableAndColumnName(
@@ -814,7 +813,7 @@ public static class TransferAssist
     /// <returns></returns>
     public static string TransferTableAndColumnName<T>(
         Expression<Func<T, object>> propertyLambda,
-        out Type? entityType
+        out Type entityType
     )
     {
         return TransferTableAndColumnName(
@@ -834,8 +833,8 @@ public static class TransferAssist
     /// <returns></returns>
     public static string TransferTableAndColumnName<T>(
         Expression<Func<T, object>> propertyLambda,
-        out Type? entityType,
-        out PropertyInfo? propertyInfo
+        out Type entityType,
+        out PropertyInfo propertyInfo
     )
     {
         return HandlerTableAndColumnName(
@@ -1754,7 +1753,7 @@ public static class TransferAssist
     /// <param name="replaceDBNullValue"></param>
     /// <returns></returns>
     public static string BuildIsNullFragment(
-        PropertyInfo? propertyInfo,
+        PropertyInfo propertyInfo,
         string sqlFragment,
         bool replaceDBNullValue = false
     )
@@ -1821,12 +1820,12 @@ public static class TransferAssist
 
     private static string HandlerColumnName<T>(
         Expression<Func<T>> propertyLambda,
-        out Type? entityType,
-        out PropertyInfo? propertyInfo,
+        out Type entityType,
+        out PropertyInfo propertyInfo,
         Func<PropertyInfo, string> handler
     )
     {
-        dynamic? me;
+        dynamic me;
         propertyInfo = null;
 
         if (propertyLambda.Body.NodeType == ExpressionType.MemberAccess)
@@ -1894,12 +1893,12 @@ public static class TransferAssist
 
     private static string HandlerColumnName<T>(
         Expression<Func<T, object>> propertyLambda,
-        out Type? entityType,
-        out PropertyInfo? propertyInfo,
+        out Type entityType,
+        out PropertyInfo propertyInfo,
         Func<PropertyInfo, string> handler
     )
     {
-        dynamic? me;
+        dynamic me;
         propertyInfo = null;
 
         if (propertyLambda.Body.NodeType == ExpressionType.MemberAccess)
@@ -1967,12 +1966,12 @@ public static class TransferAssist
 
     private static string HandlerTableAndColumnName<T>(
         Expression<Func<T>> propertyLambda,
-        out Type? entityType,
-        out PropertyInfo? propertyInfo,
-        Func<object?, PropertyInfo?, string> handler
+        out Type entityType,
+        out PropertyInfo propertyInfo,
+        Func<object, PropertyInfo, string> handler
     )
     {
-        dynamic? me;
+        dynamic me;
         propertyInfo = null;
 
         if (propertyLambda.Body.NodeType == ExpressionType.MemberAccess)
@@ -2040,12 +2039,12 @@ public static class TransferAssist
 
     private static string HandlerTableAndColumnName<T>(
         Expression<Func<T, object>> propertyLambda,
-        out Type? entityType,
-        out PropertyInfo? propertyInfo,
-        Func<object?, PropertyInfo?, string> handler
+        out Type entityType,
+        out PropertyInfo propertyInfo,
+        Func<object, PropertyInfo, string> handler
     )
     {
-        dynamic? me;
+        dynamic me;
         propertyInfo = null;
 
         if (propertyLambda.Body.NodeType == ExpressionType.MemberAccess)

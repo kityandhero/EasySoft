@@ -105,7 +105,7 @@ public static class GeneralConfigAssist
     /// <returns></returns>
     public static string GetValue(string key)
     {
-        return Configuration.GetSection(key).Value;
+        return Configuration.GetSection(key).Value ?? "";
     }
 
     private static GeneralConfig GetConfig()
@@ -128,7 +128,7 @@ public static class GeneralConfigAssist
     /// <returns></returns>
     public static string GetId()
     {
-        var ticks = DateTime.Now.GetTotalMilliseconds();
+        var ticks = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         var ticksHex = Convert.ToString(ticks, 16);
         var name = GetName();
 
@@ -182,6 +182,36 @@ public static class GeneralConfigAssist
         version = assemblyName.Version?.ToString() ?? "1.0.0.0";
 
         return version;
+    }
+
+    /// <summary>
+    /// GetCacheMode
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ConfigErrorException"></exception>
+    public static string GetCacheMode()
+    {
+        var v = GetConfig().CacheMode;
+
+        const string inMemory = nameof(CacheModeCollection.InMemory);
+        const string redis = nameof(CacheModeCollection.Redis);
+        const string hybrid = nameof(CacheModeCollection.Hybrid);
+
+        v = string.IsNullOrWhiteSpace(v) ? inMemory : v;
+
+        if (!v.In(
+                inMemory,
+                redis,
+                hybrid
+            ))
+        {
+            throw new ConfigErrorException(
+                $"请配置 CacheMode: {ConfigFile} -> CacheMode,请设置 {inMemory}/{redis}/{hybrid}",
+                GetConfigFileInfo()
+            );
+        }
+
+        return v;
     }
 
     /// <summary>
@@ -283,28 +313,6 @@ public static class GeneralConfigAssist
         }
 
         return value == 1;
-    }
-
-    /// <summary>
-    /// GetCacheMode
-    /// </summary>
-    /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
-    public static string GetCacheMode()
-    {
-        var v = GetConfig().CacheMode;
-
-        v = string.IsNullOrWhiteSpace(v) ? "InMemory" : v;
-
-        if (!v.In("InMemory", "Redis"))
-        {
-            throw new ConfigErrorException(
-                $"请配置 CacheMode: {ConfigFile} -> CacheMode,请设置 InMemory/Redis",
-                GetConfigFileInfo()
-            );
-        }
-
-        return v;
     }
 
     #region AppSecurity

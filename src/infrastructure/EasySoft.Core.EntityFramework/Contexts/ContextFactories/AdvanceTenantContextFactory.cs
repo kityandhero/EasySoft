@@ -9,7 +9,7 @@ namespace EasySoft.Core.EntityFramework.Contexts.ContextFactories;
 public abstract class AdvanceTenantContextFactory<T> : IDbContextFactory<T> where T : TenantBasicContext
 {
     private readonly IDbContextFactory<T> _pooledFactory;
-    private readonly ITenant? _tenant;
+    private readonly ITenant _tenant;
 
     /// <summary>
     /// AdvanceTenantContextFactory
@@ -18,7 +18,7 @@ public abstract class AdvanceTenantContextFactory<T> : IDbContextFactory<T> wher
     /// <param name="tenant"></param>
     protected AdvanceTenantContextFactory(
         IDbContextFactory<T> pooledFactory,
-        ITenant? tenant
+        ITenant tenant
     )
     {
         _pooledFactory = pooledFactory;

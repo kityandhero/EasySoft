@@ -37,7 +37,7 @@ public sealed class ApiResultFilterAttribute : ActionFilterAttribute
             var success = context.Result.GetProperty<bool>(nameof(apiResult.Success));
             var message = context.Result.GetProperty<string>(nameof(apiResult.Message));
             var d = context.Result.GetProperty<object>(nameof(apiResult.Data));
-            var ed = context.Result.GetProperty<object?>(nameof(apiResult.ExtraData));
+            var ed = context.Result.GetProperty<object>(nameof(apiResult.ExtraData));
 
             var data = BuildApiData(code, success, message, d, ed);
 
@@ -76,7 +76,7 @@ public sealed class ApiResultFilterAttribute : ActionFilterAttribute
             }
             else
             {
-                IEnumerable? list = data as IList;
+                IEnumerable list = data as IList;
 
                 if (list != null)
                     d.list = list;

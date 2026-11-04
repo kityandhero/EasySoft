@@ -57,7 +57,7 @@ public static class JsonConvertAssist
     /// <returns></returns>
     public static JsonSerializerSettings AdjustJsonSerializerSettings(
         JsonSerializerSettings serializerSettings,
-        Action<JsonSerializerSettings>? action = null
+        Action<JsonSerializerSettings> action = null
     )
     {
         serializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -80,7 +80,7 @@ public static class JsonConvertAssist
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static object? DeserializeObject(string data)
+    public static object DeserializeObject(string data)
     {
         return JsonConvert.DeserializeObject(data, CreateJsonSerializerSettings(false));
     }
@@ -90,7 +90,7 @@ public static class JsonConvertAssist
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static object? DeserializeObjectLegacy(string data)
+    public static object DeserializeObjectLegacy(string data)
     {
         return JsonConvert.DeserializeObject(data);
     }
@@ -101,7 +101,7 @@ public static class JsonConvertAssist
     /// <param name="data"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static T? DeserializeObject<T>(string data)
+    public static T DeserializeObject<T>(string data)
     {
         return JsonConvert.DeserializeObject<T>(
             data,
@@ -115,7 +115,7 @@ public static class JsonConvertAssist
     /// <param name="data"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static T? DeserializeObjectLegacy<T>(string data)
+    public static T DeserializeObjectLegacy<T>(string data)
     {
         return JsonConvert.DeserializeObject<T>(data);
     }
@@ -127,7 +127,7 @@ public static class JsonConvertAssist
     /// <param name="converters"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static T? DeserializeObject<T>(string data, params JsonConverter[] converters)
+    public static T DeserializeObject<T>(string data, params JsonConverter[] converters)
     {
         return JsonConvert.DeserializeObject<T>(data, converters);
     }

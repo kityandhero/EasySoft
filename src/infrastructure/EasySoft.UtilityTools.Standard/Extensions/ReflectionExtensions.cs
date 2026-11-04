@@ -227,7 +227,7 @@ public static class ReflectionExtensions
     /// <param name="target"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static bool EqualsByProperty<T>(this T sources, object target) where T : class?
+    public static bool EqualsByProperty<T>(this T sources, object target) where T : class
     {
         var sourceType = sources?.GetType();
         var targetType = target.GetType();
@@ -333,7 +333,7 @@ public static class ReflectionExtensions
     /// </summary>
     /// <param name="sources"></param>
     /// <returns></returns>
-    private static IList GetCloneByList(this IEnumerable? sources)
+    private static IList GetCloneByList(this IEnumerable sources)
     {
         if (sources == null)
         {
@@ -431,7 +431,7 @@ public static class ReflectionExtensions
     /// <param name="provider">Attribute provider</param>
     /// <param name="inherit">When true, it looks up the heirarchy chain for the inherited custom attributes</param>
     /// <returns>Attribute specified if it exists</returns>
-    public static T? Attribute<T>(this ICustomAttributeProvider provider, bool inherit = true) where T : Attribute
+    public static T Attribute<T>(this ICustomAttributeProvider provider, bool inherit = true) where T : Attribute
     {
         return provider.IsDefined(typeof(T), inherit) ? provider.Attributes<T>(inherit)[0] : default;
     }
@@ -447,7 +447,7 @@ public static class ReflectionExtensions
     /// <param name="provider">Attribute provider</param>
     /// <param name="inherit">When true, it looks up the heirarchy chain for the inherited custom attributes</param>
     /// <returns>Array of attributes</returns>
-    public static T?[] Attributes<T>(this ICustomAttributeProvider provider, bool inherit = true)
+    public static T[] Attributes<T>(this ICustomAttributeProvider provider, bool inherit = true)
         where T : Attribute
     {
         return provider.IsDefined(typeof(T), inherit)
@@ -529,7 +529,7 @@ public static class ReflectionExtensions
     /// <param name="type">Type to create an instance of</param>
     /// <param name="args">Arguments sent into the constructor</param>
     /// <returns>The newly created instance of the type</returns>
-    public static object? Create(this Type? type, params object[] args)
+    public static object Create(this Type type, params object[] args)
     {
         if (type.IsNull())
         {
@@ -546,7 +546,7 @@ public static class ReflectionExtensions
     /// <param name="types">Types to create an instance of</param>
     /// <param name="args">Arguments sent into the constructor</param>
     /// <returns>The newly created instance of the types</returns>
-    public static IEnumerable<TClassType?> Create<TClassType>(this IEnumerable<Type> types, params object[] args)
+    public static IEnumerable<TClassType> Create<TClassType>(this IEnumerable<Type> types, params object[] args)
     {
         if (types.IsNull())
         {
@@ -562,7 +562,7 @@ public static class ReflectionExtensions
     /// <param name="types">Types to create an instance of</param>
     /// <param name="args">Arguments sent into the constructor</param>
     /// <returns>The newly created instance of the types</returns>
-    public static IEnumerable<object?> Create(this IEnumerable<Type> types, params object[] args)
+    public static IEnumerable<object> Create(this IEnumerable<Type> types, params object[] args)
     {
         if (types.IsNull())
         {
@@ -673,7 +673,7 @@ public static class ReflectionExtensions
     /// <param name="objectType">Object type</param>
     /// <param name="type">Type</param>
     /// <returns>True if it is, false otherwise</returns>
-    public static bool Is(this Type? objectType, Type type)
+    public static bool Is(this Type objectType, Type type)
     {
         if (type.IsNull())
         {
@@ -782,7 +782,7 @@ public static class ReflectionExtensions
     /// </summary>
     /// <param name="name">Name of the assembly to return</param>
     /// <returns>The assembly specified if it exists</returns>
-    public static Assembly? Load(this AssemblyName name)
+    public static Assembly Load(this AssemblyName name)
     {
         if (name.IsNull())
         {
@@ -848,8 +848,8 @@ public static class ReflectionExtensions
     /// <param name="types">Types to check</param>
     /// <param name="inherit">When true, it looks up the heirarchy chain for the inherited custom attributes</param>
     /// <returns>The list of types that are marked with an attribute</returns>
-    public static IEnumerable<Type>? MarkedWith<T>(
-        this IEnumerable<Type>? types,
+    public static IEnumerable<Type> MarkedWith<T>(
+        this IEnumerable<Type> types,
         bool inherit = true
     )
         where T : Attribute
@@ -867,7 +867,7 @@ public static class ReflectionExtensions
     /// <param name="source">Object to copy</param>
     /// <param name="simpleTypesOnly">If true, it only copies simple types (no classes, only items like int, string, etc.), false copies everything.</param>
     /// <returns>A copy of the object</returns>
-    public static T? MakeShallowCopy<T>(this T source, bool simpleTypesOnly = false)
+    public static T MakeShallowCopy<T>(this T source, bool simpleTypesOnly = false)
     {
         if (source == null)
         {
@@ -928,7 +928,7 @@ public static class ReflectionExtensions
     /// <typeparam name="TClassType">Base type/interface searching for</typeparam>
     /// <param name="assembly">Assembly to search within</param>
     /// <returns>A list of objects that are of the type specified</returns>
-    public static IEnumerable<TClassType?> Objects<TClassType>(this Assembly assembly)
+    public static IEnumerable<TClassType> Objects<TClassType>(this Assembly assembly)
     {
         if (assembly.IsNull())
         {
@@ -945,14 +945,14 @@ public static class ReflectionExtensions
     /// <typeparam name="TClassType">Base type/interface searching for</typeparam>
     /// <param name="assemblies">Assemblies to search within</param>
     /// <returns>A list of objects that are of the type specified</returns>
-    public static IEnumerable<TClassType?> Objects<TClassType>(this IEnumerable<Assembly> assemblies)
+    public static IEnumerable<TClassType> Objects<TClassType>(this IEnumerable<Assembly> assemblies)
     {
         if (assemblies.IsNull())
         {
             throw new ArgumentNullException(nameof(assemblies));
         }
 
-        var returnValues = new List<TClassType?>();
+        var returnValues = new List<TClassType>();
 
         foreach (var assembly in assemblies)
         {
@@ -970,7 +970,7 @@ public static class ReflectionExtensions
     /// <param name="directory">Directory to search within</param>
     /// <param name="recursive">Should this be recursive</param>
     /// <returns>A list of objects that are of the type specified</returns>
-    public static IEnumerable<TClassType?> Objects<TClassType>(this DirectoryInfo directory, bool recursive = false)
+    public static IEnumerable<TClassType> Objects<TClassType>(this DirectoryInfo directory, bool recursive = false)
     {
         if (directory.IsNull())
         {
@@ -990,7 +990,7 @@ public static class ReflectionExtensions
     /// <param name="source">The object to get the property of</param>
     /// <param name="property">The property to get</param>
     /// <returns>Returns the property's value</returns>
-    public static object? Property(this object source, PropertyInfo? property)
+    public static object Property(this object source, PropertyInfo property)
     {
         if (source.IsNull())
         {
@@ -1011,7 +1011,7 @@ public static class ReflectionExtensions
     /// <param name="source">The object to get the property of</param>
     /// <param name="property">The property to get</param>
     /// <returns>Returns the property's value</returns>
-    public static object? Property(this object source, string property)
+    public static object Property(this object source, string property)
     {
         if (source.IsNull())
         {
@@ -1026,7 +1026,7 @@ public static class ReflectionExtensions
         var properties = property.Split(new[] { "." }, StringSplitOptions.None);
         var tempObject = source;
         var tempObjectType = tempObject.GetType();
-        PropertyInfo? destinationProperty;
+        PropertyInfo destinationProperty;
 
         for (var x = 0; x < properties.Length - 1; ++x)
         {
@@ -1199,7 +1199,7 @@ public static class ReflectionExtensions
         var objectInstance = Expression.Parameter(propertyInfo.DeclaringType, "x");
         var propertySet = Expression.Parameter(typeof(TDataType), "y");
         MethodCallExpression setterCall;
-        MemberExpression? propertyGet = null;
+        MemberExpression propertyGet = null;
 
         if (splitName.Length > 1)
         {
@@ -1302,7 +1302,7 @@ public static class ReflectionExtensions
     /// the Prop1 of the source object, which then has a Prop2 on it, which in turn
     /// has a Prop3 on it.)</param>
     /// <returns>The type of the property specified or null if it can not be reached.</returns>
-    public static Type? PropertyType(this object? source, string propertyPath)
+    public static Type PropertyType(this object source, string propertyPath)
     {
         if (source == null || string.IsNullOrEmpty(propertyPath))
         {
@@ -1320,7 +1320,7 @@ public static class ReflectionExtensions
     /// the Prop1 of the source object, which then has a Prop2 on it, which in turn
     /// has a Prop3 on it.)</param>
     /// <returns>The type of the property specified or null if it can not be reached.</returns>
-    public static Type? PropertyType(this Type? objectType, string propertyPath)
+    public static Type PropertyType(this Type objectType, string propertyPath)
     {
         if (objectType == null || string.IsNullOrEmpty(propertyPath))
         {
@@ -1349,7 +1349,7 @@ public static class ReflectionExtensions
     /// <param name="assembly">Assembly to get version information from</param>
     /// <param name="infoType">Version info type</param>
     /// <returns>The version information as a string</returns>
-    public static string? ToString(this Assembly assembly, VersionInfo infoType)
+    public static string ToString(this Assembly assembly, VersionInfo infoType)
     {
         if (assembly.IsNull())
         {

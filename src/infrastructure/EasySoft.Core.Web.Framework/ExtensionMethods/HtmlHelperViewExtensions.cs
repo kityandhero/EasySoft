@@ -2,23 +2,34 @@
 
 public static class HtmlHelperViewExtensions
 {
-    public static IHtmlContent Action(this IHtmlHelper helper, string action, object? parameters = null)
+    public static IHtmlContent Action(this IHtmlHelper helper, string action, object parameters = null)
     {
         var controller = (string)helper.ViewContext.RouteData.Values["controller"]!;
 
-        return Action(helper, action, controller, parameters);
+        return Action(
+            helper,
+            action,
+            controller,
+            parameters
+        );
     }
 
     public static IHtmlContent Action(
         this IHtmlHelper helper,
         string action,
         string controller,
-        object? parameters = null
+        object parameters = null
     )
     {
         var area = (string)helper.ViewContext.RouteData.Values["area"]!;
 
-        return Action(helper, action, controller, area, parameters);
+        return Action(
+            helper,
+            action,
+            controller,
+            area,
+            parameters
+        );
     }
 
     public static IHtmlContent Action(
@@ -26,14 +37,26 @@ public static class HtmlHelperViewExtensions
         string action,
         string controller,
         string area,
-        object? parameters = null
+        object parameters = null
     )
     {
-        if (action == null) throw new ArgumentNullException(nameof(action));
+        if (action == null)
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
 
-        if (controller == null) throw new ArgumentNullException(nameof(controller));
+        if (controller == null)
+        {
+            throw new ArgumentNullException(nameof(controller));
+        }
 
-        var task = RenderActionAsync(helper, action, controller, area, parameters);
+        var task = RenderActionAsync(
+            helper,
+            action,
+            controller,
+            area,
+            parameters
+        );
 
         return task.Result;
     }
@@ -42,7 +65,8 @@ public static class HtmlHelperViewExtensions
         this IHtmlHelper helper,
         string action,
         string controller,
-        string area, object? parameters = null
+        string area,
+        object parameters = null
     )
     {
         // fetching required services for invocation
@@ -56,9 +80,17 @@ public static class HtmlHelperViewExtensions
         // creating new action invocation context
         var routeData = new RouteData();
 
-        foreach (var router in helper.ViewContext.RouteData.Routers) routeData.PushState(router, null, null);
+        foreach (var router in helper.ViewContext.RouteData.Routers)
+        {
+            routeData.PushState(
+                router,
+                null,
+                null
+            );
+        }
 
-        routeData.PushState(null,
+        routeData.PushState(
+            null,
             new RouteValueDictionary(
                 new
                 {
@@ -70,12 +102,19 @@ public static class HtmlHelperViewExtensions
             null
         );
 
-        routeData.PushState(null, new RouteValueDictionary(parameters ?? new { }), null);
+        routeData.PushState(
+            null,
+            new RouteValueDictionary(parameters ?? new { }),
+            null
+        );
 
         var routeContext = new RouteContext(helper.ViewContext.HttpContext) { RouteData = routeData };
         var candidate = actionSelector.SelectCandidates(routeContext);
 
-        if (candidate == null) throw new Exception("candidate disallow null");
+        if (candidate == null)
+        {
+            throw new Exception("candidate disallow null");
+        }
 
         var actionDescriptor = actionSelector.SelectBestCandidate(routeContext, candidate);
 
@@ -86,13 +125,20 @@ public static class HtmlHelperViewExtensions
         {
             var newHttpContext = serviceProvider.GetRequiredService<IHttpContextFactory>()
                 .Create(helper.ViewContext.HttpContext.Features);
-            if (newHttpContext.Items.ContainsKey(typeof(IUrlHelper))) newHttpContext.Items.Remove(typeof(IUrlHelper));
+            if (newHttpContext.Items.ContainsKey(typeof(IUrlHelper)))
+            {
+                newHttpContext.Items.Remove(typeof(IUrlHelper));
+            }
 
             newHttpContext.Response.Body = new MemoryStream();
 
             if (actionDescriptor != null)
             {
-                var actionContext = new ActionContext(newHttpContext, routeData, actionDescriptor);
+                var actionContext = new ActionContext(
+                    newHttpContext,
+                    routeData,
+                    actionDescriptor
+                );
                 actionContextAccessor.ActionContext = actionContext;
 
                 var invoker = serviceProvider.GetRequiredService<IActionInvokerFactory>()
@@ -114,12 +160,17 @@ public static class HtmlHelperViewExtensions
         }
         finally
         {
-            if (originalActionContext != null) actionContextAccessor.ActionContext = originalActionContext;
+            if (originalActionContext != null)
+            {
+                actionContextAccessor.ActionContext = originalActionContext;
+            }
 
             httpContextAccessor.HttpContext = originalHttpContext;
 
             if (helper.ViewContext.HttpContext.Items.ContainsKey(typeof(IUrlHelper)))
+            {
                 helper.ViewContext.HttpContext.Items.Remove(typeof(IUrlHelper));
+            }
         }
     }
 }

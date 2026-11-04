@@ -14,7 +14,7 @@ public class CacheKeyValue<T>
     /// <summary>
     /// 结果值, 来自数据源或缓存
     /// </summary>
-    public T? Value { get; set; } = default;
+    public T Value { get; set; } = default;
 
     /// <summary>
     /// 设置缓存值时的值序列化结果, 仅在设置或刷新缓存时有值, 值仅来自缓存时为空白

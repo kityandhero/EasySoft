@@ -11,7 +11,6 @@ public static class EndpointRouteBuilderExtensions
             new HealthCheckOptions
             {
                 Predicate = _ => true,
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             }
         );
 

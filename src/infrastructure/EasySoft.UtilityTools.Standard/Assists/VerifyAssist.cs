@@ -1,6 +1,5 @@
 ﻿using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.Extensions;
-using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.UtilityTools.Standard.Assists;
 
@@ -14,7 +13,7 @@ public static class VerifyAssist
     /// </summary>
     /// <param name="source">要检验的变量</param>
     /// <returns></returns>
-    public static bool IsNull(this object? source)
+    public static bool IsNull(this object source)
     {
         return source == null;
     }
@@ -26,9 +25,12 @@ public static class VerifyAssist
     /// <returns></returns>
     public static bool IsBoolean(this object source)
     {
-        if (source.IsNull()) return false;
+        if (source.IsNull())
+        {
+            return false;
+        }
 
-        var result = bool.TryParse(source.ToString(), out var _);
+        var result = bool.TryParse(source.ToString(), out _);
         return result;
     }
 
@@ -39,9 +41,12 @@ public static class VerifyAssist
     /// <returns></returns>
     public static bool IsNumber(this object source)
     {
-        if (source.IsNull()) return false;
+        if (source.IsNull())
+        {
+            return false;
+        }
 
-        var result = double.TryParse(source.ToString(), out var _);
+        var result = double.TryParse(source.ToString(), out _);
         return result;
     }
 
@@ -86,7 +91,10 @@ public static class VerifyAssist
     {
         value = 0;
 
-        if (source.IsNull()) return false;
+        if (source.IsNull())
+        {
+            return false;
+        }
 
         var result = int.TryParse(source.ToString(), out value);
 
@@ -119,7 +127,7 @@ public static class VerifyAssist
     /// </summary>
     /// <param name="source">要检验的变量</param>
     /// <returns></returns>
-    public static bool IsInt64(this object? source)
+    public static bool IsInt64(this object source)
     {
         return IsInt64(source, out _);
     }
@@ -130,11 +138,14 @@ public static class VerifyAssist
     /// <param name="source">要检验的变量</param>
     /// <param name="value">转换后的值</param>
     /// <returns></returns>
-    public static bool IsInt64(this object? source, out long value)
+    public static bool IsInt64(this object source, out long value)
     {
         value = 0;
 
-        if (source == null) return false;
+        if (source == null)
+        {
+            return false;
+        }
 
         var result = long.TryParse(source.ToString(), out value);
 
@@ -148,9 +159,12 @@ public static class VerifyAssist
     /// <returns></returns>
     public static bool IsDateTime(this object source)
     {
-        if (source.IsNull()) return false;
+        if (source.IsNull())
+        {
+            return false;
+        }
 
-        var result = DateTime.TryParse(source.ToString(), out var _);
+        var result = DateTime.TryParse(source.ToString(), out _);
 
         return result;
     }
@@ -166,11 +180,13 @@ public static class VerifyAssist
     {
         var result = true;
         foreach (var one in p)
+        {
             if (!double.TryParse(one, out _))
             {
                 result = false;
                 break;
             }
+        }
 
         return result;
     }
@@ -185,13 +201,21 @@ public static class VerifyAssist
     public static ExecutiveResult CheckPasswordCanUse(string initialPassword)
     {
         if (string.IsNullOrWhiteSpace(initialPassword))
+        {
             return new ExecutiveResult(ReturnCode.ParamError.ToMessage("密码不能为空"));
+        }
 
         var initialPasswordTrim = initialPassword.Remove(" ").Trim();
 
-        if (initialPasswordTrim.Length < 6) return new ExecutiveResult(ReturnCode.ParamError.ToMessage("密码长度不能小于6位"));
+        if (initialPasswordTrim.Length < 6)
+        {
+            return new ExecutiveResult(ReturnCode.ParamError.ToMessage("密码长度不能小于6位"));
+        }
 
-        if (initialPasswordTrim.Length > 32) return new ExecutiveResult(ReturnCode.ParamError.ToMessage("密码长度不能长于32位"));
+        if (initialPasswordTrim.Length > 32)
+        {
+            return new ExecutiveResult(ReturnCode.ParamError.ToMessage("密码长度不能长于32位"));
+        }
 
         return new ExecutiveResult(ReturnCode.Ok);
     }

@@ -1,14 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
-        <ProjectReference Include="..\EasySoft.Simple.CustomerCenter.Domain\EasySoft.Simple.CustomerCenter.Domain.csproj" />
+        <PackageReference Include="Mapster"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
+        <ProjectReference Include="..\EasySoft.Simple.CustomerCenter.Domain\EasySoft.Simple.CustomerCenter.Domain.csproj"/>
     </ItemGroup>
 
 </Project>

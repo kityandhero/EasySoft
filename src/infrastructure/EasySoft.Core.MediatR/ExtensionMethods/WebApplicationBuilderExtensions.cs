@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.MediatR.ExtensionMethods;
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace EasySoft.Core.MediatR.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
@@ -9,13 +11,19 @@ public static class WebApplicationBuilderExtensions
     )
     {
         if (builder.HasRegistered(UniqueIdentifierAddAdvanceMediatR))
+        {
             return builder;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceMediatR)}."
         );
 
-        builder.Services.AddMediatR(MediatRConfigure.GetAssemblies().ToArray());
+        builder.Services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssemblies(MediatRConfigure.GetAssemblies().ToArray());
+            }
+        );
 
         return builder;
     }

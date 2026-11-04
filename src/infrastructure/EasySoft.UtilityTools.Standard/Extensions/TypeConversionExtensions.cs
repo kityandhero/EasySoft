@@ -36,9 +36,12 @@ public static class TypeConversionExtensions
     /// <param name="source">Input object</param>
     /// <param name="format">Format of the output string</param>
     /// <returns>The formatted string</returns>
-    public static string FormatToString(this object? source, string format)
+    public static string FormatToString(this object source, string format)
     {
-        if (source == null) return "";
+        if (source == null)
+        {
+            return "";
+        }
 
         return string.IsNullOrEmpty(format) ? source.Call<string>("ToString", format) : source.ToString() ?? "";
     }

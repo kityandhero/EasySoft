@@ -67,11 +67,14 @@ public class CompetenceEntity
     /// 转换为属性首字母小写的Object
     /// </summary>
     /// <returns></returns>
-    public ExpandoObject ToObject(ExpandoObject? additionalData = null)
+    public ExpandoObject ToObject(ExpandoObject additionalData = null)
     {
         var d = this.ToExpandoObject();
 
-        if (additionalData != null) d.AddKeyValuePair(new KeyValuePair<string, object?>("additional", additionalData));
+        if (additionalData != null)
+        {
+            d.AddKeyValuePair(new KeyValuePair<string, object>("additional", additionalData));
+        }
 
         var json = JsonConvertAssist.SerializeAndKeyToLower(d);
 
@@ -92,27 +95,43 @@ public class CompetenceEntity
 
         var listExpansionSet = ExpansionSet.ToCharArray().Select(o => o.ToString()).ToList();
 
-        if (listExpand.Count <= 0) return result;
+        if (listExpand.Count <= 0)
+        {
+            return result;
+        }
 
         var count = listExpand.Count;
 
         if (listExpand.Count != listExpansionSet.Count())
+
             //result = listExpand.Select(o => (object)new { name = o, value = "0" }).ToList();
+        {
             for (var i = 0; i < count; i++)
-                result.Add(new
-                {
-                    indexNo = i,
-                    name = listExpand[i],
-                    value = "0"
-                });
+            {
+                result.Add(
+                    new
+                    {
+                        indexNo = i,
+                        name = listExpand[i],
+                        value = "0"
+                    }
+                );
+            }
+        }
         else
+        {
             for (var i = 0; i < count; i++)
-                result.Add(new
-                {
-                    indexNo = i,
-                    name = listExpand[i],
-                    value = listExpansionSet[i] == "1" ? "1" : "0"
-                });
+            {
+                result.Add(
+                    new
+                    {
+                        indexNo = i,
+                        name = listExpand[i],
+                        value = listExpansionSet[i] == "1" ? "1" : "0"
+                    }
+                );
+            }
+        }
 
         return result;
     }
@@ -125,7 +144,10 @@ public class CompetenceEntity
     /// <returns></returns>
     public static CompetenceEntity operator +(CompetenceEntity competenceBefore, CompetenceEntity competenceAfter)
     {
-        if (competenceBefore.GuidTag != competenceAfter.GuidTag) throw new Exception("合并的两个权限体必须标识一致");
+        if (competenceBefore.GuidTag != competenceAfter.GuidTag)
+        {
+            throw new Exception("合并的两个权限体必须标识一致");
+        }
 
         var mergerResult = Merger(competenceBefore, competenceAfter);
         var result = new CompetenceEntity
@@ -174,6 +196,7 @@ public class CompetenceEntity
         }
 
         foreach (var c in minList)
+        {
             if (maxList.Contains(c))
             {
                 var index = maxList.IndexOf(c);
@@ -182,14 +205,19 @@ public class CompetenceEntity
                 var af = c == '1' ? '1' : '0';
 
                 if (be == '0' && af == '0')
+                {
                     maxList[index] = '0';
+                }
                 else
+                {
                     maxList[index] = '1';
+                }
             }
             else
             {
                 maxList.Add(c);
             }
+        }
 
         return maxList.Count > 0 ? maxList.Join("") : "";
     }
@@ -206,9 +234,16 @@ public class SortCompetenceComparer : IComparer<CompetenceEntity>
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <returns></returns>
-    public int Compare(CompetenceEntity? x, CompetenceEntity? y)
+    public int Compare(CompetenceEntity x, CompetenceEntity y)
     {
-        if (y != null && x != null && string.Compare(x.Name, y.Name, StringComparison.Ordinal) > 0) return 1;
+        if (y != null && x != null && string.Compare(
+                x.Name,
+                y.Name,
+                StringComparison.Ordinal
+            ) > 0)
+        {
+            return 1;
+        }
 
         return 0;
     }
@@ -220,9 +255,12 @@ public class SortCompetenceComparer : IComparer<CompetenceEntity>
 public class UrlCompetenceComparer : IEqualityComparer<CompetenceEntity>, IComparer<CompetenceEntity>
 {
     /// <inheritdoc />
-    public bool Equals(CompetenceEntity? x, CompetenceEntity? y)
+    public bool Equals(CompetenceEntity x, CompetenceEntity y)
     {
-        if (x != null && y != null && x.GuidTag == y.GuidTag) return true;
+        if (x != null && y != null && x.GuidTag == y.GuidTag)
+        {
+            return true;
+        }
 
         return false;
     }
@@ -234,9 +272,12 @@ public class UrlCompetenceComparer : IEqualityComparer<CompetenceEntity>, ICompa
     }
 
     /// <inheritdoc />
-    public int Compare(CompetenceEntity? x, CompetenceEntity? y)
+    public int Compare(CompetenceEntity x, CompetenceEntity y)
     {
-        if (y != null && x != null && x.GuidTag == y.GuidTag) return 1;
+        if (y != null && x != null && x.GuidTag == y.GuidTag)
+        {
+            return 1;
+        }
 
         return 0;
     }
@@ -280,7 +321,10 @@ public class CompetenceBox
     public bool CheckCompetence(string competence, string guidTag)
     {
         var index = Competence.CompetenceCollection.GetInstance().GetCompetenceIndex(guidTag, competence);
-        if (index == null) return false;
+        if (index == null)
+        {
+            return false;
+        }
 
         var v = GetExpansionValue(guidTag);
         var cv = v.GetByIndex((int)index);
@@ -295,8 +339,12 @@ public class CompetenceBox
     public string GetExpansionValue(string guidTag)
     {
         foreach (var c in CompetenceCollection)
+        {
             if (c.GuidTag.Equals(guidTag, StringComparison.OrdinalIgnoreCase))
+            {
                 return c.ExpansionSet;
+            }
+        }
 
         return "";
     }
@@ -326,7 +374,7 @@ public class CompetenceBox
     /// </summary>
     /// <param name="json"></param>
     /// <returns></returns>
-    public static CompetenceBox? ConvertToCompetenceBox(string json)
+    public static CompetenceBox ConvertToCompetenceBox(string json)
     {
         return JsonConvert.DeserializeObject<CompetenceBox>(json);
     }
@@ -342,6 +390,7 @@ public class CompetenceBox
         var tempList = new List<CompetenceEntity>();
 
         foreach (var cBefore in competenceBefore.CompetenceCollection)
+        {
             if (tempList.Contains(cBefore, new UrlCompetenceComparer()))
             {
                 var index = tempList.BinarySearch(cBefore, new UrlCompetenceComparer());
@@ -356,8 +405,10 @@ public class CompetenceBox
             {
                 tempList.Add(cBefore);
             }
+        }
 
         foreach (var cAfter in competenceAfter.CompetenceCollection)
+        {
             if (tempList.Contains(cAfter, new UrlCompetenceComparer()))
             {
                 var index = tempList.BinarySearch(cAfter, new UrlCompetenceComparer());
@@ -372,6 +423,7 @@ public class CompetenceBox
             {
                 tempList.Add(cAfter);
             }
+        }
 
         return new CompetenceBox
         {

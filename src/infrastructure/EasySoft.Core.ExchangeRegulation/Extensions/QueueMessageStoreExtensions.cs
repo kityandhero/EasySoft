@@ -29,17 +29,17 @@ public static class QueueMessageStoreExtensions
     /// <returns></returns>
     public static ExpandoObject ToObject<T>(
         this T entity,
-        ExpandoObject? additionalData = null
+        ExpandoObject additionalData = null
     ) where T : IQueueMessageStore
     {
         var d = entity.ToExpandoObject();
 
         if (additionalData != null)
         {
-            d.Add(new KeyValuePair<string, object?>("additional", additionalData));
+            d.Add(new KeyValuePair<string, object>("additional", additionalData));
         }
 
-        d.Add(new KeyValuePair<string, object?>("Key", entity.GetId()));
+        d.Add(new KeyValuePair<string, object>("Key", entity.GetId()));
 
         var modelName = ReflectionAssist.GetClassName(entity).ToLowerFirst();
 
@@ -88,7 +88,7 @@ public static class QueueMessageStoreExtensions
 
             if (item.Key.Equals(identification))
             {
-                result.Add(new KeyValuePair<string, object?>(className + $"{identification}", item.Value));
+                result.Add(new KeyValuePair<string, object>(className + $"{identification}", item.Value));
             }
             else
             {
@@ -96,7 +96,7 @@ public static class QueueMessageStoreExtensions
             }
         }
 
-        result.Add(new KeyValuePair<string, object?>("Key", entity.GetId()));
+        result.Add(new KeyValuePair<string, object>("Key", entity.GetId()));
 
         var json = JsonConvertAssist.SerializeAndKeyToLower(result);
 
@@ -137,7 +137,7 @@ public static class QueueMessageStoreExtensions
 
             if (item.Key.Equals(identification))
             {
-                result.Add(new KeyValuePair<string, object?>(className + $"{identification}", item.Value));
+                result.Add(new KeyValuePair<string, object>(className + $"{identification}", item.Value));
             }
             else
             {
@@ -145,12 +145,12 @@ public static class QueueMessageStoreExtensions
             }
         }
 
-        result.Add(new KeyValuePair<string, object?>("Key", entity.GetId()));
+        result.Add(new KeyValuePair<string, object>("Key", entity.GetId()));
 
         var jObject = JsonConvert.DeserializeObject<JObject>(JsonConvertAssist.SerializeAndKeyToLower(result));
 
         return jObject?.ToExpandoObject() ?? new ExpandoObject();
-    }
+    } 
 
     /// <summary>  
     /// ToObjectJson

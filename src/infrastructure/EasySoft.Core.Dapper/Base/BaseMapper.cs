@@ -4,6 +4,7 @@ using EasySoft.Core.Sql.Builders;
 using EasySoft.Core.Sql.Extensions;
 using EasySoft.Core.Sql.Factories;
 using EasySoft.Core.Sql.Interfaces;
+using EasySoft.UtilityTools.Standard.Exceptions;
 using EasySoft.UtilityTools.Standard.Interfaces;
 using EasySoft.UtilityTools.Standard.Messages;
 using EasySoft.UtilityTools.Standard.Result.Factories;
@@ -15,7 +16,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 {
     private readonly IMapperChannel _mapperChannel;
 
-    private readonly IMapperTransaction? _mapperTransaction;
+    private readonly IMapperTransaction _mapperTransaction;
 
     private readonly bool _sqlLogRecordSwitch;
 
@@ -48,7 +49,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public T? Get(object id)
+    public T Get(object id)
     {
         var m = new T();
 
@@ -70,14 +71,14 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    protected object? GetObject(object id)
+    protected object GetObject(object id)
     {
         var o = Get(id);
 
         return o == null ? null : o.ToObject();
     }
 
-    public T? GetBy(Condition<T> conditions, bool transferWrapperQuery = true)
+    public T GetBy(Condition<T> conditions, bool transferWrapperQuery = true)
     {
         return GetBy(
             new List<Condition<T>>
@@ -89,7 +90,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         );
     }
 
-    public T? GetBy(Condition<T> conditions, Sort<T> sort, bool transferWrapperQuery = true)
+    public T GetBy(Condition<T> conditions, Sort<T> sort, bool transferWrapperQuery = true)
     {
         return GetBy(
             new List<Condition<T>>
@@ -104,7 +105,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         );
     }
 
-    public T? GetBy(Condition<T> conditions, IList<Sort<T>> sorts, bool transferWrapperQuery = true)
+    public T GetBy(Condition<T> conditions, IList<Sort<T>> sorts, bool transferWrapperQuery = true)
     {
         return GetBy(
             new List<Condition<T>>
@@ -116,7 +117,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         );
     }
 
-    public T? GetBy(ICollection<Condition<T>> conditions, bool transferWrapperQuery = true)
+    public T GetBy(ICollection<Condition<T>> conditions, bool transferWrapperQuery = true)
     {
         return GetBy(
             conditions,
@@ -125,7 +126,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         );
     }
 
-    public T? GetBy(ICollection<Condition<T>> conditions, Sort<T> sort, bool transferWrapperQuery = true)
+    public T GetBy(ICollection<Condition<T>> conditions, Sort<T> sort, bool transferWrapperQuery = true)
     {
         return GetBy(
             conditions,
@@ -141,7 +142,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
     /// 按照指定条件获取实例
     /// </summary>
     /// <returns></returns>
-    public T? GetBy(ICollection<Condition<T>> conditions, IList<Sort<T>>? sorts, bool transferWrapperQuery = true)
+    public T GetBy(ICollection<Condition<T>> conditions, IList<Sort<T>> sorts, bool transferWrapperQuery = true)
     {
         var model = new T();
 
@@ -229,6 +230,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 var data = dbTransaction.Connection.Query<T>(
                         builder.Sql,
                         null,
@@ -258,7 +269,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
     /// 获取实例
     /// </summary>
     /// <returns></returns>
-    public object? GetByObject(ICollection<Condition<T>> conditions, IList<Sort<T>>? sorts = null)
+    public object GetByObject(ICollection<Condition<T>> conditions, IList<Sort<T>> sorts = null)
     {
         var o = GetBy(conditions, sorts);
 
@@ -340,6 +351,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 dbTransaction.Connection.ExecuteScalar(
                     sql,
                     model,
@@ -435,6 +456,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 var result = dbTransaction.Connection.Execute(
                     sql,
                     model,
@@ -504,6 +535,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
                     try
                     {
+                        if (dbTransaction == null)
+                        {
+                            throw new UnhandledException("dbTransaction disallow null");
+                        }
+
+                        if (dbTransaction.Connection == null)
+                        {
+                            throw new UnhandledException("dbTransaction.Connection disallow null");
+                        }
+
                         dbTransaction.Connection.ExecuteScalar(
                             sql,
                             model,
@@ -525,9 +566,12 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
                                 new
                                 {
                                     channel = _mapperChannel.GetChannel(),
-                                    data = JsonConvert.DeserializeObject(
-                                        MiniProfiler.Current.Head.CustomTimingsJson
-                                    )
+                                    data = MiniProfiler.Current.Head != null &&
+                                           MiniProfiler.Current.Head.CustomTimingsJson != null
+                                        ? JsonConvert.DeserializeObject(
+                                            MiniProfiler.Current.Head.CustomTimingsJson
+                                        )
+                                        : ""
                                 }
                             );
                         }
@@ -548,6 +592,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
                 try
                 {
+                    if (dbTransaction == null)
+                    {
+                        throw new UnhandledException("dbTransaction disallow null");
+                    }
+
+                    if (dbTransaction.Connection == null)
+                    {
+                        throw new UnhandledException("dbTransaction.Connection disallow null");
+                    }
+
                     dbTransaction.Connection.ExecuteScalar(
                         sql,
                         model,
@@ -615,6 +669,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 dbTransaction.Connection.Execute(
                     sql,
                     model,
@@ -677,6 +741,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 dbTransaction.Connection.Execute(
                     query,
                     data,
@@ -740,6 +814,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 dbTransaction.Connection.Execute(
                     sql,
                     model,
@@ -806,6 +890,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 dbTransaction.Connection.Execute(
                     sql,
                     model,
@@ -872,6 +966,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 dbTransaction.Connection.Execute(
                     sql,
                     model,
@@ -942,6 +1046,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 dbTransaction.Connection.Execute(
                     query,
                     data,
@@ -1009,6 +1123,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 dbTransaction.Connection.Execute(
                     query,
                     data,
@@ -1075,6 +1199,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 dbTransaction.Connection.Execute(
                     sql,
                     model,
@@ -1133,6 +1267,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 dbTransaction.Connection.Execute(
                     sql,
                     model,
@@ -1256,6 +1400,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 dbTransaction.Connection.Execute(
                     sql,
                     null,
@@ -1311,6 +1465,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 dbTransaction.Connection.Execute(
                     sql,
                     null,
@@ -1493,6 +1657,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 var reader = dbTransaction.Connection.ExecuteReader(
                     query,
                     null,
@@ -1689,6 +1863,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 var list = dbTransaction.Connection.Query<T>(
                         query.Sql,
                         null,
@@ -1721,8 +1905,8 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
     public PageListResult<T> PageListWithTotalSize(
         int pageNo,
         int pageSize,
-        ICollection<Condition<T>>? conditions = null,
-        IList<Sort<T>>? sorts = null
+        ICollection<Condition<T>> conditions = null,
+        IList<Sort<T>> sorts = null
     )
     {
         var total = TotalCount(conditions);
@@ -1754,8 +1938,8 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
     public List<T> PageList(
         int pageNo,
         int pageSize,
-        ICollection<Condition<T>>? conditions = null,
-        IList<Sort<T>>? sorts = null
+        ICollection<Condition<T>> conditions = null,
+        IList<Sort<T>> sorts = null
     )
     {
         var query = SqlAssist.BuildPageListSql(
@@ -1794,6 +1978,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 var list = dbTransaction.Connection.Query<T>(
                         query,
                         null,
@@ -1855,6 +2049,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 result = dbTransaction.Connection.Query<T>(
                         sql,
                         null,
@@ -2049,7 +2253,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
     /// 依据条件获取数据总量
     /// </summary>
     /// <returns></returns>
-    public long TotalCount(ICollection<Condition<T>>? conditions = null)
+    public long TotalCount(ICollection<Condition<T>> conditions = null)
     {
         var model = new T();
         var query = new StringBuilder();
@@ -2114,6 +2318,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 var r = dbTransaction.Connection.ExecuteReader(
                     query.ToString(),
                     null,
@@ -2179,6 +2393,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 var list = dbTransaction.Connection.Query<T>(sql).ToList();
 
                 LogSqlExecutionMessage();
@@ -2327,6 +2551,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         {
             var dbTransaction = _mapperTransaction.GetTransaction();
 
+            if (dbTransaction == null)
+            {
+                throw new UnhandledException("dbTransaction disallow null");
+            }
+
+            if (dbTransaction.Connection == null)
+            {
+                throw new UnhandledException("dbTransaction.Connection disallow null");
+            }
+
             using var r = dbTransaction.Connection.ExecuteReader(
                 procName,
                 ps,
@@ -2397,6 +2631,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 var r = dbTransaction.Connection.ExecuteReader(
                     procName,
                     ps,
@@ -2463,6 +2707,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 var result = dbTransaction.Connection.Execute(
                     procName,
                     ps,
@@ -2529,6 +2783,16 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
             try
             {
+                if (dbTransaction == null)
+                {
+                    throw new UnhandledException("dbTransaction disallow null");
+                }
+
+                if (dbTransaction.Connection == null)
+                {
+                    throw new UnhandledException("dbTransaction.Connection disallow null");
+                }
+
                 var result = dbTransaction.Connection.ExecuteScalar(
                     procName,
                     ps,
@@ -2632,7 +2896,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         return _mapperTransaction;
     }
 
-    private object BuildErrorDataValue(MiniProfiler? miniProfiler)
+    private object BuildErrorDataValue(MiniProfiler miniProfiler)
     {
         if (miniProfiler != null)
         {
@@ -2640,7 +2904,12 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
                 new
                 {
                     channel = _mapperChannel.GetChannel(),
-                    data = JsonConvert.DeserializeObject(MiniProfiler.Current.Head.CustomTimingsJson)
+                    data = MiniProfiler.Current != null && MiniProfiler.Current.Head != null &&
+                           MiniProfiler.Current.Head.CustomTimingsJson != null
+                        ? JsonConvert.DeserializeObject(
+                            MiniProfiler.Current.Head.CustomTimingsJson
+                        )
+                        : ""
                 }
             );
         }
@@ -2670,13 +2939,14 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
         var listCustomTiming = new List<SqlLogMessage>();
 
-        var dictionary = MiniProfiler.Current.Head.CustomTimings;
+        var dictionary = MiniProfiler.Current.Head != null
+            ? MiniProfiler.Current.Head.CustomTimings ?? new Dictionary<string, List<CustomTiming>>()
+            : new Dictionary<string, List<CustomTiming>>();
 
         foreach (var item in dictionary)
         {
             listCustomTiming.AddRange(
-                item.Value.Select(
-                    one => new SqlLogMessage
+                item.Value.Select(one => new SqlLogMessage
                     {
                         Flag = one.Id.ToString(),
                         CommandString = one.CommandString,

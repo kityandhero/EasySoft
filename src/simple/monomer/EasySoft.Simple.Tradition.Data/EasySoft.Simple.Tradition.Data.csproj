@@ -1,23 +1,43 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
-      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework.MySql\EasySoft.Core.EntityFramework.MySql.csproj" />
-      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework.SqlServer\EasySoft.Core.EntityFramework.SqlServer.csproj" />
-      <ProjectReference Include="..\..\..\infrastructure\EasySoft.IdGenerator\EasySoft.IdGenerator.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework.MySql\EasySoft.Core.EntityFramework.MySql.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework.SqlServer\EasySoft.Core.EntityFramework.SqlServer.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.IdGenerator\EasySoft.IdGenerator.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
+        <PackageReference Include="Humanizer.Core"/>
+        <PackageReference Include="Mapster"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.CodeAnalysis.Common"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyModel"/>
+        <PackageReference Include="Microsoft.Extensions.Logging"/>
+        <PackageReference Include="System.CodeDom"/>
+        <PackageReference Include="System.Composition"/>
+        <PackageReference Include="System.Composition.AttributedModel"/>
+        <PackageReference Include="System.Composition.Convention"/>
+        <PackageReference Include="System.Composition.Hosting"/>
+        <PackageReference Include="System.Composition.Runtime"/>
+        <PackageReference Include="System.Composition.TypedParts"/>
     </ItemGroup>
 
 </Project>

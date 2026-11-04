@@ -54,14 +54,23 @@ public static class EnumerableExtensions
     /// </example>
     public static IEnumerable<T> Concat<T>(this IEnumerable<T> enumerable1, params IEnumerable<T>[] additions)
     {
-        if (enumerable1.IsNull()) throw new ArgumentNullException(nameof(enumerable1));
+        if (enumerable1.IsNull())
+        {
+            throw new ArgumentNullException(nameof(enumerable1));
+        }
 
-        if (additions.IsNull()) throw new ArgumentNullException(nameof(additions));
+        if (additions.IsNull())
+        {
+            throw new ArgumentNullException(nameof(additions));
+        }
 
         var results = new List<T>();
         results.AddRange(enumerable1);
         foreach (var t in additions)
+        {
             results.AddRange(t);
+        }
+
         return results;
     }
 
@@ -81,13 +90,22 @@ public static class EnumerableExtensions
     {
         var enumerable = list as T[] ?? list.ToArray();
 
-        if (end > enumerable.Length) end = enumerable.Length;
+        if (end > enumerable.Length)
+        {
+            end = enumerable.Length;
+        }
 
-        if (start < 0) start = 0;
+        if (start < 0)
+        {
+            start = 0;
+        }
 
         var returnList = new List<T>();
 
-        for (var x = start; x < end; ++x) returnList.Add(enumerable.ElementAt(x));
+        for (var x = start; x < end; ++x)
+        {
+            returnList.Add(enumerable.ElementAt(x));
+        }
 
         return returnList;
     }
@@ -105,15 +123,29 @@ public static class EnumerableExtensions
     /// <param name="end">Item to end with</param>
     /// <param name="action">Action to do</param>
     /// <returns>The original list</returns>
-    public static IEnumerable<T> For<T>(this IEnumerable<T> list, int start, int end, Action<T> action)
+    public static IEnumerable<T> For<T>(
+        this IEnumerable<T> list,
+        int start,
+        int end,
+        Action<T> action
+    )
     {
-        if (list.IsNull()) throw new ArgumentNullException(nameof(list));
+        if (list.IsNull())
+        {
+            throw new ArgumentNullException(nameof(list));
+        }
 
-        if (action.IsNull()) throw new ArgumentNullException(nameof(action));
+        if (action.IsNull())
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
 
         var enumerable = list as T[] ?? list.ToArray();
         foreach (var item in enumerable.ElementsBetween(start, end + 1))
+        {
             action(item);
+        }
+
         return enumerable;
     }
 
@@ -127,17 +159,33 @@ public static class EnumerableExtensions
     /// <param name="end">Item to end with</param>
     /// <param name="function">Function to do</param>
     /// <returns>The resulting list</returns>
-    public static IEnumerable<TR> For<T, TR>(this IEnumerable<T> list, int start, int end, Func<T, TR> function)
+    public static IEnumerable<TR> For<T, TR>(
+        this IEnumerable<T> list,
+        int start,
+        int end,
+        Func<T, TR> function
+    )
     {
-        if (list.IsNull()) throw new ArgumentNullException(nameof(list));
+        if (list.IsNull())
+        {
+            throw new ArgumentNullException(nameof(list));
+        }
 
-        if (function.IsNull()) throw new ArgumentNullException(nameof(function));
+        if (function.IsNull())
+        {
+            throw new ArgumentNullException(nameof(function));
+        }
 
         var returnValues = new List<TR>();
+
         // ReSharper disable LoopCanBeConvertedToQuery
         foreach (var item in list.ElementsBetween(start, end + 1))
+
             // ReSharper restore LoopCanBeConvertedToQuery
+        {
             returnValues.Add(function(item));
+        }
+
         return returnValues;
     }
 
@@ -154,13 +202,22 @@ public static class EnumerableExtensions
     /// <returns>The original list</returns>
     public static IEnumerable<T> ForEach<T>(this IEnumerable<T> list, Action<T> action)
     {
-        if (list.IsNull()) throw new ArgumentNullException(nameof(list));
+        if (list.IsNull())
+        {
+            throw new ArgumentNullException(nameof(list));
+        }
 
-        if (action.IsNull()) throw new ArgumentNullException(nameof(action));
+        if (action.IsNull())
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
 
         var forEach = list as T[] ?? list.ToArray();
         foreach (var item in forEach)
+        {
             action(item);
+        }
+
         return forEach;
     }
 
@@ -172,17 +229,28 @@ public static class EnumerableExtensions
     /// <param name="list">IEnumerable to iterate over</param>
     /// <param name="function">Function to do</param>
     /// <returns>The resulting list</returns>
-    public static IEnumerable<TR?> ForEach<T, TR>(this IEnumerable<T> list, Func<T, TR?> function)
+    public static IEnumerable<TR> ForEach<T, TR>(this IEnumerable<T> list, Func<T, TR> function)
     {
-        if (list.IsNull()) throw new ArgumentNullException(nameof(list));
+        if (list.IsNull())
+        {
+            throw new ArgumentNullException(nameof(list));
+        }
 
-        if (function.IsNull()) throw new ArgumentNullException(nameof(function));
+        if (function.IsNull())
+        {
+            throw new ArgumentNullException(nameof(function));
+        }
 
-        var returnValues = new List<TR?>();
+        var returnValues = new List<TR>();
+
         // ReSharper disable LoopCanBeConvertedToQuery
         foreach (var item in list)
+
             // ReSharper restore LoopCanBeConvertedToQuery
+        {
             returnValues.Add(function(item));
+        }
+
         return returnValues;
     }
 
@@ -194,17 +262,30 @@ public static class EnumerableExtensions
     /// <param name="action">Action to do</param>
     /// <param name="catchAction">Action that occurs if an exception occurs</param>
     /// <returns>The original list</returns>
-    public static IEnumerable<T> ForEach<T>(this IEnumerable<T> list, Action<T> action,
-        Action<T, Exception> catchAction)
+    public static IEnumerable<T> ForEach<T>(
+        this IEnumerable<T> list,
+        Action<T> action,
+        Action<T, Exception> catchAction
+    )
     {
-        if (list.IsNull()) throw new ArgumentNullException(nameof(list));
+        if (list.IsNull())
+        {
+            throw new ArgumentNullException(nameof(list));
+        }
 
-        if (action.IsNull()) throw new ArgumentNullException(nameof(action));
+        if (action.IsNull())
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
 
-        if (catchAction.IsNull()) throw new ArgumentNullException(nameof(catchAction));
+        if (catchAction.IsNull())
+        {
+            throw new ArgumentNullException(nameof(catchAction));
+        }
 
         var forEach = list as T[] ?? list.ToArray();
         foreach (var item in forEach)
+        {
             try
             {
                 action(item);
@@ -213,6 +294,7 @@ public static class EnumerableExtensions
             {
                 catchAction(item, e);
             }
+        }
 
         return forEach;
     }
@@ -226,17 +308,30 @@ public static class EnumerableExtensions
     /// <param name="function">Function to do</param>
     /// <param name="catchAction">Action that occurs if an exception occurs</param>
     /// <returns>The resulting list</returns>
-    public static IEnumerable<TR> ForEach<T, TR>(this IEnumerable<T> list, Func<T, TR> function,
-        Action<T, Exception> catchAction)
+    public static IEnumerable<TR> ForEach<T, TR>(
+        this IEnumerable<T> list,
+        Func<T, TR> function,
+        Action<T, Exception> catchAction
+    )
     {
-        if (list.IsNull()) throw new ArgumentNullException(nameof(list));
+        if (list.IsNull())
+        {
+            throw new ArgumentNullException(nameof(list));
+        }
 
-        if (function.IsNull()) throw new ArgumentNullException(nameof(function));
+        if (function.IsNull())
+        {
+            throw new ArgumentNullException(nameof(function));
+        }
 
-        if (catchAction.IsNull()) throw new ArgumentNullException(nameof(catchAction));
+        if (catchAction.IsNull())
+        {
+            throw new ArgumentNullException(nameof(catchAction));
+        }
 
         var returnValues = new List<TR>();
         foreach (var item in list)
+        {
             try
             {
                 returnValues.Add(function(item));
@@ -245,6 +340,7 @@ public static class EnumerableExtensions
             {
                 catchAction(item, e);
             }
+        }
 
         return returnValues;
     }
@@ -262,13 +358,28 @@ public static class EnumerableExtensions
     /// <param name="end">Item to end with</param>
     /// <param name="action">Action to do</param>
     /// <returns>The original list</returns>
-    public static IEnumerable<T> ForParallel<T>(this IEnumerable<T> list, int start, int end, Action<T> action)
+    public static IEnumerable<T> ForParallel<T>(
+        this IEnumerable<T> list,
+        int start,
+        int end,
+        Action<T> action
+    )
     {
-        if (list.IsNull()) throw new ArgumentNullException(nameof(list));
+        if (list.IsNull())
+        {
+            throw new ArgumentNullException(nameof(list));
+        }
 
-        if (action.IsNull()) throw new ArgumentNullException(nameof(action));
+        if (action.IsNull())
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
 
-        Parallel.For(start, end + 1, x => action(list.ElementAt(x)));
+        Parallel.For(
+            start,
+            end + 1,
+            x => action(list.ElementAt(x))
+        );
         return list;
     }
 
@@ -282,15 +393,29 @@ public static class EnumerableExtensions
     /// <param name="end">Item to end with</param>
     /// <param name="function">Function to do</param>
     /// <returns>The resulting list</returns>
-    public static IEnumerable<TR> ForParallel<T, TR>(this IEnumerable<T> list, int start, int end,
-        Func<T, TR> function)
+    public static IEnumerable<TR> ForParallel<T, TR>(
+        this IEnumerable<T> list,
+        int start,
+        int end,
+        Func<T, TR> function
+    )
     {
-        if (list.IsNull()) throw new ArgumentNullException(nameof(list));
+        if (list.IsNull())
+        {
+            throw new ArgumentNullException(nameof(list));
+        }
 
-        if (function.IsNull()) throw new ArgumentNullException(nameof(function));
+        if (function.IsNull())
+        {
+            throw new ArgumentNullException(nameof(function));
+        }
 
         var results = new TR[end + 1 - start];
-        Parallel.For(start, end + 1, x => results[x - start] = function(list.ElementAt(x)));
+        Parallel.For(
+            start,
+            end + 1,
+            x => results[x - start] = function(list.ElementAt(x))
+        );
         return results;
     }
 
@@ -307,9 +432,15 @@ public static class EnumerableExtensions
     /// <returns>The original list</returns>
     public static IEnumerable<T> ForEachParallel<T>(this IEnumerable<T> list, Action<T> action)
     {
-        if (list.IsNull()) throw new ArgumentNullException(nameof(list));
+        if (list.IsNull())
+        {
+            throw new ArgumentNullException(nameof(list));
+        }
 
-        if (action.IsNull()) throw new ArgumentNullException(nameof(action));
+        if (action.IsNull())
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
 
         var forEachParallel = list as T[] ?? list.ToArray();
         Parallel.ForEach(forEachParallel, action);
@@ -326,12 +457,22 @@ public static class EnumerableExtensions
     /// <returns>The results in an IEnumerable list</returns>
     public static IEnumerable<TR> ForEachParallel<T, TR>(this IEnumerable<T> list, Func<T, TR> function)
     {
-        if (list.IsNull()) throw new ArgumentNullException(nameof(list));
+        if (list.IsNull())
+        {
+            throw new ArgumentNullException(nameof(list));
+        }
 
-        if (function.IsNull()) throw new ArgumentNullException(nameof(function));
+        if (function.IsNull())
+        {
+            throw new ArgumentNullException(nameof(function));
+        }
 
         var enumerable = list as T[] ?? list.ToArray();
-        return enumerable.ForParallel(0, enumerable.Length - 1, function);
+        return enumerable.ForParallel(
+            0,
+            enumerable.Length - 1,
+            function
+        );
     }
 
     /// <summary>
@@ -342,27 +483,42 @@ public static class EnumerableExtensions
     /// <param name="action">Action to do</param>
     /// <param name="catchAction">Action that occurs if an exception occurs</param>
     /// <returns>The original list</returns>
-    public static IEnumerable<T> ForEachParallel<T>(this IEnumerable<T> list, Action<T> action,
-        Action<T, Exception> catchAction)
+    public static IEnumerable<T> ForEachParallel<T>(
+        this IEnumerable<T> list,
+        Action<T> action,
+        Action<T, Exception> catchAction
+    )
     {
-        if (list.IsNull()) throw new ArgumentNullException(nameof(list));
+        if (list.IsNull())
+        {
+            throw new ArgumentNullException(nameof(list));
+        }
 
-        if (action.IsNull()) throw new ArgumentNullException(nameof(action));
+        if (action.IsNull())
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
 
-        if (catchAction.IsNull()) throw new ArgumentNullException(nameof(catchAction));
+        if (catchAction.IsNull())
+        {
+            throw new ArgumentNullException(nameof(catchAction));
+        }
 
         var forEachParallel = list as T[] ?? list.ToArray();
-        Parallel.ForEach(forEachParallel, delegate(T item)
-        {
-            try
+        Parallel.ForEach(
+            forEachParallel,
+            delegate(T item)
             {
-                action(item);
+                try
+                {
+                    action(item);
+                }
+                catch (Exception e)
+                {
+                    catchAction(item, e);
+                }
             }
-            catch (Exception e)
-            {
-                catchAction(item, e);
-            }
-        });
+        );
         return forEachParallel;
     }
 
@@ -375,27 +531,42 @@ public static class EnumerableExtensions
     /// <param name="function">Function to do</param>
     /// <param name="catchAction">Action that occurs if an exception occurs</param>
     /// <returns>The resulting list</returns>
-    public static IEnumerable<TR> ForEachParallel<T, TR>(this IEnumerable<T> list, Func<T, TR> function,
-        Action<T, Exception> catchAction)
+    public static IEnumerable<TR> ForEachParallel<T, TR>(
+        this IEnumerable<T> list,
+        Func<T, TR> function,
+        Action<T, Exception> catchAction
+    )
     {
-        if (list.IsNull()) throw new ArgumentNullException(nameof(list));
+        if (list.IsNull())
+        {
+            throw new ArgumentNullException(nameof(list));
+        }
 
-        if (function.IsNull()) throw new ArgumentNullException(nameof(function));
+        if (function.IsNull())
+        {
+            throw new ArgumentNullException(nameof(function));
+        }
 
-        if (catchAction.IsNull()) throw new ArgumentNullException(nameof(catchAction));
+        if (catchAction.IsNull())
+        {
+            throw new ArgumentNullException(nameof(catchAction));
+        }
 
         var returnValues = new List<TR>();
-        Parallel.ForEach(list, delegate(T item)
-        {
-            try
+        Parallel.ForEach(
+            list,
+            delegate(T item)
             {
-                returnValues.Add(function(item));
+                try
+                {
+                    returnValues.Add(function(item));
+                }
+                catch (Exception e)
+                {
+                    catchAction(item, e);
+                }
             }
-            catch (Exception e)
-            {
-                catchAction(item, e);
-            }
-        });
+        );
         return returnValues;
     }
 
@@ -412,7 +583,10 @@ public static class EnumerableExtensions
     /// <returns>The last X items from the list</returns>
     public static IEnumerable<T> Last<T>(this IEnumerable<T> list, int count)
     {
-        if (list.IsNull()) throw new ArgumentNullException(nameof(list));
+        if (list.IsNull())
+        {
+            throw new ArgumentNullException(nameof(list));
+        }
 
         var enumerable = list as T[] ?? list.ToArray();
         return enumerable.ElementsBetween(enumerable.Length - count, enumerable.Length);
@@ -433,16 +607,22 @@ public static class EnumerableExtensions
     public static int PositionOf<T>(
         this IEnumerable<T> list,
         T value,
-        IEqualityComparer<T>? equalityComparer = null
+        IEqualityComparer<T> equalityComparer = null
     )
     {
-        if (list.IsNull()) throw new ArgumentNullException(nameof(list));
+        if (list.IsNull())
+        {
+            throw new ArgumentNullException(nameof(list));
+        }
 
         equalityComparer = equalityComparer.Check(() => new GenericEqualityComparer<T>());
         var count = 0;
         foreach (var item in list)
         {
-            if (equalityComparer != null && equalityComparer.Equals(value, item)) return count;
+            if (equalityComparer != null && equalityComparer.Equals(value, item))
+            {
+                return count;
+            }
 
             ++count;
         }
@@ -463,7 +643,10 @@ public static class EnumerableExtensions
     /// <returns>An IEnumerable with the objects that meet the criteria removed</returns>
     public static IEnumerable<T> Remove<T>(this IEnumerable<T> value, Func<T, bool> predicate)
     {
-        if (predicate.IsNull()) throw new ArgumentNullException(nameof(predicate));
+        if (predicate.IsNull())
+        {
+            throw new ArgumentNullException(nameof(predicate));
+        }
 
         return value.Where(x => !predicate(x));
     }
@@ -480,12 +663,20 @@ public static class EnumerableExtensions
     /// <param name="list">List to convert</param>
     /// <param name="convertingFunction">Function used to convert each item</param>
     /// <returns>The array containing the items from the list</returns>
-    public static TTArget?[] ToArray<TSource, TTArget>(this IEnumerable<TSource> list,
-        Func<TSource, TTArget?> convertingFunction)
+    public static TTArget[] ToArray<TSource, TTArget>(
+        this IEnumerable<TSource> list,
+        Func<TSource, TTArget> convertingFunction
+    )
     {
-        if (list.IsNull()) throw new ArgumentNullException(nameof(list));
+        if (list.IsNull())
+        {
+            throw new ArgumentNullException(nameof(list));
+        }
 
-        if (convertingFunction.IsNull()) throw new ArgumentNullException(nameof(convertingFunction));
+        if (convertingFunction.IsNull())
+        {
+            throw new ArgumentNullException(nameof(convertingFunction));
+        }
 
         return list.ForEach(convertingFunction).ToArray();
     }
@@ -501,24 +692,31 @@ public static class EnumerableExtensions
     /// <param name="list">List to convert</param>
     /// <param name="columns">Column names (if empty, uses property names)</param>
     /// <returns>The list as a DataTable</returns>
-    public static DataTable ToDataTable<T>(this IEnumerable<T> list, params string?[] columns)
+    public static DataTable ToDataTable<T>(this IEnumerable<T> list, params string[] columns)
     {
         var returnValue = new DataTable { Locale = CultureInfo.CurrentCulture };
         var enumerable = list as T[] ?? list.ToArray();
 
-        if (!enumerable.Any()) return returnValue;
+        if (!enumerable.Any())
+        {
+            return returnValue;
+        }
 
         var properties = typeof(T).GetProperties();
 
-        if (columns.Length == 0) columns = properties.ToArray(x => x.Name);
+        if (columns.Length == 0)
+        {
+            columns = properties.ToArray(x => x.Name);
+        }
 
         columns.ForEach(x =>
-        {
-            var firstOrDefault = properties.FirstOrDefault(z => z.Name == x);
-            return firstOrDefault != null ? returnValue.Columns.Add(x, firstOrDefault.PropertyType) : null;
-        });
+            {
+                var firstOrDefault = properties.FirstOrDefault(z => z.Name == x);
+                return firstOrDefault != null ? returnValue.Columns.Add(x, firstOrDefault.PropertyType) : null;
+            }
+        );
 
-        var row = new object?[columns.Length];
+        var row = new object[columns.Length];
 
         foreach (var item in enumerable)
         {
@@ -526,7 +724,10 @@ public static class EnumerableExtensions
             {
                 var firstOrDefault = properties.FirstOrDefault(z => z.Name == columns[x]);
 
-                if (firstOrDefault != null) row[x] = firstOrDefault.GetValue(item, Array.Empty<object>());
+                if (firstOrDefault != null)
+                {
+                    row[x] = firstOrDefault.GetValue(item, Array.Empty<object>());
+                }
             }
 
             returnValue.Rows.Add(row);
@@ -547,12 +748,20 @@ public static class EnumerableExtensions
     /// <param name="list">IEnumerable to convert</param>
     /// <param name="convertingFunction">Function used to convert each item</param>
     /// <returns>The list containing the items from the IEnumerable</returns>
-    public static List<TTarget?> ToList<TSource, TTarget>(this IEnumerable<TSource> list,
-        Func<TSource, TTarget?> convertingFunction)
+    public static List<TTarget> ToList<TSource, TTarget>(
+        this IEnumerable<TSource> list,
+        Func<TSource, TTarget> convertingFunction
+    )
     {
-        if (list.IsNull()) throw new ArgumentNullException(nameof(list));
+        if (list.IsNull())
+        {
+            throw new ArgumentNullException(nameof(list));
+        }
 
-        if (convertingFunction.IsNull()) throw new ArgumentNullException(nameof(convertingFunction));
+        if (convertingFunction.IsNull())
+        {
+            throw new ArgumentNullException(nameof(convertingFunction));
+        }
 
         return list.ForEach(convertingFunction).ToList();
     }
@@ -567,15 +776,18 @@ public static class EnumerableExtensions
     /// <typeparam name="T">Item type</typeparam>
     /// <param name="list">List to convert</param>
     /// <param name="itemOutput">Used to convert the item to a string (defaults to calling ToString)</param>
-    /// <param name="separator">Seperator to use between items (defaults to ,)</param>
+    /// <param name="separator">Seperator to use between items (defaults to ',')</param>
     /// <returns>The string version of the list</returns>
     public static string ToString<T>(
         this IEnumerable<T> list,
-        Func<T, string>? itemOutput = null,
-        string? separator = ","
+        Func<T, string> itemOutput = null,
+        string separator = ","
     )
     {
-        if (list.IsNull()) throw new ArgumentNullException(nameof(list));
+        if (list.IsNull())
+        {
+            throw new ArgumentNullException(nameof(list));
+        }
 
         separator = separator.Check("");
         itemOutput = itemOutput.Check(x => x?.ToString() ?? "");
@@ -584,10 +796,11 @@ public static class EnumerableExtensions
         var tempSeparator = "";
 
         list.ForEach(x =>
-        {
-            builder.Append(tempSeparator).Append(itemOutput?.Invoke(x));
-            tempSeparator = separator;
-        });
+            {
+                builder.Append(tempSeparator).Append(itemOutput?.Invoke(x));
+                tempSeparator = separator;
+            }
+        );
 
         return builder.ToString();
     }
@@ -604,12 +817,18 @@ public static class EnumerableExtensions
     /// <param name="predicate">Predicate to check</param>
     /// <param name="exception">Exception to throw if predicate is true</param>
     /// <returns>the original Item</returns>
-    public static IEnumerable<T> ThrowIfAll<T>(this IEnumerable<T> list, Predicate<T> predicate,
-        Func<Exception> exception)
+    public static IEnumerable<T> ThrowIfAll<T>(
+        this IEnumerable<T> list,
+        Predicate<T> predicate,
+        Func<Exception> exception
+    )
     {
         var throwIfAll = list as T[] ?? list.ToArray();
 
-        if (throwIfAll.Any(item => !predicate(item))) return throwIfAll;
+        if (throwIfAll.Any(item => !predicate(item)))
+        {
+            return throwIfAll;
+        }
 
         throw exception();
     }
@@ -622,12 +841,18 @@ public static class EnumerableExtensions
     /// <param name="predicate">Predicate to check</param>
     /// <param name="exception">Exception to throw if predicate is true</param>
     /// <returns>the original Item</returns>
-    public static IEnumerable<T> ThrowIfAll<T>(this IEnumerable<T> list, Predicate<T> predicate,
-        Exception exception)
+    public static IEnumerable<T> ThrowIfAll<T>(
+        this IEnumerable<T> list,
+        Predicate<T> predicate,
+        Exception exception
+    )
     {
         var throwIfAll = list as T[] ?? list.ToArray();
 
-        if (throwIfAll.Any(item => !predicate(item))) return throwIfAll;
+        if (throwIfAll.Any(item => !predicate(item)))
+        {
+            return throwIfAll;
+        }
 
         throw exception;
     }
@@ -644,12 +869,18 @@ public static class EnumerableExtensions
     /// <param name="predicate">Predicate to check</param>
     /// <param name="exception">Exception to throw if predicate is true</param>
     /// <returns>the original Item</returns>
-    public static IEnumerable<T> ThrowIfAny<T>(this IEnumerable<T> list, Predicate<T> predicate,
-        Func<Exception> exception)
+    public static IEnumerable<T> ThrowIfAny<T>(
+        this IEnumerable<T> list,
+        Predicate<T> predicate,
+        Func<Exception> exception
+    )
     {
         var throwIfAny = list as T[] ?? list.ToArray();
 
-        if (throwIfAny.Any(item => predicate(item))) throw exception();
+        if (throwIfAny.Any(item => predicate(item)))
+        {
+            throw exception();
+        }
 
         return throwIfAny;
     }
@@ -662,12 +893,18 @@ public static class EnumerableExtensions
     /// <param name="predicate">Predicate to check</param>
     /// <param name="exception">Exception to throw if predicate is true</param>
     /// <returns>the original Item</returns>
-    public static IEnumerable<T> ThrowIfAny<T>(this IEnumerable<T> list, Predicate<T> predicate,
-        Exception exception)
+    public static IEnumerable<T> ThrowIfAny<T>(
+        this IEnumerable<T> list,
+        Predicate<T> predicate,
+        Exception exception
+    )
     {
         var throwIfAny = list as T[] ?? list.ToArray();
 
-        if (throwIfAny.Any(item => predicate(item))) throw exception;
+        if (throwIfAny.Any(item => predicate(item)))
+        {
+            throw exception;
+        }
 
         return throwIfAny;
     }
@@ -680,7 +917,7 @@ public static class EnumerableExtensions
     /// <param name="source"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static bool IsNullOrEmpty<T>(this IEnumerable<T>? source)
+    public static bool IsNullOrEmpty<T>(this IEnumerable<T> source)
     {
         return source == null || !source.Any();
     }

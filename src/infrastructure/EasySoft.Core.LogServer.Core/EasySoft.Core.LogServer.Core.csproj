@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -19,6 +19,10 @@
         <ProjectReference Include="..\EasySoft.Core.ErrorLogTransmitter\EasySoft.Core.ErrorLogTransmitter.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.SqlLogTransmitter\EasySoft.Core.SqlLogTransmitter.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+
     </ItemGroup>
 
 </Project>

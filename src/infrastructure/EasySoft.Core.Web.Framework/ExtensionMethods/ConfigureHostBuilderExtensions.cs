@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.Web.Framework.ExtensionMethods;
+﻿using IChannel = EasySoft.UtilityTools.Standard.Interfaces.IChannel;
+
+namespace EasySoft.Core.Web.Framework.ExtensionMethods;
 
 public static class ConfigureHostBuilderExtensions
 {
@@ -18,8 +20,7 @@ public static class ConfigureHostBuilderExtensions
         IChannel channel
     )
     {
-        builder.ConfigureContainer<ContainerBuilder>(
-            containerBuilder =>
+        builder.ConfigureContainer<ContainerBuilder>(containerBuilder =>
             {
                 containerBuilder.RegisterInstance(new ApplicationChannel().SetChannel(channel))
                     .As<IApplicationChannel>()

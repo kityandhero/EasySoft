@@ -1,19 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Data\EasySoft.Core.Data.csproj" />
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
-        <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Domain\EasySoft.Simple.AccountCenter.Domain.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Data\EasySoft.Core.Data.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
+        <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Domain\EasySoft.Simple.AccountCenter.Domain.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Grpc.AspNetCore" Version="2.49.0" />
+        <PackageReference Include="Google.Protobuf"/>
+        <PackageReference Include="Grpc.AspNetCore"/>
+        <PackageReference Include="Mapster"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder"/>
+        <PackageReference Include="Microsoft.Extensions.Diagnostics"/>
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.Abstractions"/>
+        <PackageReference Include="Microsoft.Extensions.Http"/>
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions"/>
     </ItemGroup>
 
 </Project>

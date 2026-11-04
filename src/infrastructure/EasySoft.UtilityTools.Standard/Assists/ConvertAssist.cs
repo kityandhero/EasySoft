@@ -1,6 +1,5 @@
 ﻿using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.Extensions;
-using EasySoft.UtilityTools.Standard.Result;
 
 namespace EasySoft.UtilityTools.Standard.Assists;
 
@@ -24,9 +23,16 @@ public static class ConvertAssist
     private static long X2H(string value, int digit)
     {
         value = value.Trim();
-        if (string.IsNullOrEmpty(value)) return 0L;
+        if (string.IsNullOrEmpty(value))
+        {
+            return 0L;
+        }
 
-        var sDigits = new string(MetaDigit, 0, digit);
+        var sDigits = new string(
+            MetaDigit,
+            0,
+            digit
+        );
         long result = 0;
 
         value = value.ToUpper();
@@ -34,9 +40,11 @@ public static class ConvertAssist
         for (var i = 0; i < value.Length; i++)
         {
             if (!sDigits.Contains(value[i].ToString()))
+            {
                 throw new ArgumentException(
                     $"The argument \"{value[i]}\" is not in {digit} system."
                 );
+            }
 
             try
             {
@@ -61,7 +69,10 @@ public static class ConvertAssist
     {
         var returnBytes = new byte[hexString.Length / 2];
 
-        for (var i = 0; i < returnBytes.Length; i++) returnBytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
+        for (var i = 0; i < returnBytes.Length; i++)
+        {
+            returnBytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
+        }
 
         return returnBytes;
     }
@@ -69,8 +80,12 @@ public static class ConvertAssist
     private static int GetCharIndex(char[] arr, char value)
     {
         for (var i = 0; i < arr.Length; i++)
+        {
             if (arr[i] == value)
+            {
                 return i;
+            }
+        }
 
         return 0;
     }
@@ -90,14 +105,21 @@ public static class ConvertAssist
 
         for (digitIndex = 0; digitIndex <= 64; digitIndex++)
         {
-            if (longPositive == 0) break;
+            if (longPositive == 0)
+            {
+                break;
+            }
 
             outDigits[outDigits.Length - digitIndex - 1] =
                 MetaDigit[longPositive % radix];
             longPositive /= radix;
         }
 
-        return new string(outDigits, outDigits.Length - digitIndex, digitIndex);
+        return new string(
+            outDigits,
+            outDigits.Length - digitIndex,
+            digitIndex
+        );
     }
 
     /// <summary>
@@ -110,17 +132,24 @@ public static class ConvertAssist
     /// <exception cref="ArgumentException"></exception>
     public static string DigitToDigit(string value, int fromDigit, int toDigit)
     {
-        if (string.IsNullOrEmpty(value.Trim())) return string.Empty;
+        if (string.IsNullOrEmpty(value.Trim()))
+        {
+            return string.Empty;
+        }
 
         if (fromDigit < 2 || fromDigit > 36)
+        {
             throw new ArgumentException(
                 $"The fromBase radix \"{fromDigit}\" is not in the range 2..36."
             );
+        }
 
         if (toDigit < 2 || toDigit > 36)
+        {
             throw new ArgumentException(
                 $"The toBase radix \"{toDigit}\" is not in the range 2..36."
             );
+        }
 
         var m = X2H(value, fromDigit);
         var r = LongToTargetDigit(m, toDigit);
@@ -134,7 +163,11 @@ public static class ConvertAssist
     /// <returns></returns>
     public static string LongToThirtySixDigit(long value)
     {
-        return DigitToDigit(value.ToString(), 10, 36);
+        return DigitToDigit(
+            value.ToString(),
+            10,
+            36
+        );
     }
 
     /// <summary>
@@ -145,9 +178,18 @@ public static class ConvertAssist
     /// <exception cref="Exception"></exception>
     public static long ThirtySixDigitToLong(string value)
     {
-        if (string.IsNullOrWhiteSpace(value)) throw new Exception("空字符串不能参与进制转换");
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new Exception("空字符串不能参与进制转换");
+        }
 
-        return Convert.ToInt64(DigitToDigit(value, 36, 10));
+        return Convert.ToInt64(
+            DigitToDigit(
+                value,
+                36,
+                10
+            )
+        );
     }
 
     /// <summary>
@@ -216,9 +258,12 @@ public static class ConvertAssist
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static ExecutiveResult<T> StringTo<T>(string? value)
+    public static ExecutiveResult<T> StringTo<T>(string value)
     {
-        if (string.IsNullOrWhiteSpace(value)) return new ExecutiveResult<T>(ReturnCode.NoData);
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return new ExecutiveResult<T>(ReturnCode.NoData);
+        }
 
         var typeCode = Type.GetTypeCode(typeof(T));
 
@@ -350,7 +395,7 @@ public static class ConvertAssist
     /// <param name="defaultValue"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static T? ObjectTo<T>(object? value, object? defaultValue = null)
+    public static T ObjectTo<T>(object value, object defaultValue = null)
     {
         defaultValue ??= default(T);
 
@@ -361,7 +406,10 @@ public static class ConvertAssist
         if (convertType.IsGenericType &&
             convertType.GetGenericTypeDefinition() == typeof(Nullable<>))
         {
-            if (value == null || value.ToString()!.Trim().Length == 0) return default;
+            if (value == null || value.ToString()!.Trim().Length == 0)
+            {
+                return default;
+            }
 
             var nullableConverter = new NullableConverter(convertType);
 
@@ -379,7 +427,10 @@ public static class ConvertAssist
             }
         }
 
-        if (value != null) result = (T)Convert.ChangeType(value, typeof(T));
+        if (value != null)
+        {
+            result = (T)Convert.ChangeType(value, typeof(T));
+        }
 
         return result;
     }
@@ -395,7 +446,15 @@ public static class ConvertAssist
     /// <returns>时间</returns>
     public static DateTime UnixTimeToUniversalTime(long unixTime)
     {
-        var start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        var start = new DateTime(
+            1970,
+            1,
+            1,
+            0,
+            0,
+            0,
+            DateTimeKind.Utc
+        );
         var date = start.AddSeconds(unixTime).ToUniversalTime();
 
         return date;
@@ -517,15 +576,18 @@ public static class ConvertAssist
     /// JObjectToNameValueCollection
     /// </summary>
     /// <returns></returns>
-    public static ExpandoObject DictionaryToExpandoObject(IDictionary<string, object>? dic)
+    public static ExpandoObject DictionaryToExpandoObject(IDictionary<string, object> dic)
     {
         var eo = new ExpandoObject();
 
-        if (dic == null || dic.Count == 0) return eo;
+        if (dic == null || dic.Count == 0)
+        {
+            return eo;
+        }
 
         return dic.Aggregate(
             eo,
-            (current, d) => current.AddKeyValuePair(new KeyValuePair<string, object?>(d.Key, d.Value))
+            (current, d) => current.AddKeyValuePair(new KeyValuePair<string, object>(d.Key, d.Value))
         );
     }
 
@@ -533,7 +595,7 @@ public static class ConvertAssist
     /// JObjectToNameValueCollection
     /// </summary>
     /// <returns></returns>
-    public static IDictionary<string, object?> ExpandoObjectToDictionary(ExpandoObject dic)
+    public static IDictionary<string, object> ExpandoObjectToDictionary(ExpandoObject dic)
     {
         return dic;
     }
@@ -547,7 +609,10 @@ public static class ConvertAssist
     {
         var dictionary = new Dictionary<string, object>();
 
-        if (jo.Count == 0) return dictionary;
+        if (jo.Count == 0)
+        {
+            return dictionary;
+        }
 
         var stopName = jo.First;
 
@@ -555,11 +620,17 @@ public static class ConvertAssist
         {
             var jp = stopName.Value<JProperty>();
 
-            if (jp == null) continue;
+            if (jp == null)
+            {
+                continue;
+            }
 
             if (jp.Value is JValue jv)
+            {
                 dictionary[jp.Name] = jv.Value ?? "";
+            }
             else
+            {
                 switch (jp.Value)
                 {
                     case JArray jArray:
@@ -567,6 +638,7 @@ public static class ConvertAssist
                         var list = new List<object>();
 
                         foreach (var item in jArray)
+                        {
                             if (!(item is JObject v))
                             {
                                 list.Add(item);
@@ -575,8 +647,12 @@ public static class ConvertAssist
                             {
                                 var d = JObjectToDictionary(v);
 
-                                if (d.Count > 0) list.Add(d);
+                                if (d.Count > 0)
+                                {
+                                    list.Add(d);
+                                }
                             }
+                        }
 
                         dictionary[jp.Name] = list;
 
@@ -586,10 +662,14 @@ public static class ConvertAssist
 
                         var dic = JObjectToDictionary(j);
 
-                        if (dic.Count > 0) dictionary[jp.Name] = dic;
+                        if (dic.Count > 0)
+                        {
+                            dictionary[jp.Name] = dic;
+                        }
 
                         break;
                 }
+            }
 
             stopName = stopName.Next;
         }
@@ -620,7 +700,10 @@ public static class ConvertAssist
 
         var dic = JObjectToDictionary(jo);
 
-        foreach (var key in dic.Keys) nv[key] = dic[key].ToString();
+        foreach (var key in dic.Keys)
+        {
+            nv[key] = dic[key].ToString();
+        }
 
         return nv;
     }
@@ -630,19 +713,30 @@ public static class ConvertAssist
     /// </summary>
     /// <param name="nv">NameValueCollection</param>
     /// <returns></returns>
-    public static string NameValueCollectionToJson(NameValueCollection? nv)
+    public static string NameValueCollectionToJson(NameValueCollection nv)
     {
-        if (nv == null) return "{}";
+        if (nv == null)
+        {
+            return "{}";
+        }
 
-        if (nv.Count <= 0) return "{}";
+        if (nv.Count <= 0)
+        {
+            return "{}";
+        }
 
         var result = new Hashtable();
 
         foreach (var key in nv.AllKeys)
+        {
             if (!string.IsNullOrWhiteSpace(key))
+            {
                 result[key] = nv[key];
+            }
+        }
 
         return JsonConvert.SerializeObject(result);
+
         //var list = (from key in nv.AllKeys let value = nv[key] select "\"{0}\":\"{1}\"".FormatValue(key, value.ContainsHtml() ? value.FilterHtmlTag() : value)).ToList();
         //return "{" + list.Join(",") + "}";
     }
@@ -664,17 +758,23 @@ public static class ConvertAssist
     /// </summary>
     /// <param name="nv"></param>
     /// <returns></returns>
-    public static IDictionary<string, T?> NameValueCollectionToDictionary<T>(NameValueCollection nv) where T : class
+    public static IDictionary<string, T> NameValueCollectionToDictionary<T>(NameValueCollection nv) where T : class
     {
-        var r = new Dictionary<string, T?>();
+        var r = new Dictionary<string, T>();
 
-        if (nv.Count <= 0) return r;
+        if (nv.Count <= 0)
+        {
+            return r;
+        }
 
         foreach (var key in nv.AllKeys)
         {
             var v = nv[key];
 
-            if (key != null) r.Add(key, v as T);
+            if (key != null)
+            {
+                r.Add(key, v as T);
+            }
         }
 
         return r;
@@ -689,9 +789,15 @@ public static class ConvertAssist
     {
         var r = new NameValueCollection();
 
-        if (dic.Count <= 0) return r;
+        if (dic.Count <= 0)
+        {
+            return r;
+        }
 
-        foreach (var key in dic.Keys) r.Add(key, dic[key]?.ToString());
+        foreach (var key in dic.Keys)
+        {
+            r.Add(key, dic[key]?.ToString());
+        }
 
         return r;
     }
@@ -717,7 +823,10 @@ public static class ConvertAssist
     {
         var r = new SortedDictionary<string, T>();
 
-        foreach (var item in dic) r.Add(item.Key, item.Value);
+        foreach (var item in dic)
+        {
+            r.Add(item.Key, item.Value);
+        }
 
         return r;
     }
@@ -731,7 +840,10 @@ public static class ConvertAssist
     {
         var stringBuilder = new StringBuilder();
 
-        foreach (var temp in dic) stringBuilder.Append(temp.Key + "=" + temp.Value + "&");
+        foreach (var temp in dic)
+        {
+            stringBuilder.Append(temp.Key + "=" + temp.Value + "&");
+        }
 
         //去掉最後一個&字符
         var nLen = stringBuilder.Length;
@@ -746,9 +858,12 @@ public static class ConvertAssist
     /// <typeparam name="T"></typeparam>
     /// <param name="actionT"></param>
     /// <returns></returns>
-    public static Action<object>? ConvertAction<T>(Action<T>? actionT)
+    public static Action<object> ConvertAction<T>(Action<T> actionT)
     {
-        if (actionT == null) return null;
+        if (actionT == null)
+        {
+            return null;
+        }
 
         return o => actionT((T)o);
     }
@@ -765,7 +880,10 @@ public static class ConvertAssist
         var table = new DataTable();
         var fieldCount = reader.FieldCount;
 
-        for (var i = 0; i < fieldCount; i++) table.Columns.Add(reader.GetName(i), reader.GetFieldType(i));
+        for (var i = 0; i < fieldCount; i++)
+        {
+            table.Columns.Add(reader.GetName(i), reader.GetFieldType(i));
+        }
 
         table.BeginLoadData();
 
@@ -793,7 +911,10 @@ public static class ConvertAssist
 
         ds.Tables.Add(CreateDataTableFromDataReader(reader));
 
-        while (reader.NextResult()) ds.Tables.Add(CreateDataTableFromDataReader(reader));
+        while (reader.NextResult())
+        {
+            ds.Tables.Add(CreateDataTableFromDataReader(reader));
+        }
 
         return ds;
     }
@@ -844,23 +965,26 @@ public static class ConvertAssist
     /// <param name="reader">    </param>
     /// <param name="keyToLower"></param>
     /// <returns></returns>
-    public static IList<IDictionary<string, object?>> DataReaderToDictionaryList(
+    public static IList<IDictionary<string, object>> DataReaderToDictionaryList(
         IDataReader reader,
         bool keyToLower = true
     )
     {
-        var result = new List<IDictionary<string, object?>>();
+        var result = new List<IDictionary<string, object>>();
 
         var json = DataReaderToJson(reader, keyToLower);
-        var list = JsonConvert.DeserializeObject<List<object?>>(json);
+        var list = JsonConvert.DeserializeObject<List<object>>(json);
 
-        if (list == null) return result;
+        if (list == null)
+        {
+            return result;
+        }
 
         result.AddRange(
             list.ToListFilterNullable()
                 .Select(JsonConvert.SerializeObject)
                 .Select(JsonToDictionary)
-                .Where(dic => dic.Count > 0)!
+                .Where(dic => dic.Count > 0)
         );
 
         return result;
@@ -872,7 +996,7 @@ public static class ConvertAssist
     /// <param name="dataTable"> </param>
     /// <param name="keyToLower"></param>
     /// <returns></returns>
-    public static IList<IDictionary<string, object?>> DataTableToDictionaryList(
+    public static IList<IDictionary<string, object>> DataTableToDictionaryList(
         DataTable dataTable,
         bool keyToLower = true
     )
@@ -914,7 +1038,10 @@ public static class ConvertAssist
     /// <returns></returns>
     public static List<ExpandoObject> DataTableToExpandoObjectList(DataTable dataTable, bool keyToLower = true)
     {
-        if (dataTable.Rows.Count <= 0) return new List<ExpandoObject>();
+        if (dataTable.Rows.Count <= 0)
+        {
+            return new List<ExpandoObject>();
+        }
 
         var dr = dataTable.CreateDataReader();
 
@@ -925,9 +1052,9 @@ public static class ConvertAssist
     /// 检测值类型
     /// </summary>
     /// <returns></returns>
-    private static object? CheckValue(TypeCode typeCode, object? value, bool longToInt = true)
+    private static object CheckValue(TypeCode typeCode, object value, bool longToInt = true)
     {
-        object? result = null;
+        object result = null;
 
         switch (typeCode)
         {
@@ -1008,12 +1135,15 @@ public static class ConvertAssist
     /// <param name="ignoreCase">忽略大小写(默认忽略大小写)</param>
     /// <returns></returns>
     public static IList<TModel> DataTableToModel<TModel>(
-        DataTable? table,
+        DataTable table,
         bool longToInt = true,
         bool ignoreCase = true
     )
     {
-        if (table == null) return new List<TModel>();
+        if (table == null)
+        {
+            return new List<TModel>();
+        }
 
         var list = new List<TModel>(); //里氏替换原则
         TModel t;
@@ -1026,22 +1156,33 @@ public static class ConvertAssist
             {
                 t = Activator.CreateInstance<TModel>(); ////创建指定类型的实例
 
-                if (t == null) continue;
+                if (t == null)
+                {
+                    continue;
+                }
 
                 properties = t.GetType().GetProperties(); //得到类的属性
 
                 foreach (var pro in properties)
+                {
                     try
                     {
                         tempName = pro.Name;
 
-                        if (!table.Columns.Contains(tempName)) continue;
+                        if (!table.Columns.Contains(tempName))
+                        {
+                            continue;
+                        }
 
                         var typeCode = Type.GetTypeCode(pro.PropertyType);
                         var value = row[tempName];
                         var realValue = CheckValue(typeCode, value);
 
-                        pro.SetValue(t, realValue, null);
+                        pro.SetValue(
+                            t,
+                            realValue,
+                            null
+                        );
                     }
                     catch (Exception ex)
                     {
@@ -1049,6 +1190,7 @@ public static class ConvertAssist
                             "property {0} has error:{1}".FormatValue(pro.Name, ex.Message)
                         );
                     }
+                }
 
                 list.Add(t);
             }
@@ -1063,22 +1205,33 @@ public static class ConvertAssist
             {
                 t = Activator.CreateInstance<TModel>(); ////创建指定类型的实例
 
-                if (t == null) continue;
+                if (t == null)
+                {
+                    continue;
+                }
 
                 properties = t.GetType().GetProperties(); //得到类的属性
 
                 foreach (var pro in properties)
+                {
                     try
                     {
                         tempName = pro.Name.ToLower();
 
-                        if (!colList.Contains(tempName)) continue;
+                        if (!colList.Contains(tempName))
+                        {
+                            continue;
+                        }
 
                         var typeCode = Type.GetTypeCode(pro.PropertyType);
                         var value = row[tempName];
                         var realValue = CheckValue(typeCode, value);
 
-                        pro.SetValue(t, realValue, null);
+                        pro.SetValue(
+                            t,
+                            realValue,
+                            null
+                        );
                     }
                     catch (Exception ex)
                     {
@@ -1086,6 +1239,7 @@ public static class ConvertAssist
                             "property {0} has error:{1}".FormatValue(pro.Name, ex.Message)
                         );
                     }
+                }
 
                 list.Add(t);
             }
@@ -1113,13 +1267,19 @@ public static class ConvertAssist
     {
         var success = int.TryParse(input.SafeString(), out var result);
 
-        if (success) return result;
+        if (success)
+        {
+            return result;
+        }
 
         try
         {
             var temp = ToDoubleOrNull(input, 0);
 
-            if (temp == null) return null;
+            if (temp == null)
+            {
+                return null;
+            }
 
             return Convert.ToInt32(temp);
         }
@@ -1146,13 +1306,19 @@ public static class ConvertAssist
     {
         var success = long.TryParse(input.SafeString(), out var result);
 
-        if (success) return result;
+        if (success)
+        {
+            return result;
+        }
 
         try
         {
             var temp = ToDecimalOrNull(input, 0);
 
-            if (temp == null) return null;
+            if (temp == null)
+            {
+                return null;
+            }
 
             return Convert.ToInt64(temp);
         }
@@ -1181,9 +1347,15 @@ public static class ConvertAssist
     {
         var success = float.TryParse(input.SafeString(), out var result);
 
-        if (!success) return null;
+        if (!success)
+        {
+            return null;
+        }
 
-        if (digits == null) return result;
+        if (digits == null)
+        {
+            return result;
+        }
 
         return (float)Math.Round(result, digits.Value);
     }
@@ -1207,9 +1379,15 @@ public static class ConvertAssist
     {
         var success = double.TryParse(input.SafeString(), out var result);
 
-        if (!success) return null;
+        if (!success)
+        {
+            return null;
+        }
 
-        if (digits == null) return result;
+        if (digits == null)
+        {
+            return result;
+        }
 
         return Math.Round(result, digits.Value);
     }
@@ -1233,9 +1411,15 @@ public static class ConvertAssist
     {
         var success = decimal.TryParse(input.SafeString(), out var result);
 
-        if (!success) return null;
+        if (!success)
+        {
+            return null;
+        }
 
-        if (digits == null) return result;
+        if (digits == null)
+        {
+            return result;
+        }
 
         return Math.Round(result, digits.Value);
     }
@@ -1257,7 +1441,10 @@ public static class ConvertAssist
     {
         var value = GetBool(input);
 
-        if (value != null) return value.Value;
+        if (value != null)
+        {
+            return value.Value;
+        }
 
         return bool.TryParse(input.SafeString(), out var result) ? result : null;
     }

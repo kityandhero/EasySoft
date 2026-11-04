@@ -45,7 +45,9 @@ public static class ServiceCollectionExtension
         var hostBuilderContext = services.GetSingletonInstanceOrNull<HostBuilderContext>();
 
         if (hostBuilderContext?.Configuration is IConfigurationRoot instance)
+        {
             return instance;
+        }
 
         return services.GetSingletonInstance<IConfiguration>();
     }
@@ -60,12 +62,14 @@ public static class ServiceCollectionExtension
         return services.GetSingletonInstance<IDependencyRegistrar>();
     }
 
-    private static T? GetSingletonInstanceOrNull<T>(this IServiceCollection services) where T : class
+    private static T GetSingletonInstanceOrNull<T>(this IServiceCollection services) where T : class
     {
         var instance = services.FirstOrDefault(d => d.ServiceType == typeof(T))?.ImplementationInstance;
 
         if (instance is null)
+        {
             return null;
+        }
 
         return (T)instance;
     }
@@ -76,7 +80,9 @@ public static class ServiceCollectionExtension
         var instance = GetSingletonInstanceOrNull<T>(services);
 
         if (instance is null)
+        {
             throw new InvalidOperationException("Could not find singleton service: " + typeof(T).AssemblyQualifiedName);
+        }
 
         return instance;
     }

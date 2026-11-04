@@ -9,5 +9,5 @@ public class NameValue : INameValue
     public string Name { get; set; } = "";
 
     /// <inheritdoc />
-    public object? Value { get; set; } = "";
+    public object Value { get; set; } = "";
 }

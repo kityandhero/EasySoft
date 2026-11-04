@@ -21,7 +21,9 @@ public static class WebApplicationBuilderExtensions
     )
     {
         if (builder.HasRegistered(UniqueIdentifierAddAppSecurityVerification))
+        {
             return builder;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAppSecurityVerification)}."
@@ -34,31 +36,34 @@ public static class WebApplicationBuilderExtensions
         );
 
         builder.AddAdvanceRefitClient<IAppSecurityClient>(clientBuilder =>
-        {
-            clientBuilder.ConfigureHttpClient(client =>
             {
-                if (!Uri.TryCreate(
-                        GeneralConfigAssist.GetAppSecurityServerHostUrl(),
-                        UriKind.Absolute,
-                        out var baseAddress
-                    ))
-                    throw new UnknownException("AppSecurityServerHostUrl error");
+                clientBuilder.ConfigureHttpClient(client =>
+                    {
+                        if (!Uri.TryCreate(
+                                GeneralConfigAssist.GetAppSecurityServerHostUrl(),
+                                UriKind.Absolute,
+                                out var baseAddress
+                            ))
+                        {
+                            throw new UnknownException("AppSecurityServerHostUrl error");
+                        }
 
-                client.BaseAddress = baseAddress;
-            });
-        });
+                        client.BaseAddress = baseAddress;
+                    }
+                );
+            }
+        );
 
         builder.Services.AddTransient<IAppSecurityDetector, AppSecurityDetector>();
 
         builder.AddChannelCheckTransmitter();
 
-        builder.Services.AddMediatR(typeof(IAppSecurityDetector).Assembly);
+        builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<IAppSecurityDetector>(); });
 
         ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
-                .SetAction(
-                    application => { application.UseAppSecurityFirstVerify(); }
+                .SetAction(application => { application.UseAppSecurityFirstVerify(); }
                 )
         );
 

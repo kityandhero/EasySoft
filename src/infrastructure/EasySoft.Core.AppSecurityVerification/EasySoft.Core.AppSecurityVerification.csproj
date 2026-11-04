@@ -1,27 +1,30 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\EasySoft.Core.AppSecurityVerification.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\EasySoft.Core.AppSecurityVerification.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\EasySoft.Core.AppSecurityVerification.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\EasySoft.Core.AppSecurityVerification.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\domain\EasySoft.Ddd.Service.DependencyInjection\EasySoft.Ddd.Service.DependencyInjection.csproj" />
-      <ProjectReference Include="..\EasySoft.Core.ChannelCheckTransmitter\EasySoft.Core.ChannelCheckTransmitter.csproj" />
-      <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
-      <ProjectReference Include="..\EasySoft.Core.Refit\EasySoft.Core.Refit.csproj" />
-      <ProjectReference Include="..\EasySoft.Dependence.Core\EasySoft.Dependence.Core.csproj" />
-      <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj" />
-      <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
+        <ProjectReference Include="..\..\domain\EasySoft.Ddd.Service.DependencyInjection\EasySoft.Ddd.Service.DependencyInjection.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.ChannelCheckTransmitter\EasySoft.Core.ChannelCheckTransmitter.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Refit\EasySoft.Core.Refit.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Refit"/>
     </ItemGroup>
 
 </Project>

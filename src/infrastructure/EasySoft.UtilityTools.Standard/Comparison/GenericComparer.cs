@@ -47,20 +47,27 @@ public class GenericComparer<T> : IComparer<T> where T : IComparable
     /// 0 if they're equal, any other value they are not
     /// 相等返回0，否则返回-1  
     /// </returns>
-    public int Compare(T? x, T? y)
+    public int Compare(T x, T y)
     {
         if (!typeof(T).IsValueType
             || (typeof(T).IsGenericType
                 && typeof(T).GetGenericTypeDefinition().IsAssignableFrom(typeof(Nullable<>))))
         {
             if (Equals(x, default(T)))
+            {
                 return Equals(y, default(T)) ? 0 : -1;
+            }
 
             if (Equals(y, default(T)))
+            {
                 return -1;
+            }
         }
 
-        if (x?.GetType() != y?.GetType()) return -1;
+        if (x?.GetType() != y?.GetType())
+        {
+            return -1;
+        }
 
         var tempComparable = x as IComparable<T>;
 

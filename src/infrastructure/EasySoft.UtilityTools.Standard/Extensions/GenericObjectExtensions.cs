@@ -48,11 +48,14 @@ public static class GenericObjectExtensions
     /// <param name="action">Action to run</param>
     /// <param name="defaultObjectValue">Default object value</param>
     /// <returns>The original object</returns>
-    public static T? Chain<T>(this T? source, Action<T>? action, T? defaultObjectValue = default)
+    public static T Chain<T>(this T source, Action<T> action, T defaultObjectValue = default)
     {
         source = source.Check(defaultObjectValue);
 
-        if (action == null || source == null) return source;
+        if (action == null || source == null)
+        {
+            return source;
+        }
 
         action(source);
 
@@ -73,16 +76,19 @@ public static class GenericObjectExtensions
     /// <param name="defaultObjectValue">Default object value</param>
     /// <param name="defaultReturnValue">Default return value</param>
     /// <returns>The result from the function</returns>
-    public static TR? Chain<T, TR>(
-        this T? source,
-        Func<T, TR>? function,
-        TR? defaultReturnValue = default!,
-        T? defaultObjectValue = default
+    public static TR Chain<T, TR>(
+        this T source,
+        Func<T, TR> function,
+        TR defaultReturnValue = default!,
+        T defaultObjectValue = default
     )
     {
         source = source.Check(defaultObjectValue);
 
-        if (function == null || source == null) return defaultReturnValue;
+        if (function == null || source == null)
+        {
+            return defaultReturnValue;
+        }
 
         return function(source).Check(defaultReturnValue);
     }
@@ -107,9 +113,12 @@ public static class GenericObjectExtensions
         int timeOut = int.MaxValue
     )
     {
-        if (function.IsNull()) throw new ArgumentNullException(nameof(function));
+        if (function.IsNull())
+        {
+            throw new ArgumentNullException(nameof(function));
+        }
 
-        Exception? holder = null;
+        Exception holder = null;
 
         long start = Environment.TickCount;
 
@@ -119,12 +128,15 @@ public static class GenericObjectExtensions
             {
                 return function();
             }
-            catch (Exception? e)
+            catch (Exception e)
             {
                 holder = e;
             }
 
-            if (Environment.TickCount - start > timeOut) break;
+            if (Environment.TickCount - start > timeOut)
+            {
+                break;
+            }
 
             Thread.Sleep(retryDelay);
 
@@ -141,11 +153,19 @@ public static class GenericObjectExtensions
     /// <param name="attempts">Number of times to attempt it</param>
     /// <param name="retryDelay">The amount of milliseconds to wait between tries</param>
     /// <param name="timeOut">Max amount of time to wait for the function to run (waits for the current attempt to finish before checking)</param>
-    public static void Execute(this Action action, int attempts = 3, int retryDelay = 0, int timeOut = int.MaxValue)
+    public static void Execute(
+        this Action action,
+        int attempts = 3,
+        int retryDelay = 0,
+        int timeOut = int.MaxValue
+    )
     {
-        if (action.IsNull()) throw new ArgumentNullException(nameof(action));
+        if (action.IsNull())
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
 
-        Exception? holder = null;
+        Exception holder = null;
 
         long start = Environment.TickCount;
 
@@ -155,19 +175,25 @@ public static class GenericObjectExtensions
             {
                 action();
             }
-            catch (Exception? e)
+            catch (Exception e)
             {
                 holder = e;
             }
 
-            if (Environment.TickCount - start > timeOut) break;
+            if (Environment.TickCount - start > timeOut)
+            {
+                break;
+            }
 
             Thread.Sleep(retryDelay);
 
             --attempts;
         }
 
-        if (holder != null) throw holder;
+        if (holder != null)
+        {
+            throw holder;
+        }
     }
 
     #endregion
@@ -182,9 +208,12 @@ public static class GenericObjectExtensions
     /// <param name="defaultValue">The default value to return</param>
     /// <param name="predicate">Predicate to check the object against</param>
     /// <returns>The default object if it fails the criteria, the object otherwise</returns>
-    public static T? Check<T>(this T? source, Predicate<T> predicate, T? defaultValue = default)
+    public static T Check<T>(this T source, Predicate<T> predicate, T defaultValue = default)
     {
-        if (predicate.IsNull()) throw new ArgumentNullException(nameof(predicate));
+        if (predicate.IsNull())
+        {
+            throw new ArgumentNullException(nameof(predicate));
+        }
 
         return source != null && predicate(source) ? source : defaultValue;
     }
@@ -199,9 +228,15 @@ public static class GenericObjectExtensions
     /// <returns>The default object if it fails the criteria, the object otherwise</returns>
     public static T Check<T>(this T source, Predicate<T> predicate, Func<T> defaultValue)
     {
-        if (predicate.IsNull()) throw new ArgumentNullException(nameof(predicate));
+        if (predicate.IsNull())
+        {
+            throw new ArgumentNullException(nameof(predicate));
+        }
 
-        if (defaultValue.IsNull()) throw new ArgumentNullException(nameof(defaultValue));
+        if (defaultValue.IsNull())
+        {
+            throw new ArgumentNullException(nameof(defaultValue));
+        }
 
         return predicate(source) ? source : defaultValue();
     }
@@ -213,7 +248,7 @@ public static class GenericObjectExtensions
     /// <param name="source">Object to check</param>
     /// <param name="defaultValue">The default value to return</param>
     /// <returns>The default object if it is null, the object otherwise</returns>
-    public static T? Check<T>(this T source, T? defaultValue = default)
+    public static T Check<T>(this T source, T defaultValue = default)
     {
         return source.Check(x => !x.IsNull(), defaultValue);
     }
@@ -227,10 +262,14 @@ public static class GenericObjectExtensions
     /// <returns>The default object if it is null, the object otherwise</returns>
     public static T Check<T>(this T source, Func<T> defaultValue)
     {
-        if (defaultValue.IsNull()) throw new ArgumentNullException(nameof(defaultValue));
+        if (defaultValue.IsNull())
+        {
+            throw new ArgumentNullException(nameof(defaultValue));
+        }
 
         // ReSharper disable CompareNonConstrainedGenericWithNull
         return source.Check(x => x != null, defaultValue);
+
         // ReSharper restore CompareNonConstrainedGenericWithNull
     }
 
@@ -247,7 +286,10 @@ public static class GenericObjectExtensions
     /// <returns>True if the object passes the predicate, false otherwise</returns>
     public static bool Is<T>(this T source, Predicate<T> predicate)
     {
-        if (predicate.IsNull()) throw new ArgumentNullException(nameof(predicate));
+        if (predicate.IsNull())
+        {
+            throw new ArgumentNullException(nameof(predicate));
+        }
 
         return predicate(source);
     }
@@ -260,7 +302,7 @@ public static class GenericObjectExtensions
     /// <param name="comparisonObject">Comparison object</param>
     /// <param name="comparer">Comparer</param>
     /// <returns>True if the object passes the predicate, false otherwise</returns>
-    public static bool Is<T>(this T source, T comparisonObject, IEqualityComparer<T>? comparer = null)
+    public static bool Is<T>(this T source, T comparisonObject, IEqualityComparer<T> comparer = null)
     {
         comparer = comparer.Check(() => new GenericEqualityComparer<T>());
 
@@ -282,7 +324,10 @@ public static class GenericObjectExtensions
     public static T ThrowIf<T>(this T item, Predicate<T> predicate, Func<Exception> exception)
     {
         if (predicate(item))
+        {
             throw exception();
+        }
+
         return item;
     }
 
@@ -296,7 +341,10 @@ public static class GenericObjectExtensions
     /// <returns>the original Item</returns>
     public static T ThrowIf<T>(this T item, Predicate<T> predicate, Exception exception)
     {
-        if (predicate(item)) throw exception;
+        if (predicate(item))
+        {
+            throw exception;
+        }
 
         return item;
     }
@@ -369,6 +417,7 @@ public static class GenericObjectExtensions
     {
         // ReSharper disable CompareNonConstrainedGenericWithNull
         return item.ThrowIf(x => x == null || Convert.IsDBNull(x), exception);
+
         // ReSharper restore CompareNonConstrainedGenericWithNull
     }
 
@@ -443,7 +492,10 @@ public static class GenericObjectExtensions
     {
         var returnValue = new List<T>();
 
-        for (var x = 0; x < count; ++x) returnValue.Add(function(x));
+        for (var x = 0; x < count; ++x)
+        {
+            returnValue.Add(function(x));
+        }
 
         return returnValue;
     }
@@ -456,7 +508,9 @@ public static class GenericObjectExtensions
     public static void Times(this int count, Action<int> action)
     {
         for (var x = 0; x < count; ++x)
+        {
             action(x);
+        }
     }
 
     #endregion

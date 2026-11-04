@@ -13,14 +13,14 @@ public class StartUpConfigure : IStartUpConfigure
     {
         Core.Assists.ApplicationAssist.InitManagement();
 
-        SwaggerConfigure.GeneralParameters.AddRange(
-            new OpenApiParameter
-            {
-                Name = "token",
-                Description = "登录凭据",
-                Required = false,
-                In = ParameterLocation.Header
-            }
-        );
+        var openApiParameter = new OpenApiParameter
+        {
+            Name = "token",
+            Description = "登录凭据",
+            Required = false,
+            In = ParameterLocation.Header
+        };
+
+        SwaggerConfigure.GeneralParameters.AddRange(openApiParameter);
     }
 }

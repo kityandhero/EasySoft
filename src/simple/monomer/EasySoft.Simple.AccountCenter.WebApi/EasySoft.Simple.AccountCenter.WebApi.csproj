@@ -1,18 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <Nullable>enable</Nullable>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>warnings</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\EasySoft.Simple.AccountCenter.WebApi.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\EasySoft.Simple.AccountCenter.WebApi.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\EasySoft.Simple.AccountCenter.WebApi.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\EasySoft.Simple.AccountCenter.WebApi.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -43,17 +44,22 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework.MySql\EasySoft.Core.EntityFramework.MySql.csproj" />
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Grpc\EasySoft.Core.Grpc.csproj" />
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.LogDashboard\EasySoft.Core.LogDashboard.csproj" />
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.MediatR\EasySoft.Core.MediatR.csproj" />
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj" />
-        <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Application.Contracts\EasySoft.Simple.AccountCenter.Application.Contracts.csproj" />
-        <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Application\EasySoft.Simple.AccountCenter.Application.csproj" />
-        <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Domain\EasySoft.Simple.AccountCenter.Domain.csproj" />
-        <ProjectReference Include="..\EasySoft.Simple.DomainDrivenDesign.Domain.Shared\EasySoft.Simple.DomainDrivenDesign.Domain.Shared.csproj" />
-        <ProjectReference Include="..\EasySoft.Simple.DomainDrivenDesign.Infrastructure\EasySoft.Simple.DomainDrivenDesign.Infrastructure.csproj" />
+        <PackageReference Include="System.Linq.Dynamic.Core"/>
+        <PackageReference Include="System.Data.SqlClient"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework.MySql\EasySoft.Core.EntityFramework.MySql.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Grpc\EasySoft.Core.Grpc.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.LogDashboard\EasySoft.Core.LogDashboard.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.MediatR\EasySoft.Core.MediatR.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj"/>
+        <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Application.Contracts\EasySoft.Simple.AccountCenter.Application.Contracts.csproj"/>
+        <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Application\EasySoft.Simple.AccountCenter.Application.csproj"/>
+        <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Domain\EasySoft.Simple.AccountCenter.Domain.csproj"/>
+        <ProjectReference Include="..\EasySoft.Simple.DomainDrivenDesign.Domain.Shared\EasySoft.Simple.DomainDrivenDesign.Domain.Shared.csproj"/>
+        <ProjectReference Include="..\EasySoft.Simple.DomainDrivenDesign.Infrastructure\EasySoft.Simple.DomainDrivenDesign.Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>

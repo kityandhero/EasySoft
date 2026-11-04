@@ -1,17 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="DotNetCore.CAP.MySql" Version="6.2.1" />
+        <PackageReference Include="DotNetCore.CAP"/>
+        <PackageReference Include="DotNetCore.CAP.MySql"/>
+        <PackageReference Include="EFCore.NamingConventions"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational"/>
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.Abstractions"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions"/>
+        <PackageReference Include="Microsoft.Extensions.Logging"/>
+        <PackageReference Include="MySql.EntityFrameworkCore"/>
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.EntityFramework.MySql.Contexts;
+﻿using MySql.EntityFrameworkCore.Extensions;
+
+namespace EasySoft.Core.EntityFramework.MySql.Contexts;
 
 public class MySqlContext : BasicContext
 {

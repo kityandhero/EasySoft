@@ -24,7 +24,7 @@ public static class ExecutiveResultExtensions
     /// <param name="executiveResult"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static RpcResult<T> ToRpcResult<T>(this ExecutiveResult<T> executiveResult, T? data)
+    public static RpcResult<T> ToRpcResult<T>(this ExecutiveResult<T> executiveResult, T data)
     {
         return RpcResultFactory.CreateFromReturnMessage(executiveResult.Code, data);
     }

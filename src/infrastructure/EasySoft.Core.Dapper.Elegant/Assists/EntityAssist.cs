@@ -17,7 +17,7 @@ public static class EntityAssist
             ) ?? "";
     }
 
-    public static T? RefreshCache<T>(
+    public static T RefreshCache<T>(
         long id,
         bool logSql = true
     ) where T : IEntitySelf<T>, new()
@@ -31,7 +31,7 @@ public static class EntityAssist
     /// GetEntityCache 
     /// </summary>
     /// <returns></returns>
-    public static T? GetEntity<T>(
+    public static T GetEntity<T>(
         long id,
         bool allowFromCache = true,
         bool logSql = true
@@ -49,9 +49,9 @@ public static class EntityAssist
     /// GetEntityCache
     /// </summary>
     /// <returns></returns>
-    public static T? GetEntity<T>(
+    public static T GetEntity<T>(
         long id,
-        out CacheKeyValue<T?>? cacheValue,
+        out CacheKeyValue<T> cacheValue,
         bool allowFromCache = true,
         bool logSql = true
     ) where T : IEntitySelf<T>, new()
@@ -81,7 +81,7 @@ public static class EntityAssist
         return cacheValue.Value;
     }
 
-    private static T? GetEntityCore<T>(
+    private static T GetEntityCore<T>(
         long id,
         bool logSql = true
     ) where T : IEntitySelf<T>, new()
@@ -508,8 +508,8 @@ public static class EntityAssist
     public static PageListResult<T> PageListEntityWithTotalSize<T>(
         int pageNo,
         int pageSize,
-        ICollection<Condition<T>>? conditions = null,
-        IList<Sort<T>>? sorts = null,
+        ICollection<Condition<T>> conditions = null,
+        IList<Sort<T>> sorts = null,
         bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
@@ -534,8 +534,8 @@ public static class EntityAssist
     public static List<T> PageListEntity<T>(
         int pageNo,
         int pageSize,
-        ICollection<Condition<T>>? conditions = null,
-        IList<Sort<T>>? sorts = null,
+        ICollection<Condition<T>> conditions = null,
+        IList<Sort<T>> sorts = null,
         bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
@@ -571,7 +571,7 @@ public static class EntityAssist
         return result;
     }
 
-    public static T? GetEntity<T>(
+    public static T GetEntity<T>(
         Condition<T> condition,
         bool logSql = true
     ) where T : IEntitySelf<T>, new()
@@ -586,7 +586,7 @@ public static class EntityAssist
         return result;
     }
 
-    public static T? GetEntity<T>(
+    public static T GetEntity<T>(
         ICollection<Condition<T>> conditions,
         bool logSql = true
     ) where T : IEntitySelf<T>, new()
@@ -601,7 +601,7 @@ public static class EntityAssist
         return result;
     }
 
-    public static T? GetEntity<T>(
+    public static T GetEntity<T>(
         ICollection<Condition<T>> conditions,
         IList<Sort<T>> sorts,
         bool logSql = true
@@ -964,7 +964,7 @@ public static class EntityAssist
 
     public static ExecutiveResult DeleteMany<T>(
         IEnumerable<long> keys,
-        Action? callback = null,
+        Action callback = null,
         bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {
@@ -982,7 +982,7 @@ public static class EntityAssist
 
     public static ExecutiveResult DeleteMany<T>(
         IEnumerable<T> models,
-        Action? callback = null,
+        Action callback = null,
         bool logSql = true
     ) where T : IEntitySelf<T>, new()
     {

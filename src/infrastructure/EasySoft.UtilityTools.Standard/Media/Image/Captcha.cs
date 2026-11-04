@@ -1,6 +1,6 @@
 ﻿using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Exceptions;
-using SixLabors.Fonts;
+using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 
@@ -49,7 +49,9 @@ public class Captcha
     public Captcha SetLetterCount(int letterCount)
     {
         if (letterCount < 4 || letterCount > 8)
+        {
             throw new UnknownException("letterCount must greater than 3 or less than 9");
+        }
 
         LetterCount = letterCount;
 
@@ -66,7 +68,9 @@ public class Captcha
         var validateCode = string.Empty;
 
         for (var i = 0; i < LetterCount; i++)
+        {
             validateCode += _chars[random.Next(0, _chars.Length)].ToString(CultureInfo.InvariantCulture);
+        }
 
         return validateCode;
     }
@@ -87,42 +91,72 @@ public class Captcha
         using var image = new Image<Rgba32>(imageWidth, imageHeight);
 
         // 字体
-        var font = SystemFonts.CreateFont(SystemFonts.Families.First().Name, 20, FontStyle.Bold);
+        var font = SystemFonts.CreateFont(
+            SystemFonts.Families.First().Name,
+            20,
+            FontStyle.Bold
+        );
 
         image.Mutate(ctx =>
-        {
-            // 白底背景
-            ctx.Fill(Color.White);
+            {
+                ctx.Paint(canvas =>
+                    {
+                        // ✅ 白底背景：填充整张画布
+                        var fullRect = new RectanglePolygon(
+                            0,
+                            0,
+                            imageWidth,
+                            imageHeight
+                        );
 
-            // 画验证码
-            for (var i = 0; i < code.Length; i++)
-                ctx.DrawText(
-                    code[i].ToString(),
-                    font,
-                    ColorAssist.GetFontRandomColor(),
-                    new PointF(20 * i + 10, r.Next(2, 6))
+                        canvas.Fill(Brushes.Solid(Color.White), fullRect);
+
+                        // 画验证码文字
+                        for (var i = 0; i < code.Length; i++)
+                        {
+                            var text = code[i].ToString();
+
+                            canvas.DrawText(
+                                new RichTextOptions(font)
+                                {
+                                    Origin = new PointF(20 * i + 10, r.Next(2, 6))
+                                },
+                                text,
+                                Brushes.Solid(ColorAssist.GetFontRandomColor()),
+                                null
+                            );
+                        }
+
+                        // 画干扰线
+                        for (var i = 0; i < 10; i++)
+                        {
+                            var pen = Pens.Solid(ColorAssist.GetRandomColorRgba(), 1f);
+                            var p1 = new PointF(r.Next(imageWidth), r.Next(imageHeight));
+                            var p2 = new PointF(r.Next(imageWidth), r.Next(imageHeight));
+
+                            canvas.DrawLine(
+                                pen,
+                                p1,
+                                p2
+                            );
+                        }
+
+                        // 画噪点
+                        for (var i = 0; i < 80; i++)
+                        {
+                            var pen = Pens.Solid(ColorAssist.GetRandomColorRgba(), 1f);
+                            var p1 = new PointF(r.Next(imageWidth), r.Next(imageHeight));
+                            var p2 = new PointF(p1.X + 1f, p1.Y + 1f);
+                            canvas.DrawLine(
+                                pen,
+                                p1,
+                                p2
+                            );
+                        }
+                    }
                 );
-
-            // 画干扰线
-            for (var i = 0; i < 10; i++)
-            {
-                var pen = new Pen(ColorAssist.GetRandomColorRgba(), 1);
-                var p1 = new PointF(r.Next(imageWidth), r.Next(imageHeight));
-                var p2 = new PointF(r.Next(imageWidth), r.Next(imageHeight));
-
-                ctx.DrawLines(pen, p1, p2);
             }
-
-            // 画噪点
-            for (var i = 0; i < 80; i++)
-            {
-                var pen = new Pen(ColorAssist.GetRandomColorRgba(), 1);
-                var p1 = new PointF(r.Next(imageWidth), r.Next(imageHeight));
-                var p2 = new PointF(p1.X + 1f, p1.Y + 1f);
-
-                ctx.DrawLines(pen, p1, p2);
-            }
-        });
+        );
 
         using var ms = new MemoryStream();
 
@@ -142,8 +176,10 @@ public class Captcha
         var validateCode = string.Empty;
 
         for (var i = 0; i < LetterCount; i++)
+        {
             validateCode += _numberChars[random.Next(0, _numberChars.Length)]
                 .ToString(CultureInfo.InvariantCulture);
+        }
 
         return validateCode;
     }

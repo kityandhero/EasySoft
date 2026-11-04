@@ -1,7 +1,4 @@
-﻿using IdentityServer4.Configuration;
-using IdentityServer4.Models;
-
-namespace EasySoft.Core.IdentityServer.Configure;
+﻿namespace EasySoft.Core.IdentityServer.Configure;
 
 public static class IdentityServerConfigurator
 {
@@ -19,12 +16,12 @@ public static class IdentityServerConfigurator
 
     public static IEnumerable<IdentityResource> IdentityResources => new IdentityResource[]
     {
-        new(name: "server", new List<string> { "c1", "c2" })
+        new("server", new List<string> { "c1", "c2" })
     };
 
     public static IEnumerable<ApiScope> ApiScopes => new ApiScope[]
     {
-        new(name: "api", displayName: "MyApi")
+        new("api", "MyApi")
     };
 
     public static IEnumerable<Client> Clients => new Client[]

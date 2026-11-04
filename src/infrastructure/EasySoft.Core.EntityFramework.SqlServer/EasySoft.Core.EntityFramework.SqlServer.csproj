@@ -1,25 +1,44 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\EasySoft.Core.EntityFramework.SqlServer.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\EasySoft.Core.EntityFramework.SqlServer.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\EasySoft.Core.EntityFramework.SqlServer.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\EasySoft.Core.EntityFramework.SqlServer.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj" />
+        <PackageReference Include="Apache.Avro"/>
+        <PackageReference Include="DotNetCore.CAP"/>
+        <PackageReference Include="DotNetCore.CAP.SqlServer"/>
+        <PackageReference Include="EFCore.NamingConventions"/>
+        <PackageReference Include="Microsoft.Data.SqlClient"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer"/>
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.Abstractions"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions"/>
+        <PackageReference Include="Microsoft.Extensions.Logging"/>
+        <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens"/>
+        <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect"/>
+        <PackageReference Include="MySql.EntityFrameworkCore"/>
+        <PackageReference Include="System.CodeDom"/>
+        <PackageReference Include="System.Configuration.ConfigurationManager"/>
+        <PackageReference Include="System.Diagnostics.EventLog"/>
+        <PackageReference Include="System.Security.Cryptography.Pkcs"/>
+        <PackageReference Include="System.Security.Cryptography.ProtectedData"/>
+        <PackageReference Include="System.Threading.RateLimiting"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="DotNetCore.CAP.SqlServer" Version="6.2.1" />
+        <ProjectReference Include="..\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj"/>
     </ItemGroup>
 
 </Project>

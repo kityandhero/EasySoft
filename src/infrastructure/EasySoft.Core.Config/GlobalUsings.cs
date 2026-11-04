@@ -10,7 +10,6 @@ global using EasySoft.UtilityTools.Core.Assists;
 global using EasySoft.UtilityTools.Core.Extensions;
 global using EasySoft.UtilityTools.Standard.Assists;
 global using EasySoft.UtilityTools.Standard.Enums;
-global using Masuit.Tools.DateTimeExt;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Routing;

@@ -1,21 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Domain.Base\EasySoft.Core.Domain.Base.csproj" />
-      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj" />
-      <ProjectReference Include="..\EasySoft.Simple.DomainDrivenDesign.Shared\EasySoft.Simple.DomainDrivenDesign.Shared.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Domain.Base\EasySoft.Core.Domain.Base.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj"/>
+        <ProjectReference Include="..\EasySoft.Simple.DomainDrivenDesign.Shared\EasySoft.Simple.DomainDrivenDesign.Shared.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="configures\databaseConfig.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+        <Content Include="configures\databaseConfig.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+
     </ItemGroup>
 
 </Project>

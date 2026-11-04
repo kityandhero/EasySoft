@@ -1,14 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Application.Contracts\EasySoft.Simple.AccountCenter.Application.Contracts.csproj" />
-      <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Domain\EasySoft.Simple.AccountCenter.Domain.csproj" />
+        <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Application.Contracts\EasySoft.Simple.AccountCenter.Application.Contracts.csproj"/>
+        <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Domain\EasySoft.Simple.AccountCenter.Domain.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+
     </ItemGroup>
 
 </Project>

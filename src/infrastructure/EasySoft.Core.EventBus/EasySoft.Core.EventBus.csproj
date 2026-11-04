@@ -1,17 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
-      <ProjectReference Include="..\EasySoft.Core.Data\EasySoft.Core.Data.csproj" />
-      <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
-      <ProjectReference Include="..\EasySoft.Dependence.Core\EasySoft.Dependence.Core.csproj" />
-      <ProjectReference Include="..\EasySoft.IdGenerator\EasySoft.IdGenerator.csproj" />
+        <PackageReference Include="DotNetCore.CAP"/>
+        <PackageReference Include="Polly"/>
+        <PackageReference Include="RabbitMQ.Client"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Data\EasySoft.Core.Data.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.RabbitMQ\EasySoft.Core.RabbitMQ.csproj"/>
+        <ProjectReference Include="..\EasySoft.IdGenerator\EasySoft.IdGenerator.csproj"/>
     </ItemGroup>
 
 </Project>

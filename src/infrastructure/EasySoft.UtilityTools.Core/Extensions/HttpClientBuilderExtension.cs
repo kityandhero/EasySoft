@@ -6,16 +6,14 @@
 public static class HttpClientBuilderExtension
 {
     /// <summary>
-    /// AddPolicyHandlerICollection
+    /// 批量注入Polly策略，全部合并到单个ResiliencePipeline，避免多个独立DelegatingHandler
     /// </summary>
-    /// <param name="builder"></param>
-    /// <param name="policies"></param>
-    /// <returns></returns>
-    public static IHttpClientBuilder AddPolicyHandlerICollection(this IHttpClientBuilder builder,
-        List<IAsyncPolicy<HttpResponseMessage>> policies)
+    public static IHttpClientBuilder AddPolicyHandlerICollection(
+        this IHttpClientBuilder builder,
+        List<IAsyncPolicy<HttpResponseMessage>> policies
+    )
     {
         policies?.ForEach(policy => builder.AddPolicyHandler(policy));
-
         return builder;
     }
 }

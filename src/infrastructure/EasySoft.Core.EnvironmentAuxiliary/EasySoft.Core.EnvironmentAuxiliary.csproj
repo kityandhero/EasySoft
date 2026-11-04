@@ -1,19 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
         <Title>EasySoft.Core.Auxiliary</Title>
         <Description>EasySoft.Core.Auxiliary</Description>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="ViewConfig" Version="0.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions"/>
+        <PackageReference Include="ViewConfig"/>
+
     </ItemGroup>
 
 </Project>

@@ -36,7 +36,7 @@ public static class ExpandoObjectExtensions
     /// <returns></returns>
     public static ExpandoObject Add(
         this ExpandoObject source,
-        ICollection<KeyValuePair<string, object?>> keyValuePairCollection
+        ICollection<KeyValuePair<string, object>> keyValuePairCollection
     )
     {
         return source.AddKeyValuePairCollection(keyValuePairCollection);
@@ -50,7 +50,7 @@ public static class ExpandoObjectExtensions
     /// <returns></returns>
     public static ExpandoObject AddKeyValuePairCollection(
         this ExpandoObject source,
-        ICollection<KeyValuePair<string, object?>> keyValuePairCollection
+        ICollection<KeyValuePair<string, object>> keyValuePairCollection
     )
     {
         foreach (var keyValuePair in keyValuePairCollection)
@@ -69,7 +69,7 @@ public static class ExpandoObjectExtensions
     /// <returns></returns>
     public static ExpandoObject Add(
         this ExpandoObject source,
-        KeyValuePair<string, object?> keyValuePair
+        KeyValuePair<string, object> keyValuePair
     )
     {
         return source.AddKeyValuePair(keyValuePair);
@@ -84,7 +84,7 @@ public static class ExpandoObjectExtensions
     /// <exception cref="Exception"></exception>
     public static ExpandoObject AddKeyValuePair(
         this ExpandoObject source,
-        KeyValuePair<string, object?> keyValuePair
+        KeyValuePair<string, object> keyValuePair
     )
     {
         var resultAdd = source.TryAdd(keyValuePair.Key, keyValuePair.Value ?? "");
@@ -108,7 +108,7 @@ public static class ExpandoObjectExtensions
     /// <exception cref="Exception"></exception>
     public static ExpandoObject AddDictionary(
         this ExpandoObject source,
-        IDictionary<string, object?> dictionary
+        IDictionary<string, object> dictionary
     )
     {
         foreach (var item in dictionary)

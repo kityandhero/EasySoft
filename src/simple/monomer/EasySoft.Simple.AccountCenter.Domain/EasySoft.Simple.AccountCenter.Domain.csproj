@@ -1,19 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore"/>
+
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Domain.Base\EasySoft.Core.Domain.Base.csproj" />
-      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj" />
-      <ProjectReference Include="..\EasySoft.Simple.DomainDrivenDesign.Application.Contracts\EasySoft.Simple.DomainDrivenDesign.Application.Contracts.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Domain.Base\EasySoft.Core.Domain.Base.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj"/>
+        <ProjectReference Include="..\EasySoft.Simple.DomainDrivenDesign.Application.Contracts\EasySoft.Simple.DomainDrivenDesign.Application.Contracts.csproj"/>
     </ItemGroup>
 
 </Project>

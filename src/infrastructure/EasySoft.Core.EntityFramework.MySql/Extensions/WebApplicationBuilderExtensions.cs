@@ -18,20 +18,23 @@ public static class WebApplicationBuilderExtensions
     ) where TContext : MySqlContext
     {
         if (builder.HasRegistered(UniqueIdentifier))
+        {
             return builder;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceMySql)}<{typeof(TContext).Name}>."
         );
 
         builder.Services.AddAdvanceMySql<TContext>(opt =>
-        {
-            opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            {
+                opt.UseMySQL(connectionString);
 
-            opt.UseSnakeCaseNamingConvention();
+                opt.UseSnakeCaseNamingConvention();
 
-            action?.Invoke(opt);
-        });
+                action?.Invoke(opt);
+            }
+        );
 
         return builder;
     }

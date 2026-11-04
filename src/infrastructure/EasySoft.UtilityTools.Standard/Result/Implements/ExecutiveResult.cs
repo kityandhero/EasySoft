@@ -23,7 +23,7 @@ public class ExecutiveResult : ExecutiveResult<object>
 public class ExecutiveResult<T> : BaseExecutiveResult, IExecutiveResult<T>
 {
     /// <inheritdoc />
-    public T? Data { get; set; }
+    public T Data { get; set; }
 
     /// <summary>
     /// ExecutiveResult

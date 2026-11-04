@@ -8,13 +8,14 @@ internal static class ConfigureHostBuilderExtensions
 {
     public static ConfigureHostBuilder AddTenantFactory(
         this ConfigureHostBuilder builder,
-        Func<HttpContext?, Tenant> tenantBuilder
+        Func<HttpContext, Tenant> tenantBuilder
     )
     {
         builder.ConfigureContainer<ContainerBuilder>((_, containerBuilder) =>
-        {
-            containerBuilder.AddTenantFactory(tenantBuilder);
-        });
+            {
+                containerBuilder.AddTenantFactory(tenantBuilder);
+            }
+        );
 
         return builder;
     }

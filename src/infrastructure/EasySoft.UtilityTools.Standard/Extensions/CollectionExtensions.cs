@@ -14,14 +14,18 @@ public static class CollectionExtensions
     /// <param name="source"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static List<T> ToListFilterNullable<T>(this IEnumerable<T?> source)
+    public static List<T> ToListFilterNullable<T>(this IEnumerable<T> source)
     {
         var result = new List<T>();
 
         source.ForEach(o =>
-        {
-            if (o != null) result.Add(o);
-        });
+            {
+                if (o != null)
+                {
+                    result.Add(o);
+                }
+            }
+        );
 
         return result;
     }
@@ -31,14 +35,18 @@ public static class CollectionExtensions
     /// </summary>
     /// <param name="source"></param>
     /// <returns></returns>
-    public static List<string> ToListFilterNullOrWhiteSpace(this IEnumerable<string?> source)
+    public static List<string> ToListFilterNullOrWhiteSpace(this IEnumerable<string> source)
     {
         var result = new List<string>();
 
         source.ForEach(o =>
-        {
-            if (!string.IsNullOrWhiteSpace(o)) result.Add(o);
-        });
+            {
+                if (!string.IsNullOrWhiteSpace(o))
+                {
+                    result.Add(o);
+                }
+            }
+        );
 
         return result;
     }
@@ -126,8 +134,12 @@ public static class CollectionExtensions
         var sourceAdjust = source.ToListFilterNullable();
 
         foreach (var item in sourceAdjust)
+        {
             if (result != null && !result.ContainsByProperty(item))
+            {
                 result.Add(item);
+            }
+        }
 
         return result ?? new List<T>();
     }
@@ -170,10 +182,10 @@ public static class CollectionExtensions
     /// <example>
     /// </example>
     /// <returns></returns>
-    public static T? Get<T>(
+    public static T Get<T>(
         this IEnumerable<T> source,
         object filter,
-        string? propertyName = null
+        string propertyName = null
     ) where T : class
     {
         var sourceArray = source.ToArray();
@@ -194,7 +206,7 @@ public static class CollectionExtensions
     public static IEnumerable<T> GetAll<T>(
         this IEnumerable<T> source,
         object filter,
-        string? propertyName = null
+        string propertyName = null
     ) where T : class
     {
         var sourceArray = source.ToArray();
@@ -219,23 +231,32 @@ public static class CollectionExtensions
     public static void RemoveValue<T>(
         this ICollection<T> source,
         object filter,
-        string? propertyName = null,
+        string propertyName = null,
         bool onlyFirstMatch = true
     ) where T : class
     {
-        if (source.IsReadOnly) throw new Exception("该集合已设置为只读，不能删除元素");
+        if (source.IsReadOnly)
+        {
+            throw new Exception("该集合已设置为只读，不能删除元素");
+        }
 
         if (onlyFirstMatch)
         {
             var v = source.Get(filter, propertyName);
 
-            if (v != null) source.Remove(v);
+            if (v != null)
+            {
+                source.Remove(v);
+            }
         }
         else
         {
             var r = source.GetAll(filter, propertyName);
 
-            foreach (var item in r) source.Remove(item);
+            foreach (var item in r)
+            {
+                source.Remove(item);
+            }
         }
     }
 
@@ -299,13 +320,17 @@ public static class CollectionExtensions
     public static IEnumerable<T> SortByPropertyValue<T>(
         this IEnumerable<T> source,
         SortRule rule = SortRule.Asc,
-        string? propertyName = null,
+        string propertyName = null,
         int? sortCount = null
     )
     {
         var sourceArray = source.ToArray();
 
-        return sourceArray.SortByPropertyValue(rule, propertyName, sortCount);
+        return sourceArray.SortByPropertyValue(
+            rule,
+            propertyName,
+            sortCount
+        );
     }
 
     #endregion
@@ -335,7 +360,12 @@ public static class CollectionExtensions
     {
         var enumerable = source as T[] ?? source.ToArray();
 
-        return enumerable.Join(connector, template, distinct, propertyName);
+        return enumerable.Join(
+            connector,
+            template,
+            distinct,
+            propertyName
+        );
     }
 
     /// <summary>
@@ -352,17 +382,27 @@ public static class CollectionExtensions
         ICollection<KeyValuePair<TKey, TValue>> target
     )
     {
-        if (collection.IsNull()) throw new ArgumentNullException(nameof(collection));
+        if (collection.IsNull())
+        {
+            throw new ArgumentNullException(nameof(collection));
+        }
 
         var targetKeys = new List<TKey>();
 
-        foreach (var itemTarget in target) targetKeys.Add(itemTarget.Key);
+        foreach (var itemTarget in target)
+        {
+            targetKeys.Add(itemTarget.Key);
+        }
 
         var result = new List<KeyValuePair<TKey, TValue>>();
 
         foreach (var item in collection)
+        {
             if (!targetKeys.Contains(item.Key))
+            {
                 result.Add(item);
+            }
+        }
 
         result.AddRange(target);
 
@@ -382,7 +422,10 @@ public static class CollectionExtensions
     /// <returns>The collection with the added items</returns>
     public static ICollection<T> Add<T>(this ICollection<T> collection, IEnumerable<T> items)
     {
-        if (collection.IsNull()) throw new ArgumentNullException(nameof(collection));
+        if (collection.IsNull())
+        {
+            throw new ArgumentNullException(nameof(collection));
+        }
 
         items.ForEach(collection.Add);
 
@@ -398,7 +441,10 @@ public static class CollectionExtensions
     /// <returns>The collection with the added items</returns>
     public static ICollection<T> Add<T>(this ICollection<T> collection, params T[] items)
     {
-        if (collection.IsNull()) throw new ArgumentNullException(nameof(collection));
+        if (collection.IsNull())
+        {
+            throw new ArgumentNullException(nameof(collection));
+        }
 
         items.ForEach(collection.Add);
 
@@ -418,9 +464,15 @@ public static class CollectionExtensions
     /// <returns>The original item</returns>
     public static T AddAndReturn<T>(this ICollection<T> collection, T item)
     {
-        if (collection.IsNull()) throw new ArgumentNullException(nameof(collection));
+        if (collection.IsNull())
+        {
+            throw new ArgumentNullException(nameof(collection));
+        }
 
-        if (item.IsNull()) throw new ArgumentNullException(nameof(item));
+        if (item.IsNull())
+        {
+            throw new ArgumentNullException(nameof(item));
+        }
 
         collection.Add(item);
         return item;
@@ -444,15 +496,24 @@ public static class CollectionExtensions
         params T[] items
     )
     {
-        if (collection.IsNull()) throw new ArgumentNullException(nameof(collection));
+        if (collection.IsNull())
+        {
+            throw new ArgumentNullException(nameof(collection));
+        }
 
-        if (predicate.IsNull()) throw new ArgumentNullException(nameof(predicate));
+        if (predicate.IsNull())
+        {
+            throw new ArgumentNullException(nameof(predicate));
+        }
 
         var returnValue = false;
 
         foreach (var item in items)
         {
-            if (!predicate(item)) continue;
+            if (!predicate(item))
+            {
+                continue;
+            }
 
             collection.Add(item);
 
@@ -476,9 +537,15 @@ public static class CollectionExtensions
         IEnumerable<T> items
     )
     {
-        if (collection.IsNull()) throw new ArgumentNullException(nameof(collection));
+        if (collection.IsNull())
+        {
+            throw new ArgumentNullException(nameof(collection));
+        }
 
-        if (predicate.IsNull()) throw new ArgumentNullException(nameof(predicate));
+        if (predicate.IsNull())
+        {
+            throw new ArgumentNullException(nameof(predicate));
+        }
 
         return collection.AddIf(predicate, items.ToArray());
     }
@@ -496,7 +563,10 @@ public static class CollectionExtensions
     /// <returns>True if it is added, false otherwise</returns>
     public static bool AddIfUnique<T>(this ICollection<T> collection, params T[] items)
     {
-        if (collection.IsNull()) throw new ArgumentNullException(nameof(collection));
+        if (collection.IsNull())
+        {
+            throw new ArgumentNullException(nameof(collection));
+        }
 
         return collection.AddIf(x => !collection.Contains(x), items);
     }
@@ -510,7 +580,10 @@ public static class CollectionExtensions
     /// <returns>True if it is added, false otherwise</returns>
     public static bool AddIfUnique<T>(this ICollection<T> collection, IEnumerable<T> items)
     {
-        if (collection.IsNull()) throw new ArgumentNullException(nameof(collection));
+        if (collection.IsNull())
+        {
+            throw new ArgumentNullException(nameof(collection));
+        }
 
         return collection.AddIf(x => !collection.Contains(x), items);
     }
@@ -529,7 +602,10 @@ public static class CollectionExtensions
     {
         target.Clear();
 
-        foreach (var val in source) target.Add(val);
+        foreach (var val in source)
+        {
+            target.Add(val);
+        }
     }
 
     #endregion
@@ -544,7 +620,10 @@ public static class CollectionExtensions
     /// <param name="predicate">Predicate used to determine what items to remove</param>
     public static ICollection<T> Remove<T>(this ICollection<T> collection, Func<T, bool> predicate)
     {
-        if (collection.IsNull()) throw new ArgumentNullException(nameof(collection));
+        if (collection.IsNull())
+        {
+            throw new ArgumentNullException(nameof(collection));
+        }
 
         return collection.Where(x => !predicate(x)).ToList();
     }
@@ -558,7 +637,10 @@ public static class CollectionExtensions
     /// <returns>The collection with the items removed</returns>
     public static ICollection<T> Remove<T>(this ICollection<T> collection, IEnumerable<T> items)
     {
-        if (collection.IsNull()) throw new ArgumentNullException(nameof(collection));
+        if (collection.IsNull())
+        {
+            throw new ArgumentNullException(nameof(collection));
+        }
 
         return collection.Where(x => !items.Contains(x)).ToList();
     }

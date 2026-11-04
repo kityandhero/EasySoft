@@ -1,23 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>EasySoft.Core.AgileConfigClient</Title>
         <Description>EasySoft.Core.AgileConfigClient</Description>
         <PackageProjectUrl>https://github.com/kityandhero/EasySoft</PackageProjectUrl>
         <RepositoryUrl>https://github.com/kityandhero/EasySoft</RepositoryUrl>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
+        <PackageReference Include="AgileConfig.Client"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
     </ItemGroup>
 
 </Project>

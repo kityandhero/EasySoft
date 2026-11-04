@@ -8,7 +8,7 @@ public interface IExecutiveResult<T> : IExecutiveResult
     /// <summary>
     /// 数据  
     /// </summary>
-    public T? Data { get; set; }
+    public T Data { get; set; }
 }
 
 /// <summary>

@@ -14,9 +14,9 @@ public static class RpcResultFactory
     /// <param name="data"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static RpcResult<T> CreateSuccess<T>(T? data)
+    public static RpcResult<T> CreateSuccess<T>(T data)
     {
-        return new RpcResult<T>()
+        return new RpcResult<T>
         {
             Code = ReturnCode.Ok.ToInt(),
             Success = true,
@@ -50,7 +50,7 @@ public static class RpcResultFactory
     /// <param name="data"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static RpcResult<T> CreateFail<T>(ReturnCode code, string message, T? data)
+    public static RpcResult<T> CreateFail<T>(ReturnCode code, string message, T data)
     {
         return new RpcResult<T>
         {
@@ -85,7 +85,7 @@ public static class RpcResultFactory
     /// <param name="data"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static RpcResult<T> CreateFromReturnMessage<T>(IReturnMessage returnMessage, T? data)
+    public static RpcResult<T> CreateFromReturnMessage<T>(IReturnMessage returnMessage, T data)
     {
         return new RpcResult<T>
         {

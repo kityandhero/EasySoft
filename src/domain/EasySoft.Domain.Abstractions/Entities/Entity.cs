@@ -13,8 +13,8 @@ public abstract class Entity : IEntity
 
     #region 领域事件的处理
 
-    private List<IDomainEvent>? _domainEvents;
-    public IReadOnlyCollection<IDomainEvent>? DomainEvents => _domainEvents?.AsReadOnly();
+    private List<IDomainEvent> _domainEvents;
+    public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents?.AsReadOnly();
 
     public void AddDomainEvent(IDomainEvent eventItem)
     {
@@ -51,23 +51,33 @@ public abstract class Entity<TKey> : Entity, IEntity<TKey> where TKey : struct
         return new object[] { Id };
     }
 
-    public override bool Equals(object? obj)
+    public override bool Equals(object obj)
     {
         if (obj == null || !(obj is Entity<TKey>))
+        {
             return false;
+        }
 
         if (ReferenceEquals(this, obj))
+        {
             return true;
+        }
 
         if (GetType() != obj.GetType())
+        {
             return false;
+        }
 
         var item = (Entity<TKey>)obj;
 
         if (item.IsTransient() || IsTransient())
+        {
             return false;
+        }
         else
+        {
             return item.Id.Equals(Id);
+        }
     }
 
     public override int GetHashCode()
@@ -75,7 +85,9 @@ public abstract class Entity<TKey> : Entity, IEntity<TKey> where TKey : struct
         if (!IsTransient())
         {
             if (!_requestedHashCode.HasValue)
+            {
                 _requestedHashCode = Id.GetHashCode() ^ 31;
+            }
 
             return _requestedHashCode.Value;
         }
@@ -96,7 +108,7 @@ public abstract class Entity<TKey> : Entity, IEntity<TKey> where TKey : struct
         return $"[Entity: {GetType().Name}] Id = {Id}";
     }
 
-    public static bool operator ==(Entity<TKey>? left, Entity<TKey> right)
+    public static bool operator ==(Entity<TKey> left, Entity<TKey> right)
     {
         return left?.Equals(right) ?? Equals(right, null);
     }

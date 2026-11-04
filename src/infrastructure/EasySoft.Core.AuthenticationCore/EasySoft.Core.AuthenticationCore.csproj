@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>EasySoft.Core.AuthenticationCore</Title>
         <Description>EasySoft.Core.AuthenticationCore</Description>
@@ -12,17 +12,21 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\EasySoft.Core.AuthenticationCore.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\EasySoft.Core.AuthenticationCore.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\EasySoft.Core.AuthenticationCore.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\EasySoft.Core.AuthenticationCore.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj" />
-      <ProjectReference Include="..\EasySoft.Core.CacheCore\EasySoft.Core.CacheCore.csproj" />
-      <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.CacheCore\EasySoft.Core.CacheCore.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+
     </ItemGroup>
 
 </Project>

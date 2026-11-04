@@ -2,8 +2,12 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <Nullable>enable</Nullable>
-        <LangVersion>11</LangVersion>
+        <Nullable>warnings</Nullable>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
+
+    <ItemGroup>
+
+    </ItemGroup>
 
 </Project>

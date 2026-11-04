@@ -6,7 +6,10 @@ public abstract class BaseValueObject : IValueObject
 {
     protected static bool EqualOperator(IValueObject left, IValueObject right)
     {
-        if (ReferenceEquals(left, null) ^ ReferenceEquals(right, null)) return false;
+        if (ReferenceEquals(left, null) ^ ReferenceEquals(right, null))
+        {
+            return false;
+        }
 
         return ReferenceEquals(left, null) || left.Equals(right);
     }
@@ -16,11 +19,14 @@ public abstract class BaseValueObject : IValueObject
         return !EqualOperator(left, right);
     }
 
-    public abstract IEnumerable<object?> GetAtomicValues();
+    public abstract IEnumerable<object> GetAtomicValues();
 
-    public override bool Equals(object? obj)
+    public override bool Equals(object obj)
     {
-        if (obj == null || obj.GetType() != GetType()) return false;
+        if (obj == null || obj.GetType() != GetType())
+        {
+            return false;
+        }
 
         var other = (IValueObject)obj;
 
@@ -29,9 +35,15 @@ public abstract class BaseValueObject : IValueObject
 
         while (thisValues.MoveNext() && otherValues.MoveNext())
         {
-            if (ReferenceEquals(thisValues.Current, null) ^ ReferenceEquals(otherValues.Current, null)) return false;
+            if (ReferenceEquals(thisValues.Current, null) ^ ReferenceEquals(otherValues.Current, null))
+            {
+                return false;
+            }
 
-            if (thisValues.Current != null && !thisValues.Current.Equals(otherValues.Current)) return false;
+            if (thisValues.Current != null && !thisValues.Current.Equals(otherValues.Current))
+            {
+                return false;
+            }
         }
 
         return !thisValues.MoveNext() && !otherValues.MoveNext();

@@ -45,7 +45,7 @@ public class QueryAssist
         public void ExecuteSql(string sql, IMapperChannel mapperChannel)
         {
             ExecuteSql(
-                new List<string>()
+                new List<string>
                 {
                     sql
                 },
@@ -80,6 +80,16 @@ public class QueryAssist
                     try
                     {
                         LogSql(mapperChannel, sql);
+
+                        if (dbTransaction == null)
+                        {
+                            throw new UnhandledException("dbTransaction disallow null");
+                        }
+
+                        if (dbTransaction.Connection == null)
+                        {
+                            throw new UnhandledException("dbTransaction.Connection disallow null");
+                        }
 
                         dbTransaction.Connection.Execute(
                             sql,
@@ -117,7 +127,7 @@ public class QueryAssist
         /// <param name="sql">sql</param>
         /// <param name="mapperChannel">数据库通道</param>
         /// <returns></returns>
-        public ExpandoObject? ExecuteObject(
+        public ExpandoObject ExecuteObject(
             string sql,
             IMapperChannel mapperChannel
         )
@@ -296,7 +306,7 @@ public class QueryAssist
         /// <param name="primaryKey"></param>
         /// <param name="mapperChannel">数据库通道</param>
         /// <returns></returns>
-        public ExpandoObject? ExecuteSingleTableObject(
+        public ExpandoObject ExecuteSingleTableObject(
             string fields,
             string where,
             string tableName,
@@ -323,7 +333,7 @@ public class QueryAssist
         /// <param name="primaryKey"></param>
         /// <param name="mapperChannel">数据库通道</param>
         /// <returns></returns>
-        public ExpandoObject? ExecuteSingleTableObject(
+        public ExpandoObject ExecuteSingleTableObject(
             string fields,
             string where,
             string sort,

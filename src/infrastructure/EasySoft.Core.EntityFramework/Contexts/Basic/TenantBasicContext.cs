@@ -23,7 +23,7 @@ public abstract class TenantBasicContext : BasicContext
     /// <summary>
     /// Tenant
     /// </summary>
-    public ITenant? Tenant { get; set; }
+    public ITenant Tenant { get; set; }
 
     /// <summary>
     /// OnAdvanceModelCreating
@@ -40,7 +40,7 @@ public abstract class TenantBasicContext : BasicContext
     /// </summary>
     /// <param name="modelBuilder"></param>
     /// <param name="tenant"></param>
-    protected abstract void OnModelCreatingWithTenant(ModelBuilder modelBuilder, ITenant? tenant);
+    protected abstract void OnModelCreatingWithTenant(ModelBuilder modelBuilder, ITenant tenant);
 
     /// <summary>
     /// OnMoreModelCreating

@@ -4,5 +4,5 @@ public interface ITenant
 {
     public ITenant SetTenantId(object id);
 
-    public object? GetTenantId();
+    public object GetTenantId();
 }

@@ -1,15 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.PermissionVerification\EasySoft.Core.PermissionVerification.csproj" />
-      <ProjectReference Include="..\..\..\infrastructure\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj" />
-      <ProjectReference Include="..\..\..\infrastructure\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.PermissionVerification\EasySoft.Core.PermissionVerification.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+
     </ItemGroup>
 
 </Project>

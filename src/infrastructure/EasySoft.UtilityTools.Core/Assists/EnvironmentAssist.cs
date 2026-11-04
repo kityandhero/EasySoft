@@ -7,16 +7,19 @@ namespace EasySoft.UtilityTools.Core.Assists;
 /// </summary>
 public static class EnvironmentAssist
 {
-    private static IWebHostEnvironment? _environment;
+    private static IWebHostEnvironment _environment;
 
     /// <summary>
     /// SetEnvironment
     /// </summary>
     /// <param name="environment"></param>
     /// <exception cref="Exception"></exception>
-    public static void SetEnvironment(IWebHostEnvironment? environment)
+    public static void SetEnvironment(IWebHostEnvironment environment)
     {
-        if (_environment != null) throw new Exception("environment has been set, it disallow set more than once.");
+        if (_environment != null)
+        {
+            throw new Exception("environment has been set, it disallow set more than once.");
+        }
 
         _environment = environment;
     }
@@ -28,7 +31,10 @@ public static class EnvironmentAssist
     /// <exception cref="Exception"></exception>
     public static IWebHostEnvironment GetEnvironment()
     {
-        if (_environment == null) throw new Exception("environment has not set yet");
+        if (_environment == null)
+        {
+            throw new Exception("environment has not set yet");
+        }
 
         return _environment;
     }

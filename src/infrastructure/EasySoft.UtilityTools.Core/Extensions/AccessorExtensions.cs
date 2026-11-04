@@ -8,26 +8,29 @@ namespace EasySoft.UtilityTools.Core.Extensions;
 /// </summary>
 public static class AccessorExtensions
 {
-    private static Func<object>? _asyncLocalAccessor;
-    private static Func<object, object>? _holderAccessor;
-    private static Func<object, HttpContext>? _httpContextAccessor;
+    private static Func<object> _asyncLocalAccessor;
+    private static Func<object, object> _holderAccessor;
+    private static Func<object, HttpContext> _httpContextAccessor;
 
     /// <summary>
     /// GetCurrentHttpContext
     /// </summary>
     /// <param name="_"></param>
     /// <returns></returns>
-    public static HttpContext? GetCurrentHttpContext(this IAccessor _)
+    public static HttpContext GetCurrentHttpContext(this IAccessor _)
     {
         var asyncLocal = (_asyncLocalAccessor ??= CreateAsyncLocalAccessor())?.Invoke();
 
-        if (asyncLocal is null) return null;
+        if (asyncLocal is null)
+        {
+            return null;
+        }
 
         var holder = (_holderAccessor ??= CreateHolderAccessor(asyncLocal))?.Invoke(asyncLocal);
 
         return holder is null ? null : (_httpContextAccessor ??= CreateHttpContextAccessor(holder))(holder);
 
-        static Func<object>? CreateAsyncLocalAccessor()
+        static Func<object> CreateAsyncLocalAccessor()
         {
             var fieldInfo = typeof(HttpContextAccessor).GetField(
                 "_httpContextCurrent",
@@ -35,20 +38,24 @@ public static class AccessorExtensions
             );
 
             if (fieldInfo is null)
+            {
                 return default;
+            }
 
             var field = Expression.Field(null, fieldInfo);
 
             return Expression.Lambda<Func<object>>(field).Compile();
         }
 
-        static Func<object, object>? CreateHolderAccessor(object asyncLocal)
+        static Func<object, object> CreateHolderAccessor(object asyncLocal)
         {
             var holderType = asyncLocal.GetType().GetGenericArguments()[0];
             var method = typeof(AsyncLocal<>).MakeGenericType(holderType).GetProperty("Value")?.GetGetMethod();
 
             if (method is null)
+            {
                 return default;
+            }
 
             var target = Expression.Parameter(typeof(object));
             var convert = Expression.Convert(target, asyncLocal.GetType());

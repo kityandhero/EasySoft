@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.Web.Framework.ExtensionMethods;
 using NLog;
+using IChannel = EasySoft.UtilityTools.Standard.Interfaces.IChannel;
 
 namespace EasySoft.Core.Web.Framework.BuilderAssists;
 
@@ -55,8 +56,7 @@ public static class WebApplicationBuilderAssist
             $"{nameof(CreateBuilder)}<{typeof(TStartUpConfigure).Name}>."
         );
 
-        builder.Host.ConfigureAppConfiguration(
-            (hostingContext, config) =>
+        builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
             {
                 config
                     .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
@@ -176,8 +176,7 @@ public static class WebApplicationBuilderAssist
 
             if (GeneralConfigAssist.GetConfigCenterType() == ConfigCenterType.AgileConfig)
             {
-                builder.AddAgileConfigClient(
-                    _ =>
+                builder.AddAgileConfigClient(_ =>
                     {
                         var result = DynamicConfigAssist.GetNLogJsonConfig();
 

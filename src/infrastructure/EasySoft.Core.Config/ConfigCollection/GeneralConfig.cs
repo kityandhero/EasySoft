@@ -16,7 +16,7 @@ public class GeneralConfig : IConfig
     /// <summary>
     /// CacheMode
     /// </summary>
-    public string CacheMode { get; set; } = CacheModeCollection.InMemory.ToString();
+    public string CacheMode { get; set; } = nameof(CacheModeCollection.InMemory);
 
     #region Start Port
 

@@ -1,37 +1,39 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>EasySoft.Core.ErrorLogTransmitter</Title>
         <Description>EasySoft.Core.ErrorLogTransmitter</Description>
         <PackageProjectUrl>https://github.com/kityandhero/EasySoft</PackageProjectUrl>
         <RepositoryUrl>https://github.com/kityandhero/EasySoft</RepositoryUrl>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\EasySoft.Core.ErrorLogTransmitter.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\EasySoft.Core.ErrorLogTransmitter.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\EasySoft.Core.ErrorLogTransmitter.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\EasySoft.Core.ErrorLogTransmitter.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EasySoft.Core.Cap\EasySoft.Core.Cap.csproj" />
-      <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
-      <ProjectReference Include="..\EasySoft.Core.ExchangeRegulation\EasySoft.Core.ExchangeRegulation.csproj" />
-      <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.Cap\EasySoft.Core.Cap.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.ExchangeRegulation\EasySoft.Core.ExchangeRegulation.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Autofac" Version="6.4.0" />
+        <PackageReference Include="Autofac"/>
+
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Enums" />
+        <Folder Include="Enums"/>
     </ItemGroup>
 
 </Project>

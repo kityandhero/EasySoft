@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>EasySoft.Core.AutoFac</Title>
         <Description>EasySoft.Core.AutoFac</Description>
@@ -12,14 +12,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Autofac" Version="6.4.0" />
-      <PackageReference Include="Autofac.Configuration" Version="6.0.0" />
-      <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+        <PackageReference Include="Autofac"/>
+        <PackageReference Include="Autofac.Configuration"/>
+        <PackageReference Include="Autofac.Extensions.DependencyInjection"/>
+
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
-      <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
     </ItemGroup>
 
 </Project>

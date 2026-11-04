@@ -16,4 +16,4 @@ global using EasySoft.Core.Web.Framework.ExtensionMethods;
 global using Masuit.Tools;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.EntityFrameworkCore;
-global using Microsoft.OpenApi.Models;
+global using Microsoft.OpenApi;

@@ -1,16 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
         <RootNamespace>EasySoft.Domain.Infrastructure.Core</RootNamespace>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Data\EasySoft.Core.Data.csproj"/>
         <ProjectReference Include="..\..\infrastructure\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj"/>
         <ProjectReference Include="..\EasySoft.Domain.Abstractions\EasySoft.Domain.Abstractions.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+
     </ItemGroup>
 
 </Project> 

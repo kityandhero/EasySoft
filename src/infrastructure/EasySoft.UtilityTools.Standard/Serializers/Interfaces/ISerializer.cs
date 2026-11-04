@@ -40,5 +40,5 @@ public interface ISerializer<T>
     /// <param name="objectType">Object type</param>
     /// <param name="data">Data to deserialize</param>
     /// <returns>The resulting object</returns>
-    object? Deserialize(T data, Type objectType);
+    object Deserialize(T data, Type objectType);
 }

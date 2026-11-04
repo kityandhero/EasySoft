@@ -8,7 +8,7 @@ public static class WebApplicationBuilderExtensions
 {
     public static WebApplicationBuilder AddTenantFactory(
         this WebApplicationBuilder builder,
-        Func<HttpContext?, Tenant> tenantBuilder
+        Func<HttpContext, Tenant> tenantBuilder
     )
     {
         StartupDescriptionMessageAssist.AddExecute(

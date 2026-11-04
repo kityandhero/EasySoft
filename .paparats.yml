@@ -1,0 +1,50 @@
+# ============================================================
+# paparats 项目配置（放在要索引的项目根目录，跟 .git 同级）
+# 项目：EasySoft（.NET 后端框架，实际目标框架 net10.0，127 个 csproj）
+#
+# 注意：这是 netcore_framework 库。另有 .NET Framework 版框架是**独立**的另一套，
+# 将来会进 netfx_framework 库，两套不要混查。
+# ============================================================
+
+group: netcore_framework
+
+# ---------- Embedding 模型 ----------
+# 本机 llama-server 跑 bge-m3（1024 维, CPU, 8765 端口）
+embeddings:
+  provider: llama
+  model: bge-m3
+  dimensions: 1024
+
+# ---------- 代码层语言 ----------
+# csharp 档位 = **/*.cs
+language: csharp
+
+# ---------- 索引范围控制 ----------
+indexing:
+  # 只索引框架核心三块；paths 只对代码层生效
+  paths:
+    - src/domain
+    - src/infrastructure
+    - src/project-framework
+
+  # 追加排除（用 exclude 会整体替换语言内置排除表）
+  # src/test、src/unit-test、src/simple 是测试与示例；src/distribution 是部署物
+  # （IdService、getway）；publish 是构建产物。
+  exclude_extra:
+    - 'src/test/**'
+    - 'src/unit-test/**'
+    - 'src/simple/**'
+    - 'src/distribution/**'
+    - 'publish/**'
+    - '**/bin/**'
+    - '**/obj/**'
+
+  chunkSize: 480
+  overlap: 100
+  concurrency: 2
+  batchSize: 8
+
+# ---------- Markdown 文档层 ----------
+docs:
+  kind: code
+  audience: internal

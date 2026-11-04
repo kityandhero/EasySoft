@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>EasySoft.Core.Config</Title>
         <PackageProjectUrl>https://github.com/kityandhero/EasySoft/tree/main/src</PackageProjectUrl>
@@ -12,54 +12,58 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\EasySoft.Core.Config.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\EasySoft.Core.Config.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\EasySoft.Core.Config.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\EasySoft.Core.Config.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
-        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="nlog.simple.config.json" />
+        <None Remove="nlog.simple.config.json"/>
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="nlog.trace.target.txt" />
-        <EmbeddedResource Include="nlog.trace.target.txt" />
-        <None Remove="nlog.trace.rule.txt" />
-        <EmbeddedResource Include="nlog.trace.rule.txt" />
-        <None Remove="nlog.debug.target.txt" />
-        <EmbeddedResource Include="nlog.debug.target.txt" />
-        <None Remove="nlog.debug.rule.txt" />
-        <EmbeddedResource Include="nlog.debug.rule.txt" />
-        <None Remove="nlog.main.config.txt" />
-        <EmbeddedResource Include="nlog.main.config.txt" />
-        <None Remove="nlog.exceptionless.rule.txt" />
-        <EmbeddedResource Include="nlog.exceptionless.rule.txt" />
-        <None Remove="nlog.exceptionlesstarget.txt" />
-        <EmbeddedResource Include="nlog.exceptionless.target.txt" />
-        <None Remove="nlog.exceptionless-extensions.tet" />
-        <None Remove="nlog.exceptionless-extensions.txt" />
-        <EmbeddedResource Include="nlog.exceptionless-extensions.txt" />
-        <None Remove="wordHighlightingRules.txt" />
-        <EmbeddedResource Include="nlog.console.word.highlighting.rules.txt" />
-        <None Remove="nlog.console.filter.repeated.txt" />
-        <EmbeddedResource Include="nlog.console.filter.repeated.txt" />
-        <None Remove="nlog.console.target.txt" />
-        <EmbeddedResource Include="nlog.console.target.txt" />
-        <None Remove="nlog.console.limiting.wrapper.txt" />
-        <EmbeddedResource Include="nlog.console.limiting.wrapper.txt" />
-        <None Remove="nlog.console.filter.txt" />
-        <EmbeddedResource Include="nlog.console.filter.txt" />
-        <None Remove="nlog.production.file.rule.txt" />
-        <EmbeddedResource Include="nlog.production.file.rule.txt" />
-        <None Remove="nlog.production.file.target.txt" />
-        <EmbeddedResource Include="nlog.production.file.target.txt" />
+        <None Remove="nlog.trace.target.txt"/>
+        <EmbeddedResource Include="nlog.trace.target.txt"/>
+        <None Remove="nlog.trace.rule.txt"/>
+        <EmbeddedResource Include="nlog.trace.rule.txt"/>
+        <None Remove="nlog.debug.target.txt"/>
+        <EmbeddedResource Include="nlog.debug.target.txt"/>
+        <None Remove="nlog.debug.rule.txt"/>
+        <EmbeddedResource Include="nlog.debug.rule.txt"/>
+        <None Remove="nlog.main.config.txt"/>
+        <EmbeddedResource Include="nlog.main.config.txt"/>
+        <None Remove="nlog.exceptionless.rule.txt"/>
+        <EmbeddedResource Include="nlog.exceptionless.rule.txt"/>
+        <None Remove="nlog.exceptionlesstarget.txt"/>
+        <EmbeddedResource Include="nlog.exceptionless.target.txt"/>
+        <None Remove="nlog.exceptionless-extensions.tet"/>
+        <None Remove="nlog.exceptionless-extensions.txt"/>
+        <EmbeddedResource Include="nlog.exceptionless-extensions.txt"/>
+        <None Remove="wordHighlightingRules.txt"/>
+        <EmbeddedResource Include="nlog.console.word.highlighting.rules.txt"/>
+        <None Remove="nlog.console.filter.repeated.txt"/>
+        <EmbeddedResource Include="nlog.console.filter.repeated.txt"/>
+        <None Remove="nlog.console.target.txt"/>
+        <EmbeddedResource Include="nlog.console.target.txt"/>
+        <None Remove="nlog.console.limiting.wrapper.txt"/>
+        <EmbeddedResource Include="nlog.console.limiting.wrapper.txt"/>
+        <None Remove="nlog.console.filter.txt"/>
+        <EmbeddedResource Include="nlog.console.filter.txt"/>
+        <None Remove="nlog.production.file.rule.txt"/>
+        <EmbeddedResource Include="nlog.production.file.rule.txt"/>
+        <None Remove="nlog.production.file.target.txt"/>
+        <EmbeddedResource Include="nlog.production.file.target.txt"/>
     </ItemGroup>
-    
+
+    <ItemGroup>
+
+    </ItemGroup>
+
 </Project>

@@ -1,22 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\EasySoft.Simple.Tradition.Service.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\EasySoft.Simple.Tradition.Service.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\EasySoft.Simple.Tradition.Service.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\EasySoft.Simple.Tradition.Service.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Data\EasySoft.Core.Data.csproj" />
-      <ProjectReference Include="..\EasySoft.Simple.Tradition.Data\EasySoft.Simple.Tradition.Data.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Data\EasySoft.Core.Data.csproj"/>
+        <ProjectReference Include="..\EasySoft.Simple.Tradition.Data\EasySoft.Simple.Tradition.Data.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+
     </ItemGroup>
 
 </Project>

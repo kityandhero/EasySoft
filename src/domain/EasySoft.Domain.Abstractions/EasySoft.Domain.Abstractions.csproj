@@ -1,17 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\infrastructure\EasySoft.Dependence.Core\EasySoft.Dependence.Core.csproj" />
+        <PackageReference Include="MediatR"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Values" />
+        <Folder Include="Values"/>
     </ItemGroup>
 
 </Project>

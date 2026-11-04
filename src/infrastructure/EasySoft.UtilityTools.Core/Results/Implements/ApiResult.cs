@@ -20,9 +20,15 @@ public class ApiResult : ApiResult<object>, IApiResult
         ReturnCode code = ReturnCode.Ok,
         bool success = true,
         string message = "success",
-        object? data = default,
-        object? extraData = default
-    ) : base(code, success, message, data, extraData)
+        object data = default,
+        object extraData = default
+    ) : base(
+        code,
+        success,
+        message,
+        data,
+        extraData
+    )
     {
     }
 
@@ -38,9 +44,15 @@ public class ApiResult : ApiResult<object>, IApiResult
         int code = 200,
         bool success = true,
         string message = "success",
-        object? data = default,
-        object? extraData = default
-    ) : base(code, success, message, data, extraData)
+        object data = default,
+        object extraData = default
+    ) : base(
+        code,
+        success,
+        message,
+        data,
+        extraData
+    )
     {
     }
 }
@@ -62,9 +74,15 @@ public class ApiResult<TData> : ApiResult<TData, object>, IApiResult<TData>
         ReturnCode code = ReturnCode.Ok,
         bool success = true,
         string message = "success",
-        TData? data = default,
-        object? extraData = default
-    ) : base(code, success, message, data, extraData)
+        TData data = default,
+        object extraData = default
+    ) : base(
+        code,
+        success,
+        message,
+        data,
+        extraData
+    )
     {
     }
 
@@ -80,9 +98,15 @@ public class ApiResult<TData> : ApiResult<TData, object>, IApiResult<TData>
         int code = 200,
         bool success = true,
         string message = "success",
-        TData? data = default,
-        object? extraData = default
-    ) : base(code, success, message, data, extraData)
+        TData data = default,
+        object extraData = default
+    ) : base(
+        code,
+        success,
+        message,
+        data,
+        extraData
+    )
     {
     }
 }
@@ -116,13 +140,13 @@ public class ApiResult<TData, TExtraData> : ActionResult, IApiResult<TData, TExt
     /// 主要数据
     /// </summary>
     [Description("主要数据")]
-    public TData? Data { get; set; }
+    public TData Data { get; set; }
 
     /// <summary>
     /// 扩展数据
     /// </summary>
     [Description("扩展数据")]
-    public TExtraData? ExtraData { get; set; }
+    public TExtraData ExtraData { get; set; }
 
     /// <summary>
     /// CustomDataResult
@@ -136,8 +160,8 @@ public class ApiResult<TData, TExtraData> : ActionResult, IApiResult<TData, TExt
         ReturnCode code = ReturnCode.Ok,
         bool success = true,
         string message = "success",
-        TData? data = default,
-        TExtraData? extraData = default
+        TData data = default,
+        TExtraData extraData = default
     )
     {
         Code = code.ToInt();
@@ -159,8 +183,8 @@ public class ApiResult<TData, TExtraData> : ActionResult, IApiResult<TData, TExt
         int code = 200,
         bool success = true,
         string message = "success",
-        TData? data = default,
-        TExtraData? extraData = default
+        TData data = default,
+        TExtraData extraData = default
     )
     {
         Code = code;

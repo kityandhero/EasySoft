@@ -126,7 +126,7 @@ public static class SqlAssist
     /// <returns></returns>
     public static string TransferSort<T>(Expression<Func<T, object>> propertyLambda, SortType sortType)
     {
-        var p = TransferAssist.GetTableAndColumnName(propertyLambda, out Type? type);
+        var p = TransferAssist.GetTableAndColumnName(propertyLambda, out Type type);
 
         var m = type.Create();
 
@@ -202,7 +202,7 @@ public static class SqlAssist
     /// <returns></returns>
     public static string TransferGroup<T>(Expression<Func<T, object>> propertyLambda)
     {
-        var p = TransferAssist.GetTableAndColumnName(propertyLambda, out Type? type);
+        var p = TransferAssist.GetTableAndColumnName(propertyLambda, out Type type);
 
         var m = type.Create();
 
@@ -519,8 +519,8 @@ public static class SqlAssist
     public static string BuildPageListSql<T>(
         int pageIndex,
         int pageSize,
-        ICollection<Condition<T>>? listCondition,
-        ICollection<Sort<T>>? listSort
+        ICollection<Condition<T>> listCondition,
+        ICollection<Sort<T>> listSort
     ) where T : IEntitySelf<T>, new()
     {
         var start = (pageIndex - 1) * pageSize + 1;
@@ -1093,7 +1093,7 @@ public static class SqlAssist
     /// <exception cref="Exception"></exception>
     public static string UpdateAssignField<T>(
         T model,
-        ICollection<AssignField<T>>? listAssignField
+        ICollection<AssignField<T>> listAssignField
     ) where T : IEntitySelf<T>, new()
     {
         if (listAssignField == null || !listAssignField.Any())
@@ -1395,8 +1395,7 @@ public static class SqlAssist
 
         var properties = modelType.GetProperties();
 
-        properties.ForEach(
-            p =>
+        properties.ForEach(p =>
             {
                 var columnName = TransferAssist.GetColumnName(p);
 
@@ -1407,8 +1406,7 @@ public static class SqlAssist
             }
         );
 
-        properties.ForEach(
-            p =>
+        properties.ForEach(p =>
             {
                 var columnName = TransferAssist.GetColumnName(p);
 

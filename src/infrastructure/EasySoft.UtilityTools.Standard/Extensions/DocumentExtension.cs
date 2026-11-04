@@ -13,9 +13,13 @@ public static class DocumentExtension
     /// <param name="type">Type to find the documentation for</param>
     /// <returns>The XML fragment that describes the type</returns>
     /// <remarks>  Prefix in type names is T</remarks>
-    public static XmlElement? GetDocumentation(this Type type)
+    public static XmlElement GetDocumentation(this Type type)
     {
-        return XmlFromName(type, 'T', "");
+        return XmlFromName(
+            type,
+            'T',
+            ""
+        );
     }
 
     /// <summary>
@@ -23,24 +27,43 @@ public static class DocumentExtension
     /// </summary>
     /// <param name="methodInfo">The MethodInfo (reflection data ) of the member to find documentation for</param>
     /// <returns>The XML fragment describing the method</returns>
-    public static XmlElement? GetDocumentation(this MethodInfo methodInfo)
+    public static XmlElement GetDocumentation(this MethodInfo methodInfo)
     {
         // Calculate the parameter string as this is in the member name in the XML
         var parametersString = "";
         foreach (var parameterInfo in methodInfo.GetParameters())
         {
-            if (parametersString.Length > 0) parametersString += ",";
+            if (parametersString.Length > 0)
+            {
+                parametersString += ",";
+            }
+
             parametersString += parameterInfo.ParameterType.FullName;
         }
 
         //AL: 15.04.2008 ==> BUG-FIX remove “()” if parametersString is empty
 
-        if (methodInfo.DeclaringType is null) return default;
+        if (methodInfo.DeclaringType is null)
+        {
+            return default;
+        }
 
         if (parametersString.Length > 0)
-            return XmlFromName(methodInfo.DeclaringType, 'M', methodInfo.Name + "(" + parametersString + ")");
+        {
+            return XmlFromName(
+                methodInfo.DeclaringType,
+                'M',
+                methodInfo.Name + "(" + parametersString + ")"
+            );
+        }
         else
-            return XmlFromName(methodInfo.DeclaringType, 'M', methodInfo.Name);
+        {
+            return XmlFromName(
+                methodInfo.DeclaringType,
+                'M',
+                methodInfo.Name
+            );
+        }
     }
 
     /// <summary>
@@ -48,13 +71,19 @@ public static class DocumentExtension
     /// </summary>
     /// <param name="memberInfo">The MemberInfo (reflection data) or the member to find documentation for</param>
     /// <returns>The XML fragment describing the member</returns>
-    public static XmlElement? GetDocumentation(this MemberInfo? memberInfo)
+    public static XmlElement GetDocumentation(this MemberInfo memberInfo)
     {
         if (memberInfo?.DeclaringType is null)
+        {
             return default;
+        }
 
         // First character [0] of member type is prefix character in the name in the XML
-        return XmlFromName(memberInfo.DeclaringType, memberInfo.MemberType.ToString()[0], memberInfo.Name);
+        return XmlFromName(
+            memberInfo.DeclaringType,
+            memberInfo.MemberType.ToString()[0],
+            memberInfo.Name
+        );
     }
 
     /// <summary>
@@ -62,9 +91,12 @@ public static class DocumentExtension
     /// </summary>
     /// <param name="memberInfo"></param>
     /// <returns></returns>
-    public static string GetSummary(this MemberInfo? memberInfo)
+    public static string GetSummary(this MemberInfo memberInfo)
     {
-        if (memberInfo is null) return string.Empty;
+        if (memberInfo is null)
+        {
+            return string.Empty;
+        }
 
         var element = memberInfo.GetDocumentation();
         var summaryElm = element?.SelectSingleNode("summary");
@@ -93,14 +125,18 @@ public static class DocumentExtension
     /// <param name="prefix">The prefix as seen in the name attribute in the documentation XML</param>
     /// <param name="name">Where relevant, the full name qualifier for the element</param>
     /// <returns>The member that has a name that describes the specified reflection element</returns>
-    private static XmlElement? XmlFromName(this Type type, char prefix, string name)
+    private static XmlElement XmlFromName(this Type type, char prefix, string name)
     {
         string fullName;
 
         if (string.IsNullOrEmpty(name))
+        {
             fullName = prefix + ":" + type.FullName;
+        }
         else
+        {
             fullName = prefix + ":" + type.FullName + "." + name;
+        }
 
         var xmlDoc = XmlFromAssembly(type.Assembly);
 
@@ -126,15 +162,22 @@ public static class DocumentExtension
     /// <returns>The XML document</returns>
     /// <remarks>This version uses a cache to preserve the assemblies, so that
     /// the XML file is not loaded and parsed on every single lookup</remarks>
-    public static XmlDocument? XmlFromAssembly(this Assembly assembly)
+    public static XmlDocument XmlFromAssembly(this Assembly assembly)
     {
-        if (FailCache.ContainsKey(assembly)) return default;
+        if (FailCache.ContainsKey(assembly))
+        {
+            return default;
+        }
 
         try
         {
             if (!Cache.ContainsKey(assembly))
+
                 // load the document into the cache
+            {
                 Cache[assembly] = XmlFromAssemblyNonCached(assembly);
+            }
+
             return Cache[assembly];
         }
         catch (Exception exception)
@@ -157,10 +200,12 @@ public static class DocumentExtension
 
         try
         {
-            streamReader = new StreamReader(Path.ChangeExtension(
-                assemblyFilename.Substring(8),
-                ".xml"
-            ));
+            streamReader = new StreamReader(
+                Path.ChangeExtension(
+                    assemblyFilename.Substring(8),
+                    ".xml"
+                )
+            );
         }
         catch (FileNotFoundException exception)
         {

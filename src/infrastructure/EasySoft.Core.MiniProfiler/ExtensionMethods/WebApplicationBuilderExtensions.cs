@@ -19,7 +19,9 @@ public static class WebApplicationBuilderExtensions
     )
     {
         if (builder.HasRegistered(UniqueIdentifierAddAdvanceMiniProfile))
+        {
             return builder;
+        }
 
         if (!GeneralConfigAssist.GetMiniProFileSwitch())
         {
@@ -41,8 +43,7 @@ public static class WebApplicationBuilderExtensions
         );
 
         builder.Services
-            .AddMiniProfiler(
-                options =>
+            .AddMiniProfiler(options =>
                 {
                     options.RouteBasePath = "/profiler";
 
@@ -56,13 +57,13 @@ public static class WebApplicationBuilderExtensions
 
                     ApplicationConfigure.GetMiniProfilerOptionsAction()?.Invoke(options);
                 }
-            ).AddEntityFramework();
+            )
+            .AddEntityFramework();
 
         ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
-                .SetAction(
-                    application => { application.UseMiniProfiler(); }
+                .SetAction(application => { application.UseMiniProfiler(); }
                 )
         );
 

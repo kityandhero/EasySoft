@@ -2,7 +2,7 @@
 
 public class Tenant : ITenant
 {
-    private object? _id;
+    private object _id;
 
     protected Tenant()
     {
@@ -21,7 +21,7 @@ public class Tenant : ITenant
         return this;
     }
 
-    public object? GetTenantId()
+    public object GetTenantId()
     {
         return _id;
     }

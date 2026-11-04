@@ -1,22 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="RedLock.net" Version="2.3.2" />
+        <PackageReference Include="Microsoft.Bcl.AsyncInterfaces"/>
+        <PackageReference Include="Pipelines.Sockets.Unofficial"/>
+        <PackageReference Include="RedLock.net"/>
+
+        <PackageReference Include="StackExchange.Redis"/>
+        <PackageReference Include="System.IO.Hashing"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj" />
-        <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
     </ItemGroup>
 
 </Project>

@@ -13,7 +13,7 @@ public class LongConverter : JsonConverter
     /// <param name="writer"></param>
     /// <param name="value"></param>
     /// <param name="serializer"></param>
-    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
     {
         var valueAdjust = value ?? new object();
 
@@ -53,14 +53,17 @@ public class LongConverter : JsonConverter
     /// <param name="existingValue"></param>
     /// <param name="serializer"></param>
     /// <returns></returns>
-    public override object? ReadJson(
+    public override object ReadJson(
         JsonReader reader,
         Type objectType,
-        object? existingValue,
+        object existingValue,
         JsonSerializer serializer
     )
     {
-        if (reader.Value is string v) return v.ToLong();
+        if (reader.Value is string v)
+        {
+            return v.ToLong();
+        }
 
         return reader.Value;
     }

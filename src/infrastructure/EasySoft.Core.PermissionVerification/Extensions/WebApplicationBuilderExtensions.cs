@@ -31,7 +31,9 @@ public static class WebApplicationBuilderExtensions
     ) where TPermissionObserver : IPermissionObserver
     {
         if (builder.HasRegistered(IdentifierAddPermissionVerification))
+        {
             return builder;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddPermissionVerification)}<{typeof(TPermissionObserver).Name}>."
@@ -47,19 +49,23 @@ public static class WebApplicationBuilderExtensions
         );
 
         builder.AddAdvanceRefitClient<IPermissionClient>(clientBuilder =>
-        {
-            clientBuilder.ConfigureHttpClient(client =>
             {
-                if (!Uri.TryCreate(
-                        GeneralConfigAssist.GetPermissionServerHostUrl(),
-                        UriKind.Absolute,
-                        out var baseAddress
-                    ))
-                    throw new UnknownException("PermissionServerHostUrl error");
+                clientBuilder.ConfigureHttpClient(client =>
+                    {
+                        if (!Uri.TryCreate(
+                                GeneralConfigAssist.GetPermissionServerHostUrl(),
+                                UriKind.Absolute,
+                                out var baseAddress
+                            ))
+                        {
+                            throw new UnknownException("PermissionServerHostUrl error");
+                        }
 
-                client.BaseAddress = baseAddress;
-            });
-        });
+                        client.BaseAddress = baseAddress;
+                    }
+                );
+            }
+        );
 
         builder.Services.AddTransient(
             typeof(IAccessWayDetector),
@@ -73,9 +79,11 @@ public static class WebApplicationBuilderExtensions
                 var proxyGenerator = provider.GetService<ProxyGenerator>();
 
                 if (proxyGenerator == null)
+                {
                     throw new UnknownException(
                         "provider.GetService<ProxyGenerator>() result is null"
                     );
+                }
 
                 var proxy = proxyGenerator.CreateInterfaceProxyWithTargetInterface(
                     typeof(IAccessWayDetector),
@@ -99,9 +107,11 @@ public static class WebApplicationBuilderExtensions
                 var proxyGenerator = provider.GetService<ProxyGenerator>();
 
                 if (proxyGenerator == null)
+                {
                     throw new UnknownException(
                         "provider.GetService<ProxyGenerator>() result is null"
                     );
+                }
 
                 var proxy = proxyGenerator.CreateInterfaceProxyWithTargetInterface(
                     typeof(ICompetenceDetector),
@@ -116,23 +126,23 @@ public static class WebApplicationBuilderExtensions
         if (middlewareMode)
         {
             builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-            {
-                // https://docs.autofac.org/en/latest/faq/per-request-scope.html
-                containerBuilder.RegisterType<OperateOfficer>().As<IOperateOfficer>().InstancePerLifetimeScope();
-            });
+                {
+                    // https://docs.autofac.org/en/latest/faq/per-request-scope.html
+                    containerBuilder.RegisterType<OperateOfficer>().As<IOperateOfficer>().InstancePerLifetimeScope();
+                }
+            );
 
             builder.Services.AddTransient<PermissionVerificationMiddleware>();
 
             FlagAssist.PermissionVerificationMiddlewareModeSwitch = true;
         }
 
-        builder.Services.AddMediatR(typeof(IAccessWayDetector).Assembly);
+        builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<IAccessWayDetector>(); });
 
         ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
-                .SetAction(
-                    application => { application.UseScanPermission(); }
+                .SetAction(application => { application.UseScanPermission(); }
                 )
         );
 
@@ -155,10 +165,11 @@ public static class WebApplicationBuilderExtensions
         );
 
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-        {
-            // https://docs.autofac.org/en/latest/faq/per-request-scope.html
-            containerBuilder.RegisterType<T>().As<IPermissionObserver>().InstancePerLifetimeScope();
-        });
+            {
+                // https://docs.autofac.org/en/latest/faq/per-request-scope.html
+                containerBuilder.RegisterType<T>().As<IPermissionObserver>().InstancePerLifetimeScope();
+            }
+        );
 
         return builder;
     }

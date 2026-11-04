@@ -1,20 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Consul.AspNetCore" Version="1.6.10.7" />
-      <PackageReference Include="Winton.Extensions.Configuration.Consul" Version="3.2.0" />
+        <PackageReference Include="Consul"/>
+        <PackageReference Include="Consul.AspNetCore"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder"/>
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.Abstractions"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions"/>
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions"/>
+        <PackageReference Include="Winton.Extensions.Configuration.Consul"/>
+
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj" />
-      <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
-      <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>

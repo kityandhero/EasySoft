@@ -8,4 +8,5 @@ global using EasySoft.UtilityTools.Standard.Extensions;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.Hosting;
 global using Minio;
+global using Minio.DataModel.Args;
 global using Minio.Exceptions;

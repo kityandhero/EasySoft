@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>EasySoft.Core.EasyToken</Title>
         <Description>EasySoft.Core.EasyToken</Description>
@@ -12,28 +12,30 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\EasySoft.Core.PermissionVerification.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\EasySoft.Core.PermissionVerification.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\EasySoft.Core.PermissionVerification.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\EasySoft.Core.PermissionVerification.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.AccessWayTransmitter\EasySoft.Core.AccessWayTransmitter.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.AuthenticationCore\EasySoft.Core.AuthenticationCore.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
-        <ProjectReference Include="..\EasySoft.Core.Refit\EasySoft.Core.Refit.csproj" />
-        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.AccessWayTransmitter\EasySoft.Core.AccessWayTransmitter.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.AuthenticationCore\EasySoft.Core.AuthenticationCore.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Refit\EasySoft.Core.Refit.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="6.4.0" />
+        <PackageReference Include="Autofac"/>
+        <PackageReference Include="Mapster"/>
+        <PackageReference Include="Refit"/>
     </ItemGroup>
 
 </Project>

@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>EasySoft.Core.Swagger</Title>
         <Description>EasySoft.Core.Swagger</Description>
@@ -12,25 +12,26 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\EasySoft.Core.Swagger.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\EasySoft.Core.Swagger.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\EasySoft.Core.Swagger.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\EasySoft.Core.Swagger.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
-      <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
+        <PackageReference Include="Microsoft.OpenApi"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
+        <PackageReference Include="Scalar.AspNetCore"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0" />
-      <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>

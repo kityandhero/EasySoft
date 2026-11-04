@@ -56,7 +56,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "component", "component", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.EntityFramework", "infrastructure\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj", "{FE89CDFC-5A5F-4027-8C1C-35ACEECF725C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.EasyCaching", "infrastructure\EasySoft.Core.EasyCaching\EasySoft.Core.EasyCaching.csproj", "{38C8DFFF-B515-4853-8DE3-E97B90440C08}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.CacheImplementation", "infrastructure\EasySoft.Core.CacheImplementation\EasySoft.Core.CacheImplementation.csproj", "{38C8DFFF-B515-4853-8DE3-E97B90440C08}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configures-配置-本地-动态远端", "configures-配置-本地-动态远端", "{5CFBCD84-655E-4724-A0FF-03C2390C471E}"
 EndProject
@@ -189,12 +189,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.FluentValidation", "infrastructure\EasySoft.FluentValidation\EasySoft.FluentValidation.csproj", "{0B13D993-AA9D-4DB7-B91F-4AF91BC950F1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.FluentValidation", "infrastructure\EasySoft.Core.FluentValidation\EasySoft.Core.FluentValidation.csproj", "{BED43A07-C59C-4D4D-94EB-BCAE5E2949E5}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dependence-依赖版本控制", "dependence-依赖版本控制", "{D7E2EFA6-3EED-440A-8DE6-8DBC9BB86EF0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Dependence.Core", "infrastructure\EasySoft.Dependence.Core\EasySoft.Dependence.Core.csproj", "{D253A72D-C003-44EA-89E8-A18B8DBD1435}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Dependence.Standard", "infrastructure\EasySoft.Dependence.Standard\EasySoft.Dependence.Standard.csproj", "{AAFF87D6-3227-44FE-95CC-A74A4EFF9C9D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "measure-措施类-注册-保护-熔断-限流-其他", "measure-措施类-注册-保护-熔断-限流-其他", "{450371C9-F27A-419D-84FD-0DEE8F5A5F3D}"
 EndProject
@@ -429,6 +423,22 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql", "Sql", "{BA398E7B-56A8-4D26-8001-D61AAB0321C3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Sql.Creators.Test", "test\EasySoft.Core.Sql.Creators.Test\EasySoft.Core.Sql.Creators.Test.csproj", "{B39CF48A-7494-46BB-BE92-527D99B699FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.RabbitMQ", "infrastructure\EasySoft.Core.RabbitMQ\EasySoft.Core.RabbitMQ.csproj", "{E89569D8-C9F3-4EC6-969D-DB0CEAD294FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "message-queue 消息队列", "message-queue 消息队列", "{AFC0235D-6F09-4544-87A4-7C52A63802A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.RabbitMQ.Extensions.DependencyInjection", "infrastructure\EasySoft.Core.RabbitMQ.Extensions.DependencyInjection\EasySoft.Core.RabbitMQ.Extensions.DependencyInjection.csproj", "{0F68CA51-67EF-4A5B-AA8A-AD001AC56643}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "m-message 消息", "m-message 消息", "{CC1D9C19-45EC-481E-B806-557F983B0BE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Messaging", "infrastructure\EasySoft.Core.Messaging\EasySoft.Core.Messaging.csproj", "{B5626165-9C14-433E-9195-A6ADFF5DAA5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Messaging.SlimMessageBus", "infrastructure\EasySoft.Core.Messaging.SlimMessageBus\EasySoft.Core.Messaging.SlimMessageBus.csproj", "{00346165-7F6D-464D-9F20-DF0D1550F97A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messaging", "Messaging", "{9FE6DE5C-FDC5-4A53-AC77-0A8C18467574}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Messaging.SlimMessageBus.Test", "test\EasySoft.Core.Messaging.SlimMessageBus.Test\EasySoft.Core.Messaging.SlimMessageBus.Test.csproj", "{12B317B9-39AE-4F3A-85F8-BCD913933BC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -672,14 +682,6 @@ Global
 		{BED43A07-C59C-4D4D-94EB-BCAE5E2949E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BED43A07-C59C-4D4D-94EB-BCAE5E2949E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BED43A07-C59C-4D4D-94EB-BCAE5E2949E5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D253A72D-C003-44EA-89E8-A18B8DBD1435}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D253A72D-C003-44EA-89E8-A18B8DBD1435}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D253A72D-C003-44EA-89E8-A18B8DBD1435}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D253A72D-C003-44EA-89E8-A18B8DBD1435}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AAFF87D6-3227-44FE-95CC-A74A4EFF9C9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AAFF87D6-3227-44FE-95CC-A74A4EFF9C9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AAFF87D6-3227-44FE-95CC-A74A4EFF9C9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AAFF87D6-3227-44FE-95CC-A74A4EFF9C9D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{383997FB-D2B8-4B23-B673-BBA4B8E41E7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{383997FB-D2B8-4B23-B673-BBA4B8E41E7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{383997FB-D2B8-4B23-B673-BBA4B8E41E7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -940,6 +942,26 @@ Global
 		{B39CF48A-7494-46BB-BE92-527D99B699FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B39CF48A-7494-46BB-BE92-527D99B699FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B39CF48A-7494-46BB-BE92-527D99B699FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E89569D8-C9F3-4EC6-969D-DB0CEAD294FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E89569D8-C9F3-4EC6-969D-DB0CEAD294FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E89569D8-C9F3-4EC6-969D-DB0CEAD294FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E89569D8-C9F3-4EC6-969D-DB0CEAD294FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F68CA51-67EF-4A5B-AA8A-AD001AC56643}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F68CA51-67EF-4A5B-AA8A-AD001AC56643}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F68CA51-67EF-4A5B-AA8A-AD001AC56643}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F68CA51-67EF-4A5B-AA8A-AD001AC56643}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5626165-9C14-433E-9195-A6ADFF5DAA5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5626165-9C14-433E-9195-A6ADFF5DAA5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5626165-9C14-433E-9195-A6ADFF5DAA5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5626165-9C14-433E-9195-A6ADFF5DAA5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00346165-7F6D-464D-9F20-DF0D1550F97A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00346165-7F6D-464D-9F20-DF0D1550F97A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00346165-7F6D-464D-9F20-DF0D1550F97A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00346165-7F6D-464D-9F20-DF0D1550F97A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12B317B9-39AE-4F3A-85F8-BCD913933BC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12B317B9-39AE-4F3A-85F8-BCD913933BC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12B317B9-39AE-4F3A-85F8-BCD913933BC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12B317B9-39AE-4F3A-85F8-BCD913933BC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1008,9 +1030,6 @@ Global
 		{31637F87-FF68-4578-9C0E-03BF6AC194DA} = {8A2DE03A-A728-48D2-8E33-AD2A5D53220F}
 		{0B13D993-AA9D-4DB7-B91F-4AF91BC950F1} = {31637F87-FF68-4578-9C0E-03BF6AC194DA}
 		{BED43A07-C59C-4D4D-94EB-BCAE5E2949E5} = {31637F87-FF68-4578-9C0E-03BF6AC194DA}
-		{D7E2EFA6-3EED-440A-8DE6-8DBC9BB86EF0} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
-		{D253A72D-C003-44EA-89E8-A18B8DBD1435} = {D7E2EFA6-3EED-440A-8DE6-8DBC9BB86EF0}
-		{AAFF87D6-3227-44FE-95CC-A74A4EFF9C9D} = {D7E2EFA6-3EED-440A-8DE6-8DBC9BB86EF0}
 		{383997FB-D2B8-4B23-B673-BBA4B8E41E7D} = {450371C9-F27A-419D-84FD-0DEE8F5A5F3D}
 		{92242400-A970-4BE9-BBC4-746CC1EE6A2D} = {450371C9-F27A-419D-84FD-0DEE8F5A5F3D}
 		{B33712DC-E041-495D-82E5-60BE90BD3753} = {450371C9-F27A-419D-84FD-0DEE8F5A5F3D}
@@ -1147,6 +1166,14 @@ Global
 		{34450341-6807-4C16-A05E-DB412DE2589D} = {C079D8F1-6EE1-4D9A-8877-B634A440E5A0}
 		{BA398E7B-56A8-4D26-8001-D61AAB0321C3} = {3A5000A7-B37E-4A5D-8668-82E7E2681993}
 		{B39CF48A-7494-46BB-BE92-527D99B699FC} = {BA398E7B-56A8-4D26-8001-D61AAB0321C3}
+		{E89569D8-C9F3-4EC6-969D-DB0CEAD294FE} = {5AE563D0-82A4-4957-9F75-AFDFBA9648D4}
+		{AFC0235D-6F09-4544-87A4-7C52A63802A2} = {65AFCFE2-59A9-4704-A9BE-A5B83F944E88}
+		{0F68CA51-67EF-4A5B-AA8A-AD001AC56643} = {AFC0235D-6F09-4544-87A4-7C52A63802A2}
+		{CC1D9C19-45EC-481E-B806-557F983B0BE8} = {99B6F68C-C99D-4923-9615-7462DD1FF90D}
+		{B5626165-9C14-433E-9195-A6ADFF5DAA5F} = {CC1D9C19-45EC-481E-B806-557F983B0BE8}
+		{00346165-7F6D-464D-9F20-DF0D1550F97A} = {CC1D9C19-45EC-481E-B806-557F983B0BE8}
+		{9FE6DE5C-FDC5-4A53-AC77-0A8C18467574} = {3A5000A7-B37E-4A5D-8668-82E7E2681993}
+		{12B317B9-39AE-4F3A-85F8-BCD913933BC2} = {9FE6DE5C-FDC5-4A53-AC77-0A8C18467574}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

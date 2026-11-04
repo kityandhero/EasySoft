@@ -52,6 +52,12 @@ public interface ICacheOperator : ITryGet
 
     #endregion
 
+    #region GetSerializedValue
+
+    protected ExecutiveResult<string> GetSerializedValue<T>(string key);
+
+    #endregion
+
     #region Set
 
     /// <summary>
@@ -166,8 +172,6 @@ public interface ICacheOperator : ITryGet
     public bool Remove(string key);
 
     public bool RemoveBatch(IEnumerable<string> keys);
-
-    public bool RemoveByPrefix(string prefix);
 
     #endregion
 }

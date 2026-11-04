@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <LangVersion>11</LangVersion>
+        <Nullable>warnings</Nullable>
+        <LangVersion>14</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>EasySoft.NPOIEx</Title>
         <PackageProjectUrl>https://github.com/kityandhero/EasySoft</PackageProjectUrl>
@@ -13,12 +13,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="NPOI" Version="2.5.6" />
+        <PackageReference Include="BouncyCastle.Cryptography"/>
+        <PackageReference Include="ExtendedNumerics.BigDecimal"/>
+        <PackageReference Include="Microsoft.IO.RecyclableMemoryStream"/>
+        <PackageReference Include="NPOI"/>
+
+        <PackageReference Include="SkiaSharp"/>
+        <PackageReference Include="SkiaSharp.NativeAssets.macOS"/>
+        <PackageReference Include="SkiaSharp.NativeAssets.Win32"/>
+        <PackageReference Include="System.Security.Cryptography.Pkcs"/>
+        <PackageReference Include="System.Security.Cryptography.Xml"/>
+        <PackageReference Include="ZString"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Dependence.Standard\EasySoft.Dependence.Standard.csproj" />
-        <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
+        <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
     </ItemGroup>
 
 </Project>

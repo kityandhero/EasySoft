@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Config.Exceptions;
+﻿using EasySoft.Core.Config.ConfigCollection;
+using EasySoft.Core.Config.Exceptions;
 using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
 using EasySoft.UtilityTools.Standard.Extensions;
@@ -10,7 +11,7 @@ namespace EasySoft.Core.Config.ConfigAssist;
 /// </summary>
 public static class AgileConfigAssist
 {
-    private static readonly string ConfigFile = $"{nameof(ConfigCollection.AgileConfig).ToLowerFirst()}.json";
+    private static readonly string ConfigFile = $"{nameof(AgileConfig).ToLowerFirst()}.json";
 
     private static IConfiguration Configuration { get; set; }
 
@@ -26,7 +27,7 @@ public static class AgileConfigAssist
 
         Configuration = builder.Build();
 
-        Configuration.Bind(ConfigCollection.AgileConfig.Instance);
+        Configuration.Bind(AgileConfig.Instance);
     }
 
     /// <summary>
@@ -45,9 +46,9 @@ public static class AgileConfigAssist
         return $"[{ConfigFile}](./configures/{ConfigFile})";
     }
 
-    private static ConfigCollection.AgileConfig GetConfig()
+    private static AgileConfig GetConfig()
     {
-        return ConfigCollection.AgileConfig.Instance;
+        return AgileConfig.Instance;
     }
 
     /// <summary>
@@ -61,10 +62,12 @@ public static class AgileConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
+        {
             throw new ConfigErrorException(
                 $"请配置 AgileConfigAppId: {ConfigFile} -> AgileConfigAppId",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -80,10 +83,12 @@ public static class AgileConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
+        {
             throw new ConfigErrorException(
                 $"请配置 AgileConfigSecret: {ConfigFile} -> AgileConfigSecret",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -99,10 +104,12 @@ public static class AgileConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
+        {
             throw new ConfigErrorException(
                 $"请配置 AgileConfigAppId: {ConfigFile} -> AgileConfigAppId",
                 GetConfigFileInfo()
             );
+        }
 
         return v.Split(",").ToListFilterNullOrWhiteSpace().ToList();
     }
@@ -165,10 +172,12 @@ public static class AgileConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "100" : v;
 
         if (!v.IsInt(out var value) || value <= 0)
+        {
             throw new ConfigErrorException(
                 $"请配置 AgileConfigEnv: {ConfigFile} -> AgileConfigEnv,请设置数字 value > 0",
                 GetConfigFileInfo()
             );
+        }
 
         return value;
     }

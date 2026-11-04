@@ -1,22 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <Nullable>enable</Nullable>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>warnings</Nullable>
 
         <IsPackable>false</IsPackable>
+
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="coverlet.collector" Version="3.2.0">
-            <PrivateAssets>all</PrivateAssets>
+        <PackageReference Include="coverlet.collector">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk"/>
+        <PackageReference Include="Shouldly"/>
+        <PackageReference Include="xunit.v3"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\infrastructure\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj" />
+        <ProjectReference Include="..\..\infrastructure\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
     </ItemGroup>
 
 </Project>

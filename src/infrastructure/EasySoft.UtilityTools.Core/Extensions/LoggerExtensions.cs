@@ -12,15 +12,14 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录一般信息
     /// </summary>
-    public static void LogAdvanceInfo(this ILogger logger, params string?[] logs)
+    public static void LogAdvanceInfo(this ILogger logger, params string[] logs)
     {
         if (!logs.Any())
         {
             return;
         }
 
-        logs.ForEach(
-            o =>
+        logs.ForEach(o =>
             {
                 if (string.IsNullOrWhiteSpace(o))
                 {
@@ -35,7 +34,7 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录一般信息
     /// </summary>
-    public static void LogAdvanceInfo(this ILogger logger, IEnumerable<string?> logs)
+    public static void LogAdvanceInfo(this ILogger logger, IEnumerable<string> logs)
     {
         logger.LogAdvanceInfo(logs.ToArray());
     }
@@ -47,15 +46,14 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录调试信息集
     /// </summary>
-    public static void LogAdvanceDebug(this ILogger logger, params string?[] logs)
+    public static void LogAdvanceDebug(this ILogger logger, params string[] logs)
     {
         if (!logs.Any())
         {
             return;
         }
 
-        logs.ForEach(
-            o =>
+        logs.ForEach(o =>
             {
                 if (string.IsNullOrWhiteSpace(o))
                 {
@@ -70,7 +68,7 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录调试信息集合 【输出多条】
     /// </summary>
-    public static void LogAdvanceDebug(this ILogger logger, IEnumerable<string?> logs)
+    public static void LogAdvanceDebug(this ILogger logger, IEnumerable<string> logs)
     {
         logger.LogAdvanceDebug(logs.ToArray());
     }
@@ -82,15 +80,14 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录重要信息
     /// </summary>
-    public static void LogAdvanceCritical(this ILogger logger, params string?[] logs)
+    public static void LogAdvanceCritical(this ILogger logger, params string[] logs)
     {
         if (!logs.Any())
         {
             return;
         }
 
-        logs.ForEach(
-            o =>
+        logs.ForEach(o =>
             {
                 if (string.IsNullOrWhiteSpace(o))
                 {
@@ -105,7 +102,7 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录重要信息集合 【输出多条】
     /// </summary>
-    public static void LogAdvanceCritical(this ILogger logger, IEnumerable<string?> logs)
+    public static void LogAdvanceCritical(this ILogger logger, IEnumerable<string> logs)
     {
         logger.LogAdvanceCritical(logs.ToArray());
     }
@@ -117,15 +114,14 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录警告信息
     /// </summary>
-    public static void LogAdvanceWarning(this ILogger logger, params string?[] logs)
+    public static void LogAdvanceWarning(this ILogger logger, params string[] logs)
     {
         if (!logs.Any())
         {
             return;
         }
 
-        logs.ForEach(
-            o =>
+        logs.ForEach(o =>
             {
                 if (string.IsNullOrWhiteSpace(o))
                 {
@@ -140,7 +136,7 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录警告信息集合 【输出多条】
     /// </summary>
-    public static void LogAdvanceWarning(this ILogger logger, IEnumerable<string?> logs)
+    public static void LogAdvanceWarning(this ILogger logger, IEnumerable<string> logs)
     {
         logger.LogAdvanceWarning(logs.ToArray());
     }
@@ -152,15 +148,14 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录跟踪信息
     /// </summary>
-    public static void LogAdvanceTrace(this ILogger logger, params string?[] logs)
+    public static void LogAdvanceTrace(this ILogger logger, params string[] logs)
     {
         if (!logs.Any())
         {
             return;
         }
 
-        logs.ForEach(
-            o =>
+        logs.ForEach(o =>
             {
                 if (string.IsNullOrWhiteSpace(o))
                 {
@@ -175,7 +170,7 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录跟踪信息集合 【输出多条】
     /// </summary>
-    public static void LogAdvanceTrace(this ILogger logger, IEnumerable<string?> logs)
+    public static void LogAdvanceTrace(this ILogger logger, IEnumerable<string> logs)
     {
         logger.LogAdvanceTrace(logs.ToArray());
     }
@@ -187,15 +182,14 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录错误信息
     /// </summary>
-    public static void LogAdvanceError(this ILogger logger, params string?[] logs)
+    public static void LogAdvanceError(this ILogger logger, params string[] logs)
     {
         if (!logs.Any())
         {
             return;
         }
 
-        logs.ForEach(
-            o =>
+        logs.ForEach(o =>
             {
                 if (string.IsNullOrWhiteSpace(o))
                 {
@@ -210,7 +204,7 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录错误信息集合 【输出多条】
     /// </summary>
-    public static void LogAdvanceError(this ILogger logger, IEnumerable<string?> logs)
+    public static void LogAdvanceError(this ILogger logger, IEnumerable<string> logs)
     {
         logger.LogAdvanceError(logs.ToArray());
     }
@@ -238,7 +232,7 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录调试时的说明信息
     /// </summary>
-    public static void LogAdvanceExecute(this ILogger logger, string? log, bool supplementRoundBracket = false)
+    public static void LogAdvanceExecute(this ILogger logger, string log, bool supplementRoundBracket = false)
     {
         if (string.IsNullOrWhiteSpace(log))
         {
@@ -257,7 +251,7 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录调试时的说明信息
     /// </summary>
-    public static void LogAdvancePrompt(this ILogger logger, string? log)
+    public static void LogAdvancePrompt(this ILogger logger, string log)
     {
         if (string.IsNullOrWhiteSpace(log))
         {
@@ -281,8 +275,7 @@ public static class LoggerExtensions
             return;
         }
 
-        logs.ForEach(
-            log =>
+        logs.ForEach(log =>
             {
                 if (!string.IsNullOrWhiteSpace(log))
                 {
@@ -299,7 +292,7 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录一般数据 【序列化输出】
     /// </summary>
-    public static void InfoData(this ILogger logger, object? log, string prefix = "")
+    public static void InfoData(this ILogger logger, object log, string prefix = "")
     {
         if (log == null)
         {
@@ -324,7 +317,7 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录调试数据 【序列化输出】
     /// </summary>
-    public static void DebugData(this ILogger logger, object? log, string prefix = "")
+    public static void DebugData(this ILogger logger, object log, string prefix = "")
     {
         if (log == null)
         {
@@ -349,7 +342,7 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录重要数据 【序列化输出】
     /// </summary>
-    public static void CriticalData(this ILogger logger, object? log, string prefix = "")
+    public static void CriticalData(this ILogger logger, object log, string prefix = "")
     {
         if (log == null)
         {
@@ -374,7 +367,7 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录警告数据 【序列化输出】
     /// </summary>
-    public static void WarningData(this ILogger logger, object? log, string prefix = "")
+    public static void WarningData(this ILogger logger, object log, string prefix = "")
     {
         if (log == null)
         {
@@ -399,7 +392,7 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录跟踪数据
     /// </summary>
-    public static void TraceData(this ILogger logger, object? log, string prefix = "")
+    public static void TraceData(this ILogger logger, object log, string prefix = "")
     {
         if (log == null)
         {
@@ -424,7 +417,7 @@ public static class LoggerExtensions
     /// <summary>
     /// 记录错误数据
     /// </summary>
-    public static void ErrorData(this ILogger logger, object? log, string prefix = "")
+    public static void ErrorData(this ILogger logger, object log, string prefix = "")
     {
         if (log == null)
         {
@@ -460,7 +453,7 @@ public static class LoggerExtensions
     public static void LogMiddlewareInvokeAsyncBefore<TMiddleware>(
         this ILogger logger,
         IWebHostEnvironment environment,
-        params string?[] logs
+        params string[] logs
     ) where TMiddleware : IMiddleware
     {
         if (!environment.IsDevelopment())
@@ -483,7 +476,7 @@ public static class LoggerExtensions
     public static void LogMiddlewareInvokeAsyncAfter<TMiddleware>(
         this ILogger logger,
         IWebHostEnvironment environment,
-        params string?[] logs
+        params string[] logs
     ) where TMiddleware : IMiddleware
     {
         if (!environment.IsDevelopment())

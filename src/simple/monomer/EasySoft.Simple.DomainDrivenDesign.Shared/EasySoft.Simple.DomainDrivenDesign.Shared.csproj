@@ -1,16 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Domain.Base\EasySoft.Core.Domain.Base.csproj" />
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Domain.Share\EasySoft.Core.Domain.Share.csproj" />
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EventBus\EasySoft.Core.EventBus.csproj" />
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Domain.Base\EasySoft.Core.Domain.Base.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Domain.Share\EasySoft.Core.Domain.Share.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EventBus\EasySoft.Core.EventBus.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+
     </ItemGroup>
 
 </Project>

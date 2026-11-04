@@ -95,7 +95,7 @@ public static class ControllerBaseExtensions
         this ControllerBase controller,
         ExecutiveResult<T> result,
         Func<T, object> dataHandler,
-        object? extra = null
+        object extra = null
     )
     {
         var data = result.Data != null ? dataHandler(result.Data) : null;
@@ -117,8 +117,8 @@ public static class ControllerBaseExtensions
         ReturnCode code = ReturnCode.Ok,
         bool success = true,
         string message = "success",
-        object? data = null,
-        object? extraData = null,
+        object data = null,
+        object extraData = null,
         bool camelCase = true
     )
     {
@@ -140,8 +140,8 @@ public static class ControllerBaseExtensions
     /// </summary>
     public static IApiResult Success(
         this ControllerBase controller,
-        object? data = null,
-        object? extraData = null,
+        object data = null,
+        object extraData = null,
         bool camelCase = true
     )
     {
@@ -162,8 +162,8 @@ public static class ControllerBaseExtensions
         this ControllerBase controller,
         ReturnCode code,
         string message = "",
-        object? data = null,
-        object? extraData = null
+        object data = null,
+        object extraData = null
     )
     {
         var messageAdjust = string.IsNullOrWhiteSpace(message) ? code.ToMessage().Message : message;
@@ -188,8 +188,8 @@ public static class ControllerBaseExtensions
     public static IApiResult Fail(
         this ControllerBase controller,
         IReturnMessage returnMessage,
-        object? data = null,
-        object? extraData = null
+        object data = null,
+        object extraData = null
     )
     {
         return controller.Data(
@@ -211,7 +211,7 @@ public static class ControllerBaseExtensions
     public static IApiResult PagedData(
         this ControllerBase controller,
         IEnumerable<object> list,
-        object? extraData = null,
+        object extraData = null,
         bool camelCase = true
     )
     {
@@ -238,7 +238,7 @@ public static class ControllerBaseExtensions
         int pageNo,
         int pageSize,
         long total,
-        object? other = null,
+        object other = null,
         bool camelCase = true
     )
     {
@@ -274,7 +274,7 @@ public static class ControllerBaseExtensions
     public static IApiResult PagedData(
         this ControllerBase controller,
         IPageListResult<object> pageListResult,
-        object? extraData = null,
+        object extraData = null,
         bool camelCase = true
     )
     {
@@ -300,7 +300,7 @@ public static class ControllerBaseExtensions
         this ControllerBase controller,
         IPageListResult<T> pageListResult,
         Func<T, object> trandfer,
-        object? extraData = null,
+        object extraData = null,
         bool camelCase = true
     )
     {

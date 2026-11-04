@@ -2,9 +2,9 @@
 
 public interface IValueObject
 {
-    IEnumerable<object?> GetAtomicValues();
+    IEnumerable<object> GetAtomicValues();
 
-    bool Equals(object? obj);
+    bool Equals(object obj);
 
     int GetHashCode();
 }

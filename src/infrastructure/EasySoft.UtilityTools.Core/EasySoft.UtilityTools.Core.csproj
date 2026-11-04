@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <LangVersion>11</LangVersion>
-        <Nullable>enable</Nullable>
+        <LangVersion>14</LangVersion>
+        <Nullable>warnings</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>EasySoft.UtilityTools.Core</Title>
         <Description>EasySoft.UtilityTools.Core</Description>
@@ -10,7 +10,7 @@
         <RepositoryUrl>https://github.com/kityandhero/EasySoft</RepositoryUrl>
     </PropertyGroup>
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <RepositoryType>git</RepositoryType>
     </PropertyGroup>
@@ -21,19 +21,25 @@
         <DocumentationFile>bin\Release\EasySoft.UtilityTools.Core.xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="NGeoHash" Version="1.2.0" />
-        <PackageReference Include="QRCoder" Version="1.4.3" />
-        <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-        <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
+        <PackageReference Include="Castle.Core"/>
+        <PackageReference Include="Castle.Core.AsyncInterceptor"/>
+        <PackageReference Include="Microsoft.Extensions.Http.Polly"/>
+        <PackageReference Include="Microsoft.Extensions.Http.Resilience"/>
+        <PackageReference Include="Microsoft.NETCore.Platforms"/>
+        <PackageReference Include="Microsoft.Win32.SystemEvents"/>
+        <PackageReference Include="NGeoHash"/>
+        <PackageReference Include="Polly"/>
+        <PackageReference Include="QRCoder"/>
+        <PackageReference Include="System.Data.DataSetExtensions"/>
+        <PackageReference Include="System.Drawing.Common"/>
     </ItemGroup>
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Dependence.Core\EasySoft.Dependence.Core.csproj" />
-        <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj" />
+        <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Results" />
+        <Folder Include="Results"/>
     </ItemGroup>
 </Project>

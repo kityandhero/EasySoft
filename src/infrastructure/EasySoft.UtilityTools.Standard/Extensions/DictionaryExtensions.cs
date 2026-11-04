@@ -42,11 +42,14 @@ public static class DictionaryExtensions
     /// </summary>
     /// <param name="dictionary"></param>
     /// <returns></returns>
-    public static ExpandoObject ToExpandoObject(this IDictionary<string, object?> dictionary)
+    public static ExpandoObject ToExpandoObject(this IDictionary<string, object> dictionary)
     {
         var expandoObject = new ExpandoObject();
 
-        foreach (var kvp in dictionary) expandoObject.AddKeyValuePair(kvp);
+        foreach (var kvp in dictionary)
+        {
+            expandoObject.AddKeyValuePair(kvp);
+        }
 
         return expandoObject;
     }
@@ -65,13 +68,16 @@ public static class DictionaryExtensions
     /// <param name="defaultValue">Default value if the key is not found</param>
     /// <returns>The value associated with the key or the default value if the key is not found</returns>
     /// <exception cref="System.ArgumentNullException">Thrown if the dictionary is null</exception>
-    public static TValue? GetValue<TKey, TValue>(
+    public static TValue GetValue<TKey, TValue>(
         this IDictionary<TKey, TValue> dictionary,
         TKey key,
-        TValue? defaultValue = default
+        TValue defaultValue = default
     )
     {
-        if (dictionary.IsNull()) throw new ArgumentNullException(nameof(dictionary));
+        if (dictionary.IsNull())
+        {
+            throw new ArgumentNullException(nameof(dictionary));
+        }
 
         return dictionary.TryGetValue(key, out var returnValue) ? returnValue : defaultValue;
     }
@@ -90,15 +96,26 @@ public static class DictionaryExtensions
     /// <param name="value">Value to add</param>
     /// <returns>The dictionary</returns>
     /// <exception cref="System.ArgumentNullException">Thrown if the dictionary is null</exception>
-    public static IDictionary<TKey, TValue> SetValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary,
-        TKey key, TValue value)
+    public static IDictionary<TKey, TValue> SetValue<TKey, TValue>(
+        this IDictionary<TKey, TValue> dictionary,
+        TKey key,
+        TValue value
+    )
     {
-        if (dictionary.IsNull()) throw new ArgumentNullException(nameof(dictionary));
+        if (dictionary.IsNull())
+        {
+            throw new ArgumentNullException(nameof(dictionary));
+        }
 
         if (dictionary.ContainsKey(key))
+        {
             dictionary[key] = value;
+        }
         else
+        {
             dictionary.Add(key, value);
+        }
+
         return dictionary;
     }
 
@@ -118,7 +135,10 @@ public static class DictionaryExtensions
     )
         where T1 : IComparable
     {
-        if (dictionary.IsNull()) throw new ArgumentNullException(nameof(dictionary));
+        if (dictionary.IsNull())
+        {
+            throw new ArgumentNullException(nameof(dictionary));
+        }
 
         return dictionary.Sort(x => x.Key);
     }
@@ -137,7 +157,10 @@ public static class DictionaryExtensions
     )
         where T1 : IComparable
     {
-        if (dictionary.IsNull()) throw new ArgumentNullException(nameof(dictionary));
+        if (dictionary.IsNull())
+        {
+            throw new ArgumentNullException(nameof(dictionary));
+        }
 
         return dictionary.Sort(x => x.Key, comparer);
     }
@@ -156,9 +179,15 @@ public static class DictionaryExtensions
         Func<KeyValuePair<T1, T2>, T3> orderBy
     ) where T3 : IComparable where T1 : notnull
     {
-        if (dictionary.IsNull()) throw new ArgumentNullException(nameof(dictionary));
+        if (dictionary.IsNull())
+        {
+            throw new ArgumentNullException(nameof(dictionary));
+        }
 
-        if (orderBy.IsNull()) throw new ArgumentNullException(nameof(orderBy));
+        if (orderBy.IsNull())
+        {
+            throw new ArgumentNullException(nameof(orderBy));
+        }
 
         return dictionary.OrderBy(orderBy)
             .ToDictionary(x => x.Key, x => x.Value);
@@ -180,9 +209,15 @@ public static class DictionaryExtensions
         IComparer<T3> comparer
     ) where T3 : IComparable where T1 : notnull
     {
-        if (dictionary.IsNull()) throw new ArgumentNullException(nameof(dictionary));
+        if (dictionary.IsNull())
+        {
+            throw new ArgumentNullException(nameof(dictionary));
+        }
 
-        if (orderBy.IsNull()) throw new ArgumentNullException(nameof(orderBy));
+        if (orderBy.IsNull())
+        {
+            throw new ArgumentNullException(nameof(orderBy));
+        }
 
         return dictionary.OrderBy(orderBy, comparer.Check(() => new GenericComparer<T3>()))
             .ToDictionary(x => x.Key, x => x.Value);
@@ -199,9 +234,15 @@ public static class DictionaryExtensions
     /// <returns>The IDictionary expressed as a string</returns>
     public static string ToQueryString(this IDictionary<string, string> source)
     {
-        if (source.IsNull()) throw new ArgumentNullException(nameof(source));
+        if (source.IsNull())
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
 
-        if (source.Count <= 0) return "";
+        if (source.Count <= 0)
+        {
+            return "";
+        }
 
         var builder = new StringBuilder();
 

@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,6 +17,14 @@
 
     <ItemGroup>
         <Folder Include="Assists"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Dapper"/>
+        <PackageReference Include="Microsoft.Data.SqlClient"/>
+        <PackageReference Include="MiniProfiler.AspNetCore"/>
+        <PackageReference Include="MiniProfiler.Shared"/>
+        <PackageReference Include="Newtonsoft.Json"/>
     </ItemGroup>
 
 </Project>

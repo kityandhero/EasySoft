@@ -13,5 +13,5 @@ public interface INameValue
     /// <summary>
     /// Value
     /// </summary>
-    object? Value { get; set; }
+    object Value { get; set; }
 }

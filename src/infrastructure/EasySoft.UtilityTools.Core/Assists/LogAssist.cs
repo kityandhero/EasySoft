@@ -7,7 +7,7 @@ namespace EasySoft.UtilityTools.Core.Assists;
 /// </summary>
 public static class LogAssist
 {
-    private static ILogger? _logger;
+    private static ILogger _logger;
 
     /// <summary>
     /// SetLogger
@@ -16,7 +16,10 @@ public static class LogAssist
     /// <exception cref="Exception"></exception>
     public static void SetLogger(ILogger logger)
     {
-        if (_logger != null) throw new Exception("logger has been set, it disallow set more than once.");
+        if (_logger != null)
+        {
+            throw new Exception("logger has been set, it disallow set more than once.");
+        }
 
         _logger = logger;
     }
@@ -30,7 +33,10 @@ public static class LogAssist
     /// <exception cref="Exception"></exception>
     public static ILogger GetLogger()
     {
-        if (_logger == null) throw new Exception("logger has not set yet");
+        if (_logger == null)
+        {
+            throw new Exception("logger has not set yet");
+        }
 
         return _logger;
     }
@@ -42,9 +48,12 @@ public static class LogAssist
     /// <summary>
     /// 记录一般信息
     /// </summary>
-    public static void Info(string? log)
+    public static void Info(string log)
     {
-        if (string.IsNullOrWhiteSpace(log)) return;
+        if (string.IsNullOrWhiteSpace(log))
+        {
+            return;
+        }
 
         GetLogger().LogAdvanceInfo(log);
     }
@@ -52,7 +61,7 @@ public static class LogAssist
     /// <summary>
     /// 记录一般信息集合 【输出多条】
     /// </summary>
-    public static void Info(params string?[] logs)
+    public static void Info(params string[] logs)
     {
         GetLogger().LogAdvanceInfo(logs);
     }
@@ -60,7 +69,7 @@ public static class LogAssist
     /// <summary>
     /// 记录一般信息集合 【输出多条】
     /// </summary>
-    public static void Info(IEnumerable<string?> logs)
+    public static void Info(IEnumerable<string> logs)
     {
         GetLogger().LogAdvanceInfo(logs);
     }
@@ -72,7 +81,7 @@ public static class LogAssist
     /// <summary>
     /// 记录调试信息
     /// </summary>
-    public static void Debug(string? log)
+    public static void Debug(string log)
     {
         GetLogger().LogAdvanceDebug(log);
     }
@@ -80,7 +89,7 @@ public static class LogAssist
     /// <summary>
     /// 记录调试信息集合 【输出多条】
     /// </summary>
-    public static void Debug(params string?[] logs)
+    public static void Debug(params string[] logs)
     {
         GetLogger().LogAdvanceDebug(logs);
     }
@@ -88,7 +97,7 @@ public static class LogAssist
     /// <summary>
     /// 记录调试信息集合 【输出多条】
     /// </summary>
-    public static void Debug(IEnumerable<string?> logs)
+    public static void Debug(IEnumerable<string> logs)
     {
         GetLogger().LogAdvanceDebug(logs);
     }
@@ -100,7 +109,7 @@ public static class LogAssist
     /// <summary>
     /// 记录重要信息
     /// </summary>
-    public static void Critical(string? log)
+    public static void Critical(string log)
     {
         GetLogger().LogAdvanceCritical(log);
     }
@@ -108,7 +117,7 @@ public static class LogAssist
     /// <summary>
     /// 记录重要信息集合 【输出多条】
     /// </summary>
-    public static void Critical(params string?[] logs)
+    public static void Critical(params string[] logs)
     {
         GetLogger().LogAdvanceCritical(logs);
     }
@@ -116,7 +125,7 @@ public static class LogAssist
     /// <summary>
     /// 记录重要信息集合 【输出多条】
     /// </summary>
-    public static void Critical(IEnumerable<string?> logs)
+    public static void Critical(IEnumerable<string> logs)
     {
         GetLogger().LogAdvanceCritical(logs);
     }
@@ -128,7 +137,7 @@ public static class LogAssist
     /// <summary>
     /// 记录警告信息
     /// </summary>
-    public static void Warning(string? log)
+    public static void Warning(string log)
     {
         GetLogger().LogAdvanceWarning(log);
     }
@@ -136,7 +145,7 @@ public static class LogAssist
     /// <summary>
     /// 记录警告信息集合 【输出多条】
     /// </summary>
-    public static void Warning(params string?[] logs)
+    public static void Warning(params string[] logs)
     {
         GetLogger().LogAdvanceWarning(logs);
     }
@@ -144,7 +153,7 @@ public static class LogAssist
     /// <summary>
     /// 记录警告信息集合 【输出多条】
     /// </summary>
-    public static void Warning(IEnumerable<string?> logs)
+    public static void Warning(IEnumerable<string> logs)
     {
         GetLogger().LogAdvanceWarning(logs);
     }
@@ -156,7 +165,7 @@ public static class LogAssist
     /// <summary>
     /// 记录跟踪信息
     /// </summary>
-    public static void Trace(string? log)
+    public static void Trace(string log)
     {
         GetLogger().LogAdvanceTrace(log);
     }
@@ -164,7 +173,7 @@ public static class LogAssist
     /// <summary>
     /// 记录跟踪信息集合 【输出多条】
     /// </summary>
-    public static void Trace(params string?[] logs)
+    public static void Trace(params string[] logs)
     {
         GetLogger().LogAdvanceTrace(logs);
     }
@@ -172,7 +181,7 @@ public static class LogAssist
     /// <summary>
     /// 记录跟踪信息集合 【输出多条】
     /// </summary>
-    public static void Trace(IEnumerable<string?> logs)
+    public static void Trace(IEnumerable<string> logs)
     {
         GetLogger().LogAdvanceTrace(logs);
     }
@@ -182,7 +191,7 @@ public static class LogAssist
     /// <summary>
     /// 记录错误信息
     /// </summary>
-    public static void Error(string? log)
+    public static void Error(string log)
     {
         GetLogger().LogAdvanceError(log);
     }
@@ -190,7 +199,7 @@ public static class LogAssist
     /// <summary>
     /// 记录错误信息集合 【输出多条】
     /// </summary>
-    public static void Error(params string?[] logs)
+    public static void Error(params string[] logs)
     {
         GetLogger().LogAdvanceError(logs);
     }
@@ -198,7 +207,7 @@ public static class LogAssist
     /// <summary>
     /// 记录错误信息集合 【输出多条】
     /// </summary>
-    public static void Error(IEnumerable<string?> logs)
+    public static void Error(IEnumerable<string> logs)
     {
         GetLogger().LogAdvanceError(logs);
     }
@@ -210,7 +219,7 @@ public static class LogAssist
     /// <summary>
     /// 记录调试时的说明信息
     /// </summary>
-    public static void Execute(string? log, bool supplementRoundBracket = false)
+    public static void Execute(string log, bool supplementRoundBracket = false)
     {
         GetLogger().LogAdvanceExecute(log, supplementRoundBracket);
     }
@@ -218,7 +227,7 @@ public static class LogAssist
     /// <summary>
     /// 记录调试时的说明信息
     /// </summary>
-    public static void Prompt(string? log)
+    public static void Prompt(string log)
     {
         GetLogger().LogAdvancePrompt(log);
     }
@@ -240,7 +249,7 @@ public static class LogAssist
     /// <summary>
     /// 记录一般数据 【序列化输出】
     /// </summary>
-    public static void InfoData(object? log, string prefix = "")
+    public static void InfoData(object log, string prefix = "")
     {
         GetLogger().InfoData(log, prefix);
     }
@@ -256,7 +265,7 @@ public static class LogAssist
     /// <summary>
     /// 记录调试数据 【序列化输出】
     /// </summary>
-    public static void DebugData(object? log, string prefix = "")
+    public static void DebugData(object log, string prefix = "")
     {
         GetLogger().DebugData(log, prefix);
     }
@@ -272,7 +281,7 @@ public static class LogAssist
     /// <summary>
     /// 记录重要数据 【序列化输出】
     /// </summary>
-    public static void CriticalData(object? log, string prefix = "")
+    public static void CriticalData(object log, string prefix = "")
     {
         GetLogger().CriticalData(log, prefix);
     }
@@ -288,7 +297,7 @@ public static class LogAssist
     /// <summary>
     /// 记录警告数据 【序列化输出】
     /// </summary>
-    public static void WarningData(object? log, string prefix = "")
+    public static void WarningData(object log, string prefix = "")
     {
         GetLogger().WarningData(log, prefix);
     }
@@ -304,7 +313,7 @@ public static class LogAssist
     /// <summary>
     /// 记录跟踪数据
     /// </summary>
-    public static void TraceData(object? log, string prefix = "")
+    public static void TraceData(object log, string prefix = "")
     {
         GetLogger().TraceData(log, prefix);
     }
@@ -320,7 +329,7 @@ public static class LogAssist
     /// <summary>
     /// 记录错误数据
     /// </summary>
-    public static void ErrorData(object? log, string prefix = "")
+    public static void ErrorData(object log, string prefix = "")
     {
         GetLogger().ErrorData(log, prefix);
     }

@@ -23,10 +23,35 @@ public interface IAsyncCacheOperator : ICacheOperator
         TimeSpan slidingTime
     );
 
+    /// <summary>
+    /// 设置缓存
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    /// <param name="expiration"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public Task SetAsync<T>(string key, T value, TimeSpan expiration);
 
+    /// <summary>
+    /// 设置缓存
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    /// <param name="dateTime"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public Task SetAsync<T>(string key, T value, DateTime dateTime);
 
+    /// <summary>
+    /// 设置缓存
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    /// <param name="dateTimeMin"></param>
+    /// <param name="dateTimeMax"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public Task SetAsync<T>(
         string key,
         T value,
@@ -34,6 +59,16 @@ public interface IAsyncCacheOperator : ICacheOperator
         DateTime dateTimeMax
     );
 
+    /// <summary>
+    /// 设置缓存
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    /// <param name="expirationRatio"></param>
+    /// <param name="secondMin"></param>
+    /// <param name="secondMax"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public Task SetAsync<T>(
         string key,
         T value,
@@ -76,11 +111,12 @@ public interface IAsyncCacheOperator : ICacheOperator
         TimeSpan expirationMax
     );
 
+    /// <summary>
+    /// 移除指定缓存
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public Task RemoveAsync(string key);
-
-    public Task RemoveBatchAsync(IEnumerable<string> keys);
-
-    public Task RemoveByPrefixAsync(string prefix);
 
     #endregion
 }

@@ -66,7 +66,7 @@ public static class TypeExtensions
     /// <param name="source">调用源</param>
     /// <param name="nameFilter">筛选名称</param>
     /// <returns></returns>
-    public static T? GetCustomAttribute<T>(this Enum source, string nameFilter = "") where T : class
+    public static T GetCustomAttribute<T>(this Enum source, string nameFilter = "") where T : class
     {
         var field = source.GetType().GetField(source.ToString());
 
@@ -173,8 +173,8 @@ public static class TypeExtensions
     /// <param name="inherit">继承</param>
     /// <param name="memberTypes">成员类型</param>
     /// <returns></returns>
-    public static T? TryGetCustomAttribute<T>(
-        this object? source,
+    public static T TryGetCustomAttribute<T>(
+        this object source,
         string nameFilter = "",
         bool inherit = false,
         MemberTypes memberTypes = MemberTypes.All
@@ -204,7 +204,7 @@ public static class TypeExtensions
     /// <param name="inherit">继承</param>
     /// <param name="memberTypes">成员类型</param>
     /// <returns></returns>
-    public static T? GetCustomAttribute<T>(
+    public static T GetCustomAttribute<T>(
         this object source,
         string nameFilter = "",
         bool inherit = false,
@@ -235,7 +235,7 @@ public static class TypeExtensions
     /// <param name="memberTypes">成员类型</param>
     /// <returns></returns>
     public static List<object> GetCustomAttribute(
-        this object? source,
+        this object source,
         string nameFilter = "",
         bool inherit = false,
         MemberTypes memberTypes = MemberTypes.All
@@ -379,8 +379,7 @@ public static class TypeExtensions
             return "";
         }
 
-        var list = properties.Select(
-            o =>
+        var list = properties.Select(o =>
             {
                 var value = o.GetValue(target);
 

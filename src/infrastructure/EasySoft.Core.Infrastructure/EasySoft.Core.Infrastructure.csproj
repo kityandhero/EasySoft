@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>EasySoft.Core.Infrastructure</Title>
         <Description>EasySoft.Core.Infrastructure</Description>
@@ -12,35 +12,33 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\EasySoft.Core.Infrastructure.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\EasySoft.Core.Infrastructure.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\EasySoft.Core.Infrastructure.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\EasySoft.Core.Infrastructure.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <PackageReference Include="Autofac"/>
+        <PackageReference Include="Autofac.Extensions.DependencyInjection"/>
+        <PackageReference Include="Masuit.Tools.Core"/>
+        <PackageReference Include="MiniProfiler.AspNetCore"/>
+        <PackageReference Include="MiniProfiler.Shared"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Reference Include="Microsoft.Extensions.Logging.Abstractions" />
+        <ProjectReference Include="..\EasySoft.IdGenerator\EasySoft.IdGenerator.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="6.4.0" />
-        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Dependence.Core\EasySoft.Dependence.Core.csproj" />
-        <ProjectReference Include="..\EasySoft.Dependence.Standard\EasySoft.Dependence.Standard.csproj" />
-        <ProjectReference Include="..\EasySoft.IdGenerator\EasySoft.IdGenerator.csproj" />
-        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Repositories" />
+        <Folder Include="Repositories"/>
     </ItemGroup>
 
 </Project>

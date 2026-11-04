@@ -1,4 +1,4 @@
 {
-  "MainConnection": "server=database.local.com; User ID=publicOpinion;Password=!@#$1234;database=public_opinion;Encrypt=False",
-  "MirrorConnection": "server=database.local.com; User ID=publicOpinion;Password=!@#$1234;database=public_opinion;Encrypt=False"
+  "MainConnection": "server=database.local.com; User ID=sa;Password=sa;database=easy_soft_core_test;Encrypt=False",
+  "MirrorConnection": "server=database.local.com; User ID=sa;Password=sa;database=easy_soft_core_test;Encrypt=False"
 }

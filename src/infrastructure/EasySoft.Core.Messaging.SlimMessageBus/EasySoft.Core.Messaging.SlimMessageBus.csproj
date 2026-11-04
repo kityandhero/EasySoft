@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>warnings</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="SlimMessageBus"/>
+        <PackageReference Include="SlimMessageBus.Host"/>
+        <PackageReference Include="SlimMessageBus.Host.Interceptor"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\EasySoft.Core.Messaging\EasySoft.Core.Messaging.csproj"/>
+    </ItemGroup>
+
+</Project>

@@ -26,7 +26,7 @@ public static class ControllerExtensions
     public static IApiResult WrapperExecutiveResult<T>(
         this Controller controller,
         ExecutiveResult<T> result,
-        Func<T?, object> translateCallback
+        Func<T, object> translateCallback
     ) where T : BaseEntity<T>
     {
         return !result.Success ? controller.Fail(result.Code) : controller.Success(translateCallback(result.Data));
@@ -36,7 +36,7 @@ public static class ControllerExtensions
         this Controller controller,
         ExecutiveResult<T> result,
         TAdditionalArgument1 additionalArgument1,
-        Func<T?, TAdditionalArgument1, object> translateCallback
+        Func<T, TAdditionalArgument1, object> translateCallback
     ) where T : BaseEntity<T>
     {
         return !result.Success
@@ -59,7 +59,7 @@ public static class ControllerExtensions
         TAdditionalArgument1 additionalArgument1,
         TAdditionalArgument2 additionalArgument2,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             object
@@ -89,7 +89,7 @@ public static class ControllerExtensions
         TAdditionalArgument2 additionalArgument2,
         TAdditionalArgument3 additionalArgument3,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             TAdditionalArgument3,
@@ -123,7 +123,7 @@ public static class ControllerExtensions
         TAdditionalArgument3 additionalArgument3,
         TAdditionalArgument4 additionalArgument4,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             TAdditionalArgument3,
@@ -161,7 +161,7 @@ public static class ControllerExtensions
         TAdditionalArgument4 additionalArgument4,
         TAdditionalArgument5 additionalArgument5,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             TAdditionalArgument3,
@@ -190,7 +190,7 @@ public static class ControllerExtensions
     public static IApiResult WrapperExecutiveResult<T>(
         this Controller controller,
         ExecutiveResult<T> result,
-        Func<T?, ExpandoObject> translateCallback
+        Func<T, ExpandoObject> translateCallback
     )
     {
         return !result.Success ? controller.Fail(result.Code) : controller.Success(translateCallback(result.Data));
@@ -199,8 +199,8 @@ public static class ControllerExtensions
     public static IApiResult WrapperExecutiveResult<T>(
         this Controller controller,
         ExecutiveResult<T> result,
-        Func<T?, ExpandoObject> translateCallback,
-        Func<T?, ICollection<KeyValuePair<string, object?>>> additionalValueCallback
+        Func<T, ExpandoObject> translateCallback,
+        Func<T, ICollection<KeyValuePair<string, object>>> additionalValueCallback
     )
     {
         return !result.Success
@@ -217,7 +217,7 @@ public static class ControllerExtensions
         this Controller controller,
         ExecutiveResult<T> result,
         TAdditionalArgument1 additionalArgument1,
-        Func<T?, TAdditionalArgument1, ExpandoObject> translateCallback
+        Func<T, TAdditionalArgument1, ExpandoObject> translateCallback
     ) where T : BaseEntity<T>
     {
         return !result.Success
@@ -234,8 +234,8 @@ public static class ControllerExtensions
         this Controller controller,
         ExecutiveResult<T> result,
         TAdditionalArgument1 additionalArgument1,
-        Func<T?, TAdditionalArgument1, ExpandoObject> translateCallback,
-        Func<T?, ICollection<KeyValuePair<string, object?>>> additionalValueCallback
+        Func<T, TAdditionalArgument1, ExpandoObject> translateCallback,
+        Func<T, ICollection<KeyValuePair<string, object>>> additionalValueCallback
     ) where T : BaseEntity<T>
     {
         return !result.Success
@@ -261,7 +261,7 @@ public static class ControllerExtensions
         TAdditionalArgument1 additionalArgument1,
         TAdditionalArgument2 additionalArgument2,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             ExpandoObject
@@ -289,12 +289,12 @@ public static class ControllerExtensions
         TAdditionalArgument1 additionalArgument1,
         TAdditionalArgument2 additionalArgument2,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             ExpandoObject
         > translateCallback,
-        Func<T?, ICollection<KeyValuePair<string, object?>>> additionalValueCallback
+        Func<T, ICollection<KeyValuePair<string, object>>> additionalValueCallback
     ) where T : BaseEntity<T>
     {
         return !result.Success
@@ -323,7 +323,7 @@ public static class ControllerExtensions
         TAdditionalArgument2 additionalArgument2,
         TAdditionalArgument3 additionalArgument3,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             TAdditionalArgument3,
@@ -355,13 +355,13 @@ public static class ControllerExtensions
         TAdditionalArgument2 additionalArgument2,
         TAdditionalArgument3 additionalArgument3,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             TAdditionalArgument3,
             ExpandoObject
         > translateCallback,
-        Func<T?, ICollection<KeyValuePair<string, object?>>> additionalValueCallback
+        Func<T, ICollection<KeyValuePair<string, object>>> additionalValueCallback
     ) where T : BaseEntity<T>
     {
         return !result.Success
@@ -393,7 +393,7 @@ public static class ControllerExtensions
         TAdditionalArgument3 additionalArgument3,
         TAdditionalArgument4 additionalArgument4,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             TAdditionalArgument3,
@@ -429,14 +429,14 @@ public static class ControllerExtensions
         TAdditionalArgument3 additionalArgument3,
         TAdditionalArgument4 additionalArgument4,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             TAdditionalArgument3,
             TAdditionalArgument4,
             ExpandoObject
         > translateCallback,
-        Func<T?, ICollection<KeyValuePair<string, object?>>> additionalValueCallback
+        Func<T, ICollection<KeyValuePair<string, object>>> additionalValueCallback
     ) where T : BaseEntity<T>
     {
         return !result.Success
@@ -471,7 +471,7 @@ public static class ControllerExtensions
         TAdditionalArgument4 additionalArgument4,
         TAdditionalArgument5 additionalArgument5,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             TAdditionalArgument3,
@@ -511,7 +511,7 @@ public static class ControllerExtensions
         TAdditionalArgument4 additionalArgument4,
         TAdditionalArgument5 additionalArgument5,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             TAdditionalArgument3,
@@ -519,7 +519,7 @@ public static class ControllerExtensions
             TAdditionalArgument5,
             ExpandoObject
         > translateCallback,
-        Func<T?, ICollection<KeyValuePair<string, object?>>> additionalValueCallback
+        Func<T, ICollection<KeyValuePair<string, object>>> additionalValueCallback
     ) where T : BaseEntity<T>
     {
         return !result.Success
@@ -553,7 +553,7 @@ public static class ControllerExtensions
         TAdditionalArgument1 additionalArgument1,
         TAdditionalArgument2 additionalArgument2,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             ExpandoObject
@@ -581,12 +581,12 @@ public static class ControllerExtensions
         TAdditionalArgument1 additionalArgument1,
         TAdditionalArgument2 additionalArgument2,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             ExpandoObject
         > translateCallback,
-        Func<T?, ICollection<KeyValuePair<string, object?>>> additionalValueCallback
+        Func<T, ICollection<KeyValuePair<string, object>>> additionalValueCallback
     ) where T : BaseEntity<T>
     {
         return !result.Success
@@ -615,7 +615,7 @@ public static class ControllerExtensions
         TAdditionalArgument2 additionalArgument2,
         TAdditionalArgument3 additionalArgument3,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             TAdditionalArgument3,
@@ -647,13 +647,13 @@ public static class ControllerExtensions
         TAdditionalArgument2 additionalArgument2,
         TAdditionalArgument3 additionalArgument3,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             TAdditionalArgument3,
             ExpandoObject
         > translateCallback,
-        Func<T?, ICollection<KeyValuePair<string, object?>>> additionalValueCallback
+        Func<T, ICollection<KeyValuePair<string, object>>> additionalValueCallback
     ) where T : BaseEntity<T>
     {
         return !result.Success
@@ -685,7 +685,7 @@ public static class ControllerExtensions
         TAdditionalArgument3 additionalArgument3,
         TAdditionalArgument4 additionalArgument4,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             TAdditionalArgument3,
@@ -721,14 +721,14 @@ public static class ControllerExtensions
         TAdditionalArgument3 additionalArgument3,
         TAdditionalArgument4 additionalArgument4,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             TAdditionalArgument3,
             TAdditionalArgument4,
             ExpandoObject
         > translateCallback,
-        Func<T?, ICollection<KeyValuePair<string, object?>>> additionalValueCallback
+        Func<T, ICollection<KeyValuePair<string, object>>> additionalValueCallback
     ) where T : BaseEntity<T>
     {
         return !result.Success
@@ -763,7 +763,7 @@ public static class ControllerExtensions
         TAdditionalArgument4 additionalArgument4,
         TAdditionalArgument5 additionalArgument5,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             TAdditionalArgument3,
@@ -803,7 +803,7 @@ public static class ControllerExtensions
         TAdditionalArgument4 additionalArgument4,
         TAdditionalArgument5 additionalArgument5,
         Func<
-            T?,
+            T,
             TAdditionalArgument1,
             TAdditionalArgument2,
             TAdditionalArgument3,
@@ -811,7 +811,7 @@ public static class ControllerExtensions
             TAdditionalArgument5,
             ExpandoObject
         > translateCallback,
-        Func<T?, ICollection<KeyValuePair<string, object?>>> additionalValueCallback
+        Func<T, ICollection<KeyValuePair<string, object>>> additionalValueCallback
     ) where T : BaseEntity<T>
     {
         return !result.Success

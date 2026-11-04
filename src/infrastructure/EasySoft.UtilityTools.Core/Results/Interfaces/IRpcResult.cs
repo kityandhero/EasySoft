@@ -26,5 +26,5 @@ public interface IRpcResult<T>
     /// <summary>
     /// 
     /// </summary>
-    T? Data { get; set; }
+    T Data { get; set; }
 }

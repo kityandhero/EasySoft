@@ -26,3 +26,4 @@ global using Newtonsoft.Json.Linq;
 global using SixLabors.ImageSharp;
 global using SixLabors.ImageSharp.Formats;
 global using SixLabors.ImageSharp.Processing;
+global using SixLabors.Fonts;

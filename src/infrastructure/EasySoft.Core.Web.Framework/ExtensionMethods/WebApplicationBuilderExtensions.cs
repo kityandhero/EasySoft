@@ -1,13 +1,22 @@
-﻿using EasySoft.Core.EntityFramework.Extensions;
+﻿using EasySoft.Core.CacheImplementation.ExtensionMethods;
+using EasySoft.Core.EntityFramework.Extensions;
 using EasySoft.Core.GeneralLogTransmitter.Extensions;
+using EasySoft.Core.RabbitMQ.Channels;
+using EasySoft.Core.RabbitMQ.Connections;
+using EasySoft.Core.RabbitMQ.Producers;
+using EasySoft.Core.Swagger.Configures;
+using EasySoft.Core.Swagger.ExtensionMethods;
+using EasySoft.Core.Web.Framework.ActionModelConventions;
 using EasySoft.Core.Web.Framework.Attributes;
 using EasySoft.Core.Web.Framework.Filters;
+using IChannel = EasySoft.UtilityTools.Standard.Interfaces.IChannel;
 
 namespace EasySoft.Core.Web.Framework.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
     private const string IdentifierAddAdvanceApplicationChannel = "9ef8c9f4-08b9-4755-912c-6ff80988f513";
+    private const string IdentifierAddAdvanceRabbitMQ = "F15148EB-DAAE-48C8-867B-70D98657F1AB";
 
     /// <summary>
     /// 标记当前应用通道值, 用于远程日志等数据中, 便于数据辨认, 不使用此方法标记, 框架将采用内置值 0 代替
@@ -56,6 +65,67 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
+    internal static WebApplicationBuilder AddAdvanceRabbitMQ(
+        this WebApplicationBuilder builder,
+        string clientProvidedName
+    )
+    {
+        if (builder.HasRegistered(IdentifierAddAdvanceRabbitMQ))
+        {
+            return builder;
+        }
+
+        StartupDescriptionMessageAssist.AddExecute(
+            $"{nameof(AddAdvanceRabbitMQ)}."
+        );
+
+        builder.Services.AddSingleton<IConnectionFactory>(sp =>
+            {
+                var factory = new ConnectionFactory
+                {
+                    ClientProvidedName = clientProvidedName,
+                    HostName = RabbitMQConfigAssist.GetHostName(),
+                    VirtualHost = RabbitMQConfigAssist.GetVirtualHost(),
+                    UserName = RabbitMQConfigAssist.GetUserName(),
+                    Password = RabbitMQConfigAssist.GetPassword(),
+                    Port = RabbitMQConfigAssist.GetPort(),
+
+                    //Rabbitmq集群必需加这两个参数
+                    AutomaticRecoveryEnabled = true
+
+                    //TopologyRecoveryEnabled=true
+                };
+
+                return factory;
+            }
+        );
+
+        // 注册连接HostedService，同时暴露IRabbitMqConnection
+        builder.Services.AddSingleton<AdvanceConnection>();
+        builder.Services.AddHostedService(serviceProvider => serviceProvider.GetRequiredService<AdvanceConnection>());
+
+        // 通道池单例
+        builder.Services.AddSingleton<AdvanceChannelPool>(serviceProvider =>
+            {
+                var connWrapper = serviceProvider.GetRequiredService<IAdvanceConnection>();
+                var logger = serviceProvider.GetRequiredService<ILogger<AdvanceChannelPool>>();
+
+                return new AdvanceChannelPool(
+                    connWrapper,
+                    logger,
+                    8,
+                    true,
+                    true
+                );
+            }
+        );
+
+        // 生产者
+        builder.Services.AddSingleton<BaseAdvanceProducer>();
+
+        return builder;
+    }
+
     public static WebApplication EasyBuild(
         this WebApplicationBuilder builder
     )
@@ -83,8 +153,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddRouting(o => { o.LowercaseUrls = true; });
 
-        builder.Services.AddApiVersioning(
-            o =>
+        builder.Services.AddApiVersioning(o =>
             {
                 //return versions in a response header
                 o.ReportApiVersions = true;
@@ -98,12 +167,11 @@ public static class WebApplicationBuilderExtensions
         );
 
         // AddMvc 最为全面， 涵盖 AddControllers 等的全部功能
-        builder.Services.AddMvc(
-                option =>
+        builder.Services.AddMvc(option =>
                 {
                     option.EnableEndpointRouting = false;
 
-                    option.Conventions.Add(new IgnoreActionModelConvention());
+                    option.Conventions.Add(new IgnoreForApiExplorerActionModelConvention());
 
                     if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.EasyToken &&
                         !FlagAssist.EasyTokenMiddlewareModeSwitch)
@@ -144,8 +212,10 @@ public static class WebApplicationBuilderExtensions
 
             // 通过AddControllersAsServices方法，将控制器交给 autofac 容器来处理，可以使“属性注入”
             .AddControllersAsServices()
-            .AddNewtonsoftJson(
-                options => { JsonConvertAssist.AdjustJsonSerializerSettings(options.SerializerSettings); }
+            .AddNewtonsoftJson(options =>
+                {
+                    JsonConvertAssist.AdjustJsonSerializerSettings(options.SerializerSettings);
+                }
             );
 
         // builder.Services.AddSingleton<IHostEnvironment, HostingEnvironment>();
@@ -154,8 +224,7 @@ public static class WebApplicationBuilderExtensions
         // builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         // builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
-        builder.Host.ConfigureContainer<ContainerBuilder>(
-            containerBuilder =>
+        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
             {
                 containerBuilder.RegisterType<HostingEnvironment>().As<IHostEnvironment>().SingleInstance();
                 containerBuilder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
@@ -168,8 +237,7 @@ public static class WebApplicationBuilderExtensions
 
         if (GeneralConfigAssist.GetCorsSwitch())
         {
-            builder.Services.AddCors(
-                options =>
+            builder.Services.AddCors(options =>
                 {
                     options.AddPolicy(
                         ConstCollection.DefaultSpecificOrigins,
@@ -193,7 +261,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.AddAdvanceMediatR();
 
-        builder.AddAdvanceEasyCaching();
+        builder.AddAdvanceCacheImplementation();
 
         builder.AddAdvanceMiniProfile();
 
@@ -525,8 +593,7 @@ public static class WebApplicationBuilderExtensions
 
         var i = 1;
 
-        extraActions.ForEach(
-            extraAction =>
+        extraActions.ForEach(extraAction =>
             {
                 var action = extraAction.GetAction();
 
@@ -579,8 +646,7 @@ public static class WebApplicationBuilderExtensions
 
         var i = 1;
 
-        extraActions.ForEach(
-            extraAction =>
+        extraActions.ForEach(extraAction =>
             {
                 var action = extraAction.GetAction();
 
@@ -633,8 +699,7 @@ public static class WebApplicationBuilderExtensions
 
         var i = 1;
 
-        extraActions.ForEach(
-            extraAction =>
+        extraActions.ForEach(extraAction =>
             {
                 var action = extraAction.GetAction();
 

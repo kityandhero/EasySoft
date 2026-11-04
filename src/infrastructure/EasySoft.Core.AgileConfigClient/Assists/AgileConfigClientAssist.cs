@@ -2,7 +2,7 @@
 
 public static class AgileConfigClientAssist
 {
-    private static IConfigClient? _configClient;
+    private static IConfigClient _configClient;
 
     public static void SetConfigClient(IConfigClient configClient)
     {

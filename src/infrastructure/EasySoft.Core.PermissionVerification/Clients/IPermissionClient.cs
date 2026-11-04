@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.PermissionVerification.Entities;
 using EasySoft.UtilityTools.Core.Results.Implements;
-using Refit;
 
 namespace EasySoft.Core.PermissionVerification.Clients;
 

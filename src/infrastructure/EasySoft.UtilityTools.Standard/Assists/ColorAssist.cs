@@ -1,4 +1,6 @@
-﻿namespace EasySoft.UtilityTools.Standard.Assists;
+﻿using SixLabors.ImageSharp.PixelFormats;
+
+namespace EasySoft.UtilityTools.Standard.Assists;
 
 /// <summary>
 /// ColorAssist
@@ -254,12 +256,14 @@ public static class ColorAssist
         var blue = random.Next(0, 255);
         var alpha = random.Next(0, 255);
 
-        return Color.FromRgba(
+        var color = new Rgba32(
             Convert.ToByte(red),
             Convert.ToByte(green),
             Convert.ToByte(blue),
             Convert.ToByte(alpha)
         );
+
+        return Color.FromPixel(color);
     }
 
     /// <summary>
@@ -270,7 +274,10 @@ public static class ColorAssist
     public static Color HexToColor(string hexColor)
     {
         //Remove # if present
-        if (hexColor.IndexOf('#') != -1) hexColor = hexColor.Replace("#", "");
+        if (hexColor.IndexOf('#') != -1)
+        {
+            hexColor = hexColor.Replace("#", "");
+        }
 
         var red = 0;
         var green = 0;
@@ -291,10 +298,12 @@ public static class ColorAssist
             blue = int.Parse(hexColor[2].ToString() + hexColor[2].ToString(), NumberStyles.AllowHexSpecifier);
         }
 
-        return Color.FromRgb(
+        var color = new Rgba32(
             Convert.ToByte(red),
             Convert.ToByte(green),
             Convert.ToByte(blue)
         );
+
+        return Color.FromPixel(color);
     }
 }

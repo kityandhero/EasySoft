@@ -1,24 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="NLog.Extensions.Hosting" Version="5.1.0" />
-        <PackageReference Include="NLog.Extensions.Logging" Version="5.1.0" />
-        <PackageReference Include="NLog.Web.AspNetCore" Version="5.1.5" />
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.Abstractions"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions"/>
+        <PackageReference Include="Microsoft.Extensions.Logging"/>
+        <PackageReference Include="NLog.Extensions.Hosting"/>
+        <PackageReference Include="NLog.Extensions.Logging"/>
+        <PackageReference Include="NLog.Web.AspNetCore"/>
+
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj" />
-      <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj" />
+        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Renderers" />
+        <Folder Include="Renderers"/>
     </ItemGroup>
 
 </Project>

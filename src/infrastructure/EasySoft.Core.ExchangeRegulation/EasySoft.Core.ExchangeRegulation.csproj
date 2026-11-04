@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>EasySoft.Core.ExchangeRegulation</Title>
         <Description>EasySoft.Core.ExchangeRegulation</Description>
@@ -12,21 +12,27 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\EasySoft.Core.ExchangeRegulation.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\EasySoft.Core.ExchangeRegulation.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\EasySoft.Core.ExchangeRegulation.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\EasySoft.Core.ExchangeRegulation.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj" />
+        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Entities" />
-      <Folder Include="Enums" />
-      <Folder Include="Interfaces" />
+        <Folder Include="Entities"/>
+        <Folder Include="Enums"/>
+        <Folder Include="Interfaces"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Newtonsoft.Json"/>
+
     </ItemGroup>
 
 </Project>
