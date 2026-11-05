@@ -59,4 +59,23 @@ public static class AppSettingAssist
     {
         return Configuration.GetSection(key).Value;
     }
+
+    /// <summary>
+    /// 获取全局前缀，未配置则为空
+    /// </summary>
+    /// <param name="configuration"></param>
+    /// <returns>全局前缀</returns>
+    public static string GetGlobalPrefix(IConfiguration configuration)
+    {
+        return configuration["GlobalPrefix"] ?? "";
+    }
+
+    /// <summary>
+    /// 获取全局前缀，未配置则为空
+    /// </summary>
+    /// <returns>全局前缀</returns>
+    public static string GetGlobalPrefix()
+    {
+        return GetGlobalPrefix(Configuration);
+    }
 }

@@ -10,7 +10,7 @@ global using EasySoft.Core.EntityFramework.Configures;
 global using EasySoft.Core.EntityFramework.EntityTypeConfigures;
 global using EasySoft.Core.ErrorLogTransmitter.Producers;
 global using EasySoft.Core.EventBus;
-global using EasySoft.Core.GeneralLogTransmitter.Producers;
+global using EasySoft.Core.GeneralLogTransceiver.Producers;
 global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.Core.Infrastructure.Configures;
 global using EasySoft.Core.Infrastructure.Services;

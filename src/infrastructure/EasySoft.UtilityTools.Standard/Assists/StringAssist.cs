@@ -8,11 +8,23 @@ namespace EasySoft.UtilityTools.Standard.Assists;
 public static class StringAssist
 {
     /// <summary>
+    /// Join
+    /// 用于把数组中的所有元素放入一个字符串,元素是通过指定的分隔符进行分隔,
+    /// 如果属性值不是Int,或者string,将会被忽略
+    /// </summary>
+    /// <param name="source">源</param>
+    /// <param name="connector">连接符</param>
+    public static string Join(IEnumerable<string> source, string connector)
+    {
+        return source.Join(connector);
+    }
+
+    /// <summary>
     /// 集合中全部为空字符串
     /// </summary>
     /// <param name="list"></param>  
     /// <returns></returns>
-    public static bool IsAllNullOrWhiteSpace(params string?[] list)
+    public static bool IsAllNullOrWhiteSpace(params string[] list)
     {
         return !list.Any() || list.All(string.IsNullOrWhiteSpace);
     }

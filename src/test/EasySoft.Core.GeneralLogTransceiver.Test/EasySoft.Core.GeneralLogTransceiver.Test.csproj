@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>warnings</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- 添加这一行，即可在控制台项目中使用 ASP.NET Core 的 DI 和 WebApplicationBuilder -->
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
+        <PackageReference Include="SlimMessageBus"/>
+        <PackageReference Include="SlimMessageBus.Host"/>
+        <PackageReference Include="SlimMessageBus.Host.Interceptor"/>
+        <PackageReference Include="SlimMessageBus.Host.Memory"/>
+        <PackageReference Include="SlimMessageBus.Host.RabbitMQ"/>
+        <PackageReference Include="SlimMessageBus.Host.Serialization.Json"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.GeneralLogTransceiver\EasySoft.Core.GeneralLogTransceiver.csproj"/>
+        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="appsettings.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+</Project>

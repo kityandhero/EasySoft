@@ -34,7 +34,7 @@ public class SqlLogExchangeSubscriber : ICapSubscribe
     /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
-    [CapSubscribe(TransmitterTopic.SqlLogMessage)]
+    [CapSubscribe(TransceiverConstant.SqlLogMessage)]
     public async Task Process(ISqlLogMessage message)
     {
         if (message.Ignore > 0)

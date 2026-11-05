@@ -34,7 +34,7 @@ public sealed class ErrorLogExchangeSubscriber : ICapSubscribe
     /// </summary>
     /// <param name="errorLogMessage"></param>
     /// <returns></returns>
-    [CapSubscribe(TransmitterTopic.ErrorLogMessage)]
+    [CapSubscribe(TransceiverConstant.ErrorLogMessage)]
     public async Task Process(IErrorLogMessage errorLogMessage)
     {
         if (errorLogMessage.Ignore > 0)

@@ -1,4 +1,7 @@
-﻿namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
+﻿using EasySoft.Core.GeneralLogTransceiver.Producers;
+using EasySoft.UtilityTools.Core.Results.Interfaces;
+
+namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 
 /// <summary>
 /// RemoteGeneralLogController
@@ -26,16 +29,16 @@ public class RemoteGeneralLogController : AreaControllerCore
     /// Test
     /// </summary>
     /// <returns></returns>
-    public async Task<IActionResult> Test()
+    public IApiResult Test()
     {
         if (!GeneralConfigAssist.GetRemoteGeneralLogSwitch())
         {
             return this.Fail(ReturnCode.NoChange.ToMessage("RemoteGeneralLogEnable switch is not open"));
         }
 
-        var log = await _generalLogProducer.SendAsync("Test");
+        _generalLogProducer.SendAsync("Test");
 
-        return this.Success(log.ToExpandoObject());
+        return this.Success(new { time = DateTime.Now.ToUnixTime() });
     }
 
     /// <summary>

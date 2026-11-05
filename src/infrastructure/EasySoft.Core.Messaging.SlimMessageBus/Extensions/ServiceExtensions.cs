@@ -14,6 +14,17 @@ namespace EasySoft.Core.Messaging.SlimMessageBus.Extensions;
 public static class ServiceExtensions
 {
     /// <summary>
+    /// 注册拦截器和观测器、门面
+    /// </summary>
+    public static IServiceCollection AddKernelMessaging(this IServiceCollection services)
+    {
+        services.AddKernelMessagingCore();
+        services.AddKernelMessagingContracts();
+
+        return services;
+    }
+
+    /// <summary>
     /// 注册拦截器和观测器。
     /// </summary>
     /// <remarks>
@@ -22,7 +33,7 @@ public static class ServiceExtensions
     /// </remarks>
     /// <param name="services">根容器注册集合。</param>
     /// <returns>原 services，便于链式调用。</returns>
-    public static IServiceCollection AddScaffoldMessagingCore(this IServiceCollection services)
+    private static IServiceCollection AddKernelMessagingCore(this IServiceCollection services)
     {
         // 开放泛型注册：SlimMessageBus 运行时按消息类型解析，对所有子总线统一织入。
         services.AddTransient(typeof(IPublishInterceptor<>), typeof(TracingPublishInterceptor<>));
@@ -37,9 +48,9 @@ public static class ServiceExtensions
 
     /// <summary>
     /// 注册对外契约：业务门面 + Keyed 出站口。
-    /// 两个契约在这里集中注册，AddScaffoldMessagingCore 不再承担门面注册。
+    /// 两个契约在这里集中注册，AddKernelMessagingCore 不再承担门面注册。
     /// </summary>
-    public static IServiceCollection AddScaffoldMessagingContracts(this IServiceCollection services)
+    private static IServiceCollection AddKernelMessagingContracts(this IServiceCollection services)
     {
         // 业务路由门面：注入复合 IMessageBus，按消息类型自动路由。
         services.TryAddSingleton<IMessageBusRouterFacade, MessageBusRouterFacade>();

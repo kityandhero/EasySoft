@@ -10,7 +10,7 @@ global using EasySoft.Core.AuthenticationCore.ExtensionMethods;
 global using EasySoft.Core.AutoFac.ExtensionMethods;
 global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.DynamicConfig.Assists;
-global using EasySoft.Core.GeneralLogTransmitter.Producers;
+global using EasySoft.Core.GeneralLogTransceiver.Producers;
 global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.Core.Infrastructure.Configures;
 global using EasySoft.Core.Infrastructure.Startup;

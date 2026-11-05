@@ -49,7 +49,7 @@ public class SqlLogProducer : ISqlLogProducer
         };
 
         await _capPublisher.PublishAsync(
-            TransmitterTopic.SqlLogMessage,
+            TransceiverConstant.SqlLogMessage,
             entity
         );
 
@@ -60,7 +60,7 @@ public class SqlLogProducer : ISqlLogProducer
     public async Task<ISqlLogMessage> SendAsync(ISqlLogMessage logExchange)
     {
         await _capPublisher.PublishAsync(
-            TransmitterTopic.SqlLogMessage,
+            TransceiverConstant.SqlLogMessage,
             logExchange
         );
 

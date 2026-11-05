@@ -25,7 +25,7 @@
         <ProjectReference Include="..\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.ErrorLogTransmitter\EasySoft.Core.ErrorLogTransmitter.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Exceptionless\EasySoft.Core.Exceptionless.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.GeneralLogTransmitter\EasySoft.Core.GeneralLogTransmitter.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.GeneralLogTransceiver\EasySoft.Core.GeneralLogTransceiver.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Hangfire\EasySoft.Core.Hangfire.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.JsonWebToken\EasySoft.Core.JsonWebToken.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Mapster\EasySoft.Core.Mapster.csproj"/>

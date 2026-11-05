@@ -14,7 +14,7 @@ public sealed class ActivityPipelineObserver : IMessagePipelineObserver
     /// <summary>
     /// 共享的 ActivitySource。进程内只建一份，避免重复注册监听者。
     /// </summary>
-    private static readonly ActivitySource Source = new("Scaffold.Messaging");
+    private static readonly ActivitySource Source = new("Kernel.Messaging");
 
     /// <inheritdoc />
     public ValueTask<IMessageScope> EnterAsync(MessagePipelineContext context, CancellationToken ct)

@@ -30,7 +30,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Config", "inf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Web.Framework", "infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj", "{E7040D87-0900-424F-987E-8150135362E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.GeneralLogTransmitter", "infrastructure\EasySoft.Core.GeneralLogTransmitter\EasySoft.Core.GeneralLogTransmitter.csproj", "{5D383514-6D98-4638-8D9B-99C98ED46E24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.GeneralLogTransceiver", "infrastructure\EasySoft.Core.GeneralLogTransceiver\EasySoft.Core.GeneralLogTransceiver.csproj", "{5D383514-6D98-4638-8D9B-99C98ED46E24}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.ExchangeRegulation", "infrastructure\EasySoft.Core.ExchangeRegulation\EasySoft.Core.ExchangeRegulation.csproj", "{89744B4F-C6C4-4870-A96D-795859DBDF7D}"
 EndProject
@@ -50,7 +50,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Hangfire", "i
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework-整合框架", "framework-整合框架", "{E3680D8B-1B50-4234-9E60-AAF8483FA0D3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "transmitter", "transmitter", "{A4A52E96-6D09-4234-BD3F-FF1EEFBBAEC2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "transceiver 收发器", "transceiver 收发器", "{A4A52E96-6D09-4234-BD3F-FF1EEFBBAEC2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "component", "component", "{E1BDAC69-A565-4A26-866B-10845357EA3D}"
 EndProject
@@ -436,9 +436,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Messaging", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Messaging.SlimMessageBus", "infrastructure\EasySoft.Core.Messaging.SlimMessageBus\EasySoft.Core.Messaging.SlimMessageBus.csproj", "{00346165-7F6D-464D-9F20-DF0D1550F97A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messaging", "Messaging", "{9FE6DE5C-FDC5-4A53-AC77-0A8C18467574}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "messaging", "messaging", "{9FE6DE5C-FDC5-4A53-AC77-0A8C18467574}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Messaging.SlimMessageBus.Test", "test\EasySoft.Core.Messaging.SlimMessageBus.Test\EasySoft.Core.Messaging.SlimMessageBus.Test.csproj", "{12B317B9-39AE-4F3A-85F8-BCD913933BC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "transceiver", "transceiver", "{5F135F5D-9412-493E-9A52-4A1200C0644C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.GeneralLogTransceiver.Test", "test\EasySoft.Core.GeneralLogTransceiver.Test\EasySoft.Core.GeneralLogTransceiver.Test.csproj", "{BAD5F1F9-77D8-492D-A33A-5719314E3074}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -962,6 +966,10 @@ Global
 		{12B317B9-39AE-4F3A-85F8-BCD913933BC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12B317B9-39AE-4F3A-85F8-BCD913933BC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12B317B9-39AE-4F3A-85F8-BCD913933BC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAD5F1F9-77D8-492D-A33A-5719314E3074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD5F1F9-77D8-492D-A33A-5719314E3074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD5F1F9-77D8-492D-A33A-5719314E3074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAD5F1F9-77D8-492D-A33A-5719314E3074}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1174,6 +1182,8 @@ Global
 		{00346165-7F6D-464D-9F20-DF0D1550F97A} = {CC1D9C19-45EC-481E-B806-557F983B0BE8}
 		{9FE6DE5C-FDC5-4A53-AC77-0A8C18467574} = {3A5000A7-B37E-4A5D-8668-82E7E2681993}
 		{12B317B9-39AE-4F3A-85F8-BCD913933BC2} = {9FE6DE5C-FDC5-4A53-AC77-0A8C18467574}
+		{5F135F5D-9412-493E-9A52-4A1200C0644C} = {3A5000A7-B37E-4A5D-8668-82E7E2681993}
+		{BAD5F1F9-77D8-492D-A33A-5719314E3074} = {5F135F5D-9412-493E-9A52-4A1200C0644C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

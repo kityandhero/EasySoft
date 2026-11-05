@@ -11,8 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 #region RabbitMQ Build
 
 // 1) 拦截器 + 观测器 + 公共门面。不含任何子总线配置。
-// builder.Services.AddScaffoldMessagingCore();
-// builder.Services.AddScaffoldMessagingContracts();
+// builder.Services.AddKernelMessagingCore();
+// builder.Services.AddKernelMessagingContracts();
 
 // 2) 各模块独立注册自己的子总线，互不感知。
 // builder.Services.AddInfraBusRabbitMQCore(builder.Configuration);

@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.CacheImplementation.ExtensionMethods;
 using EasySoft.Core.EntityFramework.Extensions;
-using EasySoft.Core.GeneralLogTransmitter.Extensions;
+using EasySoft.Core.GeneralLogTransceiver.Extensions;
 using EasySoft.Core.RabbitMQ.Channels;
 using EasySoft.Core.RabbitMQ.Connections;
 using EasySoft.Core.RabbitMQ.Producers;
@@ -23,13 +23,11 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="channel"></param>
-    /// <param name="name"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     internal static WebApplicationBuilder AddAdvanceApplicationChannel(
         this WebApplicationBuilder builder,
-        IChannel channel,
-        string name
+        IChannel channel
     )
     {
         if (builder.HasRegistered(IdentifierAddAdvanceApplicationChannel))

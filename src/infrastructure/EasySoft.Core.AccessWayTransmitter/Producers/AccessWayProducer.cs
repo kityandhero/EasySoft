@@ -34,7 +34,7 @@ public class AccessWayProducer : IAccessWayProducer
             TriggerChannel = _applicationChannel.GetChannel().ToValue()
         };
 
-        await _capPublisher.PublishAsync(TransmitterTopic.AccessWayMessage, entity);
+        await _capPublisher.PublishAsync(TransceiverConstant.AccessWayMessage, entity);
 
         return entity;
     }

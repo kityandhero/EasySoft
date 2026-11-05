@@ -35,7 +35,7 @@ public class ChannelCheckExchangeSubscriber : ICapSubscribe
     /// </summary>
     /// <param name="exchange"></param>
     /// <returns></returns>
-    [CapSubscribe(TransmitterTopic.ChannelCheckMessage)]
+    [CapSubscribe(TransceiverConstant.ChannelCheckMessage)]
     public async Task Process(ChannelCheckExchange exchange)
     {
         if (_environment.IsDevelopment())

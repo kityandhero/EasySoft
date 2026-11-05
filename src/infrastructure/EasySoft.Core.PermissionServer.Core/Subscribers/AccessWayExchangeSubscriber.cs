@@ -34,7 +34,7 @@ public sealed class AccessWayExchangeSubscriber : ICapSubscribe
     /// </summary>
     /// <param name="accessWayExchange"></param>
     /// <returns></returns>
-    [CapSubscribe(TransmitterTopic.AccessWayMessage)]
+    [CapSubscribe(TransceiverConstant.AccessWayMessage)]
     public async Task Process(IAccessWayMessage accessWayExchange)
     {
         if (_environment.IsDevelopment())

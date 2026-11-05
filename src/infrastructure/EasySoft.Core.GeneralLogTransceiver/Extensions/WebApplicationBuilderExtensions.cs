@@ -1,9 +1,8 @@
 ﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.GeneralLogTransmitter.Producers;
+using EasySoft.Core.GeneralLogTransceiver.Producers;
 using EasySoft.Core.Infrastructure.Assists;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace EasySoft.Core.GeneralLogTransmitter.Extensions;
+namespace EasySoft.Core.GeneralLogTransceiver.Extensions;
 
 /// <summary>
 /// WebApplicationBuilderExtensions
@@ -22,7 +21,9 @@ public static class WebApplicationBuilderExtensions
     )
     {
         if (builder.HasRegistered(IdentifierAddGeneralLogTransmitter))
+        {
             return builder;
+        }
 
         StartupConfigMessageAssist.AddConfig(
             GeneralConfigAssist.GetRemoteGeneralLogSwitch()

@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.LogServer.Core.Extensions;
+﻿using EasySoft.Core.GeneralLogTransceiver.Producers;
+
+namespace EasySoft.Core.LogServer.Core.Extensions;
 
 /// <summary>
 /// WebApplicationExtensions

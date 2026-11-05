@@ -24,7 +24,7 @@ public class ErrorLogProducer : IErrorLogProducer
     /// <inheritdoc />
     public async Task SendAsync(IErrorLogMessage errorLogExchange)
     {
-        await _capPublisher.PublishAsync(TransmitterTopic.ErrorLogMessage, errorLogExchange);
+        await _capPublisher.PublishAsync(TransceiverConstant.ErrorLogMessage, errorLogExchange);
     }
 
     /// <inheritdoc />
@@ -51,7 +51,7 @@ public class ErrorLogProducer : IErrorLogProducer
             requestInfo
         );
 
-        await _capPublisher.PublishAsync(TransmitterTopic.ErrorLogMessage, entity);
+        await _capPublisher.PublishAsync(TransceiverConstant.ErrorLogMessage, entity);
 
         return entity;
     }
