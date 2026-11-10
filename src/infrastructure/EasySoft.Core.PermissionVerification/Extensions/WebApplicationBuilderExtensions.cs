@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.AccessWayTransmitter.Extensions;
+﻿using EasySoft.Core.AccessWayTransceiver.Extensions;
 using EasySoft.Core.PermissionVerification.Clients;
 using EasySoft.Core.PermissionVerification.Detectors;
 using EasySoft.Core.PermissionVerification.Detectors.Implements;
@@ -28,7 +28,7 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddPermissionVerification<TPermissionObserver>(
         this WebApplicationBuilder builder,
         bool middlewareMode = true
-    ) where TPermissionObserver : IPermissionObserver
+    ) where TPermissionObserver : class, IPermissionObserver
     {
         if (builder.HasRegistered(IdentifierAddPermissionVerification))
         {
@@ -39,8 +39,9 @@ public static class WebApplicationBuilderExtensions
             $"{nameof(AddPermissionVerification)}<{typeof(TPermissionObserver).Name}>."
         );
 
-        builder.AddPermissionObserverInjection<TPermissionObserver>()
-            .AddAccessWayTransmitter();
+        builder.AddPermissionObserverInjection<TPermissionObserver>();
+
+        builder.AddAccessWayRabbitMQOnlyProducer();
 
         builder.Services.TryAddSingleton(new ProxyGenerator());
 
@@ -125,12 +126,7 @@ public static class WebApplicationBuilderExtensions
 
         if (middlewareMode)
         {
-            builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-                {
-                    // https://docs.autofac.org/en/latest/faq/per-request-scope.html
-                    containerBuilder.RegisterType<OperateOfficer>().As<IOperateOfficer>().InstancePerLifetimeScope();
-                }
-            );
+            builder.Services.AddScoped<IOperateOfficer, OperateOfficer>();
 
             builder.Services.AddTransient<PermissionVerificationMiddleware>();
 
@@ -156,20 +152,15 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    private static WebApplicationBuilder AddPermissionObserverInjection<T>(
+    private static WebApplicationBuilder AddPermissionObserverInjection<TPermissionObserver>(
         this WebApplicationBuilder builder
-    ) where T : IPermissionObserver
+    ) where TPermissionObserver : class, IPermissionObserver
     {
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddPermissionObserverInjection)}<{typeof(T).Name}>."
+            $"{nameof(AddPermissionObserverInjection)}<{typeof(TPermissionObserver).Name}>."
         );
 
-        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-            {
-                // https://docs.autofac.org/en/latest/faq/per-request-scope.html
-                containerBuilder.RegisterType<T>().As<IPermissionObserver>().InstancePerLifetimeScope();
-            }
-        );
+        builder.Services.AddScoped<IPermissionObserver, TPermissionObserver>();
 
         return builder;
     }

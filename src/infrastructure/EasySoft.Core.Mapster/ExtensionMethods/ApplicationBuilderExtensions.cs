@@ -19,12 +19,10 @@ public static class ApplicationBuilderExtensions
             $"{nameof(AddAdvanceMapster)}."
         );
 
-        ConfigActionAssist.GetConfigAction().ForEach(action => { action(TypeAdapterConfig.GlobalSettings); });
+        ConfigActionAssist.GetConfigAction()
+            .ForEach(action => { action(TypeAdapterConfig.GlobalSettings); });
 
-        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-        {
-            containerBuilder.RegisterType<Mapper>().As<IMapper>().SingleInstance();
-        });
+        builder.Services.AddSingleton<IMapper, Mapper>();
 
         StartupDescriptionMessageAssist.AddPrompt(
             "IMapper provide by Mapster inject complete, you can config it with ConfigActionAssist, the easy way to use is MapperAssist."

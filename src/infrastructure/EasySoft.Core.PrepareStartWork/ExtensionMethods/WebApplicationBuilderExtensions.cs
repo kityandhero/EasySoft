@@ -13,7 +13,9 @@ public static class WebApplicationBuilderExtensions
     )
     {
         if (builder.HasRegistered(UniqueIdentifierAddAdvanceUrls))
+        {
             return builder;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceUrls)}()"
@@ -26,9 +28,11 @@ public static class WebApplicationBuilderExtensions
         var httpsPort = GeneralConfigAssist.GetHttpsPort();
 
         if (httpPort <= 0 && httpsPort <= 0)
+        {
             throw new Exception(
                 $"one of HttpPost or HttpsPort must bu greater than 0, please set httpPost or httpsPort in {GeneralConfigAssist.GetConfigFileInfo()}."
             );
+        }
 
         if (httpPort > 0)
         {
@@ -69,12 +73,11 @@ public static class WebApplicationBuilderExtensions
     )
     {
         if (builder.HasRegistered(UniqueIdentifierAddCovertInjection))
-            return builder;
-
-        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
-            containerBuilder.RegisterType<PrepareCovertStartWork>().As<IPrepareCovertStartWork>().SingleInstance();
-        });
+            return builder;
+        }
+
+        builder.Services.AddSingleton<IPrepareCovertStartWork, PrepareCovertStartWork>();
 
         return builder;
     }
@@ -83,16 +86,13 @@ public static class WebApplicationBuilderExtensions
     /// 注入定制的启动预处理任务，注入任务将在应用启动时自动执行
     /// </summary>
     /// <param name="builder"></param>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TPrepareStartWork"></typeparam>
     /// <returns></returns>
-    public static WebApplicationBuilder AddPrepareStartWorkInjection<T>(
+    public static WebApplicationBuilder AddPrepareStartWorkInjection<TPrepareStartWork>(
         this WebApplicationBuilder builder
-    ) where T : IPrepareStartWork
+    ) where TPrepareStartWork : class, IPrepareStartWork
     {
-        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-        {
-            containerBuilder.RegisterType<T>().As<IPrepareStartWork>().SingleInstance();
-        });
+        builder.Services.AddSingleton<IPrepareStartWork, TPrepareStartWork>();
 
         return builder;
     }

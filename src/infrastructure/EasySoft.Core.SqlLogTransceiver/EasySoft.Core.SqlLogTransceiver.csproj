@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>warnings</Nullable>
+        <LangVersion>14</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DocumentationFile>bin\Debug\EasySoft.Core.SqlLogTransmitter.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DocumentationFile>bin\Release\EasySoft.Core.SqlLogTransmitter.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"/>
+        <PackageReference Include="SlimMessageBus"/>
+        <PackageReference Include="SlimMessageBus.Host"/>
+        <PackageReference Include="SlimMessageBus.Host.Interceptor"/>
+        <PackageReference Include="SlimMessageBus.Host.Memory"/>
+        <PackageReference Include="SlimMessageBus.Host.RabbitMQ"/>
+        <PackageReference Include="SlimMessageBus.Host.Serialization.Json"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Messaging.SlimMessageBus\EasySoft.Core.Messaging.SlimMessageBus.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Messaging\EasySoft.Core.Messaging.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Interfaces"/>
+    </ItemGroup>
+
+</Project>

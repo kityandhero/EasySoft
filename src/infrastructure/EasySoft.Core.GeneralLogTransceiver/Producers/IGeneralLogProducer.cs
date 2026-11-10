@@ -49,11 +49,11 @@ public interface IGeneralLogProducer
     /// <summary>
     /// 发送
     /// </summary>
-    /// <param name="generalLogExchange">消息体</param>
+    /// <param name="generalLogMessage">消息体</param>
     /// <param name="cancellationToken">取消令牌</param>
     /// <returns>发送结果</returns>
     Task SendAsync(
-        IGeneralLogMessage generalLogExchange,
+        IGeneralLogMessage generalLogMessage,
         CancellationToken cancellationToken = default
     );
 }

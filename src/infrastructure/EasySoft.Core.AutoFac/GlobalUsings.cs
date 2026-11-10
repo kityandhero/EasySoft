@@ -2,6 +2,7 @@
 
 global using System.ComponentModel;
 global using System.Reflection;
+global using System.Reflection.Metadata;
 global using Autofac;
 global using Autofac.Builder;
 global using Autofac.Configuration;

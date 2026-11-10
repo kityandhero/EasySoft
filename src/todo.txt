@@ -1,1 +1,4 @@
 测试 CacheImplementation
+AddSqlLogTransmitter 仅定时开启
+
+收发器是否需要开关

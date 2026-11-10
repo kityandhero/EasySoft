@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Standard.Result.Implements;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.JsonWebToken.Assists;
 
@@ -6,7 +7,10 @@ public static class ActualOperatorAssist
 {
     public static ExecutiveResult<IActualOperator> ResolveActualOperator(string token)
     {
-        if (string.IsNullOrWhiteSpace(token)) return new ExecutiveResult<IActualOperator>(ReturnCode.NoData);
+        if (string.IsNullOrWhiteSpace(token))
+        {
+            return new ExecutiveResult<IActualOperator>(ReturnCode.NoData);
+        }
 
         ClaimsPrincipal claimsPrincipal;
 
@@ -26,22 +30,26 @@ public static class ActualOperatorAssist
         );
 
         if (first == null)
+        {
             return new ExecutiveResult<IActualOperator>(
                 ReturnCode.Exception.ToMessage("凭证无效或凭证已过期")
             );
+        }
 
         var identification = first.Value;
 
-        var actualOperator = AutofacAssist.Instance.Resolve<IActualOperator>();
+        var actualOperator = ServiceProviderAssist.Instance.Resolve<IActualOperator>();
 
         actualOperator.SetToken(token);
 
         actualOperator.SetIdentity(identification);
 
         if (actualOperator.IsAnonymous())
+        {
             return new ExecutiveResult<IActualOperator>(
                 ReturnCode.Exception.ToMessage("凭证无效或凭证已过期")
             );
+        }
 
         return new ExecutiveResult<IActualOperator>(ReturnCode.Ok)
         {

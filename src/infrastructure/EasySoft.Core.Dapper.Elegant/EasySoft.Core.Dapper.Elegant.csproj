@@ -7,9 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\ EasySoft.Core.DependencyInjection\EasySoft.Core.DependencyInjection.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.CacheCore\EasySoft.Core.CacheCore.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Dapper\EasySoft.Core.Dapper.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.ErrorLogTransmitter\EasySoft.Core.ErrorLogTransmitter.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.ErrorLogTransceiver\EasySoft.Core.ErrorLogTransceiver.csproj"/>
         <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
     </ItemGroup>
 

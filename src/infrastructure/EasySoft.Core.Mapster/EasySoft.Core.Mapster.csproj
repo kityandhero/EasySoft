@@ -12,8 +12,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac"/>
-        <PackageReference Include="Autofac.Extensions.DependencyInjection"/>
         <PackageReference Include="Mapster"/>
         <PackageReference Include="Mapster.DependencyInjection"/>
     </ItemGroup>
@@ -23,7 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
     </ItemGroup>
 

@@ -1,8 +1,4 @@
-﻿using Autofac;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-
-namespace EasySoft.Core.MultiTenant.ExtensionMethods;
+﻿namespace EasySoft.Core.MultiTenant.ExtensionMethods;
 
 internal static class ConfigureHostBuilderExtensions
 {
@@ -11,10 +7,8 @@ internal static class ConfigureHostBuilderExtensions
         Func<HttpContext, Tenant> tenantBuilder
     )
     {
-        builder.ConfigureContainer<ContainerBuilder>((_, containerBuilder) =>
-            {
-                containerBuilder.AddTenantFactory(tenantBuilder);
-            }
+        builder.ConfigureServices((_, services) =>
+            services.AddTenantFactory(tenantBuilder)
         );
 
         return builder;

@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.LuoSiMao.LuoSiMao;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EasySoft.Core.LuoSiMao.ExtensionMethods;
 
@@ -9,15 +10,17 @@ public static class ConfigureHostBuilderExtensions
         SmsConfig smsConfig
     )
     {
-        builder.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-        {
-            containerBuilder.Register(c =>
+        builder.ConfigureServices(services =>
             {
-                var httpClientFactory = c.Resolve<IHttpClientFactory>();
+                services.AddTransient(sp =>
+                    ActivatorUtilities.CreateInstance<SmsService>(sp, smsConfig)
+                );
 
-                return new SmsService(smsConfig, httpClientFactory);
-            }).AsSelf().As<ISmsService>().InstancePerDependency();
-        });
+                services.AddTransient<ISmsService>(sp =>
+                    sp.GetRequiredService<SmsService>()
+                );
+            }
+        );
 
         return builder;
     }

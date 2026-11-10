@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>warnings</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>EasySoft.Core.AccessWayTransmitter</Title>
+        <Description>EasySoft.Core.AccessWayTransmitter</Description>
+        <PackageProjectUrl>https://github.com/kityandhero/EasySoft</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/kityandhero/EasySoft</RepositoryUrl>
+        <LangVersion>14</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DocumentationFile>bin\Debug\EasySoft.Core.AccessWayTransmitter.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="SlimMessageBus"/>
+        <PackageReference Include="SlimMessageBus.Host"/>
+        <PackageReference Include="SlimMessageBus.Host.Interceptor"/>
+        <PackageReference Include="SlimMessageBus.Host.Memory"/>
+        <PackageReference Include="SlimMessageBus.Host.RabbitMQ"/>
+        <PackageReference Include="SlimMessageBus.Host.Serialization.Json"/>
+    </ItemGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DocumentationFile>bin\Release\EasySoft.Core.AccessWayTransmitter.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Messaging.SlimMessageBus\EasySoft.Core.Messaging.SlimMessageBus.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Messaging\EasySoft.Core.Messaging.csproj"/>
+        <ProjectReference Include="..\EasySoft.IdGenerator\EasySoft.IdGenerator.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
+    </ItemGroup>
+
+
+</Project>

@@ -31,11 +31,9 @@ BusinessServiceConfigure.AddBusinessServiceImplementationAssembly(typeof(UserSer
 ApplicationConfigure.AddWebApplicationBuilderExtraActions(
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddApiVersioning")
-        .SetAction(
-            applicationBuilder =>
+        .SetAction(applicationBuilder =>
             {
-                applicationBuilder.Services.AddApiVersioning(
-                    o =>
+                applicationBuilder.Services.AddApiVersioning(o =>
                     {
                         //return versions in a response header
                         o.ReportApiVersions = true;
@@ -51,8 +49,7 @@ ApplicationConfigure.AddWebApplicationBuilderExtraActions(
         ),
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddAdvanceDbContext<DataContext>")
-        .SetAction(
-            applicationBuilder =>
+        .SetAction(applicationBuilder =>
             {
                 applicationBuilder.AddAdvanceMySql<DataContext>(
                     DatabaseConfigAssist.GetMainConnection()
@@ -64,8 +61,10 @@ ApplicationConfigure.AddWebApplicationBuilderExtraActions(
         .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceJsonWebToken<ApplicationOperator>(); }),
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddPermissionVerification")
-        .SetAction(
-            applicationBuilder => { applicationBuilder.AddPermissionVerification<ApplicationPermissionObserver>(); }
+        .SetAction(applicationBuilder =>
+            {
+                applicationBuilder.AddPermissionVerification<ApplicationPermissionObserver>();
+            }
         ),
 
     // 启用日志面板
@@ -89,8 +88,7 @@ ApplicationConfigure.AddWebApplicationBuilderExtraActions(
 ApplicationConfigure.AddWebApplicationExtraAction(
     new ExtraAction<WebApplication>()
         .SetName("MapAdvanceGrpcService")
-        .SetAction(
-            application =>
+        .SetAction(application =>
             {
                 application
                     .MapAdvanceGrpcService<EasySoft.Simple.AccountCenter.Application.GrpcServices.EntranceService>();

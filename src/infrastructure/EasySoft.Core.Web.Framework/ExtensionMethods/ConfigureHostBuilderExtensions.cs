@@ -20,13 +20,9 @@ public static class ConfigureHostBuilderExtensions
         IChannel channel
     )
     {
-        builder.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-            {
-                containerBuilder.RegisterInstance(new ApplicationChannel().SetChannel(channel))
-                    .As<IApplicationChannel>()
-                    .SingleInstance();
-            }
-        );
+        var applicationChannel = new ApplicationChannel().SetChannel(channel);
+
+        builder.ConfigureServices(services => { services.AddSingleton<IApplicationChannel>(applicationChannel); });
 
         StartupDescriptionMessageAssist.AddPrompt(
             $"ApplicationChannel name is {channel.Name}, identification is {channel.Value}."

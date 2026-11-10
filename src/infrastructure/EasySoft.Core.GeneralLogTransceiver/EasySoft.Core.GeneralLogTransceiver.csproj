@@ -22,7 +22,6 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
         <PackageReference Include="SlimMessageBus"/>
         <PackageReference Include="SlimMessageBus.Host"/>
         <PackageReference Include="SlimMessageBus.Host.Interceptor"/>
@@ -32,17 +31,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\test\EasySoft.Core.Messaging.SlimMessageBus.Test\EasySoft.Core.Messaging.SlimMessageBus.Test.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.ExchangeRegulation\EasySoft.Core.ExchangeRegulation.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Messaging.SlimMessageBus\EasySoft.Core.Messaging.SlimMessageBus.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Messaging\EasySoft.Core.Messaging.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Abstractions\"/>
-        <Folder Include="BackgroundServices\"/>
-        <Folder Include="Enums"/>
     </ItemGroup>
 
 </Project>

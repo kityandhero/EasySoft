@@ -25,8 +25,6 @@
 
 
     <ItemGroup>
-        <PackageReference Include="Autofac"/>
-        <PackageReference Include="Autofac.Extensions.DependencyInjection"/>
         <PackageReference Include="Masuit.Tools.Core"/>
         <PackageReference Include="MiniProfiler.AspNetCore"/>
         <PackageReference Include="MiniProfiler.Shared"/>
@@ -35,6 +33,7 @@
     <ItemGroup>
         <ProjectReference Include="..\EasySoft.IdGenerator\EasySoft.IdGenerator.csproj"/>
         <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

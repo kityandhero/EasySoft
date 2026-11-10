@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.Interfaces;
+using EasySoft.Core.DependencyInjection.IocAssists;
 using EasySoft.Core.Sql.Builders;
 using EasySoft.Core.Sql.Extensions;
 using EasySoft.Core.Sql.Factories;
@@ -2986,7 +2987,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             return;
         }
 
-        AutofacAssist.Instance.Resolve<ISqlLogProducer>()
+        ServiceProviderAssist.Instance.Resolve<ISqlLogProducer>()
             .SendAsync(
                 sqlExecutionMessage.CommandString,
                 sqlExecutionMessage.ExecuteType,

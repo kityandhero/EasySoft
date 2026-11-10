@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.EasyToken.AccessControl;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.Core.EasyToken.AccessControl;
 using EasySoft.UtilityTools.Core.Extensions;
 using EasySoft.UtilityTools.Core.Results.Implements;
 
@@ -13,7 +14,10 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
             filterContext.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor &&
             controllerActionDescriptor.MethodInfo.ContainAttribute<OperatorAttribute>();
 
-        if (!hasOperatorAttribute) return;
+        if (!hasOperatorAttribute)
+        {
+            return;
+        }
 
         var token = filterContext.HttpContext.GetToken(GeneralConfigAssist.GetTokenName());
 
@@ -28,9 +32,9 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
             return;
         }
 
-        AutofacAssist.Instance.Resolve<ITokenSecretOptions>();
+        ServiceProviderAssist.Instance.Resolve<ITokenSecretOptions>();
 
-        var tokenSecret = AutofacAssist.Instance.Resolve<ITokenSecret>();
+        var tokenSecret = ServiceProviderAssist.Instance.Resolve<ITokenSecret>();
 
         try
         {
@@ -44,11 +48,14 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
             catch (Exception e)
             {
                 if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
-                    AutofacAssist.Instance.Resolve<IErrorLogProducer>().SendAsync(
-                        e,
-                        0,
-                        filterContext.HttpContext.BuildRequestInfo()
-                    );
+                {
+                    ServiceProviderAssist.Instance.Resolve<IErrorLogProducer>()
+                        .SendAsync(
+                            e,
+                            0,
+                            filterContext.HttpContext.BuildRequestInfo()
+                        );
+                }
 
                 filterContext.Result = new ApiResult(
                     ReturnCode.TokenExpired.ToInt(),
@@ -70,27 +77,32 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
                 return;
             }
 
-            var actualOperator = AutofacAssist.Instance.Resolve<IActualOperator>();
+            var actualOperator = ServiceProviderAssist.Instance.Resolve<IActualOperator>();
 
             actualOperator.SetToken(token);
 
             actualOperator.SetIdentity(identity);
 
             if (actualOperator.IsAnonymous())
+            {
                 filterContext.Result = new ApiResult(
                     ReturnCode.TokenExpired.ToInt(),
                     false,
                     "凭证无效或凭证已过期"
                 );
+            }
         }
         catch (Exception e)
         {
             if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
-                AutofacAssist.Instance.Resolve<IErrorLogProducer>().SendAsync(
-                    e,
-                    0,
-                    filterContext.HttpContext.BuildRequestInfo()
-                );
+            {
+                ServiceProviderAssist.Instance.Resolve<IErrorLogProducer>()
+                    .SendAsync(
+                        e,
+                        0,
+                        filterContext.HttpContext.BuildRequestInfo()
+                    );
+            }
 
             filterContext.Result = new ApiResult(
                 ReturnCode.TokenExpired.ToInt(),

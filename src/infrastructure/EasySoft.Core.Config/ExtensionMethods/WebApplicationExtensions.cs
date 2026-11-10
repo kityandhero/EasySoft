@@ -20,21 +20,24 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        if (!application.UseHostFiltering()
-                .ApplicationServices.GetAutofacRoot()
-                .IsRegistered<AdvanceStaticFileOptions>())
+        var app = application.UseHostFiltering();
+
+        var isService = app.ApplicationServices.GetService<IServiceProviderIsService>();
+
+        if (isService?.IsService(typeof(AdvanceStaticFileOptions)) != true)
         {
             application.UseStaticFiles();
         }
         else
         {
-            var staticFileOptions = application.UseHostFiltering()
-                .ApplicationServices.GetAutofacRoot()
-                .Resolve<AdvanceStaticFileOptions>();
+            var staticFileOptions = app.ApplicationServices.GetService<AdvanceStaticFileOptions>();
 
-            application.UseStaticFiles(staticFileOptions);
+            if (staticFileOptions != null)
+            {
+                application.UseStaticFiles(staticFileOptions);
 
-            FlagAssist.SetAdvanceStaticFileOptionsSwitchOpen();
+                FlagAssist.SetAdvanceStaticFileOptionsSwitchOpen();
+            }
         }
 
         return application;

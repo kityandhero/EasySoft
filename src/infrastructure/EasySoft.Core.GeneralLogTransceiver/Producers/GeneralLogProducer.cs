@@ -16,7 +16,7 @@ public class GeneralLogProducer : IGeneralLogProducer
     /// 一般日志的出站总线。通过 <see cref="FromKeyedServicesAttribute"/> 按 Key 注入，
     /// 不通过业务路由门面，避免污染业务路由表。
     /// </param>
-    /// <param name="applicationChannel"></param>
+    /// <param name="applicationChannel">应用通道</param>
     public GeneralLogProducer(
         [FromKeyedServices(TransceiverConstant.GeneralLogMessageServiceKey)]
         IOutboundMessageBus bus,
@@ -102,14 +102,10 @@ public class GeneralLogProducer : IGeneralLogProducer
 
     /// <inheritdoc />
     public Task SendAsync(
-        IGeneralLogMessage generalLogExchange,
+        IGeneralLogMessage generalLogMessage,
         CancellationToken cancellationToken = default
     )
     {
-        // await _capPublisher.PublishAsync(TransceiverConstant.GeneralLogMessage, generalLogExchange);
-
-        // await _capPublisher.PublishAsync(TransceiverConstant.GeneralLogMessage, entity);
-
-        return _bus.Publish(generalLogExchange, cancellationToken);
+        return _bus.Publish(generalLogMessage, cancellationToken);
     }
 }

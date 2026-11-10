@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.AuthenticationCore.Operators;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EasySoft.Core.AuthenticationCore.ExtensionMethods;
 
@@ -13,13 +14,9 @@ public static class ConfigureHostBuilderExtensions
     /// <returns></returns>
     public static ConfigureHostBuilder AddOperator<T>(
         this ConfigureHostBuilder configureHostBuilder
-    ) where T : ActualOperator
+    ) where T : ActualOperator, IActualOperator
     {
-        configureHostBuilder.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-        {
-            // https://docs.autofac.org/en/latest/faq/per-request-scope.html
-            containerBuilder.RegisterType<T>().As<IActualOperator>().InstancePerLifetimeScope();
-        });
+        configureHostBuilder.ConfigureServices(services => { services.AddScoped<IActualOperator, T>(); });
 
         return configureHostBuilder;
     }

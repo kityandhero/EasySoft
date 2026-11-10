@@ -75,13 +75,14 @@ app.Lifetime.ApplicationStarted.Register(() =>
     {
         _ = Task.Run(async () =>
             {
-                var concrete = app.Services.GetRequiredService<InMemoryInformationCollector>();
+                var inMemoryInformationCollector = app.Services.GetRequiredService<InMemoryInformationCollector>();
+
                 var sw = Stopwatch.StartNew();
 
                 // 非阻塞突发发送 2000 条。TryWrite 恒为纳秒级，整个循环应远小于 100ms。
                 for (var i = 0; i < 2000; i++)
                 {
-                    await concrete.CollectAsync(
+                    await inMemoryInformationCollector.CollectAsync(
                         new InMemoryInformationCollectedEvent(
                             "BurstTest",
                             "test",
@@ -94,13 +95,15 @@ app.Lifetime.ApplicationStarted.Register(() =>
                 sw.Stop();
 
                 Console.WriteLine($"Fired 2000 sends in {sw.ElapsedMilliseconds}ms");
-                Console.WriteLine($"Enqueued: {concrete.EnqueuedCount}");
-                Console.WriteLine($"Dropped:  {concrete.DroppedCount}");
+                Console.WriteLine($"Enqueued: {inMemoryInformationCollector.EnqueuedCount}");
+                Console.WriteLine($"Dropped:  {inMemoryInformationCollector.DroppedCount}");
 
                 // 给后台泵 2 秒消化队列。
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
-                Console.WriteLine($"After 2s — Enqueued: {concrete.EnqueuedCount}, Dropped: {concrete.DroppedCount}");
+                Console.WriteLine(
+                    $"After 2s — Enqueued: {inMemoryInformationCollector.EnqueuedCount}, Dropped: {inMemoryInformationCollector.DroppedCount}"
+                );
             }
         );
     }

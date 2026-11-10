@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.PermissionVerification.Attributes;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.Core.PermissionVerification.Attributes;
 using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
 using EasySoft.Core.PermissionVerification.Entities;
 
@@ -27,7 +28,9 @@ public static class PermissionAssists
     )
     {
         if (AccessWayModelScanHistory.Keys.Contains(guidTag))
+        {
             return;
+        }
 
         AccessWayModelScanHistory.Add(guidTag, accessWayModel);
 
@@ -58,79 +61,105 @@ public static class PermissionAssists
             .ToList();
 
         list.ForEach(o =>
-        {
-            var mainRoute = o.GetCustomAttribute<RouteAttribute>()?.Template ?? "";
-
-            if (string.IsNullOrWhiteSpace(mainRoute)) return;
-
-            var methodInfos = o
-                .GetMethods()
-                .Where(x => x.ExistAttribute<RouteAttribute>() && x.ExistAttribute<PermissionAttribute>())
-                .ToList();
-
-            methodInfos.ForEach(x =>
             {
-                var childRoute = x.GetCustomAttribute<RouteAttribute>()?.Template ?? "";
+                var mainRoute = o.GetCustomAttribute<RouteAttribute>()?.Template ?? "";
 
-                if (string.IsNullOrWhiteSpace(childRoute)) return;
-
-                var permissionAttribute = x.GetCustomAttribute<PermissionAttribute>();
-
-                if (permissionAttribute == null || string.IsNullOrWhiteSpace(permissionAttribute.GuidTag)) return;
-
-                var relativePath = new List<string> { $"/{mainRoute}", childRoute }.Join("/");
-
-                var accessWayModel = new AccessWayModel
+                if (string.IsNullOrWhiteSpace(mainRoute))
                 {
-                    Name = string.IsNullOrWhiteSpace(permissionAttribute.Name)
-                        ? relativePath
-                        : permissionAttribute.Name,
-                    GuidTag = permissionAttribute.GuidTag,
-                    RelativePath = relativePath,
-                    Group = permissionAttribute.Group,
-                    Expand = permissionAttribute.AggregateExpandItems()
-                };
+                    return;
+                }
 
-                AccessWayModelScanQuery.Enqueue(accessWayModel);
+                var methodInfos = o
+                    .GetMethods()
+                    .Where(x => x.ExistAttribute<RouteAttribute>() && x.ExistAttribute<PermissionAttribute>())
+                    .ToList();
 
-                if (EnvironmentAssist.IsDevelopment())
-                    LogAssist.Prompt(
-                        $"Scan Permission: \"{assembly.GetName().Name}\" -> \"{accessWayModel.Name}, {accessWayModel.GuidTag} ({accessWayModel.RelativePath})\"."
-                    );
-            });
-        });
+                methodInfos.ForEach(x =>
+                    {
+                        var childRoute = x.GetCustomAttribute<RouteAttribute>()?.Template ?? "";
+
+                        if (string.IsNullOrWhiteSpace(childRoute))
+                        {
+                            return;
+                        }
+
+                        var permissionAttribute = x.GetCustomAttribute<PermissionAttribute>();
+
+                        if (permissionAttribute == null || string.IsNullOrWhiteSpace(permissionAttribute.GuidTag))
+                        {
+                            return;
+                        }
+
+                        var relativePath = new List<string> { $"/{mainRoute}", childRoute }.Join("/");
+
+                        var accessWayModel = new AccessWayModel
+                        {
+                            Name = string.IsNullOrWhiteSpace(permissionAttribute.Name)
+                                ? relativePath
+                                : permissionAttribute.Name,
+                            GuidTag = permissionAttribute.GuidTag,
+                            RelativePath = relativePath,
+                            Group = permissionAttribute.Group,
+                            Expand = permissionAttribute.AggregateExpandItems()
+                        };
+
+                        AccessWayModelScanQuery.Enqueue(accessWayModel);
+
+                        if (EnvironmentAssist.IsDevelopment())
+                        {
+                            LogAssist.Prompt(
+                                $"Scan Permission: \"{assembly.GetName().Name}\" -> \"{accessWayModel.Name}, {accessWayModel.GuidTag} ({accessWayModel.RelativePath})\"."
+                            );
+                        }
+                    }
+                );
+            }
+        );
     }
 
     internal static async Task StartSaveAsync(IAccessWayDetector accessWayDetector)
     {
-        if (!GetAccessWayModelScanQuery().Any()) return;
+        if (!GetAccessWayModelScanQuery().Any())
+        {
+            return;
+        }
 
         var isDevelopment = EnvironmentAssist.IsDevelopment();
 
         if (isDevelopment)
+        {
             LogAssist.Prompt(
                 $"Permission need sync {GetAccessWayModelScanQuery().Count}, start sync."
             );
+        }
 
         await ExecSaveAsync(accessWayDetector);
 
-        if (isDevelopment) LogAssist.Prompt("Permission sync complete.");
+        if (isDevelopment)
+        {
+            LogAssist.Prompt("Permission sync complete.");
+        }
     }
 
     private static async Task ExecSaveAsync(IAccessWayDetector accessWayDetector)
     {
-        var accessWayProducer = AutofacAssist.Instance.Resolve<IAccessWayProducer>();
+        var accessWayProducer = ServiceProviderAssist.Instance.Resolve<IAccessWayProducer>();
 
         while (AccessWayModelScanQuery.TryDequeue(out var accessWayModel))
         {
             var result = await accessWayDetector.Find(accessWayModel.GuidTag);
 
-            if (result.Success) continue;
+            if (result.Success)
+            {
+                continue;
+            }
 
             await accessWayProducer.SendAsync(accessWayModel);
 
             if (EnvironmentAssist.IsDevelopment())
+            {
                 LogAssist.Prompt($"Send {nameof(AccessWayModel)} -> {accessWayModel.BuildInfo()}.");
+            }
         }
     }
 }

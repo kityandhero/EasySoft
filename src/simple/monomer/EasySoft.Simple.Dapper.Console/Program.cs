@@ -1,42 +1,31 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.CacheCore.interfaces;
-using EasySoft.Core.CacheImplementation.ConfigAssist;
 using EasySoft.Core.CacheImplementation.ExtensionMethods;
 using EasySoft.Core.CacheImplementation.Operators;
 using EasySoft.Core.Dapper.Elegant.Assists;
 using EasySoft.Core.Dapper.Elegant.Configure;
+using EasySoft.Core.DependencyInjection.IocAssists;
 using EasySoft.Core.Project.DataEntity.Dapper.Infrastructure.Entities;
 using EasySoft.Simple.Dapper.Console;
 using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.Assists;
-using EasySoft.UtilityTools.Standard.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 
-AutoFacConsoleAssist.CreateServiceProvider(
-    services =>
+var serviceProvider = ConsoleServiceProviderAssist.CreateServiceProvider((serviceCollection, configuration) =>
     {
-        var redisConnection = RedisConfigAssist.GetConnectionCollection().Join("|");
+        serviceCollection.AddAdvanceCacheImplementation(configuration);
 
-        services.AddAdvanceCacheImplementation(false, redisConnection);
-    },
-    containerBuilder =>
-    {
-        containerBuilder.InterceptCacheImplementation();
-
-        containerBuilder.RegisterType<GeneralCacheOperator>().As<IAsyncCacheOperator>().SingleInstance();
-
-        containerBuilder.RegisterInstance(
-                new ApplicationChannel().SetChannel(ChannelCollection.DapperTestApplication)
-            )
-            .As<IApplicationChannel>()
-            .SingleInstance();
+        // *) RegisterInstance(new ApplicationChannel().SetChannel(...))
+        //       .As<IApplicationChannel>().SingleInstance()
+        //    → 实例单例注册
+        serviceCollection.AddSingleton<IApplicationChannel>(
+            new ApplicationChannel().SetChannel(ChannelCollection.DapperTestApplication)
+        );
     }
 );
 
-DapperElegantConfigurator.SetCacheOperator(AutofacAssist.Instance.Resolve<IAsyncCacheOperator>());
+DapperElegantConfigurator.SetCacheOperator(serviceProvider.GetRequiredService<IAsyncCacheOperator>());
 
 var author = EntityAssist.GetEntity<AccessWay>(1);
 

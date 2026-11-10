@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Standard.Result.Implements;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.MinIO.Assists;
 
@@ -6,19 +7,22 @@ public static class MinioClientAssist
 {
     public static MinioClient GetMinioClient()
     {
-        return AutofacAssist.Instance.Resolve<MinioClient>();
+        return ServiceProviderAssist.Instance.Resolve<MinioClient>();
     }
 
     public static async Task<ExecutiveResult> PutObjectAsync(string bucketName, string objectName, string contentType)
     {
         try
         {
-            var minioClient = AutofacAssist.Instance.Resolve<MinioClient>();
+            var minioClient = ServiceProviderAssist.Instance.Resolve<MinioClient>();
 
             // Make a bucket on the server, if not already present.
             var found = await minioClient.BucketExistsAsync(new BucketExistsArgs().WithBucket(bucketName));
 
-            if (!found) await minioClient.MakeBucketAsync(new MakeBucketArgs().WithBucket(bucketName));
+            if (!found)
+            {
+                await minioClient.MakeBucketAsync(new MakeBucketArgs().WithBucket(bucketName));
+            }
 
             var putObjectArgs = new PutObjectArgs()
                 .WithBucket(bucketName)

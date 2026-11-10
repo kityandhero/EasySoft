@@ -10,6 +10,7 @@
         <PackageReference Include="SlimMessageBus"/>
         <PackageReference Include="SlimMessageBus.Host"/>
         <PackageReference Include="SlimMessageBus.Host.Interceptor"/>
+        <PackageReference Include="SlimMessageBus.Host.Serialization.Json"/>
     </ItemGroup>
 
     <ItemGroup>

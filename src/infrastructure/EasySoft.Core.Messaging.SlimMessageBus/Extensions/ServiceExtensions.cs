@@ -25,6 +25,19 @@ public static class ServiceExtensions
     }
 
     /// <summary>
+    /// 注册拦截器和观测器、门面，并且使用 Json 序列化配置。
+    /// </summary>
+    public static IServiceCollection AddKernelMessagingWithJson(this IServiceCollection services)
+    {
+        services.AddKernelMessagingCore();
+        services.AddKernelMessagingContracts();
+
+        services.AddSlimMessageBus(messageBusBuilder => messageBusBuilder.AddJsonSerializer());
+
+        return services;
+    }
+
+    /// <summary>
     /// 注册拦截器和观测器。
     /// </summary>
     /// <remarks>

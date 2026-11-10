@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac"/>
         <PackageReference Include="LogDashboard"/>
         <PackageReference Include="System.Linq.Dynamic.Core"/>
         <PackageReference Include="System.Data.SqlClient"/>
@@ -22,6 +21,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
     </ItemGroup>
 
 </Project>

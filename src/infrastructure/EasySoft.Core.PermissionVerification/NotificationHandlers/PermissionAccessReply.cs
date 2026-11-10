@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
 using EasySoft.UtilityTools.Core.Extensions;
 
 namespace EasySoft.Core.PermissionVerification.NotificationHandlers;
@@ -50,7 +51,7 @@ public class PermissionAccessReply : INotificationHandler<PermissionAccessNotifi
 
         if (!result.Success || result.Data == null)
         {
-            await AutofacAssist.Instance.Resolve<IAccessWayProducer>().SendAsync(accessWayPersistence);
+            await ServiceProviderAssist.Instance.Resolve<IAccessWayProducer>().SendAsync(accessWayPersistence);
 
             if (_environment.IsDevelopment())
             {
@@ -84,7 +85,7 @@ public class PermissionAccessReply : INotificationHandler<PermissionAccessNotifi
                 return;
             }
 
-            await AutofacAssist.Instance.Resolve<IAccessWayProducer>().SendAsync(accessWayPersistence);
+            await ServiceProviderAssist.Instance.Resolve<IAccessWayProducer>().SendAsync(accessWayPersistence);
 
             if (_environment.IsDevelopment())
             {

@@ -15,13 +15,12 @@
         <PackageReference Include="Microsoft.Bcl.AsyncInterfaces"/>
         <PackageReference Include="Pipelines.Sockets.Unofficial"/>
         <PackageReference Include="RedLock.net"/>
-
         <PackageReference Include="StackExchange.Redis"/>
         <PackageReference Include="System.IO.Hashing"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
         <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
     </ItemGroup>
 

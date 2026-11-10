@@ -13,17 +13,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.AgileConfigClient\EasySoft.Core.AgileConfigClient.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.Cap\EasySoft.Core.Cap.csproj"/>
+        <PackageReference Include="Asp.Versioning.Abstractions"/>
+        <PackageReference Include="Asp.Versioning.Mvc"/>
+        <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder"/>
+        <PackageReference Include="Microsoft.OpenApi"/>
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.ConsulConfigCenterClient\EasySoft.Core.ConsulConfigCenterClient.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.ConsulRegistrationCenterClient\EasySoft.Core.ConsulRegistrationCenterClient.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.EnvironmentAuxiliary\EasySoft.Core.EnvironmentAuxiliary.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.CacheImplementation\EasySoft.Core.CacheImplementation.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.EasyToken\EasySoft.Core.EasyToken.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.ErrorLogTransmitter\EasySoft.Core.ErrorLogTransmitter.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.ErrorLogTransceiver\EasySoft.Core.ErrorLogTransceiver.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Exceptionless\EasySoft.Core.Exceptionless.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.GeneralLogTransceiver\EasySoft.Core.GeneralLogTransceiver.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Hangfire\EasySoft.Core.Hangfire.csproj"/>
@@ -37,21 +41,9 @@
         <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.PrepareStartWork\EasySoft.Core.PrepareStartWork.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.RabbitMQ\EasySoft.Core.RabbitMQ.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.SqlLogTransmitter\EasySoft.Core.SqlLogTransmitter.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.SqlLogTransceiver\EasySoft.Core.SqlLogTransceiver.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Swagger\EasySoft.Core.Swagger.csproj"/>
         <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="Asp.Versioning.Abstractions"/>
-        <PackageReference Include="Asp.Versioning.Mvc"/>
-        <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer"/>
-        <PackageReference Include="Autofac"/>
-        <PackageReference Include="Autofac.Configuration"/>
-        <PackageReference Include="Autofac.Extensions.DependencyInjection"/>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder"/>
-        <PackageReference Include="Microsoft.OpenApi"/>
     </ItemGroup>
 
     <ItemGroup>

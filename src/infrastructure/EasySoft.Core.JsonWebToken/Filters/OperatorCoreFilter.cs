@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Core.Results.Implements;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.UtilityTools.Core.Results.Implements;
 
 namespace EasySoft.Core.JsonWebToken.Filters;
 
@@ -11,7 +12,10 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
             filterContext.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor &&
             controllerActionDescriptor.MethodInfo.ContainAttribute<OperatorAttribute>();
 
-        if (!hasOperatorAttribute) return;
+        if (!hasOperatorAttribute)
+        {
+            return;
+        }
 
         var token = filterContext.HttpContext.GetToken(GeneralConfigAssist.GetTokenName());
 
@@ -42,17 +46,19 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
 
         var identification = first.Value;
 
-        var actualOperator = AutofacAssist.Instance.Resolve<IActualOperator>();
+        var actualOperator = ServiceProviderAssist.Instance.Resolve<IActualOperator>();
 
         actualOperator.SetToken(token);
 
         actualOperator.SetIdentity(identification);
 
         if (actualOperator.IsAnonymous())
+        {
             filterContext.Result = new ApiResult(
                 ReturnCode.TokenExpired.ToInt(),
                 false,
                 "凭证无效或凭证已过期"
             );
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Core.Results.Implements;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.UtilityTools.Core.Results.Implements;
 
 namespace EasySoft.Core.Web.Framework.Filters;
 
@@ -16,17 +17,29 @@ public class GlobalExceptionFilter : IExceptionFilter
 
     public void OnException(ExceptionContext context)
     {
-        if (context.ExceptionHandled) return;
+        if (context.ExceptionHandled)
+        {
+            return;
+        }
 
-        LogAssist.GetLogger().LogError(0, context.Exception, "{Message}", context.Exception.Message);
+        LogAssist.GetLogger()
+        .LogError(
+            0,
+            context.Exception,
+            "{Message}",
+            context.Exception.Message
+        );
 
         if (context.Exception.InnerException != null)
-            LogAssist.GetLogger().LogError(
-                0,
-                context.Exception.InnerException,
-                "{Message}",
-                context.Exception.InnerException.Message
-            );
+        {
+            LogAssist.GetLogger()
+                .LogError(
+                    0,
+                    context.Exception.InnerException,
+                    "{Message}",
+                    context.Exception.InnerException.Message
+                );
+        }
 
         if (context.Exception is TokenException)
         {
@@ -46,7 +59,11 @@ public class GlobalExceptionFilter : IExceptionFilter
             return;
         }
 
-        var result = new ApiResult(ReturnCode.Error.ToInt(), false, "服务发生错误");
+        var result = new ApiResult(
+            ReturnCode.Error.ToInt(),
+            false,
+            "服务发生错误"
+        );
 
         if (_hostEnvironment.IsDevelopment())
         {
@@ -56,11 +73,15 @@ public class GlobalExceptionFilter : IExceptionFilter
 
         if (GeneralConfigAssist.GetRemoteErrorLogSwitch())
         {
-            var errorLogProducer = AutofacAssist.Instance.Resolve<IErrorLogProducer>();
+            var errorLogProducer = ServiceProviderAssist.Instance.Resolve<IErrorLogProducer>();
 
             var requestInfo = context.HttpContext.BuildRequestInfo();
 
-            errorLogProducer.SendAsync(context.Exception, 0, requestInfo);
+            errorLogProducer.SendAsync(
+                context.Exception,
+                0,
+                requestInfo
+            );
         }
 
         context.Result = new JsonResult(

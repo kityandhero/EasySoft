@@ -36,7 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.ExchangeRegul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.AutoFac", "infrastructure\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj", "{DEB4B7BB-B9FC-4ECC-91E6-9F3A58E24FA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.ErrorLogTransmitter", "infrastructure\EasySoft.Core.ErrorLogTransmitter\EasySoft.Core.ErrorLogTransmitter.csproj", "{54311193-8614-471F-96AA-3F9CDC97EB8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.ErrorLogTransceiver", "infrastructure\EasySoft.Core.ErrorLogTransceiver\EasySoft.Core.ErrorLogTransceiver.csproj", "{54311193-8614-471F-96AA-3F9CDC97EB8D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.PermissionVerification", "infrastructure\EasySoft.Core.PermissionVerification\EasySoft.Core.PermissionVerification.csproj", "{99E229A1-0413-4C88-BCD2-D9FCF02B1FE5}"
 EndProject
@@ -60,7 +60,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.CacheImplemen
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configures-配置-本地-动态远端", "configures-配置-本地-动态远端", "{5CFBCD84-655E-4724-A0FF-03C2390C471E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.AccessWayTransmitter", "infrastructure\EasySoft.Core.AccessWayTransmitter\EasySoft.Core.AccessWayTransmitter.csproj", "{B716B52E-EFF6-4D72-AC26-4D2DE89DC18C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.AccessWayTransceiver", "infrastructure\EasySoft.Core.AccessWayTransceiver\EasySoft.Core.AccessWayTransceiver.csproj", "{B716B52E-EFF6-4D72-AC26-4D2DE89DC18C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.UtilityTools.Standard", "infrastructure\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj", "{944A05EB-EF3A-4D14-8E0A-97C2A69DDCCB}"
 EndProject
@@ -96,7 +96,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.HealthChecks"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationTest", "test\ConfigurationTest\ConfigurationTest.csproj", "{159CECE3-508F-4127-9D4A-ACB42B392DA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.SqlLogTransmitter", "infrastructure\EasySoft.Core.SqlLogTransmitter\EasySoft.Core.SqlLogTransmitter.csproj", "{1A93F2C3-8A08-4416-85A0-8DBBFC986AEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.SqlLogTransceiver", "infrastructure\EasySoft.Core.SqlLogTransceiver\EasySoft.Core.SqlLogTransceiver.csproj", "{1A93F2C3-8A08-4416-85A0-8DBBFC986AEB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "b-data", "b-data", "{3E4998D6-8F35-4340-9F9E-AA686E6E72D3}"
 EndProject
@@ -390,7 +390,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.AppSecuritySe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.AppSecurityVerification", "infrastructure\EasySoft.Core.AppSecurityVerification\EasySoft.Core.AppSecurityVerification.csproj", "{648050D2-EAAE-409B-9689-8C2F563CDB25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.ChannelCheckTransmitter", "infrastructure\EasySoft.Core.ChannelCheckTransmitter\EasySoft.Core.ChannelCheckTransmitter.csproj", "{67B792D0-C4B5-4014-ACEA-4A918B941700}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.ChannelCheckTransceiver", "infrastructure\EasySoft.Core.ChannelCheckTransceiver\EasySoft.Core.ChannelCheckTransceiver.csproj", "{67B792D0-C4B5-4014-ACEA-4A918B941700}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.UserLogicCore", "infrastructure\EasySoft.Core.UserLogicCore\EasySoft.Core.UserLogicCore.csproj", "{6A4F2CA0-6A48-46C0-8E5D-B85290BC173D}"
 EndProject
@@ -443,6 +443,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "transceiver", "transceiver", "{5F135F5D-9412-493E-9A52-4A1200C0644C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.GeneralLogTransceiver.Test", "test\EasySoft.Core.GeneralLogTransceiver.Test\EasySoft.Core.GeneralLogTransceiver.Test.csproj", "{BAD5F1F9-77D8-492D-A33A-5719314E3074}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Web.Framework.Extra", "infrastructure\EasySoft.Core.Web.Framework.Extra\EasySoft.Core.Web.Framework.Extra.csproj", "{5C49C71C-17F3-4603-A6B1-263F533DB03B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.DependencyInjection", "infrastructure\ EasySoft.Core.DependencyInjection\EasySoft.Core.DependencyInjection.csproj", "{AD328717-EBB8-4ABF-B37F-6FE6CEE87A2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cache", "cache", "{AF7BA6DF-0328-436D-B9FB-E41A063A7D13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.CacheImplementation.Test", "test\EasySoft.Core.CacheImplementation.Test\EasySoft.Core.CacheImplementation.Test.csproj", "{BC3CDC1C-356D-4678-9626-E6210461FAF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -970,6 +978,18 @@ Global
 		{BAD5F1F9-77D8-492D-A33A-5719314E3074}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAD5F1F9-77D8-492D-A33A-5719314E3074}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAD5F1F9-77D8-492D-A33A-5719314E3074}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C49C71C-17F3-4603-A6B1-263F533DB03B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C49C71C-17F3-4603-A6B1-263F533DB03B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C49C71C-17F3-4603-A6B1-263F533DB03B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C49C71C-17F3-4603-A6B1-263F533DB03B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD328717-EBB8-4ABF-B37F-6FE6CEE87A2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD328717-EBB8-4ABF-B37F-6FE6CEE87A2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD328717-EBB8-4ABF-B37F-6FE6CEE87A2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD328717-EBB8-4ABF-B37F-6FE6CEE87A2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC3CDC1C-356D-4678-9626-E6210461FAF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC3CDC1C-356D-4678-9626-E6210461FAF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC3CDC1C-356D-4678-9626-E6210461FAF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC3CDC1C-356D-4678-9626-E6210461FAF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1184,6 +1204,10 @@ Global
 		{12B317B9-39AE-4F3A-85F8-BCD913933BC2} = {9FE6DE5C-FDC5-4A53-AC77-0A8C18467574}
 		{5F135F5D-9412-493E-9A52-4A1200C0644C} = {3A5000A7-B37E-4A5D-8668-82E7E2681993}
 		{BAD5F1F9-77D8-492D-A33A-5719314E3074} = {5F135F5D-9412-493E-9A52-4A1200C0644C}
+		{5C49C71C-17F3-4603-A6B1-263F533DB03B} = {E3680D8B-1B50-4234-9E60-AAF8483FA0D3}
+		{AD328717-EBB8-4ABF-B37F-6FE6CEE87A2F} = {CAACA793-6CBA-447E-AB9C-D8BE24B50850}
+		{AF7BA6DF-0328-436D-B9FB-E41A063A7D13} = {3A5000A7-B37E-4A5D-8668-82E7E2681993}
+		{BC3CDC1C-356D-4678-9626-E6210461FAF3} = {AF7BA6DF-0328-436D-B9FB-E41A063A7D13}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4669C79-A743-449E-B15F-4FA048B8482F}

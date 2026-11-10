@@ -2,7 +2,6 @@
 
 global using System.Text;
 global using EasySoft.Core.AgileConfigClient.Assists;
-global using EasySoft.Core.AutoFac.IocAssists;
 global using EasySoft.Core.Config;
 global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.ConsulConfigCenterClient.Assists;

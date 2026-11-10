@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.EntityFramework.InterFaces;
+﻿using DotNetCore.CAP;
+
+namespace EasySoft.Core.EntityFramework.InterFaces;
 
 /// <summary>
 /// IAdvanceTransaction

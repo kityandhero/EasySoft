@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.EntityFramework.EntityConfigures.Implements;
+﻿using EasySoft.Core.EntityFramework.Contexts.ContextFactories;
+using EasySoft.Core.EntityFramework.EntityConfigures.Implements;
 using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
 using EasySoft.Core.EntityFramework.Interceptors;
 using EasySoft.Core.EntityFramework.Repositories;
@@ -32,55 +33,62 @@ public static class ServiceCollectionExtension
     ) where T : BasicContext
     {
         if (services.HasRegistered(UniqueIdentifierAddAdvanceContextPool))
+        {
             throw new Exception("AddAdvanceContext and AddAdvanceContextPool do not use at the same time");
+        }
 
         if (services.HasRegistered(UniqueIdentifierAddAdvanceContext))
+        {
             return services;
+        }
 
         services.AddDbContext<DbContext, T>((serviceProvider, optionsBuilder) =>
-        {
-            optionsBuilder.UseLoggerFactory(serviceProvider.GetService<ILoggerFactory>());
-
-            optionsBuilder.AddInterceptors(new LogCommandInterceptor(serviceProvider));
-
-            var environment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
-
-            if (environment.IsDevelopment())
             {
-                if (ContextConfigure.EnableSensitiveDataLogging)
-                {
-                    LogAssist.Hint(
-                        $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.EnableSensitiveDataLogging)} is {ContextConfigure.EnableSensitiveDataLogging}."
-                    );
+                optionsBuilder.UseLoggerFactory(serviceProvider.GetService<ILoggerFactory>());
 
-                    //敏感数据日志
-                    //仅应在开发环境下开启
-                    optionsBuilder.EnableSensitiveDataLogging();
+                optionsBuilder.AddInterceptors(new LogCommandInterceptor(serviceProvider));
+
+                var environment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
+
+                if (environment.IsDevelopment())
+                {
+                    if (ContextConfigure.EnableSensitiveDataLogging)
+                    {
+                        LogAssist.Hint(
+                            $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.EnableSensitiveDataLogging)} is {ContextConfigure.EnableSensitiveDataLogging}."
+                        );
+
+                        //敏感数据日志
+                        //仅应在开发环境下开启
+                        optionsBuilder.EnableSensitiveDataLogging();
+                    }
+
+                    if (ContextConfigure.EnableDetailedErrors)
+                    {
+                        LogAssist.Hint(
+                            $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.EnableDetailedErrors)} is {ContextConfigure.EnableDetailedErrors}."
+                        );
+
+                        //出于性能原因，EF Core 不会在 try-catch 块中包装每个调用以从数据库提供程序读取值。 但是，这有时会导致难以诊断的异常，尤其是当数据库在模型不允许的情况下返回 NULL 时
+                        //仅应在开发环境下开启
+                        optionsBuilder.EnableDetailedErrors();
+                    }
+
+                    if (ContextConfigure.EnableSensitiveDataLogging)
+                    {
+                        LogAssist.Prompt(
+                            $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.EnableSensitiveDataLogging)} only takes effect in development mode."
+                        );
+                    }
+
+                    LogAssist.Hint(
+                        $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.GetEntityConfigureAssemblies)} contain {(!ContextConfigure.GetEntityConfigureAssemblies().Any() ? "none" : ContextConfigure.GetEntityConfigureAssemblies().Select(o => o.GetName().Name).Join(","))}."
+                    );
                 }
 
-                if (ContextConfigure.EnableDetailedErrors)
-                {
-                    LogAssist.Hint(
-                        $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.EnableDetailedErrors)} is {ContextConfigure.EnableDetailedErrors}."
-                    );
-
-                    //出于性能原因，EF Core 不会在 try-catch 块中包装每个调用以从数据库提供程序读取值。 但是，这有时会导致难以诊断的异常，尤其是当数据库在模型不允许的情况下返回 NULL 时
-                    //仅应在开发环境下开启
-                    optionsBuilder.EnableDetailedErrors();
-                }
-
-                if (ContextConfigure.EnableSensitiveDataLogging)
-                    LogAssist.Prompt(
-                        $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.EnableSensitiveDataLogging)} only takes effect in development mode."
-                    );
-
-                LogAssist.Hint(
-                    $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.GetEntityConfigureAssemblies)} contain {(!ContextConfigure.GetEntityConfigureAssemblies().Any() ? "none" : ContextConfigure.GetEntityConfigureAssemblies().Select(o => o.GetName().Name).Join(","))}."
-                );
+                action(optionsBuilder);
             }
-
-            action(optionsBuilder);
-        });
+        );
 
         return services;
     }
@@ -99,30 +107,41 @@ public static class ServiceCollectionExtension
     ) where T : BasicContext
     {
         if (services.HasRegistered(UniqueIdentifierAddAdvanceContext))
+        {
             throw new Exception("AddAdvanceContext and AddAdvanceContextPool do not use at the same time");
+        }
 
         if (services.HasRegistered(UniqueIdentifierAddAdvanceContextPool))
+        {
             return services;
+        }
 
         services.AddDbContextPool<T>((serviceProvider, optionsBuilder) =>
-        {
-            if (EnvironmentAssist.GetEnvironment().IsDevelopment())
             {
-                optionsBuilder.UseLoggerFactory(serviceProvider.GetService<ILoggerFactory>());
+                if (EnvironmentAssist.GetEnvironment().IsDevelopment())
+                {
+                    optionsBuilder.UseLoggerFactory(serviceProvider.GetService<ILoggerFactory>());
 
-                if (ContextConfigure.EnableSensitiveDataLogging)
-                    //敏感数据日志
-                    //仅应在开发环境下开启
-                    optionsBuilder.EnableSensitiveDataLogging();
+                    if (ContextConfigure.EnableSensitiveDataLogging)
 
-                if (ContextConfigure.EnableDetailedErrors)
-                    //出于性能原因，EF Core 不会在 try-catch 块中包装每个调用以从数据库提供程序读取值。 但是，这有时会导致难以诊断的异常，尤其是当数据库在模型不允许的情况下返回 NULL 时
-                    //仅应在开发环境下开启
-                    optionsBuilder.EnableDetailedErrors();
+                        //敏感数据日志
+                        //仅应在开发环境下开启
+                    {
+                        optionsBuilder.EnableSensitiveDataLogging();
+                    }
+
+                    if (ContextConfigure.EnableDetailedErrors)
+
+                        //出于性能原因，EF Core 不会在 try-catch 块中包装每个调用以从数据库提供程序读取值。 但是，这有时会导致难以诊断的异常，尤其是当数据库在模型不允许的情况下返回 NULL 时
+                        //仅应在开发环境下开启
+                    {
+                        optionsBuilder.EnableDetailedErrors();
+                    }
+                }
+
+                action(optionsBuilder);
             }
-
-            action(optionsBuilder);
-        });
+        );
 
         return services;
     }
@@ -137,7 +156,9 @@ public static class ServiceCollectionExtension
     )
     {
         if (services.HasRegistered(UniqueIdentifierAddAdvanceRepository))
+        {
             return services;
+        }
 
         services.TryAddScoped(typeof(IRepository<>), typeof(Repository<>));
 
@@ -154,7 +175,9 @@ public static class ServiceCollectionExtension
     )
     {
         if (services.HasRegistered(UniqueIdentifierAddEntityConfigure))
+        {
             return services;
+        }
 
         services.TryAddSingleton(
             typeof(IEntityConfigure),
@@ -163,7 +186,9 @@ public static class ServiceCollectionExtension
                 var entityConfigureAssemblies = ContextConfigure.GetEntityConfigureAssemblies();
 
                 if (!entityConfigureAssemblies.Any())
+                {
                     LogAssist.Warning("ContextConfigure.EntityConfigureAssemblies has none Assemblies");
+                }
 
                 var entityConfigure = new EntityConfigure().AddRangeAssemblies(
                     entityConfigureAssemblies
@@ -171,6 +196,40 @@ public static class ServiceCollectionExtension
 
                 return entityConfigure;
             }
+        );
+
+        return services;
+    }
+
+    public static IServiceCollection AddAdvanceTenantContextFactory<TFactory, T>(
+        this IServiceCollection services
+    )
+        where TFactory : AdvanceTenantContextFactory<T>, new()
+        where T : TenantBasicContext
+    {
+        // 等价于 .AsSelf()：TFactory 自身可解析
+        services.AddScoped<TFactory>();
+
+        // 等价于 .As<AdvanceTenantContextFactory<T>>()：基类委托到具体类
+        services.AddScoped<AdvanceTenantContextFactory<T>>(sp => sp.GetRequiredService<TFactory>());
+
+        return services;
+    }
+
+    public static IServiceCollection AddAdvanceTenantContext<TFactory, T>(
+        this IServiceCollection services
+    )
+        where TFactory : AdvanceTenantContextFactory<T>, new()
+        where T : TenantBasicContext
+    {
+        // 对应 .AsSelf()：暴露 lambda 的返回类型 TenantBasicContext
+        services.AddScoped<TenantBasicContext>(sp =>
+            sp.GetRequiredService<TFactory>().CreateDbContext()
+        );
+
+        // 对应 .As<T>()：委托到基类注册，保证同 scope 同实例
+        services.AddScoped<T>(sp =>
+            (T)sp.GetRequiredService<TenantBasicContext>()
         );
 
         return services;

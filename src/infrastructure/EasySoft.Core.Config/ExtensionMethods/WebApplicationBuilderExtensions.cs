@@ -17,9 +17,7 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     ) where T : AdvanceStaticFileOptions
     {
-        builder.Host.ConfigureContainer<ContainerBuilder>(
-            containerBuilder => { containerBuilder.RegisterType<T>().As<AdvanceStaticFileOptions>().SingleInstance(); }
-        );
+        builder.Services.AddSingleton<AdvanceStaticFileOptions, T>();
 
         return builder;
     }

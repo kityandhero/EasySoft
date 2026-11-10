@@ -69,17 +69,12 @@ public static class HtmlHelperViewExtensions
         object parameters = null
     )
     {
-        // fetching required services for invocation
         var serviceProvider = helper.ViewContext.HttpContext.RequestServices;
-        var actionContextAccessor = helper.ViewContext.HttpContext.RequestServices
-            .GetRequiredService<IActionContextAccessor>();
-        var httpContextAccessor = helper.ViewContext.HttpContext.RequestServices
-            .GetRequiredService<IHttpContextAccessor>();
+        var httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
         var actionSelector = serviceProvider.GetRequiredService<IActionSelector>();
 
-        // creating new action invocation context
+        // 构建 RouteData
         var routeData = new RouteData();
-
         foreach (var router in helper.ViewContext.RouteData.Routers)
         {
             routeData.PushState(
@@ -91,40 +86,31 @@ public static class HtmlHelperViewExtensions
 
         routeData.PushState(
             null,
-            new RouteValueDictionary(
-                new
-                {
-                    controller,
-                    action,
-                    area
-                }
-            ),
+            new RouteValueDictionary(new { controller, action, area }),
             null
         );
-
         routeData.PushState(
             null,
             new RouteValueDictionary(parameters ?? new { }),
             null
         );
 
+        // 选择目标 ActionDescriptor
         var routeContext = new RouteContext(helper.ViewContext.HttpContext) { RouteData = routeData };
-        var candidate = actionSelector.SelectCandidates(routeContext);
-
-        if (candidate == null)
+        var candidates = actionSelector.SelectCandidates(routeContext);
+        if (candidates == null || candidates.Count == 0)
         {
             throw new Exception("candidate disallow null");
         }
 
-        var actionDescriptor = actionSelector.SelectBestCandidate(routeContext, candidate);
-
-        var originalActionContext = actionContextAccessor.ActionContext;
+        var actionDescriptor = actionSelector.SelectBestCandidate(routeContext, candidates);
         var originalHttpContext = httpContextAccessor.HttpContext;
 
         try
         {
             var newHttpContext = serviceProvider.GetRequiredService<IHttpContextFactory>()
                 .Create(helper.ViewContext.HttpContext.Features);
+
             if (newHttpContext.Items.ContainsKey(typeof(IUrlHelper)))
             {
                 newHttpContext.Items.Remove(typeof(IUrlHelper));
@@ -139,20 +125,22 @@ public static class HtmlHelperViewExtensions
                     routeData,
                     actionDescriptor
                 );
-                actionContextAccessor.ActionContext = actionContext;
+
+                // ← 不再设置 actionContextAccessor.ActionContext
 
                 var invoker = serviceProvider.GetRequiredService<IActionInvokerFactory>()
                     .CreateInvoker(actionContext);
 
-                await invoker?.InvokeAsync()!;
+                if (invoker != null)
+                {
+                    await invoker.InvokeAsync();
+                }
             }
 
             newHttpContext.Response.Body.Position = 0;
 
-            using (var reader = new StreamReader(newHttpContext.Response.Body))
-            {
-                return new HtmlString(await reader.ReadToEndAsync());
-            }
+            using var reader = new StreamReader(newHttpContext.Response.Body);
+            return new HtmlString(await reader.ReadToEndAsync());
         }
         catch (Exception ex)
         {
@@ -160,11 +148,6 @@ public static class HtmlHelperViewExtensions
         }
         finally
         {
-            if (originalActionContext != null)
-            {
-                actionContextAccessor.ActionContext = originalActionContext;
-            }
-
             httpContextAccessor.HttpContext = originalHttpContext;
 
             if (helper.ViewContext.HttpContext.Items.ContainsKey(typeof(IUrlHelper)))

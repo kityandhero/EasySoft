@@ -2,12 +2,10 @@
 
 global using System.ComponentModel;
 global using Asp.Versioning;
-global using Autofac;
 global using DotNetCore.CAP;
 global using EasySoft.Core.AgileConfigClient.Assists;
 global using EasySoft.Core.AuthenticationCore.Attributes;
 global using EasySoft.Core.AuthenticationCore.ExtensionMethods;
-global using EasySoft.Core.AutoFac.ExtensionMethods;
 global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.DynamicConfig.Assists;
 global using EasySoft.Core.GeneralLogTransceiver.Producers;

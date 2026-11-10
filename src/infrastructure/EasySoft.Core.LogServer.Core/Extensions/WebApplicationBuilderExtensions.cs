@@ -1,4 +1,7 @@
-﻿using EasySoft.Core.LogServer.Core.Subscribers;
+﻿using EasySoft.Core.ErrorLogTransceiver.Extensions;
+using EasySoft.Core.GeneralLogTransceiver.Extensions;
+using EasySoft.Core.LogServer.Core.Consumers;
+using EasySoft.Core.SqlLogTransceiver.Extensions;
 
 namespace EasySoft.Core.LogServer.Core.Extensions;
 
@@ -20,9 +23,9 @@ internal static class WebApplicationBuilderExtensions
             $"{nameof(AddLogServerCore)}."
         );
 
-        builder.AddCapSubscriber<ErrorLogExchangeSubscriber>();
-        builder.AddCapSubscriber<GeneralLogExchangeSubscriber>();
-        builder.AddCapSubscriber<SqlLogExchangeSubscriber>();
+        builder.AddErrorLogRabbitMQOnlyConsumer<ErrorLogConsumer>();
+        builder.AddGeneralLogRabbitMQOnlyConsumer<GeneralLogConsumer>();
+        builder.AddSqlLogRabbitMQOnlyConsumer<SqlLogConsumer>();
 
         return builder;
     }

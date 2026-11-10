@@ -1,8 +1,9 @@
 ﻿using EasySoft.Core.AppSecurityServer.Core.Clients;
+using EasySoft.Core.AppSecurityServer.Core.Consumers;
 using EasySoft.Core.AppSecurityServer.Core.Detectors.Implements;
 using EasySoft.Core.AppSecurityServer.Core.Detectors.Interfaces;
 using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
-using EasySoft.Core.AppSecurityServer.Core.Subscribers;
+using EasySoft.Core.ChannelCheckTransceiver.Extensions;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Extensions;
 
@@ -27,23 +28,27 @@ internal static class WebApplicationBuilderExtensions
         );
 
         builder.AddAdvanceRefitClient<IMaintainSuperRoleClient>(clientBuilder =>
-        {
-            clientBuilder.ConfigureHttpClient(client =>
             {
-                if (!Uri.TryCreate(
-                        GeneralConfigAssist.GetPermissionServerHostUrl(),
-                        UriKind.Absolute,
-                        out var baseAddress
-                    ))
-                    throw new UnknownException("PermissionServerHostUrl error");
+                clientBuilder.ConfigureHttpClient(client =>
+                    {
+                        if (!Uri.TryCreate(
+                                GeneralConfigAssist.GetPermissionServerHostUrl(),
+                                UriKind.Absolute,
+                                out var baseAddress
+                            ))
+                        {
+                            throw new UnknownException("PermissionServerHostUrl error");
+                        }
 
-                client.BaseAddress = baseAddress;
-            });
-        });
+                        client.BaseAddress = baseAddress;
+                    }
+                );
+            }
+        );
 
         builder.Services.AddTransient<IMaintainSuperRoleDetector, MaintainSuperRoleDetector>();
 
-        builder.AddCapSubscriber<ChannelCheckExchangeSubscriber>();
+        builder.AddChannelCheckRabbitMQOnlyConsumer<ChannelCheckConsumer>();
 
         builder.AddDetectionAppPublicKey();
 
@@ -86,7 +91,8 @@ internal static class WebApplicationBuilderExtensions
             var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<object>();
 
             logger.LogAdvancePrompt(
-                $"Detection app public key, interval {DetectionInterval} , time {time.ToYearMonthDayHourMinuteSecond()}.");
+                $"Detection app public key, interval {DetectionInterval} , time {time.ToYearMonthDayHourMinuteSecond()}."
+            );
         }
 
         var appPublicKeyService = serviceProvider.GetRequiredService<IAppPublicKeyService>();

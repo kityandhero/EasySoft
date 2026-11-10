@@ -7,9 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj"/>
+        <ProjectReference Include="..\ EasySoft.Core.DependencyInjection\EasySoft.Core.DependencyInjection.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.SqlLogTransmitter\EasySoft.Core.SqlLogTransmitter.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.SqlLogTransceiver\EasySoft.Core.SqlLogTransceiver.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Sql\EasySoft.Core.Sql.csproj"/>
         <ProjectReference Include="..\EasySoft.IdGenerator\EasySoft.IdGenerator.csproj"/>
         <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>

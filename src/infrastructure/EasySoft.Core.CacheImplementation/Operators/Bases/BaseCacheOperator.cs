@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.CacheImplementation.ConfigAssist;
-using EasySoft.Core.CacheImplementation.Entities;
+﻿using EasySoft.Core.CacheImplementation.Entities;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
@@ -7,6 +6,17 @@ namespace EasySoft.Core.CacheImplementation.Operators.Bases;
 
 public abstract partial class BaseCacheOperator : IAsyncCacheOperator
 {
+    #region Properties
+
+    public string GlobalPrefix { get; private set; }
+
+    #endregion
+
+    protected BaseCacheOperator(string globalPrefix)
+    {
+        GlobalPrefix = globalPrefix;
+    }
+
     public virtual string GetKeyPrefix()
     {
         return GeneralConfigAssist.GetKeyPrefix();
@@ -75,7 +85,7 @@ public abstract partial class BaseCacheOperator : IAsyncCacheOperator
 
         var nameList = new List<string>
         {
-            RedisConfigAssist.GetKeyPrefix().ToLowerFirst(),
+            GlobalPrefix,
             nameArray
         };
 
@@ -95,64 +105,45 @@ public abstract partial class BaseCacheOperator : IAsyncCacheOperator
 
     #region Get
 
+    protected abstract T GetCore<T>(string key);
+
     /// <summary>
     /// 获取序列化的缓存值
     /// </summary>
     /// <param name="key">键名</param>
     /// <returns>序列化字符串</returns>
-    public abstract ExecutiveResult<string> GetSerializedValue<T>(string key);
-
-    private ExecutiveResult<T> GetCore<T>(string key)
+    private ExecutiveResult<string> GetCacheValue(string key)
     {
-        var resultGetSerializedValue = GetSerializedValue<T>(key);
+        var serializedValue = GetCore<string>(key);
 
-        if (!resultGetSerializedValue.Success)
+        if (serializedValue == null)
         {
-            return new ExecutiveResult<T>(resultGetSerializedValue.Code);
+            return new ExecutiveResult<string>(ReturnCode.NoData);
         }
 
-        var v = string.IsNullOrWhiteSpace(resultGetSerializedValue.Data) ? "" : resultGetSerializedValue.Data;
-
-        try
+        return new ExecutiveResult<string>(ReturnCode.Ok)
         {
-            var analyzeResult = JsonConvert.DeserializeObject<T>(v);
-
-            return new ExecutiveResult<T>(ReturnCode.Ok)
-            {
-                Data = analyzeResult
-            };
-        }
-        catch (Exception e)
-        {
-            e.Data.Add("json", v);
-
-            throw;
-        }
+            Data = serializedValue
+        };
     }
 
     public ExecutiveResult<T> Get<T>(string key)
     {
-        var result = GetCore<object>(key);
+        var executiveResult = GetCacheValue(key);
 
-        if (!result.Success)
+        if (!executiveResult.Success)
+        {
+            return new ExecutiveResult<T>(executiveResult.Code);
+        }
+
+        if (executiveResult.Data == null)
         {
             return new ExecutiveResult<T>(ReturnCode.NoData);
         }
 
-        if (result.Data == null)
+        try
         {
-            return new ExecutiveResult<T>(ReturnCode.NoData);
-        }
-
-        var valueType = result.Data.GetType();
-
-        if (valueType.IsGenericType &&
-            valueType.GetGenericTypeDefinition() == typeof(SlidingWrapper<>))
-        {
-            if (result.Data is not SlidingWrapper<T> slidingWrapper)
-            {
-                return new ExecutiveResult<T>(ReturnCode.NoData);
-            }
+            var slidingWrapper = JsonConvertAssist.DeserializeObject<SlidingWrapper<T>>(executiveResult.Data);
 
             var innerValue = slidingWrapper.Value;
 
@@ -176,23 +167,143 @@ public abstract partial class BaseCacheOperator : IAsyncCacheOperator
                 Data = slidingWrapper.Value
             };
         }
-
-        if (result.Data is T transferData)
+        catch (Exception)
         {
-            return new ExecutiveResult<T>(ReturnCode.Ok)
+            try
             {
-                Data = transferData
-            };
+                var deserializeValue = JsonConvertAssist.DeserializeObject<T>(executiveResult.Data);
+
+                return new ExecutiveResult<T>(ReturnCode.Ok)
+                {
+                    Data = deserializeValue
+                };
+            }
+            catch (Exception e)
+            {
+                e.Data.Add("json", executiveResult.Data);
+
+                throw;
+            }
+        }
+    }
+
+    public ExecutiveResult<string> GetSerializedValue<T>(string key)
+    {
+        var executiveResult = Get<T>(key);
+
+        if (!executiveResult.Success)
+        {
+            return new ExecutiveResult<string>(executiveResult.Code);
         }
 
-        return new ExecutiveResult<T>(ReturnCode.NoData);
+        return new ExecutiveResult<string>(ReturnCode.Ok)
+        {
+            Data = JsonConvertAssist.SerializeObject(executiveResult.Data)
+        };
+    }
+
+    #endregion
+
+    #region Get Async
+
+    protected abstract Task<T> GetAsyncCore<T>(string key);
+
+    /// <summary>
+    /// 获取序列化的缓存值
+    /// </summary>
+    /// <param name="key">键名</param>
+    /// <returns>序列化字符串</returns>
+    private async Task<ExecutiveResult<string>> GetSerializedValueAsync(string key)
+    {
+        var serializedValue = await GetAsyncCore<string>(key);
+
+        if (serializedValue == null)
+        {
+            return new ExecutiveResult<string>(ReturnCode.NoData);
+        }
+
+        return new ExecutiveResult<string>(ReturnCode.Ok)
+        {
+            Data = serializedValue
+        };
+    }
+
+    public async Task<ExecutiveResult<T>> GetAsync<T>(string key)
+    {
+        var executiveResult = await GetSerializedValueAsync(key);
+
+        if (!executiveResult.Success)
+        {
+            return new ExecutiveResult<T>(executiveResult.Code);
+        }
+
+        if (executiveResult.Data == null)
+        {
+            return new ExecutiveResult<T>(ReturnCode.NoData);
+        }
+
+        try
+        {
+            var slidingWrapper = JsonConvertAssist.DeserializeObject<SlidingWrapper<T>>(executiveResult.Data);
+
+            var innerValue = slidingWrapper.Value;
+
+            if (innerValue == null)
+            {
+                return new ExecutiveResult<T>(ReturnCode.NoData);
+            }
+
+            if (slidingWrapper.SlidingTime > TimeSpan.Zero)
+            {
+                await SetAsync(
+                    key,
+                    innerValue,
+                    slidingWrapper.SlidingTime,
+                    slidingWrapper.SlidingTime
+                );
+            }
+
+            return new ExecutiveResult<T>(ReturnCode.Ok)
+            {
+                Data = slidingWrapper.Value
+            };
+        }
+        catch (Exception)
+        {
+            try
+            {
+                var deserializeValue = JsonConvertAssist.DeserializeObject<T>(executiveResult.Data);
+
+                return new ExecutiveResult<T>(ReturnCode.Ok)
+                {
+                    Data = deserializeValue
+                };
+            }
+            catch (Exception e)
+            {
+                e.Data.Add("json", executiveResult.Data);
+
+                throw;
+            }
+        }
     }
 
     #endregion
 
     #region Set
 
-    public abstract void Set<T>(string key, T value, TimeSpan expiration);
+    protected abstract void SetCore<T>(string key, T value, TimeSpan expiration);
+
+    public void Set<T>(string key, T value, TimeSpan expiration)
+    {
+        var serializedValue = JsonConvertAssist.SerializeObject(value);
+
+        SetCore(
+            key,
+            serializedValue,
+            expiration
+        );
+    }
 
     public void Set<T>(
         string key,
@@ -359,75 +470,20 @@ public abstract partial class BaseCacheOperator : IAsyncCacheOperator
 
     #endregion
 
-    #region Remove
+    #region Set Async
 
-    public abstract bool Remove(string key);
+    protected abstract Task SetAsyncCore<T>(string key, T value, TimeSpan expiration);
 
-    public abstract bool RemoveBatch(IEnumerable<string> keys);
-
-    #endregion
-
-    protected abstract Task<ExecutiveResult<T>> GetCoreAsync<T>(string key);
-
-    public async Task<ExecutiveResult<T>> GetAsync<T>(string key)
+    public async Task SetAsync<T>(string key, T value, TimeSpan expiration)
     {
-        var result = await GetCoreAsync<object>(key);
+        var serializedValue = JsonConvertAssist.SerializeObject(value);
 
-        if (!result.Success)
-        {
-            return new ExecutiveResult<T>(ReturnCode.NoData);
-        }
-
-        if (result.Data == null)
-        {
-            return new ExecutiveResult<T>(ReturnCode.NoData);
-        }
-
-        var valueType = result.Data.GetType();
-
-        if (valueType.IsGenericType &&
-            valueType.GetGenericTypeDefinition() == typeof(SlidingWrapper<>))
-        {
-            if (result.Data is not SlidingWrapper<T> slidingWrapper)
-            {
-                return new ExecutiveResult<T>(ReturnCode.NoData);
-            }
-
-            var innerValue = slidingWrapper.Value;
-
-            if (innerValue == null)
-            {
-                return new ExecutiveResult<T>(ReturnCode.NoData);
-            }
-
-            if (slidingWrapper.SlidingTime > TimeSpan.Zero)
-            {
-                await SetAsync(
-                    key,
-                    innerValue,
-                    slidingWrapper.SlidingTime,
-                    slidingWrapper.SlidingTime
-                );
-            }
-
-            return new ExecutiveResult<T>(ReturnCode.Ok)
-            {
-                Data = slidingWrapper.Value
-            };
-        }
-
-        if (result.Data is T transferData)
-        {
-            return new ExecutiveResult<T>(ReturnCode.Ok)
-            {
-                Data = transferData
-            };
-        }
-
-        return new ExecutiveResult<T>(ReturnCode.NoData);
+        await SetAsyncCore(
+            key,
+            serializedValue,
+            expiration
+        );
     }
-
-    public abstract Task SetAsync<T>(string key, T value, TimeSpan expiration);
 
     public async Task SetAsync<T>(
         string key,
@@ -611,7 +667,21 @@ public abstract partial class BaseCacheOperator : IAsyncCacheOperator
         );
     }
 
+    #endregion
+
+    #region Remove
+
+    public abstract bool Remove(string key);
+
+    public abstract bool RemoveBatch(IEnumerable<string> keys);
+
+    #endregion
+
+    #region RemoveAsync
+
     public abstract Task RemoveAsync(string key);
 
     public abstract Task RemoveBatchAsync(IEnumerable<string> keys);
+
+    #endregion
 }

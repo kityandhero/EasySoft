@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.AutoFac.IocAssists;
+﻿using Parameter = Autofac.Core.Parameter;
+
+namespace EasySoft.Core.AutoFac.IocAssists;
 
 public class AutofacAssist
 {
@@ -34,14 +36,20 @@ public class AutofacAssist
 
     public void SetContainer(ILifetimeScope container)
     {
-        if (_container != null) throw new Exception("container has been set, it disallow set more than once.");
+        if (_container != null)
+        {
+            throw new Exception("container has been set, it disallow set more than once.");
+        }
 
         _container = container;
     }
 
     public ILifetimeScope GetContainer()
     {
-        if (_container == null) throw new Exception("Container is null, please assign a value before use it.");
+        if (_container == null)
+        {
+            throw new Exception("Container is null, please assign a value before use it.");
+        }
 
         return _container;
     }

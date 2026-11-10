@@ -2,7 +2,6 @@
 using EasySoft.Core.PermissionServer.Core.Extensions;
 using EasySoft.Core.PermissionServer.Core.Services.Implements;
 using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
-using EasySoft.Core.PermissionServer.Core.Subscribers;
 using EasySoft.Core.PermissionVerification.Configures;
 
 namespace EasySoft.Core.PermissionServer.Core.Assist;
@@ -18,10 +17,12 @@ public static class PermissionServerAssist
     /// <param name="embedMode">是否使用嵌入模式，嵌入模式不会执行请求校验</param>
     public static void Init(bool embedMode)
     {
-        PermissionConfigure.AddRangeScanPermissionAssemblies(new List<Assembly>
-        {
-            typeof(PresetRole).Assembly
-        });
+        PermissionConfigure.AddRangeScanPermissionAssemblies(
+            new List<Assembly>
+            {
+                typeof(PresetRole).Assembly
+            }
+        );
 
         PermissionServerConfigure.EmbedMode = embedMode;
 

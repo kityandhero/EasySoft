@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.EasyToken.AccessControl;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.Core.EasyToken.AccessControl;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.EasyToken.Assists;
@@ -7,11 +8,14 @@ public static class ActualOperatorAssist
 {
     public static ExecutiveResult<IActualOperator> ResolveActualOperator(string token)
     {
-        if (string.IsNullOrWhiteSpace(token)) return new ExecutiveResult<IActualOperator>(ReturnCode.NoData);
+        if (string.IsNullOrWhiteSpace(token))
+        {
+            return new ExecutiveResult<IActualOperator>(ReturnCode.NoData);
+        }
 
-        AutofacAssist.Instance.Resolve<ITokenSecretOptions>();
+        ServiceProviderAssist.Instance.Resolve<ITokenSecretOptions>();
 
-        var tokenSecret = AutofacAssist.Instance.Resolve<ITokenSecret>();
+        var tokenSecret = ServiceProviderAssist.Instance.Resolve<ITokenSecret>();
 
         try
         {
@@ -30,20 +34,24 @@ public static class ActualOperatorAssist
             }
 
             if (expired)
+            {
                 return new ExecutiveResult<IActualOperator>(
                     ReturnCode.Exception.ToMessage("凭证无效或凭证已过期")
                 );
+            }
 
-            var actualOperator = AutofacAssist.Instance.Resolve<IActualOperator>();
+            var actualOperator = ServiceProviderAssist.Instance.Resolve<IActualOperator>();
 
             actualOperator.SetToken(token);
 
             actualOperator.SetIdentity(identity);
 
             if (actualOperator.IsAnonymous())
+            {
                 return new ExecutiveResult<IActualOperator>(
                     ReturnCode.Exception.ToMessage("凭证无效或凭证已过期")
                 );
+            }
 
             return new ExecutiveResult<IActualOperator>(ReturnCode.Ok)
             {

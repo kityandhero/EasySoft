@@ -1,5 +1,5 @@
-﻿using EasySoft.Core.PermissionVerification.Attributes;
-using EasySoft.Core.PermissionVerification.Officers;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.Core.PermissionVerification.Attributes;
 using EasySoft.Core.PermissionVerification.Officers.Interfaces;
 using EasySoft.UtilityTools.Core.Extensions;
 
@@ -46,7 +46,7 @@ public class PermissionVerificationMiddleware : IMiddleware
 
         logger.LogMiddlewareInvokeAsyncAfter<PermissionVerificationMiddleware>(_hostEnvironment);
 
-        var operateOfficer = AutofacAssist.Instance.Resolve<IOperateOfficer>();
+        var operateOfficer = ServiceProviderAssist.Instance.Resolve<IOperateOfficer>();
 
         var result = await operateOfficer.DoVerificationAsync(context);
 
@@ -56,7 +56,10 @@ public class PermissionVerificationMiddleware : IMiddleware
         }
         else
         {
-            if (result.Data != null) await context.Response.WriteObjectAsJsonAsync(result.Data.ToExpandoObject());
+            if (result.Data != null)
+            {
+                await context.Response.WriteObjectAsJsonAsync(result.Data.ToExpandoObject());
+            }
         }
     }
 }

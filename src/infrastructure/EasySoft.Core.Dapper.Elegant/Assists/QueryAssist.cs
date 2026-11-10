@@ -1,4 +1,6 @@
 ﻿using EasySoft.Core.Dapper.Elegant.Configure;
+using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.Core.SqlLogTransceiver.Producers;
 using EasySoft.UtilityTools.Standard.Messages;
 
 namespace EasySoft.Core.Dapper.Elegant.Assists;
@@ -1066,7 +1068,7 @@ public class QueryAssist
         /// <param name="sqlLogMessage">sql</param>
         private static void LogSqlExecutionMessage(SqlLogMessage sqlLogMessage)
         {
-            AutofacAssist.Instance.Resolve<ISqlLogProducer>()
+            ServiceProviderAssist.Instance.Resolve<ISqlLogProducer>()
                 .SendAsync(
                     sqlLogMessage.CommandString,
                     sqlLogMessage.ExecuteType,
@@ -1084,7 +1086,7 @@ public class QueryAssist
             Exception exception
         )
         {
-            AutofacAssist.Instance.Resolve<IErrorLogProducer>()
+            ServiceProviderAssist.Instance.Resolve<IErrorLogProducer>()
                 .SendAsync(
                     exception,
                     0
@@ -1154,7 +1156,7 @@ public class QueryAssist
                 exception.Data.Add("mapperChannel", mapperChannel.GetChannel());
             }
 
-            AutofacAssist.Instance.Resolve<IErrorLogProducer>()
+            ServiceProviderAssist.Instance.Resolve<IErrorLogProducer>()
                 .SendAsync(
                     exception,
                     0

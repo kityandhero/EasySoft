@@ -1,8 +1,6 @@
 ﻿// Global using directives
 
 global using System.Reflection;
-global using AspectCore.Configuration;
-global using Autofac;
 global using EasySoft.Core.CacheCore.interfaces;
 global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.Config.ConfigInterface;

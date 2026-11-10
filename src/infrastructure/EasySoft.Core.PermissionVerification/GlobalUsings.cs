@@ -3,11 +3,9 @@
 global using System.Collections.Concurrent;
 global using System.ComponentModel;
 global using System.Reflection;
-global using Autofac;
 global using Castle.DynamicProxy;
-global using EasySoft.Core.AccessWayTransmitter.Producers;
+global using EasySoft.Core.AccessWayTransceiver.Producers;
 global using EasySoft.Core.AuthenticationCore.Operators;
-global using EasySoft.Core.AutoFac.IocAssists;
 global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.Core.Infrastructure.Configures;

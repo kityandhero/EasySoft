@@ -56,7 +56,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddTransient<IAppSecurityDetector, AppSecurityDetector>();
 
-        builder.AddChannelCheckTransmitter();
+        builder.AddChannelCheckRabbitMQOnlyProducer();
 
         builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<IAppSecurityDetector>(); });
 

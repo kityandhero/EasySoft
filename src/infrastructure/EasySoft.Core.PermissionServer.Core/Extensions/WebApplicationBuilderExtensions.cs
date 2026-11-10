@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.PermissionServer.Core.Subscribers;
+﻿using EasySoft.Core.AccessWayTransceiver.Extensions;
+using EasySoft.Core.PermissionServer.Core.Consumers;
 
 namespace EasySoft.Core.PermissionServer.Core.Extensions;
 
@@ -20,7 +21,7 @@ internal static class WebApplicationBuilderExtensions
             $"{nameof(AddPermissionServerCore)}."
         );
 
-        builder.AddCapSubscriber<AccessWayExchangeSubscriber>();
+        builder.AddAccessWayRabbitMQOnlyConsumer<AccessWayExchangeSubscriber>();
 
         return builder;
     }

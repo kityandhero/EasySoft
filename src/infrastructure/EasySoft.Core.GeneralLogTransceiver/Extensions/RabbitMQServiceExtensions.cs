@@ -9,14 +9,16 @@ namespace EasySoft.Core.GeneralLogTransceiver.Extensions;
 /// <summary>
 /// RabbitMQServiceExtensions
 /// </summary>
-public static class RabbitMQServiceExtensions
+internal static class RabbitMQServiceExtensions
 {
     /// <summary>
-    /// 声明 "infra" 子总线的基础配置：连接串。
+    /// 声明 "GeneralLog" 子总线的基础配置：连接串。
     /// 生产方服务和消费方服务都必须调用一次，作为子总线的存在前提。
     /// 不声明任何生产者或消费者。
     /// </summary>
-    public static IServiceCollection AddGeneralLogRabbitMQCore(
+    /// <param name="services">服务集</param>
+    /// <param name="configuration">配置集合</param>
+    internal static IServiceCollection AddGeneralLogRabbitMQCore(
         this IServiceCollection services,
         IConfiguration configuration
     )
@@ -46,7 +48,7 @@ public static class RabbitMQServiceExtensions
                                 // 驱动层消费并发上限。与消费端 .Instances(n) 共同作用。
                                 // 默认 1；大于 1 会打破单个消费者的消息处理顺序。
                                 // 两者都大于 1 时，实际并发受更严格的一方约束
-                                cfg.ConnectionFactory.ConsumerDispatchConcurrency = 1;
+                                cfg.ConnectionFactory.ConsumerDispatchConcurrency = 3;
                             }
                         );
                     }
@@ -61,10 +63,12 @@ public static class RabbitMQServiceExtensions
     }
 
     /// <summary>
-    /// 声明 RabbitMQInformationCollectedEvent 的生产者与出站口。
-    /// 只在负责发消息的服务中调用，引用 Infra.Contracts，不引用消费者实现。
+    /// 声明 GeneralLog 的生产者与出站口。
+    /// 只在负责发消息的服务中调用，不引用消费者实现。
     /// </summary>
-    public static IServiceCollection AddGeneralLogRabbitMQProducer(
+    /// <param name="services">服务集</param>
+    /// <param name="configuration">配置集合</param>
+    internal static IServiceCollection AddGeneralLogRabbitMQProducer(
         this IServiceCollection services,
         IConfiguration configuration
     )
@@ -90,10 +94,13 @@ public static class RabbitMQServiceExtensions
     }
 
     /// <summary>
-    /// 声明 RabbitMQInformationCollectedEvent 的消费者与队列绑定。
+    /// 声明 GeneralLog 的消费者与队列绑定。
     /// 只在负责收消息的服务中调用，引用消费者实现程序集，不引用 RabbitMQRabbitMQInformationCollector。
     /// </summary>
-    public static IServiceCollection AddGeneralLogRabbitMQConsumer<TGeneralLogConsumer>(
+    /// <param name="services">服务集</param>
+    /// <param name="configuration">配置集合</param>
+    /// <param name="instances">消费者最大数</param>
+    internal static IServiceCollection AddGeneralLogRabbitMQConsumer<TGeneralLogConsumer>(
         this IServiceCollection services,
         IConfiguration configuration,
         int instances = 1

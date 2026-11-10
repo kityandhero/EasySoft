@@ -185,36 +185,6 @@ public static class GeneralConfigAssist
     }
 
     /// <summary>
-    /// GetCacheMode
-    /// </summary>
-    /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
-    public static string GetCacheMode()
-    {
-        var v = GetConfig().CacheMode;
-
-        const string inMemory = nameof(CacheModeCollection.InMemory);
-        const string redis = nameof(CacheModeCollection.Redis);
-        const string hybrid = nameof(CacheModeCollection.Hybrid);
-
-        v = string.IsNullOrWhiteSpace(v) ? inMemory : v;
-
-        if (!v.In(
-                inMemory,
-                redis,
-                hybrid
-            ))
-        {
-            throw new ConfigErrorException(
-                $"请配置 CacheMode: {ConfigFile} -> CacheMode,请设置 {inMemory}/{redis}/{hybrid}",
-                GetConfigFileInfo()
-            );
-        }
-
-        return v;
-    }
-
-    /// <summary>
     /// GetHttpPort
     /// </summary>
     /// <returns></returns>

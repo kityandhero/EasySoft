@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Standard.Extensions;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.UtilityTools.Standard.Extensions;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.DynamicConfig.Assists;
@@ -147,7 +148,7 @@ public static class DynamicConfigAssist
     {
         try
         {
-            var applicationChannel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
+            var applicationChannel = ServiceProviderAssist.Instance.Resolve<IApplicationChannel>();
 
             var consulClient = ConsulConfigCenterClientAssist.GetConfigClient();
 

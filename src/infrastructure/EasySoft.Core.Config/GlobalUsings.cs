@@ -2,8 +2,6 @@
 
 global using System.Reflection;
 global using System.Text;
-global using Autofac;
-global using Autofac.Extensions.DependencyInjection;
 global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.Core.Infrastructure.Controllers;
 global using EasySoft.UtilityTools.Core.Assists;
@@ -14,5 +12,6 @@ global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Routing;
 global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.FileProviders;
 global using Microsoft.Extensions.Hosting;

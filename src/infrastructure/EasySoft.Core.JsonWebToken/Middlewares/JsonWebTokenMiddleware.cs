@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.JsonWebToken.Assists;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.Core.JsonWebToken.Assists;
 using EasySoft.UtilityTools.Core.Extensions;
 using EasySoft.UtilityTools.Core.Results.Implements;
 using Microsoft.AspNetCore.Hosting;
@@ -58,11 +59,14 @@ public class JsonWebTokenMiddleware : IMiddleware
         catch (Exception e)
         {
             if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
-                await AutofacAssist.Instance.Resolve<IErrorLogProducer>().SendAsync(
-                    e,
-                    0,
-                    context.BuildRequestInfo()
-                );
+            {
+                await ServiceProviderAssist.Instance.Resolve<IErrorLogProducer>()
+                    .SendAsync(
+                        e,
+                        0,
+                        context.BuildRequestInfo()
+                    );
+            }
 
             await context.Response.WriteObjectAsJsonAsync(
                 new ApiResult(
@@ -100,15 +104,18 @@ public class JsonWebTokenMiddleware : IMiddleware
 
         var identification = first.Value;
 
-        var actualOperator = AutofacAssist.Instance.Resolve<IActualOperator>();
+        var actualOperator = ServiceProviderAssist.Instance.Resolve<IActualOperator>();
 
         actualOperator.SetToken(token);
 
         actualOperator.SetIdentity(identification);
 
         if (!actualOperator.IsAnonymous())
+        {
             await next.Invoke(context);
+        }
         else
+        {
             await context.Response.WriteObjectAsJsonAsync(
                 new ApiResult(
                     ReturnCode.TokenExpired.ToInt(),
@@ -116,5 +123,6 @@ public class JsonWebTokenMiddleware : IMiddleware
                     "无操作凭证或凭证已过期"
                 ).ToExpandoObject()
             );
+        }
     }
 }

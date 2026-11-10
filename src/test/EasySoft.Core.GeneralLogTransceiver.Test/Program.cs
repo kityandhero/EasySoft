@@ -13,20 +13,9 @@ builder.Services.AddSingleton<IApplicationChannel>(
 
 #region RabbitMQ Build
 
-// * 拦截器 + 观测器 + 公共门面。不含任何子总线配置。
-builder.Services.AddKernelMessaging();
+builder.Services.AddKernelMessagingWithJson();
 
-// * 各模块独立注册自己的子总线，互不感知。
-builder.Services.AddGeneralLogRabbitMQCore(builder.Configuration);
-
-// 发消息
-builder.Services.AddGeneralLogRabbitMQProducer(builder.Configuration);
-
-// 收消息
-builder.Services.AddGeneralLogRabbitMQConsumer<GeneralLogConsumer>(builder.Configuration);
-
-// * 序列化配置为共享设置，任一次 AddSlimMessageBus 中声明一次即可。
-builder.Services.AddSlimMessageBus(messageBusBuilder => messageBusBuilder.AddJsonSerializer());
+builder.AddGeneralLogRabbitMQTransceiver<GeneralLogConsumer>();
 
 #endregion
 

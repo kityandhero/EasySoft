@@ -3,9 +3,7 @@
 global using System.ComponentModel;
 global using System.Reflection;
 global using System.Timers;
-global using DotNetCore.CAP;
 global using EasySoft.Core.AuthenticationCore.Attributes;
-global using EasySoft.Core.Cap.ExtensionMethods;
 global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.Data.Configures;
 global using EasySoft.Core.Data.Repositories;
@@ -15,7 +13,6 @@ global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.Core.Infrastructure.Configures;
 global using EasySoft.Core.Infrastructure.Services;
 global using EasySoft.Core.Infrastructure.Startup;
-global using EasySoft.Core.Infrastructure.Transmitters;
 global using EasySoft.Core.Refit.ExtensionMethods;
 global using EasySoft.Core.Web.Framework.Controllers;
 global using EasySoft.UtilityTools.Core.Extensions;

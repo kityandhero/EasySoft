@@ -9,15 +9,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac"/>
-        <PackageReference Include="Autofac.Extensions.DependencyInjection"/>
+
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\..\infrastructure\ EasySoft.Core.DependencyInjection\EasySoft.Core.DependencyInjection.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Dapper.Elegant\EasySoft.Core.Dapper.Elegant.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Dapper\EasySoft.Core.Dapper.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.CacheImplementation\EasySoft.Core.CacheImplementation.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Entities.Common\EasySoft.Core.Entities.Common.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
         <ProjectReference Include="..\..\..\project-framework\EasySoft.Core.Project.DataEntity.Dapper.Infrastructure\EasySoft.Core.Project.DataEntity.Dapper.Infrastructure.csproj"/>
     </ItemGroup>
 

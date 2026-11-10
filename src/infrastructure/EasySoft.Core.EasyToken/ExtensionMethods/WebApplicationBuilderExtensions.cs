@@ -17,7 +17,7 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddEasyToken<TTokenSecretOptions>(
         this WebApplicationBuilder builder,
         bool middlewareMode = true
-    ) where TTokenSecretOptions : ITokenSecretOptions
+    ) where TTokenSecretOptions : class, ITokenSecretOptions
     {
         return builder.AddEasyToken<TTokenSecretOptions, DefaultActualOperator>(middlewareMode);
     }
@@ -31,10 +31,12 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddEasyToken<TTokenSecretOptions, TOperator>(
         this WebApplicationBuilder builder,
         bool middlewareMode = true
-    ) where TOperator : ActualOperator where TTokenSecretOptions : ITokenSecretOptions
+    ) where TOperator : ActualOperator where TTokenSecretOptions : class, ITokenSecretOptions
     {
         if (!string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
+        {
             throw new Exception("token mode disallow set more than one");
+        }
 
         if (builder.HasRegistered(UniqueIdentifierAddEasyToken))
         {
@@ -79,12 +81,15 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddEasyToken<TTokenSecretOptions, TTokenSecret, TOperator>(
         this WebApplicationBuilder builder,
         bool middlewareMode = true
-    ) where TOperator : ActualOperator
-        where TTokenSecretOptions : ITokenSecretOptions
-        where TTokenSecret : ITokenSecret
+    )
+        where TOperator : ActualOperator
+        where TTokenSecretOptions : class, ITokenSecretOptions
+        where TTokenSecret : class, ITokenSecret
     {
         if (!string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
+        {
             throw new Exception("token mode disallow set more than one");
+        }
 
         if (builder.HasRegistered(UniqueIdentifierAddEasyToken))
         {
@@ -117,23 +122,22 @@ public static class WebApplicationBuilderExtensions
     /// 注入Token密钥配置, 未配置此项将使用内置密钥, 但默认密钥不安全的
     /// </summary>
     /// <param name="builder"></param>
-    /// <typeparam name="T"></typeparam>  
+    /// <typeparam name="TTokenSecretOptions"></typeparam>  
     /// <returns></returns>
-    private static WebApplicationBuilder AddTokenSecretOptionsInjection<T>(
+    private static WebApplicationBuilder AddTokenSecretOptionsInjection<TTokenSecretOptions>(
         this WebApplicationBuilder builder
-    ) where T : ITokenSecretOptions
+    ) where TTokenSecretOptions : class, ITokenSecretOptions
     {
         if (FlagAssist.EasyTokenSecretOptionInjectionComplete)
+        {
             throw new Exception("UseTokenSecretOptionsInjection<T> disallow inject more than once");
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddTokenSecretOptionsInjection)}<{typeof(T).Name}>."
+            $"{nameof(AddTokenSecretOptionsInjection)}<{typeof(TTokenSecretOptions).Name}>."
         );
 
-        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-        {
-            containerBuilder.RegisterType<T>().As<ITokenSecretOptions>().SingleInstance();
-        });
+        builder.Services.AddSingleton<ITokenSecretOptions, TTokenSecretOptions>();
 
         FlagAssist.EasyTokenSecretOptionInjectionComplete = true;
 
@@ -144,23 +148,22 @@ public static class WebApplicationBuilderExtensions
     /// 注入Token加解密工具, 未配置此项将使用内置工具
     /// </summary>
     /// <param name="builder"></param>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TTokenSecret"></typeparam>
     /// <returns></returns>
-    private static WebApplicationBuilder AddTokenSecretInjection<T>(
+    private static WebApplicationBuilder AddTokenSecretInjection<TTokenSecret>(
         this WebApplicationBuilder builder
-    ) where T : ITokenSecret
+    ) where TTokenSecret : class, ITokenSecret
     {
         if (FlagAssist.EasyTokenSecretInjectionComplete)
+        {
             throw new Exception("UseTokenSecretInjection<T> disallow inject more than once");
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddTokenSecretInjection)}<{typeof(T).Name}>."
+            $"{nameof(AddTokenSecretInjection)}<{typeof(TTokenSecret).Name}>."
         );
 
-        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-        {
-            containerBuilder.RegisterType<T>().As<ITokenSecret>().SingleInstance();
-        });
+        builder.Services.AddSingleton<ITokenSecret, TTokenSecret>();
 
         FlagAssist.EasyTokenSecretInjectionComplete = true;
 

@@ -4,8 +4,6 @@ global using System.Data;
 global using System.Data.Common;
 global using System.Linq.Expressions;
 global using System.Reflection;
-global using Autofac;
-global using DotNetCore.CAP;
 global using EasySoft.Core.Data.Contexts.Interfaces;
 global using EasySoft.Core.Data.ExtensionMethods;
 global using EasySoft.Core.Data.Repositories;

@@ -1,7 +1,6 @@
 ﻿// Global using directives
 
 global using System.Net;
-global using Autofac;
 global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.Core.Infrastructure.Startup;
 global using Microsoft.AspNetCore.Builder;

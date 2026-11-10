@@ -24,18 +24,18 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.AccessWayTransmitter\EasySoft.Core.AccessWayTransmitter.csproj"/>
+        <ProjectReference Include="..\ EasySoft.Core.DependencyInjection\EasySoft.Core.DependencyInjection.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.AccessWayTransceiver\EasySoft.Core.AccessWayTransceiver.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.AuthenticationCore\EasySoft.Core.AuthenticationCore.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.AutoFac\EasySoft.Core.AutoFac.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Refit\EasySoft.Core.Refit.csproj"/>
         <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac"/>
         <PackageReference Include="Mapster"/>
         <PackageReference Include="Refit"/>
+        <PackageReference Include="MediatR"/>
     </ItemGroup>
 
 </Project>

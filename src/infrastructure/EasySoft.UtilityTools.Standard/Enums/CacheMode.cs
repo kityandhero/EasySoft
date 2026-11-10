@@ -13,10 +13,5 @@ public enum CacheModeCollection
     /// <summary>
     /// Redis
     /// </summary>
-    Redis,
-
-    /// <summary>
-    /// Hybrid
-    /// </summary>
-    Hybrid
+    Redis
 }

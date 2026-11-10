@@ -69,7 +69,7 @@ public class CachingController : AreaControllerCore
         return this.Success(
             new
             {
-                cacheMode = GeneralConfigAssist.GetCacheMode(),
+                // cacheMode = GeneralConfigAssist.GetCacheMode(),
                 value = result.Data,
                 time = DateTime.Now.ToUnixTime()
             }
@@ -125,7 +125,7 @@ public class CachingController : AreaControllerCore
         return this.Success(
             new
             {
-                cacheMode = GeneralConfigAssist.GetCacheMode(),
+                // cacheMode = GeneralConfigAssist.GetCacheMode(),
                 value = result.Data,
                 time = DateTime.Now.ToUnixTime()
             }
@@ -177,7 +177,7 @@ public class CachingController : AreaControllerCore
         return this.Success(
             new
             {
-                cacheMode = GeneralConfigAssist.GetCacheMode(),
+                // cacheMode = GeneralConfigAssist.GetCacheMode(),
                 value = result.Data,
                 time = DateTime.Now.ToUnixTime()
             }
@@ -228,7 +228,7 @@ public class CachingController : AreaControllerCore
         return this.Success(
             new
             {
-                cacheMode = GeneralConfigAssist.GetCacheMode(),
+                // cacheMode = GeneralConfigAssist.GetCacheMode(),
                 value = result.Data,
                 time = DateTime.Now.ToUnixTime()
             }
@@ -284,7 +284,7 @@ public class CachingController : AreaControllerCore
         return this.Success(
             new
             {
-                cacheMode = GeneralConfigAssist.GetCacheMode(),
+                // cacheMode = GeneralConfigAssist.GetCacheMode(),
                 value = result.Data,
                 time = DateTime.Now.ToUnixTime()
             }
@@ -336,7 +336,7 @@ public class CachingController : AreaControllerCore
         return this.Success(
             new
             {
-                cacheMode = GeneralConfigAssist.GetCacheMode(),
+                // cacheMode = GeneralConfigAssist.GetCacheMode(),
                 value = result.Data,
                 time = DateTime.Now.ToUnixTime()
             }

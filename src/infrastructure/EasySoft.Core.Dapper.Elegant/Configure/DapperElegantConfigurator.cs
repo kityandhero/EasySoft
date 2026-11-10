@@ -2,14 +2,14 @@
 
 public static class DapperElegantConfigurator
 {
-    private static ICacheOperator? _cacheOperator;
+    private static IAsyncCacheOperator _cacheOperator;
 
-    public static void SetCacheOperator(ICacheOperator cacheOperator)
+    public static void SetCacheOperator(IAsyncCacheOperator cacheOperator)
     {
         _cacheOperator = cacheOperator;
     }
 
-    public static ICacheOperator? GetCacheOperator()
+    public static IAsyncCacheOperator GetCacheOperator()
     {
         return _cacheOperator;
     }

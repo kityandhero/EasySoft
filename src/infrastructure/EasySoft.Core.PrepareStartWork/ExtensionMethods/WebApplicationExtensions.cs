@@ -12,11 +12,9 @@ public static class WebApplicationExtensions
             $"{nameof(UsePrepareStartWork)}."
         );
 
-        var prepareCovertStartWork = application
-            .UseHostFiltering()
-            .ApplicationServices
-            .GetAutofacRoot()
-            .Resolve<IPrepareCovertStartWork>();
+        var app = application.UseHostFiltering();
+
+        var prepareCovertStartWork = app.ApplicationServices.GetRequiredService<IPrepareCovertStartWork>();
 
         prepareCovertStartWork.DoWork();
 
@@ -24,11 +22,14 @@ public static class WebApplicationExtensions
             "PrepareCovertStartWork do work complete."
         );
 
-        if (!application.UseHostFiltering().ApplicationServices.GetAutofacRoot().IsRegistered<IPrepareStartWork>())
-            return application;
+        var isService = app.ApplicationServices.GetService<IServiceProviderIsService>();
 
-        var prepareStartWork = application.UseHostFiltering().ApplicationServices.GetAutofacRoot()
-            .Resolve<IPrepareStartWork>();
+        if (isService?.IsService(typeof(IPrepareStartWork)) != true)
+        {
+            return application;
+        }
+
+        var prepareStartWork = app.ApplicationServices.GetRequiredService<IPrepareStartWork>();
 
         prepareStartWork.DoWork();
 

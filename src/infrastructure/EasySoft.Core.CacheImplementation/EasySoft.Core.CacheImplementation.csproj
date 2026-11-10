@@ -22,7 +22,6 @@
         <PackageReference Include="AspectCore.Core"/>
         <PackageReference Include="AspectCore.Extensions.DependencyInjection"/>
         <PackageReference Include="AspectCore.Extensions.Reflection"/>
-        <PackageReference Include="Autofac"/>
         <PackageReference Include="Castle.Core"/>
         <PackageReference Include="CSRedisCore"/>
         <PackageReference Include="ZiggyCreatures.FusionCache"/>
@@ -30,7 +29,6 @@
         <PackageReference Include="ZiggyCreatures.FusionCache.Backplane.StackExchangeRedis"/>
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis"/>
         <PackageReference Include="StackExchange.Redis"/>
-        <PackageReference Include="Autofac.Extras.DynamicProxy"/>
     </ItemGroup>
 
     <ItemGroup>

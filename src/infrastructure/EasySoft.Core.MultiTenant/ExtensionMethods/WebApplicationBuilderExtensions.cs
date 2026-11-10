@@ -1,6 +1,4 @@
 ﻿using EasySoft.Core.Infrastructure.Assists;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 
 namespace EasySoft.Core.MultiTenant.ExtensionMethods;
 

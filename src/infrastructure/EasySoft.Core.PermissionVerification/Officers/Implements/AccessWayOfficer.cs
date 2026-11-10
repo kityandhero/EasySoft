@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.PermissionVerification.Assists;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.Core.PermissionVerification.Assists;
 using EasySoft.Core.PermissionVerification.Entities;
 using EasySoft.Core.PermissionVerification.Extensions;
 using EasySoft.UtilityTools.Core.Extensions;
@@ -45,7 +46,8 @@ public abstract class AccessWayOfficer : OfficerCore
         Environment = environment;
         Mediator = mediator;
 
-        Channel = AutofacAssist.Instance.Resolve<IApplicationChannel>();
+        Channel = ServiceProviderAssist.Instance.Resolve<IApplicationChannel>();
+
         AccessPermission = new AccessPermission
         {
             Channel = GetChannel(),

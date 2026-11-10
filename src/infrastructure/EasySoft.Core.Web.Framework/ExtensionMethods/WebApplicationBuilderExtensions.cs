@@ -63,67 +63,6 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
-    internal static WebApplicationBuilder AddAdvanceRabbitMQ(
-        this WebApplicationBuilder builder,
-        string clientProvidedName
-    )
-    {
-        if (builder.HasRegistered(IdentifierAddAdvanceRabbitMQ))
-        {
-            return builder;
-        }
-
-        StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceRabbitMQ)}."
-        );
-
-        builder.Services.AddSingleton<IConnectionFactory>(sp =>
-            {
-                var factory = new ConnectionFactory
-                {
-                    ClientProvidedName = clientProvidedName,
-                    HostName = RabbitMQConfigAssist.GetHostName(),
-                    VirtualHost = RabbitMQConfigAssist.GetVirtualHost(),
-                    UserName = RabbitMQConfigAssist.GetUserName(),
-                    Password = RabbitMQConfigAssist.GetPassword(),
-                    Port = RabbitMQConfigAssist.GetPort(),
-
-                    //Rabbitmq集群必需加这两个参数
-                    AutomaticRecoveryEnabled = true
-
-                    //TopologyRecoveryEnabled=true
-                };
-
-                return factory;
-            }
-        );
-
-        // 注册连接HostedService，同时暴露IRabbitMqConnection
-        builder.Services.AddSingleton<AdvanceConnection>();
-        builder.Services.AddHostedService(serviceProvider => serviceProvider.GetRequiredService<AdvanceConnection>());
-
-        // 通道池单例
-        builder.Services.AddSingleton<AdvanceChannelPool>(serviceProvider =>
-            {
-                var connWrapper = serviceProvider.GetRequiredService<IAdvanceConnection>();
-                var logger = serviceProvider.GetRequiredService<ILogger<AdvanceChannelPool>>();
-
-                return new AdvanceChannelPool(
-                    connWrapper,
-                    logger,
-                    8,
-                    true,
-                    true
-                );
-            }
-        );
-
-        // 生产者
-        builder.Services.AddSingleton<BaseAdvanceProducer>();
-
-        return builder;
-    }
-
     public static WebApplication EasyBuild(
         this WebApplicationBuilder builder
     )
@@ -207,8 +146,6 @@ public static class WebApplicationBuilderExtensions
 
             // 爆露ApplicationPartManager 实例给外部工具，用以实现某些特定功能
             .ConfigureApplicationPartManager(ApplicationPartManagerAssist.SetApplicationPartManager)
-
-            // 通过AddControllersAsServices方法，将控制器交给 autofac 容器来处理，可以使“属性注入”
             .AddControllersAsServices()
             .AddNewtonsoftJson(options =>
                 {
@@ -222,13 +159,9 @@ public static class WebApplicationBuilderExtensions
         // builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         // builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
-        builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-            {
-                containerBuilder.RegisterType<HostingEnvironment>().As<IHostEnvironment>().SingleInstance();
-                containerBuilder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
-                containerBuilder.RegisterType<ActionContextAccessor>().As<IActionContextAccessor>().SingleInstance();
-            }
-        );
+        builder.Services.AddSingleton<IHostEnvironment, HostingEnvironment>();
+        builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        builder.Services.AddHttpContextAccessor();
 
         // 注入IHttpClientFactory 
         builder.Services.AddHttpClient();
@@ -263,13 +196,13 @@ public static class WebApplicationBuilderExtensions
 
         builder.AddAdvanceMiniProfile();
 
-        builder.AddGeneralLogTransmitter();
+        builder.AddGeneralLogRabbitMQOnlyProducer();
 
-        builder.AddErrorLogTransmitter();
+        builder.AddErrorLogRabbitMQOnlyProducer();
 
-        builder.AddSqlLogTransmitter();
+        builder.AddSqlLogRabbitMQOnlyProducer();
 
-        builder.AddAdvanceCap();
+        // builder.AddAdvanceCap();
 
         builder.AddAdvanceHangfire();
 
@@ -280,8 +213,6 @@ public static class WebApplicationBuilderExtensions
         var app = builder.Build();
 
         LogAssist.SetLogger(app.Logger);
-
-        AutofacAssist.Instance.SetContainer(app.UseHostFiltering().ApplicationServices.GetAutofacRoot());
 
         ServiceAssist.SetServiceProvider(app.Services);
 
@@ -360,7 +291,12 @@ public static class WebApplicationBuilderExtensions
 
             if (FlagAssist.GetAdvanceStaticFileOptionsSwitch())
             {
-                staticFileOptionsTypeName = AutofacAssist.Instance.Resolve<AdvanceStaticFileOptions>().GetType().Name;
+                var staticFileOptions = app.Services.GetService<AdvanceStaticFileOptions>();
+
+                if (staticFileOptions != null)
+                {
+                    staticFileOptionsTypeName = staticFileOptions.GetType().Name;
+                }
             }
 
             StartupConfigMessageAssist.AddConfig(

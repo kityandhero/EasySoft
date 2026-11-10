@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.AutoFac.Attributes;
-using EasySoft.Core.AutoFac.IocAssists;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
 using EasySoft.Simple.Single.Application.Common;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
@@ -9,12 +8,6 @@ namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 /// </summary>
 public class AutoFacController : AreaControllerCore
 {
-    /// <summary>
-    /// SimpleAutowired
-    /// </summary>
-    [Autowired]
-    private ISimpleDependencyInjection? SimpleAutowired { get; set; }
-
     private readonly ISimpleDependencyInjection _simple;
 
     /// <summary>
@@ -33,11 +26,13 @@ public class AutoFacController : AreaControllerCore
     /// <returns></returns>
     public IActionResult Index()
     {
-        return this.Success(new
-        {
-            value = _simple.GetValue().ToString(),
-            info = "构造函数注入"
-        });
+        return this.Success(
+            new
+            {
+                value = _simple.GetValue().ToString(),
+                info = "构造函数注入"
+            }
+        );
     }
 
     /// <summary>
@@ -46,25 +41,14 @@ public class AutoFacController : AreaControllerCore
     /// <returns></returns>
     public IActionResult TestCustom()
     {
-        var simple = AutofacAssist.Instance.Resolve<ISimpleDependencyInjection>();
+        var simple = ServiceProviderAssist.Instance.Resolve<ISimpleDependencyInjection>();
 
-        return this.Success(new
-        {
-            value = simple.GetValue().ToString(),
-            info = "自主构建"
-        });
-    }
-
-    /// <summary>
-    /// TestAutowired
-    /// </summary>
-    /// <returns></returns>
-    public IActionResult TestAutowired()
-    {
-        return this.Success(new
-        {
-            value = SimpleAutowired?.GetValue().ToString(),
-            info = "属性注入"
-        });
+        return this.Success(
+            new
+            {
+                value = simple.GetValue().ToString(),
+                info = "自主构建"
+            }
+        );
     }
 }

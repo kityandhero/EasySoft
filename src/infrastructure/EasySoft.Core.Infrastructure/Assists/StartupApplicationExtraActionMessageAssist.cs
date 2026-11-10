@@ -68,7 +68,7 @@ public static class StartupApplicationExtraActionMessageAssist
         AddTrace(divider);
     }
 
-    /// <summary>
+    /// <summary>  
     /// AddPrompt
     /// </summary>
     /// <param name="message"></param>

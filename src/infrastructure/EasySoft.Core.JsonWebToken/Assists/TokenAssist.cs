@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.JsonWebToken.Assists;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
+
+namespace EasySoft.Core.JsonWebToken.Assists;
 
 public static class TokenAssist
 {
@@ -53,9 +55,12 @@ public static class TokenAssist
 
         var token = new JwtSecurityTokenHandler().WriteToken(securityToken);
 
-        if (!GeneralConfigAssist.GetTokenServerDumpSwitch()) return token;
+        if (!GeneralConfigAssist.GetTokenServerDumpSwitch())
+        {
+            return token;
+        }
 
-        var asyncCacheOperator = AutofacAssist.Instance.Resolve<IAsyncCacheOperator>();
+        var asyncCacheOperator = ServiceProviderAssist.Instance.Resolve<IAsyncCacheOperator>();
 
         var cacheKey = Guid.NewGuid().ToString().Remove("-").ToLower();
 

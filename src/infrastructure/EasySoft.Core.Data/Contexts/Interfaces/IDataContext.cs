@@ -24,7 +24,7 @@ public interface IDataContext
     /// <summary>
     /// SaveChangesAsync
     /// </summary>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <param name="cancellationToken">取消令牌</param>
+    /// <returns>发送结果</returns>
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

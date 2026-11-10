@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.AuthenticationCore.Attributes;
+using EasySoft.Core.DependencyInjection.IocAssists;
 using EasySoft.Core.PermissionVerification.Observers;
 using EasySoft.UtilityTools.Core.Extensions;
 using EasySoft.UtilityTools.Core.Results.Implements;
@@ -20,16 +21,23 @@ public abstract class OperateOfficerCore : AccessWayOfficer
         ILoggerFactory loggerFactory,
         IWebHostEnvironment environment,
         IMediator mediator
-    ) : base(loggerFactory, environment, mediator)
+    ) : base(
+        loggerFactory,
+        environment,
+        mediator
+    )
     {
-        _actualOperator = AutofacAssist.Instance.Resolve<IActualOperator>();
+        _actualOperator = ServiceProviderAssist.Instance.Resolve<IActualOperator>();
     }
 
     private IPermissionObserver? _permissionObserver;
 
     private IActualOperator GetOperator()
     {
-        if (!Environment.IsDevelopment()) return _actualOperator;
+        if (!Environment.IsDevelopment())
+        {
+            return _actualOperator;
+        }
 
         var logger = LoggerFactory.CreateLogger<OperateOfficerCore>();
 
@@ -56,10 +64,15 @@ public abstract class OperateOfficerCore : AccessWayOfficer
             );
         }
 
-        if (!AutofacAssist.Instance.IsRegistered<IPermissionObserver>())
+        if (!ServiceProviderAssist.Instance.IsRegistered<IPermissionObserver>())
+        {
             throw new Exception("IPermissionObserver is not injected");
+        }
 
-        if (_permissionObserver == null) throw new Exception("PermissionObserver has not set");
+        if (_permissionObserver == null)
+        {
+            throw new Exception("PermissionObserver has not set");
+        }
 
         return _permissionObserver;
     }
@@ -75,7 +88,7 @@ public abstract class OperateOfficerCore : AccessWayOfficer
             );
         }
 
-        _permissionObserver = AutofacAssist.Instance.Resolve<IPermissionObserver>();
+        _permissionObserver = ServiceProviderAssist.Instance.Resolve<IPermissionObserver>();
     }
 
     /// <summary>
@@ -96,15 +109,23 @@ public abstract class OperateOfficerCore : AccessWayOfficer
         var applicationOperator = GetOperator();
 
         if (applicationOperator.IsAnonymous())
+        {
             return new ExecutiveResult(
                 ReturnCode.NoPermission.ToMessage(
                     $"匿名用户不支持鉴权, 请修复程序（配置登录验证 {nameof(OperatorAttribute)}）"
                 )
             );
+        }
 
-        if (string.IsNullOrWhiteSpace(AccessPermission.GuidTag)) return new ExecutiveResult(ReturnCode.Ok);
+        if (string.IsNullOrWhiteSpace(AccessPermission.GuidTag))
+        {
+            return new ExecutiveResult(ReturnCode.Ok);
+        }
 
-        if (_permissionObserver == null) throw new Exception("PermissionObserver has not set");
+        if (_permissionObserver == null)
+        {
+            throw new Exception("PermissionObserver has not set");
+        }
 
         return await _permissionObserver.CheckAccessPermissionAsync(AccessPermission.GuidTag);
     }
@@ -130,7 +151,10 @@ public abstract class OperateOfficerCore : AccessWayOfficer
 
         var result = await CheckAccessPermissionAsync();
 
-        if (result.Success) return new ExecutiveResult<ApiResult>(ReturnCode.Ok);
+        if (result.Success)
+        {
+            return new ExecutiveResult<ApiResult>(ReturnCode.Ok);
+        }
 
         var apiResultNoAccessPermission = new ApiResult(
             ReturnCode.NoPermission.ToInt(),

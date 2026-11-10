@@ -2,13 +2,12 @@
 
 global using System.Reflection;
 global using DotNetCore.CAP;
-global using EasySoft.Core.Cap.ExtensionMethods;
 global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.Data.Configures;
 global using EasySoft.Core.Data.Repositories;
 global using EasySoft.Core.EntityFramework.Configures;
 global using EasySoft.Core.EntityFramework.EntityTypeConfigures;
-global using EasySoft.Core.ErrorLogTransmitter.Producers;
+global using EasySoft.Core.ErrorLogTransceiver.Producers;
 global using EasySoft.Core.EventBus;
 global using EasySoft.Core.GeneralLogTransceiver.Producers;
 global using EasySoft.Core.Infrastructure.Assists;
@@ -18,7 +17,7 @@ global using EasySoft.Core.Infrastructure.Startup;
 global using EasySoft.Core.Infrastructure.Transmitters;
 global using EasySoft.Core.PermissionVerification.Attributes;
 global using EasySoft.Core.PermissionVerification.Configures;
-global using EasySoft.Core.SqlLogTransmitter.Producers;
+global using EasySoft.Core.SqlLogTransceiver.Producers;
 global using EasySoft.Core.Web.Framework.Controllers;
 global using EasySoft.UtilityTools.Core.Extensions;
 global using EasySoft.UtilityTools.Standard;

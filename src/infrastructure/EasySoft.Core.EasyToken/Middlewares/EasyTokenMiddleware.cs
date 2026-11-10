@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.EasyToken.AccessControl;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.Core.EasyToken.AccessControl;
 using EasySoft.UtilityTools.Core.Extensions;
 using EasySoft.UtilityTools.Core.Results.Implements;
 using Microsoft.AspNetCore.Hosting;
@@ -49,9 +50,9 @@ public class EasyTokenMiddleware : IMiddleware
             return;
         }
 
-        AutofacAssist.Instance.Resolve<ITokenSecretOptions>();
+        ServiceProviderAssist.Instance.Resolve<ITokenSecretOptions>();
 
-        var tokenSecret = AutofacAssist.Instance.Resolve<ITokenSecret>();
+        var tokenSecret = ServiceProviderAssist.Instance.Resolve<ITokenSecret>();
 
         try
         {
@@ -65,11 +66,14 @@ public class EasyTokenMiddleware : IMiddleware
             catch (Exception e)
             {
                 if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
-                    await AutofacAssist.Instance.Resolve<IErrorLogProducer>().SendAsync(
-                        e,
-                        0,
-                        context.BuildRequestInfo()
-                    );
+                {
+                    await ServiceProviderAssist.Instance.Resolve<IErrorLogProducer>()
+                        .SendAsync(
+                            e,
+                            0,
+                            context.BuildRequestInfo()
+                        );
+                }
 
                 await context.Response.WriteObjectAsJsonAsync(
                     new ApiResult(
@@ -95,15 +99,18 @@ public class EasyTokenMiddleware : IMiddleware
                 return;
             }
 
-            var actualOperator = AutofacAssist.Instance.Resolve<IActualOperator>();
+            var actualOperator = ServiceProviderAssist.Instance.Resolve<IActualOperator>();
 
             actualOperator.SetToken(token);
 
             actualOperator.SetIdentity(identity);
 
             if (!actualOperator.IsAnonymous())
+            {
                 await next.Invoke(context);
+            }
             else
+            {
                 await context.Response.WriteObjectAsJsonAsync(
                     new ApiResult(
                         ReturnCode.TokenExpired.ToInt(),
@@ -111,15 +118,19 @@ public class EasyTokenMiddleware : IMiddleware
                         "无操作凭证或凭证已过期"
                     ).ToExpandoObject()
                 );
+            }
         }
         catch (Exception e)
         {
             if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
-                await AutofacAssist.Instance.Resolve<IErrorLogProducer>().SendAsync(
-                    e,
-                    0,
-                    context.BuildRequestInfo()
-                );
+            {
+                await ServiceProviderAssist.Instance.Resolve<IErrorLogProducer>()
+                    .SendAsync(
+                        e,
+                        0,
+                        context.BuildRequestInfo()
+                    );
+            }
 
             await context.Response.WriteObjectAsJsonAsync(
                 new ApiResult(

@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.EasyToken.AccessControl;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.Core.EasyToken.AccessControl;
 
 namespace EasySoft.Core.EasyToken.Assists;
 
@@ -6,16 +7,19 @@ public static class TokenAssist
 {
     public static string GenerateEasyToken(string identification)
     {
-        var tokenSecret = AutofacAssist.Instance.Resolve<ITokenSecret>();
+        var tokenSecret = ServiceProviderAssist.Instance.Resolve<ITokenSecret>();
 
         var token = tokenSecret.EncryptWithExpirationTime(
             identification,
             new TimeSpan(TimeSpan.TicksPerSecond * DynamicConfigAssist.GetTokenExpires())
         );
 
-        if (!GeneralConfigAssist.GetTokenServerDumpSwitch()) return token;
+        if (!GeneralConfigAssist.GetTokenServerDumpSwitch())
+        {
+            return token;
+        }
 
-        var asyncCacheOperator = AutofacAssist.Instance.Resolve<IAsyncCacheOperator>();
+        var asyncCacheOperator = ServiceProviderAssist.Instance.Resolve<IAsyncCacheOperator>();
 
         var key = Guid.NewGuid().ToString().Remove("-").ToLower();
 
