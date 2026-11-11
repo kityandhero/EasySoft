@@ -33,16 +33,16 @@ public class AccessWayService : IAccessWayService
     }
 
     /// <inheritdoc />
-    public async Task SaveAccessWayAsync(IAccessWayMessage accessWayMessage)
+    public async Task SaveAccessWayAsync(IAccessWayTransitiveMessage accessWayTransitiveMessage)
     {
-        if (string.IsNullOrWhiteSpace(accessWayMessage.GuidTag))
+        if (string.IsNullOrWhiteSpace(accessWayTransitiveMessage.GuidTag))
         {
             return;
         }
 
-        var resultGet = await _accessWayRepository.GetAsync(
-            o => o.GuidTag == accessWayMessage.GuidTag
-        );
+        var resultGet =
+            await _accessWayRepository.GetAsync(o => o.GuidTag == accessWayTransitiveMessage.GuidTag
+            );
 
         if (resultGet.Success)
         {
@@ -51,12 +51,12 @@ public class AccessWayService : IAccessWayService
 
         var accessWay = new AccessWay
         {
-            Name = accessWayMessage.Name.ToLower(),
-            GuidTag = accessWayMessage.GuidTag.ToLower(),
-            RelativePath = accessWayMessage.RelativePath.ToLower(),
-            Expand = accessWayMessage.Expand.ToLower(),
-            Group = accessWayMessage.Group.ToLower(),
-            TriggerChannel = accessWayMessage.TriggerChannel,
+            Name = accessWayTransitiveMessage.Name.ToLower(),
+            GuidTag = accessWayTransitiveMessage.GuidTag.ToLower(),
+            RelativePath = accessWayTransitiveMessage.RelativePath.ToLower(),
+            Expand = accessWayTransitiveMessage.Expand.ToLower(),
+            Group = accessWayTransitiveMessage.Group.ToLower(),
+            TriggerChannel = accessWayTransitiveMessage.TriggerChannel,
             Channel = ChannelAssist.GetCurrentChannel().ToValue(),
             Status = 0,
             CreateTime = DateTimeOffset.Now.DateTime,

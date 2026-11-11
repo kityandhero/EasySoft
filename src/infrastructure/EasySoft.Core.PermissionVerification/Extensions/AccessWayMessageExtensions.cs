@@ -8,15 +8,17 @@ namespace EasySoft.Core.PermissionVerification.Extensions;
 public static class AccessWayMessageExtensions
 {
     /// <summary>
-    /// ToAccessWayModel
+    /// ToAccessWayTransitiveMessage
     /// </summary>
-    /// <param name="accessWay"></param>
+    /// <param name="accessWayTransitive
     /// <returns></returns>
-    public static AccessWayModel ToAccessWayModel(this IAccessWayMessage accessWay)
+    public static AccessWayModel ToAccessWayModel(
+        this IAccessWayTransitiveMessage accessWayTransitive
+    )
     {
         var typeAdapterConfig = new TypeAdapterConfig();
 
-        typeAdapterConfig.ForType<IAccessWayMessage, AccessWayModel>()
+        typeAdapterConfig.ForType<IAccessWayTransitiveMessage, AccessWayModel>()
             .Map(
                 dest => dest.Name,
                 src => src.Name
@@ -42,9 +44,9 @@ public static class AccessWayMessageExtensions
                 src => src.TriggerChannel
             );
 
-        var dto = accessWay.Adapt<AccessWayModel>(typeAdapterConfig);
+        var dto = accessWayTransitive.Adapt<AccessWayModel>(typeAdapterConfig);
 
-        accessWay.Adapt(dto);
+        accessWayTransitive.Adapt(dto);
 
         return dto;
     }

@@ -4,9 +4,9 @@ public class ServiceProviderAssist
 {
     public static readonly ServiceProviderAssist Instance = new();
 
-    private IServiceProvider? _root;
-    private IServiceProviderIsService? _isService;
-    private IServiceProviderIsKeyedService? _isKeyedService;
+    private IServiceProvider _root;
+    private IServiceProviderIsService _isService;
+    private IServiceProviderIsKeyedService _isKeyedService;
 
     public void SetProvider(IServiceProvider provider)
     {

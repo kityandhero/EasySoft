@@ -8,21 +8,21 @@ namespace EasySoft.Core.Infrastructure.Transmitters;
 public static class TransceiverConstant
 {
     /// <summary>
-    /// AccessWayMessage
+    /// AccessWayTransitiveMessage
     /// </summary>
     public const string TransceiverConfigureNode = "Transceiver";
 
-    #region AccessWayMessage
+    #region AccessWayTransitiveMessage
 
     /// <summary>
     /// AccessWayMessageConfigureNode
     /// </summary>
-    public const string AccessWayMessageConfigureNode = "AccessWayMessage";
+    public const string AccessWayMessageConfigureNode = "AccessWayTransitiveMessage";
 
     /// <summary>
-    /// AccessWayMessage
+    /// AccessWayTransitiveMessage
     /// </summary>
-    public const string AccessWayMessage = "AccessWayMessage";
+    public const string AccessWayMessage = "AccessWayTransitiveMessage";
 
     /// <summary>
     /// AccessWayMessageServiceKey
@@ -51,17 +51,17 @@ public static class TransceiverConstant
 
     #endregion
 
-    #region GeneralLogMessage
+    #region GeneralLogTransitiveMessage
 
     /// <summary>
     /// GeneralLogMessageConfigureNode
     /// </summary>
-    public const string GeneralLogMessageConfigureNode = "GeneralLogMessage";
+    public const string GeneralLogMessageConfigureNode = "GeneralLogTransitiveMessage";
 
     /// <summary>
-    /// GeneralLogMessage
+    /// GeneralLogTransitiveMessage
     /// </summary>
-    public const string GeneralLogMessage = "GeneralLogMessage";
+    public const string GeneralLogMessage = "GeneralLogTransitiveMessage";
 
     /// <summary>
     /// GeneralLogMessageServiceKey
@@ -90,17 +90,17 @@ public static class TransceiverConstant
 
     #endregion
 
-    #region ErrorLogMessage
+    #region ErrorLogTransitiveMessage
 
     /// <summary>
     /// ErrorLogMessageConfigureNode
     /// </summary>
-    public const string ErrorLogMessageConfigureNode = "ErrorLogMessage";
+    public const string ErrorLogMessageConfigureNode = "ErrorLogTransitiveMessage";
 
     /// <summary>
-    /// ErrorLogMessage
+    /// ErrorLogTransitiveMessage
     /// </summary>
-    public const string ErrorLogMessage = "ErrorLogMessage";
+    public const string ErrorLogMessage = "ErrorLogTransitiveMessage";
 
     /// <summary>
     /// ErrorLogMessageServiceKey
@@ -129,17 +129,17 @@ public static class TransceiverConstant
 
     #endregion
 
-    #region SqlLogMessage
+    #region SqlLogTransitiveMessage
 
     /// <summary>
     /// SqlLogMessageConfigureNode
     /// </summary>
-    public const string SqlLogMessageConfigureNode = "SqlLogMessage";
+    public const string SqlLogMessageConfigureNode = "SqlLogTransitiveMessage";
 
     /// <summary>
-    /// SqlLogMessage
+    /// SqlLogTransitiveMessage
     /// </summary>
-    public const string SqlLogMessage = "SqlLogMessage";
+    public const string SqlLogMessage = "SqlLogTransitiveMessage";
 
     /// <summary>
     /// SqlLogMessageServiceKey
@@ -208,7 +208,7 @@ public static class TransceiverConstant
     #endregion
 
     /// <summary>
-    /// 获取 AccessWayMessage RabbitMQ 连接字符串
+    /// 获取 AccessWayTransitiveMessage RabbitMQ 连接字符串
     /// </summary>
     /// <returns></returns>
     public static string GetAccessWayMessageRabbitMQConnectionString()
@@ -225,7 +225,7 @@ public static class TransceiverConstant
     }
 
     /// <summary>
-    /// 获取 GeneralLogMessage RabbitMQ 连接字符串
+    /// 获取 GeneralLogTransitiveMessage RabbitMQ 连接字符串
     /// </summary>
     /// <returns></returns>
     public static string GetGeneralLogMessageRabbitMQConnectionString()
@@ -242,7 +242,7 @@ public static class TransceiverConstant
     }
 
     /// <summary>
-    /// 获取 ErrorLogMessage RabbitMQ 连接字符串
+    /// 获取 ErrorLogTransitiveMessage RabbitMQ 连接字符串
     /// </summary>
     /// <returns></returns>
     public static string GetErrorLogMessageRabbitMQConnectionString()
@@ -259,7 +259,7 @@ public static class TransceiverConstant
     }
 
     /// <summary>
-    /// 获取 SqlLogMessage RabbitMQ 连接字符串
+    /// 获取 SqlLogTransitiveMessage RabbitMQ 连接字符串
     /// </summary>
     /// <returns></returns>
     public static string GetSqlLogMessageRabbitMQConnectionString()

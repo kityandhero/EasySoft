@@ -10,7 +10,7 @@ public class GeneralLog : AbstractFunctionEntity<GeneralLog>, IGeneralLogStore
     #region Properties
 
     [AdvanceColumnInformation("消息描述")]
-    [AdvanceColumnMapper("message")]
+    [AdvanceColumnMapper("transitiveMessage")]
     [AdvanceColumnNational]
     public string Message { get; set; } = "";
 

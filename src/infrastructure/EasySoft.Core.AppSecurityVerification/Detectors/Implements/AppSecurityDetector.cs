@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.AppSecurityVerification.Clients;
 using EasySoft.Core.AppSecurityVerification.Detectors.Interfaces;
 using EasySoft.Core.ChannelCheckTransceiver.Producers;
+using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.AppSecurityVerification.Detectors.Implements;
 

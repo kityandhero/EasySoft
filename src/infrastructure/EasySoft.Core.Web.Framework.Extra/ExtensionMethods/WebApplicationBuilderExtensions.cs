@@ -196,11 +196,15 @@ public static class WebApplicationBuilderExtensions
 
                 LogManager.Configuration.Reload();
 
-                LogAssist.Info("Receive agileConfig changed message, nlog configure reload success.");
+                LogAssist.Info(
+                    "Receive agileConfig changed transitiveMessage, nlog configure reload success."
+                );
             }
             catch (Exception e)
             {
-                LogAssist.Error($"some error occur, message: \"{e.Message}\", will use local config.");
+                LogAssist.Error(
+                    $"some error occur, transitiveMessage: \"{e.Message}\", will use local config."
+                );
 
                 LogManager.Configuration = BuildDefaultConfig();
 

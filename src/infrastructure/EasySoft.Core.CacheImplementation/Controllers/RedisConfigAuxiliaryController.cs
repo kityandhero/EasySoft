@@ -1,7 +1,4 @@
-﻿using EasySoft.Core.CacheImplementation.ConfigAssist;
-using EasySoft.Core.CacheImplementation.ConfigCollection;
-
-namespace EasySoft.Core.CacheImplementation.Controllers;
+﻿namespace EasySoft.Core.CacheImplementation.Controllers;
 
 public class RedisConfigAuxiliaryController : BasicController
 {

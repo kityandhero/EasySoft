@@ -43,7 +43,7 @@ public class SmsService : ISmsService
                 "mobile", mobile
             },
             {
-                "message", content
+                "transitiveMessage", content
             }
         };
 
@@ -74,11 +74,24 @@ public class SmsService : ISmsService
     {
         var result = JsonConvertAssist.DeserializeObject<LuoSiMaoResult>(message);
 
-        if (result == null) throw new Exception("response can not convert to LuoSiMaoResult");
+        if (result == null)
+        {
+            throw new Exception("response can not convert to LuoSiMaoResult");
+        }
 
-        if (result.error == "0") return SmsResult.Ok;
+        if (result.error == "0")
+        {
+            return SmsResult.Ok;
+        }
 
-        if (result.msg == "WRONG_MOBILE") return new SmsResult(false, message, SmsErrorCode.MobileError);
+        if (result.msg == "WRONG_MOBILE")
+        {
+            return new SmsResult(
+                false,
+                message,
+                SmsErrorCode.MobileError
+            );
+        }
 
         return new SmsResult(false, message);
     }

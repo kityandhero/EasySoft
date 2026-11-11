@@ -3,6 +3,7 @@ using EasySoft.Core.AccessWayTransceiver.Consumers;
 using EasySoft.Core.AccessWayTransceiver.Producers;
 using EasySoft.Core.Messaging.SlimMessageBus.Extensions;
 using EasySoft.UtilityTools.Standard.Assists;
+using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.AccessWayTransceiver.Extensions;
 
@@ -36,7 +37,7 @@ internal static class RabbitMQServiceExtensions
 
                                 cfg.ConnectionString = configuration[configurationPath]
                                                        ?? throw new InvalidOperationException(
-                                                           $"缺少 AccessWayMessage RabbitMQ 连接串[{configurationPath}]。"
+                                                           $"缺少 AccessWayTransitiveMessage RabbitMQ 连接串[{configurationPath}]。"
                                                        );
 
                                 // 交换器持久化：影响本子总线内所有生产者的交换器声明。
@@ -79,7 +80,7 @@ internal static class RabbitMQServiceExtensions
                     TransceiverConstant.AccessWayMessageTransmitter,
                     child =>
                     {
-                        child.Produce<IAccessWayMessage>(x => x
+                        child.Produce<IAccessWayTransitiveMessage>(x => x
                             .Exchange(GetExchange(configuration), ExchangeType.Direct)
                             .RoutingKeyProvider((_, _) => GetRoutingKey(configuration))
                         );
@@ -112,7 +113,7 @@ internal static class RabbitMQServiceExtensions
                     TransceiverConstant.AccessWayMessageTransmitter,
                     child =>
                     {
-                        child.Consume<IAccessWayMessage>(x =>
+                        child.Consume<IAccessWayTransitiveMessage>(x =>
                             {
                                 x.Queue(GetQueue(configuration))
                                     .ExchangeBinding(GetExchange(configuration), GetRoutingKey(configuration))

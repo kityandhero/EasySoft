@@ -8,7 +8,7 @@ namespace EasySoft.Core.AppSecurityServer.Core.Extensions;
 public static class AppPublicKeyExtensions
 {
     /// <summary>
-    /// ToAccessWayModel
+    /// ToAccessWayTransitiveMessage
     /// </summary>
     /// <param name="appSecurity"></param>
     /// <returns></returns>
@@ -18,7 +18,8 @@ public static class AppPublicKeyExtensions
 
         typeAdapterConfig.ForType<AppPublicKey, AppPublicKeyDto>()
             .Map(
-                dest => dest.Key, src => src.Key
+                dest => dest.Key,
+                src => src.Key
             );
 
         var dto = appSecurity.Adapt<AppPublicKeyDto>(typeAdapterConfig);

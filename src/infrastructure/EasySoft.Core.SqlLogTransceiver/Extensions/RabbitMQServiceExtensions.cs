@@ -3,6 +3,7 @@ using EasySoft.Core.Messaging.SlimMessageBus.Extensions;
 using EasySoft.Core.SqlLogTransceiver.Consumers;
 using EasySoft.Core.SqlLogTransceiver.Producers;
 using EasySoft.UtilityTools.Standard.Assists;
+using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.SqlLogTransceiver.Extensions;
 
@@ -36,7 +37,7 @@ public static class RabbitMQServiceExtensions
 
                                 cfg.ConnectionString = configuration[configurationPath]
                                                        ?? throw new InvalidOperationException(
-                                                           $"缺少 SqlLogMessage RabbitMQ 连接串[{configurationPath}]。"
+                                                           $"缺少 SqlLogTransitiveMessage RabbitMQ 连接串[{configurationPath}]。"
                                                        );
 
                                 // 交换器持久化：影响本子总线内所有生产者的交换器声明。
@@ -79,7 +80,7 @@ public static class RabbitMQServiceExtensions
                     TransceiverConstant.SqlLogMessageTransmitter,
                     child =>
                     {
-                        child.Produce<ISqlLogMessage>(x => x
+                        child.Produce<ISqlLogTransitiveMessage>(x => x
                             .Exchange(GetExchange(configuration), ExchangeType.Direct)
                             .RoutingKeyProvider((_, _) => GetRoutingKey(configuration))
                         );
@@ -112,7 +113,7 @@ public static class RabbitMQServiceExtensions
                     TransceiverConstant.SqlLogMessageTransmitter,
                     child =>
                     {
-                        child.Consume<ISqlLogMessage>(x =>
+                        child.Consume<ISqlLogTransitiveMessage>(x =>
                             {
                                 x.Queue(GetQueue(configuration))
                                     .ExchangeBinding(GetExchange(configuration), GetRoutingKey(configuration))

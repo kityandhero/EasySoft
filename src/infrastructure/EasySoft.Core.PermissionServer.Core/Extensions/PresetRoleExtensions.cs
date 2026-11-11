@@ -9,7 +9,7 @@ namespace EasySoft.Core.PermissionServer.Core.Extensions;
 public static class PresetRoleExtensions
 {
     /// <summary>
-    /// ToAccessWayModel
+    /// ToAccessWayTransitiveMessage
     /// </summary>
     /// <param name="presetRole"></param>
     /// <returns></returns>
@@ -19,22 +19,28 @@ public static class PresetRoleExtensions
 
         typeAdapterConfig.ForType<PresetRole, PresetRoleDto>()
             .Map(
-                dest => dest.PresetRoleId, src => src.Id
+                dest => dest.PresetRoleId,
+                src => src.Id
             )
             .Map(
-                dest => dest.Competence, src => src.Competence
+                dest => dest.Competence,
+                src => src.Competence
             )
             .Map(
-                dest => dest.WhetherSuper, src => src.WhetherSuper
+                dest => dest.WhetherSuper,
+                src => src.WhetherSuper
             )
             .Map(
-                dest => dest.Name, src => src.Name
+                dest => dest.Name,
+                src => src.Name
             )
             .Map(
-                dest => dest.Description, src => src.Description
+                dest => dest.Description,
+                src => src.Description
             )
             .Map(
-                dest => dest.Content, src => src.Content
+                dest => dest.Content,
+                src => src.Content
             );
 
         var dto = presetRole.Adapt<PresetRoleDto>(typeAdapterConfig);

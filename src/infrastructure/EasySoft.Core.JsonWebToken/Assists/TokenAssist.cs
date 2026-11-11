@@ -60,11 +60,11 @@ public static class TokenAssist
             return token;
         }
 
-        var asyncCacheOperator = ServiceProviderAssist.Instance.Resolve<IAsyncCacheOperator>();
+        var cacheOperator = ServiceProviderAssist.Instance.Resolve<ICacheOperator>();
 
         var cacheKey = Guid.NewGuid().ToString().Remove("-").ToLower();
 
-        asyncCacheOperator.SetAsync(
+        cacheOperator.Set(
             cacheKey,
             token,
             new TimeSpan(TimeSpan.TicksPerSecond * DynamicConfigAssist.GetTokenExpires())

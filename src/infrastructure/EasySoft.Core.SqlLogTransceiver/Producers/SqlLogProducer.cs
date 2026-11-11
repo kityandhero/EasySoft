@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.Messaging.Abstractions;
 using EasySoft.UtilityTools.Standard.Assists;
-using EasySoft.UtilityTools.Standard.Extensions;
+using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.SqlLogTransceiver.Producers;
 
@@ -44,7 +44,7 @@ public class SqlLogProducer : ISqlLogProducer
         CancellationToken cancellationToken = default
     )
     {
-        var entity = new SqlLogMessage
+        var entity = new SqlLogTransitiveMessage
         {
             CommandString = commandString,
             ExecuteType = executeType,
@@ -63,7 +63,7 @@ public class SqlLogProducer : ISqlLogProducer
 
     /// <inheritdoc />
     public Task SendAsync(
-        ISqlLogMessage sqlLogMessage,
+        ISqlLogTransitiveMessage sqlLogTransitiveMessage,
         CancellationToken cancellationToken = default
     )
     {
@@ -72,6 +72,6 @@ public class SqlLogProducer : ISqlLogProducer
             return Task.CompletedTask;
         }
 
-        return _bus.Publish(sqlLogMessage, cancellationToken);
+        return _bus.Publish(sqlLogTransitiveMessage, cancellationToken);
     }
 }

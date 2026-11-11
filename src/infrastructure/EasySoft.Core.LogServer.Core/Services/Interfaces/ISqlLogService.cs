@@ -18,7 +18,7 @@ public interface ISqlLogService : IBusinessService
     /// <summary>
     /// SaveAccessWayModelAsync
     /// </summary>
-    /// <param name="sqlLogMessage"></param>
+    /// <param name="sqlLogTransitiveMessage
     /// <returns></returns>
-    Task SaveAsync(ISqlLogMessage sqlLogMessage);
+    Task SaveAsync(ISqlLogTransitiveMessage sqlLogTransitiveMessage);
 }

@@ -47,34 +47,34 @@ public class ErrorLogService : IErrorLogService
     }
 
     /// <inheritdoc />
-    public async Task SaveAsync(IErrorLogMessage errorLogMessage)
+    public async Task SaveAsync(IErrorLogTransitiveMessage errorLogTransitiveMessage)
     {
         var errorLog = new ErrorLog
         {
-            OperatorId = errorLogMessage.OperatorId,
-            Url = errorLogMessage.Url,
-            Message = errorLogMessage.Message,
-            StackTrace = errorLogMessage.StackTrace,
-            Source = errorLogMessage.Source,
-            Scene = errorLogMessage.Scene,
-            Type = errorLogMessage.Type,
-            Degree = errorLogMessage.Degree,
-            Header = errorLogMessage.Header,
-            UrlParams = errorLogMessage.UrlParams,
-            PayloadParams = errorLogMessage.PayloadParams,
-            FormParams = errorLogMessage.FormParams,
-            Host = errorLogMessage.Host,
-            Port = errorLogMessage.Port,
-            CustomLog = errorLogMessage.CustomLog,
-            CustomData = errorLogMessage.CustomData,
-            CustomDataType = errorLogMessage.CustomDataType,
-            ExceptionTypeName = errorLogMessage.ExceptionTypeName,
-            ExceptionTypeFullName = errorLogMessage.ExceptionTypeFullName,
+            OperatorId = errorLogTransitiveMessage.OperatorId,
+            Url = errorLogTransitiveMessage.Url,
+            Message = errorLogTransitiveMessage.Message,
+            StackTrace = errorLogTransitiveMessage.StackTrace,
+            Source = errorLogTransitiveMessage.Source,
+            Scene = errorLogTransitiveMessage.Scene,
+            Type = errorLogTransitiveMessage.Type,
+            Degree = errorLogTransitiveMessage.Degree,
+            Header = errorLogTransitiveMessage.Header,
+            UrlParams = errorLogTransitiveMessage.UrlParams,
+            PayloadParams = errorLogTransitiveMessage.PayloadParams,
+            FormParams = errorLogTransitiveMessage.FormParams,
+            Host = errorLogTransitiveMessage.Host,
+            Port = errorLogTransitiveMessage.Port,
+            CustomLog = errorLogTransitiveMessage.CustomLog,
+            CustomData = errorLogTransitiveMessage.CustomData,
+            CustomDataType = errorLogTransitiveMessage.CustomDataType,
+            ExceptionTypeName = errorLogTransitiveMessage.ExceptionTypeName,
+            ExceptionTypeFullName = errorLogTransitiveMessage.ExceptionTypeFullName,
             Channel = ChannelAssist.GetCurrentChannel().ToValue(),
             Status = 0,
-            CreateBy = errorLogMessage.OperatorId,
+            CreateBy = errorLogTransitiveMessage.OperatorId,
             CreateTime = DateTimeOffset.Now.DateTime,
-            ModifyBy = errorLogMessage.OperatorId,
+            ModifyBy = errorLogTransitiveMessage.OperatorId,
             ModifyTime = DateTimeOffset.Now.DateTime
         };
 

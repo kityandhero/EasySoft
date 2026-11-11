@@ -2,9 +2,9 @@
 
 public static class ControllerBaseExtensionMethods
 {
-    public static async Task<ExecutiveResult<IActualOperator>> GetActualOperator(this ControllerBase controller)
+    public static ExecutiveResult<IActualOperator> GetActualOperator(this ControllerBase controller)
     {
-        var token = await controller.GetTokenAsync();
+        var token = controller.GetToken();
 
         if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.EasyToken)
         {

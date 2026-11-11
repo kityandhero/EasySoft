@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.GeneralLogTransceiver.Producers;
+using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.LogServer.Core.Extensions;
 
@@ -101,7 +102,7 @@ public static class WebApplicationExtensions
 
         var isDevelopment = environment.IsDevelopment();
 
-        var errorLogExchange = new ErrorLogMessage
+        var errorLogExchange = new ErrorLogTransitiveMessage
         {
             Ignore = Whether.Yes.ToInt()
         };
@@ -140,7 +141,7 @@ public static class WebApplicationExtensions
 
         var isDevelopment = environment.IsDevelopment();
 
-        var generalLogMessage = new GeneralLogMessage
+        var generalLogMessage = new GeneralLogTransitiveMessage
         {
             Ignore = Whether.Yes.ToInt()
         };
@@ -179,7 +180,7 @@ public static class WebApplicationExtensions
 
         var isDevelopment = environment.IsDevelopment();
 
-        var exchange = new SqlLogMessage
+        var exchange = new SqlLogTransitiveMessage
         {
             Ignore = Whether.Yes.ToInt()
         };

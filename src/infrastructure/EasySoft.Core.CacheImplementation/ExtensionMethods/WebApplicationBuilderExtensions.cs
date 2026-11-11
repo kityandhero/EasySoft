@@ -22,7 +22,7 @@ public static class WebApplicationBuilderExtensions
             $"{nameof(AddAdvanceCacheImplementation)}."
         );
 
-        builder.Services.AddAdvanceCacheImplementation(builder.Configuration);
+        builder.Services.AddAdvanceCacheImplementation();
 
         return builder;
     }

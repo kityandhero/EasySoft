@@ -8,7 +8,7 @@ namespace EasySoft.Core.PermissionServer.Core.Controllers;
 /// <summary>
 /// AccessWayController
 /// </summary>
-[Route("accessWay")]
+[Route("accessWayTransitive")]
 public class AccessWayController : AuthControllerCore
 {
     private const string ControllerDescription = "模块管理/";

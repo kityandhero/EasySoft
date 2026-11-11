@@ -8,7 +8,7 @@ namespace EasySoft.Core.AppSecurityServer.Core.Extensions;
 public static class AppSecurityExtensions
 {
     /// <summary>
-    /// ToAccessWayModel
+    /// ToAccessWayTransitiveMessage
     /// </summary>
     /// <param name="appSecurity"></param>
     /// <returns></returns>
@@ -18,14 +18,20 @@ public static class AppSecurityExtensions
 
         typeAdapterConfig.ForType<AppSecurity, AppSecurityDto>()
             .Map(
-                dest => dest.AppSecurityId, src => src.Id
+                dest => dest.AppSecurityId,
+                src => src.Id
             )
             .Map(
-                dest => dest.AppId, src => src.AppId
-            ).Map(
-                dest => dest.AppSecret, src => src.AppSecret
-            ).Map(
-                dest => dest.Channel, src => src.Channel
+                dest => dest.AppId,
+                src => src.AppId
+            )
+            .Map(
+                dest => dest.AppSecret,
+                src => src.AppSecret
+            )
+            .Map(
+                dest => dest.Channel,
+                src => src.Channel
             );
 
         var dto = appSecurity.Adapt<AppSecurityDto>(typeAdapterConfig);

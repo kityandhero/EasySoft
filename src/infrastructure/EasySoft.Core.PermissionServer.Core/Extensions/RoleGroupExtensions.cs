@@ -9,7 +9,7 @@ namespace EasySoft.Core.PermissionServer.Core.Extensions;
 public static class RoleGroupExtensions
 {
     /// <summary>
-    /// ToAccessWayModel
+    /// ToAccessWayTransitiveMessage
     /// </summary>
     /// <param name="roleGroup"></param>
     /// <returns></returns>
@@ -19,10 +19,12 @@ public static class RoleGroupExtensions
 
         typeAdapterConfig.ForType<RoleGroup, RoleGroupDto>()
             .Map(
-                dest => dest.RoleGroupId, src => src.Id
+                dest => dest.RoleGroupId,
+                src => src.Id
             )
             .Map(
-                dest => dest.Name, src => src.Name
+                dest => dest.Name,
+                src => src.Name
             );
 
         var dto = roleGroup.Adapt<RoleGroupDto>(typeAdapterConfig);

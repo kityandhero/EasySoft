@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.CacheCore.Enums;
+﻿using EasySoft.Core.CacheCore.Assists;
+using EasySoft.Core.CacheCore.Enums;
 using EasySoft.Core.CacheCore.ExtensionMethods;
 using EasySoft.Core.CacheCore.Models;
 using EasySoft.UtilityTools.Standard.Enums;
@@ -58,7 +59,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            _ => GetSuperiorCacheExpireTime(),
+            _ => CacheTimeAssist.GetSuperiorCacheExpireTime(),
             (_, _) => forceRefresh
         );
     }
@@ -76,7 +77,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            _ => GetSuperiorCacheExpireTime(),
+            _ => CacheTimeAssist.GetSuperiorCacheExpireTime(),
             forceRefreshAction
         );
     }
@@ -148,7 +149,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            (_, _) => GetSuperiorCacheExpireTime(),
+            (_, _) => CacheTimeAssist.GetSuperiorCacheExpireTime(),
             (_, _, _) => forceRefresh
         );
     }
@@ -168,7 +169,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            (_, _) => GetSuperiorCacheExpireTime(),
+            (_, _) => CacheTimeAssist.GetSuperiorCacheExpireTime(),
             forceRefreshAction
         );
     }
@@ -251,7 +252,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            (_, _, _) => GetSuperiorCacheExpireTime(),
+            (_, _, _) => CacheTimeAssist.GetSuperiorCacheExpireTime(),
             (
                 _,
                 _,
@@ -282,7 +283,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            (_, _, _) => GetSuperiorCacheExpireTime(),
+            (_, _, _) => CacheTimeAssist.GetSuperiorCacheExpireTime(),
             forceRefreshAction
         );
     }
@@ -393,7 +394,7 @@ public abstract partial class BaseCacheOperator
                 _,
                 _,
                 _
-            ) => GetSuperiorCacheExpireTime(),
+            ) => CacheTimeAssist.GetSuperiorCacheExpireTime(),
             (
                 _,
                 _,
@@ -434,7 +435,7 @@ public abstract partial class BaseCacheOperator
                 _,
                 _,
                 _
-            ) => GetSuperiorCacheExpireTime(),
+            ) => CacheTimeAssist.GetSuperiorCacheExpireTime(),
             forceRefreshAction
         );
     }
@@ -558,7 +559,7 @@ public abstract partial class BaseCacheOperator
                 _,
                 _,
                 _
-            ) => GetSuperiorCacheExpireTime(),
+            ) => CacheTimeAssist.GetSuperiorCacheExpireTime(),
             (
                 _,
                 _,
@@ -604,7 +605,7 @@ public abstract partial class BaseCacheOperator
                 _,
                 _,
                 _
-            ) => GetSuperiorCacheExpireTime(),
+            ) => CacheTimeAssist.GetSuperiorCacheExpireTime(),
             forceRefreshAction
         );
     }
@@ -662,7 +663,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            _ => GetProvisionalCacheExpireTime(),
+            _ => CacheTimeAssist.GetProvisionalCacheExpireTime(),
             (_, _) => forceRefresh
         );
     }
@@ -680,7 +681,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            _ => GetProvisionalCacheExpireTime(),
+            _ => CacheTimeAssist.GetProvisionalCacheExpireTime(),
             forceRefreshAction
         );
     }
@@ -740,7 +741,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            (_, _) => GetProvisionalCacheExpireTime(),
+            (_, _) => CacheTimeAssist.GetProvisionalCacheExpireTime(),
             (_, _, _) => forceRefresh
         );
     }
@@ -760,7 +761,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            (_, _) => GetProvisionalCacheExpireTime(),
+            (_, _) => CacheTimeAssist.GetProvisionalCacheExpireTime(),
             forceRefreshAction
         );
     }
@@ -846,7 +847,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            (_, _, _) => GetProvisionalCacheExpireTime(),
+            (_, _, _) => CacheTimeAssist.GetProvisionalCacheExpireTime(),
             (
                 _,
                 _,
@@ -878,7 +879,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            (_, _, _) => GetProvisionalCacheExpireTime(),
+            (_, _, _) => CacheTimeAssist.GetProvisionalCacheExpireTime(),
             forceRefreshAction
         );
     }
@@ -989,7 +990,7 @@ public abstract partial class BaseCacheOperator
                 _,
                 _,
                 _
-            ) => GetProvisionalCacheExpireTime(),
+            ) => CacheTimeAssist.GetProvisionalCacheExpireTime(),
             (
                 _,
                 _,
@@ -1030,7 +1031,7 @@ public abstract partial class BaseCacheOperator
                 _,
                 _,
                 _
-            ) => GetProvisionalCacheExpireTime(),
+            ) => CacheTimeAssist.GetProvisionalCacheExpireTime(),
             forceRefreshAction
         );
     }
@@ -1154,7 +1155,7 @@ public abstract partial class BaseCacheOperator
                 _,
                 _,
                 _
-            ) => GetProvisionalCacheExpireTime(),
+            ) => CacheTimeAssist.GetProvisionalCacheExpireTime(),
             (
                 _,
                 _,
@@ -1200,7 +1201,7 @@ public abstract partial class BaseCacheOperator
                 _,
                 _,
                 _
-            ) => GetProvisionalCacheExpireTime(),
+            ) => CacheTimeAssist.GetProvisionalCacheExpireTime(),
             forceRefreshAction
         );
     }
@@ -1258,7 +1259,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            _ => GetSteadyCacheExpireTime(),
+            _ => CacheTimeAssist.GetSteadyCacheExpireTime(),
             (_, _) => forceRefresh
         );
     }
@@ -1276,7 +1277,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            _ => GetSteadyCacheExpireTime(),
+            _ => CacheTimeAssist.GetSteadyCacheExpireTime(),
             forceRefreshAction
         );
     }
@@ -1348,7 +1349,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            (_, _) => GetSteadyCacheExpireTime(),
+            (_, _) => CacheTimeAssist.GetSteadyCacheExpireTime(),
             (_, _, _) => forceRefresh
         );
     }
@@ -1372,7 +1373,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            (_, _) => GetSteadyCacheExpireTime(),
+            (_, _) => CacheTimeAssist.GetSteadyCacheExpireTime(),
             forceRefreshAction
         );
     }
@@ -1458,7 +1459,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            (_, _, _) => GetSteadyCacheExpireTime(),
+            (_, _, _) => CacheTimeAssist.GetSteadyCacheExpireTime(),
             (
                 _,
                 _,
@@ -1490,7 +1491,7 @@ public abstract partial class BaseCacheOperator
             detectParameterAction,
             keyBuildAction,
             valueBuildAction,
-            (_, _, _) => GetSteadyCacheExpireTime(),
+            (_, _, _) => CacheTimeAssist.GetSteadyCacheExpireTime(),
             forceRefreshAction
         );
     }
@@ -1583,7 +1584,7 @@ public abstract partial class BaseCacheOperator
                 _,
                 _,
                 _
-            ) => GetSteadyCacheExpireTime(),
+            ) => CacheTimeAssist.GetSteadyCacheExpireTime(),
             (
                 _,
                 _,
@@ -1618,7 +1619,7 @@ public abstract partial class BaseCacheOperator
                 _,
                 _,
                 _
-            ) => GetSteadyCacheExpireTime(),
+            ) => CacheTimeAssist.GetSteadyCacheExpireTime(),
             forceRefreshAction
         );
     }
@@ -1742,7 +1743,7 @@ public abstract partial class BaseCacheOperator
                 _,
                 _,
                 _
-            ) => GetSteadyCacheExpireTime(),
+            ) => CacheTimeAssist.GetSteadyCacheExpireTime(),
             (
                 _,
                 _,
@@ -1788,7 +1789,7 @@ public abstract partial class BaseCacheOperator
                 _,
                 _,
                 _
-            ) => GetSteadyCacheExpireTime(),
+            ) => CacheTimeAssist.GetSteadyCacheExpireTime(),
             forceRefreshAction
         );
     }
@@ -1882,7 +1883,7 @@ public abstract partial class BaseCacheOperator
             throw new UnhandledException("构建缓存键名时，得到了空白值");
         }
 
-        var resultGetSerializedValue = GetSerializedValue<T>(key);
+        var resultGetSerializedValue = GetSerializedValue(key);
 
         if (!resultGetSerializedValue.Success)
         {
@@ -2039,7 +2040,7 @@ public abstract partial class BaseCacheOperator
             throw new UnhandledException("构建缓存键名时，得到了空白值");
         }
 
-        var resultGetSerializedValue = GetSerializedValue<T>(key);
+        var resultGetSerializedValue = GetSerializedValue(key);
 
         if (!resultGetSerializedValue.Success)
         {
@@ -2219,7 +2220,7 @@ public abstract partial class BaseCacheOperator
             throw new UnhandledException("构建缓存键名时，得到了空白值");
         }
 
-        var resultGetSerializedValue = GetSerializedValue<T>(key);
+        var resultGetSerializedValue = GetSerializedValue(key);
 
         if (!resultGetSerializedValue.Success)
         {
@@ -2432,7 +2433,7 @@ public abstract partial class BaseCacheOperator
             throw new UnhandledException("构建缓存键名时，得到了空白值");
         }
 
-        var resultGetSerializedValue = GetSerializedValue<T>(key);
+        var resultGetSerializedValue = GetSerializedValue(key);
 
         if (!resultGetSerializedValue.Success)
         {
@@ -2679,7 +2680,7 @@ public abstract partial class BaseCacheOperator
             throw new UnhandledException("构建缓存键名时，得到了空白值");
         }
 
-        var resultGetSerializedValue = GetSerializedValue<T>(key);
+        var resultGetSerializedValue = GetSerializedValue(key);
 
         if (!resultGetSerializedValue.Success)
         {
@@ -2946,7 +2947,7 @@ public abstract partial class BaseCacheOperator
             throw new UnhandledException("构建缓存键名时，得到了空白值");
         }
 
-        var resultGetSerializedValue = GetSerializedValue<T>(key);
+        var resultGetSerializedValue = GetSerializedValue(key);
 
         if (!resultGetSerializedValue.Success)
         {

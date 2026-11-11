@@ -4,7 +4,7 @@ using EasySoft.UtilityTools.Standard.Result.Interfaces;
 namespace EasySoft.UtilityTools.Standard.Result.Factories;
 
 /// <summary>
-/// return message factory
+/// return transitiveMessage factory
 /// </summary>
 public static class ReturnMessageFactory
 {

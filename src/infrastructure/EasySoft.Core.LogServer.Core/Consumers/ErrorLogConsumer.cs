@@ -31,9 +31,12 @@ public sealed class ErrorLogConsumer : BaseErrorLogConsumer
     }
 
     /// <inheritdoc />
-    public override async Task OnHandle(IErrorLogMessage message, CancellationToken cancellationToken)
+    public override async Task OnHandle(
+        IErrorLogTransitiveMessage transitiveMessage,
+        CancellationToken cancellationToken
+    )
     {
-        if (message.Ignore > 0)
+        if (transitiveMessage.Ignore > 0)
         {
             if (_environment.IsDevelopment())
             {
@@ -50,10 +53,10 @@ public sealed class ErrorLogConsumer : BaseErrorLogConsumer
             _logger.LogAdvanceExecute($"{GetType().Name}.{nameof(OnHandle)}");
 
             _logger.LogAdvancePrompt(
-                $"Save IErrorLogMessage -> {message.BuildInfo()}."
+                $"Save IErrorLogTransitiveMessage -> {transitiveMessage.BuildInfo()}."
             );
         }
 
-        await _errorLogService.SaveAsync(message);
+        await _errorLogService.SaveAsync(transitiveMessage);
     }
 }

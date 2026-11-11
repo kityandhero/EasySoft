@@ -702,13 +702,13 @@ public class MimeCollection
     };
 
     /// <summary>
-    /// Eml mime：.eml=message/rfc822
+    /// Eml mime：.eml=transitiveMessage/rfc822
     /// </summary>
     public static MimeModel Eml => new()
     {
         Name = "Eml",
         Extension = ".eml",
-        ContentType = "message/rfc822",
+        ContentType = "transitiveMessage/rfc822",
         Alias = new List<string>()
     };
 
@@ -1454,24 +1454,24 @@ public class MimeCollection
     };
 
     /// <summary>
-    /// Mht mime：.mht=message/rfc822
+    /// Mht mime：.mht=transitiveMessage/rfc822
     /// </summary>
     public static MimeModel Mht => new()
     {
         Name = "Mht",
         Extension = ".mht",
-        ContentType = "message/rfc822",
+        ContentType = "transitiveMessage/rfc822",
         Alias = new List<string>()
     };
 
     /// <summary>
-    /// Mhtml mime：.mhtml=message/rfc822
+    /// Mhtml mime：.mhtml=transitiveMessage/rfc822
     /// </summary>
     public static MimeModel Mhtml => new()
     {
         Name = "Mhtml",
         Extension = ".mhtml",
-        ContentType = "message/rfc822",
+        ContentType = "transitiveMessage/rfc822",
         Alias = new List<string>()
     };
 
@@ -1817,13 +1817,13 @@ public class MimeCollection
     };
 
     /// <summary>
-    /// Nws mime：.nws=message/rfc822
+    /// Nws mime：.nws=transitiveMessage/rfc822
     /// </summary>
     public static MimeModel Nws => new()
     {
         Name = "Nws",
         Extension = ".nws",
-        ContentType = "message/rfc822",
+        ContentType = "transitiveMessage/rfc822",
         Alias = new List<string>()
     };
 

@@ -3,6 +3,6 @@
 /// <summary>
 /// 错误日志消费器
 /// </summary>
-public interface IErrorLogConsumer : IConsumer<IErrorLogMessage>
+public interface IErrorLogConsumer : IConsumer<IErrorLogTransitiveMessage>
 {
 }

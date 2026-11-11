@@ -1,7 +1,7 @@
 ﻿namespace EasySoft.UtilityTools.Standard.Result.Interfaces;
 
 /// <summary>
-/// return message
+/// return transitiveMessage
 /// </summary>
 public interface IReturnMessage
 {

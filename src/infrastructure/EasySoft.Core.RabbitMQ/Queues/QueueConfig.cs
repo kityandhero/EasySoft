@@ -51,7 +51,7 @@ public class QueueConfig
     /// 队列扩展参数配置
     /// x-dead-letter-exchange 设置当前队列的DLX(死信交机)
     /// x-dead-letter-routing-key 设置DLX的路由key，DLX会根据该值去找到死信消息存放的队列
-    /// x-message-ttl 设置消息的存活时间，即过期时间(毫秒)
+    /// x-transitiveMessage-ttl 设置消息的存活时间，即过期时间(毫秒)
     /// </summary>
     public IDictionary<string, object> Arguments { get; set; }
 

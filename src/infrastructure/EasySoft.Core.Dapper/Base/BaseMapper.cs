@@ -8,6 +8,7 @@ using EasySoft.Core.Sql.Interfaces;
 using EasySoft.UtilityTools.Standard.Exceptions;
 using EasySoft.UtilityTools.Standard.Interfaces;
 using EasySoft.UtilityTools.Standard.Messages;
+using EasySoft.UtilityTools.Standard.Producers;
 using EasySoft.UtilityTools.Standard.Result.Factories;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
@@ -2938,7 +2939,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             return;
         }
 
-        var listCustomTiming = new List<SqlLogMessage>();
+        var listCustomTiming = new List<SqlLogTransitiveMessage>();
 
         var dictionary = MiniProfiler.Current.Head != null
             ? MiniProfiler.Current.Head.CustomTimings ?? new Dictionary<string, List<CustomTiming>>()
@@ -2947,7 +2948,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
         foreach (var item in dictionary)
         {
             listCustomTiming.AddRange(
-                item.Value.Select(one => new SqlLogMessage
+                item.Value.Select(one => new SqlLogTransitiveMessage
                     {
                         Flag = one.Id.ToString(),
                         CommandString = one.CommandString,

@@ -10,14 +10,14 @@ public class PermissionAccessNotification : INotification
     /// <summary>
     /// VerifyResult
     /// </summary>
-    public IAccessWay AccessWay { get; }
+    public IAccessWayTransitiveMessage AccessWay { get; }
 
     /// <summary>
     /// 应用安全首次校验通知
     /// </summary>
     /// <param name="accessWay"></param>
     public PermissionAccessNotification(
-        IAccessWay accessWay
+        IAccessWayTransitiveMessage accessWay
     )
     {
         AccessWay = accessWay;

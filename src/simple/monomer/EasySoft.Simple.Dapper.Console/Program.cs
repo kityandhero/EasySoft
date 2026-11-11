@@ -14,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 var serviceProvider = ConsoleServiceProviderAssist.CreateServiceProvider((serviceCollection, configuration) =>
     {
-        serviceCollection.AddAdvanceCacheImplementation(configuration);
+        serviceCollection.AddAdvanceCacheImplementation();
 
         // *) RegisterInstance(new ApplicationChannel().SetChannel(...))
         //       .As<IApplicationChannel>().SingleInstance()
@@ -25,7 +25,7 @@ var serviceProvider = ConsoleServiceProviderAssist.CreateServiceProvider((servic
     }
 );
 
-DapperElegantConfigurator.SetCacheOperator(serviceProvider.GetRequiredService<IAsyncCacheOperator>());
+DapperElegantConfigurator.SetCacheOperator(serviceProvider.GetRequiredService<ICacheOperator>());
 
 var author = EntityAssist.GetEntity<AccessWay>(1);
 

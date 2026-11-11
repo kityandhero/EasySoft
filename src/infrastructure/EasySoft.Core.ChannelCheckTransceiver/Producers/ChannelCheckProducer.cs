@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.ChannelCheckTransceiver.Entities.implements;
 using EasySoft.Core.ChannelCheckTransceiver.Entities.Interfaces;
 using EasySoft.Core.Messaging.Abstractions;
+using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.ChannelCheckTransceiver.Producers;
 

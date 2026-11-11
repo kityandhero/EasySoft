@@ -9,7 +9,7 @@ namespace EasySoft.Core.PermissionServer.Core.Extensions;
 public static class AccessWayExtensions
 {
     /// <summary>
-    /// ToAccessWayModel
+    /// ToAccessWayTransitiveMessage
     /// </summary>
     /// <param name="presetRole"></param>
     /// <returns></returns>
@@ -19,10 +19,12 @@ public static class AccessWayExtensions
 
         typeAdapterConfig.ForType<AccessWay, AccessWayDto>()
             .Map(
-                dest => dest.AccessWayId, src => src.Id
+                dest => dest.AccessWayId,
+                src => src.Id
             )
             .Map(
-                dest => dest.Name, src => src.Name
+                dest => dest.Name,
+                src => src.Name
             );
 
         var dto = presetRole.Adapt<AccessWayDto>(typeAdapterConfig);
@@ -33,7 +35,7 @@ public static class AccessWayExtensions
     }
 
     /// <summary>
-    /// ToAccessWayModel
+    /// ToAccessWayTransitiveMessage
     /// </summary>
     /// <param name="accessWay"></param>
     /// <returns></returns>
@@ -43,17 +45,28 @@ public static class AccessWayExtensions
 
         typeAdapterConfig.ForType<AccessWay, AccessWayModel>()
             .Map(
-                dest => dest.Name, src => src.Name
-            ).Map(
-                dest => dest.GuidTag, src => src.GuidTag
-            ).Map(
-                dest => dest.RelativePath, src => src.RelativePath
-            ).Map(
-                dest => dest.Expand, src => src.Expand
-            ).Map(
-                dest => dest.Group, src => src.Group
-            ).Map(
-                dest => dest.Channel, src => src.Channel
+                dest => dest.Name,
+                src => src.Name
+            )
+            .Map(
+                dest => dest.GuidTag,
+                src => src.GuidTag
+            )
+            .Map(
+                dest => dest.RelativePath,
+                src => src.RelativePath
+            )
+            .Map(
+                dest => dest.Expand,
+                src => src.Expand
+            )
+            .Map(
+                dest => dest.Group,
+                src => src.Group
+            )
+            .Map(
+                dest => dest.Channel,
+                src => src.Channel
             );
 
         var dto = accessWay.Adapt<AccessWayModel>(typeAdapterConfig);

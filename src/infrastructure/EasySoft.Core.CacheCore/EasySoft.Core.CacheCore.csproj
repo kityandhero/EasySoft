@@ -12,11 +12,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions"/>
     </ItemGroup>
 
     <ItemGroup>
-
+        <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
     </ItemGroup>
 
 </Project>

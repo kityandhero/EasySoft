@@ -118,7 +118,7 @@ public static class DynamicConfigAssist
         catch (Exception e)
         {
             LogAssist.Error(
-                $"Received “NLogJsonConfig” from remote cause some error, message: \"{e.Message}\", will use local config."
+                $"Received “NLogJsonConfig” from remote cause some error, transitiveMessage: \"{e.Message}\", will use local config."
             );
 
             return new ExecutiveResult<string>(ReturnCode.Ok)

@@ -153,6 +153,16 @@ public static class VerifyAssist
     }
 
     /// <summary>
+    /// 是否为 Decimal
+    /// </summary>
+    /// <param name="source">要检验的变量</param>
+    /// <returns></returns>
+    public static bool IsDecimal(this object source)
+    {
+        return !source.IsNull() && decimal.TryParse(source.ToString(), out _);
+    }
+
+    /// <summary>
     /// 是否为Datetime
     /// </summary>
     /// <param name="source">要检验的变量</param>

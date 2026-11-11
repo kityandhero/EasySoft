@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.DependencyInjection.IocAssists;
 using EasySoft.UtilityTools.Core.Results.Implements;
+using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.Web.Framework.Filters;
 
@@ -23,12 +24,12 @@ public class GlobalExceptionFilter : IExceptionFilter
         }
 
         LogAssist.GetLogger()
-        .LogError(
-            0,
-            context.Exception,
-            "{Message}",
-            context.Exception.Message
-        );
+            .LogError(
+                0,
+                context.Exception,
+                "{Message}",
+                context.Exception.Message
+            );
 
         if (context.Exception.InnerException != null)
         {

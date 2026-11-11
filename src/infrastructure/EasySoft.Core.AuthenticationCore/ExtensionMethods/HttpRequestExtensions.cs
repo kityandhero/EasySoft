@@ -45,44 +45,6 @@ public static class HttpRequestExtensions
         return token ?? "";
     }
 
-    /// <summary>
-    /// GetTokenAsync
-    /// </summary>
-    /// <param name="httpRequest"></param>
-    /// <param name="key"></param>
-    /// <returns></returns>
-    public static async Task<string> GetTokenAsync(this HttpRequest httpRequest, string key = "token")
-    {
-        var token = httpRequest.Headers.ContainsKey(key) ? httpRequest.Headers[key].ToString() : "";
-
-        if (!string.IsNullOrWhiteSpace(token))
-        {
-            return await ExchangeRealTokenAsync(token);
-        }
-
-        if (GeneralConfigAssist.GetTokenParseFromUrlSwitch() && httpRequest.Query.ContainsKey(key))
-        {
-            token = httpRequest.Query[key];
-
-            if (!string.IsNullOrWhiteSpace(token))
-            {
-                return await ExchangeRealTokenAsync(token);
-            }
-        }
-
-        if (GeneralConfigAssist.GetTokenParseFromCookieSwitch() && httpRequest.Cookies.ContainsKey(key))
-        {
-            token = httpRequest.Cookies[key];
-
-            if (!string.IsNullOrWhiteSpace(token))
-            {
-                return await ExchangeRealTokenAsync(token);
-            }
-        }
-
-        return token ?? "";
-    }
-
     private static string ExchangeRealToken(string tokenOrKey)
     {
         if (!GeneralConfigAssist.GetTokenServerDumpSwitch())
@@ -90,28 +52,9 @@ public static class HttpRequestExtensions
             return tokenOrKey;
         }
 
-        var asyncCacheOperator = ServiceProviderAssist.Instance.Resolve<IAsyncCacheOperator>();
+        var cacheOperator = ServiceProviderAssist.Instance.Resolve<ICacheOperator>();
 
-        var result = asyncCacheOperator.Get<string>(tokenOrKey);
-
-        if (result.Success)
-        {
-            return result.Data ?? "";
-        }
-
-        return "";
-    }
-
-    private static async Task<string> ExchangeRealTokenAsync(string tokenOrKey)
-    {
-        if (!GeneralConfigAssist.GetTokenServerDumpSwitch())
-        {
-            return tokenOrKey;
-        }
-
-        var asyncCacheOperator = ServiceProviderAssist.Instance.Resolve<IAsyncCacheOperator>();
-
-        var result = await asyncCacheOperator.GetAsync<string>(tokenOrKey);
+        var result = cacheOperator.GetSerializedValue(tokenOrKey);
 
         if (result.Success)
         {

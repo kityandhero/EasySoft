@@ -103,7 +103,7 @@ public abstract class AccessWayOfficer : OfficerCore
                 AccessPermission.Competence
             );
 
-        var accessWayModel = AccessPermission.ToAccessWayModel();
+        var accessWayModel = AccessPermission.ToAccessWayTransitiveMessage();
 
         await PermissionAssists.AddAccessWayModelScanHistory(
             Mediator,

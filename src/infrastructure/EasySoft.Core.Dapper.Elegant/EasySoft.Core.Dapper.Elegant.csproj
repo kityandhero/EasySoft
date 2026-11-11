@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\ EasySoft.Core.DependencyInjection\EasySoft.Core.DependencyInjection.csproj"/>
+        <ProjectReference Include="..\..\project-framework\EasySoft.Core.Project.DataEntity.Dapper.Infrastructure\EasySoft.Core.Project.DataEntity.Dapper.Infrastructure.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.CacheCore\EasySoft.Core.CacheCore.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Dapper\EasySoft.Core.Dapper.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.ErrorLogTransceiver\EasySoft.Core.ErrorLogTransceiver.csproj"/>

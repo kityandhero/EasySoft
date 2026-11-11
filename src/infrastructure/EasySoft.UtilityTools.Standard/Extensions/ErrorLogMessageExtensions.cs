@@ -16,11 +16,11 @@ public static class ErrorLogMessageExtensions
     /// <param name="operatorId"></param>
     /// <param name="request"></param>
     /// <returns></returns>
-    public static IErrorLogMessage Fill(
-        this IErrorLogMessage entity,
+    public static IErrorLogTransitiveMessage Fill(
+        this IErrorLogTransitiveMessage entity,
         Exception ex,
         long operatorId = 0,
-        IRequestInfo? request = null
+        IRequestInfo request = null
     )
     {
         try

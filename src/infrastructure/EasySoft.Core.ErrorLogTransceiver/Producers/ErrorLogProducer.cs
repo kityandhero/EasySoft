@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Messaging.Abstractions;
+using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.ErrorLogTransceiver.Producers;
 
@@ -50,7 +51,7 @@ public class ErrorLogProducer : IErrorLogProducer
         CancellationToken cancellationToken = default
     )
     {
-        var entity = new ErrorLogMessage
+        var entity = new ErrorLogTransitiveMessage
         {
             TriggerChannel = _applicationChannel.GetChannel().ToValue()
         };
@@ -66,10 +67,10 @@ public class ErrorLogProducer : IErrorLogProducer
 
     /// <inheritdoc />
     public Task SendAsync(
-        IErrorLogMessage errorLogMessage,
+        IErrorLogTransitiveMessage errorLogTransitiveMessage,
         CancellationToken cancellationToken = default
     )
     {
-        return _bus.Publish(errorLogMessage, cancellationToken);
+        return _bus.Publish(errorLogTransitiveMessage, cancellationToken);
     }
 }

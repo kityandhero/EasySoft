@@ -9,7 +9,7 @@ public static class EntityAssist
     private static string GetEntityCacheKey<T>(long id) where T : IEntitySelf<T>, new()
     {
         return DapperElegantConfigurator.GetCacheOperator()
-            ?.BuildKey(
+            ?.CacheKeyAssist.BuildKey(
                 "entityCache",
                 typeof(T).Name.ToLowerFirst(),
                 "key",

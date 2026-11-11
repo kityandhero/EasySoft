@@ -108,7 +108,7 @@ public class LogCommandInterceptor : DbCommandInterceptor
         }
 
         SqlLogInnerQueue.Enqueue(
-            new SqlLogMessage
+            new SqlLogTransitiveMessage
             {
                 Flag = UniqueIdAssist.CreateUUID(),
                 CommandString = JsonConvertAssist.SerializeObject(

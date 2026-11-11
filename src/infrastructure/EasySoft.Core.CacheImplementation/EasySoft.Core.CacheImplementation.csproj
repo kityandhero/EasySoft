@@ -23,23 +23,30 @@
         <PackageReference Include="AspectCore.Extensions.DependencyInjection"/>
         <PackageReference Include="AspectCore.Extensions.Reflection"/>
         <PackageReference Include="Castle.Core"/>
-        <PackageReference Include="CSRedisCore"/>
-        <PackageReference Include="ZiggyCreatures.FusionCache"/>
-        <PackageReference Include="ZiggyCreatures.FusionCache.Serialization.NewtonsoftJson"/>
-        <PackageReference Include="ZiggyCreatures.FusionCache.Backplane.StackExchangeRedis"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid"/>
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis"/>
+        <PackageReference Include="Newtonsoft.Json"/>
         <PackageReference Include="StackExchange.Redis"/>
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\ EasySoft.Core.DependencyInjection\EasySoft.Core.DependencyInjection.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.CacheCore\EasySoft.Core.CacheCore.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
         <Folder Include="Assists"/>
+        <Folder Include="Attributes\"/>
+        <Folder Include="CacheFactories\"/>
+        <Folder Include="CacheKeyGenerators\"/>
+        <Folder Include="ConfigAssist\"/>
+        <Folder Include="ConfigCollection\"/>
         <Folder Include="Enums\"/>
+        <Folder Include="Interceptors\"/>
         <Folder Include="interfaces\"/>
+        <Folder Include="Options\"/>
+        <Folder Include="Serializers\"/>
     </ItemGroup>
 
 </Project>

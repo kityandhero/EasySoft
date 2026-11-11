@@ -9,9 +9,9 @@ namespace EasySoft.Core.GeneralLogTransceiver.Test.Consumers;
 public class GeneralLogConsumer : BaseGeneralLogConsumer
 {
     /// <inheritdoc />
-    public override Task OnHandle(IGeneralLogMessage message, CancellationToken cancellationToken)
+    public override Task OnHandle(IGeneralLogTransitiveMessage transitiveMessage, CancellationToken cancellationToken)
     {
-        Console.WriteLine($"message received: {message.Message}");
+        Console.WriteLine($"transitiveMessage received: {transitiveMessage.Message}");
 
         return Task.CompletedTask;
     }

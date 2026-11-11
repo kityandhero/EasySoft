@@ -15,15 +15,4 @@ public static class HttpContextExtensions
     {
         return httpContext.Request.GetToken();
     }
-
-    /// <summary>
-    /// GetTokenAsync
-    /// </summary>
-    /// <param name="httpContext"></param>
-    /// <param name="key"></param>
-    /// <returns></returns>
-    public static async Task<string> GetTokenAsync(this HttpContext httpContext, string key = "token")
-    {
-        return await httpContext.Request.GetTokenAsync();
-    }
 }

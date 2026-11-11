@@ -23,10 +23,12 @@ public class AuthorController : AreaControllerCore
     /// <returns></returns>
     public async Task<IActionResult> GetAuthor()
     {
-        var resultActualOperator = await this.GetActualOperator();
+        var resultActualOperator = this.GetActualOperator();
 
         if (!resultActualOperator.Success || resultActualOperator.Data == null)
+        {
             return this.Fail(resultActualOperator.Code);
+        }
 
         var result = await _blogService.GetBlogDtoAsync(
             Convert.ToInt32(resultActualOperator.Data.GetIdentity())

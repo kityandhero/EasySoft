@@ -20,7 +20,7 @@ public class ErrorLog : AbstractFunctionEntity<ErrorLog>, IErrorLogStore
     public string Url { get; set; } = "";
 
     [AdvanceColumnInformation("消息文本")]
-    [AdvanceColumnMapper("message")]
+    [AdvanceColumnMapper("transitiveMessage")]
     [AdvanceColumnLength(2000)]
     [AdvanceColumnNational]
     public string Message { get; set; } = "";

@@ -2,6 +2,8 @@
 using EasySoft.Core.PermissionVerification.Attributes;
 using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
 using EasySoft.Core.PermissionVerification.Entities;
+using EasySoft.UtilityTools.Standard.Messages;
+using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.PermissionVerification.Assists;
 
@@ -10,21 +12,21 @@ namespace EasySoft.Core.PermissionVerification.Assists;
 /// </summary>
 public static class PermissionAssists
 {
-    private static readonly IDictionary<string, AccessWayModel> AccessWayModelScanHistory =
-        new ConcurrentDictionary<string, AccessWayModel>();
+    private static readonly IDictionary<string, IAccessWayTransitiveMessage> AccessWayModelScanHistory =
+        new ConcurrentDictionary<string, IAccessWayTransitiveMessage>();
 
-    private static readonly ConcurrentQueue<AccessWayModel> AccessWayModelScanQuery = new();
+    private static readonly ConcurrentQueue<IAccessWayTransitiveMessage> AccessWayModelScanQuery = new();
 
     /// <summary>
     /// AddAccessWayModelScanHistory
     /// </summary>
     /// <param name="mediator"></param>
     /// <param name="guidTag"></param>
-    /// <param name="accessWayModel"></param>
+    /// <param name="accessWayTransitiveMessage"></param>
     public static async Task AddAccessWayModelScanHistory(
         IMediator mediator,
         string guidTag,
-        AccessWayModel accessWayModel
+        IAccessWayTransitiveMessage accessWayTransitiveMessage
     )
     {
         if (AccessWayModelScanHistory.Keys.Contains(guidTag))
@@ -32,20 +34,20 @@ public static class PermissionAssists
             return;
         }
 
-        AccessWayModelScanHistory.Add(guidTag, accessWayModel);
+        AccessWayModelScanHistory.Add(guidTag, accessWayTransitiveMessage);
 
         LogAssist.Prompt(
-            $"Permission -> {accessWayModel.BuildInfo()} add to history."
+            $"Permission -> {accessWayTransitiveMessage.BuildInfo()} add to history."
         );
 
-        await mediator.Publish(new PermissionAccessNotification(accessWayModel));
+        await mediator.Publish(new PermissionAccessNotification(accessWayTransitiveMessage));
     }
 
     /// <summary>
     /// GetAccessWayModelScanQuery
     /// </summary>
     /// <returns></returns>
-    private static ConcurrentQueue<AccessWayModel> GetAccessWayModelScanQuery()
+    private static ConcurrentQueue<IAccessWayTransitiveMessage> GetAccessWayModelScanQuery()
     {
         return AccessWayModelScanQuery;
     }
@@ -92,7 +94,7 @@ public static class PermissionAssists
 
                         var relativePath = new List<string> { $"/{mainRoute}", childRoute }.Join("/");
 
-                        var accessWayModel = new AccessWayModel
+                        var accessWayModel = new AccessWayTransitiveMessage
                         {
                             Name = string.IsNullOrWhiteSpace(permissionAttribute.Name)
                                 ? relativePath

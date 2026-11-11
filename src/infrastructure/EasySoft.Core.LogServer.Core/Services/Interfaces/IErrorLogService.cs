@@ -18,7 +18,7 @@ public interface IErrorLogService : IBusinessService
     /// <summary>   
     /// SaveAccessWayModelAsync
     /// </summary>
-    /// <param name="errorLogMessage"></param>
+    /// <param name="errorLogTransitiveMessage
     /// <returns></returns>
-    Task SaveAsync(IErrorLogMessage errorLogMessage);
+    Task SaveAsync(IErrorLogTransitiveMessage errorLogTransitiveMessage);
 }

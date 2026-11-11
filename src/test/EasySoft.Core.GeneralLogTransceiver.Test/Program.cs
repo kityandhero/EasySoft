@@ -4,6 +4,7 @@ using EasySoft.Core.GeneralLogTransceiver.Test;
 using EasySoft.Core.GeneralLogTransceiver.Test.Consumers;
 using EasySoft.Core.Messaging.SlimMessageBus.Extensions;
 using EasySoft.UtilityTools.Core.Channels;
+using EasySoft.UtilityTools.Standard.Producers;
 
 var builder = WebApplication.CreateBuilder(args);
 

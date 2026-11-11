@@ -18,7 +18,7 @@ public interface IGeneralLogService : IBusinessService
     /// <summary>
     /// SaveAccessWayModelAsync
     /// </summary>
-    /// <param name="generalLogMessage"></param>
+    /// <param name="generalLogTransitiveMessage
     /// <returns></returns>
-    Task SaveAsync(IGeneralLogMessage generalLogMessage);
+    Task SaveAsync(IGeneralLogTransitiveMessage generalLogTransitiveMessage);
 }

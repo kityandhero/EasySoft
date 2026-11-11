@@ -2,6 +2,7 @@
 using EasySoft.Core.JsonWebToken.Assists;
 using EasySoft.UtilityTools.Core.Extensions;
 using EasySoft.UtilityTools.Core.Results.Implements;
+using EasySoft.UtilityTools.Standard.Producers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -35,7 +36,7 @@ public class JsonWebTokenMiddleware : IMiddleware
 
         logger.LogMiddlewareInvokeAsyncAfter<JsonWebTokenMiddleware>(_hostEnvironment);
 
-        var token = await context.GetTokenAsync(GeneralConfigAssist.GetTokenName());
+        var token = context.GetToken(GeneralConfigAssist.GetTokenName());
 
         if (string.IsNullOrWhiteSpace(token))
         {

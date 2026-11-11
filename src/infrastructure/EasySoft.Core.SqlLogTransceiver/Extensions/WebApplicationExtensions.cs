@@ -3,6 +3,7 @@ using EasySoft.Core.Infrastructure.Configures;
 using EasySoft.Core.Infrastructure.Queues;
 using EasySoft.Core.SqlLogTransceiver.Producers;
 using EasySoft.UtilityTools.Standard.Assists;
+using EasySoft.UtilityTools.Standard.Producers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 

@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Messaging.Abstractions;
+using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.GeneralLogTransceiver.Producers;
 
@@ -68,7 +69,7 @@ public class GeneralLogProducer : IGeneralLogProducer
         CancellationToken cancellationToken = default
     )
     {
-        var entity = new GeneralLogMessage
+        var entity = new GeneralLogTransitiveMessage
         {
             MessageType = messageValueType.ToInt(),
             ContentType = contentValueType.ToInt(),
@@ -102,10 +103,10 @@ public class GeneralLogProducer : IGeneralLogProducer
 
     /// <inheritdoc />
     public Task SendAsync(
-        IGeneralLogMessage generalLogMessage,
+        IGeneralLogTransitiveMessage generalLogTransitiveMessage,
         CancellationToken cancellationToken = default
     )
     {
-        return _bus.Publish(generalLogMessage, cancellationToken);
+        return _bus.Publish(generalLogTransitiveMessage, cancellationToken);
     }
 }

@@ -31,17 +31,20 @@ public sealed class AccessWayExchangeSubscriber : BaseAccessWayConsumer
     }
 
     /// <inheritdoc />
-    public override async Task OnHandle(IAccessWayMessage message, CancellationToken cancellationToken)
+    public override async Task OnHandle(
+        IAccessWayTransitiveMessage transitiveMessage,
+        CancellationToken cancellationToken
+    )
     {
         if (_environment.IsDevelopment())
         {
             _logger.LogAdvanceExecute($"{GetType().Name}.{nameof(OnHandle)}");
 
             _logger.LogAdvancePrompt(
-                $"Save AccessWayMessage -> {message.BuildInfo()}."
+                $"Save AccessWayTransitiveMessage -> {transitiveMessage.BuildInfo()}."
             );
         }
 
-        await _accessWayService.SaveAccessWayAsync(message);
+        await _accessWayService.SaveAccessWayAsync(transitiveMessage);
     }
 }

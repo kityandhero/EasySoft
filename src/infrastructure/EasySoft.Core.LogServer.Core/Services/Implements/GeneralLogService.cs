@@ -45,16 +45,16 @@ public class GeneralLogService : IGeneralLogService
     }
 
     /// <inheritdoc />
-    public async Task SaveAsync(IGeneralLogMessage generalLogMessage)
+    public async Task SaveAsync(IGeneralLogTransitiveMessage generalLogTransitiveMessage)
     {
         var generalLog = new GeneralLog
         {
-            Message = generalLogMessage.Message,
-            MessageType = generalLogMessage.MessageType,
-            Content = generalLogMessage.Content,
-            ContentType = generalLogMessage.ContentType,
-            Type = generalLogMessage.Type,
-            TriggerChannel = generalLogMessage.TriggerChannel,
+            Message = generalLogTransitiveMessage.Message,
+            MessageType = generalLogTransitiveMessage.MessageType,
+            Content = generalLogTransitiveMessage.Content,
+            ContentType = generalLogTransitiveMessage.ContentType,
+            Type = generalLogTransitiveMessage.Type,
+            TriggerChannel = generalLogTransitiveMessage.TriggerChannel,
             Channel = ChannelAssist.GetCurrentChannel().ToValue(),
             Status = 0,
             CreateBy = 0,

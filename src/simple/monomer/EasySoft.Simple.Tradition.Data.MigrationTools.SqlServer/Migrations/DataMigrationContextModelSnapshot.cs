@@ -298,7 +298,7 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)")
                         .HasDefaultValue("")
-                        .HasColumnName("message")
+                        .HasColumnName("transitiveMessage")
                         .HasComment("");
 
                     b.Property<long>("ModifyBy")
@@ -458,7 +458,7 @@ namespace EasySoft.Simple.Tradition.Data.MigrationTools.SqlServer.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)")
                         .HasDefaultValue("")
-                        .HasColumnName("message")
+                        .HasColumnName("transitiveMessage")
                         .HasComment("");
 
                     b.Property<int>("MessageType")

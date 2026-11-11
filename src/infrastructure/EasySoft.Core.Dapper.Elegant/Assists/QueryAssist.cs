@@ -1,7 +1,7 @@
 ﻿using EasySoft.Core.Dapper.Elegant.Configure;
 using EasySoft.Core.DependencyInjection.IocAssists;
-using EasySoft.Core.SqlLogTransceiver.Producers;
 using EasySoft.UtilityTools.Standard.Messages;
+using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.Dapper.Elegant.Assists;
 
@@ -1041,7 +1041,7 @@ public class QueryAssist
             var listRecord = (
                 from sql in sqlArray
                 where !string.IsNullOrWhiteSpace(sql)
-                select new SqlLogMessage
+                select new SqlLogTransitiveMessage
                 {
                     CommandString = sql,
                     ExecuteType = "",
@@ -1065,20 +1065,20 @@ public class QueryAssist
         /// <summary>
         /// 记录执行的sql
         /// </summary>
-        /// <param name="sqlLogMessage">sql</param>
-        private static void LogSqlExecutionMessage(SqlLogMessage sqlLogMessage)
+        /// <param name="sqlLogTransitiveMessage">sql</param>
+        private static void LogSqlExecutionMessage(SqlLogTransitiveMessage sqlLogTransitiveMessage)
         {
             ServiceProviderAssist.Instance.Resolve<ISqlLogProducer>()
                 .SendAsync(
-                    sqlLogMessage.CommandString,
-                    sqlLogMessage.ExecuteType,
-                    sqlLogMessage.StackTraceSnippet,
-                    sqlLogMessage.StartMilliseconds,
-                    sqlLogMessage.DurationMilliseconds,
-                    sqlLogMessage.FirstFetchDurationMilliseconds,
-                    sqlLogMessage.Errored,
-                    sqlLogMessage.CollectMode,
-                    sqlLogMessage.DatabaseChannel
+                    sqlLogTransitiveMessage.CommandString,
+                    sqlLogTransitiveMessage.ExecuteType,
+                    sqlLogTransitiveMessage.StackTraceSnippet,
+                    sqlLogTransitiveMessage.StartMilliseconds,
+                    sqlLogTransitiveMessage.DurationMilliseconds,
+                    sqlLogTransitiveMessage.FirstFetchDurationMilliseconds,
+                    sqlLogTransitiveMessage.Errored,
+                    sqlLogTransitiveMessage.CollectMode,
+                    sqlLogTransitiveMessage.DatabaseChannel
                 );
         }
 
@@ -1166,7 +1166,7 @@ public class QueryAssist
         private static string BuildTotalCountResultCacheKey(string key, IMapperChannel mapperChannel)
         {
             return DapperElegantConfigurator.GetCacheOperator()
-                ?.BuildKey(
+                ?.CacheKeyAssist.BuildKey(
                     "sql",
                     "executor",
                     "countSql",
@@ -1249,11 +1249,20 @@ public class QueryAssist
                 mapperChannel
             );
 
-            var resultCache = cacheOperator.Get<int>(key);
+            var count = cacheOperator.StringGet(key);
 
-            if (resultCache.Success)
+            if (!string.IsNullOrWhiteSpace(count))
             {
-                return resultCache.Data;
+                try
+                {
+                    result = Convert.ToInt32(count);
+
+                    return result;
+                }
+                catch (Exception)
+                {
+                    // continue
+                }
             }
 
             result = calculateFunc();

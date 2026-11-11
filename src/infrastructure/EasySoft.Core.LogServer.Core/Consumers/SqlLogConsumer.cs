@@ -31,9 +31,9 @@ public class SqlLogConsumer : BaseSqlLogConsumer
     }
 
     /// <inheritdoc />
-    public override async Task OnHandle(ISqlLogMessage message, CancellationToken cancellationToken)
+    public override async Task OnHandle(ISqlLogTransitiveMessage transitiveMessage, CancellationToken cancellationToken)
     {
-        if (message.Ignore > 0)
+        if (transitiveMessage.Ignore > 0)
         {
             if (_environment.IsDevelopment())
             {
@@ -50,10 +50,10 @@ public class SqlLogConsumer : BaseSqlLogConsumer
             _logger.LogAdvanceExecute($"{GetType().Name}.{nameof(OnHandle)}");
 
             _logger.LogAdvancePrompt(
-                $"Save SqlLogExchange -> {message.BuildInfo()}."
+                $"Save SqlLogExchange -> {transitiveMessage.BuildInfo()}."
             );
         }
 
-        await _sqlLogService.SaveAsync(message);
+        await _sqlLogService.SaveAsync(transitiveMessage);
     }
 }

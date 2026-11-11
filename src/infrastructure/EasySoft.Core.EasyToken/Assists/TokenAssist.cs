@@ -19,11 +19,11 @@ public static class TokenAssist
             return token;
         }
 
-        var asyncCacheOperator = ServiceProviderAssist.Instance.Resolve<IAsyncCacheOperator>();
+        var cacheOperator = ServiceProviderAssist.Instance.Resolve<ICacheOperator>();
 
         var key = Guid.NewGuid().ToString().Remove("-").ToLower();
 
-        asyncCacheOperator.SetAsync(
+        cacheOperator.Set(
             key,
             token,
             new TimeSpan(TimeSpan.TicksPerSecond * DynamicConfigAssist.GetTokenExpires())

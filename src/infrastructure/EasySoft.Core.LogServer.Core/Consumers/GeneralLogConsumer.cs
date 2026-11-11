@@ -31,9 +31,12 @@ public sealed class GeneralLogConsumer : BaseGeneralLogConsumer
     }
 
     /// <inheritdoc />
-    public override async Task OnHandle(IGeneralLogMessage message, CancellationToken cancellationToken)
+    public override async Task OnHandle(
+        IGeneralLogTransitiveMessage transitiveMessage,
+        CancellationToken cancellationToken
+    )
     {
-        if (message.Ignore > 0)
+        if (transitiveMessage.Ignore > 0)
         {
             if (_environment.IsDevelopment())
             {
@@ -50,10 +53,10 @@ public sealed class GeneralLogConsumer : BaseGeneralLogConsumer
             _logger.LogAdvanceExecute($"{GetType().Name}.{nameof(OnHandle)}");
 
             _logger.LogAdvancePrompt(
-                $"Save GeneralLogMessage -> {message.BuildInfo()}."
+                $"Save GeneralLogTransitiveMessage -> {transitiveMessage.BuildInfo()}."
             );
         }
 
-        await _generalLogService.SaveAsync(message);
+        await _generalLogService.SaveAsync(transitiveMessage);
     }
 }

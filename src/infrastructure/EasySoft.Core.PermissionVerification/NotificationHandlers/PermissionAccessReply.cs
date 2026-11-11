@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.DependencyInjection.IocAssists;
 using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
 using EasySoft.UtilityTools.Core.Extensions;
+using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.PermissionVerification.NotificationHandlers;
 

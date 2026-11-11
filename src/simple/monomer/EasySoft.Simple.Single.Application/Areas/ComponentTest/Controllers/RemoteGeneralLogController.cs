@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.GeneralLogTransceiver.Producers;
 using EasySoft.UtilityTools.Core.Results.Interfaces;
+using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 
@@ -44,10 +45,10 @@ public class RemoteGeneralLogController : AreaControllerCore
     /// <summary>
     /// SubscribeMessage
     /// </summary>
-    /// <param name="generalLogMessage"></param>
+    /// <param name="generalLogTransitiveMessage
     [CapSubscribe("EasySoft.GeneralLog")]
-    public void SubscribeMessage(IGeneralLogMessage generalLogMessage)
+    public void SubscribeMessage(IGeneralLogTransitiveMessage generalLogTransitiveMessage)
     {
-        Console.WriteLine("message is:" + generalLogMessage.Message);
+        Console.WriteLine("transitiveMessage is:" + generalLogTransitiveMessage.Message);
     }
 }

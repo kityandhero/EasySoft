@@ -47,20 +47,20 @@ public class SqlLogService : ISqlLogService
     }
 
     /// <inheritdoc />
-    public async Task SaveAsync(ISqlLogMessage sqlLogMessage)
+    public async Task SaveAsync(ISqlLogTransitiveMessage sqlLogTransitiveMessage)
     {
         var log = new SqlLog
         {
-            CommandString = sqlLogMessage.CommandString,
-            ExecuteType = sqlLogMessage.ExecuteType,
-            StackTraceSnippet = sqlLogMessage.StackTraceSnippet,
-            StartMilliseconds = sqlLogMessage.StartMilliseconds,
-            DurationMilliseconds = sqlLogMessage.DurationMilliseconds,
-            FirstFetchDurationMilliseconds = sqlLogMessage.FirstFetchDurationMilliseconds,
-            Errored = sqlLogMessage.Errored,
-            CollectMode = sqlLogMessage.CollectMode,
-            DatabaseChannel = sqlLogMessage.DatabaseChannel,
-            TriggerChannel = sqlLogMessage.TriggerChannel,
+            CommandString = sqlLogTransitiveMessage.CommandString,
+            ExecuteType = sqlLogTransitiveMessage.ExecuteType,
+            StackTraceSnippet = sqlLogTransitiveMessage.StackTraceSnippet,
+            StartMilliseconds = sqlLogTransitiveMessage.StartMilliseconds,
+            DurationMilliseconds = sqlLogTransitiveMessage.DurationMilliseconds,
+            FirstFetchDurationMilliseconds = sqlLogTransitiveMessage.FirstFetchDurationMilliseconds,
+            Errored = sqlLogTransitiveMessage.Errored,
+            CollectMode = sqlLogTransitiveMessage.CollectMode,
+            DatabaseChannel = sqlLogTransitiveMessage.DatabaseChannel,
+            TriggerChannel = sqlLogTransitiveMessage.TriggerChannel,
             Status = 0,
             CreateBy = 0,
             CreateTime = DateTimeOffset.Now.DateTime,

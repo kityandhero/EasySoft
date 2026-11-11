@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Messaging.Abstractions;
+using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.AccessWayTransceiver.Producers;
 
@@ -30,17 +31,17 @@ public class AccessWayProducer : IAccessWayProducer
 
     /// <inheritdoc />
     public Task SendAsync(
-        IAccessWay accessWay,
+        IAccessWayTransitiveMessage accessWayTransitiveMessage,
         CancellationToken cancellationToken = default
     )
     {
-        var entity = new AccessWayMessage
+        var entity = new AccessWayTransitiveMessage
         {
-            Name = accessWay.Name,
-            GuidTag = accessWay.GuidTag,
-            RelativePath = accessWay.RelativePath,
-            Expand = accessWay.Expand,
-            Group = accessWay.Group,
+            Name = accessWayTransitiveMessage.Name,
+            GuidTag = accessWayTransitiveMessage.GuidTag,
+            RelativePath = accessWayTransitiveMessage.RelativePath,
+            Expand = accessWayTransitiveMessage.Expand,
+            Group = accessWayTransitiveMessage.Group,
             TriggerChannel = _applicationChannel.GetChannel().ToValue()
         };
 

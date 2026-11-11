@@ -1,84 +1,100 @@
-﻿using EasySoft.Core.CacheImplementation.CacheFactories;
+﻿using EasySoft.Core.CacheCore.Assists;
 using EasySoft.Core.CacheImplementation.Operators.Bases;
 
 namespace EasySoft.Core.CacheImplementation.Operators;
 
 public class GeneralCacheOperator : BaseCacheOperator
 {
-    private readonly IFusionCache _cacheExecutor;
+    #region Properties
+
+    public MemoryCacheOperator MemoryCacheOperator { get; private set; }
+
+    public RedisCacheOperator RedisCacheOperator { get; private set; }
+
+    #endregion
 
     public GeneralCacheOperator(
-        IFusionCacheFactory cacheFactory,
-        string globalPrefix
-    ) : base(globalPrefix)
+        CacheConfigureAssist cacheConfigureAssist,
+        CacheKeyAssist cacheKeyAssist,
+        MemoryCacheOperator memoryCacheOperator,
+        RedisCacheOperator redisCacheOperator
+    ) : base(cacheConfigureAssist, cacheKeyAssist)
     {
-        _cacheExecutor = cacheFactory.GetCache(ConstCollection.FusionCacheName);
+        MemoryCacheOperator = memoryCacheOperator;
+        RedisCacheOperator = redisCacheOperator;
     }
+
+    #region HasKey
+
+    /// <inheritdoc />
+    internal override bool HasKeyCore(string key)
+    {
+        var currentCacheMode = CacheConfigureAssist.GetCacheMode();
+
+        if (currentCacheMode == "redis")
+        {
+            return RedisCacheOperator.HasKeyCore(key);
+        }
+
+        return MemoryCacheOperator.HasKeyCore(key);
+    }
+
+    #endregion
+
+    #region StringIncrement
+
+    /// <inheritdoc />
+    internal override long StringIncrementCore(string key, int count)
+    {
+        var currentCacheMode = CacheConfigureAssist.GetCacheMode();
+
+        if (currentCacheMode == "redis")
+        {
+            return RedisCacheOperator.StringIncrementCore(key, count);
+        }
+
+        return MemoryCacheOperator.StringIncrementCore(key, count);
+    }
+
+    #endregion
 
     #region Get
 
-    protected override T GetCore<T>(string key)
+    /// <inheritdoc />
+    internal override string StringGetCore(string key)
     {
-        return _cacheExecutor.GetOrDefault<T>(key);
+        var currentCacheMode = CacheConfigureAssist.GetCacheMode();
+
+        if (currentCacheMode == "redis")
+        {
+            return RedisCacheOperator.StringGetCore(key);
+        }
+
+        return MemoryCacheOperator.StringGetCore(key);
     }
-
-    protected override async Task<T> GetAsyncCore<T>(string key)
-    {
-        return await _cacheExecutor.GetOrDefaultAsync<T>(key);
-    }
-
-    // protected override async Task<ExecutiveResult<T>> GetCoreAsync<T>(string key)
-    // {
-    //     var cacheValue = await _cacheExecutor.GetOrDefaultAsync<T>(key);
-    //
-    //     if (cacheValue == null)
-    //     {
-    //         return new ExecutiveResult<T>(ReturnCode.NoData);
-    //     }
-    //
-    //     return new ExecutiveResult<T>(ReturnCode.Ok)
-    //     {
-    //         Data = cacheValue
-    //     };
-    // }
-
-    // public override ExecutiveResult<string> GetSerializedValue(string key)
-    // {
-    //     var cacheValue = _cacheExecutor.GetOrDefault<string>(key);
-    //
-    //     if (cacheValue == null)
-    //     {
-    //         return new ExecutiveResult<string>(ReturnCode.Ok)
-    //         {
-    //             Data = ""
-    //         };
-    //     }
-    //
-    //     return new ExecutiveResult<string>(ReturnCode.Ok)
-    //     {
-    //         Data = cacheValue
-    //     };
-    // }
 
     #endregion
 
     #region Set
 
-    protected override async Task SetAsyncCore<T>(string key, T value, TimeSpan expiration)
+    /// <inheritdoc />
+    internal override bool SetValueCore<T>(string key, T value, TimeSpan expireTime)
     {
-        await _cacheExecutor.SetAsync(
-            key,
-            value,
-            expiration
-        );
-    }
+        var currentCacheMode = CacheConfigureAssist.GetCacheMode();
 
-    protected override void SetCore<T>(string key, T value, TimeSpan expiration)
-    {
-        _cacheExecutor.Set(
+        if (currentCacheMode == "redis")
+        {
+            return RedisCacheOperator.SetValueCore(
+                key,
+                value,
+                expireTime
+            );
+        }
+
+        return MemoryCacheOperator.SetValueCore(
             key,
             value,
-            expiration
+            expireTime
         );
     }
 
@@ -86,44 +102,30 @@ public class GeneralCacheOperator : BaseCacheOperator
 
     #region Remove
 
-    public override bool Remove(string key)
+    /// <inheritdoc />
+    internal override bool RemoveCore(string key)
     {
-        if (string.IsNullOrWhiteSpace(key))
+        var currentCacheMode = CacheConfigureAssist.GetCacheMode();
+
+        if (currentCacheMode == "redis")
         {
-            return true;
+            return RedisCacheOperator.RemoveCore(key);
         }
 
-        _cacheExecutor.Remove(key);
-
-        return true;
+        return MemoryCacheOperator.RemoveCore(key);
     }
 
-    public override bool RemoveBatch(IEnumerable<string> keys)
+    /// <inheritdoc />
+    internal override bool RemoveBatchCore(string key)
     {
-        foreach (var key in keys)
+        var currentCacheMode = CacheConfigureAssist.GetCacheMode();
+
+        if (currentCacheMode == "redis")
         {
-            Remove(key);
+            return RedisCacheOperator.RemoveBatchCore(key);
         }
 
-        return true;
-    }
-
-    public override async Task RemoveAsync(string key)
-    {
-        if (string.IsNullOrWhiteSpace(key))
-        {
-            return;
-        }
-
-        await _cacheExecutor.RemoveAsync(key);
-    }
-
-    public override async Task RemoveBatchAsync(IEnumerable<string> keys)
-    {
-        foreach (var key in keys)
-        {
-            await RemoveAsync(key);
-        }
+        return MemoryCacheOperator.RemoveBatchCore(key);
     }
 
     #endregion
