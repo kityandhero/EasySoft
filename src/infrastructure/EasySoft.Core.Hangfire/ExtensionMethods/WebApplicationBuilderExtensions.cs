@@ -1,65 +1,50 @@
 ﻿using EasySoft.Core.Hangfire.Assists;
-using EasySoft.Core.Hangfire.ConfigAssist;
-using EasySoft.Core.Hangfire.Enums;
 
 namespace EasySoft.Core.Hangfire.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
-    private const string UniqueIdentifierAddSwaggerGen = "0fc40198-fa59-4f88-9d01-4ba2fbed9ae0";
+    private const string UniqueIdentifierAddSwaggerGen = "3ed53dbb090f4a3d811319bb257176cd";
 
     public static WebApplicationBuilder AddAdvanceHangfire(this WebApplicationBuilder builder)
     {
         if (builder.HasRegistered(UniqueIdentifierAddSwaggerGen))
+        {
             return builder;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceHangfire)}."
         );
 
-        HangfireConfigAssist.Init();
+        builder.Services.AddSingleton(new HangfireConfigAssist(builder.Configuration));
 
-        var hangfireSwitch = HangfireConfigAssist.GetSwitch();
-
-        StartupConfigMessageAssist.AddConfig(
-            $"Hangfire: {(!hangfireSwitch ? "disable" : "enable")}.",
-            HangfireConfigAssist.GetConfigFileInfo()
-        );
-
-        if (!hangfireSwitch)
-        {
-            StartupDescriptionMessageAssist.AddPrompt(
-                $"Hangfire is closed."
-            );
-
-            return builder;
-        }
-
-        var storageType = HangfireAssist.GetStorageType();
+        var storageTypeConfigValue = HangfireConfigAssist.GetStorageType(builder.Configuration);
 
         //启用Hangfire服务.
         builder.Services.AddHangfireServer();
 
-        switch (storageType)
+        switch (storageTypeConfigValue.Value)
         {
-            case StorageType.MemoryStorage:
+            case "MemoryStorage":
                 builder.Services.AddHangfire(x => x.UseStorage(new MemoryStorage()));
                 break;
 
-            case StorageType.SqlServer:
-                var connection = HangfireConfigAssist.GetStorageConnection();
+            case "SqlServer":
+                var connectionConfigValue = HangfireConfigAssist.GetStorageConnection(builder.Configuration);
 
-                builder.Services.AddHangfire(x => x.UseStorage(new SqlServerStorage(connection)));
+                builder.Services.AddHangfire(x => x.UseStorage(new SqlServerStorage(connectionConfigValue.Value)));
+
                 break;
 
             default:
                 throw new UnsupportedException(
-                    $"Hangfire storage type is {storageType.ToString()}."
+                    $"Hangfire storage type is {storageTypeConfigValue.Value}."
                 );
         }
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"Hangfire storage type is {storageType.ToString()}, available storage is {HangfireAssist.GetAllAvailableStorageType()}."
+            $"Hangfire storage type is {storageTypeConfigValue.Value}."
         );
 
         ApplicationConfigure.AddWebApplicationExtraAction(

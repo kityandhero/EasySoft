@@ -25,7 +25,7 @@ public abstract partial class BaseCacheOperator : ICacheOperator
 
     public virtual string GetKeyPrefix()
     {
-        return GeneralConfigAssist.GetKeyPrefix();
+        return CacheConfigureAssist.GetCacheKeyPrefix().Value;
     }
 
     #region Has

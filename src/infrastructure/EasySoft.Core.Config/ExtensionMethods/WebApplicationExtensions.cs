@@ -1,5 +1,5 @@
-﻿using EasySoft.Core.Config.Options;
-using EasySoft.Core.Infrastructure.Configures;
+﻿using EasySoft.Core.Infrastructure.Configures;
+using EasySoft.Core.Infrastructure.Options;
 using EasySoft.Core.Infrastructure.Startup;
 
 namespace EasySoft.Core.Config.ExtensionMethods;
@@ -10,38 +10,6 @@ namespace EasySoft.Core.Config.ExtensionMethods;
 public static class WebApplicationExtensions
 {
     private const string IdentifierUseDevelopAuxiliary = "e84ad243-6571-4e74-aa77-02a3a8bb4ef1";
-
-    /// <summary>
-    /// UseAdvanceStaticFiles
-    /// </summary>
-    /// <param name="application"></param>
-    /// <returns></returns>
-    public static WebApplication UseAdvanceStaticFiles(
-        this WebApplication application
-    )
-    {
-        var app = application.UseHostFiltering();
-
-        var isService = app.ApplicationServices.GetService<IServiceProviderIsService>();
-
-        if (isService?.IsService(typeof(AdvanceStaticFileOptions)) != true)
-        {
-            application.UseStaticFiles();
-        }
-        else
-        {
-            var staticFileOptions = app.ApplicationServices.GetService<AdvanceStaticFileOptions>();
-
-            if (staticFileOptions != null)
-            {
-                application.UseStaticFiles(staticFileOptions);
-
-                FlagAssist.SetAdvanceStaticFileOptionsSwitchOpen();
-            }
-        }
-
-        return application;
-    }
 
     /// <summary>
     /// UseConfigureTemplate

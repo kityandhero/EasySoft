@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.Interfaces;
 using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Sql.Builders;
 using EasySoft.Core.Sql.Extensions;
 using EasySoft.Core.Sql.Factories;

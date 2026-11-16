@@ -1,5 +1,4 @@
 ﻿using EasySoft.UtilityTools.Core.Results.Implements;
-using EasySoft.UtilityTools.Core.Results.Interfaces;
 
 namespace EasySoft.Core.AppSecurityVerification.Clients;
 

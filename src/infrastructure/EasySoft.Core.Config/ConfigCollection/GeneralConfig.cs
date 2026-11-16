@@ -13,117 +13,6 @@ public class GeneralConfig : IConfig
     /// </summary>
     public static readonly GeneralConfig Instance = new();
 
-    /// <summary>
-    /// CacheMode
-    /// </summary>
-    public string CacheMode { get; set; } = nameof(CacheModeCollection.InMemory);
-
-    #region Start Port
-
-    /// <summary>
-    /// HttpPort
-    /// </summary>
-    public string HttpPort { get; set; } = "0";
-
-    /// <summary>
-    /// HttpsPort
-    /// </summary>
-    public string HttpsPort { get; set; } = "0";
-
-    #endregion
-
-    /// <summary>
-    /// HstsSwitch
-    /// </summary>
-    public string HstsSwitch { get; set; } = "0";
-
-    /// <summary>
-    /// 键名前缀，用于标记缓存键前缀, 队列名前缀等等, 以便于在复杂部署中隔离数据
-    /// </summary>
-    public string KeyPrefix { get; set; } = "";
-
-    #region Compression
-
-    /// <summary>
-    /// 压缩传输开关
-    /// </summary>
-    public string CompressionSwitch { get; set; } = "0";
-
-    #endregion
-
-    #region Token
-
-    /// <summary>
-    /// 服务端使用缓存存储键值 token, 仅返回前端键名
-    /// </summary>
-    public string TokenServerDumpSwitch { get; set; } = "1";
-
-    /// <summary>
-    /// Http Header 中 Token 的键名, 默认 “token”
-    /// </summary>
-    public string TokenName { get; set; } = "token";
-
-    /// <summary>
-    /// 支持从Url解析Token, 特定场景下无法使用 Http Header 时候可开启, 有安全隐患
-    /// </summary>
-    public string TokenParseFromUrlSwitch { get; set; } = "0";
-
-    /// <summary>
-    /// 支持从Cookie解析Token, 使用场景为传统MVC开发等场景, 适用于单体部署
-    /// </summary>
-    public string TokenParseFromCookieSwitch { get; set; } = "0";
-
-    /// <summary>
-    /// 过期时间 (秒)
-    /// </summary>
-    public string TokenExpires { get; set; } = "7200";
-
-    #region JsonWebToken
-
-    /// <summary>
-    /// Token的时间偏移量 (秒)
-    /// </summary>
-    public string JsonWebTokenClockSkew { get; set; } = "30";
-
-    /// <summary>
-    /// 访问群体
-    /// </summary>
-    public string JsonWebTokenValidAudience { get; set; } = "";
-
-    /// <summary>
-    /// 是否验证访问群体
-    /// </summary>
-    public string JsonWebTokenValidateAudience { get; set; } = "1";
-
-    /// <summary>
-    /// 颁发者
-    /// </summary>
-    public string JsonWebTokenValidIssuer { get; set; } = "";
-
-    /// <summary>
-    /// 是否验证颁发者
-    /// </summary>
-    public string JsonWebTokenValidateIssuer { get; set; } = "1";
-
-    /// <summary>
-    /// 是否验证生存期
-    /// </summary>
-    public string JsonWebTokenValidateLifetime { get; set; } = "1";
-
-    /// <summary>
-    /// 安全密钥
-    /// </summary>
-    public string JsonWebTokenIssuerSigningKey { get; set; } = "";
-
-    /// <summary>
-    /// 是否验证安全密钥
-    /// </summary>
-    public string JsonWebTokenValidateIssuerSigningKey { get; set; } = "1";
-
-    #endregion
-
-    #endregion
-
     #region AppSecurity
 
     /// <summary>
@@ -154,11 +43,6 @@ public class GeneralConfig : IConfig
     public string RemoteGeneralLogSwitch { get; set; } = "0";
 
     /// <summary>
-    /// RemoteErrorLogSwitch
-    /// </summary>
-    public string RemoteErrorLogSwitch { get; set; } = "0";
-
-    /// <summary>
     /// UseStaticFilesSwitch
     /// </summary>
     public string UseStaticFilesSwitch { get; set; } = "1";
@@ -179,11 +63,6 @@ public class GeneralConfig : IConfig
     /// CorsSwitch
     /// </summary>
     public string CorsSwitch { get; set; } = "0";
-
-    /// <summary>
-    /// CorsPolicies
-    /// </summary>
-    public string CorsPolicies { get; set; } = "*";
 
     #endregion
 
@@ -365,21 +244,6 @@ public class GeneralConfig : IConfig
     /// GatewayConfigInConsulSwitch
     /// </summary>
     public string GatewayConfigInConsulSwitch { get; set; } = "0";
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public string ExceptionlessSwitch { get; set; } = "0";
-
-    /// <summary>
-    /// ExceptionlessServerUrl
-    /// </summary>
-    public string ExceptionlessServerUrl { get; set; } = "";
-
-    /// <summary>
-    /// ExceptionlessApiKey
-    /// </summary>
-    public string ExceptionlessApiKey { get; set; } = "";
 
     /// <summary>
     /// SkyApmSwitch

@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.Dapper.Elegant.Configure;
-using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Standard.Messages;
 using EasySoft.UtilityTools.Standard.Producers;
 
@@ -1033,7 +1033,11 @@ public class QueryAssist
                 return;
             }
 
-            if (GeneralConfigAssist.GetRemoteGeneralLogSwitch())
+            var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+
+            var transmissionSqlLogConfigValue = infrastructureConfigureAssist.GetTransmissionSqlLog();
+
+            if (transmissionSqlLogConfigValue.Value)
             {
                 return;
             }
@@ -1068,7 +1072,7 @@ public class QueryAssist
         /// <param name="sqlLogTransitiveMessage">sql</param>
         private static void LogSqlExecutionMessage(SqlLogTransitiveMessage sqlLogTransitiveMessage)
         {
-            ServiceProviderAssist.Instance.Resolve<ISqlLogProducer>()
+            ServiceProviderAssist.Resolve<ISqlLogProducer>()
                 .SendAsync(
                     sqlLogTransitiveMessage.CommandString,
                     sqlLogTransitiveMessage.ExecuteType,
@@ -1086,7 +1090,7 @@ public class QueryAssist
             Exception exception
         )
         {
-            ServiceProviderAssist.Instance.Resolve<IErrorLogProducer>()
+            ServiceProviderAssist.Resolve<IErrorLogProducer>()
                 .SendAsync(
                     exception,
                     0
@@ -1124,7 +1128,11 @@ public class QueryAssist
             IMapperChannel mapperChannel
         )
         {
-            if (GeneralConfigAssist.GetRemoteErrorLogSwitch())
+            var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+
+            var transmissionSqlLogConfigValue = infrastructureConfigureAssist.GetTransmissionSqlLog();
+
+            if (transmissionSqlLogConfigValue.Value)
             {
                 return;
             }
@@ -1156,7 +1164,7 @@ public class QueryAssist
                 exception.Data.Add("mapperChannel", mapperChannel.GetChannel());
             }
 
-            ServiceProviderAssist.Instance.Resolve<IErrorLogProducer>()
+            ServiceProviderAssist.Resolve<IErrorLogProducer>()
                 .SendAsync(
                     exception,
                     0

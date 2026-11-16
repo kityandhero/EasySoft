@@ -46,7 +46,7 @@ public class PermissionVerificationMiddleware : IMiddleware
 
         logger.LogMiddlewareInvokeAsyncAfter<PermissionVerificationMiddleware>(_hostEnvironment);
 
-        var operateOfficer = ServiceProviderAssist.Instance.Resolve<IOperateOfficer>();
+        var operateOfficer = ServiceProviderAssist.Resolve<IOperateOfficer>();
 
         var result = await operateOfficer.DoVerificationAsync(context);
 

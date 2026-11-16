@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
+﻿using EasySoft.Core.AccessWayTransceiver.Assists;
 using EasySoft.Core.AccessWayTransceiver.Consumers;
 using EasySoft.Core.AccessWayTransceiver.Producers;
 using EasySoft.Core.Messaging.SlimMessageBus.Extensions;
@@ -27,18 +27,15 @@ internal static class RabbitMQServiceExtensions
         services.AddSlimMessageBus(messageBusBuilder =>
             {
                 messageBusBuilder.AddChildBus(
-                    TransceiverConstant.AccessWayMessageTransmitter,
+                    AccessWayTransceiverConfigureAssist.AccessWayMessageTransceiver,
                     child =>
                     {
                         child.WithProviderRabbitMQ(cfg =>
                             {
-                                var configurationPath = TransceiverConstant
-                                    .GetAccessWayMessageRabbitMQConnectionString();
+                                var rabbitMQConnectionStringConfigValue = AccessWayTransceiverConfigureAssist
+                                    .GetRabbitMQConnectionString(configuration);
 
-                                cfg.ConnectionString = configuration[configurationPath]
-                                                       ?? throw new InvalidOperationException(
-                                                           $"缺少 AccessWayTransitiveMessage RabbitMQ 连接串[{configurationPath}]。"
-                                                       );
+                                cfg.ConnectionString = rabbitMQConnectionStringConfigValue.Value;
 
                                 // 交换器持久化：影响本子总线内所有生产者的交换器声明。
                                 cfg.UseExchangeDefaults(true);
@@ -58,7 +55,7 @@ internal static class RabbitMQServiceExtensions
         );
 
         // 出站口暴露给上层基础设施（生产方需要）
-        services.AddKeyedOutboundBus(TransceiverConstant.AccessWayMessageServiceKey);
+        services.AddKeyedOutboundBus(AccessWayTransceiverConfigureAssist.AccessWayMessageServiceKey);
 
         return services;
     }
@@ -77,7 +74,7 @@ internal static class RabbitMQServiceExtensions
         services.AddSlimMessageBus(messageBusBuilder =>
             {
                 messageBusBuilder.AddChildBus(
-                    TransceiverConstant.AccessWayMessageTransmitter,
+                    AccessWayTransceiverConfigureAssist.AccessWayMessageTransceiver,
                     child =>
                     {
                         child.Produce<IAccessWayTransitiveMessage>(x => x
@@ -110,7 +107,7 @@ internal static class RabbitMQServiceExtensions
         services.AddSlimMessageBus(mbb =>
             {
                 mbb.AddChildBus(
-                    TransceiverConstant.AccessWayMessageTransmitter,
+                    AccessWayTransceiverConfigureAssist.AccessWayMessageTransceiver,
                     child =>
                     {
                         child.Consume<IAccessWayTransitiveMessage>(x =>
@@ -133,30 +130,30 @@ internal static class RabbitMQServiceExtensions
 
     private static string GetExchange(IConfiguration configuration)
     {
-        var prefix = AppSettingAssist.GetGlobalPrefix(configuration);
+        var prefixConfigValue = AccessWayTransceiverConfigureAssist.GetPrefix(configuration);
 
         return StringAssist.Join(
-            [prefix, TransceiverConstant.AccessWayMessageExchange],
+            [prefixConfigValue.Value, AccessWayTransceiverConfigureAssist.AccessWayMessageExchange],
             "."
         );
     }
 
     private static string GetRoutingKey(IConfiguration configuration)
     {
-        var prefix = AppSettingAssist.GetGlobalPrefix(configuration);
+        var prefixConfigValue = AccessWayTransceiverConfigureAssist.GetPrefix(configuration);
 
         return StringAssist.Join(
-            [prefix, TransceiverConstant.AccessWayMessageRoutingKey],
+            [prefixConfigValue.Value, AccessWayTransceiverConfigureAssist.AccessWayMessageRoutingKey],
             "."
         );
     }
 
     private static string GetQueue(IConfiguration configuration)
     {
-        var prefix = AppSettingAssist.GetGlobalPrefix(configuration);
+        var prefixConfigValue = AccessWayTransceiverConfigureAssist.GetPrefix(configuration);
 
         return StringAssist.Join(
-            [prefix, TransceiverConstant.AccessWayMessageQueue],
+            [prefixConfigValue.Value, AccessWayTransceiverConfigureAssist.AccessWayMessageQueue],
             "."
         );
     }

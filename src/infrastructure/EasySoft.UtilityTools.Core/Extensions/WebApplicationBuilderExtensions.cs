@@ -29,4 +29,26 @@ public static class WebApplicationBuilderExtensions
 
         return builder;
     }
+
+    /// <summary>
+    /// AddExtraNormalInjection
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="action"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static WebApplicationBuilder AddExtraNormalInjection(
+        this WebApplicationBuilder builder,
+        Action<IServiceCollection> action
+    )
+    {
+        if (action == null)
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
+
+        builder.Host.ConfigureServices(action);
+
+        return builder;
+    }
 }

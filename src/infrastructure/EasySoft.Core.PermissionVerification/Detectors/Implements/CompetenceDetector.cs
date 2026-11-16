@@ -20,23 +20,28 @@ public class CompetenceDetector : ICompetenceDetector
     /// <inheritdoc />
     public async Task<IList<CompetenceEntity>> GetCompetenceEntityCollection(long roleGroupId)
     {
-        var appId = GeneralConfigAssist.GetAppId();
+        var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+
+        var applicationIdConfigValue = infrastructureConfigureAssist.GetApplicationId();
+
         var salt = AppSecurityAssist.GetSalt();
         var sign = AppSecurityAssist.SignRequest(
-            appId,
+            applicationIdConfigValue.Value,
             AppSecurityClientConfigure.GetPublicKey(),
             salt
         );
 
         var apiResponse = await _permissionClient.GetCompetenceEntityCollectionAsync(
             roleGroupId,
-            appId,
+            applicationIdConfigValue.Value,
             sign,
             salt
         );
 
         if (!apiResponse.IsSuccessStatusCode || apiResponse.Content == null)
+        {
             throw new UnknownException($"rpc {GetType().Name}.{nameof(GetCompetenceEntityCollection)} call fail");
+        }
 
         return apiResponse.Content.Data ?? new List<CompetenceEntity>();
     }

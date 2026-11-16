@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Config.Options;
+﻿using EasySoft.Core.Infrastructure.Options;
 using Microsoft.AspNetCore.StaticFiles;
 
 namespace EasySoft.Simple.Single.Application.Options;

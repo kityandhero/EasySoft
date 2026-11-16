@@ -145,7 +145,7 @@ public static class PermissionAssists
 
     private static async Task ExecSaveAsync(IAccessWayDetector accessWayDetector)
     {
-        var accessWayProducer = ServiceProviderAssist.Instance.Resolve<IAccessWayProducer>();
+        var accessWayProducer = ServiceProviderAssist.Resolve<IAccessWayProducer>();
 
         while (AccessWayModelScanQuery.TryDequeue(out var accessWayModel))
         {

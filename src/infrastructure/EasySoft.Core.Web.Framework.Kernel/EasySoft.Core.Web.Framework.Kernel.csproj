@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>warnings</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Asp.Versioning.Abstractions"/>
+        <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\EasySoft.Core.CacheImplementation\EasySoft.Core.CacheImplementation.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.EasyToken\EasySoft.Core.EasyToken.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.JsonWebToken\EasySoft.Core.JsonWebToken.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Mapster\EasySoft.Core.Mapster.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.MiniProfiler\EasySoft.Core.MiniProfiler.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.NLog\EasySoft.Core.NLog.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.PermissionVerification\EasySoft.Core.PermissionVerification.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.PrepareStartWork\EasySoft.Core.PrepareStartWork.csproj"/>
+    </ItemGroup>
+
+</Project>

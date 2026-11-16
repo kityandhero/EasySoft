@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Infrastructure.Configures;
+﻿using EasySoft.Core.Exceptionless.Assists;
+using EasySoft.Core.Infrastructure.Configures;
 using FlagAssist = EasySoft.Core.Exceptionless.Assists.FlagAssist;
 
 namespace EasySoft.Core.Exceptionless.ExtensionMethods;
@@ -7,10 +8,12 @@ public static class WebApplicationBuilderExtensions
 {
     public static WebApplicationBuilder AddAdvanceExceptionless(this WebApplicationBuilder builder)
     {
-        if (!GeneralConfigAssist.GetExceptionlessSwitch())
+        builder.Services.AddExceptionlessConfigureAssist(builder.Configuration);
+
+        if (!ExceptionlessConfigureAssist.GetExceptionlessTeleport(builder.Configuration))
         {
             StartupConfigMessageAssist.AddConfig(
-                $"ExceptionlessSwitch: disable.",
+                $"Exceptionless Teleport: disable.",
                 GeneralConfigAssist.GetConfigFileInfo()
             );
 
@@ -26,9 +29,12 @@ public static class WebApplicationBuilderExtensions
             GeneralConfigAssist.GetConfigFileInfo()
         );
 
-        if (FlagAssist.GetAdvanceExceptionlessInitializeWhetherCompleted()) return builder;
+        if (FlagAssist.GetAdvanceExceptionlessInitializeWhetherCompleted())
+        {
+            return builder;
+        }
 
-        builder.Services.AddAdvanceExceptionless();
+        builder.Services.AddAdvanceExceptionless(builder.Configuration);
 
         ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>().SetName("").SetAction(application => application.UseExceptionless())
@@ -37,7 +43,7 @@ public static class WebApplicationBuilderExtensions
         FlagAssist.SetAdvanceExceptionlessInitializeCompleted();
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"Exceptionless is in use, address is {GeneralConfigAssist.GetExceptionlessServerUrl()}."
+            $"Exceptionless is in use, address is {ExceptionlessConfigureAssist.GetExceptionlessServerUrl(builder.Configuration)}."
         );
 
         return builder;

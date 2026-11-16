@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.DependencyInjection.IocAssists;
-using EasySoft.UtilityTools.Standard.Exceptions;
+﻿using EasySoft.UtilityTools.Standard.Exceptions;
 using EasySoft.UtilityTools.Standard.Interfaces;
 using EasySoft.UtilityTools.Standard.Producers;
 
@@ -150,14 +149,14 @@ public static class RedisCacheProvider
     /// <param name="ex"></param>
     private static void LogError(Exception ex)
     {
-        var errorLogProducer = ServiceProviderAssist.Instance.Resolve<IErrorLogProducer>();
+        var errorLogProducer = ServiceProviderAssist.Resolve<IErrorLogProducer>();
 
         if (errorLogProducer == null)
         {
             return;
         }
 
-        var channel = ServiceProviderAssist.Instance.Resolve<IChannel>();
+        var channel = ServiceProviderAssist.Resolve<IChannel>();
 
         if (channel == null)
         {
@@ -182,14 +181,14 @@ public static class RedisCacheProvider
             return;
         }
 
-        var errorLogProducer = ServiceProviderAssist.Instance.Resolve<IErrorLogProducer>();
+        var errorLogProducer = ServiceProviderAssist.Resolve<IErrorLogProducer>();
 
         if (errorLogProducer == null)
         {
             return;
         }
 
-        var channel = ServiceProviderAssist.Instance.Resolve<IChannel>();
+        var channel = ServiceProviderAssist.Resolve<IChannel>();
 
         if (channel == null)
         {

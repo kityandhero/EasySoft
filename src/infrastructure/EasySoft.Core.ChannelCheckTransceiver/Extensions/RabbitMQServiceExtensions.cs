@@ -1,7 +1,7 @@
-﻿using EasySoft.Core.ChannelCheckTransceiver.Consumers;
+﻿using EasySoft.Core.ChannelCheckTransceiver.Assists;
+using EasySoft.Core.ChannelCheckTransceiver.Consumers;
 using EasySoft.Core.ChannelCheckTransceiver.Entities.Interfaces;
 using EasySoft.Core.ChannelCheckTransceiver.Producers;
-using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Messaging.SlimMessageBus.Extensions;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Producers;
@@ -28,18 +28,16 @@ internal static class RabbitMQServiceExtensions
         services.AddSlimMessageBus(messageBusBuilder =>
             {
                 messageBusBuilder.AddChildBus(
-                    TransceiverConstant.ChannelCheckMessageTransmitter,
+                    ChannelCheckTransceiverConfigureAssist.ChannelCheckMessageTransceiver,
                     child =>
                     {
                         child.WithProviderRabbitMQ(cfg =>
                             {
-                                var configurationPath = TransceiverConstant
-                                    .GetChannelCheckMessageRabbitMQConnectionString();
+                                var rabbitMQConnectionString = ChannelCheckTransceiverConfigureAssist
+                                    .GetRabbitMQConnectionString(configuration)
+                                    .Value;
 
-                                cfg.ConnectionString = configuration[configurationPath]
-                                                       ?? throw new InvalidOperationException(
-                                                           $"缺少 ChannelCheckMessage RabbitMQ 连接串[{configurationPath}]。"
-                                                       );
+                                cfg.ConnectionString = rabbitMQConnectionString;
 
                                 // 交换器持久化：影响本子总线内所有生产者的交换器声明。
                                 cfg.UseExchangeDefaults(true);
@@ -59,7 +57,7 @@ internal static class RabbitMQServiceExtensions
         );
 
         // 出站口暴露给上层基础设施（生产方需要）
-        services.AddKeyedOutboundBus(TransceiverConstant.ChannelCheckMessageServiceKey);
+        services.AddKeyedOutboundBus(ChannelCheckTransceiverConfigureAssist.ChannelCheckMessageServiceKey);
 
         return services;
     }
@@ -78,7 +76,7 @@ internal static class RabbitMQServiceExtensions
         services.AddSlimMessageBus(messageBusBuilder =>
             {
                 messageBusBuilder.AddChildBus(
-                    TransceiverConstant.ChannelCheckMessageTransmitter,
+                    ChannelCheckTransceiverConfigureAssist.ChannelCheckMessageTransceiver,
                     child =>
                     {
                         child.Produce<IChannelCheckMessage>(x => x
@@ -111,7 +109,7 @@ internal static class RabbitMQServiceExtensions
         services.AddSlimMessageBus(mbb =>
             {
                 mbb.AddChildBus(
-                    TransceiverConstant.ChannelCheckMessageTransmitter,
+                    ChannelCheckTransceiverConfigureAssist.ChannelCheckMessageTransceiver,
                     child =>
                     {
                         child.Consume<IChannelCheckMessage>(x =>
@@ -134,30 +132,30 @@ internal static class RabbitMQServiceExtensions
 
     private static string GetExchange(IConfiguration configuration)
     {
-        var prefix = AppSettingAssist.GetGlobalPrefix(configuration);
+        var prefix = ChannelCheckTransceiverConfigureAssist.GetPrefix(configuration).Value;
 
         return StringAssist.Join(
-            [prefix, TransceiverConstant.ChannelCheckMessageExchange],
+            [prefix, ChannelCheckTransceiverConfigureAssist.ChannelCheckMessageExchange],
             "."
         );
     }
 
     private static string GetRoutingKey(IConfiguration configuration)
     {
-        var prefix = AppSettingAssist.GetGlobalPrefix(configuration);
+        var prefix = ChannelCheckTransceiverConfigureAssist.GetPrefix(configuration).Value;
 
         return StringAssist.Join(
-            [prefix, TransceiverConstant.ChannelCheckMessageRoutingKey],
+            [prefix, ChannelCheckTransceiverConfigureAssist.ChannelCheckMessageRoutingKey],
             "."
         );
     }
 
     private static string GetQueue(IConfiguration configuration)
     {
-        var prefix = AppSettingAssist.GetGlobalPrefix(configuration);
+        var prefix = ChannelCheckTransceiverConfigureAssist.GetPrefix(configuration).Value;
 
         return StringAssist.Join(
-            [prefix, TransceiverConstant.ChannelCheckMessageQueue],
+            [prefix, ChannelCheckTransceiverConfigureAssist.ChannelCheckMessageQueue],
             "."
         );
     }

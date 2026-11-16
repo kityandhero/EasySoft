@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Infrastructure.Configures;
+using EasySoft.Core.MiniProfiler.Assists;
 
 namespace EasySoft.Core.MiniProfiler.ExtensionMethods;
 
@@ -10,7 +11,7 @@ public static class WebApplicationBuilderExtensions
     private const string UniqueIdentifierAddAdvanceMiniProfile = "0087964a-ea50-4f11-9f85-35ee4146de53";
 
     /// <summary>
-    /// AddAdvanceMiniProfile
+    /// 注入 MiniProfile
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
@@ -23,24 +24,22 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
-        if (!GeneralConfigAssist.GetMiniProFileSwitch())
-        {
-            StartupConfigMessageAssist.AddConfig(
-                "MiniProFileSwitch : disable.",
-                GeneralConfigAssist.GetConfigFileInfo()
-            );
-
-            return builder;
-        }
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceMiniProfile)}."
         );
 
+        builder.Services.AddSingleton(new MiniProFileConfigureAssist(builder.Configuration));
+
+        var miniProFileConfigValue = MiniProFileConfigureAssist.GetMiniProFile(builder.Configuration);
+
         StartupConfigMessageAssist.AddConfig(
-            "MiniProFileSwitch : enable.",
-            GeneralConfigAssist.GetConfigFileInfo()
+            miniProFileConfigValue.ToArrowDescription()
         );
+
+        if (!miniProFileConfigValue.Value)
+        {
+            return builder;
+        }
 
         builder.Services
             .AddMiniProfiler(options =>

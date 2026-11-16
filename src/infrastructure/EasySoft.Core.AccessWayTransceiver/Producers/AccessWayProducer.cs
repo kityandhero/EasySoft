@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Messaging.Abstractions;
+﻿using EasySoft.Core.AccessWayTransceiver.Assists;
+using EasySoft.Core.Messaging.Abstractions;
 using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.AccessWayTransceiver.Producers;
@@ -19,7 +20,7 @@ public class AccessWayProducer : IAccessWayProducer
     /// </param>
     /// <param name="applicationChannel">应用通道</param>
     public AccessWayProducer(
-        [FromKeyedServices(TransceiverConstant.AccessWayMessageServiceKey)]
+        [FromKeyedServices(AccessWayTransceiverConfigureAssist.AccessWayMessageServiceKey)]
         IOutboundMessageBus bus,
         IApplicationChannel applicationChannel
     )

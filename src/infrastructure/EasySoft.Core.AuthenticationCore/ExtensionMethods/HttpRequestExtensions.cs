@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.DependencyInjection.IocAssists;
+﻿using EasySoft.Core.AuthenticationCore.Assists;
+using EasySoft.Core.Infrastructure.Assists;
 
 namespace EasySoft.Core.AuthenticationCore.ExtensionMethods;
 
@@ -22,7 +23,11 @@ public static class HttpRequestExtensions
             return ExchangeRealToken(token);
         }
 
-        if (GeneralConfigAssist.GetTokenParseFromUrlSwitch() && httpRequest.Query.ContainsKey(key))
+        var authenticationConfigureAssist = ServiceProviderAssist.Resolve<AuthenticationConfigureAssist>();
+
+        var tokenParseFromUrlSwitchConfigValue = authenticationConfigureAssist.GetTokenParseFromUrlSwitch();
+
+        if (tokenParseFromUrlSwitchConfigValue.Value && httpRequest.Query.ContainsKey(key))
         {
             token = httpRequest.Query[key];
 
@@ -32,7 +37,9 @@ public static class HttpRequestExtensions
             }
         }
 
-        if (GeneralConfigAssist.GetTokenParseFromCookieSwitch() && httpRequest.Cookies.ContainsKey(key))
+        var tokenParseFromCookieSwitchConfigValue = authenticationConfigureAssist.GetTokenParseFromCookieSwitch();
+
+        if (tokenParseFromCookieSwitchConfigValue.Value && httpRequest.Cookies.ContainsKey(key))
         {
             token = httpRequest.Cookies[key];
 
@@ -47,12 +54,16 @@ public static class HttpRequestExtensions
 
     private static string ExchangeRealToken(string tokenOrKey)
     {
-        if (!GeneralConfigAssist.GetTokenServerDumpSwitch())
+        var authenticationConfigureAssist = ServiceProviderAssist.Resolve<AuthenticationConfigureAssist>();
+
+        var tokenServerDumpSwitchConfigValue = authenticationConfigureAssist.GetTokenServerDumpSwitch();
+
+        if (!tokenServerDumpSwitchConfigValue.Value)
         {
             return tokenOrKey;
         }
 
-        var cacheOperator = ServiceProviderAssist.Instance.Resolve<ICacheOperator>();
+        var cacheOperator = ServiceProviderAssist.Resolve<ICacheOperator>();
 
         var result = cacheOperator.GetSerializedValue(tokenOrKey);
 

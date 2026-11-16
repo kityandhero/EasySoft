@@ -7,14 +7,14 @@ public static class MinioClientAssist
 {
     public static MinioClient GetMinioClient()
     {
-        return ServiceProviderAssist.Instance.Resolve<MinioClient>();
+        return ServiceProviderAssist.Resolve<MinioClient>();
     }
 
     public static async Task<ExecutiveResult> PutObjectAsync(string bucketName, string objectName, string contentType)
     {
         try
         {
-            var minioClient = ServiceProviderAssist.Instance.Resolve<MinioClient>();
+            var minioClient = ServiceProviderAssist.Resolve<MinioClient>();
 
             // Make a bucket on the server, if not already present.
             var found = await minioClient.BucketExistsAsync(new BucketExistsArgs().WithBucket(bucketName));

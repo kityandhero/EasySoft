@@ -2,7 +2,7 @@
 
 public static class MapperAssist
 {
-    private static IMapper? _mapper;
+    private static IMapper _mapper;
 
     public static void SetMapper(IMapper mapper)
     {
@@ -11,7 +11,10 @@ public static class MapperAssist
 
     public static IMapper GetMapper()
     {
-        if (_mapper == null) throw new Exception("please set mapper before get it");
+        if (_mapper == null)
+        {
+            throw new Exception("please set mapper before get it");
+        }
 
         return _mapper;
     }

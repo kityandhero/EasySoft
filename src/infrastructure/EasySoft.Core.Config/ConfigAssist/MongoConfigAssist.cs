@@ -77,16 +77,18 @@ public static class MongoConfigAssist
     /// GetConnection
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
+    /// <exception cref="ConfigFileErrorException"></exception>
     public static string GetConnection()
     {
         var v = GetConfig().Connection;
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置Mongo Connection: {ConfigFile} -> Connection",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -95,16 +97,18 @@ public static class MongoConfigAssist
     /// GetDatabase
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
+    /// <exception cref="ConfigFileErrorException"></exception>
     public static string GetDatabase()
     {
         var v = GetConfig().Database;
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置Mongo Database: {ConfigFile} -> Database",
                 GetConfigFileInfo()
             );
+        }
 
         return v.Remove(" ").Trim();
     }

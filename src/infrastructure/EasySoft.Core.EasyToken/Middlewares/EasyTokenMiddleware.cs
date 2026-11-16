@@ -1,10 +1,8 @@
-﻿using EasySoft.Core.DependencyInjection.IocAssists;
+﻿using EasySoft.Core.AuthenticationCore.Assists;
 using EasySoft.Core.EasyToken.AccessControl;
 using EasySoft.UtilityTools.Core.Extensions;
 using EasySoft.UtilityTools.Core.Results.Implements;
 using EasySoft.UtilityTools.Standard.Producers;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.EasyToken.Middlewares;
 
@@ -36,7 +34,11 @@ public class EasyTokenMiddleware : IMiddleware
 
         logger.LogMiddlewareInvokeAsyncAfter<EasyTokenMiddleware>(_hostEnvironment);
 
-        var token = context.GetToken(GeneralConfigAssist.GetTokenName());
+        var authenticationConfigureAssist = ServiceProviderAssist.Resolve<AuthenticationConfigureAssist>();
+
+        var tokenNameConfigValue = authenticationConfigureAssist.GetTokenName();
+
+        var token = context.GetToken(tokenNameConfigValue.Value);
 
         if (string.IsNullOrWhiteSpace(token))
         {
@@ -51,9 +53,9 @@ public class EasyTokenMiddleware : IMiddleware
             return;
         }
 
-        ServiceProviderAssist.Instance.Resolve<ITokenSecretOptions>();
+        ServiceProviderAssist.Resolve<ITokenSecretOptions>();
 
-        var tokenSecret = ServiceProviderAssist.Instance.Resolve<ITokenSecret>();
+        var tokenSecret = ServiceProviderAssist.Resolve<ITokenSecret>();
 
         try
         {
@@ -66,9 +68,13 @@ public class EasyTokenMiddleware : IMiddleware
             }
             catch (Exception e)
             {
-                if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
+                var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+
+                var transmissionErrorConfigValue = infrastructureConfigureAssist.GetTransmissionError();
+
+                if (!transmissionErrorConfigValue.Value)
                 {
-                    await ServiceProviderAssist.Instance.Resolve<IErrorLogProducer>()
+                    await ServiceProviderAssist.Resolve<IErrorLogProducer>()
                         .SendAsync(
                             e,
                             0,
@@ -100,7 +106,7 @@ public class EasyTokenMiddleware : IMiddleware
                 return;
             }
 
-            var actualOperator = ServiceProviderAssist.Instance.Resolve<IActualOperator>();
+            var actualOperator = ServiceProviderAssist.Resolve<IActualOperator>();
 
             actualOperator.SetToken(token);
 
@@ -123,9 +129,13 @@ public class EasyTokenMiddleware : IMiddleware
         }
         catch (Exception e)
         {
-            if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
+            var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+
+            var transmissionErrorConfigValue = infrastructureConfigureAssist.GetTransmissionError();
+
+            if (!transmissionErrorConfigValue.Value)
             {
-                await ServiceProviderAssist.Instance.Resolve<IErrorLogProducer>()
+                await ServiceProviderAssist.Resolve<IErrorLogProducer>()
                     .SendAsync(
                         e,
                         0,

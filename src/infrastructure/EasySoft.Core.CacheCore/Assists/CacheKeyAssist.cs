@@ -27,7 +27,7 @@ public class CacheKeyAssist
 
     private string KeyPrefix()
     {
-        return CacheConfigureAssist.GetCacheKeyPrefix();
+        return CacheConfigureAssist.GetCacheKeyPrefix().Value;
     }
 
     public string BuildKey<T>(params string[] nameArray)

@@ -13,7 +13,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\infrastructure\ EasySoft.Core.DependencyInjection\EasySoft.Core.DependencyInjection.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Dapper.Elegant\EasySoft.Core.Dapper.Elegant.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Dapper\EasySoft.Core.Dapper.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.CacheImplementation\EasySoft.Core.CacheImplementation.csproj"/>

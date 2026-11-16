@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Messaging.Abstractions;
+using EasySoft.Core.SqlLogTransceiver.Assists;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Producers;
 
@@ -20,7 +21,7 @@ public class SqlLogProducer : ISqlLogProducer
     /// </param>
     /// <param name="applicationChannel">应用通道</param>
     public SqlLogProducer(
-        [FromKeyedServices(TransceiverConstant.SqlLogMessageServiceKey)]
+        [FromKeyedServices(SqlLogTransceiverConfigureAssist.SqlLogMessageServiceKey)]
         IOutboundMessageBus bus,
         IApplicationChannel applicationChannel
     )

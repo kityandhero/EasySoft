@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.AppSecurityVerification.Clients;
 using EasySoft.Core.AppSecurityVerification.Detectors.Interfaces;
-using EasySoft.Core.ChannelCheckTransceiver.Producers;
 using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.AppSecurityVerification.Detectors.Implements;
@@ -59,10 +58,15 @@ public class AppSecurityDetector : IAppSecurityDetector
     /// <inheritdoc />
     public async Task CredentialVerify()
     {
+        var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+
+        var applicationIdConfigValue = infrastructureConfigureAssist.GetApplicationId();
+        var applicationSecretConfigValue = infrastructureConfigureAssist.GetApplicationSecret();
+
         var appSecurityDto = new AppSecurityDto
         {
-            AppId = GeneralConfigAssist.GetAppId(),
-            AppSecret = GeneralConfigAssist.GetAppSecret(),
+            AppId = applicationIdConfigValue.Value,
+            AppSecret = applicationSecretConfigValue.Value,
             UnixTime = AppSecurityAssist.GetUnixTime(),
             Salt = AppSecurityAssist.GetSalt(),
             Channel = _applicationChannel.GetChannel().ToValue()

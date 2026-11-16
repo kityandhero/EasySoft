@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.DependencyInjection.ExtensionMethods;
-using EasySoft.Simple.Single.Application.Common;
+﻿using EasySoft.Simple.Single.Application.Common;
 using EasySoft.Simple.Single.Application.PrepareStartWorks;
 using EasySoft.Simple.Single.Application.Security;
 using EasySoft.UtilityTools.Core.Results.Implements;

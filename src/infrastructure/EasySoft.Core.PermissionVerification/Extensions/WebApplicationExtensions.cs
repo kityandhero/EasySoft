@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.PermissionVerification.Assists;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.Core.PermissionVerification.Assists;
 using EasySoft.Core.PermissionVerification.Configures;
 
 namespace EasySoft.Core.PermissionVerification.Extensions;
@@ -17,7 +18,12 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        if (!GeneralConfigAssist.GetAccessWayDetectSwitch()) return application;
+        var authorizationConfigureAssist = ServiceProviderAssist.Resolve<AuthorizationConfigureAssist>();
+
+        if (!authorizationConfigureAssist.GetAccessWayDetectSwitch().Value)
+        {
+            return application;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseScanPermission)}."

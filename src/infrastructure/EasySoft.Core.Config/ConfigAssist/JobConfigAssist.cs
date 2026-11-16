@@ -81,10 +81,12 @@ public static class JobConfigAssist
         var v = GetConfig().MaxThread.Remove(" ").Trim();
 
         if (!v.IsInt() || v.ToInt() <= 0)
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置Job MaxThread: {ConfigFile} -> MaxThread",
                 GetConfigFileInfo()
             );
+        }
 
         return v.ToInt();
     }
@@ -97,10 +99,12 @@ public static class JobConfigAssist
         var v = GetConfig().TimeInterval.Remove(" ").Trim();
 
         if (!v.IsInt64() || v.ToInt64() <= 0)
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置Job TimeInterval: {ConfigFile} -> TimeInterval",
                 GetConfigFileInfo()
             );
+        }
 
         return v.ToInt64();
     }
@@ -113,10 +117,12 @@ public static class JobConfigAssist
         var v = GetConfig().SpecifiedHour.Remove(" ").Trim();
 
         if (!v.IsInt() || v.ToInt() < 0 || v.ToInt() >= 24)
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置Job SpecifiedHour: {ConfigFile} -> SpecifiedHour, 可配置范围: [0 ~ 23]",
                 GetConfigFileInfo()
             );
+        }
 
         return v.ToInt();
     }
@@ -129,10 +135,12 @@ public static class JobConfigAssist
         var v = GetConfig().SpecifiedMinute.Remove(" ").Trim();
 
         if (!v.IsInt() || v.ToInt() <= 0 || v.ToInt() >= 59)
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置Job SpecifiedMinute: {ConfigFile} -> SpecifiedMinute, 可配置范围: [0 ~ 59]",
                 GetConfigFileInfo()
             );
+        }
 
         return v.ToInt();
     }
@@ -145,10 +153,12 @@ public static class JobConfigAssist
         var v = GetConfig().SpecifiedSecond.Remove(" ").Trim();
 
         if (!v.IsInt() || v.ToInt() <= 0)
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置Job SpecifiedSecond: {ConfigFile} -> SpecifiedSecond, 可配置范围: [0 ~ 59]",
                 GetConfigFileInfo()
             );
+        }
 
         return v.ToInt();
     }
@@ -161,10 +171,12 @@ public static class JobConfigAssist
         var v = GetConfig().CurtailHour.Remove(" ").Trim();
 
         if (!v.IsInt() || v.ToInt() < 0)
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置Job CurtailHour: {ConfigFile} -> CurtailHour",
                 GetConfigFileInfo()
             );
+        }
 
         return v.ToInt();
     }

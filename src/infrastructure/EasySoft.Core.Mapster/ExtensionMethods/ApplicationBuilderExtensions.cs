@@ -19,8 +19,7 @@ public static class ApplicationBuilderExtensions
             $"{nameof(AddAdvanceMapster)}."
         );
 
-        ConfigActionAssist.GetConfigAction()
-            .ForEach(action => { action(TypeAdapterConfig.GlobalSettings); });
+        ConfigActionAssist.GetConfigAction().ForEach(action => { action(TypeAdapterConfig.GlobalSettings); });
 
         builder.Services.AddSingleton<IMapper, Mapper>();
 

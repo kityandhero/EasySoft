@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.ErrorLogTransceiver.Consumers;
-using EasySoft.Core.ErrorLogTransceiver.Producers;
+﻿using EasySoft.Core.ErrorLogTransceiver.Consumers;
 using EasySoft.Core.Infrastructure.Assists;
 
 namespace EasySoft.Core.ErrorLogTransceiver.Extensions;
@@ -33,13 +31,17 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
-        StartupConfigMessageAssist.AddConfig(
-            GeneralConfigAssist.GetRemoteErrorLogSwitch()
-                ? "RemoteErrorLogEnable: enable."
-                : "RemoteErrorLogEnable: disable.",
-            GeneralConfigAssist.GetConfigFileInfo()
+        StartupDescriptionMessageAssist.AddExecute($"{nameof(AddErrorLogRabbitMQTransceiver)}");
+
+        var transmissionErrorConfigValue = InfrastructureConfigureAssist.GetTransmissionError(
+            builder.Configuration
         );
 
+        StartupConfigMessageAssist.AddConfig(
+            transmissionErrorConfigValue.ToArrowDescription()
+        );
+
+        builder.Services.AddErrorLogTransceiverConfigureAssist(builder.Configuration);
         builder.Services.AddErrorLogRabbitMQCore(builder.Configuration);
         builder.Services.AddErrorLogRabbitMQProducer(builder.Configuration);
         builder.Services.AddErrorLogRabbitMQConsumer<TErrorLogConsumer>(builder.Configuration, 1);
@@ -61,13 +63,17 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
-        StartupConfigMessageAssist.AddConfig(
-            GeneralConfigAssist.GetRemoteErrorLogSwitch()
-                ? "RemoteErrorLogEnable: enable."
-                : "RemoteErrorLogEnable: disable.",
-            GeneralConfigAssist.GetConfigFileInfo()
+        StartupDescriptionMessageAssist.AddExecute($"{nameof(AddErrorLogRabbitMQOnlyProducer)}");
+
+        var transmissionErrorConfigValue = InfrastructureConfigureAssist.GetTransmissionError(
+            builder.Configuration
         );
 
+        StartupConfigMessageAssist.AddConfig(
+            transmissionErrorConfigValue.ToArrowDescription()
+        );
+
+        builder.Services.AddErrorLogTransceiverConfigureAssist(builder.Configuration);
         builder.Services.AddErrorLogRabbitMQCore(builder.Configuration);
         builder.Services.AddErrorLogRabbitMQProducer(builder.Configuration);
 
@@ -90,13 +96,17 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
-        StartupConfigMessageAssist.AddConfig(
-            GeneralConfigAssist.GetRemoteErrorLogSwitch()
-                ? "RemoteErrorLogEnable: enable."
-                : "RemoteErrorLogEnable: disable.",
-            GeneralConfigAssist.GetConfigFileInfo()
+        StartupDescriptionMessageAssist.AddExecute($"{nameof(AddErrorLogRabbitMQOnlyConsumer)}");
+
+        var transmissionErrorConfigValue = InfrastructureConfigureAssist.GetTransmissionError(
+            builder.Configuration
         );
 
+        StartupConfigMessageAssist.AddConfig(
+            transmissionErrorConfigValue.ToArrowDescription()
+        );
+
+        builder.Services.AddErrorLogTransceiverConfigureAssist(builder.Configuration);
         builder.Services.AddErrorLogRabbitMQCore(builder.Configuration);
         builder.Services.AddErrorLogRabbitMQConsumer<TErrorLogConsumer>(builder.Configuration, instances);
 

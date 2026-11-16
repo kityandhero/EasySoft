@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.DependencyInjection.IocAssists;
+﻿using EasySoft.Core.AuthenticationCore.Assists;
 using EasySoft.Core.EasyToken.AccessControl;
 using EasySoft.UtilityTools.Core.Extensions;
 using EasySoft.UtilityTools.Core.Results.Implements;
@@ -20,7 +20,11 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
             return;
         }
 
-        var token = filterContext.HttpContext.GetToken(GeneralConfigAssist.GetTokenName());
+        var authenticationConfigureAssist = ServiceProviderAssist.Resolve<AuthenticationConfigureAssist>();
+
+        var tokenNameConfigValue = authenticationConfigureAssist.GetTokenName();
+
+        var token = filterContext.HttpContext.GetToken(tokenNameConfigValue.Value);
 
         if (string.IsNullOrWhiteSpace(token))
         {
@@ -33,9 +37,9 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
             return;
         }
 
-        ServiceProviderAssist.Instance.Resolve<ITokenSecretOptions>();
+        ServiceProviderAssist.Resolve<ITokenSecretOptions>();
 
-        var tokenSecret = ServiceProviderAssist.Instance.Resolve<ITokenSecret>();
+        var tokenSecret = ServiceProviderAssist.Resolve<ITokenSecret>();
 
         try
         {
@@ -48,9 +52,13 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
             }
             catch (Exception e)
             {
-                if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
+                var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+
+                var transmissionErrorConfigValue = infrastructureConfigureAssist.GetTransmissionError();
+
+                if (!transmissionErrorConfigValue.Value)
                 {
-                    ServiceProviderAssist.Instance.Resolve<IErrorLogProducer>()
+                    ServiceProviderAssist.Resolve<IErrorLogProducer>()
                         .SendAsync(
                             e,
                             0,
@@ -78,7 +86,7 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
                 return;
             }
 
-            var actualOperator = ServiceProviderAssist.Instance.Resolve<IActualOperator>();
+            var actualOperator = ServiceProviderAssist.Resolve<IActualOperator>();
 
             actualOperator.SetToken(token);
 
@@ -95,9 +103,13 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
         }
         catch (Exception e)
         {
-            if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
+            var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+
+            var transmissionErrorConfigValue = infrastructureConfigureAssist.GetTransmissionError();
+
+            if (!transmissionErrorConfigValue.Value)
             {
-                ServiceProviderAssist.Instance.Resolve<IErrorLogProducer>()
+                ServiceProviderAssist.Resolve<IErrorLogProducer>()
                     .SendAsync(
                         e,
                         0,

@@ -16,11 +16,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\ EasySoft.Core.DependencyInjection\EasySoft.Core.DependencyInjection.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.AuthenticationCore\EasySoft.Core.AuthenticationCore.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.CacheCore\EasySoft.Core.CacheCore.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.DynamicConfig\EasySoft.Core.DynamicConfig.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.ErrorLogTransceiver\EasySoft.Core.ErrorLogTransceiver.csproj"/>
     </ItemGroup>
 

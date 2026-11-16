@@ -63,7 +63,7 @@ public static class AgileConfigAssist
 
         if (string.IsNullOrWhiteSpace(v))
         {
-            throw new ConfigErrorException(
+            throw new ConfigFileErrorException(
                 $"请配置 AgileConfigAppId: {ConfigFile} -> AgileConfigAppId",
                 GetConfigFileInfo()
             );
@@ -84,7 +84,7 @@ public static class AgileConfigAssist
 
         if (string.IsNullOrWhiteSpace(v))
         {
-            throw new ConfigErrorException(
+            throw new ConfigFileErrorException(
                 $"请配置 AgileConfigSecret: {ConfigFile} -> AgileConfigSecret",
                 GetConfigFileInfo()
             );
@@ -105,7 +105,7 @@ public static class AgileConfigAssist
 
         if (string.IsNullOrWhiteSpace(v))
         {
-            throw new ConfigErrorException(
+            throw new ConfigFileErrorException(
                 $"请配置 AgileConfigAppId: {ConfigFile} -> AgileConfigAppId",
                 GetConfigFileInfo()
             );
@@ -173,7 +173,7 @@ public static class AgileConfigAssist
 
         if (!v.IsInt(out var value) || value <= 0)
         {
-            throw new ConfigErrorException(
+            throw new ConfigFileErrorException(
                 $"请配置 AgileConfigEnv: {ConfigFile} -> AgileConfigEnv,请设置数字 value > 0",
                 GetConfigFileInfo()
             );

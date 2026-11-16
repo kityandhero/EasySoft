@@ -13,7 +13,7 @@ public static class WebApplicationBuilderExtensions
     /// <returns></returns>
     public static WebApplicationBuilder AddAdvanceRefitClient<TAdvanceRefitClient>(
         this WebApplicationBuilder builder,
-        Action<IHttpClientBuilder>? action = null
+        Action<IHttpClientBuilder> action = null
     ) where TAdvanceRefitClient : class
     {
         builder.Services.AddAdvanceRefitClient<TAdvanceRefitClient>(action);

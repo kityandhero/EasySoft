@@ -77,16 +77,18 @@ public static class RabbitMQConfigAssist
     /// 获取域名
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
+    /// <exception cref="ConfigFileErrorException"></exception>
     public static string GetHostName()
     {
         var v = GetConfig().HostName.Remove(" ").Trim();
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置RabbitMQ消息队列HostName项: {ConfigFile} -> HostName",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -95,16 +97,18 @@ public static class RabbitMQConfigAssist
     /// 获取用户名
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
+    /// <exception cref="ConfigFileErrorException"></exception>
     public static string GetUserName()
     {
         var v = GetConfig().UserName.Remove(" ").Trim();
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置RabbitMQ消息队列UserName项: {ConfigFile} -> UserName",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -113,16 +117,18 @@ public static class RabbitMQConfigAssist
     /// 获取密码
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
+    /// <exception cref="ConfigFileErrorException"></exception>
     public static string GetPassword()
     {
         var v = GetConfig().Password.Remove(" ").Trim();
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置RabbitMQ消息队列Password项: {ConfigFile} -> Password",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -131,16 +137,18 @@ public static class RabbitMQConfigAssist
     /// 获取VirtualHost
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
+    /// <exception cref="ConfigFileErrorException"></exception>
     public static string GetVirtualHost()
     {
         var v = GetConfig().VirtualHost.Remove(" ").Trim();
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置RabbitMQ消息队列VirtualHost项: {ConfigFile} -> VirtualHost",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -149,7 +157,7 @@ public static class RabbitMQConfigAssist
     /// 获取端口
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
+    /// <exception cref="ConfigFileErrorException"></exception>
     public static int GetPort()
     {
         var v = GetConfig().Port.Remove(" ").Trim();
@@ -157,10 +165,12 @@ public static class RabbitMQConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "5672" : v;
 
         if (!v.IsInt(out var value) || value < 0)
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置 Port: {ConfigFile} -> Port,请设置数字 value > 0",
                 GetConfigFileInfo()
             );
+        }
 
         return value;
     }
@@ -169,16 +179,18 @@ public static class RabbitMQConfigAssist
     /// 获取超时时间
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
+    /// <exception cref="ConfigFileErrorException"></exception>
     public static int GetConnectionTimeout()
     {
         var v = GetConfig().ConnectionTimeout.Remove(" ").Trim();
 
         if (!v.IsInt() || v.ToInt() < 0)
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置RabbitMQ消息队列ConnectionTimeout项: {ConfigFile} -> ConnectionTimeout",
                 GetConfigFileInfo()
             );
+        }
 
         return v.ToInt();
     }

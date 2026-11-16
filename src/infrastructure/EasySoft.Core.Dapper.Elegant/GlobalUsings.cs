@@ -6,7 +6,6 @@ global using System.Linq.Expressions;
 global using Dapper;
 global using EasySoft.Core.CacheCore.interfaces;
 global using EasySoft.Core.CacheCore.Models;
-global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.Dapper.Base;
 global using EasySoft.Core.Dapper.Common;
 global using EasySoft.Core.Dapper.Enums;

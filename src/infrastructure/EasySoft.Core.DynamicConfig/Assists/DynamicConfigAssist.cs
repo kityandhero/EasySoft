@@ -1,4 +1,6 @@
-﻿using EasySoft.Core.DependencyInjection.IocAssists;
+﻿using EasySoft.Core.AuthenticationCore.Assists;
+using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Standard.Extensions;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
@@ -13,7 +15,9 @@ public static class DynamicConfigAssist
     /// <exception cref="Exception"></exception>
     public static int GetTokenExpires()
     {
-        var defaultTokenExpires = GeneralConfigAssist.GetTokenExpires();
+        var authenticationConfigureAssist = ServiceProviderAssist.Resolve<AuthenticationConfigureAssist>();
+
+        var defaultTokenExpires = authenticationConfigureAssist.GetTokenExpires();
 
         if (!GeneralConfigAssist.GetConfigCenterSwitch())
         {
@@ -148,7 +152,7 @@ public static class DynamicConfigAssist
     {
         try
         {
-            var applicationChannel = ServiceProviderAssist.Instance.Resolve<IApplicationChannel>();
+            var applicationChannel = ServiceProviderAssist.Resolve<IApplicationChannel>();
 
             var consulClient = ConsulConfigCenterClientAssist.GetConfigClient();
 

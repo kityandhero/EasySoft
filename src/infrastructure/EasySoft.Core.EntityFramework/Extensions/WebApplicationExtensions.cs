@@ -9,7 +9,10 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        if (EnvironmentAssist.GetEnvironment().IsDevelopment()) application.UseMigrationsEndPoint();
+        if (EnvironmentAssist.GetEnvironment().IsDevelopment())
+        {
+            application.UseMigrationsEndPoint();
+        }
 
         return application;
     }
@@ -26,12 +29,20 @@ public static class WebApplicationExtensions
     {
         var environment = application.Services.GetRequiredService<IWebHostEnvironment>();
 
-        if (!environment.IsDevelopment()) return application;
+        if (!environment.IsDevelopment())
+        {
+            return application;
+        }
 
         if (ContextConfigure.AutoMigrate && ContextConfigure.AutoEnsureCreated)
+        {
             throw new Exception(" 不能同时启用AutoMigrate, AutoEnsureCreated");
+        }
 
-        if (!ContextConfigure.AutoMigrate) return application;
+        if (!ContextConfigure.AutoMigrate)
+        {
+            return application;
+        }
 
         if (!environment.IsDevelopment())
         {
@@ -44,7 +55,7 @@ public static class WebApplicationExtensions
             );
         }
 
-        var context = ServiceAssist.GetServiceProvider().GetService<DbContext>();
+        var context = ServiceProviderAssist.GetProvider().GetService<DbContext>();
 
         context?.Database.Migrate();
 
@@ -61,12 +72,20 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        if (!EnvironmentAssist.GetEnvironment().IsDevelopment()) return application;
+        if (!EnvironmentAssist.GetEnvironment().IsDevelopment())
+        {
+            return application;
+        }
 
         if (ContextConfigure.AutoMigrate && ContextConfigure.AutoEnsureCreated)
+        {
             throw new Exception(" 不能同时启用AutoMigrate, AutoEnsureCreated");
+        }
 
-        if (!ContextConfigure.AutoEnsureCreated) return application;
+        if (!ContextConfigure.AutoEnsureCreated)
+        {
+            return application;
+        }
 
         LogAssist.Execute($"{nameof(UseAutoEnsureCreated)}.");
 
@@ -74,7 +93,7 @@ public static class WebApplicationExtensions
             $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.AutoEnsureCreated)} is {ContextConfigure.AutoEnsureCreated}."
         );
 
-        var context = ServiceAssist.GetServiceProvider().GetService<DbContext>();
+        var context = ServiceProviderAssist.GetProvider().GetService<DbContext>();
 
         context?.Database.EnsureCreated();
 

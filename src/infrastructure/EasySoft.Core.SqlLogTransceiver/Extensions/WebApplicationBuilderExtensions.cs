@@ -1,9 +1,8 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Infrastructure.Assists;
+﻿using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Configures;
 using EasySoft.Core.Infrastructure.Startup;
+using EasySoft.Core.SqlLogTransceiver.Assists;
 using EasySoft.Core.SqlLogTransceiver.Consumers;
-using EasySoft.UtilityTools.Standard.Assists;
 
 namespace EasySoft.Core.SqlLogTransceiver.Extensions;
 
@@ -34,13 +33,13 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddSqlLogRabbitMQTransceiver)}");
 
+        var transmissionConfigValue = SqlLogTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+
         StartupConfigMessageAssist.AddConfig(
-            SqlLogSwitchAssist.GetCurrentSwitch()
-                ? "RemoteSqlLogEnable: enable."
-                : "RemoteSqlLogEnable: disable.",
-            GeneralConfigAssist.GetConfigFileInfo()
+            transmissionConfigValue.ToArrowDescription()
         );
 
+        builder.Services.AddSqlLogTransceiverConfigureAssist(builder.Configuration);
         builder.Services.AddSqlLogRabbitMQCore(builder.Configuration);
         builder.Services.AddSqlLogRabbitMQProducer(builder.Configuration);
         builder.Services.AddSqlLogRabbitMQConsumer<TSqlLogConsumer>(builder.Configuration, 1);
@@ -69,13 +68,15 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
+        StartupDescriptionMessageAssist.AddExecute($"{nameof(AddSqlLogRabbitMQOnlyProducer)}");
+
+        var transmissionConfigValue = SqlLogTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+
         StartupConfigMessageAssist.AddConfig(
-            SqlLogSwitchAssist.GetCurrentSwitch()
-                ? "RemoteSqlLogEnable: enable."
-                : "RemoteSqlLogEnable: disable.",
-            GeneralConfigAssist.GetConfigFileInfo()
+            transmissionConfigValue.ToArrowDescription()
         );
 
+        builder.Services.AddSqlLogTransceiverConfigureAssist(builder.Configuration);
         builder.Services.AddSqlLogRabbitMQCore(builder.Configuration);
         builder.Services.AddSqlLogRabbitMQProducer(builder.Configuration);
 
@@ -98,13 +99,15 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
+        StartupDescriptionMessageAssist.AddExecute($"{nameof(AddSqlLogRabbitMQOnlyConsumer)}");
+
+        var transmissionConfigValue = SqlLogTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+
         StartupConfigMessageAssist.AddConfig(
-            SqlLogSwitchAssist.GetCurrentSwitch()
-                ? "RemoteSqlLogEnable: enable."
-                : "RemoteSqlLogEnable: disable.",
-            GeneralConfigAssist.GetConfigFileInfo()
+            transmissionConfigValue.ToArrowDescription()
         );
 
+        builder.Services.AddSqlLogTransceiverConfigureAssist(builder.Configuration);
         builder.Services.AddSqlLogRabbitMQCore(builder.Configuration);
         builder.Services.AddSqlLogRabbitMQConsumer<TSqlLogConsumer>(builder.Configuration, instances);
 

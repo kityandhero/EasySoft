@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
+﻿using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Startup;
 using Masuit.Tools;
 using Timer = System.Timers.Timer;
@@ -52,13 +53,17 @@ public static class ApplicationConfigure
         {
             var environment = serviceProvider.GetService<IWebHostEnvironment>();
 
-            if (!environment.IsDevelopment()) return;
+            if (!environment.IsDevelopment())
+            {
+                return;
+            }
 
             var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
 
-            loggerFactory?.CreateLogger<object>().LogAdvancePrompt(
-                "Execute work after application start."
-            );
+            loggerFactory?.CreateLogger<object>()
+                .LogAdvancePrompt(
+                    "Execute work after application start."
+                );
         };
     }
 
@@ -79,7 +84,7 @@ public static class ApplicationConfigure
     {
         var timer = new Timer(interval);
 
-        timer.Elapsed += (_, e) => { action(ServiceAssist.GetServiceProvider(), e); };
+        timer.Elapsed += (_, e) => { action(ServiceProviderAssist.GetProvider(), e); };
 
         Timers.AddRange(timer);
     }
@@ -117,7 +122,10 @@ public static class ApplicationConfigure
     /// <param name="area"></param>
     public static void AddArea(string area)
     {
-        if (string.IsNullOrWhiteSpace(area)) return;
+        if (string.IsNullOrWhiteSpace(area))
+        {
+            return;
+        }
 
         Areas.Add(area);
     }

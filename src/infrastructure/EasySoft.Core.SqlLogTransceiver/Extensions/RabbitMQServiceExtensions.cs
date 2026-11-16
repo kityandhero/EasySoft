@@ -1,5 +1,5 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.Messaging.SlimMessageBus.Extensions;
+﻿using EasySoft.Core.Messaging.SlimMessageBus.Extensions;
+using EasySoft.Core.SqlLogTransceiver.Assists;
 using EasySoft.Core.SqlLogTransceiver.Consumers;
 using EasySoft.Core.SqlLogTransceiver.Producers;
 using EasySoft.UtilityTools.Standard.Assists;
@@ -27,18 +27,16 @@ public static class RabbitMQServiceExtensions
         services.AddSlimMessageBus(messageBusBuilder =>
             {
                 messageBusBuilder.AddChildBus(
-                    TransceiverConstant.SqlLogMessageTransmitter,
+                    SqlLogTransceiverConfigureAssist.SqlLogMessageTransceiver,
                     child =>
                     {
                         child.WithProviderRabbitMQ(cfg =>
                             {
-                                var configurationPath = TransceiverConstant
-                                    .GetSqlLogMessageRabbitMQConnectionString();
+                                var rabbitMQConnectionString = SqlLogTransceiverConfigureAssist
+                                    .GetRabbitMQConnectionString(configuration)
+                                    .Value;
 
-                                cfg.ConnectionString = configuration[configurationPath]
-                                                       ?? throw new InvalidOperationException(
-                                                           $"缺少 SqlLogTransitiveMessage RabbitMQ 连接串[{configurationPath}]。"
-                                                       );
+                                cfg.ConnectionString = rabbitMQConnectionString;
 
                                 // 交换器持久化：影响本子总线内所有生产者的交换器声明。
                                 cfg.UseExchangeDefaults(true);
@@ -58,7 +56,7 @@ public static class RabbitMQServiceExtensions
         );
 
         // 出站口暴露给上层基础设施（生产方需要）
-        services.AddKeyedOutboundBus(TransceiverConstant.SqlLogMessageServiceKey);
+        services.AddKeyedOutboundBus(SqlLogTransceiverConfigureAssist.SqlLogMessageServiceKey);
 
         return services;
     }
@@ -77,7 +75,7 @@ public static class RabbitMQServiceExtensions
         services.AddSlimMessageBus(messageBusBuilder =>
             {
                 messageBusBuilder.AddChildBus(
-                    TransceiverConstant.SqlLogMessageTransmitter,
+                    SqlLogTransceiverConfigureAssist.SqlLogMessageTransceiver,
                     child =>
                     {
                         child.Produce<ISqlLogTransitiveMessage>(x => x
@@ -110,7 +108,7 @@ public static class RabbitMQServiceExtensions
         services.AddSlimMessageBus(mbb =>
             {
                 mbb.AddChildBus(
-                    TransceiverConstant.SqlLogMessageTransmitter,
+                    SqlLogTransceiverConfigureAssist.SqlLogMessageTransceiver,
                     child =>
                     {
                         child.Consume<ISqlLogTransitiveMessage>(x =>
@@ -133,30 +131,30 @@ public static class RabbitMQServiceExtensions
 
     private static string GetExchange(IConfiguration configuration)
     {
-        var prefix = AppSettingAssist.GetGlobalPrefix(configuration);
+        var prefix = SqlLogTransceiverConfigureAssist.GetPrefix(configuration).Value;
 
         return StringAssist.Join(
-            [prefix, TransceiverConstant.SqlLogMessageExchange],
+            [prefix, SqlLogTransceiverConfigureAssist.SqlLogMessageExchange],
             "."
         );
     }
 
     private static string GetRoutingKey(IConfiguration configuration)
     {
-        var prefix = AppSettingAssist.GetGlobalPrefix(configuration);
+        var prefix = SqlLogTransceiverConfigureAssist.GetPrefix(configuration).Value;
 
         return StringAssist.Join(
-            [prefix, TransceiverConstant.SqlLogMessageRoutingKey],
+            [prefix, SqlLogTransceiverConfigureAssist.SqlLogMessageRoutingKey],
             "."
         );
     }
 
     private static string GetQueue(IConfiguration configuration)
     {
-        var prefix = AppSettingAssist.GetGlobalPrefix(configuration);
+        var prefix = SqlLogTransceiverConfigureAssist.GetPrefix(configuration).Value;
 
         return StringAssist.Join(
-            [prefix, TransceiverConstant.SqlLogMessageQueue],
+            [prefix, SqlLogTransceiverConfigureAssist.SqlLogMessageQueue],
             "."
         );
     }

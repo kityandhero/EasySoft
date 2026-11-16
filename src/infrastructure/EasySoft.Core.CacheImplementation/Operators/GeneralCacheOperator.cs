@@ -29,7 +29,7 @@ public class GeneralCacheOperator : BaseCacheOperator
     /// <inheritdoc />
     internal override bool HasKeyCore(string key)
     {
-        var currentCacheMode = CacheConfigureAssist.GetCacheMode();
+        var currentCacheMode = CacheConfigureAssist.GetCacheMode().Value;
 
         if (currentCacheMode == "redis")
         {
@@ -46,7 +46,7 @@ public class GeneralCacheOperator : BaseCacheOperator
     /// <inheritdoc />
     internal override long StringIncrementCore(string key, int count)
     {
-        var currentCacheMode = CacheConfigureAssist.GetCacheMode();
+        var currentCacheMode = CacheConfigureAssist.GetCacheMode().Value;
 
         if (currentCacheMode == "redis")
         {
@@ -63,7 +63,7 @@ public class GeneralCacheOperator : BaseCacheOperator
     /// <inheritdoc />
     internal override string StringGetCore(string key)
     {
-        var currentCacheMode = CacheConfigureAssist.GetCacheMode();
+        var currentCacheMode = CacheConfigureAssist.GetCacheMode().Value;
 
         if (currentCacheMode == "redis")
         {
@@ -80,7 +80,7 @@ public class GeneralCacheOperator : BaseCacheOperator
     /// <inheritdoc />
     internal override bool SetValueCore<T>(string key, T value, TimeSpan expireTime)
     {
-        var currentCacheMode = CacheConfigureAssist.GetCacheMode();
+        var currentCacheMode = CacheConfigureAssist.GetCacheMode().Value;
 
         if (currentCacheMode == "redis")
         {
@@ -105,7 +105,7 @@ public class GeneralCacheOperator : BaseCacheOperator
     /// <inheritdoc />
     internal override bool RemoveCore(string key)
     {
-        var currentCacheMode = CacheConfigureAssist.GetCacheMode();
+        var currentCacheMode = CacheConfigureAssist.GetCacheMode().Value;
 
         if (currentCacheMode == "redis")
         {
@@ -118,7 +118,7 @@ public class GeneralCacheOperator : BaseCacheOperator
     /// <inheritdoc />
     internal override bool RemoveBatchCore(string key)
     {
-        var currentCacheMode = CacheConfigureAssist.GetCacheMode();
+        var currentCacheMode = CacheConfigureAssist.GetCacheMode().Value;
 
         if (currentCacheMode == "redis")
         {

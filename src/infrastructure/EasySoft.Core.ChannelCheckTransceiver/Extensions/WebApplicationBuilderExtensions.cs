@@ -1,4 +1,6 @@
-﻿using EasySoft.Core.ChannelCheckTransceiver.Consumers;
+﻿using EasySoft.Core.ChannelCheckTransceiver.Assists;
+using EasySoft.Core.ChannelCheckTransceiver.Consumers;
+using EasySoft.Core.Infrastructure.Assists;
 
 namespace EasySoft.Core.ChannelCheckTransceiver.Extensions;
 
@@ -30,6 +32,15 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
+        StartupDescriptionMessageAssist.AddExecute($"{nameof(AddChannelCheckRabbitMQTransceiver)}");
+
+        var transmissionConfigValue = ChannelCheckTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            transmissionConfigValue.ToArrowDescription()
+        );
+
+        builder.Services.AddChannelCheckTransceiverConfigureAssist(builder.Configuration);
         builder.Services.AddChannelCheckRabbitMQCore(builder.Configuration);
         builder.Services.AddChannelCheckRabbitMQProducer(builder.Configuration);
         builder.Services.AddChannelCheckRabbitMQConsumer<TChannelCheckConsumer>(builder.Configuration, 1);
@@ -51,6 +62,15 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
+        StartupDescriptionMessageAssist.AddExecute($"{nameof(AddChannelCheckRabbitMQOnlyProducer)}");
+
+        var transmissionConfigValue = ChannelCheckTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            transmissionConfigValue.ToArrowDescription()
+        );
+
+        builder.Services.AddChannelCheckTransceiverConfigureAssist(builder.Configuration);
         builder.Services.AddChannelCheckRabbitMQCore(builder.Configuration);
         builder.Services.AddChannelCheckRabbitMQProducer(builder.Configuration);
 
@@ -73,6 +93,15 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
+        StartupDescriptionMessageAssist.AddExecute($"{nameof(AddChannelCheckRabbitMQOnlyConsumer)}");
+
+        var transmissionConfigValue = ChannelCheckTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            transmissionConfigValue.ToArrowDescription()
+        );
+
+        builder.Services.AddChannelCheckTransceiverConfigureAssist(builder.Configuration);
         builder.Services.AddChannelCheckRabbitMQCore(builder.Configuration);
         builder.Services.AddChannelCheckRabbitMQConsumer<TChannelCheckConsumer>(builder.Configuration, instances);
 

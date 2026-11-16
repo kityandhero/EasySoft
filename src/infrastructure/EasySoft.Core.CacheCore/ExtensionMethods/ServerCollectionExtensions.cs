@@ -5,21 +5,20 @@ namespace EasySoft.Core.CacheCore.ExtensionMethods;
 
 public static class ServerCollectionExtensions
 {
+    /// <summary>
+    /// 注入缓存内核
+    /// </summary>
+    /// <param name="services">服务集</param>
+    /// <param name="configuration">配置集</param>
+    /// <returns>服务集</returns>
     public static IServiceCollection AddCacheCore(
-        this IServiceCollection services
+        this IServiceCollection services,
+        IConfiguration configuration
     )
     {
-        services.AddCacheConfigureAssist();
+        services.AddSingleton(new CacheConfigureAssist(configuration));
+
         services.AddCacheKeyAssist();
-
-        return services;
-    }
-
-    private static IServiceCollection AddCacheConfigureAssist(
-        this IServiceCollection services
-    )
-    {
-        services.AddSingleton<CacheConfigureAssist>();
 
         return services;
     }

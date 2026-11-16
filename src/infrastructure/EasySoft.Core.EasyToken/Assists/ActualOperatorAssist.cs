@@ -13,9 +13,9 @@ public static class ActualOperatorAssist
             return new ExecutiveResult<IActualOperator>(ReturnCode.NoData);
         }
 
-        ServiceProviderAssist.Instance.Resolve<ITokenSecretOptions>();
+        ServiceProviderAssist.Resolve<ITokenSecretOptions>();
 
-        var tokenSecret = ServiceProviderAssist.Instance.Resolve<ITokenSecret>();
+        var tokenSecret = ServiceProviderAssist.Resolve<ITokenSecret>();
 
         try
         {
@@ -40,7 +40,7 @@ public static class ActualOperatorAssist
                 );
             }
 
-            var actualOperator = ServiceProviderAssist.Instance.Resolve<IActualOperator>();
+            var actualOperator = ServiceProviderAssist.Resolve<IActualOperator>();
 
             actualOperator.SetToken(token);
 

@@ -1,10 +1,9 @@
-﻿using EasySoft.Core.DependencyInjection.IocAssists;
+﻿using EasySoft.Core.AuthenticationCore.Assists;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.JsonWebToken.Assists;
 using EasySoft.UtilityTools.Core.Extensions;
 using EasySoft.UtilityTools.Core.Results.Implements;
 using EasySoft.UtilityTools.Standard.Producers;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace EasySoft.Core.JsonWebToken.Middlewares;
 
@@ -36,7 +35,9 @@ public class JsonWebTokenMiddleware : IMiddleware
 
         logger.LogMiddlewareInvokeAsyncAfter<JsonWebTokenMiddleware>(_hostEnvironment);
 
-        var token = context.GetToken(GeneralConfigAssist.GetTokenName());
+        var authenticationConfigureAssist = ServiceProviderAssist.Resolve<AuthenticationConfigureAssist>();
+
+        var token = context.GetToken(authenticationConfigureAssist.GetTokenName().Value);
 
         if (string.IsNullOrWhiteSpace(token))
         {
@@ -59,9 +60,13 @@ public class JsonWebTokenMiddleware : IMiddleware
         }
         catch (Exception e)
         {
-            if (!GeneralConfigAssist.GetRemoteErrorLogSwitch())
+            var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+
+            var transmissionErrorConfigValue = infrastructureConfigureAssist.GetTransmissionError();
+
+            if (!transmissionErrorConfigValue.Value)
             {
-                await ServiceProviderAssist.Instance.Resolve<IErrorLogProducer>()
+                await ServiceProviderAssist.Resolve<IErrorLogProducer>()
                     .SendAsync(
                         e,
                         0,
@@ -105,7 +110,7 @@ public class JsonWebTokenMiddleware : IMiddleware
 
         var identification = first.Value;
 
-        var actualOperator = ServiceProviderAssist.Instance.Resolve<IActualOperator>();
+        var actualOperator = ServiceProviderAssist.Resolve<IActualOperator>();
 
         actualOperator.SetToken(token);
 

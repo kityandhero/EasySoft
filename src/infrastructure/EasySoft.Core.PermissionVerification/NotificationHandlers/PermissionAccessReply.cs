@@ -52,7 +52,7 @@ public class PermissionAccessReply : INotificationHandler<PermissionAccessNotifi
 
         if (!result.Success || result.Data == null)
         {
-            await ServiceProviderAssist.Instance.Resolve<IAccessWayProducer>().SendAsync(accessWayPersistence);
+            await ServiceProviderAssist.Resolve<IAccessWayProducer>().SendAsync(accessWayPersistence);
 
             if (_environment.IsDevelopment())
             {
@@ -86,7 +86,7 @@ public class PermissionAccessReply : INotificationHandler<PermissionAccessNotifi
                 return;
             }
 
-            await ServiceProviderAssist.Instance.Resolve<IAccessWayProducer>().SendAsync(accessWayPersistence);
+            await ServiceProviderAssist.Resolve<IAccessWayProducer>().SendAsync(accessWayPersistence);
 
             if (_environment.IsDevelopment())
             {

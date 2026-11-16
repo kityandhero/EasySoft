@@ -3,12 +3,12 @@
 /// <summary>
 /// ConfigErrorException
 /// </summary>
-public class ConfigErrorException : Exception
+public class ConfigFileErrorException : Exception
 {
     /// <summary>
     /// ConfigErrorException
     /// </summary>
-    public ConfigErrorException() : this("config error")
+    public ConfigFileErrorException() : this("config error")
     {
     }
 
@@ -16,7 +16,7 @@ public class ConfigErrorException : Exception
     /// ConfigErrorException
     /// </summary>
     /// <param name="message"></param>
-    public ConfigErrorException(string message) : base(message)
+    public ConfigFileErrorException(string message) : base(message)
     {
     }
 
@@ -25,7 +25,7 @@ public class ConfigErrorException : Exception
     /// </summary>
     /// <param name="message"></param>
     /// <param name="fileInfo"></param>
-    public ConfigErrorException(string message, string fileInfo) : base(
+    public ConfigFileErrorException(string message, string fileInfo) : base(
         $"{message}{(string.IsNullOrWhiteSpace(fileInfo) ? "" : $", config file is {fileInfo}")}"
     )
     {

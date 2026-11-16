@@ -1,6 +1,5 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
+﻿using EasySoft.Core.GeneralLogTransceiver.Assists;
 using EasySoft.Core.GeneralLogTransceiver.Consumers;
-using EasySoft.Core.GeneralLogTransceiver.Producers;
 using EasySoft.Core.Infrastructure.Assists;
 
 namespace EasySoft.Core.GeneralLogTransceiver.Extensions;
@@ -33,13 +32,15 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
+        StartupDescriptionMessageAssist.AddExecute($"{nameof(AddGeneralLogRabbitMQTransceiver)}");
+
+        var transmissionConfigValue = GeneralLogTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+
         StartupConfigMessageAssist.AddConfig(
-            GeneralConfigAssist.GetRemoteGeneralLogSwitch()
-                ? "RemoteGeneralLogEnable: enable."
-                : "RemoteGeneralLogEnable: disable.",
-            GeneralConfigAssist.GetConfigFileInfo()
+            transmissionConfigValue.ToArrowDescription()
         );
 
+        builder.Services.AddGeneralLogTransceiverConfigureAssist(builder.Configuration);
         builder.Services.AddGeneralLogRabbitMQCore(builder.Configuration);
         builder.Services.AddGeneralLogRabbitMQProducer(builder.Configuration);
         builder.Services.AddGeneralLogRabbitMQConsumer<TGeneralLogConsumer>(builder.Configuration, 1);
@@ -61,13 +62,15 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
+        StartupDescriptionMessageAssist.AddExecute($"{nameof(AddGeneralLogRabbitMQOnlyProducer)}");
+
+        var transmissionConfigValue = GeneralLogTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+
         StartupConfigMessageAssist.AddConfig(
-            GeneralConfigAssist.GetRemoteGeneralLogSwitch()
-                ? "RemoteGeneralLogEnable: enable."
-                : "RemoteGeneralLogEnable: disable.",
-            GeneralConfigAssist.GetConfigFileInfo()
+            transmissionConfigValue.ToArrowDescription()
         );
 
+        builder.Services.AddGeneralLogTransceiverConfigureAssist(builder.Configuration);
         builder.Services.AddGeneralLogRabbitMQCore(builder.Configuration);
         builder.Services.AddGeneralLogRabbitMQProducer(builder.Configuration);
 
@@ -90,13 +93,15 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
+        StartupDescriptionMessageAssist.AddExecute($"{nameof(AddGeneralLogRabbitMQOnlyConsumer)}");
+
+        var transmissionConfigValue = GeneralLogTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+
         StartupConfigMessageAssist.AddConfig(
-            GeneralConfigAssist.GetRemoteGeneralLogSwitch()
-                ? "RemoteGeneralLogEnable: enable."
-                : "RemoteGeneralLogEnable: disable.",
-            GeneralConfigAssist.GetConfigFileInfo()
+            transmissionConfigValue.ToArrowDescription()
         );
 
+        builder.Services.AddGeneralLogTransceiverConfigureAssist(builder.Configuration);
         builder.Services.AddGeneralLogRabbitMQCore(builder.Configuration);
         builder.Services.AddGeneralLogRabbitMQConsumer<TGeneralLogConsumer>(builder.Configuration, instances);
 

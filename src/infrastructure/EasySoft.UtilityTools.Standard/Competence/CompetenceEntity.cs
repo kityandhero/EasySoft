@@ -1,4 +1,5 @@
 ﻿using EasySoft.UtilityTools.Standard.Assists;
+using EasySoft.UtilityTools.Standard.Exceptions;
 using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.UtilityTools.Standard.Competence;
@@ -306,7 +307,7 @@ public class CompetenceBox
     /// CheckAllowAccess 传递null参数则判断当前链接
     /// </summary>
     /// <param name="guidTag">GuidTag</param>
-    /// <returns>true or false</returns>
+    /// <exception cref="ConfigErrorException">配置异常</exception> or false</returns>
     public bool CheckAllowAccess(string guidTag)
     {
         return CompetenceCollection.Any(c => c.GuidTag.Equals(guidTag, StringComparison.OrdinalIgnoreCase));
@@ -317,7 +318,7 @@ public class CompetenceBox
     /// </summary>
     /// <param name="competence">扩展权限</param>
     /// <param name="guidTag">GuidTag</param>
-    /// <returns>true or false</returns>
+    /// <exception cref="ConfigErrorException">配置异常</exception> or false</returns>
     public bool CheckCompetence(string competence, string guidTag)
     {
         var index = Competence.CompetenceCollection.GetInstance().GetCompetenceIndex(guidTag, competence);

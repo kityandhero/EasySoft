@@ -1,5 +1,5 @@
-﻿using EasySoft.Core.ChannelCheckTransceiver.Entities.implements;
-using EasySoft.Core.ChannelCheckTransceiver.Entities.Interfaces;
+﻿using EasySoft.Core.ChannelCheckTransceiver.Assists;
+using EasySoft.Core.ChannelCheckTransceiver.Entities.implements;
 using EasySoft.Core.Messaging.Abstractions;
 using EasySoft.UtilityTools.Standard.Producers;
 
@@ -21,7 +21,7 @@ public class ChannelCheckProducer : IChannelCheckProducer
     /// </param>
     /// <param name="applicationChannel">应用通道</param>
     public ChannelCheckProducer(
-        [FromKeyedServices(TransceiverConstant.GeneralLogMessageServiceKey)]
+        [FromKeyedServices(ChannelCheckTransceiverConfigureAssist.ChannelCheckMessageServiceKey)]
         IOutboundMessageBus bus,
         IApplicationChannel applicationChannel
     )

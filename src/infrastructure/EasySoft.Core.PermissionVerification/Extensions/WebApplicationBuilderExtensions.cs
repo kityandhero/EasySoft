@@ -1,11 +1,10 @@
 ﻿using EasySoft.Core.AccessWayTransceiver.Extensions;
+using EasySoft.Core.PermissionVerification.Assists;
 using EasySoft.Core.PermissionVerification.Clients;
-using EasySoft.Core.PermissionVerification.Detectors;
 using EasySoft.Core.PermissionVerification.Detectors.Implements;
 using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
 using EasySoft.Core.PermissionVerification.Middlewares;
 using EasySoft.Core.PermissionVerification.Observers;
-using EasySoft.Core.PermissionVerification.Officers;
 using EasySoft.Core.PermissionVerification.Officers.Implements;
 using EasySoft.Core.PermissionVerification.Officers.Interfaces;
 using EasySoft.UtilityTools.Core.Extensions;
@@ -39,14 +38,22 @@ public static class WebApplicationBuilderExtensions
             $"{nameof(AddPermissionVerification)}<{typeof(TPermissionObserver).Name}>."
         );
 
+        builder.Services.AddAuthorizationConfigureAssist(builder.Configuration);
+
         builder.AddPermissionObserverInjection<TPermissionObserver>();
 
         builder.AddAccessWayRabbitMQOnlyProducer();
 
         builder.Services.TryAddSingleton(new ProxyGenerator());
 
+        var serverHostUrlConfigValue = AuthorizationConfigureAssist.GetServerHostUrl(builder.Configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            serverHostUrlConfigValue.ToArrowDescription()
+        );
+
         StartupDescriptionMessageAssist.AddPrompt(
-            $"Permission server host url is {GeneralConfigAssist.GetPermissionServerHostUrl()}."
+            $"Authorization server host url is {serverHostUrlConfigValue.Value}."
         );
 
         builder.AddAdvanceRefitClient<IPermissionClient>(clientBuilder =>
@@ -54,7 +61,7 @@ public static class WebApplicationBuilderExtensions
                 clientBuilder.ConfigureHttpClient(client =>
                     {
                         if (!Uri.TryCreate(
-                                GeneralConfigAssist.GetPermissionServerHostUrl(),
+                                serverHostUrlConfigValue.Value,
                                 UriKind.Absolute,
                                 out var baseAddress
                             ))

@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
+﻿using EasySoft.Core.ErrorLogTransceiver.Assists;
 using EasySoft.Core.ErrorLogTransceiver.Consumers;
 using EasySoft.Core.ErrorLogTransceiver.Producers;
 using EasySoft.Core.Messaging.SlimMessageBus.Extensions;
@@ -27,18 +27,16 @@ internal static class RabbitMQServiceExtensions
         services.AddSlimMessageBus(messageBusBuilder =>
             {
                 messageBusBuilder.AddChildBus(
-                    TransceiverConstant.ErrorLogMessageTransmitter,
+                    ErrorLogTransceiverConfigureAssist.ErrorLogMessageTransceiver,
                     child =>
                     {
                         child.WithProviderRabbitMQ(cfg =>
                             {
-                                var configurationPath = TransceiverConstant
-                                    .GetErrorLogMessageRabbitMQConnectionString();
+                                var rabbitMQConnectionString = ErrorLogTransceiverConfigureAssist
+                                    .GetRabbitMQConnectionString(configuration)
+                                    .Value;
 
-                                cfg.ConnectionString = configuration[configurationPath]
-                                                       ?? throw new InvalidOperationException(
-                                                           $"缺少 ErrorLogTransitiveMessage RabbitMQ 连接串[{configurationPath}]。"
-                                                       );
+                                cfg.ConnectionString = rabbitMQConnectionString;
 
                                 // 交换器持久化：影响本子总线内所有生产者的交换器声明。
                                 cfg.UseExchangeDefaults(true);
@@ -58,7 +56,7 @@ internal static class RabbitMQServiceExtensions
         );
 
         // 出站口暴露给上层基础设施（生产方需要）
-        services.AddKeyedOutboundBus(TransceiverConstant.ErrorLogMessageServiceKey);
+        services.AddKeyedOutboundBus(ErrorLogTransceiverConfigureAssist.ErrorLogMessageServiceKey);
 
         return services;
     }
@@ -77,7 +75,7 @@ internal static class RabbitMQServiceExtensions
         services.AddSlimMessageBus(messageBusBuilder =>
             {
                 messageBusBuilder.AddChildBus(
-                    TransceiverConstant.ErrorLogMessageTransmitter,
+                    ErrorLogTransceiverConfigureAssist.ErrorLogMessageTransceiver,
                     child =>
                     {
                         child.Produce<IErrorLogTransitiveMessage>(x => x
@@ -110,7 +108,7 @@ internal static class RabbitMQServiceExtensions
         services.AddSlimMessageBus(mbb =>
             {
                 mbb.AddChildBus(
-                    TransceiverConstant.ErrorLogMessageTransmitter,
+                    ErrorLogTransceiverConfigureAssist.ErrorLogMessageTransceiver,
                     child =>
                     {
                         child.Consume<IErrorLogTransitiveMessage>(x =>
@@ -133,30 +131,30 @@ internal static class RabbitMQServiceExtensions
 
     private static string GetExchange(IConfiguration configuration)
     {
-        var prefix = AppSettingAssist.GetGlobalPrefix(configuration);
+        var prefix = ErrorLogTransceiverConfigureAssist.GetPrefix(configuration).Value;
 
         return StringAssist.Join(
-            [prefix, TransceiverConstant.ErrorLogMessageExchange],
+            [prefix, ErrorLogTransceiverConfigureAssist.ErrorLogMessageExchange],
             "."
         );
     }
 
     private static string GetRoutingKey(IConfiguration configuration)
     {
-        var prefix = AppSettingAssist.GetGlobalPrefix(configuration);
+        var prefix = ErrorLogTransceiverConfigureAssist.GetPrefix(configuration).Value;
 
         return StringAssist.Join(
-            [prefix, TransceiverConstant.ErrorLogMessageRoutingKey],
+            [prefix, ErrorLogTransceiverConfigureAssist.ErrorLogMessageRoutingKey],
             "."
         );
     }
 
     private static string GetQueue(IConfiguration configuration)
     {
-        var prefix = AppSettingAssist.GetGlobalPrefix(configuration);
+        var prefix = ErrorLogTransceiverConfigureAssist.GetPrefix(configuration).Value;
 
         return StringAssist.Join(
-            [prefix, TransceiverConstant.ErrorLogMessageQueue],
+            [prefix, ErrorLogTransceiverConfigureAssist.ErrorLogMessageQueue],
             "."
         );
     }

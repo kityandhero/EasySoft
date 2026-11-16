@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Messaging.Abstractions;
+﻿using EasySoft.Core.ErrorLogTransceiver.Assists;
+using EasySoft.Core.Messaging.Abstractions;
 using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.ErrorLogTransceiver.Producers;
@@ -19,7 +20,7 @@ public class ErrorLogProducer : IErrorLogProducer
     /// </param>
     /// <param name="applicationChannel">应用通道</param>
     public ErrorLogProducer(
-        [FromKeyedServices(TransceiverConstant.ErrorLogMessageServiceKey)]
+        [FromKeyedServices(ErrorLogTransceiverConfigureAssist.ErrorLogMessageServiceKey)]
         IOutboundMessageBus bus,
         IApplicationChannel applicationChannel
     )

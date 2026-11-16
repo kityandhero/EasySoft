@@ -90,7 +90,10 @@ public static class ConsulRegistrationCenterConfigAssist
     /// <exception cref="Exception"></exception>
     public static IConfiguration GetConfiguration()
     {
-        if (Configuration == null) throw new Exception("ConsulConfig has not been established.");
+        if (Configuration == null)
+        {
+            throw new Exception("ConsulConfig has not been established.");
+        }
 
         return Configuration;
     }
@@ -124,7 +127,7 @@ public static class ConsulRegistrationCenterConfigAssist
     /// GetCenterAddress
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
+    /// <exception cref="ConfigFileErrorException"></exception>
     public static string GetCenterAddress()
     {
         var v = GetConsulConfig().CenterAddress.Trim();
@@ -132,10 +135,12 @@ public static class ConsulRegistrationCenterConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"You've enabled the registration Center setting and set it to Consul type, please continue config CenterAddress, it in {ConfigFile} -> CenterAddress",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -144,7 +149,7 @@ public static class ConsulRegistrationCenterConfigAssist
     /// GetServiceName
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
+    /// <exception cref="ConfigFileErrorException"></exception>
     public static string GetServiceName()
     {
         var v = GetConsulConfig().ServiceName.Trim();
@@ -152,10 +157,12 @@ public static class ConsulRegistrationCenterConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置 ServiceName: {ConfigFile} -> ServiceName",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -164,7 +171,7 @@ public static class ConsulRegistrationCenterConfigAssist
     /// GetServiceIP
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
+    /// <exception cref="ConfigFileErrorException"></exception>
     public static string GetServiceIP()
     {
         var v = GetConsulConfig().ServiceIP.Trim();
@@ -172,10 +179,12 @@ public static class ConsulRegistrationCenterConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置 ServiceIP: {ConfigFile} -> ServiceIP",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -184,7 +193,7 @@ public static class ConsulRegistrationCenterConfigAssist
     /// GetServicePort
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
+    /// <exception cref="ConfigFileErrorException"></exception>
     public static int GetServicePort()
     {
         var v = GetConsulConfig().ServicePort.Trim();
@@ -192,10 +201,12 @@ public static class ConsulRegistrationCenterConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v) || !v.IsInt(out var value))
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置 ServicePort: {ConfigFile} -> ServicePort",
                 GetConfigFileInfo()
             );
+        }
 
         return value;
     }
@@ -212,10 +223,12 @@ public static class ConsulRegistrationCenterConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v) || !v.IsInt(out var value))
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置 DeregisterCriticalServiceAfter: {ConfigFile} -> DeregisterCriticalServiceAfter",
                 GetConfigFileInfo()
             );
+        }
 
         return value;
     }
@@ -232,10 +245,12 @@ public static class ConsulRegistrationCenterConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v) || !v.IsInt(out var value))
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置 HealthCheckIntervalInSecond: {ConfigFile} -> HealthCheckIntervalInSecond",
                 GetConfigFileInfo()
             );
+        }
 
         return value;
     }
@@ -252,10 +267,12 @@ public static class ConsulRegistrationCenterConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "" : v;
 
         if (string.IsNullOrWhiteSpace(v) || !v.IsInt(out var value))
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置 Timeout: {ConfigFile} -> Timeout",
                 GetConfigFileInfo()
             );
+        }
 
         return value;
     }

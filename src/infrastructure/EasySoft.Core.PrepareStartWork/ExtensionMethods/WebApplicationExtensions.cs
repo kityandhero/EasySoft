@@ -1,9 +1,15 @@
 ﻿using EasySoft.Core.PrepareStartWork.PrepareWorks;
+using Microsoft.AspNetCore.Builder;
 
 namespace EasySoft.Core.PrepareStartWork.ExtensionMethods;
 
 public static class WebApplicationExtensions
 {
+    /// <summary>
+    /// UsePrepareStartWork
+    /// </summary>
+    /// <param name="application"></param>
+    /// <returns></returns>
     public static WebApplication UsePrepareStartWork(
         this WebApplication application
     )
@@ -14,7 +20,27 @@ public static class WebApplicationExtensions
 
         var app = application.UseHostFiltering();
 
+        #region PrepareCovertStartWork
+
+        if (!app.ApplicationServices.IsRegistered<IPrepareCovertStartWork>())
+        {
+            StartupDescriptionMessageAssist.AddPrompt(
+                "PrepareCovertStartWork not exist, ignore."
+            );
+
+            return application;
+        }
+
         var prepareCovertStartWork = app.ApplicationServices.GetRequiredService<IPrepareCovertStartWork>();
+
+        if (prepareCovertStartWork == null)
+        {
+            StartupDescriptionMessageAssist.AddPrompt(
+                "PrepareCovertStartWork is null, ignore."
+            );
+
+            return application;
+        }
 
         prepareCovertStartWork.DoWork();
 
@@ -22,20 +48,37 @@ public static class WebApplicationExtensions
             "PrepareCovertStartWork do work complete."
         );
 
-        var isService = app.ApplicationServices.GetService<IServiceProviderIsService>();
+        #endregion
 
-        if (isService?.IsService(typeof(IPrepareStartWork)) != true)
+        #region PrepareStartWork
+
+        if (!app.ApplicationServices.IsRegistered<IPrepareStartWork>())
         {
+            StartupDescriptionMessageAssist.AddPrompt(
+                "PrepareStartWork not exist, ignore."
+            );
+
             return application;
         }
 
         var prepareStartWork = app.ApplicationServices.GetRequiredService<IPrepareStartWork>();
+
+        if (prepareStartWork == null)
+        {
+            StartupDescriptionMessageAssist.AddPrompt(
+                "PrepareStartWork is null, ignore."
+            );
+
+            return application;
+        }
 
         prepareStartWork.DoWork();
 
         StartupDescriptionMessageAssist.AddPrompt(
             "PrepareStartWork do work complete."
         );
+
+        #endregion
 
         return application;
     }

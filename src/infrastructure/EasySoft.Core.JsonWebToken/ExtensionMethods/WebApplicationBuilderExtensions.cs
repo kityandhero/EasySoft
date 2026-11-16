@@ -90,8 +90,7 @@ public static class WebApplicationBuilderExtensions
         FlagAssist.TokenMode = ConstCollection.JsonWebToken;
 
         StartupDescriptionMessageAssist.AddPrompt(
-            "JsonWebToken already available, you can config it with config file.",
-            GeneralConfigAssist.GetConfigFileInfo()
+            "JsonWebToken already available, you can config it with config file."
         );
 
         return builder;

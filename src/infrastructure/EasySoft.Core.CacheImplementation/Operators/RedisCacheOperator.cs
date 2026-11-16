@@ -20,7 +20,7 @@ public class RedisCacheOperator : BaseCacheOperator
     /// <inheritdoc />
     internal override bool HasKeyCore(string key)
     {
-        var db = RedisCacheProvider.GetDatabase(CacheConfigureAssist.GetRedisConnectionString());
+        var db = RedisCacheProvider.GetDatabase(CacheConfigureAssist.GetRedisConnectionString().Value);
 
         return db.KeyExists(key);
     }
@@ -32,7 +32,7 @@ public class RedisCacheOperator : BaseCacheOperator
     /// <inheritdoc />
     internal override long StringIncrementCore(string key, int count)
     {
-        var db = RedisCacheProvider.GetDatabase(CacheConfigureAssist.GetRedisConnectionString());
+        var db = RedisCacheProvider.GetDatabase(CacheConfigureAssist.GetRedisConnectionString().Value);
 
         return db.StringIncrement(key, count);
     }
@@ -46,7 +46,7 @@ public class RedisCacheOperator : BaseCacheOperator
     {
         var result = "";
 
-        var db = RedisCacheProvider.GetDatabase(CacheConfigureAssist.GetRedisConnectionString());
+        var db = RedisCacheProvider.GetDatabase(CacheConfigureAssist.GetRedisConnectionString().Value);
 
         var v = db.StringGet(key);
 
@@ -65,7 +65,7 @@ public class RedisCacheOperator : BaseCacheOperator
     /// <inheritdoc />
     internal override bool SetValueCore<T>(string key, T value, TimeSpan expireTime)
     {
-        var db = RedisCacheProvider.GetDatabase(CacheConfigureAssist.GetRedisConnectionString());
+        var db = RedisCacheProvider.GetDatabase(CacheConfigureAssist.GetRedisConnectionString().Value);
 
         if (value is string v)
         {

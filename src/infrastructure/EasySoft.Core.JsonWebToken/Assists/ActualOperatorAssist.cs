@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.DependencyInjection.IocAssists;
+﻿using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.JsonWebToken.Assists;
@@ -38,7 +38,7 @@ public static class ActualOperatorAssist
 
         var identification = first.Value;
 
-        var actualOperator = ServiceProviderAssist.Instance.Resolve<IActualOperator>();
+        var actualOperator = ServiceProviderAssist.Resolve<IActualOperator>();
 
         actualOperator.SetToken(token);
 

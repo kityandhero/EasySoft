@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Standard.Extensions;
+﻿using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.NLog.ExtensionMethods;
 
@@ -17,8 +18,9 @@ public static class EndpointConventionBuilderExtensions
         );
 
         return endpoints.MapControllerRoute(
-            "NLogInlayConfig",
-            "{controller=NLogInlayConfig}/{action=Index}"
-        ).WithDisplayName("NLogInlayConfig");
+                "NLogInlayConfig",
+                "{controller=NLogInlayConfig}/{action=Index}"
+            )
+            .WithDisplayName("NLogInlayConfig");
     }
 }

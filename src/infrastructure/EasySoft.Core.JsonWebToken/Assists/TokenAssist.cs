@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.DependencyInjection.IocAssists;
+﻿using EasySoft.Core.AuthenticationCore.Assists;
+using EasySoft.Core.Infrastructure.Assists;
 
 namespace EasySoft.Core.JsonWebToken.Assists;
 
@@ -15,15 +16,17 @@ public static class TokenAssist
 
     public static TokenValidationParameters GenerateTokenValidationParameters()
     {
+        var authenticationConfigureAssist = ServiceProviderAssist.Resolve<AuthenticationConfigureAssist>();
+
         return new TokenValidationParameters
         {
-            ValidateIssuer = GeneralConfigAssist.GetJsonWebTokenValidateIssuer(),
-            ValidIssuer = GeneralConfigAssist.GetJsonWebTokenValidIssuer(),
-            ValidateAudience = GeneralConfigAssist.GetJsonWebTokenValidateAudience(),
-            ValidAudience = GeneralConfigAssist.GetJsonWebTokenValidAudience(),
-            ValidateLifetime = GeneralConfigAssist.GetJsonWebTokenValidateLifetime(),
+            ValidateIssuer = authenticationConfigureAssist.GetJsonWebTokenValidateIssuer().Value,
+            ValidIssuer = authenticationConfigureAssist.GetJsonWebTokenValidIssuer().Value,
+            ValidateAudience = authenticationConfigureAssist.GetJsonWebTokenValidateAudience().Value,
+            ValidAudience = authenticationConfigureAssist.GetJsonWebTokenValidAudience().Value,
+            ValidateLifetime = authenticationConfigureAssist.GetJsonWebTokenValidateLifetime().Value,
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(GeneralConfigAssist.GetJsonWebTokenIssuerSigningKey())
+                Encoding.UTF8.GetBytes(authenticationConfigureAssist.GetJsonWebTokenIssuerSigningKey().Value)
             )
         };
     }
@@ -37,37 +40,39 @@ public static class TokenAssist
 
         claimsAdjust.AddRange(claims);
 
+        var authenticationConfigureAssist = ServiceProviderAssist.Resolve<AuthenticationConfigureAssist>();
+
         var key = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(
-                GeneralConfigAssist.GetJsonWebTokenIssuerSigningKey()
+                authenticationConfigureAssist.GetJsonWebTokenIssuerSigningKey().Value
             )
         );
 
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var securityToken = new JwtSecurityToken(
-            GeneralConfigAssist.GetJsonWebTokenValidIssuer(),
-            GeneralConfigAssist.GetJsonWebTokenValidAudience(),
+            authenticationConfigureAssist.GetJsonWebTokenValidIssuer().Value,
+            authenticationConfigureAssist.GetJsonWebTokenValidAudience().Value,
             claimsAdjust,
-            expires: DateTime.Now.AddSeconds(DynamicConfigAssist.GetTokenExpires()),
+            expires: DateTime.Now.AddSeconds(authenticationConfigureAssist.GetTokenExpires().Value),
             signingCredentials: credentials
         );
 
         var token = new JwtSecurityTokenHandler().WriteToken(securityToken);
 
-        if (!GeneralConfigAssist.GetTokenServerDumpSwitch())
+        if (!authenticationConfigureAssist.GetTokenServerDumpSwitch().Value)
         {
             return token;
         }
 
-        var cacheOperator = ServiceProviderAssist.Instance.Resolve<ICacheOperator>();
+        var cacheOperator = ServiceProviderAssist.Resolve<ICacheOperator>();
 
         var cacheKey = Guid.NewGuid().ToString().Remove("-").ToLower();
 
         cacheOperator.Set(
             cacheKey,
             token,
-            new TimeSpan(TimeSpan.TicksPerSecond * DynamicConfigAssist.GetTokenExpires())
+            new TimeSpan(TimeSpan.TicksPerSecond * authenticationConfigureAssist.GetTokenExpires().Value)
         );
 
         return cacheKey;

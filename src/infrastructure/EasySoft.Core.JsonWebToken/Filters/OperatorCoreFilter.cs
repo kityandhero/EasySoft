@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.DependencyInjection.IocAssists;
+﻿using EasySoft.Core.AuthenticationCore.Assists;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Core.Results.Implements;
 
 namespace EasySoft.Core.JsonWebToken.Filters;
@@ -17,7 +18,9 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
             return;
         }
 
-        var token = filterContext.HttpContext.GetToken(GeneralConfigAssist.GetTokenName());
+        var authenticationConfigureAssist = ServiceProviderAssist.Resolve<AuthenticationConfigureAssist>();
+
+        var token = filterContext.HttpContext.GetToken(authenticationConfigureAssist.GetTokenName().Value);
 
         if (string.IsNullOrWhiteSpace(token))
         {
@@ -46,7 +49,7 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
 
         var identification = first.Value;
 
-        var actualOperator = ServiceProviderAssist.Instance.Resolve<IActualOperator>();
+        var actualOperator = ServiceProviderAssist.Resolve<IActualOperator>();
 
         actualOperator.SetToken(token);
 

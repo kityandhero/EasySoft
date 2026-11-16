@@ -1,9 +1,11 @@
-﻿using EasySoft.Core.CacheImplementation.ExtensionMethods;
+﻿using EasySoft.Core.CacheCore.ExtensionMethods;
+using EasySoft.Core.CacheImplementation.ExtensionMethods;
+using EasySoft.Core.DependencyInjection.IocAssists;
 using EasySoft.Core.EntityFramework.Extensions;
 using EasySoft.Core.GeneralLogTransceiver.Extensions;
-using EasySoft.Core.RabbitMQ.Channels;
-using EasySoft.Core.RabbitMQ.Connections;
-using EasySoft.Core.RabbitMQ.Producers;
+using EasySoft.Core.Infrastructure.Extensions;
+using EasySoft.Core.Infrastructure.Options;
+using EasySoft.Core.PrepareStartWork.PrepareWorks;
 using EasySoft.Core.Swagger.Configures;
 using EasySoft.Core.Swagger.ExtensionMethods;
 using EasySoft.Core.Web.Framework.ActionModelConventions;
@@ -15,143 +17,80 @@ namespace EasySoft.Core.Web.Framework.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
-    private const string IdentifierAddAdvanceApplicationChannel = "9ef8c9f4-08b9-4755-912c-6ff80988f513";
-    private const string IdentifierAddAdvanceRabbitMQ = "F15148EB-DAAE-48C8-867B-70D98657F1AB";
+    private const string UniqueIdentifierAddCovertInjection = "1CE0086F-567F-4838-9611-55819A9A549B";
 
-    /// <summary>
-    /// 标记当前应用通道值, 用于远程日志等数据中, 便于数据辨认, 不使用此方法标记, 框架将采用内置值 0 代替
-    /// </summary>
-    /// <param name="builder"></param>
-    /// <param name="channel"></param>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
-    internal static WebApplicationBuilder AddAdvanceApplicationChannel(
-        this WebApplicationBuilder builder,
-        IChannel channel
-    )
-    {
-        if (builder.HasRegistered(IdentifierAddAdvanceApplicationChannel))
-        {
-            return builder;
-        }
-
-        StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceApplicationChannel)}."
-        );
-
-        builder.Host.AddAdvanceApplicationChannel(channel);
-
-        return builder;
-    }
-
-    internal static WebApplicationBuilder AddAdvanceApplicationChannel<T>(
-        this WebApplicationBuilder builder,
-        T channel
-    ) where T : IChannel
-    {
-        if (builder.HasRegistered(IdentifierAddAdvanceApplicationChannel))
-        {
-            return builder;
-        }
-
-        StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceApplicationChannel)}<{typeof(T).Name}>."
-        );
-
-        builder.Host.AddAdvanceApplicationChannel(channel);
-
-        return builder;
-    }
+    // /// <summary>
+    // /// 注入框架的启动预处理任务，启动时自动执行, 仅允许配置一次
+    // /// </summary>
+    // /// <param name="builder"></param>
+    // /// <returns></returns>
+    // public static WebApplicationBuilder AddCovertInjection(
+    //     this WebApplicationBuilder builder
+    // )
+    // {
+    //     if (builder.HasRegistered(UniqueIdentifierAddCovertInjection))
+    //     {
+    //         return builder;
+    //     }
+    //
+    //     builder.Services.AddSingleton<IPrepareCovertStartWork, PrepareCovertStartWork>();
+    //
+    //     return builder;
+    // }
 
     public static WebApplication EasyBuild(
         this WebApplicationBuilder builder
     )
     {
-        WeaveApplicationBuilderExtraAction(builder);
+        // 核心集成
+        // builder.Services.AddCacheCore();
 
+        // builder.AddAdvanceAutoFac();
+        // builder.AddCovertInjection();
+
+        // 核心集成
+        // builder.AddAdvanceMapster();
+
+        // builder.AddRegistrationCenter();
+
+        // builder.AddConfigCenter(channel);
+        // builder.AddGateway();
         builder.AddAdvanceExceptionless();
 
-        if (GeneralConfigAssist.GetCompressionSwitch())
-        {
-            StartupConfigMessageAssist.AddConfig(
-                "CompressionSwitch: enable.",
-                GeneralConfigAssist.GetConfigFileInfo()
-            );
+        // 核心集成
+        // if (GeneralConfigAssist.GetCompressionSwitch())
+        // {
+        //     StartupConfigMessageAssist.AddConfig(
+        //         "CompressionSwitch: enable.",
+        //         GeneralConfigAssist.GetConfigFileInfo()
+        //     );
+        //
+        //     builder.Services.AddAdvanceResponseCompression();
+        // }
+        // else
+        // {
+        //     StartupConfigMessageAssist.AddConfig(
+        //         "CompressionSwitch: disable.",
+        //         GeneralConfigAssist.GetConfigFileInfo()
+        //     );
+        // }
 
-            builder.Services.AddAdvanceResponseCompression();
-        }
-        else
-        {
-            StartupConfigMessageAssist.AddConfig(
-                "CompressionSwitch: disable.",
-                GeneralConfigAssist.GetConfigFileInfo()
-            );
-        }
+        // 核心集成
+        // builder.Services.AddRouting(o => { o.LowercaseUrls = true; });
 
-        builder.Services.AddRouting(o => { o.LowercaseUrls = true; });
-
-        builder.Services.AddApiVersioning(o =>
-            {
-                //return versions in a response header
-                o.ReportApiVersions = true;
-
-                //default version select 
-                o.DefaultApiVersion = new ApiVersion(1, 0);
-
-                //if not specifying an api version,show the default version
-                o.AssumeDefaultVersionWhenUnspecified = true;
-            }
-        );
-
-        // AddMvc 最为全面， 涵盖 AddControllers 等的全部功能
-        builder.Services.AddMvc(option =>
-                {
-                    option.EnableEndpointRouting = false;
-
-                    option.Conventions.Add(new IgnoreForApiExplorerActionModelConvention());
-
-                    if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.EasyToken &&
-                        !FlagAssist.EasyTokenMiddlewareModeSwitch)
-
-                        // 设置及接口数据返回格式
-                    {
-                        option.Filters.Add<EasyToken.Filters.OperatorFilter>();
-                    }
-
-                    if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.JsonWebToken &&
-                        !FlagAssist.JsonWebTokenMiddlewareModeSwitch)
-
-                        // 设置及接口数据返回格式
-                    {
-                        option.Filters.Add<JsonWebToken.Filters.OperatorFilter>();
-                    }
-
-                    if (FlagAssist.PermissionVerificationSwitch &&
-                        !FlagAssist.PermissionVerificationMiddlewareModeSwitch)
-
-                        // 设置及接口数据返回格式
-                    {
-                        option.Filters.Add<PermissionFilter>();
-                    }
-
-                    // 设置及接口数据返回格式
-                    option.Filters.Add<ApiResultFilterAttribute>();
-
-                    // 设置全局异常过滤器
-                    option.Filters.Add<GlobalExceptionFilter>();
-
-                    WeaveMvcOptionExtraAction(option);
-                }
-            )
-
-            // 爆露ApplicationPartManager 实例给外部工具，用以实现某些特定功能
-            .ConfigureApplicationPartManager(ApplicationPartManagerAssist.SetApplicationPartManager)
-            .AddControllersAsServices()
-            .AddNewtonsoftJson(options =>
-                {
-                    JsonConvertAssist.AdjustJsonSerializerSettings(options.SerializerSettings);
-                }
-            );
+        // 核心集成
+        // builder.Services.AddApiVersioning(o =>
+        //     {
+        //         //return versions in a response header
+        //         o.ReportApiVersions = true;
+        //
+        //         //default version select 
+        //         o.DefaultApiVersion = new ApiVersion(1, 0);
+        //
+        //         //if not specifying an api version,show the default version
+        //         o.AssumeDefaultVersionWhenUnspecified = true;
+        //     }
+        // );
 
         // builder.Services.AddSingleton<IHostEnvironment, HostingEnvironment>();
 
@@ -159,32 +98,34 @@ public static class WebApplicationBuilderExtensions
         // builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         // builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
-        builder.Services.AddSingleton<IHostEnvironment, HostingEnvironment>();
-        builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        builder.Services.AddHttpContextAccessor();
+        // 核心集成
+        // builder.Services.AddSingleton<IHostEnvironment, HostingEnvironment>();
+        // builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        // builder.Services.AddHttpContextAccessor();
 
-        // 注入IHttpClientFactory 
-        builder.Services.AddHttpClient();
+        // 核心集成 
+        // builder.Services.AddHttpClient();
 
-        if (GeneralConfigAssist.GetCorsSwitch())
-        {
-            builder.Services.AddCors(options =>
-                {
-                    options.AddPolicy(
-                        ConstCollection.DefaultSpecificOrigins,
-                        configPolicy =>
-                        {
-                            configPolicy.WithOrigins(GeneralConfigAssist.GetCorsPolicies().ToArray());
-                            configPolicy.AllowAnyHeader();
-                            configPolicy.AllowAnyMethod();
-                            configPolicy.AllowCredentials();
-                        }
-                    );
-                }
-            );
-        }
+        // 核心集成
+        // if (GeneralConfigAssist.GetCorsSwitch())
+        // {
+        //     builder.Services.AddCors(options =>
+        //         {
+        //             options.AddPolicy(
+        //                 ConstCollection.DefaultSpecificOrigins,
+        //                 configPolicy =>
+        //                 {
+        //                     configPolicy.WithOrigins(GeneralConfigAssist.GetCorsPolicies().ToArray());
+        //                     configPolicy.AllowAnyHeader();
+        //                     configPolicy.AllowAnyMethod();
+        //                     configPolicy.AllowCredentials();
+        //                 }
+        //             );
+        //         }
+        //     );
+        // }
 
-        builder.Services.AddEndpointsApiExplorer();
+        // builder.Services.AddEndpointsApiExplorer();
 
         builder.AddLogRecordInterceptor();
 
@@ -192,9 +133,11 @@ public static class WebApplicationBuilderExtensions
 
         builder.AddAdvanceMediatR();
 
-        builder.AddAdvanceCacheImplementation();
+        // 核心集成
+        // builder.AddAdvanceCacheImplementation();
 
-        builder.AddAdvanceMiniProfile();
+        // 核心集成
+        // builder.AddAdvanceMiniProfile();
 
         builder.AddGeneralLogRabbitMQOnlyProducer();
 
@@ -212,11 +155,13 @@ public static class WebApplicationBuilderExtensions
 
         var app = builder.Build();
 
-        LogAssist.SetLogger(app.Logger);
+        // LogAssist.SetLogger(app.Logger);
 
-        ServiceAssist.SetServiceProvider(app.Services);
+        // 核心集成
+        // ServiceProviderAssist.SetProvider(app.Services);
 
-        FlagAssist.SetApplicationRunPerformed();
+        // 核心集成
+        // FlagAssist.SetApplicationRunPerformed();
 
         // 中间件调用顺序请参阅: https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/middleware/?view=aspnetcore-6.0#middleware-order
 
@@ -228,60 +173,63 @@ public static class WebApplicationBuilderExtensions
         // 异常过滤器，针对在写入响应Body之前发生的未处理的异常，它可以应用全局的策略，
         // 结果过滤器，它可以在每个Action结果执行之前和之后运行代码，但也只是在Action方法无错误的成功完成后才可以执行。
 
-        if (GeneralConfigAssist.GetForwardedHeadersSwitch())
-        {
-            // 配置反向代理服务器, 需要在调用其他中间件之前 
-            // https://docs.microsoft.com/zh-cn/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-6.0
-            // https: //learn.microsoft.com/zh-cn/aspnet/core/host-and-deploy/proxy-load-balancer?view=aspnetcore-6.0
-            app.UseForwardedHeaders(
-                new ForwardedHeadersOptions
-                {
-                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-                }
-            );
+        // 核心集成
+        // if (GeneralConfigAssist.GetForwardedHeadersSwitch())
+        // {
+        //     // 配置反向代理服务器, 需要在调用其他中间件之前 
+        //     // https://docs.microsoft.com/zh-cn/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-6.0
+        //     // https: //learn.microsoft.com/zh-cn/aspnet/core/host-and-deploy/proxy-load-balancer?view=aspnetcore-6.0
+        //     app.UseForwardedHeaders(
+        //         new ForwardedHeadersOptions
+        //         {
+        //             ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+        //         }
+        //     );
+        //
+        //     StartupConfigMessageAssist.AddConfig(
+        //         "ForwardedHeadersSwitch: enable.",
+        //         GeneralConfigAssist.GetConfigFileInfo()
+        //     );
+        // }
+        // else
+        // {
+        //     StartupConfigMessageAssist.AddConfig(
+        //         "ForwardedHeadersSwitch: disable.",
+        //         GeneralConfigAssist.GetConfigFileInfo()
+        //     );
+        // }
 
-            StartupConfigMessageAssist.AddConfig(
-                "ForwardedHeadersSwitch: enable.",
-                GeneralConfigAssist.GetConfigFileInfo()
-            );
-        }
-        else
-        {
-            StartupConfigMessageAssist.AddConfig(
-                "ForwardedHeadersSwitch: disable.",
-                GeneralConfigAssist.GetConfigFileInfo()
-            );
-        }
+        // app.UsePrepareStartWork();
 
-        app.UsePrepareStartWork();
+        // 核心集成
+        // if (!app.Environment.IsDevelopment())
+        //
+        //     // app.UseExceptionHandler("/Error");
+        // {
+        //     if (GeneralConfigAssist.GetHstsSwitch())
+        //     {
+        //         app.UseHsts();
+        //     }
+        // }
 
-        if (!app.Environment.IsDevelopment())
-
-            // app.UseExceptionHandler("/Error");
-        {
-            if (GeneralConfigAssist.GetHstsSwitch())
-            {
-                app.UseHsts();
-            }
-        }
-
-        if (GeneralConfigAssist.GetHttpRedirectionHttpsSwitch())
-        {
-            // 当前项目启动后，监听的是否是多个端口，其中如果有协议是Https—我们在访问Http的默认会转发到Https中
-            app.UseHttpsRedirection();
-
-            StartupConfigMessageAssist.AddConfig(
-                "HttpRedirectionHttpsSwitch: enable.",
-                GeneralConfigAssist.GetConfigFileInfo()
-            );
-        }
-        else
-        {
-            StartupConfigMessageAssist.AddConfig(
-                "HttpRedirectionHttpsSwitch: disabled.",
-                GeneralConfigAssist.GetConfigFileInfo()
-            );
-        }
+        // 核心集成
+        // if (GeneralConfigAssist.GetHttpRedirectionHttpsSwitch())
+        // {
+        //     // 当前项目启动后，监听的是否是多个端口，其中如果有协议是Https—我们在访问Http的默认会转发到Https中
+        //     app.UseHttpsRedirection();
+        //
+        //     StartupConfigMessageAssist.AddConfig(
+        //         "HttpRedirectionHttpsSwitch: enable.",
+        //         GeneralConfigAssist.GetConfigFileInfo()
+        //     );
+        // }
+        // else
+        // {
+        //     StartupConfigMessageAssist.AddConfig(
+        //         "HttpRedirectionHttpsSwitch: disabled.",
+        //         GeneralConfigAssist.GetConfigFileInfo()
+        //     );
+        // }
 
         if (GeneralConfigAssist.GetUseStaticFilesSwitch())
         {
@@ -312,7 +260,7 @@ public static class WebApplicationBuilderExtensions
             );
         }
 
-        app.UseRouting();
+        // app.UseRouting();
 
         if (GeneralConfigAssist.GetCorsSwitch())
         {
@@ -429,10 +377,6 @@ public static class WebApplicationBuilderExtensions
 
         app.UseConfigureTemplate();
 
-        WeaveApplicationExtraAction(app);
-
-        app.UseAdvanceMapControllers();
-
         StartupConfigMessageAssist.AddConfig(
             $"Environment: {EnvironmentAssist.GetEnvironment().EnvironmentName}."
         );
@@ -453,17 +397,17 @@ public static class WebApplicationBuilderExtensions
             $"Application start completed{(!FlagAssist.StartupUrls.Any() ? "." : $" at {FlagAssist.StartupUrls.Join(" ")}.")}"
         );
 
-        StartupBuilderExtraActionMessageAssist.Print();
-
-        StartupApplicationExtraActionMessageAssist.Print();
-
-        StartupMvcOptionExtraActionMessageAssist.Print();
-
-        StartupEndPointExtraActionMessageAssist.Print();
-
-        StartupConfigMessageAssist.Print();
-
-        StartupDescriptionMessageAssist.Print();
+        // StartupBuilderExtraActionMessageAssist.Print();
+        //
+        // StartupApplicationExtraActionMessageAssist.Print();
+        //
+        // StartupMvcOptionExtraActionMessageAssist.Print();
+        //
+        // StartupEndPointExtraActionMessageAssist.Print();
+        //
+        // StartupConfigMessageAssist.Print();
+        //
+        // StartupDescriptionMessageAssist.Print();
 
         LogAssist.Hint(
             AuxiliaryConfigure.BuildHintMessage().ToArray()
@@ -501,164 +445,5 @@ public static class WebApplicationBuilderExtensions
         return string.IsNullOrWhiteSpace(GeneralConfigAssist.GetWebRootPath())
             ? result
             : EnvironmentAssist.GetEnvironment().ContentRootPath.Combine(GeneralConfigAssist.GetWebRootPath());
-    }
-
-    /// <summary>
-    /// 织入扩展的 Application Action
-    /// </summary>
-    private static void WeaveApplicationBuilderExtraAction(
-        WebApplicationBuilder builder
-    )
-    {
-        var extraActions = ApplicationConfigure.GetAllWebApplicationBuilderExtraActions().ToList();
-
-        if (extraActions.Count <= 0)
-        {
-            return;
-        }
-
-        var startMessage = new StartupMessage()
-            .SetLevel(LogLevel.Information)
-            .SetMessage(
-                UtilityTools.Standard.ConstCollection.ApplicationStartExtraBuilderMessageDivider
-            );
-
-        StartupBuilderExtraActionMessageAssist.Add(startMessage);
-
-        var i = 1;
-
-        extraActions.ForEach(extraAction =>
-            {
-                var action = extraAction.GetAction();
-
-                if (action == null)
-                {
-                    return;
-                }
-
-                var name = extraAction.GetName();
-
-                if (!string.IsNullOrWhiteSpace(name))
-                {
-                    StartupBuilderExtraActionMessageAssist.Add(
-                        new StartupMessage()
-                            .SetLevel(LogLevel.Information)
-                            .SetMessage(
-                                $"{i}: {name}"
-                            )
-                    );
-
-                    i += 1;
-                }
-
-                action(builder);
-            }
-        );
-    }
-
-    /// <summary>
-    /// 织入扩展的 Application Action
-    /// </summary>
-    private static void WeaveApplicationExtraAction(
-        WebApplication application
-    )
-    {
-        var extraActions = ApplicationConfigure.GetAllWebApplicationExtraActions().ToList();
-
-        if (extraActions.Count <= 0)
-        {
-            return;
-        }
-
-        var startMessage = new StartupMessage()
-            .SetLevel(LogLevel.Information)
-            .SetMessage(
-                UtilityTools.Standard.ConstCollection.ApplicationStartExtraApplicationMessageStartDivider
-            );
-
-        StartupApplicationExtraActionMessageAssist.Add(startMessage);
-
-        var i = 1;
-
-        extraActions.ForEach(extraAction =>
-            {
-                var action = extraAction.GetAction();
-
-                if (action == null)
-                {
-                    return;
-                }
-
-                var name = extraAction.GetName();
-
-                if (!string.IsNullOrWhiteSpace(name))
-                {
-                    StartupApplicationExtraActionMessageAssist.Add(
-                        new StartupMessage()
-                            .SetLevel(LogLevel.Information)
-                            .SetMessage(
-                                $"{i}: {name}"
-                            )
-                    );
-
-                    i += 1;
-                }
-
-                action(application);
-            }
-        );
-    }
-
-    /// <summary>
-    /// 织入扩展的 MvcOptions Action
-    /// </summary>
-    private static void WeaveMvcOptionExtraAction(
-        MvcOptions option
-    )
-    {
-        var extraActions = ApplicationConfigure.GetAllMvcOptionExtraActions().ToList();
-
-        if (extraActions.Count <= 0)
-        {
-            return;
-        }
-
-        var startMessage = new StartupMessage()
-            .SetLevel(LogLevel.Information)
-            .SetMessage(
-                UtilityTools.Standard.ConstCollection.ApplicationStartExtraMvcOptionMessageStartDivider
-            );
-
-        StartupMvcOptionExtraActionMessageAssist.Add(startMessage);
-
-        var i = 1;
-
-        extraActions.ForEach(extraAction =>
-            {
-                var action = extraAction.GetAction();
-
-                if (action == null)
-                {
-                    return;
-                }
-
-                var name = extraAction.GetName();
-
-                if (!string.IsNullOrWhiteSpace(name))
-                {
-                    StartupMvcOptionExtraActionMessageAssist.Add(
-                        new StartupMessage()
-                            .SetLevel(LogLevel.Information)
-                            .SetMessage(
-                                $"{i}: {name}"
-                            )
-                    );
-
-                    i += 1;
-                }
-
-                action(option);
-            }
-        );
     }
 }

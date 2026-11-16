@@ -1,4 +1,7 @@
 ﻿using EasySoft.UtilityTools.Standard.Assists;
+using EasySoft.UtilityTools.Standard.Exceptions;
+using EasySoft.UtilityTools.Standard.Extensions;
+using EasySoft.UtilityTools.Standard.Models;
 
 namespace EasySoft.Core.CacheCore.Assists;
 
@@ -39,6 +42,10 @@ public class CacheConfigureAssist
 
     #region Constructors
 
+    /// <summary>
+    /// 缓存配置
+    /// </summary>
+    /// <param name="configuration"></param>
     public CacheConfigureAssist(IConfiguration configuration)
     {
         Configuration = configuration;
@@ -48,7 +55,14 @@ public class CacheConfigureAssist
 
     #region Methods
 
-    public string GetCacheMode()
+    #region GetCacheMode
+
+    /// <summary>
+    /// 缓存模式
+    /// </summary>
+    /// <param name="configuration">配置集</param>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<string> GetCacheMode(IConfiguration configuration)
     {
         var node = StringAssist.Join(
             [
@@ -58,13 +72,40 @@ public class CacheConfigureAssist
             ":"
         );
 
-        return Configuration[node]
-               ?? throw new InvalidOperationException(
-                   $"缺少 Cache Mode 配置 inMemory/redis [{node}]。"
-               );
+        var v = configuration[node] ?? "inMemory";
+
+        if (!v.In("inMemory", "redis"))
+        {
+            throw new ConfigErrorException(
+                $"[{node}]配置无效，请设置 inMemory|redis"
+            );
+        }
+
+        return new ConfigValue<string>
+        {
+            Node = node,
+            Value = v
+        };
     }
 
-    public string GetCacheKeyPrefix()
+    /// <summary>
+    /// 缓存模式
+    /// </summary>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public ConfigValue<string> GetCacheMode()
+    {
+        return GetCacheMode(Configuration);
+    }
+
+    #endregion
+
+    #region GetCacheKeyPrefix
+
+    /// <summary>
+    /// 缓存前缀
+    /// </summary>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<string> GetCacheKeyPrefix(IConfiguration configuration)
     {
         var node = StringAssist.Join(
             [
@@ -74,13 +115,33 @@ public class CacheConfigureAssist
             ":"
         );
 
-        return Configuration[node]
-               ?? throw new InvalidOperationException(
-                   $"缺少 Cache KeyPrefix 配置[{node}]。"
-               );
+        var v = configuration[node] ?? "";
+
+        return new ConfigValue<string>
+        {
+            Node = node,
+            Value = v
+        };
     }
 
-    public string GetRedisConnectionString()
+    /// <summary>
+    /// 缓存前缀
+    /// </summary>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public ConfigValue<string> GetCacheKeyPrefix()
+    {
+        return GetCacheKeyPrefix(Configuration);
+    }
+
+    #endregion
+
+    #region GetRedisConnectionString
+
+    /// <summary>
+    /// GetRedisConnectionString
+    /// </summary>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<string> GetRedisConnectionString(IConfiguration configuration)
     {
         var node = StringAssist.Join(
             [
@@ -91,13 +152,40 @@ public class CacheConfigureAssist
             ":"
         );
 
-        return Configuration[node]
-               ?? throw new InvalidOperationException(
-                   $"缺少 Cache Redis ConnectionString 配置[{node}]。"
-               );
+        var v = configuration[node] ?? "";
+
+        if (string.IsNullOrWhiteSpace(v))
+        {
+            throw new ConfigErrorException(
+                $"[{node}]配置无效，请设置"
+            );
+        }
+
+        return new ConfigValue<string>
+        {
+            Node = node,
+            Value = v
+        };
     }
 
-    public string GetSentinelCollection()
+    /// <summary>
+    /// GetRedisConnectionString
+    /// </summary>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public ConfigValue<string> GetRedisConnectionString()
+    {
+        return GetRedisConnectionString(Configuration);
+    }
+
+    #endregion
+
+    #region GetSentinelCollection
+
+    /// <summary>
+    /// GetSentinelCollection
+    /// </summary>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<string> GetSentinelCollection(IConfiguration configuration)
     {
         var node = StringAssist.Join(
             [
@@ -108,11 +196,25 @@ public class CacheConfigureAssist
             ":"
         );
 
-        return Configuration[node]
-               ?? throw new InvalidOperationException(
-                   $"缺少 Cache Redis Sentinel 配置[{node}]。"
-               );
+        var v = configuration[node] ?? "";
+
+        return new ConfigValue<string>
+        {
+            Node = node,
+            Value = v
+        };
     }
+
+    /// <summary>
+    /// GetSentinelCollection
+    /// </summary>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public ConfigValue<string> GetSentinelCollection()
+    {
+        return GetSentinelCollection(Configuration);
+    }
+
+    #endregion
 
     #endregion
 }

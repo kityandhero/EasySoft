@@ -1,7 +1,6 @@
 ﻿// Global using directives
 
 global using System.Reflection;
-global using DotNetCore.CAP;
 global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.Data.Configures;
 global using EasySoft.Core.Data.Repositories;
@@ -14,7 +13,6 @@ global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.Core.Infrastructure.Configures;
 global using EasySoft.Core.Infrastructure.Services;
 global using EasySoft.Core.Infrastructure.Startup;
-global using EasySoft.Core.Infrastructure.Transmitters;
 global using EasySoft.Core.PermissionVerification.Attributes;
 global using EasySoft.Core.PermissionVerification.Configures;
 global using EasySoft.Core.SqlLogTransceiver.Producers;

@@ -7,7 +7,6 @@ global using EasySoft.Core.AuthenticationCore.ExtensionMethods;
 global using EasySoft.Core.AuthenticationCore.Operators;
 global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.Config.ExtensionMethods;
-global using EasySoft.Core.Config.Options;
 global using EasySoft.Core.Data.ExtensionMethods;
 global using EasySoft.Core.EnvironmentAuxiliary.ExtensionMethods;
 global using EasySoft.Core.EasyToken.ExtensionMethods;

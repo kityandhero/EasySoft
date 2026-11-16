@@ -27,10 +27,10 @@ public abstract class OperateOfficerCore : AccessWayOfficer
         mediator
     )
     {
-        _actualOperator = ServiceProviderAssist.Instance.Resolve<IActualOperator>();
+        _actualOperator = ServiceProviderAssist.Resolve<IActualOperator>();
     }
 
-    private IPermissionObserver? _permissionObserver;
+    private IPermissionObserver _permissionObserver;
 
     private IActualOperator GetOperator()
     {
@@ -64,7 +64,7 @@ public abstract class OperateOfficerCore : AccessWayOfficer
             );
         }
 
-        if (!ServiceProviderAssist.Instance.IsRegistered<IPermissionObserver>())
+        if (!ServiceProviderAssist.IsRegistered<IPermissionObserver>())
         {
             throw new Exception("IPermissionObserver is not injected");
         }
@@ -88,7 +88,7 @@ public abstract class OperateOfficerCore : AccessWayOfficer
             );
         }
 
-        _permissionObserver = ServiceProviderAssist.Instance.Resolve<IPermissionObserver>();
+        _permissionObserver = ServiceProviderAssist.Resolve<IPermissionObserver>();
     }
 
     /// <summary>

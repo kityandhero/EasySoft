@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Messaging.Abstractions;
+﻿using EasySoft.Core.GeneralLogTransceiver.Assists;
+using EasySoft.Core.Messaging.Abstractions;
 using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.GeneralLogTransceiver.Producers;
@@ -19,7 +20,7 @@ public class GeneralLogProducer : IGeneralLogProducer
     /// </param>
     /// <param name="applicationChannel">应用通道</param>
     public GeneralLogProducer(
-        [FromKeyedServices(TransceiverConstant.GeneralLogMessageServiceKey)]
+        [FromKeyedServices(GeneralLogTransceiverConfigureAssist.GeneralLogMessageServiceKey)]
         IOutboundMessageBus bus,
         IApplicationChannel applicationChannel
     )

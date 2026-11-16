@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.Hangfire.ConfigAssist;
-using EasySoft.UtilityTools.Standard.Extensions;
-using Hangfire.Dashboard;
+﻿using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Hangfire.ExtensionMethods;
 
@@ -8,11 +6,6 @@ public static class WebApplicationExtensions
 {
     public static WebApplication UseAdvanceHangfire(this WebApplication application)
     {
-        if (!HangfireConfigAssist.GetSwitch())
-        {
-            return application;
-        }
-
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseAdvanceHangfire)}."
         );

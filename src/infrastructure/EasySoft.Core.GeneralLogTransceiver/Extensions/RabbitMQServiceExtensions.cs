@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
+﻿using EasySoft.Core.GeneralLogTransceiver.Assists;
 using EasySoft.Core.GeneralLogTransceiver.Consumers;
 using EasySoft.Core.GeneralLogTransceiver.Producers;
 using EasySoft.Core.Messaging.SlimMessageBus.Extensions;
@@ -27,18 +27,16 @@ internal static class RabbitMQServiceExtensions
         services.AddSlimMessageBus(messageBusBuilder =>
             {
                 messageBusBuilder.AddChildBus(
-                    TransceiverConstant.GeneralLogMessageTransmitter,
+                    GeneralLogTransceiverConfigureAssist.GeneralLogMessageTransceiver,
                     child =>
                     {
                         child.WithProviderRabbitMQ(cfg =>
                             {
-                                var configurationPath = TransceiverConstant
-                                    .GetGeneralLogMessageRabbitMQConnectionString();
+                                var rabbitMQConnectionString = GeneralLogTransceiverConfigureAssist
+                                    .GetRabbitMQConnectionString(configuration)
+                                    .Value;
 
-                                cfg.ConnectionString = configuration[configurationPath]
-                                                       ?? throw new InvalidOperationException(
-                                                           $"缺少 GeneralLogTransitiveMessage RabbitMQ 连接串[{configurationPath}]。"
-                                                       );
+                                cfg.ConnectionString = rabbitMQConnectionString;
 
                                 // 交换器持久化：影响本子总线内所有生产者的交换器声明。
                                 cfg.UseExchangeDefaults(true);
@@ -58,7 +56,7 @@ internal static class RabbitMQServiceExtensions
         );
 
         // 出站口暴露给上层基础设施（生产方需要）
-        services.AddKeyedOutboundBus(TransceiverConstant.GeneralLogMessageServiceKey);
+        services.AddKeyedOutboundBus(GeneralLogTransceiverConfigureAssist.GeneralLogMessageServiceKey);
 
         return services;
     }
@@ -77,7 +75,7 @@ internal static class RabbitMQServiceExtensions
         services.AddSlimMessageBus(messageBusBuilder =>
             {
                 messageBusBuilder.AddChildBus(
-                    TransceiverConstant.GeneralLogMessageTransmitter,
+                    GeneralLogTransceiverConfigureAssist.GeneralLogMessageTransceiver,
                     child =>
                     {
                         child.Produce<IGeneralLogTransitiveMessage>(x => x
@@ -110,7 +108,7 @@ internal static class RabbitMQServiceExtensions
         services.AddSlimMessageBus(mbb =>
             {
                 mbb.AddChildBus(
-                    TransceiverConstant.GeneralLogMessageTransmitter,
+                    GeneralLogTransceiverConfigureAssist.GeneralLogMessageTransceiver,
                     child =>
                     {
                         child.Consume<IGeneralLogTransitiveMessage>(x =>
@@ -133,30 +131,30 @@ internal static class RabbitMQServiceExtensions
 
     private static string GetExchange(IConfiguration configuration)
     {
-        var prefix = AppSettingAssist.GetGlobalPrefix(configuration);
+        var prefix = GeneralLogTransceiverConfigureAssist.GetPrefix(configuration).Value;
 
         return StringAssist.Join(
-            [prefix, TransceiverConstant.GeneralLogMessageExchange],
+            [prefix, GeneralLogTransceiverConfigureAssist.GeneralLogMessageExchange],
             "."
         );
     }
 
     private static string GetRoutingKey(IConfiguration configuration)
     {
-        var prefix = AppSettingAssist.GetGlobalPrefix(configuration);
+        var prefix = GeneralLogTransceiverConfigureAssist.GetPrefix(configuration).Value;
 
         return StringAssist.Join(
-            [prefix, TransceiverConstant.GeneralLogMessageRoutingKey],
+            [prefix, GeneralLogTransceiverConfigureAssist.GeneralLogMessageRoutingKey],
             "."
         );
     }
 
     private static string GetQueue(IConfiguration configuration)
     {
-        var prefix = AppSettingAssist.GetGlobalPrefix(configuration);
+        var prefix = GeneralLogTransceiverConfigureAssist.GetPrefix(configuration).Value;
 
         return StringAssist.Join(
-            [prefix, TransceiverConstant.GeneralLogMessageQueue],
+            [prefix, GeneralLogTransceiverConfigureAssist.GeneralLogMessageQueue],
             "."
         );
     }

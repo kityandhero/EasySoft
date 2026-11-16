@@ -10,11 +10,12 @@ public class BaseAggregateRoot : DomainEntity, IAggregateRoot
     public virtual byte[] RowVersion { get; set; } = { };
 
     public Lazy<IEventPublisher> EventPublisher => new(() =>
-    {
-        var httpContext = TreatAssist.Accessor.GetCurrentHttpContext();
+        {
+            var httpContext = TreatAssist.Accessor.GetCurrentHttpContext();
 
-        return httpContext is not null
-            ? httpContext.RequestServices.GetRequiredService<IEventPublisher>()
-            : ServiceAssist.GetServiceProvider().GetRequiredService<IEventPublisher>();
-    });
+            return httpContext is not null
+                ? httpContext.RequestServices.GetRequiredService<IEventPublisher>()
+                : ServiceProviderAssist.GetProvider().GetRequiredService<IEventPublisher>();
+        }
+    );
 }

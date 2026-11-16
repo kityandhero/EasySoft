@@ -5,4 +5,5 @@ global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.Core.Infrastructure.Startup;
 global using Exceptionless;
 global using Microsoft.AspNetCore.Builder;
+global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;

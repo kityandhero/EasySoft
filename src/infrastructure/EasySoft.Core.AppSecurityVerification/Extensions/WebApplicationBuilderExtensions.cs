@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.AppSecurityVerification.Clients;
+﻿using EasySoft.Core.AppSecurityVerification.Assists;
+using EasySoft.Core.AppSecurityVerification.Clients;
 using EasySoft.Core.AppSecurityVerification.Detectors.Implements;
 using EasySoft.Core.AppSecurityVerification.Detectors.Interfaces;
 
@@ -9,7 +10,7 @@ namespace EasySoft.Core.AppSecurityVerification.Extensions;
 /// </summary>
 public static class WebApplicationBuilderExtensions
 {
-    private const string UniqueIdentifierAddAppSecurityVerification = "9930d6ba-2364-44c4-8538-05468e3d0b93";
+    private const string UniqueIdentifierAddAppSecurityVerification = "06738c9de5f742c9a1ed562512b23b94";
 
     /// <summary>
     /// 配置应用调用安全
@@ -31,8 +32,14 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.TryAddSingleton(new ProxyGenerator());
 
+        var hostUrlConfigValue = AppSecurityServerConfigureAssist.GetHostUrl(builder.Configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            hostUrlConfigValue.ToArrowDescription()
+        );
+
         StartupDescriptionMessageAssist.AddPrompt(
-            $"AppSecurity server host url is {GeneralConfigAssist.GetAppSecurityServerHostUrl()}."
+            $"AppSecurity server host url is {hostUrlConfigValue.Value}."
         );
 
         builder.AddAdvanceRefitClient<IAppSecurityClient>(clientBuilder =>
@@ -40,7 +47,7 @@ public static class WebApplicationBuilderExtensions
                 clientBuilder.ConfigureHttpClient(client =>
                     {
                         if (!Uri.TryCreate(
-                                GeneralConfigAssist.GetAppSecurityServerHostUrl(),
+                                hostUrlConfigValue.Value,
                                 UriKind.Absolute,
                                 out var baseAddress
                             ))
@@ -55,8 +62,6 @@ public static class WebApplicationBuilderExtensions
         );
 
         builder.Services.AddTransient<IAppSecurityDetector, AppSecurityDetector>();
-
-        builder.AddChannelCheckRabbitMQOnlyProducer();
 
         builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<IAppSecurityDetector>(); });
 

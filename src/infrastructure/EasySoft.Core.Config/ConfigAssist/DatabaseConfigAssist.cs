@@ -77,16 +77,18 @@ public static class DatabaseConfigAssist
     /// GetMainConnection
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
+    /// <exception cref="ConfigFileErrorException"></exception>
     public static string GetMainConnection()
     {
         var v = GetConfig().MainConnection;
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置主库数据 MainConnection: {ConfigFile} -> MainConnection",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -95,16 +97,18 @@ public static class DatabaseConfigAssist
     /// GetMirrorConnection
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
+    /// <exception cref="ConfigFileErrorException"></exception>
     public static string GetMirrorConnection()
     {
         var v = GetConfig().MirrorConnection;
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置镜像数据库 MirrorConnection: {ConfigFile} -> MirrorConnection",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -113,16 +117,18 @@ public static class DatabaseConfigAssist
     /// GetHistoryConnection
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
+    /// <exception cref="ConfigFileErrorException"></exception>
     public static string GetHistoryConnection()
     {
         var v = GetConfig().HistoryConnection;
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置历史数据库 HistoryConnection: {ConfigFile} -> HistoryConnection",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }
@@ -131,16 +137,18 @@ public static class DatabaseConfigAssist
     /// GetHistoryErrorConnection
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
+    /// <exception cref="ConfigFileErrorException"></exception>
     public static string GetHistoryErrorConnection()
     {
         var v = GetConfig().HistoryErrorConnection;
 
         if (string.IsNullOrWhiteSpace(v))
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置历史迁移异常数据库 HistoryErrorConnection: {ConfigFile} -> HistoryErrorConnection",
                 GetConfigFileInfo()
             );
+        }
 
         return v;
     }

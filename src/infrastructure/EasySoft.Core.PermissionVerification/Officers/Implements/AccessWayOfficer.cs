@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.DependencyInjection.IocAssists;
-using EasySoft.Core.PermissionVerification.Assists;
+﻿using EasySoft.Core.PermissionVerification.Assists;
 using EasySoft.Core.PermissionVerification.Entities;
 using EasySoft.Core.PermissionVerification.Extensions;
 using EasySoft.UtilityTools.Core.Extensions;
@@ -46,7 +45,7 @@ public abstract class AccessWayOfficer : OfficerCore
         Environment = environment;
         Mediator = mediator;
 
-        Channel = ServiceProviderAssist.Instance.Resolve<IApplicationChannel>();
+        Channel = ServiceProviderAssist.Resolve<IApplicationChannel>();
 
         AccessPermission = new AccessPermission
         {
@@ -74,7 +73,9 @@ public abstract class AccessWayOfficer : OfficerCore
     /// </summary>
     protected async Task CollectAccessWay()
     {
-        if (!GeneralConfigAssist.GetAccessWayDetectSwitch())
+        var authorizationConfigureAssist = ServiceProviderAssist.Resolve<AuthorizationConfigureAssist>();
+
+        if (!authorizationConfigureAssist.GetAccessWayDetectSwitch().Value)
         {
             return;
         }

@@ -1,4 +1,6 @@
-﻿using EasySoft.Core.AccessWayTransceiver.Consumers;
+﻿using EasySoft.Core.AccessWayTransceiver.Assists;
+using EasySoft.Core.AccessWayTransceiver.Consumers;
+using EasySoft.Core.Infrastructure.Assists;
 
 namespace EasySoft.Core.AccessWayTransceiver.Extensions;
 
@@ -30,6 +32,15 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
+        StartupDescriptionMessageAssist.AddExecute($"{nameof(AddAccessWayRabbitMQTransceiver)}");
+
+        var transmissionConfigValue = AccessWayTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            transmissionConfigValue.ToArrowDescription()
+        );
+
+        builder.Services.AddAccessWayTransceiverConfigureAssist(builder.Configuration);
         builder.Services.AddAccessWayRabbitMQCore(builder.Configuration);
         builder.Services.AddAccessWayRabbitMQProducer(builder.Configuration);
         builder.Services.AddAccessWayRabbitMQConsumer<TAccessWayConsumer>(builder.Configuration, 1);
@@ -51,6 +62,15 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
+        StartupDescriptionMessageAssist.AddExecute($"{nameof(AddAccessWayRabbitMQOnlyProducer)}");
+
+        var transmissionConfigValue = AccessWayTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            transmissionConfigValue.ToArrowDescription()
+        );
+
+        builder.Services.AddAccessWayTransceiverConfigureAssist(builder.Configuration);
         builder.Services.AddAccessWayRabbitMQCore(builder.Configuration);
         builder.Services.AddAccessWayRabbitMQProducer(builder.Configuration);
 
@@ -73,6 +93,15 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
+        StartupDescriptionMessageAssist.AddExecute($"{nameof(AddAccessWayRabbitMQOnlyConsumer)}");
+
+        var transmissionConfigValue = AccessWayTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            transmissionConfigValue.ToArrowDescription()
+        );
+
+        builder.Services.AddAccessWayTransceiverConfigureAssist(builder.Configuration);
         builder.Services.AddAccessWayRabbitMQCore(builder.Configuration);
         builder.Services.AddAccessWayRabbitMQConsumer<TAccessWayConsumer>(builder.Configuration, instances);
 

@@ -77,7 +77,7 @@ public static class SwaggerConfigAssist
     /// GetSwitch
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ConfigErrorException"></exception>
+    /// <exception cref="ConfigFileErrorException"></exception>
     public static bool GetSwitch()
     {
         var v = GetConfig().Switch;
@@ -85,10 +85,12 @@ public static class SwaggerConfigAssist
         v = string.IsNullOrWhiteSpace(v) ? "0" : v;
 
         if (!v.IsInt())
-            throw new ConfigErrorException(
+        {
+            throw new ConfigFileErrorException(
                 $"请配置Swagger Enable: {ConfigFile} -> Enable,请设置 0/1",
                 GetConfigFileInfo()
             );
+        }
 
         return v.ToInt() == 1;
     }

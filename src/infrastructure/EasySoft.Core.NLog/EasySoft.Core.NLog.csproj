@@ -17,11 +17,31 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
+        <Folder Include="Renderers"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Renderers"/>
+        <EmbeddedResource Include="nlog.console.filter.repeated.txt"/>
+        <EmbeddedResource Include="nlog.console.filter.txt"/>
+        <EmbeddedResource Include="nlog.console.limiting.wrapper.txt"/>
+        <EmbeddedResource Include="nlog.console.target.txt"/>
+        <EmbeddedResource Include="nlog.console.word.highlighting.rules.txt"/>
+        <EmbeddedResource Include="nlog.debug.rule.txt"/>
+        <EmbeddedResource Include="nlog.debug.target.txt"/>
+        <EmbeddedResource Include="nlog.exceptionless-extensions.txt"/>
+        <EmbeddedResource Include="nlog.exceptionless.rule.txt"/>
+        <EmbeddedResource Include="nlog.exceptionless.target.txt"/>
+        <EmbeddedResource Include="nlog.main.config.txt"/>
+        <EmbeddedResource Include="nlog.production.file.rule.txt"/>
+        <EmbeddedResource Include="nlog.production.file.target.txt"/>
+        <EmbeddedResource Include="nlog.trace.rule.txt"/>
+        <EmbeddedResource Include="nlog.trace.target.txt"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
     </ItemGroup>
 
 </Project>

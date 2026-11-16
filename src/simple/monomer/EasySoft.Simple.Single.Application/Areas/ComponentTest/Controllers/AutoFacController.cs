@@ -41,7 +41,7 @@ public class AutoFacController : AreaControllerCore
     /// <returns></returns>
     public IActionResult TestCustom()
     {
-        var simple = ServiceProviderAssist.Instance.Resolve<ISimpleDependencyInjection>();
+        var simple = ServiceProviderAssist.Resolve<ISimpleDependencyInjection>();
 
         return this.Success(
             new
