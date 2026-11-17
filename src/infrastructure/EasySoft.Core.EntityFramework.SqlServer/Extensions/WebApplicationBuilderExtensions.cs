@@ -10,7 +10,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     ///     注册基于 SqlServer 并已集成好数据操作上下文、工作单元以及通用仓储的 EntityFramework Core 工具集
     /// </summary>  
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="connectionString"></param>
     /// <param name="action"></param>
     /// <returns></returns> 

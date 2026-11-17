@@ -13,7 +13,7 @@ public static class AdvanceSqlBuilderFieldsExtensions
     /// <summary>
     /// Fields
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambdas"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -30,7 +30,7 @@ public static class AdvanceSqlBuilderFieldsExtensions
     /// <summary>
     /// Fields
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="fieldItemSpecials"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -39,21 +39,74 @@ public static class AdvanceSqlBuilderFieldsExtensions
         params FieldItemSpecial<T>[] fieldItemSpecials
     )
     {
-        var sql = builder.Sql;
-
-        var r = new List<string>();
-
-        foreach (var fieldItemSpecial in fieldItemSpecials)
-        {
-            var transferResult = TransferAssist.TransferSumField(fieldItemSpecial);
-
-            r.Add(transferResult);
-        }
-
-        sql = "{0} {1}".FormatValue(sql, r.Join(","));
-
-        builder.Sql = sql;
-
-        return builder;
+    var
+    sql
+    =
+    builder
+    .
+    Sql
+    ;
+    var
+    r
+    =
+    new
+    List
+    <
+    string
+    >
+    (
+    )
+    ;
+    foreach
+    (
+    var
+    fieldItemSpecial
+    in
+    fieldItemSpecials
+    )
+    {
+    var
+    transferResult
+    =
+    TransferAssist
+    .
+    TransferSumField
+    (
+    fieldItemSpecial
+    )
+    ;
+    r
+    .
+    Add
+    (
+    transferResult
+    )
+    ;
+    }
+    sql
+    =
+    "{0} {1}"
+    .
+    FormatValue
+    (
+    sql
+    ,
+    r
+    .
+    Join
+    (
+    ","
+    )
+    )
+    ;
+    builder
+    .
+    Sql
+    =
+    sql
+    ;
+    return
+    builder
+    ;
     }
 }

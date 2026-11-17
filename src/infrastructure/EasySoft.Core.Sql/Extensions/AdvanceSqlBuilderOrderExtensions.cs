@@ -13,7 +13,7 @@ public static class AdvanceSqlBuilderOrderExtensions
     /// <summary>
     /// OrderBy
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="sort"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -25,7 +25,7 @@ public static class AdvanceSqlBuilderOrderExtensions
     /// <summary>
     /// OrderBy
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="sortType"></param>
     /// <typeparam name="T"></typeparam>
@@ -50,7 +50,7 @@ public static class AdvanceSqlBuilderOrderExtensions
     /// <summary>
     /// AndOrderBy
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="sort"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -62,7 +62,7 @@ public static class AdvanceSqlBuilderOrderExtensions
     /// <summary>
     /// AndOrderBy
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="sortType"></param>
     /// <typeparam name="T"></typeparam>

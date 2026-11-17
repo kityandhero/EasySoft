@@ -14,7 +14,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// 自动注册程序集中的逻辑服务以及工作单元拦截器代理, 需要配置 BusinessServiceConfigure
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <returns></returns>
     public static WebApplicationBuilder AddAssemblyBusinessServices(
         this WebApplicationBuilder builder
@@ -36,7 +36,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// 收集程序集中的逻辑服务接口  
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <returns></returns>
     internal static WebApplicationBuilder AddAssemblyBusinessServiceInterfaces(
         this WebApplicationBuilder builder
@@ -67,7 +67,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// 自动注册程序集中的逻辑服务以及工作单元拦截器代理, 需要先行收集逻辑服务接口, 即调用 AddAssemblyBusinessServiceInterfaces
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <returns></returns>
     internal static WebApplicationBuilder AddAssemblyBusinessServiceImplementations(
         this WebApplicationBuilder builder

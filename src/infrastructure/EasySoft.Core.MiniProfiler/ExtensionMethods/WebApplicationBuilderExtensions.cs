@@ -13,7 +13,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// 注入 MiniProfile
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <returns></returns>
     public static WebApplicationBuilder AddAdvanceMiniProfile(
         this WebApplicationBuilder builder

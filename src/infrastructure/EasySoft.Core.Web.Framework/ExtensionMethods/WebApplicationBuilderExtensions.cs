@@ -22,7 +22,7 @@ public static class WebApplicationBuilderExtensions
     // /// <summary>
     // /// 注入框架的启动预处理任务，启动时自动执行, 仅允许配置一次
     // /// </summary>
-    // /// <param name="builder"></param>
+    // /// <param name="builder">构建器</param>
     // /// <returns></returns>
     // public static WebApplicationBuilder AddCovertInjection(
     //     this WebApplicationBuilder builder
@@ -262,140 +262,148 @@ public static class WebApplicationBuilderExtensions
 
         // app.UseRouting();
 
-        if (GeneralConfigAssist.GetCorsSwitch())
-        {
-            app.UseCors(ConstCollection.DefaultSpecificOrigins);
+        // 核心集成
+        // if (GeneralConfigAssist.GetCorsSwitch())
+        // {
+        //     app.UseCors(ConstCollection.DefaultSpecificOrigins);
+        //
+        //     StartupConfigMessageAssist.AddConfig(
+        //         $"cors: enable, policies: {GeneralConfigAssist.GetCorsPolicies().Join(",")}."
+        //     );
+        // }
+        // else
+        // {
+        //     StartupConfigMessageAssist.AddConfig(
+        //         "Cors: disable.",
+        //         GeneralConfigAssist.GetConfigFileInfo()
+        //     );
+        // }
 
-            StartupConfigMessageAssist.AddConfig(
-                $"cors: enable, policies: {GeneralConfigAssist.GetCorsPolicies().Join(",")}."
-            );
-        }
-        else
-        {
-            StartupConfigMessageAssist.AddConfig(
-                "Cors: disable.",
-                GeneralConfigAssist.GetConfigFileInfo()
-            );
-        }
+        // 核心集成
+        // if (GeneralConfigAssist.GetUseAuthentication())
+        // {
+        //     app.UseAuthentication();
+        //
+        //     StartupConfigMessageAssist.AddConfig(
+        //         $"UseAuthentication: enable, policies: {GeneralConfigAssist.GetCorsPolicies().Join(",")}."
+        //     );
+        // }
+        // else
+        // {
+        //     StartupConfigMessageAssist.AddConfig(
+        //         "UseAuthentication: disable.",
+        //         GeneralConfigAssist.GetConfigFileInfo()
+        //     );
+        // }
 
-        if (GeneralConfigAssist.GetUseAuthentication())
-        {
-            app.UseAuthentication();
+        // 核心集成
+        // if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.EasyToken &&
+        //     FlagAssist.EasyTokenMiddlewareModeSwitch)
+        //
+        //     // 设置及接口数据返回格式
+        // {
+        //     app.UseEasyTokenMiddleware();
+        // }
+        //
+        // if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.JsonWebToken &&
+        //     FlagAssist.JsonWebTokenMiddlewareModeSwitch)
+        // {
+        //     app.UseJsonWebTokenMiddleware();
+        // }
+        //
+        // if (!string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
+        // {
+        //     if (FlagAssist.EasyTokenMiddlewareModeSwitch || FlagAssist.JsonWebTokenMiddlewareModeSwitch)
+        //     {
+        //         StartupConfigMessageAssist.AddConfig(
+        //             $"TokenMode: {FlagAssist.TokenMode}, use middleware mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}.",
+        //             GeneralConfigAssist.GetConfigFileInfo()
+        //         );
+        //     }
+        //     else
+        //     {
+        //         StartupConfigMessageAssist.AddConfig(
+        //             $"TokenMode: {FlagAssist.TokenMode}, use filter mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}.",
+        //             GeneralConfigAssist.GetConfigFileInfo()
+        //         );
+        //     }
+        // }
+        //
+        // if (FlagAssist.PermissionVerificationSwitch)
+        // {
+        //     if (string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
+        //     {
+        //         throw new Exception("use PermissionVerification need config one of token mode");
+        //     }
+        //
+        //     if (FlagAssist.PermissionVerificationMiddlewareModeSwitch)
+        //     {
+        //         app.UsePermissionVerificationMiddleware();
+        //     }
+        //
+        //     StartupConfigMessageAssist.AddConfig(
+        //         FlagAssist.PermissionVerificationMiddlewareModeSwitch
+        //             ? "PermissionVerificationSwitch: enable, use middleware mode."
+        //             : "PermissionVerificationSwitch: enable, use filter mode."
+        //     );
+        // }
 
-            StartupConfigMessageAssist.AddConfig(
-                $"UseAuthentication: enable, policies: {GeneralConfigAssist.GetCorsPolicies().Join(",")}."
-            );
-        }
-        else
-        {
-            StartupConfigMessageAssist.AddConfig(
-                "UseAuthentication: disable.",
-                GeneralConfigAssist.GetConfigFileInfo()
-            );
-        }
+        // 核心集成
+        // StartupConfigMessageAssist.AddConfig(
+        //     GeneralConfigAssist.GetAccessWayDetectSwitch()
+        //         ? "AccessWayDetectSwitch: enable."
+        //         : "AccessWayDetectSwitch: disable.",
+        //     GeneralConfigAssist.GetConfigFileInfo()
+        // );
 
-        if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.EasyToken &&
-            FlagAssist.EasyTokenMiddlewareModeSwitch)
+        // 核心集成
+        // if (GeneralConfigAssist.GetUseAuthorization())
+        // {
+        //     app.UseAuthorization();
+        //
+        //     StartupConfigMessageAssist.AddConfig(
+        //         $"UseAuthorization: enable, policies: {GeneralConfigAssist.GetCorsPolicies().Join(",")}."
+        //     );
+        // }
+        // else
+        // {
+        //     StartupConfigMessageAssist.AddConfig(
+        //         "UseAuthorization: disable.",
+        //         GeneralConfigAssist.GetConfigFileInfo()
+        //     );
+        // }
 
-            // 设置及接口数据返回格式
-        {
-            app.UseEasyTokenMiddleware();
-        }
+        // 核心集成
+        // if (app.Environment.IsDevelopment())
+        // {
+        //     app.UseDeveloperExceptionPage();
+        // }
 
-        if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.JsonWebToken &&
-            FlagAssist.JsonWebTokenMiddlewareModeSwitch)
-        {
-            app.UseJsonWebTokenMiddleware();
-        }
-
-        if (!string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
-        {
-            if (FlagAssist.EasyTokenMiddlewareModeSwitch || FlagAssist.JsonWebTokenMiddlewareModeSwitch)
-            {
-                StartupConfigMessageAssist.AddConfig(
-                    $"TokenMode: {FlagAssist.TokenMode}, use middleware mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}.",
-                    GeneralConfigAssist.GetConfigFileInfo()
-                );
-            }
-            else
-            {
-                StartupConfigMessageAssist.AddConfig(
-                    $"TokenMode: {FlagAssist.TokenMode}, use filter mode, TokenServerDumpSwitch: {GeneralConfigAssist.GetTokenServerDumpSwitch()}, TokenParseFromUrlSwitch: {GeneralConfigAssist.GetTokenParseFromUrlSwitch()}, TokenParseFromCookieSwitch: {GeneralConfigAssist.GetTokenParseFromCookieSwitch()}.",
-                    GeneralConfigAssist.GetConfigFileInfo()
-                );
-            }
-        }
-
-        if (FlagAssist.PermissionVerificationSwitch)
-        {
-            if (string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
-            {
-                throw new Exception("use PermissionVerification need config one of token mode");
-            }
-
-            if (FlagAssist.PermissionVerificationMiddlewareModeSwitch)
-            {
-                app.UsePermissionVerificationMiddleware();
-            }
-
-            StartupConfigMessageAssist.AddConfig(
-                FlagAssist.PermissionVerificationMiddlewareModeSwitch
-                    ? "PermissionVerificationSwitch: enable, use middleware mode."
-                    : "PermissionVerificationSwitch: enable, use filter mode."
-            );
-        }
-
-        StartupConfigMessageAssist.AddConfig(
-            GeneralConfigAssist.GetAccessWayDetectSwitch()
-                ? "AccessWayDetectSwitch: enable."
-                : "AccessWayDetectSwitch: disable.",
-            GeneralConfigAssist.GetConfigFileInfo()
-        );
-
-        if (GeneralConfigAssist.GetUseAuthorization())
-        {
-            app.UseAuthorization();
-
-            StartupConfigMessageAssist.AddConfig(
-                $"UseAuthorization: enable, policies: {GeneralConfigAssist.GetCorsPolicies().Join(",")}."
-            );
-        }
-        else
-        {
-            StartupConfigMessageAssist.AddConfig(
-                "UseAuthorization: disable.",
-                GeneralConfigAssist.GetConfigFileInfo()
-            );
-        }
-
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
-        }
-
-        app.UseAdvanceEnvironmentAuxiliary();
+        // 核心集成
+        // app.UseAdvanceEnvironmentAuxiliary();
 
         app.UseConfigureTemplate();
 
-        StartupConfigMessageAssist.AddConfig(
-            $"Environment: {EnvironmentAssist.GetEnvironment().EnvironmentName}."
-        );
-
-        StartupConfigMessageAssist.AddConfig(
-            $"EnvironmentAlias: {EnvironmentAssist.GetEnvironmentAliasName()}."
-        );
-
-        StartupConfigMessageAssist.AddConfig(
-            $"ContentRootPath: \"{EnvironmentAssist.GetEnvironment().ContentRootPath}\"."
-        );
-
-        StartupConfigMessageAssist.AddConfig(
-            $"WebRootPath: \"{GetWebRootPath()}\"."
-        );
-
-        StartupConfigMessageAssist.AddConfig(
-            $"Application start completed{(!FlagAssist.StartupUrls.Any() ? "." : $" at {FlagAssist.StartupUrls.Join(" ")}.")}"
-        );
+        // 核心集成
+        // StartupConfigMessageAssist.AddConfig(
+        //     $"Environment: {EnvironmentAssist.GetEnvironment().EnvironmentName}."
+        // );
+        //
+        // StartupConfigMessageAssist.AddConfig(
+        //     $"EnvironmentAlias: {EnvironmentAssist.GetEnvironmentAliasName()}."
+        // );
+        //
+        // StartupConfigMessageAssist.AddConfig(
+        //     $"ContentRootPath: \"{EnvironmentAssist.GetEnvironment().ContentRootPath}\"."
+        // );
+        //
+        // StartupConfigMessageAssist.AddConfig(
+        //     $"WebRootPath: \"{GetWebRootPath()}\"."
+        // );
+        //
+        // StartupConfigMessageAssist.AddConfig(
+        //     $"Application start completed{(!FlagAssist.StartupUrls.Any() ? "." : $" at {FlagAssist.StartupUrls.Join(" ")}.")}"
+        // );
 
         // StartupBuilderExtraActionMessageAssist.Print();
         //
@@ -409,9 +417,10 @@ public static class WebApplicationBuilderExtensions
         //
         // StartupDescriptionMessageAssist.Print();
 
-        LogAssist.Hint(
-            AuxiliaryConfigure.BuildHintMessage().ToArray()
-        );
+        // 核心集成
+        // LogAssist.Hint(
+        //     AuxiliaryConfigure.BuildHintMessage().ToArray()
+        // );
 
         LogAssist.Hint(
             SwaggerConfigure.BuildHintMessage().ToArray()
@@ -421,7 +430,8 @@ public static class WebApplicationBuilderExtensions
 
         app.UseAutoEnsureCreated();
 
-        StartupWarnMessageAssist.Print();
+        // 核心集成
+        // StartupWarnMessageAssist.Print();
 
         app.RegisterWorks();
 

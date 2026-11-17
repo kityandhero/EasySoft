@@ -8,7 +8,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// AddAdvanceSwagger
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="action"></param>
     /// <returns></returns>
     public static WebApplicationBuilder AddAdvanceRefitClient<TAdvanceRefitClient>(

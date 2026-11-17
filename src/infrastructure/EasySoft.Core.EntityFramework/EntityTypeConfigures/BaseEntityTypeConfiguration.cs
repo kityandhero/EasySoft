@@ -16,7 +16,7 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
     /// <summary>
     /// Configure
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     public void Configure(EntityTypeBuilder<TEntity> builder)
     {
         var entityType = typeof(TEntity);
@@ -34,7 +34,7 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
     /// <summary>
     /// ConfigureTable
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="entityType"></param>
     protected virtual void ConfigureTable(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
@@ -76,7 +76,7 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
     /// <summary>
     /// ConfigureKey
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="entityType"></param>
     protected virtual void ConfigureKey(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
@@ -92,7 +92,7 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
     /// <summary>
     /// ConfigureColumn
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="entityType"></param>
     protected virtual void ConfigureColumn(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
@@ -101,7 +101,7 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
     /// <summary>
     /// ConfigureIndex
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="entityType"></param>
     protected virtual void ConfigureIndex(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
@@ -110,7 +110,7 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
     /// <summary>
     /// ConfigureConcurrency
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="entityType"></param>
     protected virtual void ConfigureConcurrency(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
@@ -127,7 +127,7 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
     /// <summary>
     /// ConfigureTenant
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="entityType"></param>
     protected virtual void ConfigureTenant(EntityTypeBuilder<TEntity> builder, Type entityType)
     {
@@ -143,7 +143,7 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
     /// <summary>
     /// ConfigureQueryFilter
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="entityType"></param>
     protected virtual void ConfigureQueryFilter(EntityTypeBuilder<TEntity> builder, Type entityType)
     {

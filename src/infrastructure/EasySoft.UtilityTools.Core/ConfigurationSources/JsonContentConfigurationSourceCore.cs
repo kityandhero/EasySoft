@@ -28,7 +28,7 @@ public abstract class JsonContentConfigurationSourceCore : IConfigurationSource
     /// <summary>
     /// Build
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <returns></returns>
     public abstract IConfigurationProvider Build(IConfigurationBuilder builder);
 }

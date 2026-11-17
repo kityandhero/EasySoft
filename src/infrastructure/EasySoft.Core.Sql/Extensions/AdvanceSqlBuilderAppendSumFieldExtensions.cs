@@ -14,7 +14,7 @@ public static class AdvanceSqlBuilderAppendSumFieldExtensions
     /// <summary>
     /// AppendSumField
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="columnAlias"></param>
     /// <param name="replaceDBNullValue"></param>
@@ -39,7 +39,7 @@ public static class AdvanceSqlBuilderAppendSumFieldExtensions
     /// <summary>
     /// AppendSumField
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="fieldItem"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -62,7 +62,7 @@ public static class AdvanceSqlBuilderAppendSumFieldExtensions
     /// <summary>
     /// AppendSumField
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="columnAlias"></param>
     /// <param name="replaceDBNullValue"></param>
@@ -87,7 +87,7 @@ public static class AdvanceSqlBuilderAppendSumFieldExtensions
     /// <summary>
     /// AppendSumField
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="fieldItemSpecial"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>

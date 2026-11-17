@@ -9,7 +9,7 @@ public static class ApplicationBuilderExtensions
     /// <summary>
     /// AddAdvanceMapster, 配置构建请向 ConfigActionAssist 增加配置 action
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <returns></returns>
     public static WebApplicationBuilder AddAdvanceMapster(
         this WebApplicationBuilder builder

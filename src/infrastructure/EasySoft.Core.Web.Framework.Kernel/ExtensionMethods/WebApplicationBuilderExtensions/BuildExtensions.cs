@@ -1,9 +1,14 @@
-﻿using EasySoft.Core.DependencyInjection.IocAssists;
+﻿using EasySoft.Core.AuthenticationCore.Assists;
+using EasySoft.Core.EasyToken.ExtensionMethods;
+using EasySoft.Core.EnvironmentAuxiliary.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Configures;
 using EasySoft.Core.Infrastructure.Extensions;
 using EasySoft.Core.Infrastructure.Options;
 using EasySoft.Core.Infrastructure.Startup;
+using EasySoft.Core.JsonWebToken.ExtensionMethods;
+using EasySoft.Core.PermissionVerification.Assists;
+using EasySoft.Core.PermissionVerification.Extensions;
 using EasySoft.Core.PermissionVerification.Filters;
 using EasySoft.Core.PrepareStartWork.ExtensionMethods;
 using EasySoft.Core.Web.Framework.Kernel.ActionModelConventions;
@@ -12,7 +17,7 @@ using EasySoft.Core.Web.Framework.Kernel.Attributes;
 using EasySoft.Core.Web.Framework.Kernel.Filters;
 using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.Assists;
-using Microsoft.AspNetCore.HttpOverrides;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Web.Framework.Kernel.ExtensionMethods.WebApplicationBuilderExtensions;
 
@@ -184,9 +189,127 @@ public static class BuildExtensions
 
         app.UseRouting();
 
+        var webRootPathConfigValue = InfrastructureConfigureAssist.GetWebRootPath(builder.Configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            webRootPathConfigValue.ToArrowDescription()
+        );
+
+        #region Authentication
+
+        app.UseAuthentication();
+
+        if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.EasyToken &&
+            FlagAssist.EasyTokenMiddlewareModeSwitch)
+
+            // 设置及接口数据返回格式
+        {
+            app.UseEasyTokenMiddleware();
+        }
+
+        if (FlagAssist.TokenMode == UtilityTools.Standard.ConstCollection.JsonWebToken &&
+            FlagAssist.JsonWebTokenMiddlewareModeSwitch)
+        {
+            app.UseJsonWebTokenMiddleware();
+        }
+
+        var accessWayDetectSwitchConfigValue = AuthorizationConfigureAssist.GetAccessWayDetectSwitch(
+            builder.Configuration
+        );
+
+        StartupConfigMessageAssist.AddConfig(
+            accessWayDetectSwitchConfigValue.ToArrowDescription()
+        );
+
+        if (!string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
+        {
+            var tokenServerDumpSwitchConfigValue = AuthenticationConfigureAssist.GetTokenServerDumpSwitch(
+                builder.Configuration
+            );
+
+            StartupConfigMessageAssist.AddConfig(
+                tokenServerDumpSwitchConfigValue.ToArrowDescription()
+            );
+
+            var tokenParseFromUrlSwitchConfigValue = AuthenticationConfigureAssist.GetTokenParseFromUrlSwitch(
+                builder.Configuration
+            );
+
+            StartupConfigMessageAssist.AddConfig(
+                tokenParseFromUrlSwitchConfigValue.ToArrowDescription()
+            );
+
+            var tokenParseFromCookieSwitchConfigValue = AuthenticationConfigureAssist.GetTokenParseFromCookieSwitch(
+                builder.Configuration
+            );
+
+            StartupConfigMessageAssist.AddConfig(
+                tokenParseFromCookieSwitchConfigValue.ToArrowDescription()
+            );
+
+            if (FlagAssist.EasyTokenMiddlewareModeSwitch || FlagAssist.JsonWebTokenMiddlewareModeSwitch)
+            {
+                StartupConfigMessageAssist.AddConfig(
+                    "Token verification mode use middleware mode."
+                );
+            }
+            else
+            {
+                StartupConfigMessageAssist.AddConfig(
+                    $"Token verification mode use filter mode."
+                );
+            }
+        }
+
+        if (FlagAssist.PermissionVerificationSwitch)
+        {
+            if (string.IsNullOrWhiteSpace(FlagAssist.TokenMode))
+            {
+                throw new Exception("use PermissionVerification need config one of token mode");
+            }
+
+            if (FlagAssist.PermissionVerificationMiddlewareModeSwitch)
+            {
+                app.UsePermissionVerificationMiddleware();
+            }
+
+            StartupConfigMessageAssist.AddConfig(
+                FlagAssist.PermissionVerificationMiddlewareModeSwitch
+                    ? "PermissionVerificationSwitch: enable, use middleware mode."
+                    : "PermissionVerificationSwitch: enable, use filter mode."
+            );
+        }
+
+        #endregion
+
         app.WeaveApplicationExtraAction();
 
         app.UseAdvanceMapControllers();
+
+        app.UseAuthorization();
+
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+
+        app.UseAdvanceEnvironmentAuxiliary();
+
+        StartupConfigMessageAssist.AddConfig(
+            $"Environment is {EnvironmentAssist.GetEnvironment().EnvironmentName}."
+        );
+
+        StartupConfigMessageAssist.AddConfig(
+            $"EnvironmentAlias is {EnvironmentAssist.GetEnvironmentAliasName()}."
+        );
+
+        StartupConfigMessageAssist.AddConfig(
+            $"ContentRootPath is \"{EnvironmentAssist.GetEnvironment().ContentRootPath}\"."
+        );
+
+        StartupConfigMessageAssist.AddConfig(
+            $"Application start completed{(!FlagAssist.StartupUrls.Any() ? "." : $" at {FlagAssist.StartupUrls.Join(" ")}.")}"
+        );
 
         #region Startup Info Print
 
@@ -205,6 +328,10 @@ public static class BuildExtensions
         #endregion
 
         // ------------------------
+
+        LogAssist.Hint(
+            AuxiliaryConfigure.BuildHintMessage().ToArray()
+        );
 
         #region Startup Warn Print
 

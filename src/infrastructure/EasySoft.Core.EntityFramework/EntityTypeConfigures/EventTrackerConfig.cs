@@ -10,7 +10,7 @@ public class EventTrackerConfig : BaseEntityTypeConfiguration<EventTracker>
     /// <summary>
     /// ConfigureColumn
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="entityType"></param>
     protected override void ConfigureColumn(EntityTypeBuilder<EventTracker> builder, Type entityType)
     {

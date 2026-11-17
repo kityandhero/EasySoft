@@ -10,7 +10,7 @@ public static class ContainerBuilderExtensions
     /// <summary>
     /// AddAdvanceTenantContextFactory
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <typeparam name="TFactory"></typeparam>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>

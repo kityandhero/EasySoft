@@ -21,7 +21,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// AddLogRecordInterceptor
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <returns></returns>
     public static WebApplicationBuilder AddLogRecordInterceptor(this WebApplicationBuilder builder)
     {
@@ -33,7 +33,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// AddExtraNormalInjection
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="action"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>

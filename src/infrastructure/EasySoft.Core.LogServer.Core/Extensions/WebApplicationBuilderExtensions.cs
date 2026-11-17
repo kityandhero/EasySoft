@@ -13,7 +13,7 @@ internal static class WebApplicationBuilderExtensions
     /// <summary>
     /// add permission server core logic
     /// </summary>
-    /// <param name="builder"></param>    
+    /// <param name="builder">构建器</param>    
     /// <returns></returns>
     internal static WebApplicationBuilder AddLogServerCore(
         this WebApplicationBuilder builder

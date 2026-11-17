@@ -19,6 +19,11 @@ public class AuthenticationConfigureAssist
     private const string AuthenticationConfigureNode = "Authentication";
 
     /// <summary>
+    /// TokenModeConfigureNode
+    /// </summary>
+    private const string TokenModeConfigureNode = "TokenMode";
+
+    /// <summary>
     /// TokenParseFromUrlSwitchConfigureNode
     /// </summary>
     private const string TokenParseFromUrlSwitchConfigureNode = "TokenParseFromUrlSwitch";
@@ -44,7 +49,12 @@ public class AuthenticationConfigureAssist
     public const string TokenExpiresConfigureNode = "TokenExpires";
 
     /// <summary>
-    /// TokenExpiresConfigureNode
+    /// EasyTokenSecretKeyConfigureNode
+    /// </summary>
+    public const string EasyTokenSecretKeyConfigureNode = "EasyTokenSecretKey";
+
+    /// <summary>
+    /// JsonWebTokenClockSkewConfigureNode
     /// </summary>
     public const string JsonWebTokenClockSkewConfigureNode = "JsonWebTokenClockSkew";
 
@@ -108,6 +118,51 @@ public class AuthenticationConfigureAssist
     #endregion
 
     #region Methods
+
+    #region GetTokenMode
+
+    /// <summary>
+    /// GetTokenMode
+    /// </summary>
+    /// <param name="configuration">配置集</param>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<string> GetTokenMode(IConfiguration configuration)
+    {
+        var node = StringAssist.Join(
+            [
+                AuthenticationConfigureNode,
+                TokenModeConfigureNode
+            ],
+            ":"
+        );
+
+        var v = configuration[node] ?? UtilityTools.Standard.ConstCollection.EasyToken;
+
+        if (!v.In(UtilityTools.Standard.ConstCollection.EasyToken, UtilityTools.Standard.ConstCollection.JsonWebToken))
+        {
+            throw new ConfigErrorException(
+                $"[{node}]配置无效，如需要配置，请设置 {UtilityTools.Standard.ConstCollection.EasyToken}|{UtilityTools.Standard.ConstCollection.JsonWebToken}"
+            );
+        }
+
+        return new ConfigValue<string>
+        {
+            Node = node,
+            Value = v
+        };
+    }
+
+    /// <summary>
+    /// GetTokenMode
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException">配置异常</exception>
+    public ConfigValue<string> GetTokenMode()
+    {
+        return GetTokenMode(Configuration);
+    }
+
+    #endregion
 
     #region GetTokenParseFromUrlSwitch
 
@@ -335,6 +390,50 @@ public class AuthenticationConfigureAssist
 
     #endregion
 
+    #region GetEasyTokenSecretKey
+
+    /// <summary>
+    /// 获取 EasyToken 加密密钥
+    /// </summary>
+    /// <param name="configuration">配置集</param>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<string> GetEasyTokenSecretKey(IConfiguration configuration)
+    {
+        var node = StringAssist.Join(
+            [
+                AuthenticationConfigureNode,
+                EasyTokenSecretKeyConfigureNode
+            ],
+            ":"
+        );
+
+        var v = configuration[node] ?? "";
+
+        if (string.IsNullOrWhiteSpace(v))
+        {
+            throw new ConfigErrorException(
+                $"[{node}]配置无效，请设置"
+            );
+        }
+
+        return new ConfigValue<string>
+        {
+            Node = node,
+            Value = v
+        };
+    }
+
+    /// <summary>
+    /// 获取 EasyToken 加密密钥
+    /// </summary>
+    /// <exception cref="InvalidOperationException">配置异常</exception>
+    public ConfigValue<string> GetEasyTokenSecretKey()
+    {
+        return GetEasyTokenSecretKey(Configuration);
+    }
+
+    #endregion
+
     #region GetJsonWebTokenClockSkew
 
     /// <summary>
@@ -347,7 +446,7 @@ public class AuthenticationConfigureAssist
         var node = StringAssist.Join(
             [
                 AuthenticationConfigureNode,
-                TokenExpiresConfigureNode
+                JsonWebTokenClockSkewConfigureNode
             ],
             ":"
         );

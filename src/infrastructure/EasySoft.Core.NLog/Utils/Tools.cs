@@ -1,9 +1,7 @@
-﻿using System.Text;
+﻿using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.NLog.Assists;
 using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.Extensions;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.NLog.Utils;
 
@@ -120,10 +118,16 @@ public static class Tools
         IConfiguration configuration
     )
     {
+        var internalLogLevelConfigValue = LogConfigureAssist.GetInternalLogLevel(configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            internalLogLevelConfigValue.ToArrowDescription()
+        );
+
         return config
             .Replace(
                 "###internal-log-level###",
-                LogConfigureAssist.GetInternalLogLevel(configuration).Value
+                internalLogLevelConfigValue.Value
             );
     }
 
@@ -132,8 +136,21 @@ public static class Tools
         IConfiguration configuration
     )
     {
-        var logToFileSwitch = LogConfigureAssist.GetInternalLogToFile(configuration).Value;
-        var logFile = LogConfigureAssist.GetInternalLogFile(configuration).Value;
+        var internalLogToFileConfigValue = LogConfigureAssist.GetInternalLogToFile(configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            internalLogToFileConfigValue.ToArrowDescription()
+        );
+
+        var logToFileSwitch = internalLogToFileConfigValue.Value;
+
+        var internalLogFileConfigValue = LogConfigureAssist.GetInternalLogFile(configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            internalLogFileConfigValue.ToArrowDescription()
+        );
+
+        var logFile = internalLogFileConfigValue.Value;
 
         return config
             .Replace(
@@ -149,8 +166,13 @@ public static class Tools
         IConfiguration configuration
     )
     {
-        var nlogEmbedConfigProductionLogToToTFileSwitch =
-            LogConfigureAssist.GetProductionLogToFile(configuration).Value;
+        var productionLogToFileConfigValue = LogConfigureAssist.GetProductionLogToFile(configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            productionLogToFileConfigValue.ToArrowDescription()
+        );
+
+        var nlogEmbedConfigProductionLogToToTFileSwitch = productionLogToFileConfigValue.Value;
 
         if (!nlogEmbedConfigProductionLogToToTFileSwitch)
         {
@@ -164,20 +186,38 @@ public static class Tools
                 );
         }
 
+        var productionLogFileNameConfigValue = LogConfigureAssist.GetProductionLogFileName(configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            productionLogFileNameConfigValue.ToArrowDescription()
+        );
+
+        var productionLogArchiveFileNameConfigValue = LogConfigureAssist.GetProductionLogArchiveFileName(configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            productionLogArchiveFileNameConfigValue.ToArrowDescription()
+        );
+
         var target = GetEmbeddedResourceFileContent("/nlog.production.file.target.txt")
             .Replace(
                 "###file-name###",
-                LogConfigureAssist.GetProductionLogFileName(configuration).Value
+                productionLogFileNameConfigValue.Value
             )
             .Replace(
                 "###archive-file-name###",
-                LogConfigureAssist.GetProductionLogArchiveFileName(configuration).Value
+                productionLogArchiveFileNameConfigValue.Value
             );
+
+        var productionLogLevelConfigValue = LogConfigureAssist.GetProductionLogLevel(configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            productionLogLevelConfigValue.ToArrowDescription()
+        );
 
         var rule = GetEmbeddedResourceFileContent("/nlog.production.file.rule.txt")
             .Replace(
                 "###level###",
-                LogConfigureAssist.GetProductionLogLevel(configuration).Value
+                productionLogLevelConfigValue.Value
             );
 
         return config
@@ -196,8 +236,21 @@ public static class Tools
         IConfiguration configuration
     )
     {
-        var nlogDefaultConfigDebugToFileSwitch = LogConfigureAssist.GetDebugToFile(configuration).Value;
-        var nlogDefaultConfigTraceToFileSwitch = LogConfigureAssist.GetTraceToFile(configuration).Value;
+        var debugToFileConfigValue = LogConfigureAssist.GetDebugToFile(configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            debugToFileConfigValue.ToArrowDescription()
+        );
+
+        var nlogDefaultConfigDebugToFileSwitch = debugToFileConfigValue.Value;
+
+        var traceToFileConfigValue = LogConfigureAssist.GetTraceToFile(configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            traceToFileConfigValue.ToArrowDescription()
+        );
+
+        var nlogDefaultConfigTraceToFileSwitch = traceToFileConfigValue.Value;
 
         var debugRule = nlogDefaultConfigDebugToFileSwitch ? GetNlogDefaultDebugRuleConfig() : "";
         var debugTarget = nlogDefaultConfigDebugToFileSwitch ? GetNlogDefaultDebugTargetConfig() : "";
@@ -223,16 +276,42 @@ public static class Tools
         IConfiguration configuration
     )
     {
-        var nlogDefaultConfigDebugToConsoleSwitch = LogConfigureAssist.GetDebugToConsole(configuration).Value;
-        var nlogDefaultConfigTraceToConsoleSwitch = LogConfigureAssist.GetTraceToConsole(configuration).Value;
-        var nlogConsoleRepeatedFilterSwitch = LogConfigureAssist.GetConsoleRepeatedFilter(configuration).Value;
+        var debugToConsoleConfigValue = LogConfigureAssist.GetDebugToConsole(configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            debugToConsoleConfigValue.ToArrowDescription()
+        );
+
+        var nlogDefaultConfigDebugToConsoleSwitch = debugToConsoleConfigValue.Value;
+
+        var traceToConsoleConfigValue = LogConfigureAssist.GetTraceToConsole(configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            traceToConsoleConfigValue.ToArrowDescription()
+        );
+
+        var nlogDefaultConfigTraceToConsoleSwitch = traceToConsoleConfigValue.Value;
+
+        var consoleRepeatedFilterConfigValue = LogConfigureAssist.GetConsoleRepeatedFilter(configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            consoleRepeatedFilterConfigValue.ToArrowDescription()
+        );
+
+        var nlogConsoleRepeatedFilterSwitch = consoleRepeatedFilterConfigValue.Value;
 
         var nlogConsoleLimitingWrapper = GetNlogConsoleLimitingWrapper();
         var nlogConsoleTarget = GetNlogConsoleTarget();
 
         string configAdjust;
 
-        if (LogConfigureAssist.GetConsoleLimitingWrapper(configuration).Value)
+        var consoleLimitingWrapperConfigValue = LogConfigureAssist.GetConsoleLimitingWrapper(configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            consoleLimitingWrapperConfigValue.ToArrowDescription()
+        );
+
+        if (consoleLimitingWrapperConfigValue.Value)
         {
             configAdjust = config.Replace("###console-config###", nlogConsoleTarget);
         }
@@ -245,7 +324,13 @@ public static class Tools
         var consoleMinLevel = nlogDefaultConfigTraceToConsoleSwitch ? "Trace" :
             nlogDefaultConfigDebugToConsoleSwitch ? "Debug" : "Info";
 
-        var consoleMessageLimit = LogConfigureAssist.GetConsoleMessageLimit(configuration).Value;
+        var consoleMessageLimitConfigValue = LogConfigureAssist.GetConsoleMessageLimit(configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            consoleMessageLimitConfigValue.ToArrowDescription()
+        );
+
+        var consoleMessageLimit = consoleMessageLimitConfigValue.Value;
 
         var consoleMessageLimitSetting = consoleMessageLimit <= 0 ? "" : $"\"messageLimit\": {consoleMessageLimit},";
 
@@ -283,11 +368,29 @@ public static class Tools
         IConfiguration configuration
     )
     {
-        var nlogDefaultConfigDebugToExceptionlessSwitch =
-            LogConfigureAssist.GetExceptionlessTeleport(configuration).Value;
+        var exceptionlessTeleportConfigValue = LogConfigureAssist.GetExceptionlessTeleport(configuration);
 
-        var nlogDefaultConfigExceptionlessServerUrl = LogConfigureAssist.GetExceptionlessServerUrl(configuration).Value;
-        var nlogDefaultConfigExceptionlessApiKey = LogConfigureAssist.GetExceptionlessApiKey(configuration).Value;
+        StartupConfigMessageAssist.AddConfig(
+            exceptionlessTeleportConfigValue.ToArrowDescription()
+        );
+
+        var nlogDefaultConfigDebugToExceptionlessSwitch = exceptionlessTeleportConfigValue.Value;
+
+        var exceptionlessServerUrlConfigValue = LogConfigureAssist.GetExceptionlessServerUrl(configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            exceptionlessServerUrlConfigValue.ToArrowDescription()
+        );
+
+        var nlogDefaultConfigExceptionlessServerUrl = exceptionlessServerUrlConfigValue.Value;
+
+        var exceptionlessApiKeyConfigValue = LogConfigureAssist.GetExceptionlessApiKey(configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            exceptionlessApiKeyConfigValue.ToArrowDescription()
+        );
+
+        var nlogDefaultConfigExceptionlessApiKey = exceptionlessApiKeyConfigValue.Value;
 
         var exceptionlessExtensions =
             nlogDefaultConfigDebugToExceptionlessSwitch ? GetNlogDefaultExceptionlessExtensionsConfig() : "";

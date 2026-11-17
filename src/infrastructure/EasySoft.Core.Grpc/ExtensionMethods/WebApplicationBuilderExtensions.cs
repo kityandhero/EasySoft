@@ -5,7 +5,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// AddAdvanceGrpc
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <returns></returns>
     public static WebApplicationBuilder AddAdvanceGrpc(
         this WebApplicationBuilder builder
@@ -23,7 +23,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// AddAdvanceGrpcClient
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <returns></returns>
     public static WebApplicationBuilder AddAdvanceGrpcClient<TGrpcClient>(
         this WebApplicationBuilder builder
@@ -41,7 +41,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// AddAdvanceGrpcClient
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="action"></param>
     /// <returns></returns>
     public static WebApplicationBuilder AddAdvanceGrpcClient<TGrpcClient>(

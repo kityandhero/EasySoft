@@ -21,7 +21,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// 配置操作者验证以及操作权限验证, 需要配置在 UseEasyToken/UseAdvanceJsonWebToken 之后
     /// </summary> 
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="middlewareMode">使用中间件模式</param>
     /// <returns></returns>
     public static WebApplicationBuilder AddPermissionVerification<TPermissionObserver>(
@@ -157,7 +157,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// 注入权限判断器
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <returns></returns>
     private static WebApplicationBuilder AddPermissionObserverInjection<TPermissionObserver>(
         this WebApplicationBuilder builder

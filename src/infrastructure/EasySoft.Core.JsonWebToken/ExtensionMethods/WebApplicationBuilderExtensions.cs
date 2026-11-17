@@ -12,7 +12,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// 配置操作者验证    
     /// </summary> 
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="middlewareMode"></param>
     /// <returns></returns>
     public static WebApplicationBuilder AddAdvanceJsonWebToken(
@@ -24,9 +24,9 @@ public static class WebApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// 配置操作者验证    
-    /// </summary> 
-    /// <param name="builder"></param>
+    /// 配置操作者验证 
+       /// </summary> 
+    /// <param name="builder">构建器</param>
     /// <param name="middlewareMode"></param>
     /// <returns></returns>
     public static WebApplicationBuilder AddAdvanceJsonWebToken<TOperator>(

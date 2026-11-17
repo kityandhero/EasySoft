@@ -11,7 +11,7 @@ public static class AdvanceSqlBuilderAppendCountFieldExtensions
     /// <summary>
     /// AppendCountField
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="columnAlias"></param>
     /// <typeparam name="T"></typeparam>
@@ -39,7 +39,7 @@ public static class AdvanceSqlBuilderAppendCountFieldExtensions
     /// <summary>
     /// AppendCountField
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="columnAlias"></param>
     /// <typeparam name="T"></typeparam>
@@ -50,17 +50,44 @@ public static class AdvanceSqlBuilderAppendCountFieldExtensions
         string columnAlias = "TotalCount"
     )
     {
-        var sql = builder.Sql;
-
-        var transferResult = TransferAssist.TransferCountField(
-            propertyLambda,
-            columnAlias
-        );
-
-        sql = "{0},{1}".FormatValue(sql, transferResult);
-
-        builder.Sql = sql;
-
-        return builder;
+    var
+    sql
+    =
+    builder
+    .
+    Sql
+    ;
+    var
+    transferResult
+    =
+    TransferAssist
+    .
+    TransferCountField
+    (
+    propertyLambda
+    ,
+    columnAlias
+    )
+    ;
+    sql
+    =
+    "{0},{1}"
+    .
+    FormatValue
+    (
+    sql
+    ,
+    transferResult
+    )
+    ;
+    builder
+    .
+    Sql
+    =
+    sql
+    ;
+    return
+    builder
+    ;
     }
 }

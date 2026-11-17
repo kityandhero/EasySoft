@@ -30,7 +30,7 @@ public class ConfigValue<T>
     {
         var v = Value.ToString()?.ToLower();
 
-        return $"{Node} -> {(string.IsNullOrWhiteSpace(v) ? "none" : v)}.";
+        return $"[Configure] {Node} -> {(string.IsNullOrWhiteSpace(v) ? "not set, default value will be used" : v)}.";
     }
 
     #endregion

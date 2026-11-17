@@ -1,10 +1,7 @@
 ﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Configures;
-using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.NLog.Assists;
 using EasySoft.Core.NLog.Utils;
 using EasySoft.UtilityTools.Core.Extensions;
-using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace EasySoft.Core.NLog.ExtensionMethods;
 
@@ -51,12 +48,6 @@ public static class WebApplicationBuilderExtensions
             }
         );
 
-        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
-            new ExtraAction<IEndpointRouteBuilder>()
-                .SetName("")
-                .SetAction(endpoints => { endpoints.MapNLogInlayConfig(); })
-        );
-
         return builder;
     }
 
@@ -89,12 +80,6 @@ public static class WebApplicationBuilderExtensions
 
                 b.AddNLogWeb();
             }
-        );
-
-        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
-            new ExtraAction<IEndpointRouteBuilder>()
-                .SetName("")
-                .SetAction(endpoints => { endpoints.MapNLogInlayConfig(); })
         );
 
         return builder;

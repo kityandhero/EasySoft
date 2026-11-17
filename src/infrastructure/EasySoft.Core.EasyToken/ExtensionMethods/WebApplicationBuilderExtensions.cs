@@ -9,9 +9,25 @@ public static class WebApplicationBuilderExtensions
     private const string UniqueIdentifierAddEasyToken = "3ab223f0-d18f-44e9-9f01-82bbc5186ad0";
 
     /// <summary>
+    /// 使用默认密钥配置操作者验证,  实际项目强烈不建议使用默认密钥    
+    /// </summary> 
+    /// <param name="builder">构建器</param>
+    /// <param name="middlewareMode"></param>
+    /// <returns>构建器</returns>
+    public static WebApplicationBuilder AddEasyToken(
+        this WebApplicationBuilder builder,
+        bool middlewareMode = true
+    )
+    {
+        builder.Services.AddSingleton<DefaultTokenSecretOptions>();
+
+        return builder.AddEasyToken<DefaultTokenSecretOptions, DefaultActualOperator>(middlewareMode);
+    }
+
+    /// <summary>
     /// 配置操作者验证    
     /// </summary> 
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="middlewareMode"></param>
     /// <returns></returns>
     public static WebApplicationBuilder AddEasyToken<TTokenSecretOptions>(
@@ -25,7 +41,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// 配置操作者验证以及操作权限验证    
     /// </summary> 
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="middlewareMode">使用中间件模式</param>
     /// <returns></returns>
     public static WebApplicationBuilder AddEasyToken<TTokenSecretOptions, TOperator>(
@@ -74,7 +90,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// 配置操作者验证以及操作权限验证    
     /// </summary> 
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="middlewareMode"></param>
     /// <returns></returns>
     public static WebApplicationBuilder AddEasyToken<TTokenSecretOptions, TTokenSecret, TOperator>(
@@ -120,7 +136,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// 注入Token密钥配置, 未配置此项将使用内置密钥, 但默认密钥不安全的
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <typeparam name="TTokenSecretOptions"></typeparam>  
     /// <returns></returns>
     private static WebApplicationBuilder AddTokenSecretOptionsInjection<TTokenSecretOptions>(
@@ -146,7 +162,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// 注入Token加解密工具, 未配置此项将使用内置工具
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <typeparam name="TTokenSecret"></typeparam>
     /// <returns></returns>
     private static WebApplicationBuilder AddTokenSecretInjection<TTokenSecret>(

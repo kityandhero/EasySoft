@@ -36,7 +36,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// 注入定制的静态文件配置，诸如任务将在应用启动时自动执行
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static WebApplicationBuilder AddStaticFileOptionsInjection<T>(

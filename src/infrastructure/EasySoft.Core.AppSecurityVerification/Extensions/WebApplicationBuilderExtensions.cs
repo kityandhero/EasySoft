@@ -15,7 +15,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// 配置应用调用安全
     /// </summary> 
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <returns></returns>
     public static WebApplicationBuilder AddAppSecurityVerification(
         this WebApplicationBuilder builder

@@ -6,7 +6,7 @@ public static class AutofacExtensions
     /// 通过指定的程序集进行批量注册
     /// </summary>
     /// <typeparam name="T">注册实现了T类型的非虚类。如果T是接口，会同时注册到该接口类型中</typeparam>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="assemblies">待扫描的程序集</param>
     /// <param name="serviceNameMapping">可以指定注册的映射关系。将类和指定key关联，以便能根据key获取指定类实例</param>
     /// <returns></returns>

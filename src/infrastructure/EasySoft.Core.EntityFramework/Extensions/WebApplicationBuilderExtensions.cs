@@ -14,7 +14,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     ///     AddAdvanceEntityFrameworkCore
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <returns></returns> 
     public static WebApplicationBuilder AddAdvanceEntityFrameworkCore(
         this WebApplicationBuilder builder
@@ -39,7 +39,7 @@ public static class WebApplicationBuilderExtensions
     // /// <summary>
     // ///     AddAdvanceContext
     // /// </summary>
-    // /// <param name="builder"></param>
+    // /// <param name="builder">构建器</param>
     // /// <param name="action"></param>
     // /// <typeparam name="T"></typeparam>
     // /// <returns></returns> 
@@ -72,7 +72,7 @@ public static class WebApplicationBuilderExtensions
     // /// <summary>
     // ///     AddAdvanceContextPool, 与工作单元的协同性未做测试，暂不开放
     // /// </summary>
-    // /// <param name="builder"></param>
+    // /// <param name="builder">构建器</param>
     // /// <param name="action"></param>
     // /// <typeparam name="T"></typeparam>
     // /// <returns></returns>
@@ -106,7 +106,7 @@ public static class WebApplicationBuilderExtensions
     // /// <summary>
     // ///     AddPooledAdvanceTenantContext, 与工作单元的协同性未做测试，暂不开放
     // /// </summary>
-    // /// <param name="builder"></param>
+    // /// <param name="builder">构建器</param>
     // /// <param name="action"></param>
     // /// <typeparam name="TFactory"></typeparam>
     // /// <typeparam name="T"></typeparam>

@@ -8,7 +8,7 @@ public static class ConfigurationBuilderExtensions
     /// <summary>
     /// AddMultiJsonFile
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="filePath"></param>
     /// <returns></returns>
     public static IConfigurationBuilder AddMultiJsonFile(

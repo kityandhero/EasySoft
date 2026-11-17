@@ -14,7 +14,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// Select
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="fragment"></param>
     /// <returns></returns>
     public static AdvanceSqlBuilder Select(this AdvanceSqlBuilder builder, string fragment = "")
@@ -40,7 +40,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// Update
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="fragment"></param>
     /// <returns></returns>
     public static AdvanceSqlBuilder Update(this AdvanceSqlBuilder builder, string fragment = "")
@@ -53,7 +53,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// SelectTop
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="top"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
@@ -76,7 +76,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// Set
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="fragment"></param>
     /// <returns></returns>
     public static AdvanceSqlBuilder Set(this AdvanceSqlBuilder builder, string fragment = "")
@@ -93,7 +93,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// Sum
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="fragment"></param>
     /// <param name="valueWhenNUll"></param>
     /// <returns></returns>
@@ -115,7 +115,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// AppendFragment
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="sqlFragment"></param>
     /// <returns></returns>
     public static AdvanceSqlBuilder AppendFragment(
@@ -135,7 +135,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// From
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="model"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -169,7 +169,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// FromInnerQuery
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="innerQuery"></param>
     /// <param name="aliasInnerQueryResult"></param>
     /// <returns></returns>
@@ -201,7 +201,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// InnerJoin
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static AdvanceSqlBuilder InnerJoin<T>(this AdvanceSqlBuilder builder) where T : IEntity, new()
@@ -214,7 +214,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// InnerJoin
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="model"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -243,7 +243,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// LeftJoin
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static AdvanceSqlBuilder LeftJoin<T>(this AdvanceSqlBuilder builder) where T : IEntity, new()
@@ -256,7 +256,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// LeftJoin
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="model"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -285,7 +285,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// On
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="propertyLambda2"></param>
     /// <typeparam name="T1"></typeparam>
@@ -353,7 +353,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// On
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="p2"></param>
     /// <typeparam name="T"></typeparam>
@@ -398,7 +398,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// On
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="p2"></param>
     /// <typeparam name="T"></typeparam>
@@ -443,7 +443,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// On
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="p2"></param>
     /// <typeparam name="T"></typeparam>
@@ -488,7 +488,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// On
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="p2"></param>
     /// <typeparam name="T"></typeparam>
@@ -533,7 +533,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// On
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="p2"></param>
     /// <typeparam name="T"></typeparam>
@@ -578,7 +578,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// And
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="propertyLambda2"></param>
     /// <param name="conditionType"></param>
@@ -649,7 +649,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// And
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="p2"></param>
     /// <typeparam name="T"></typeparam>
@@ -694,7 +694,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// And
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="p2"></param>
     /// <typeparam name="T"></typeparam>
@@ -739,7 +739,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// And
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="p2"></param>
     /// <param name="conditionType"></param>
@@ -787,7 +787,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// And
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="p2"></param>
     /// <param name="conditionType"></param>
@@ -835,7 +835,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// And
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <param name="p2"></param>
     /// <param name="conditionType"></param>
@@ -883,7 +883,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// And
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="condition"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -906,7 +906,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// GroupBy
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="group"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -918,7 +918,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// GroupBy
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -941,7 +941,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// AndGroupBy
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="group"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -956,7 +956,7 @@ public static class AdvanceSqlBuilderGrammarExtensions
     /// <summary>
     /// AndGroupBy
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="propertyLambda"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>

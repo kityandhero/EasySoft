@@ -46,15 +46,13 @@ public static class AdvanceSqlBuilderAllFieldsExtensions
     {
         var list = new List<string>();
 
-        models.ForEach(
-            model =>
+        models.ForEach(model =>
             {
                 var tableName = TransferAssist.GetTableName(model);
 
                 var properties = model.GetType().GetProperties();
 
-                properties.ForEach(
-                    property =>
+                properties.ForEach(property =>
                     {
                         var customColumnMapperAttribute = Tools.GetAdvanceColumnMapperAttribute(property, false);
 

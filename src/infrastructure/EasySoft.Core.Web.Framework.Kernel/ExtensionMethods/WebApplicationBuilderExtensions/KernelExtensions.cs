@@ -1,7 +1,10 @@
 ﻿using Asp.Versioning;
+using EasySoft.Core.AuthenticationCore.Assists;
 using EasySoft.Core.CacheCore.ExtensionMethods;
 using EasySoft.Core.CacheImplementation.ExtensionMethods;
+using EasySoft.Core.EasyToken.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.Mapster.ExtensionMethods;
 using EasySoft.Core.MiniProfiler.ExtensionMethods;
 using EasySoft.Core.NLog.ExtensionMethods;
@@ -133,13 +136,33 @@ public static class KernelExtensions
 
         builder.AddAdvanceMiniProfile();
 
+        #region TokenMode
+
+        var tokenModeConfigValue = AuthenticationConfigureAssist.GetTokenMode(builder.Configuration);
+
+        StartupConfigMessageAssist.AddConfig(
+            tokenModeConfigValue.ToArrowDescription()
+        );
+
+        if (tokenModeConfigValue.Value == UtilityTools.Standard.ConstCollection.EasyToken)
+        {
+            builder.AddEasyToken();
+        }
+
+        if (tokenModeConfigValue.Value == UtilityTools.Standard.ConstCollection.JsonWebToken)
+        {
+            builder.AddAdvanceJsonWebToken();
+        }
+
+        #endregion
+
         return builder;
     }
 
     /// <summary>
     /// AddAdvanceUrls
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     private static WebApplicationBuilder AddAdvanceUrls(

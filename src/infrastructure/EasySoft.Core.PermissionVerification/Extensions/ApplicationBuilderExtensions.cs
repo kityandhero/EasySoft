@@ -10,7 +10,7 @@ public static class ApplicationBuilderExtensions
     /// <summary>
     /// UsePermissionVerificationMiddleware
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <returns></returns>
     public static IApplicationBuilder UsePermissionVerificationMiddleware(
         this IApplicationBuilder builder

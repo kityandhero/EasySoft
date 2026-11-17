@@ -13,7 +13,7 @@ public static class AdvanceSqlBuilderConditionExtensions
     /// <summary>
     /// OnlyCondition
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="condition"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -36,7 +36,7 @@ public static class AdvanceSqlBuilderConditionExtensions
     /// <summary>
     /// OnlyConditionStrange
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="condition"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -45,21 +45,49 @@ public static class AdvanceSqlBuilderConditionExtensions
         ConditionStrange<T> condition
     ) where T : IEntity, new()
     {
-        var sql = builder.Sql;
-
-        var resultTransferCondition = SqlAssist.TransferConditionStrange(condition);
-
-        sql = " {0} {1} ".FormatValue(sql, resultTransferCondition);
-
-        builder.Sql = sql;
-
-        return builder;
+    var
+    sql
+    =
+    builder
+    .
+    Sql
+    ;
+    var
+    resultTransferCondition
+    =
+    SqlAssist
+    .
+    TransferConditionStrange
+    (
+    condition
+    )
+    ;
+    sql
+    =
+    " {0} {1} "
+    .
+    FormatValue
+    (
+    sql
+    ,
+    resultTransferCondition
+    )
+    ;
+    builder
+    .
+    Sql
+    =
+    sql
+    ;
+    return
+    builder
+    ;
     }
 
     /// <summary>
     /// WhereCondition
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="condition"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -82,30 +110,60 @@ public static class AdvanceSqlBuilderConditionExtensions
     /// <summary>
     /// WhereConditionStrange
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="condition"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static AdvanceSqlBuilder WhereConditionStrange<T>(
         this AdvanceSqlBuilder builder,
         ConditionStrange<T> condition
-    ) where T : IEntity, new()
+    ) where T : IEntity,
+    new
+    (
+    )
     {
-        var sql = builder.Sql;
-
-        var resultTransferCondition = SqlAssist.TransferConditionStrange(condition);
-
-        sql = "{0} WHERE {1}".FormatValue(sql, resultTransferCondition);
-
-        builder.Sql = sql;
-
-        return builder;
+    var
+    sql
+    =
+    builder
+    .
+    Sql
+    ;
+    var
+    resultTransferCondition
+    =
+    SqlAssist
+    .
+    TransferConditionStrange
+    (
+    condition
+    )
+    ;
+    sql
+    =
+    "{0} WHERE {1}"
+    .
+    FormatValue
+    (
+    sql
+    ,
+    resultTransferCondition
+    )
+    ;
+    builder
+    .
+    Sql
+    =
+    sql
+    ;
+    return
+    builder;
     }
 
     /// <summary>
     /// AndCondition
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="condition"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -128,7 +186,7 @@ public static class AdvanceSqlBuilderConditionExtensions
     /// <summary>
     /// AndConditionStrange
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="condition"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -151,16 +209,40 @@ public static class AdvanceSqlBuilderConditionExtensions
     /// <summary>
     /// LinkConditions
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="conditions"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static AdvanceSqlBuilder LinkConditions<T>(
         this AdvanceSqlBuilder builder,
         ICollection<Condition<T>> conditions
-    ) where T : IEntity, new()
+    ) where T :
+    IEntity
+    ,
+    new
+    (
+    )
     {
-        foreach (var condition in conditions) builder.Sql = builder.LinkCondition(condition).Sql;
+    foreach
+    (
+    var
+    condition
+    in
+    conditions
+    )
+    builder
+    .
+    Sql
+    =
+    builder
+    .
+    LinkCondition
+    (
+    condition
+    )
+    .
+    Sql
+    ;
 
         return builder;
     }
@@ -168,26 +250,81 @@ public static class AdvanceSqlBuilderConditionExtensions
     /// <summary>
     /// LinkCondition
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="condition"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static AdvanceSqlBuilder LinkCondition<T>(
         this AdvanceSqlBuilder builder,
         Condition<T> condition
-    ) where T : IEntity, new()
+    ) where T
+    :
+    IEntity
+    ,
+    new
+    (
+    )
     {
-        var sql = builder.Sql;
-
-        var resultTransferCondition = SqlAssist.TransferCondition(condition);
-
-        var connector = "";
-
-        if (!string.IsNullOrWhiteSpace(sql)) connector = SqlAssist.GetConditionConnector(sql);
-
-        sql = "{0} {1} {2}".FormatValue(sql, connector, resultTransferCondition);
-
-        builder.Sql = sql;
+    var
+    sql
+    =
+    builder
+    .
+    Sql
+    ;
+    var
+    resultTransferCondition
+    =
+    SqlAssist
+    .
+    TransferCondition
+    (
+    condition
+    )
+    ;
+    var
+    connector
+    =
+    ""
+    ;
+    if
+    (
+    !
+    string
+    .
+    IsNullOrWhiteSpace
+    (
+    sql
+    )
+    )
+    connector
+    =
+    SqlAssist
+    .
+    GetConditionConnector
+    (
+    sql
+    )
+    ;
+    sql
+    =
+    "{0} {1} {2}"
+    .
+    FormatValue
+    (
+    sql
+    ,
+    connector
+    ,
+    resultTransferCondition
+    )
+    ;
+    builder
+    .
+    Sql
+    =
+    sql
+    ;
 
         return builder;
     }
@@ -195,7 +332,7 @@ public static class AdvanceSqlBuilderConditionExtensions
     /// <summary>
     /// LinkConditionStrange
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="condition"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -222,16 +359,42 @@ public static class AdvanceSqlBuilderConditionExtensions
     /// <summary>
     /// LinkConditions
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="assignUpdates"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static AdvanceSqlBuilder LinkConditions<T>(
         this AdvanceSqlBuilder builder,
         ICollection<AssignField<T>> assignUpdates
-    ) where T : IEntity, new()
+    ) where
+    T
+    :
+    IEntity
+    ,
+    new
+    (
+    )
     {
-        foreach (var assignUpdate in assignUpdates) builder.Sql = builder.LinkAssignField(assignUpdate).Sql;
+    foreach
+    (
+    var
+    assignUpdate
+    in
+    assignUpdates
+    )
+    builder
+    .
+    Sql
+    =
+    builder
+    .
+    LinkAssignField
+    (
+    assignUpdate
+    )
+    .
+    Sql
+    ;
 
         return builder;
     }

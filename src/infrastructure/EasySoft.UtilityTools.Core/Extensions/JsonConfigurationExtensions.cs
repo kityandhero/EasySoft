@@ -10,7 +10,7 @@ public static class JsonConfigurationExtensions
     /// <summary>
     /// AddJsonContent
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="jsonContent"></param>
     /// <param name="jsonSource"></param>
     /// <returns></returns>
@@ -38,7 +38,7 @@ public static class JsonConfigurationExtensions
     /// <summary>
     /// 使用Json字符串作为配置源，该方法不会监听配置变化
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <param name="jsonContent"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
@@ -48,16 +48,62 @@ public static class JsonConfigurationExtensions
         string jsonContent
     )
     {
-        if (builder == null) throw new ArgumentNullException(nameof(builder));
-
-        if (string.IsNullOrEmpty(jsonContent)) throw new Exception("json content disallow empty");
-
-        return builder.AddJsonContent(s =>
-        {
-            s.ReloadOnChange = true;
-
-            s.SetJsonContent(jsonContent);
-        });
+    if
+    (
+    builder
+    ==
+    null
+    )
+    throw
+    new
+    ArgumentNullException
+    (
+    nameof
+    (
+    builder
+    )
+    )
+    ;
+    if
+    (
+    string
+    .
+    IsNullOrEmpty
+    (
+    jsonContent
+    )
+    )
+    throw
+    new
+    Exception
+    (
+    "json content disallow empty"
+    )
+    ;
+    return
+    builder
+    .
+    AddJsonContent
+    (
+    s
+    =>
+    {
+    s
+    .
+    ReloadOnChange
+    =
+    true
+    ;
+    s
+    .
+    SetJsonContent
+    (
+    jsonContent
+    )
+    ;
+    }
+    )
+    ;
     }
 
     /// <summary>
@@ -71,8 +117,30 @@ public static class JsonConfigurationExtensions
         Action<JsonContentConfigurationSource> configureSource
     )
     {
-        if (builder.Sources.Count > 1) throw new Exception("AddJsonContent disallow more than one configure source");
-
-        return builder.Add(configureSource);
+    if
+    (
+    builder
+    .
+    Sources
+    .
+    Count
+    >
+    1
+    )
+    throw
+    new
+    Exception
+    (
+    "AddJsonContent disallow more than one configure source"
+    )
+    ;
+    return
+    builder
+    .
+    Add
+    (
+    configureSource
+    )
+    ;
     }
 }

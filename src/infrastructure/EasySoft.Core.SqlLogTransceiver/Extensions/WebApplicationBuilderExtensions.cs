@@ -20,7 +20,7 @@ public static class WebApplicationBuilderExtensions
     /// <summary>
     /// 配置远程SQL日志传输
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="builder">构建器</param>
     /// <returns></returns>
     public static WebApplicationBuilder AddSqlLogRabbitMQTransceiver<TSqlLogConsumer>(
         this WebApplicationBuilder builder
