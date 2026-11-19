@@ -2,3 +2,6 @@
 AddSqlLogTransmitter 仅定时开启
 
 收发器是否需要开关
+
+
+Behavior 模板（日志 + 链路追踪 + 基础校验）

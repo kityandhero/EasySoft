@@ -83,7 +83,7 @@ public static class StartupConfigMessageAssist
     /// <param name="extra"></param>
     public static void AddConfig(string message, string extra = "")
     {
-        AddInformation(message, extra);
+        AddInformation($"[CONF] {message}", extra);
     }
 
     /// <summary>

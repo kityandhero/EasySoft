@@ -4,7 +4,6 @@ using EasySoft.Core.Web.Framework.Kernel.ExtensionMethods.WebApplicationBuilderE
 using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.Extensions;
 using EasySoft.UtilityTools.Standard.Models;
-using Microsoft.Extensions.Configuration;
 using IChannel = EasySoft.UtilityTools.Standard.Interfaces.IChannel;
 
 namespace EasySoft.Core.Web.Framework.Kernel.Assists;

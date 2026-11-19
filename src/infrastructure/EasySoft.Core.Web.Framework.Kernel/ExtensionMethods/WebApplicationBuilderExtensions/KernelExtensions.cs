@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using EasySoft.Core.AdvanceNLog.ExtensionMethods;
 using EasySoft.Core.AuthenticationCore.Assists;
 using EasySoft.Core.CacheCore.ExtensionMethods;
 using EasySoft.Core.CacheImplementation.ExtensionMethods;
@@ -6,8 +7,8 @@ using EasySoft.Core.EasyToken.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.Mapster.ExtensionMethods;
+using EasySoft.Core.MediatR.ExtensionMethods;
 using EasySoft.Core.MiniProfiler.ExtensionMethods;
-using EasySoft.Core.NLog.ExtensionMethods;
 using EasySoft.Core.Web.Framework.Kernel.Assists;
 using EasySoft.UtilityTools.Core.Extensions;
 using EasySoft.UtilityTools.Standard.Interfaces;
@@ -133,6 +134,8 @@ public static class KernelExtensions
         #endregion
 
         builder.AddAdvanceMapster();
+
+        builder.AddAdvanceMediatR();
 
         builder.AddAdvanceMiniProfile();
 

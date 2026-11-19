@@ -20,11 +20,6 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        if (!AuxiliaryConfigure.PromptConfigFileInfo)
-        {
-            return application;
-        }
-
         if (application.HasUsed(IdentifierUseDevelopAuxiliary))
         {
             return application;

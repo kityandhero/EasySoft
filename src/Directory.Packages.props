@@ -127,9 +127,10 @@
     <PackageVersion Include="Nerdbank.GitVersioning" Version="3.10.94" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="NGeoHash" Version="1.2.0" />
-    <PackageVersion Include="NLog.Extensions.Hosting" Version="6.2.1" />
-    <PackageVersion Include="NLog.Extensions.Logging" Version="6.2.1" />
-    <PackageVersion Include="NLog.Web.AspNetCore" Version="6.2.1" />
+    <PackageVersion Include="NLog.Extensions.Hosting" Version="6.3.0" />
+    <PackageVersion Include="NLog.Extensions.Logging" Version="6.3.0" />
+    <PackageVersion Include="NLog.Web.AspNetCore" Version="6.3.0" />
+    <PackageVersion Include="NLog.RegEx" Version="6.2.2" />
     <PackageVersion Include="Npgsql" Version="10.0.3" />
     <PackageVersion Include="NPOI" Version="2.8.1" />
     <PackageVersion Include="Ocelot" Version="25.0.1" />

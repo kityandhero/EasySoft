@@ -16,8 +16,7 @@ public class StartUpConfigure : IStartUpConfigure
     /// <exception cref="NotImplementedException"></exception>
     public void Init()
     {
-        AuxiliaryConfigure.PromptStartupExecuteMessage = true;
-        AuxiliaryConfigure.PromptConfigFileInfo = true;
+        // AuxiliaryConfigure.PromptStartupExecuteMessage = true;
 
         SwaggerConfigure.ExternalSchemaType.Add(typeof(Task<ApiResult>));
 

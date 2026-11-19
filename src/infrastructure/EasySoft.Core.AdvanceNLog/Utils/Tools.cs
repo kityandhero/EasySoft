@@ -1,9 +1,9 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.NLog.Assists;
+﻿using EasySoft.Core.AdvanceNLog.Assists;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.Extensions;
 
-namespace EasySoft.Core.NLog.Utils;
+namespace EasySoft.Core.AdvanceNLog.Utils;
 
 /// <summary>
 /// Tools

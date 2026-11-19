@@ -231,34 +231,35 @@ public static class WebApplicationBuilderExtensions
         //     );
         // }
 
-        if (GeneralConfigAssist.GetUseStaticFilesSwitch())
-        {
-            app.UseAdvanceStaticFiles();
-
-            var staticFileOptionsTypeName = "";
-
-            if (FlagAssist.GetAdvanceStaticFileOptionsSwitch())
-            {
-                var staticFileOptions = app.Services.GetService<AdvanceStaticFileOptions>();
-
-                if (staticFileOptions != null)
-                {
-                    staticFileOptionsTypeName = staticFileOptions.GetType().Name;
-                }
-            }
-
-            StartupConfigMessageAssist.AddConfig(
-                $"UseStaticFilesSwitch: enable, mode: {(FlagAssist.GetAdvanceStaticFileOptionsSwitch() ? $"custom, config class is \"{staticFileOptionsTypeName}\"" : "default")}.",
-                GeneralConfigAssist.GetConfigFileInfo()
-            );
-        }
-        else
-        {
-            StartupConfigMessageAssist.AddConfig(
-                "UseStaticFiles: disable.",
-                GeneralConfigAssist.GetConfigFileInfo()
-            );
-        }
+        // 核心集成
+        // if (GeneralConfigAssist.GetUseStaticFilesSwitch())
+        // {
+        //     app.UseAdvanceStaticFiles();
+        //
+        //     var staticFileOptionsTypeName = "";
+        //
+        //     if (FlagAssist.GetAdvanceStaticFileOptionsSwitch())
+        //     {
+        //         var staticFileOptions = app.Services.GetService<AdvanceStaticFileOptions>();
+        //
+        //         if (staticFileOptions != null)
+        //         {
+        //             staticFileOptionsTypeName = staticFileOptions.GetType().Name;
+        //         }
+        //     }
+        //
+        //     StartupConfigMessageAssist.AddConfig(
+        //         $"UseStaticFilesSwitch: enable, mode: {(FlagAssist.GetAdvanceStaticFileOptionsSwitch() ? $"custom, config class is \"{staticFileOptionsTypeName}\"" : "default")}.",
+        //         GeneralConfigAssist.GetConfigFileInfo()
+        //     );
+        // }
+        // else
+        // {
+        //     StartupConfigMessageAssist.AddConfig(
+        //         "UseStaticFiles: disable.",
+        //         GeneralConfigAssist.GetConfigFileInfo()
+        //     );
+        // }
 
         // app.UseRouting();
 

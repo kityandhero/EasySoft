@@ -295,21 +295,21 @@ public static class BuildExtensions
 
         app.UseAdvanceEnvironmentAuxiliary();
 
-        StartupConfigMessageAssist.AddConfig(
-            $"Environment is {EnvironmentAssist.GetEnvironment().EnvironmentName}."
-        );
+        // StartupConfigMessageAssist.AddConfig(
+        //     $"Environment is {EnvironmentAssist.GetEnvironment().EnvironmentName}."
+        // );
 
-        StartupConfigMessageAssist.AddConfig(
-            $"EnvironmentAlias is {EnvironmentAssist.GetEnvironmentAliasName()}."
-        );
+        // StartupConfigMessageAssist.AddConfig(
+        //     $"EnvironmentAlias is {EnvironmentAssist.GetEnvironmentAliasName()}."
+        // );
 
-        StartupConfigMessageAssist.AddConfig(
-            $"ContentRootPath is \"{EnvironmentAssist.GetEnvironment().ContentRootPath}\"."
-        );
-
-        StartupConfigMessageAssist.AddConfig(
-            $"Application start completed{(!FlagAssist.StartupUrls.Any() ? "." : $" at {FlagAssist.StartupUrls.Join(" ")}.")}"
-        );
+        // StartupConfigMessageAssist.AddConfig(
+        //     $"ContentRootPath is \"{EnvironmentAssist.GetEnvironment().ContentRootPath}\"."
+        // );
+        //
+        // StartupDescriptionMessageAssist.AddPrompt(
+        //     $"Application start completed{(!FlagAssist.StartupUrls.Any() ? "." : $" at {FlagAssist.StartupUrls.Join(" ")}.")}"
+        // );
 
         #region Startup Info Print
 

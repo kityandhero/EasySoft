@@ -4,7 +4,6 @@ using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Configures;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.UtilityTools.Standard.Interfaces;
-using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.Web.Framework.Kernel.ExtensionMethods;
 
@@ -50,7 +49,7 @@ public static class ServerCollectionExtensions
         services.AddSingleton<IApplicationChannel>(applicationChannel);
 
         StartupDescriptionMessageAssist.AddPrompt(
-            $"ApplicationChannel name is {channel.Name}, identification is {channel.Value}."
+            $"ApplicationChannel name is {channel.Name}, identification is {(string.IsNullOrWhiteSpace(channel.Value) ? "\"\"" : channel.Value)}."
         );
 
         return services;

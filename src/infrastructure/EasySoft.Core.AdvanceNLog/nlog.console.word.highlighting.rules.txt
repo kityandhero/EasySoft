@@ -4,15 +4,15 @@
               "foregroundColor": "DarkGreen"
             },
             {
-               "regex": " EXEC: (.*)",
+               "regex": " [EXEC] (.*)",
                "foregroundColor": "DarkYellow"
             }, 
             {
-               "regex": " HINT: (.*)",
+               "regex": " [HINT] (.*)",
                "foregroundColor": "DarkRed"
             }, 
             {
-               "regex": " DESC: (.*)",
+               "regex": " [DESC] (.*)",
                "foregroundColor": "Green"
             },
             {

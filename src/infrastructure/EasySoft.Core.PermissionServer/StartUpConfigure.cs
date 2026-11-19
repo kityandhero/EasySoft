@@ -15,8 +15,6 @@ public class StartUpConfigure : IStartUpConfigure
     /// <exception cref="NotImplementedException"></exception>
     public void Init()
     {
-        AuxiliaryConfigure.PromptConfigFileInfo = true;
-
         ContextConfigure.EnableDetailedErrors = true;
         ContextConfigure.EnableSensitiveDataLogging = true;
         ContextConfigure.AutoEnsureCreated = true;

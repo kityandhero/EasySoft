@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.NLog.Assists;
+﻿namespace EasySoft.Core.AdvanceNLog.Assists;
 
 public static class LogManagerAssist
 {

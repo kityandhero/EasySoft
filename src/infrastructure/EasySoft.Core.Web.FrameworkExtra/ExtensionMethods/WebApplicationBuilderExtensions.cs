@@ -1,6 +1,6 @@
-﻿using EasySoft.Core.Config.ConfigAssist;
-using EasySoft.Core.NLog.Assists;
-using EasySoft.Core.NLog.Utils;
+﻿using EasySoft.Core.AdvanceNLog.Assists;
+using EasySoft.Core.AdvanceNLog.Utils;
+using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.Extensions;
 using EasySoft.UtilityTools.Standard.Result.Implements;

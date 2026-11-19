@@ -4,6 +4,12 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>warnings</Nullable>
+        <AssemblyName>EasySoft.Core.AdvanceNLog</AssemblyName>
+        <RootNamespace>EasySoft.Core.AdvanceNLog</RootNamespace>
+        <PackageId>EasySoft.Core.AdvanceNLog</PackageId>
+        <Authors>EasySoft.Core.AdvanceNLog</Authors>
+        <Company>EasySoft.Core.AdvanceNLog</Company>
+        <Product>EasySoft.Core.AdvanceNLog</Product>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,11 +19,8 @@
         <PackageReference Include="NLog.Extensions.Hosting"/>
         <PackageReference Include="NLog.Extensions.Logging"/>
         <PackageReference Include="NLog.Web.AspNetCore"/>
+        <PackageReference Include="NLog.RegEx"/>
 
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Renderers"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -75,7 +75,7 @@ public static class StartupApplicationExtraActionMessageAssist
     /// <param name="extra"></param>
     public static void AddPrompt(string message, string extra = "")
     {
-        AddTrace($"DESC: {message}", extra);
+        AddTrace($"[DESC] {message}", extra);
     }
 
     /// <summary>
@@ -88,7 +88,7 @@ public static class StartupApplicationExtraActionMessageAssist
     {
         AddTraceDivider();
 
-        AddTrace($"EXEC: {message}{(supplementRoundBracket ? "()" : "")}", extra);
+        AddTrace($"[EXEC] {message}{(supplementRoundBracket ? "()" : "")}", extra);
     }
 
     /// <summary>

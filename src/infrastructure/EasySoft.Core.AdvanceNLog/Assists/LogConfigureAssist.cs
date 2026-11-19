@@ -4,7 +4,7 @@ using EasySoft.UtilityTools.Standard.Exceptions;
 using EasySoft.UtilityTools.Standard.Extensions;
 using EasySoft.UtilityTools.Standard.Models;
 
-namespace EasySoft.Core.NLog.Assists;
+namespace EasySoft.Core.AdvanceNLog.Assists;
 
 public class LogConfigureAssist
 {

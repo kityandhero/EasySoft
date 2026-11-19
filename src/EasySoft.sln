@@ -78,7 +78,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "waitWorks", "waitWorks", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.Dapper", "infrastructure\EasySoft.Core.Dapper\EasySoft.Core.Dapper.csproj", "{599688FF-6ED9-45FE-950F-F879385FD4BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.NLog", "infrastructure\EasySoft.Core.NLog\EasySoft.Core.NLog.csproj", "{AB90E06C-7972-45B6-AE0D-D5E0CBCF196F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.AdvanceNLog", "infrastructure\EasySoft.Core.AdvanceNLog\EasySoft.Core.AdvanceNLog.csproj", "{AB90E06C-7972-45B6-AE0D-D5E0CBCF196F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoft.Core.AgileConfig", "infrastructure\EasySoft.Core.AgileConfig\EasySoft.Core.AgileConfig.csproj", "{3558FAF0-1C76-449E-AB31-4791EBB8A568}"
 EndProject

@@ -17,7 +17,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddAdvanceOcelot(useOcelotConfigFile);
 
-        if (EnvironmentAssist.IsDevelopment() && AuxiliaryConfigure.PromptConfigFileInfo)
+        if (EnvironmentAssist.IsDevelopment() )
             ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
                 new ExtraAction<IEndpointRouteBuilder>()
                     .SetName("")

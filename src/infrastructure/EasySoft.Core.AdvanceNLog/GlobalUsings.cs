@@ -12,4 +12,5 @@ global using Microsoft.Extensions.Logging;
 global using NLog;
 global using NLog.Config;
 global using NLog.Extensions.Logging;
+global using NLog.LayoutRenderers;
 global using NLog.Web;

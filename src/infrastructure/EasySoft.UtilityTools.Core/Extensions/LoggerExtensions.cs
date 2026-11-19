@@ -240,7 +240,7 @@ public static class LoggerExtensions
         }
 
         logger.LogAdvanceTrace(
-            $"EXEC: {log.Trim()}{(supplementRoundBracket ? "()" : "")}"
+            $"[EXEC] {log.Trim()}{(supplementRoundBracket ? "()" : "")}"
         );
     }
 
@@ -258,7 +258,7 @@ public static class LoggerExtensions
             return;
         }
 
-        logger.LogAdvanceTrace($"DESC: {log.Trim()}");
+        logger.LogAdvanceTrace($"[DESC] {log.Trim()}");
     }
 
     #endregion
@@ -279,7 +279,7 @@ public static class LoggerExtensions
             {
                 if (!string.IsNullOrWhiteSpace(log))
                 {
-                    logger.LogAdvanceTrace($"HINT: {log.Trim()}");
+                    logger.LogAdvanceTrace($"[HINT] {log.Trim()}");
                 }
             }
         );

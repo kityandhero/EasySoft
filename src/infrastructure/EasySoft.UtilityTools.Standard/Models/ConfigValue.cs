@@ -28,9 +28,9 @@ public class ConfigValue<T>
     /// <returns></returns>
     public string ToArrowDescription()
     {
-        var v = Value.ToString()?.ToLower();
+        var v = Value.ToString();
 
-        return $"[Configure] {Node} -> {(string.IsNullOrWhiteSpace(v) ? "not set, default value will be used" : v)}.";
+        return $"{Node} -> {(string.IsNullOrWhiteSpace(v) ? "not set, default value will be used" : v)}.";
     }
 
     #endregion

@@ -81,7 +81,7 @@ public static class StartupDescriptionMessageAssist
     /// <param name="extra"></param>
     public static void AddHint(string message, string extra = "")
     {
-        AddTrace($"HINT: {message}", extra);
+        AddTrace($"[HINT] {message}", extra);
     }
 
     /// <summary>
@@ -91,7 +91,7 @@ public static class StartupDescriptionMessageAssist
     /// <param name="extra"></param>
     public static void AddPrompt(string message, string extra = "")
     {
-        AddTrace($"DESC: {message}", extra);
+        AddTrace($"[DESC] {message}", extra);
     }
 
     /// <summary>
@@ -102,11 +102,14 @@ public static class StartupDescriptionMessageAssist
     /// <param name="supplementRoundBracket"></param>
     public static void AddExecute(string message, string extra = "", bool supplementRoundBracket = false)
     {
-        if (!AuxiliaryConfigure.PromptStartupExecuteMessage) return;
+        // if (!AuxiliaryConfigure.PromptStartupExecuteMessage)
+        // {
+        //     return;
+        // }
 
         AddTraceDivider();
 
-        AddTrace($"EXEC: {message}{(supplementRoundBracket ? "()" : "")}", extra);
+        AddTrace($"[EXEC] {message}{(supplementRoundBracket ? "()" : "")}", extra);
     }
 
     /// <summary>

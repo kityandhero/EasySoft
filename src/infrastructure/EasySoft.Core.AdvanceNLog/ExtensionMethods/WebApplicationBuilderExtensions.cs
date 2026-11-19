@@ -1,9 +1,10 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.NLog.Assists;
-using EasySoft.Core.NLog.Utils;
+﻿using EasySoft.Core.AdvanceNLog.Assists;
+using EasySoft.Core.AdvanceNLog.Renderers;
+using EasySoft.Core.AdvanceNLog.Utils;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Core.Extensions;
 
-namespace EasySoft.Core.NLog.ExtensionMethods;
+namespace EasySoft.Core.AdvanceNLog.ExtensionMethods;
 
 public static class WebApplicationBuilderExtensions
 {
@@ -36,10 +37,20 @@ public static class WebApplicationBuilderExtensions
             {
                 b.ClearProviders();
 
+                LogManager.Setup()
+                    .SetupExtensions(ext =>
+                        {
+                            ext.RegisterLayoutRenderer<ShortLevelLayoutRenderer>("shortlevel");
+
+                            ext.RegisterLayoutRenderer<AnsiHighlightLayoutRenderer>("ansi-highlight");
+                        }
+                    );
+
                 var embedConfig = Tools.GetNlogEmbedConfig(builder.Configuration);
 
                 LogManager.Configuration = new NLogLoggingConfiguration(
-                    new ConfigurationBuilder().AddJsonContent(embedConfig)
+                    new ConfigurationBuilder()
+                        .AddJsonContent(embedConfig)
                         .Build()
                         .GetSection("NLog")
                 );
