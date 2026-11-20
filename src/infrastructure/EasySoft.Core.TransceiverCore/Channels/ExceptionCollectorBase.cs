@@ -1,1 +1,0 @@
-﻿namespace EasySoft.Core.TransceiverCore.Channels;

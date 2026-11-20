@@ -2,6 +2,7 @@
 using EasySoft.Core.GeneralLogTransceiver.Assists;
 using EasySoft.Core.GeneralLogTransceiver.Consumers;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Standard.Exceptions;
 
 namespace EasySoft.Core.GeneralLogTransceiver.Extensions;
 
@@ -43,6 +44,13 @@ public static class WebApplicationBuilderExtensions
             useTransmissionConfigValue.ToArrowDescription()
         );
 
+        if (!useTransmissionConfigValue.Value)
+        {
+            throw new ConfigErrorException(
+                useTransmissionConfigValue.ToErrorDescription("开启消费者需要设置为true")
+            );
+        }
+
         builder.Services.AddGeneralLogTransceiverConfigureAssist(builder.Configuration);
 
         builder.Services.AddGeneralLogRabbitMQCore(builder.Configuration);
@@ -80,8 +88,11 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddGeneralLogTransceiverConfigureAssist(builder.Configuration);
 
-        builder.Services.AddGeneralLogRabbitMQCore(builder.Configuration);
-        builder.Services.AddGeneralLogRabbitMQProducer(builder.Configuration);
+        if (useTransmissionConfigValue.Value)
+        {
+            builder.Services.AddGeneralLogRabbitMQCore(builder.Configuration);
+            builder.Services.AddGeneralLogRabbitMQProducer(builder.Configuration);
+        }
 
         builder.Services.AddGeneralLogCollector(action);
 
@@ -113,6 +124,13 @@ public static class WebApplicationBuilderExtensions
         StartupConfigMessageAssist.AddConfig(
             useTransmissionConfigValue.ToArrowDescription()
         );
+
+        if (!useTransmissionConfigValue.Value)
+        {
+            throw new ConfigErrorException(
+                useTransmissionConfigValue.ToErrorDescription("开启消费者需要设置为true")
+            );
+        }
 
         builder.Services.AddGeneralLogTransceiverConfigureAssist(builder.Configuration);
 

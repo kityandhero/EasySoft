@@ -1,13 +1,18 @@
 ﻿using EasySoft.Core.AdvanceNLog.ExtensionMethods;
+using EasySoft.Core.ErrorLogTransceiver.Collectors;
+using EasySoft.Core.ErrorLogTransceiver.Extensions;
 using EasySoft.Core.GeneralLogTransceiver.Collectors;
 using EasySoft.Core.GeneralLogTransceiver.Extensions;
 using EasySoft.Core.GeneralLogTransceiver.Producers;
 using EasySoft.Core.GeneralLogTransceiver.Test;
 using EasySoft.Core.GeneralLogTransceiver.Test.Consumers;
 using EasySoft.Core.Messaging.SlimMessageBus.Extensions;
+using EasySoft.Core.SqlLogTransceiver.Collectors;
+using EasySoft.Core.SqlLogTransceiver.Extensions;
 using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Core.Extensions;
+using EasySoft.UtilityTools.Standard.Messages;
 using EasySoft.UtilityTools.Standard.Producers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +29,11 @@ builder.AddAdvanceNLog();
 
 builder.Services.AddKernelMessagingWithJson();
 
-builder.AddGeneralLogRabbitMQOnlyProducer();
+// builder.AddGeneralLogRabbitMQOnlyProducer();
+
+builder.AddErrorLogRabbitMQOnlyProducer();
+
+// builder.AddSqlLogRabbitMQOnlyProducer();
 
 #endregion
 
@@ -32,7 +41,7 @@ var app = builder.Build();
 
 #region RabbitMQ Test Producer
 
-var generalLogCollector = app.Services.GetRequiredService<GeneralLogCollector>();
+var collector = app.Services.GetRequiredService<ErrorLogCollector>();
 
 app.Lifetime.ApplicationStarted.Register(() =>
     {
@@ -42,7 +51,12 @@ app.Lifetime.ApplicationStarted.Register(() =>
 
                 for (var i = 0; i < 100; i++)
                 {
-                    generalLogCollector.Publish($"Test-{i}");
+                    collector.Publish(
+                        new ErrorLogTransitiveMessage
+                        {
+                            Message = $"test-error-{i}"
+                        }
+                    );
                 }
 
                 app.Logger.LogAdvanceInfo("[Test] 100条已投递，等待3秒让消费落盘...");

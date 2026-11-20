@@ -1,15 +1,15 @@
 ﻿using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.Interfaces;
-using EasySoft.Core.DependencyInjection.IocAssists;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Infrastructure.Collector;
 using EasySoft.Core.Sql.Builders;
 using EasySoft.Core.Sql.Extensions;
 using EasySoft.Core.Sql.Factories;
 using EasySoft.Core.Sql.Interfaces;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.Exceptions;
 using EasySoft.UtilityTools.Standard.Interfaces;
 using EasySoft.UtilityTools.Standard.Messages;
-using EasySoft.UtilityTools.Standard.Producers;
 using EasySoft.UtilityTools.Standard.Result.Factories;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
@@ -2989,8 +2989,17 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
             return;
         }
 
-        ServiceProviderAssist.Instance.Resolve<ISqlLogProducer>()
-            .SendAsync(
+        var sqlLogCollector = ServiceProviderAssist.Resolve<ISqlLogCollector>();
+
+        if (sqlLogCollector == null)
+        {
+            LogAssist.Warning("sqlLogCollector is null, ignore publish.");
+
+            return;
+        }
+
+        ServiceProviderAssist.Resolve<ISqlLogCollector>()
+            .Publish(
                 sqlExecutionMessage.CommandString,
                 sqlExecutionMessage.ExecuteType,
                 sqlExecutionMessage.StackTraceSnippet,

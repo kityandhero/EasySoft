@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.AdvanceFileRecord;
+using EasySoft.Core.Infrastructure.Collector;
 using EasySoft.Core.TransceiverCore.Collectors;
 using EasySoft.UtilityTools.Standard.Producers;
 
@@ -7,7 +8,7 @@ namespace EasySoft.Core.SqlLogTransceiver.Collectors;
 /// <summary>
 /// SQL日志收集器
 /// </summary>
-public class SqlLogCollector : BaseCollector<SqlLogTransitiveMessage>
+public class SqlLogCollector : BaseCollector<SqlLogTransitiveMessage>, ISqlLogCollector
 {
     private readonly IApplicationChannel _applicationChannel;
 
@@ -29,7 +30,7 @@ public class SqlLogCollector : BaseCollector<SqlLogTransitiveMessage>
     /// <param name="producer">消息队列转发器</param>
     /// <param name="options">记录器配置</param>
     /// <param name="enableFileSink">是否启用文件落盘</param>
-    /// <param name="enableMqSink">是否启用MQ转发</param>
+    /// <param name="enableTransferSink">是否启用MQ转发</param>
     /// <param name="mainBufferCapacity">主通道全局配额上限</param>
     /// <param name="sinkCapacityMultiplier">二级缓冲弹性倍率，推荐 2.0 ~ 2.5</param>
     /// <param name="metrics">指标采集，传null自动使用NullFileRecorderMetrics</param>
@@ -39,7 +40,7 @@ public class SqlLogCollector : BaseCollector<SqlLogTransitiveMessage>
         ISqlLogProducer producer,
         IOptions<DateRollingUtf8FileRecorderOptions> options,
         bool enableFileSink,
-        bool enableMqSink,
+        bool enableTransferSink,
         int mainBufferCapacity = 2000,
         double sinkCapacityMultiplier = 2.5,
         IFileRecorderMetrics metrics = null
@@ -68,7 +69,7 @@ public class SqlLogCollector : BaseCollector<SqlLogTransitiveMessage>
             EnableFile();
         }
 
-        if (!enableMqSink)
+        if (!enableTransferSink)
         {
             DisableTransfer();
         }
@@ -150,6 +151,13 @@ public class SqlLogCollector : BaseCollector<SqlLogTransitiveMessage>
         CancellationToken cancellationToken
     )
     {
+        if (_producer == null)
+        {
+            Logger.LogAdvanceWarning("TransferAsync fail: _producer is null");
+
+            return;
+        }
+
         try
         {
             var transitiveMessage = Deserialize(json);

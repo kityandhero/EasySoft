@@ -42,5 +42,10 @@
         <ProjectReference Include="..\EasySoft.UtilityTools.Standard\EasySoft.UtilityTools.Standard.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="Collectors\"/>
+        <Folder Include="Services\"/>
+    </ItemGroup>
+
 
 </Project>

@@ -5,7 +5,7 @@ using EasySoft.UtilityTools.Standard.Assists;
 namespace EasySoft.Core.TransceiverCore.Collectors;
 
 /// <summary>
-/// 异常收集器｜主谐振通道 + File/Transfer 双二级通道
+/// 基础收集器｜主谐振通道 + File/Transfer 双二级通道
 /// </summary>
 /// <remarks>
 /// <para>设计目标：提供可控弹性缓冲平衡点，拒绝无边界无限缓冲堆积，把内存上限控制在可预测范围。</para>
@@ -224,6 +224,13 @@ public abstract class BaseCollector<T> : IDisposable
     /// <param name="item">待投递原始实体</param>
     public bool Publish(T item)
     {
+        if (!FileSink.Enabled && !TransferSink.Enabled)
+        {
+            Logger.LogAdvanceWarning("文件记录和转发功能都未开启，忽略入队");
+
+            return false;
+        }
+
         lock (_closeLock)
         {
             if (_whetherClosed)
@@ -414,7 +421,7 @@ public abstract class BaseCollector<T> : IDisposable
 
                     if (sink == FileSink)
                     {
-                         await WriteFileAsync(pkt.JsonText, ct);
+                        await WriteFileAsync(pkt.JsonText, ct);
                     }
                     else if (sink == TransferSink)
                     {

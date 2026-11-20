@@ -29,7 +29,7 @@ public class GeneralLogCollector : BaseCollector<GeneralLogTransitiveMessage>
     /// <param name="producer">消息队列转发器</param>
     /// <param name="options">记录器配置</param>
     /// <param name="enableFileSink">是否启用文件落盘</param>
-    /// <param name="enableMqSink">是否启用MQ转发</param>
+    /// <param name="enableTransferSink">是否启用MQ转发</param>
     /// <param name="mainBufferCapacity">主通道全局配额上限</param>
     /// <param name="sinkCapacityMultiplier">二级缓冲弹性倍率，推荐 2.0 ~ 2.5</param>
     /// <param name="metrics">指标采集，传null自动使用NullFileRecorderMetrics</param>
@@ -39,7 +39,7 @@ public class GeneralLogCollector : BaseCollector<GeneralLogTransitiveMessage>
         IGeneralLogProducer producer,
         IOptions<DateRollingUtf8FileRecorderOptions> options,
         bool enableFileSink,
-        bool enableMqSink,
+        bool enableTransferSink,
         int mainBufferCapacity = 2000,
         double sinkCapacityMultiplier = 2.5,
         IFileRecorderMetrics metrics = null
@@ -68,7 +68,7 @@ public class GeneralLogCollector : BaseCollector<GeneralLogTransitiveMessage>
             EnableFile();
         }
 
-        if (!enableMqSink)
+        if (!enableTransferSink)
         {
             DisableTransfer();
         }
@@ -83,9 +83,7 @@ public class GeneralLogCollector : BaseCollector<GeneralLogTransitiveMessage>
     /// </summary>
     /// <param name="message">消息体</param>
     /// <returns>发送结果</returns>
-    public bool Publish(
-        string message
-    )
+    public bool Publish(string message)
     {
         return Publish(
             message,
@@ -191,6 +189,13 @@ public class GeneralLogCollector : BaseCollector<GeneralLogTransitiveMessage>
         CancellationToken cancellationToken
     )
     {
+        if (_producer == null)
+        {
+            Logger.LogAdvanceWarning("TransferAsync fail: _producer is null");
+
+            return;
+        }
+
         try
         {
             var transitiveMessage = Deserialize(json);

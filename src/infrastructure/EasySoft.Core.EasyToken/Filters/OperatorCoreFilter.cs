@@ -54,7 +54,7 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
             {
                 var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
 
-                var transmissionErrorConfigValue = infrastructureConfigureAssist.GetTransmissionError();
+                var transmissionErrorConfigValue = infrastructureConfigureAssist.GetUseErrorLogTransceiver();
 
                 if (!transmissionErrorConfigValue.Value)
                 {
@@ -105,7 +105,7 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
         {
             var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
 
-            var transmissionErrorConfigValue = infrastructureConfigureAssist.GetTransmissionError();
+            var transmissionErrorConfigValue = infrastructureConfigureAssist.GetUseErrorLogTransceiver();
 
             if (!transmissionErrorConfigValue.Value)
             {

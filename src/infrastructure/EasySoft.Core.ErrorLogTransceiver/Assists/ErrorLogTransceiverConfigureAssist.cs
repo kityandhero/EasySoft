@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.UtilityTools.Standard.Assists;
+﻿using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Exceptions;
 using EasySoft.UtilityTools.Standard.Models;
 
@@ -43,6 +42,16 @@ public class ErrorLogTransceiverConfigureAssist
     public const string ErrorLogMessageQueue = "ErrorLogMessageQueue";
 
     /// <summary>
+    /// UseTransmissionConfigureNode
+    /// </summary>
+    public const string UseTransmissionConfigureNode = "UseTransmission";
+
+    /// <summary>
+    /// UseLocalRecordConfigureNode
+    /// </summary>
+    public const string UseLocalRecordConfigureNode = "UseLocalRecord";
+
+    /// <summary>
     /// ErrorLogPrefix
     /// </summary>
     public const string ErrorLogPrefix = "Prefix";
@@ -73,6 +82,100 @@ public class ErrorLogTransceiverConfigureAssist
 
     #region Methods
 
+    #region GetUseLocalRecord
+
+    /// <summary>
+    /// 是否适用本地记录
+    /// </summary>
+    /// <param name="configuration">配置集</param>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<bool> GetUseLocalRecord(IConfiguration configuration)
+    {
+        var node = StringAssist.Join(
+            [
+                ErrorLogTransceiverConfigureNode,
+                UseLocalRecordConfigureNode
+            ],
+            ":"
+        );
+
+        var v = configuration[node] ?? "false";
+
+        var configValue = new ConfigValue<bool>
+        {
+            Node = node,
+            Value = v == "true",
+            EffectiveValueDescription = "true|false"
+        };
+
+        if (!v.In("true", "false"))
+        {
+            throw new ConfigErrorException(
+                configValue.ToErrorDescription()
+            );
+        }
+
+        return configValue;
+    }
+
+    /// <summary>
+    /// 是否适用本地记录
+    /// </summary>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public ConfigValue<bool> GetUseLocalRecord()
+    {
+        return GetUseLocalRecord(Configuration);
+    }
+
+    #endregion
+
+    #region GetUseTransmission
+
+    /// <summary>
+    /// 是否适用传输
+    /// </summary>
+    /// <param name="configuration">配置集</param>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<bool> GetUseTransmission(IConfiguration configuration)
+    {
+        var node = StringAssist.Join(
+            [
+                ErrorLogTransceiverConfigureNode,
+                UseTransmissionConfigureNode
+            ],
+            ":"
+        );
+
+        var v = configuration[node] ?? "false";
+
+        var configValue = new ConfigValue<bool>
+        {
+            Node = node,
+            Value = v == "true",
+            EffectiveValueDescription = "true|false"
+        };
+
+        if (!v.In("true", "false"))
+        {
+            throw new ConfigErrorException(
+                configValue.ToErrorDescription()
+            );
+        }
+
+        return configValue;
+    }
+
+    /// <summary>
+    /// 是否适用传输
+    /// </summary>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public ConfigValue<bool> GetUseTransmission()
+    {
+        return GetUseTransmission(Configuration);
+    }
+
+    #endregion
+
     #region GetRabbitMQConnectionString
 
     /// <summary>
@@ -82,7 +185,7 @@ public class ErrorLogTransceiverConfigureAssist
     /// <exception cref="ConfigErrorException">配置异常</exception>
     public static ConfigValue<string> GetRabbitMQConnectionString(IConfiguration configuration)
     {
-        var transmissionErrorConfigValue = InfrastructureConfigureAssist.GetTransmissionError(
+        var useTransmissionConfigValue = GetUseTransmission(
             configuration
         );
 
@@ -97,18 +200,21 @@ public class ErrorLogTransceiverConfigureAssist
 
         var v = configuration[node] ?? "";
 
-        if (transmissionErrorConfigValue.Value && string.IsNullOrWhiteSpace(v))
+        var configValue = new ConfigValue<string>
+        {
+            Node = node,
+            Value = v,
+            EffectiveValueDescription = "开启情况下，需要配置 RabbitMQ 连接字符串"
+        };
+
+        if (useTransmissionConfigValue.Value && string.IsNullOrWhiteSpace(v))
         {
             throw new ConfigErrorException(
-                $"ErrorLog 已经配置为开启，[{node}]配置无效，请设置"
+                configValue.ToErrorDescription()
             );
         }
 
-        return new ConfigValue<string>
-        {
-            Node = node,
-            Value = v
-        };
+        return configValue;
     }
 
     /// <summary>
@@ -141,11 +247,14 @@ public class ErrorLogTransceiverConfigureAssist
 
         var v = configuration[node] ?? "";
 
-        return new ConfigValue<string>
+        var configValue = new ConfigValue<string>
         {
             Node = node,
-            Value = v
+            Value = v,
+            EffectiveValueDescription = ""
         };
+
+        return configValue;
     }
 
     /// <summary>

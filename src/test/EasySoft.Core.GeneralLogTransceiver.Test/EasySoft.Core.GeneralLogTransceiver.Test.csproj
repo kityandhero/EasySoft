@@ -23,7 +23,9 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\infrastructure\EasySoft.Core.AdvanceNLog\EasySoft.Core.AdvanceNLog.csproj"/>
+        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.ErrorLogTransceiver\EasySoft.Core.ErrorLogTransceiver.csproj"/>
         <ProjectReference Include="..\..\infrastructure\EasySoft.Core.GeneralLogTransceiver\EasySoft.Core.GeneralLogTransceiver.csproj"/>
+        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.SqlLogTransceiver\EasySoft.Core.SqlLogTransceiver.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

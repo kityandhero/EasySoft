@@ -4,6 +4,7 @@ using EasySoft.Core.Infrastructure.Configures;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.SqlLogTransceiver.Assists;
 using EasySoft.Core.SqlLogTransceiver.Consumers;
+using EasySoft.UtilityTools.Standard.Exceptions;
 
 namespace EasySoft.Core.SqlLogTransceiver.Extensions;
 
@@ -43,6 +44,13 @@ public static class WebApplicationBuilderExtensions
         StartupConfigMessageAssist.AddConfig(
             useTransmissionConfigValue.ToArrowDescription()
         );
+
+        if (!useTransmissionConfigValue.Value)
+        {
+            throw new ConfigErrorException(
+                useTransmissionConfigValue.ToErrorDescription("开启消费者需要设置为true")
+            );
+        }
 
         builder.Services.AddSqlLogTransceiverConfigureAssist(builder.Configuration);
 
@@ -90,8 +98,11 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddSqlLogTransceiverConfigureAssist(builder.Configuration);
 
-        builder.Services.AddSqlLogRabbitMQCore(builder.Configuration);
-        builder.Services.AddSqlLogRabbitMQProducer(builder.Configuration);
+        if (useTransmissionConfigValue.Value)
+        {
+            builder.Services.AddSqlLogRabbitMQCore(builder.Configuration);
+            builder.Services.AddSqlLogRabbitMQProducer(builder.Configuration);
+        }
 
         builder.Services.AddSqlLogCollector(action);
 
@@ -125,6 +136,13 @@ public static class WebApplicationBuilderExtensions
         StartupConfigMessageAssist.AddConfig(
             useTransmissionConfigValue.ToArrowDescription()
         );
+
+        if (!useTransmissionConfigValue.Value)
+        {
+            throw new ConfigErrorException(
+                useTransmissionConfigValue.ToErrorDescription("开启消费者需要设置为true")
+            );
+        }
 
         builder.Services.AddSqlLogTransceiverConfigureAssist(builder.Configuration);
 

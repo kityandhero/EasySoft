@@ -30,7 +30,7 @@ public static class WebApplicationExtensions
     {
         var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
 
-        if (!infrastructureConfigureAssist.GetTransmissionError())
+        if (!infrastructureConfigureAssist.GetUseErrorLogTransceiver())
         {
             return application;
         }

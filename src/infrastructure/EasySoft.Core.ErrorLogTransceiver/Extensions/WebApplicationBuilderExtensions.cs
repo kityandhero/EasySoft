@@ -1,5 +1,8 @@
-﻿using EasySoft.Core.ErrorLogTransceiver.Consumers;
+﻿using EasySoft.Core.AdvanceFileRecord;
+using EasySoft.Core.ErrorLogTransceiver.Assists;
+using EasySoft.Core.ErrorLogTransceiver.Consumers;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Standard.Exceptions;
 
 namespace EasySoft.Core.ErrorLogTransceiver.Extensions;
 
@@ -21,9 +24,11 @@ public static class WebApplicationBuilderExtensions
     /// 同时发送和消费，使用场景较低，单端消费, 不应和单发送器和单消费器同时装配
     /// </remarks>
     /// <param name="builder">构建器</param>
+    /// <param name="action">选项配置器</param>
     /// <returns>构建器</returns>
     public static WebApplicationBuilder AddErrorLogRabbitMQTransceiver<TErrorLogConsumer>(
-        this WebApplicationBuilder builder
+        this WebApplicationBuilder builder,
+        Action<DateRollingUtf8FileRecorderOptions> action = null
     ) where TErrorLogConsumer : BaseErrorLogConsumer
     {
         if (builder.HasRegistered(IdentifierAddErrorLogRabbitMQTransceiver))
@@ -33,18 +38,28 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddErrorLogRabbitMQTransceiver)}");
 
-        var transmissionErrorConfigValue = InfrastructureConfigureAssist.GetTransmissionError(
+        var useTransmissionConfigValue = ErrorLogTransceiverConfigureAssist.GetUseTransmission(
             builder.Configuration
         );
 
         StartupConfigMessageAssist.AddConfig(
-            transmissionErrorConfigValue.ToArrowDescription()
+            useTransmissionConfigValue.ToArrowDescription()
         );
 
+        if (!useTransmissionConfigValue.Value)
+        {
+            throw new ConfigErrorException(
+                useTransmissionConfigValue.ToErrorDescription("开启消费者需要设置为true")
+            );
+        }
+
         builder.Services.AddErrorLogTransceiverConfigureAssist(builder.Configuration);
+
         builder.Services.AddErrorLogRabbitMQCore(builder.Configuration);
         builder.Services.AddErrorLogRabbitMQProducer(builder.Configuration);
         builder.Services.AddErrorLogRabbitMQConsumer<TErrorLogConsumer>(builder.Configuration, 1);
+
+        builder.Services.AddErrorLogCollector(action);
 
         return builder;
     }
@@ -53,9 +68,11 @@ public static class WebApplicationBuilderExtensions
     /// 仅装配错误日志 RabbitMQ 通道发送者
     /// </summary>
     /// <param name="builder">构建器</param>
+    /// <param name="action">选项配置器</param>
     /// <returns>构建器</returns>
     public static WebApplicationBuilder AddErrorLogRabbitMQOnlyProducer(
-        this WebApplicationBuilder builder
+        this WebApplicationBuilder builder,
+        Action<DateRollingUtf8FileRecorderOptions> action = null
     )
     {
         if (builder.HasRegistered(IdentifierAddErrorLogRabbitMQOnlyProducer))
@@ -65,17 +82,23 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddErrorLogRabbitMQOnlyProducer)}");
 
-        var transmissionErrorConfigValue = InfrastructureConfigureAssist.GetTransmissionError(
+        var useTransmissionConfigValue = ErrorLogTransceiverConfigureAssist.GetUseTransmission(
             builder.Configuration
         );
 
         StartupConfigMessageAssist.AddConfig(
-            transmissionErrorConfigValue.ToArrowDescription()
+            useTransmissionConfigValue.ToArrowDescription()
         );
 
         builder.Services.AddErrorLogTransceiverConfigureAssist(builder.Configuration);
-        builder.Services.AddErrorLogRabbitMQCore(builder.Configuration);
-        builder.Services.AddErrorLogRabbitMQProducer(builder.Configuration);
+
+        if (useTransmissionConfigValue.Value)
+        {
+            builder.Services.AddErrorLogRabbitMQCore(builder.Configuration);
+            builder.Services.AddErrorLogRabbitMQProducer(builder.Configuration);
+        }
+
+        builder.Services.AddErrorLogCollector(action);
 
         return builder;
     }
@@ -84,10 +107,12 @@ public static class WebApplicationBuilderExtensions
     /// 仅装配错误日志 RabbitMQ 通道消费者
     /// </summary>
     /// <param name="builder">构建器</param>
+    /// <param name="action">选项配置器</param>
     /// <param name="instances">消费者最大数</param>
     /// <returns>构建器</returns>
     public static WebApplicationBuilder AddErrorLogRabbitMQOnlyConsumer<TErrorLogConsumer>(
         this WebApplicationBuilder builder,
+        Action<DateRollingUtf8FileRecorderOptions> action = null,
         int instances = 1
     ) where TErrorLogConsumer : BaseErrorLogConsumer
     {
@@ -98,17 +123,27 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddErrorLogRabbitMQOnlyConsumer)}");
 
-        var transmissionErrorConfigValue = InfrastructureConfigureAssist.GetTransmissionError(
+        var useTransmissionConfigValue = ErrorLogTransceiverConfigureAssist.GetUseTransmission(
             builder.Configuration
         );
 
         StartupConfigMessageAssist.AddConfig(
-            transmissionErrorConfigValue.ToArrowDescription()
+            useTransmissionConfigValue.ToArrowDescription()
         );
 
+        if (!useTransmissionConfigValue.Value)
+        {
+            throw new ConfigErrorException(
+                useTransmissionConfigValue.ToErrorDescription("开启消费者需要设置为true")
+            );
+        }
+
         builder.Services.AddErrorLogTransceiverConfigureAssist(builder.Configuration);
+
         builder.Services.AddErrorLogRabbitMQCore(builder.Configuration);
         builder.Services.AddErrorLogRabbitMQConsumer<TErrorLogConsumer>(builder.Configuration, instances);
+
+        builder.Services.AddErrorLogCollector(action);
 
         return builder;
     }

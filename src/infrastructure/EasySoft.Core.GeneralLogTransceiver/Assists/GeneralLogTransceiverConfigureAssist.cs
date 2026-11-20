@@ -101,18 +101,21 @@ public class GeneralLogTransceiverConfigureAssist
 
         var v = configuration[node] ?? "false";
 
+        var configValue = new ConfigValue<bool>
+        {
+            Node = node,
+            Value = v == "true",
+            EffectiveValueDescription = "true|false"
+        };
+
         if (!v.In("true", "false"))
         {
             throw new ConfigErrorException(
-                $"[{node}]配置无效，如需要配置，请设置 true|false"
+                configValue.ToErrorDescription()
             );
         }
 
-        return new ConfigValue<bool>
-        {
-            Node = node,
-            Value = v == "true"
-        };
+        return configValue;
     }
 
     /// <summary>
@@ -145,18 +148,21 @@ public class GeneralLogTransceiverConfigureAssist
 
         var v = configuration[node] ?? "false";
 
+        var configValue = new ConfigValue<bool>
+        {
+            Node = node,
+            Value = v == "true",
+            EffectiveValueDescription = "true|false"
+        };
+
         if (!v.In("true", "false"))
         {
             throw new ConfigErrorException(
-                $"[{node}]配置无效，如需要配置，请设置 true|false"
+                configValue.ToErrorDescription()
             );
         }
 
-        return new ConfigValue<bool>
-        {
-            Node = node,
-            Value = v == "true"
-        };
+        return configValue;
     }
 
     /// <summary>
@@ -179,7 +185,7 @@ public class GeneralLogTransceiverConfigureAssist
     /// <exception cref="ConfigErrorException">配置异常</exception>
     public static ConfigValue<string> GetRabbitMQConnectionString(IConfiguration configuration)
     {
-        var transmissionConfigValue = GetUseTransmission(configuration);
+        var useTransmissionConfigValue = GetUseTransmission(configuration);
 
         var node = StringAssist.Join(
             [
@@ -192,18 +198,21 @@ public class GeneralLogTransceiverConfigureAssist
 
         var v = configuration[node] ?? "";
 
-        if (transmissionConfigValue.Value && string.IsNullOrWhiteSpace(v))
+        var configValue = new ConfigValue<string>
+        {
+            Node = node,
+            Value = v,
+            EffectiveValueDescription = "开启情况下，需要配置 RabbitMQ 连接字符串"
+        };
+
+        if (useTransmissionConfigValue.Value && string.IsNullOrWhiteSpace(v))
         {
             throw new ConfigErrorException(
-                $"GeneralLog 已经配置为开启，[{node}]配置无效，请设置"
+                configValue.ToErrorDescription()
             );
         }
 
-        return new ConfigValue<string>
-        {
-            Node = node,
-            Value = v
-        };
+        return configValue;
     }
 
     /// <summary>
@@ -236,11 +245,14 @@ public class GeneralLogTransceiverConfigureAssist
 
         var v = configuration[node] ?? "";
 
-        return new ConfigValue<string>
+        var configValue = new ConfigValue<string>
         {
             Node = node,
-            Value = v
+            Value = v,
+            EffectiveValueDescription = ""
         };
+
+        return configValue;
     }
 
     /// <summary>

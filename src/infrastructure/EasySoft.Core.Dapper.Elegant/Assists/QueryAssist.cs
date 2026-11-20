@@ -1035,7 +1035,7 @@ public class QueryAssist
 
             var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
 
-            var transmissionSqlLogConfigValue = infrastructureConfigureAssist.GetTransmissionSqlLog();
+            var transmissionSqlLogConfigValue = infrastructureConfigureAssist.GetUseSqlLogTransceiver();
 
             if (transmissionSqlLogConfigValue.Value)
             {
@@ -1130,7 +1130,7 @@ public class QueryAssist
         {
             var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
 
-            var transmissionSqlLogConfigValue = infrastructureConfigureAssist.GetTransmissionSqlLog();
+            var transmissionSqlLogConfigValue = infrastructureConfigureAssist.GetUseSqlLogTransceiver();
 
             if (transmissionSqlLogConfigValue.Value)
             {

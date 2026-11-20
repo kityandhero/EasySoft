@@ -28,14 +28,29 @@ public class InfrastructureConfigureAssist
     private const string ApplicationSecretConfigureNode = "ApplicationSecret";
 
     /// <summary>
-    /// TransmissionErrorConfigureNode
+    /// UseAccessWayTransceiverConfigureNode
     /// </summary>
-    public const string TransmissionErrorConfigureNode = "TransmissionError";
+    public const string UseAccessWayTransceiverConfigureNode = "UseAccessWayTransceiver";
 
     /// <summary>
-    /// TransmissionSqlLogConfigureNode
+    /// UseGeneralLogTransceiverConfigureNode
     /// </summary>
-    public const string TransmissionSqlLogConfigureNode = "TransmissionSqlLog";
+    public const string UseGeneralLogTransceiverConfigureNode = "UseGeneralLogTransceiver";
+
+    /// <summary>
+    /// UseChannelCheckTransceiverConfigureNode
+    /// </summary>
+    public const string UseChannelCheckTransceiverConfigureNode = "UseChannelCheckTransceiver";
+
+    /// <summary>
+    /// UseErrorLogTransceiverConfigureNode
+    /// </summary>
+    public const string UseErrorLogTransceiverConfigureNode = "UseErrorLogTransceiver";
+
+    /// <summary>
+    /// UseSqlLogTransceiverConfigureNode
+    /// </summary>
+    public const string UseSqlLogTransceiverConfigureNode = "UseSqlLogTransceiver";
 
     /// <summary>
     /// UseStaticFilesConfigureNode
@@ -151,94 +166,190 @@ public class InfrastructureConfigureAssist
 
     #endregion
 
-    #region GetTransmissionError
+    #region GetUseAccessWayTransceiver
 
     /// <summary>
-    /// 是否开启错误传输
+    /// 是否使用访问收集
     /// </summary>
     /// <param name="configuration">配置集</param>
-    /// <exception cref="ConfigErrorException">配置异常</exception>|
     /// <exception cref="ConfigErrorException">配置异常</exception>
-    public static ConfigValue<bool> GetTransmissionError(IConfiguration configuration)
+    public static ConfigValue<bool> GetUseAccessWayTransceiver(IConfiguration configuration)
     {
         var node = StringAssist.Join(
             [
                 InfrastructureConfigureNode,
-                TransmissionErrorConfigureNode
+                UseAccessWayTransceiverConfigureNode
             ],
             ":"
         );
 
         var v = configuration[node] ?? "false";
 
+        var configValue = new ConfigValue<bool>
+        {
+            Node = node,
+            Value = v == "true",
+            EffectiveValueDescription = "true|false"
+        };
+
         if (!v.In("true", "false"))
         {
             throw new ConfigErrorException(
-                $"[{node}]配置无效，如需要配置，请设置 true|false"
+                configValue.ToErrorDescription()
             );
         }
 
-        return new ConfigValue<bool>
-        {
-            Node = node,
-            Value = v == "true"
-        };
+        return configValue;
     }
 
     /// <summary>
-    /// 是否开启错误传输
+    /// 是否使用fang'wen收集
     /// </summary>
-    /// <exception cref="ConfigErrorException">配置异常</exception>|
     /// <exception cref="ConfigErrorException">配置异常</exception>
-    public ConfigValue<bool> GetTransmissionError()
+    public ConfigValue<bool> GetUseAccessWayTransceiver()
     {
-        return GetTransmissionError(Configuration);
+        return GetUseAccessWayTransceiver(Configuration);
     }
 
     #endregion
 
-    #region GetTransmissionSqlLog
+    #region GetUseGeneralLogTransceiver
 
     /// <summary>
-    /// 是否开启 SQL 日志传输
+    /// 是否使用一般日志收集
     /// </summary>
     /// <param name="configuration">配置集</param>
-    /// <exception cref="ConfigErrorException">配置异常</exception>|
     /// <exception cref="ConfigErrorException">配置异常</exception>
-    public static ConfigValue<bool> GetTransmissionSqlLog(IConfiguration configuration)
+    public static ConfigValue<bool> GetUseGeneralLogTransceiver(IConfiguration configuration)
     {
         var node = StringAssist.Join(
             [
                 InfrastructureConfigureNode,
-                TransmissionSqlLogConfigureNode
+                UseGeneralLogTransceiverConfigureNode
             ],
             ":"
         );
 
         var v = configuration[node] ?? "false";
 
+        var configValue = new ConfigValue<bool>
+        {
+            Node = node,
+            Value = v == "true",
+            EffectiveValueDescription = "true|false"
+        };
+
         if (!v.In("true", "false"))
         {
             throw new ConfigErrorException(
-                $"[{node}]配置无效，如需要配置，请设置 true|false"
+                configValue.ToErrorDescription()
             );
         }
 
-        return new ConfigValue<bool>
-        {
-            Node = node,
-            Value = v == "true"
-        };
+        return configValue;
     }
 
     /// <summary>
-    /// 是否开启 SQL 日志传输
+    /// 是否使用一般日志收集
     /// </summary>
-    /// <exception cref="ConfigErrorException">配置异常</exception>|
     /// <exception cref="ConfigErrorException">配置异常</exception>
-    public ConfigValue<bool> GetTransmissionSqlLog()
+    public ConfigValue<bool> GetUseGeneralLogTransceiver()
     {
-        return GetTransmissionSqlLog(Configuration);
+        return GetUseGeneralLogTransceiver(Configuration);
+    }
+
+    #endregion
+
+    #region GetUseChannelCheckTransceiver
+
+    /// <summary>
+    /// 是否使用通道收集
+    /// </summary>
+    /// <param name="configuration">配置集</param>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<bool> GetUseChannelCheckTransceiver(IConfiguration configuration)
+    {
+        var node = StringAssist.Join(
+            [
+                InfrastructureConfigureNode,
+                UseChannelCheckTransceiverConfigureNode
+            ],
+            ":"
+        );
+
+        var v = configuration[node] ?? "false";
+
+        var configValue = new ConfigValue<bool>
+        {
+            Node = node,
+            Value = v == "true",
+            EffectiveValueDescription = "true|false"
+        };
+
+        if (!v.In("true", "false"))
+        {
+            throw new ConfigErrorException(
+                configValue.ToErrorDescription()
+            );
+        }
+
+        return configValue;
+    }
+
+    /// <summary>
+    /// 是否使用通道收集
+    /// </summary>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public ConfigValue<bool> GetUseChannelCheckTransceiver()
+    {
+        return GetUseChannelCheckTransceiver(Configuration);
+    }
+
+    #endregion
+
+    #region GetUseSqlLogTransceiver
+
+    /// <summary>
+    /// 是否使用 SQL 日志收集
+    /// </summary>
+    /// <param name="configuration">配置集</param>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<bool> GetUseSqlLogTransceiver(IConfiguration configuration)
+    {
+        var node = StringAssist.Join(
+            [
+                InfrastructureConfigureNode,
+                UseSqlLogTransceiverConfigureNode
+            ],
+            ":"
+        );
+
+        var v = configuration[node] ?? "false";
+
+        var configValue = new ConfigValue<bool>
+        {
+            Node = node,
+            Value = v == "true",
+            EffectiveValueDescription = "true|false"
+        };
+
+        if (!v.In("true", "false"))
+        {
+            throw new ConfigErrorException(
+                configValue.ToErrorDescription()
+            );
+        }
+
+        return configValue;
+    }
+
+    /// <summary>
+    /// 是否使用 SQL 日志收集
+    /// </summary>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public ConfigValue<bool> GetUseSqlLogTransceiver()
+    {
+        return GetUseSqlLogTransceiver(Configuration);
     }
 
     #endregion
@@ -249,7 +360,6 @@ public class InfrastructureConfigureAssist
     /// GetUseStaticFiles
     /// </summary>
     /// <param name="configuration">配置集</param>
-    /// <exception cref="ConfigErrorException">配置异常</exception>|
     /// <exception cref="ConfigErrorException">配置异常</exception>
     public static ConfigValue<bool> GetUseStaticFiles(IConfiguration configuration)
     {
@@ -280,7 +390,6 @@ public class InfrastructureConfigureAssist
     /// <summary>
     /// GetUseStaticFiles
     /// </summary>
-    /// <exception cref="ConfigErrorException">配置异常</exception>|
     /// <exception cref="ConfigErrorException">配置异常</exception>
     public ConfigValue<bool> GetUseStaticFiles()
     {

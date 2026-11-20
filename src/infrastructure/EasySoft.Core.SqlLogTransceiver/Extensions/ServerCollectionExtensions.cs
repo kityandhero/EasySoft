@@ -39,18 +39,21 @@ internal static class ServerCollectionExtensions
 
                 var channel = serviceProvider.GetRequiredService<IApplicationChannel>();
 
-                var transceiverConfigureAssist = serviceProvider
-                    .GetRequiredService<SqlLogTransceiverConfigureAssist>();
+                var transceiverConfigureAssist = serviceProvider.GetRequiredService<
+                    SqlLogTransceiverConfigureAssist
+                >();
 
                 var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+
+                var useTransmissionConfigValue = transceiverConfigureAssist.GetUseTransmission();
 
                 return new SqlLogCollector(
                     loggerFactory,
                     channel,
-                    serviceProvider.GetRequiredService<ISqlLogProducer>(),
+                    useTransmissionConfigValue.Value ? serviceProvider.GetRequiredService<ISqlLogProducer>() : null,
                     Options.Create(options),
                     transceiverConfigureAssist.GetUseLocalRecord().Value,
-                    transceiverConfigureAssist.GetUseTransmission().Value
+                    useTransmissionConfigValue.Value
                 );
             }
         );

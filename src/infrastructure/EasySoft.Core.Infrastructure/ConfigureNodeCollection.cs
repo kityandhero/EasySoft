@@ -40,7 +40,6 @@ public static class ConfigureNodeCollection
     /// GetExceptionlessTeleport
     /// </summary>
     /// <param name="configuration">配置集</param>
-    /// <exception cref="ConfigErrorException">配置异常</exception>|
     /// <exception cref="ConfigErrorException">配置异常</exception>
     public static ConfigValue<bool> GetExceptionlessTeleport(IConfiguration configuration)
     {

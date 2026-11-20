@@ -44,13 +44,15 @@ internal static class ServerCollectionExtensions
 
                 var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
 
+                var useTransmissionConfigValue = transceiverConfigureAssist.GetUseTransmission();
+
                 return new GeneralLogCollector(
                     loggerFactory,
                     channel,
-                    serviceProvider.GetRequiredService<IGeneralLogProducer>(),
+                    useTransmissionConfigValue.Value ? serviceProvider.GetRequiredService<IGeneralLogProducer>() : null,
                     Options.Create(options),
                     transceiverConfigureAssist.GetUseLocalRecord().Value,
-                    transceiverConfigureAssist.GetUseTransmission().Value
+                    useTransmissionConfigValue.Value
                 );
             }
         );

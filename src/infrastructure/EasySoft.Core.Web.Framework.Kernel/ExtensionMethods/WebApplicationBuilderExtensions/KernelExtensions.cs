@@ -8,6 +8,7 @@ using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.Mapster.ExtensionMethods;
 using EasySoft.Core.MediatR.ExtensionMethods;
+using EasySoft.Core.Messaging.SlimMessageBus.Extensions;
 using EasySoft.Core.MiniProfiler.ExtensionMethods;
 using EasySoft.Core.Web.Framework.Kernel.Assists;
 using EasySoft.UtilityTools.Core.Extensions;
@@ -138,6 +139,8 @@ public static class KernelExtensions
         builder.AddAdvanceMediatR();
 
         builder.AddAdvanceMiniProfile();
+
+        builder.Services.AddKernelMessagingWithJson();
 
         #region TokenMode
 

@@ -62,7 +62,7 @@ public class JsonWebTokenMiddleware : IMiddleware
         {
             var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
 
-            var transmissionErrorConfigValue = infrastructureConfigureAssist.GetTransmissionError();
+            var transmissionErrorConfigValue = infrastructureConfigureAssist.GetUseErrorLogTransceiver();
 
             if (!transmissionErrorConfigValue.Value)
             {
