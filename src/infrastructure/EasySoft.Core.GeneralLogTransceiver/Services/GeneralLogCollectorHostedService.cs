@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 namespace EasySoft.Core.GeneralLogTransceiver.Services;
 
 /// <summary>
-/// 日志收集器托管后台服务
+/// 一般日志收集器托管后台服务
 /// 作用：将 GeneralLogCollector 纳入 ASP.NET Core Host 生命周期托管，解决裸Task游离、停止兜底刷写时序不一致问题
 /// 对比直接在 ApplicationStarted 手动Start：Host会识别该服务，停止阶段主动等待 StopAsync 完成，受 HostOptions.ShutdownTimeout 管控
 /// </summary>

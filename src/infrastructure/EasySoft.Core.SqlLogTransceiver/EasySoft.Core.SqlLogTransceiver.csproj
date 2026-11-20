@@ -28,9 +28,11 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\EasySoft.Core.AdvanceFileRecord\EasySoft.Core.AdvanceFileRecord.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Messaging.SlimMessageBus\EasySoft.Core.Messaging.SlimMessageBus.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Messaging\EasySoft.Core.Messaging.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.TransceiverCore\EasySoft.Core.TransceiverCore.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

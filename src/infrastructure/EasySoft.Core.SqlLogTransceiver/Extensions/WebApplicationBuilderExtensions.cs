@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
+﻿using EasySoft.Core.AdvanceFileRecord;
+using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Infrastructure.Configures;
 using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.SqlLogTransceiver.Assists;
@@ -21,9 +22,11 @@ public static class WebApplicationBuilderExtensions
     /// 配置远程SQL日志传输
     /// </summary>
     /// <param name="builder">构建器</param>
+    /// <param name="action">选项配置器</param>
     /// <returns></returns>
     public static WebApplicationBuilder AddSqlLogRabbitMQTransceiver<TSqlLogConsumer>(
-        this WebApplicationBuilder builder
+        this WebApplicationBuilder builder,
+        Action<DateRollingUtf8FileRecorderOptions> action = null
     ) where TSqlLogConsumer : BaseSqlLogConsumer
     {
         if (builder.HasRegistered(IdentifierAddSqlLogRabbitMQTransmitter))
@@ -33,16 +36,21 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddSqlLogRabbitMQTransceiver)}");
 
-        var transmissionConfigValue = SqlLogTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+        var useTransmissionConfigValue = SqlLogTransceiverConfigureAssist.GetUseTransmission(
+            builder.Configuration
+        );
 
         StartupConfigMessageAssist.AddConfig(
-            transmissionConfigValue.ToArrowDescription()
+            useTransmissionConfigValue.ToArrowDescription()
         );
 
         builder.Services.AddSqlLogTransceiverConfigureAssist(builder.Configuration);
+
         builder.Services.AddSqlLogRabbitMQCore(builder.Configuration);
         builder.Services.AddSqlLogRabbitMQProducer(builder.Configuration);
         builder.Services.AddSqlLogRabbitMQConsumer<TSqlLogConsumer>(builder.Configuration, 1);
+
+        builder.Services.AddSqlLogCollector(action);
 
         ApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
@@ -58,9 +66,11 @@ public static class WebApplicationBuilderExtensions
     /// 仅装配SQL日志 RabbitMQ 通道发送者
     /// </summary>
     /// <param name="builder">构建器</param>
+    /// <param name="action">选项配置器</param>
     /// <returns>构建器</returns>
     public static WebApplicationBuilder AddSqlLogRabbitMQOnlyProducer(
-        this WebApplicationBuilder builder
+        this WebApplicationBuilder builder,
+        Action<DateRollingUtf8FileRecorderOptions> action = null
     )
     {
         if (builder.HasRegistered(IdentifierAddSqlLogRabbitMQOnlyProducer))
@@ -70,15 +80,20 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddSqlLogRabbitMQOnlyProducer)}");
 
-        var transmissionConfigValue = SqlLogTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+        var useTransmissionConfigValue = SqlLogTransceiverConfigureAssist.GetUseTransmission(
+            builder.Configuration
+        );
 
         StartupConfigMessageAssist.AddConfig(
-            transmissionConfigValue.ToArrowDescription()
+            useTransmissionConfigValue.ToArrowDescription()
         );
 
         builder.Services.AddSqlLogTransceiverConfigureAssist(builder.Configuration);
+
         builder.Services.AddSqlLogRabbitMQCore(builder.Configuration);
         builder.Services.AddSqlLogRabbitMQProducer(builder.Configuration);
+
+        builder.Services.AddSqlLogCollector(action);
 
         return builder;
     }
@@ -87,10 +102,12 @@ public static class WebApplicationBuilderExtensions
     /// 仅装配SQL日志 RabbitMQ 通道消费者
     /// </summary>
     /// <param name="builder">构建器</param>
+    /// <param name="action">选项配置器</param>
     /// <param name="instances">消费者最大数</param>
     /// <returns>构建器</returns>
     public static WebApplicationBuilder AddSqlLogRabbitMQOnlyConsumer<TSqlLogConsumer>(
         this WebApplicationBuilder builder,
+        Action<DateRollingUtf8FileRecorderOptions> action = null,
         int instances = 1
     ) where TSqlLogConsumer : BaseSqlLogConsumer
     {
@@ -101,15 +118,20 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddSqlLogRabbitMQOnlyConsumer)}");
 
-        var transmissionConfigValue = SqlLogTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+        var useTransmissionConfigValue = SqlLogTransceiverConfigureAssist.GetUseTransmission(
+            builder.Configuration
+        );
 
         StartupConfigMessageAssist.AddConfig(
-            transmissionConfigValue.ToArrowDescription()
+            useTransmissionConfigValue.ToArrowDescription()
         );
 
         builder.Services.AddSqlLogTransceiverConfigureAssist(builder.Configuration);
+
         builder.Services.AddSqlLogRabbitMQCore(builder.Configuration);
         builder.Services.AddSqlLogRabbitMQConsumer<TSqlLogConsumer>(builder.Configuration, instances);
+
+        builder.Services.AddSqlLogCollector(action);
 
         return builder;
     }

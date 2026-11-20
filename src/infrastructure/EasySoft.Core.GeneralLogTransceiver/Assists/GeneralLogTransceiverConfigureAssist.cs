@@ -82,7 +82,7 @@ public class GeneralLogTransceiverConfigureAssist
 
     #region Methods
 
-    #region GetUseTransmission
+    #region GetUseLocalRecord
 
     /// <summary>
     /// 是否适用本地记录

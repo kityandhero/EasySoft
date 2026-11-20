@@ -37,10 +37,10 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddGeneralLogRabbitMQTransceiver)}");
 
-        var transmissionConfigValue = GeneralLogTransceiverConfigureAssist.GetUseTransmission(builder.Configuration);
+        var useTransmissionConfigValue = GeneralLogTransceiverConfigureAssist.GetUseTransmission(builder.Configuration);
 
         StartupConfigMessageAssist.AddConfig(
-            transmissionConfigValue.ToArrowDescription()
+            useTransmissionConfigValue.ToArrowDescription()
         );
 
         builder.Services.AddGeneralLogTransceiverConfigureAssist(builder.Configuration);
@@ -72,10 +72,10 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddGeneralLogRabbitMQOnlyProducer)}");
 
-        var transmissionConfigValue = GeneralLogTransceiverConfigureAssist.GetUseTransmission(builder.Configuration);
+        var useTransmissionConfigValue = GeneralLogTransceiverConfigureAssist.GetUseTransmission(builder.Configuration);
 
         StartupConfigMessageAssist.AddConfig(
-            transmissionConfigValue.ToArrowDescription()
+            useTransmissionConfigValue.ToArrowDescription()
         );
 
         builder.Services.AddGeneralLogTransceiverConfigureAssist(builder.Configuration);
@@ -108,10 +108,10 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddGeneralLogRabbitMQOnlyConsumer)}");
 
-        var transmissionConfigValue = GeneralLogTransceiverConfigureAssist.GetUseTransmission(builder.Configuration);
+        var useTransmissionConfigValue = GeneralLogTransceiverConfigureAssist.GetUseTransmission(builder.Configuration);
 
         StartupConfigMessageAssist.AddConfig(
-            transmissionConfigValue.ToArrowDescription()
+            useTransmissionConfigValue.ToArrowDescription()
         );
 
         builder.Services.AddGeneralLogTransceiverConfigureAssist(builder.Configuration);
