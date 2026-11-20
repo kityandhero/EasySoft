@@ -1,7 +1,7 @@
 ﻿namespace EasySoft.Core.Data.Interceptors;
 
 /// <summary>
-///     工作单元拦截器
+/// 工作单元拦截器
 /// </summary>
 public sealed class UnitOfWorkInterceptor : IInterceptor
 {

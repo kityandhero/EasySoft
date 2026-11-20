@@ -12,10 +12,12 @@ internal static class ServiceCollectionExtensions
         serviceCollection.AddExceptionless(exceptionlessConfiguration =>
             {
                 exceptionlessConfiguration.ServerUrl = ExceptionlessConfigureAssist
-                    .GetExceptionlessServerUrl(configuration);
+                    .GetExceptionlessServerUrl(configuration)
+                    .Value;
 
                 exceptionlessConfiguration.ApiKey = ExceptionlessConfigureAssist
-                    .GetExceptionlessApiKey(configuration);
+                    .GetExceptionlessApiKey(configuration)
+                    .Value;
             }
         );
 

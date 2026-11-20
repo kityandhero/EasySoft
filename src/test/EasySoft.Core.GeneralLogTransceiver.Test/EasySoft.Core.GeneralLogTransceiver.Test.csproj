@@ -22,8 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.AdvanceNLog\EasySoft.Core.AdvanceNLog.csproj"/>
         <ProjectReference Include="..\..\infrastructure\EasySoft.Core.GeneralLogTransceiver\EasySoft.Core.GeneralLogTransceiver.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

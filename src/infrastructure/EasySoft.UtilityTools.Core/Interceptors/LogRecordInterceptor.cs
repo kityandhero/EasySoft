@@ -1,7 +1,7 @@
 ﻿namespace EasySoft.UtilityTools.Core.Interceptors;
 
 /// <summary>
-///     日志记录拦截器
+/// 日志记录拦截器
 /// </summary>
 public sealed class LogRecordInterceptor : IInterceptor
 {

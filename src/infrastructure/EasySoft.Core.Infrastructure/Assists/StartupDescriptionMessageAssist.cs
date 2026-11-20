@@ -110,6 +110,8 @@ public static class StartupDescriptionMessageAssist
         AddTraceDivider();
 
         AddTrace($"[EXEC] {message}{(supplementRoundBracket ? "()" : "")}", extra);
+
+        AddTraceDivider();
     }
 
     /// <summary>
@@ -117,7 +119,9 @@ public static class StartupDescriptionMessageAssist
     /// </summary>
     public static void Print()
     {
-        var list = MessageCollection.ToListFilterNullable()
+        var list = MessageCollection
+            .ToListFilterNullable()
+            .RemoveAdjacentDuplicates((a, b) => a.GetMessage() == b.GetMessage())
             .ToList();
 
         list.Add(

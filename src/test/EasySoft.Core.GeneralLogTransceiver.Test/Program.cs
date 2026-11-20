@@ -1,8 +1,11 @@
-﻿using EasySoft.Core.GeneralLogTransceiver.Extensions;
+﻿using EasySoft.Core.AdvanceNLog.ExtensionMethods;
+using EasySoft.Core.GeneralLogTransceiver.Collectors;
+using EasySoft.Core.GeneralLogTransceiver.Extensions;
 using EasySoft.Core.GeneralLogTransceiver.Producers;
 using EasySoft.Core.GeneralLogTransceiver.Test;
 using EasySoft.Core.GeneralLogTransceiver.Test.Consumers;
 using EasySoft.Core.Messaging.SlimMessageBus.Extensions;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Standard.Producers;
 
@@ -12,11 +15,15 @@ builder.Services.AddSingleton<IApplicationChannel>(
     new ApplicationChannel().SetChannel(ChannelCollection.GeneralLogTransceiverTestApplication)
 );
 
+EnvironmentAssist.SetEnvironment(builder.Environment);
+
+builder.AddAdvanceNLog();
+
 #region RabbitMQ Build
 
 builder.Services.AddKernelMessagingWithJson();
 
-builder.AddGeneralLogRabbitMQTransceiver<GeneralLogConsumer>();
+builder.AddGeneralLogRabbitMQOnlyProducer();
 
 #endregion
 
@@ -24,22 +31,22 @@ var app = builder.Build();
 
 #region RabbitMQ Test Producer
 
-// 宿主启动完成后触发，此时后台泵已就绪。
+var generalLogCollector = app.Services.GetRequiredService<GeneralLogCollector>();
+
 app.Lifetime.ApplicationStarted.Register(() =>
     {
         _ = Task.Run(async () =>
             {
-                var generalLogProducer = app.Services.GetRequiredService<IGeneralLogProducer>();
-                var sw = Stopwatch.StartNew();
+                await Task.Delay(5000);
 
                 for (var i = 0; i < 100; i++)
                 {
-                    await generalLogProducer.SendAsync($"Test-{i}");
+                    generalLogCollector.Publish($"Test-{i}");
                 }
 
-                sw.Stop();
-
-                Console.WriteLine($"Fired 100 sends in {sw.ElapsedMilliseconds}ms");
+                Console.WriteLine("[Test] 100条已投递，等待3秒让消费落盘...");
+                await Task.Delay(3000); // 关键：等消费者跑完
+                Console.WriteLine("[Test] 等待结束");
             }
         );
     }

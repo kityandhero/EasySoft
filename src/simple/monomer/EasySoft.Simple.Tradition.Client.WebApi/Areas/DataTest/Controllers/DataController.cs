@@ -3,7 +3,7 @@
 namespace EasySoft.Simple.Tradition.Client.WebApi.Areas.DataTest.Controllers;
 
 /// <summary>
-///     DataController
+/// DataController
 /// </summary>
 public class DataController : AreaControllerCore
 {
@@ -76,7 +76,10 @@ public class DataController : AreaControllerCore
 
             var dictionary = new Dictionary<string, string>();
 
-            for (var i = 0; i < 10; i++) dictionary.Add($"lili-{Guid.NewGuid().ToString()}", "123456");
+            for (var i = 0; i < 10; i++)
+            {
+                dictionary.Add($"lili-{Guid.NewGuid().ToString()}", "123456");
+            }
 
             await _userService.RegisterMultiAsync(dictionary);
 

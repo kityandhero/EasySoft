@@ -14,6 +14,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\EasySoft.Core.CacheImplementation\EasySoft.Core.CacheImplementation.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Data\EasySoft.Core.Data.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.EasyToken\EasySoft.Core.EasyToken.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.EnvironmentAuxiliary\EasySoft.Core.EnvironmentAuxiliary.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>

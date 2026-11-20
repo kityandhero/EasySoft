@@ -21,7 +21,9 @@ public static class WebApplicationBuilderExtensions
     )
     {
         if (builder.HasRegistered(UniqueIdentifierAddAssemblyBusinessServices))
+        {
             return builder;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAssemblyBusinessServices)}."
@@ -49,9 +51,11 @@ public static class WebApplicationBuilderExtensions
         var assemblies = BusinessServiceConfigure.GetBusinessServiceInterfaceAssemblies().ToArray();
 
         if (!assemblies.Any())
+        {
             StartupDescriptionMessageAssist.AddWarning(
                 $"{nameof(BusinessServiceConfigure)}.{nameof(BusinessServiceConfigure.GetBusinessServiceInterfaceAssemblies)} has none."
             );
+        }
 
         StartupDescriptionMessageAssist.AddHint(
             $"{typeof(BusinessServiceConfigure).FullName}.{nameof(BusinessServiceConfigure.GetBusinessServiceInterfaceAssemblies)} contain {(!BusinessServiceConfigure.GetBusinessServiceInterfaceAssemblies().Any() ? "none" : BusinessServiceConfigure.GetBusinessServiceInterfaceAssemblies().Select(o => o.GetName().Name).Join(","))}."
@@ -80,9 +84,11 @@ public static class WebApplicationBuilderExtensions
         var assemblies = BusinessServiceConfigure.GetBusinessServiceImplementationAssemblies().ToArray();
 
         if (!assemblies.Any())
+        {
             StartupDescriptionMessageAssist.AddWarning(
                 $"{nameof(BusinessServiceConfigure)}.{nameof(BusinessServiceConfigure.GetBusinessServiceImplementationAssemblies)} has none."
             );
+        }
 
         StartupDescriptionMessageAssist.AddHint(
             $"{typeof(BusinessServiceConfigure).FullName}.{nameof(BusinessServiceConfigure.GetBusinessServiceImplementationAssemblies)} contain {(!BusinessServiceConfigure.GetBusinessServiceImplementationAssemblies().Any() ? "none" : BusinessServiceConfigure.GetBusinessServiceImplementationAssemblies().Select(o => o.GetName().Name).Join(","))}."

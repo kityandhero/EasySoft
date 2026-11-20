@@ -3,7 +3,7 @@
 namespace EasySoft.Simple.Single.Application.Enums;
 
 /// <summary>
-///     ApplicationChannelCollection
+/// ApplicationChannelCollection
 /// </summary>
 public abstract class ApplicationChannelCollection
 {

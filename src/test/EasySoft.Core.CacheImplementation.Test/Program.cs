@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddJsonSerializerSettings();
+// builder.Services.AddJsonSerializerSettings();
 builder.Services.AddCacheCore(builder.Configuration);
 builder.AddAdvanceCacheImplementation();
 

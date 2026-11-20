@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.AuthenticationCore.Assists;
+using EasySoft.Core.Data.ExtensionMethods;
 using EasySoft.Core.EasyToken.ExtensionMethods;
 using EasySoft.Core.EnvironmentAuxiliary.ExtensionMethods;
 using EasySoft.Core.Infrastructure.Assists;
@@ -78,6 +79,8 @@ public static class BuildExtensions
             );
 
         builder.WeaveApplicationBuilderExtraAction();
+
+        builder.AddAssemblyBusinessServices();
 
         var app = builder.Build();
 

@@ -4,7 +4,7 @@ using EasySoft.UtilityTools.Standard.Models;
 namespace EasySoft.Simple.DomainDrivenDesign.Domain.Shared.Enums;
 
 /// <summary>
-///     ApplicationChannelCollection
+/// ApplicationChannelCollection
 /// </summary>
 public abstract class ApplicationChannelCollection
 {

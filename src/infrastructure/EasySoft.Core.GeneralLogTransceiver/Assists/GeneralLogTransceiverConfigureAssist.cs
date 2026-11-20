@@ -42,14 +42,19 @@ public class GeneralLogTransceiverConfigureAssist
     public const string GeneralLogMessageQueue = "GeneralLogMessageQueue";
 
     /// <summary>
-    /// GeneralLogTransmission
+    /// UseTransmissionConfigureNode
     /// </summary>
-    public const string GeneralLogTransmission = "Transmission";
+    public const string UseTransmissionConfigureNode = "UseTransmission";
 
     /// <summary>
-    /// GeneralLogPrefix
+    /// UseLocalRecordConfigureNode
     /// </summary>
-    public const string GeneralLogPrefix = "Prefix";
+    public const string UseLocalRecordConfigureNode = "UseLocalRecord";
+
+    /// <summary>
+    /// PrefixConfigureNode
+    /// </summary>
+    public const string PrefixConfigureNode = "Prefix";
 
     #endregion
 
@@ -77,19 +82,19 @@ public class GeneralLogTransceiverConfigureAssist
 
     #region Methods
 
-    #region GetTransmission
+    #region GetUseTransmission
 
     /// <summary>
-    /// 是否开启传输
+    /// 是否适用本地记录
     /// </summary>
     /// <param name="configuration">配置集</param>
     /// <exception cref="ConfigErrorException">配置异常</exception>
-    public static ConfigValue<bool> GetTransmission(IConfiguration configuration)
+    public static ConfigValue<bool> GetUseLocalRecord(IConfiguration configuration)
     {
         var node = StringAssist.Join(
             [
                 GeneralLogTransceiverConfigureNode,
-                GeneralLogTransmission
+                UseLocalRecordConfigureNode
             ],
             ":"
         );
@@ -111,12 +116,56 @@ public class GeneralLogTransceiverConfigureAssist
     }
 
     /// <summary>
-    /// 是否开启传输
+    /// 是否适用本地记录
     /// </summary>
     /// <exception cref="ConfigErrorException">配置异常</exception>
-    public ConfigValue<bool> GetTransmission()
+    public ConfigValue<bool> GetUseLocalRecord()
     {
-        return GetTransmission(Configuration);
+        return GetUseLocalRecord(Configuration);
+    }
+
+    #endregion
+
+    #region GetUseTransmission
+
+    /// <summary>
+    /// 是否适用传输
+    /// </summary>
+    /// <param name="configuration">配置集</param>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<bool> GetUseTransmission(IConfiguration configuration)
+    {
+        var node = StringAssist.Join(
+            [
+                GeneralLogTransceiverConfigureNode,
+                UseTransmissionConfigureNode
+            ],
+            ":"
+        );
+
+        var v = configuration[node] ?? "false";
+
+        if (!v.In("true", "false"))
+        {
+            throw new ConfigErrorException(
+                $"[{node}]配置无效，如需要配置，请设置 true|false"
+            );
+        }
+
+        return new ConfigValue<bool>
+        {
+            Node = node,
+            Value = v == "true"
+        };
+    }
+
+    /// <summary>
+    /// 是否适用传输
+    /// </summary>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public ConfigValue<bool> GetUseTransmission()
+    {
+        return GetUseTransmission(Configuration);
     }
 
     #endregion
@@ -130,7 +179,7 @@ public class GeneralLogTransceiverConfigureAssist
     /// <exception cref="ConfigErrorException">配置异常</exception>
     public static ConfigValue<string> GetRabbitMQConnectionString(IConfiguration configuration)
     {
-        var transmissionConfigValue = GetTransmission(configuration);
+        var transmissionConfigValue = GetUseTransmission(configuration);
 
         var node = StringAssist.Join(
             [
@@ -180,7 +229,7 @@ public class GeneralLogTransceiverConfigureAssist
         var node = StringAssist.Join(
             [
                 GeneralLogTransceiverConfigureNode,
-                GeneralLogPrefix
+                PrefixConfigureNode
             ],
             ":"
         );

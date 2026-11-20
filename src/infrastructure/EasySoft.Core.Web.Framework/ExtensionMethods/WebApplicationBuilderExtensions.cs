@@ -131,7 +131,8 @@ public static class WebApplicationBuilderExtensions
 
         builder.AddAdvanceSwagger();
 
-        builder.AddAdvanceMediatR();
+        // 核心集成
+        // builder.AddAdvanceMediatR();
 
         // 核心集成
         // builder.AddAdvanceCacheImplementation();
@@ -151,7 +152,8 @@ public static class WebApplicationBuilderExtensions
 
         builder.AddAdvanceEntityFrameworkCore();
 
-        builder.AddAssemblyBusinessServices();
+        // 核心集成
+        // builder.AddAssemblyBusinessServices();
 
         var app = builder.Build();
 
@@ -434,7 +436,8 @@ public static class WebApplicationBuilderExtensions
         // 核心集成
         // StartupWarnMessageAssist.Print();
 
-        app.RegisterWorks();
+        // 核心集成
+        // app.RegisterWorks();
 
         return app;
     }

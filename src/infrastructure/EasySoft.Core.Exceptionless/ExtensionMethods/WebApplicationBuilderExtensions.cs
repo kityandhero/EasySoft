@@ -10,7 +10,7 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Services.AddExceptionlessConfigureAssist(builder.Configuration);
 
-        if (!ExceptionlessConfigureAssist.GetExceptionlessTeleport(builder.Configuration))
+        if (!ExceptionlessConfigureAssist.GetExceptionlessTeleport(builder.Configuration).Value)
         {
             StartupConfigMessageAssist.AddConfig(
                 $"Exceptionless Teleport: disable.",

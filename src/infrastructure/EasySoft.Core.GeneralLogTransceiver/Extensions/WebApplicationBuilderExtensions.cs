@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.GeneralLogTransceiver.Assists;
+﻿using EasySoft.Core.AdvanceFileRecord;
+using EasySoft.Core.GeneralLogTransceiver.Assists;
 using EasySoft.Core.GeneralLogTransceiver.Consumers;
 using EasySoft.Core.Infrastructure.Assists;
 
@@ -22,9 +23,11 @@ public static class WebApplicationBuilderExtensions
     /// 同时发送和消费，使用场景较低，单端消费, 不应和单发送器和单消费器同时装配
     /// </remarks>
     /// <param name="builder">构建器</param>
+    /// <param name="action">选项配置器</param>
     /// <returns>构建器</returns>
     public static WebApplicationBuilder AddGeneralLogRabbitMQTransceiver<TGeneralLogConsumer>(
-        this WebApplicationBuilder builder
+        this WebApplicationBuilder builder,
+        Action<DateRollingUtf8FileRecorderOptions> action = null
     ) where TGeneralLogConsumer : BaseGeneralLogConsumer
     {
         if (builder.HasRegistered(IdentifierAddGeneralLogRabbitMQTransceiver))
@@ -34,16 +37,19 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddGeneralLogRabbitMQTransceiver)}");
 
-        var transmissionConfigValue = GeneralLogTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+        var transmissionConfigValue = GeneralLogTransceiverConfigureAssist.GetUseTransmission(builder.Configuration);
 
         StartupConfigMessageAssist.AddConfig(
             transmissionConfigValue.ToArrowDescription()
         );
 
         builder.Services.AddGeneralLogTransceiverConfigureAssist(builder.Configuration);
+
         builder.Services.AddGeneralLogRabbitMQCore(builder.Configuration);
         builder.Services.AddGeneralLogRabbitMQProducer(builder.Configuration);
         builder.Services.AddGeneralLogRabbitMQConsumer<TGeneralLogConsumer>(builder.Configuration, 1);
+
+        builder.Services.AddGeneralLogCollector(action);
 
         return builder;
     }
@@ -52,9 +58,11 @@ public static class WebApplicationBuilderExtensions
     /// 仅装配一般日志 RabbitMQ 通道发送者
     /// </summary>
     /// <param name="builder">构建器</param>
+    /// <param name="action">选项配置器</param>
     /// <returns>构建器</returns>
     public static WebApplicationBuilder AddGeneralLogRabbitMQOnlyProducer(
-        this WebApplicationBuilder builder
+        this WebApplicationBuilder builder,
+        Action<DateRollingUtf8FileRecorderOptions> action = null
     )
     {
         if (builder.HasRegistered(IdentifierAddGeneralLogRabbitMQOnlyProducer))
@@ -64,15 +72,18 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddGeneralLogRabbitMQOnlyProducer)}");
 
-        var transmissionConfigValue = GeneralLogTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+        var transmissionConfigValue = GeneralLogTransceiverConfigureAssist.GetUseTransmission(builder.Configuration);
 
         StartupConfigMessageAssist.AddConfig(
             transmissionConfigValue.ToArrowDescription()
         );
 
         builder.Services.AddGeneralLogTransceiverConfigureAssist(builder.Configuration);
+
         builder.Services.AddGeneralLogRabbitMQCore(builder.Configuration);
         builder.Services.AddGeneralLogRabbitMQProducer(builder.Configuration);
+
+        builder.Services.AddGeneralLogCollector(action);
 
         return builder;
     }
@@ -81,10 +92,12 @@ public static class WebApplicationBuilderExtensions
     /// 仅装配一般日志 RabbitMQ 通道消费者
     /// </summary>
     /// <param name="builder">构建器</param>
+    /// <param name="action">选项配置器</param>
     /// <param name="instances">消费者最大数</param>
     /// <returns>构建器</returns>
     public static WebApplicationBuilder AddGeneralLogRabbitMQOnlyConsumer<TGeneralLogConsumer>(
         this WebApplicationBuilder builder,
+        Action<DateRollingUtf8FileRecorderOptions> action = null,
         int instances = 1
     ) where TGeneralLogConsumer : BaseGeneralLogConsumer
     {
@@ -95,15 +108,18 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddGeneralLogRabbitMQOnlyConsumer)}");
 
-        var transmissionConfigValue = GeneralLogTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+        var transmissionConfigValue = GeneralLogTransceiverConfigureAssist.GetUseTransmission(builder.Configuration);
 
         StartupConfigMessageAssist.AddConfig(
             transmissionConfigValue.ToArrowDescription()
         );
 
         builder.Services.AddGeneralLogTransceiverConfigureAssist(builder.Configuration);
+
         builder.Services.AddGeneralLogRabbitMQCore(builder.Configuration);
         builder.Services.AddGeneralLogRabbitMQConsumer<TGeneralLogConsumer>(builder.Configuration, instances);
+
+        builder.Services.AddGeneralLogCollector(action);
 
         return builder;
     }

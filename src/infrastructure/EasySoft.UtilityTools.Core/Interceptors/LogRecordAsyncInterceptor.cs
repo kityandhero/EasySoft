@@ -4,7 +4,7 @@ using EasySoft.UtilityTools.Standard.Attributes;
 namespace EasySoft.UtilityTools.Core.Interceptors;
 
 /// <summary>
-///     日志记录拦截器
+/// 日志记录拦截器
 /// </summary>
 public sealed class LogRecordAsyncInterceptor : IAsyncInterceptor
 {
@@ -20,7 +20,7 @@ public sealed class LogRecordAsyncInterceptor : IAsyncInterceptor
     }
 
     /// <summary>
-    ///     同步拦截器
+    /// 同步拦截器
     /// </summary>
     /// <param name="invocation"></param>
     /// <exception cref="NotImplementedException"></exception>
@@ -30,7 +30,7 @@ public sealed class LogRecordAsyncInterceptor : IAsyncInterceptor
     }
 
     /// <summary>
-    ///     异步拦截器 无返回值
+    /// 异步拦截器 无返回值
     /// </summary>
     /// <param name="invocation"></param>
     /// <exception cref="NotImplementedException"></exception>
@@ -40,7 +40,7 @@ public sealed class LogRecordAsyncInterceptor : IAsyncInterceptor
     }
 
     /// <summary>
-    ///     异步拦截器 有返回值
+    /// 异步拦截器 有返回值
     /// </summary>
     /// <param name="invocation"></param>
     /// <typeparam name="TResult"></typeparam>
@@ -51,7 +51,7 @@ public sealed class LogRecordAsyncInterceptor : IAsyncInterceptor
     }
 
     /// <summary>
-    ///     异步拦截器无事务处理-无返回值
+    /// 异步拦截器无事务处理-无返回值
     /// </summary>
     /// <param name="invocation"></param>
     /// <returns></returns>
@@ -63,7 +63,7 @@ public sealed class LogRecordAsyncInterceptor : IAsyncInterceptor
         {
             _loggerFactory
                 .CreateLogger<LogRecordAsyncInterceptor>()
-                .LogAdvanceExecute($"{invocation.TargetType.Name}.{invocation.Method.Name}");
+                .LogAdvanceExecute($"{invocation.TargetType?.Name}.{invocation.Method.Name}");
         }
 
         invocation.Proceed();
@@ -74,7 +74,7 @@ public sealed class LogRecordAsyncInterceptor : IAsyncInterceptor
     }
 
     /// <summary>
-    ///     异步拦截器无事务处理-有返回值
+    /// 异步拦截器无事务处理-有返回值
     /// </summary>
     /// <typeparam name="TResult"></typeparam>
     /// <param name="invocation"></param>

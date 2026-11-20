@@ -646,4 +646,54 @@ public static class CollectionExtensions
     }
 
     #endregion
+
+    #region RemoveAdjacentDuplicates 移除相邻重复项，只保留连续相同的第一个
+
+    /// <summary>
+    /// 移除相邻重复项，使用自定义相等判断
+    /// </summary>
+    /// <typeparam name="T">元素类型</typeparam>
+    /// <param name="source">源集合</param>
+    /// <param name="predicate">对比：当前元素 vs 上一个元素，返回true代表重复</param>
+    /// <returns>去重后的列表</returns>
+    public static ICollection<T> RemoveAdjacentDuplicates<T>(
+        this ICollection<T> source,
+        Func<T, T, bool> predicate
+    )
+    {
+        if (source == null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
+
+        if (predicate == null)
+        {
+            throw new ArgumentNullException(nameof(predicate));
+        }
+
+        if (source.Count == 0)
+        {
+            return new List<T>();
+        }
+
+        using var enumerator = source.GetEnumerator();
+
+        enumerator.MoveNext();
+
+        var result = new List<T> { enumerator.Current };
+
+        while (enumerator.MoveNext())
+        {
+            var last = result[^1];
+            var curr = enumerator.Current;
+            if (!predicate(curr, last))
+            {
+                result.Add(curr);
+            }
+        }
+
+        return result;
+    }
+
+    #endregion
 }
