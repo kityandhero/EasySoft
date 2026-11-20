@@ -32,17 +32,20 @@ public class ChannelCheckConsumer : BaseChannelCheckConsumer
     }
 
     /// <inheritdoc />
-    public override async Task OnHandle(IChannelCheckMessage message, CancellationToken cancellationToken)
+    public override async Task OnHandle(
+        IChannelCheckTransitiveMessage transitiveMessage,
+        CancellationToken cancellationToken
+    )
     {
         if (_environment.IsDevelopment())
         {
             _logger.LogAdvanceExecute($"{GetType().Name}.{nameof(OnHandle)}");
 
             _logger.LogAdvancePrompt(
-                $"Save ChannelCheckMessage -> {message.BuildInfo()}."
+                $"Save ChannelCheckTransitiveMessage -> {transitiveMessage.BuildInfo()}."
             );
         }
 
-        await _appSecurityService.TryCreateAsync(message.Channel);
+        await _appSecurityService.TryCreateAsync(transitiveMessage.Channel);
     }
 }

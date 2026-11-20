@@ -1,10 +1,9 @@
-﻿using EasySoft.Core.ChannelCheckTransceiver.Entities.Interfaces;
-using EasySoft.UtilityTools.Standard.Extensions;
+﻿using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.ChannelCheckTransceiver.Entities.implements;
 
 /// <inheritdoc />
-public class ChannelCheckMessage : IChannelCheckMessage
+public class ChannelCheckTransitiveMessage : IChannelCheckTransitiveMessage
 {
     /// <inheritdoc />
     public string Channel { get; set; } = UtilityTools.Standard.Models.Channel.Unknown.ToValue();

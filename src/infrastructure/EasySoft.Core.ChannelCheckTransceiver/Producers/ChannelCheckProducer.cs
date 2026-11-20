@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.ChannelCheckTransceiver.Assists;
-using EasySoft.Core.ChannelCheckTransceiver.Entities.implements;
 using EasySoft.Core.Messaging.Abstractions;
 using EasySoft.UtilityTools.Standard.Producers;
 
@@ -33,14 +32,10 @@ public class ChannelCheckProducer : IChannelCheckProducer
 
     /// <inheritdoc />
     public Task SendAsync(
+        IChannelCheckTransitiveMessage channelCheckTransitiveMessage,
         CancellationToken cancellationToken = default
     )
     {
-        var entity = new ChannelCheckMessage
-        {
-            Channel = _applicationChannel.GetChannel().ToValue()
-        };
-
-        return _bus.Publish(entity, cancellationToken);
+        return _bus.Publish(channelCheckTransitiveMessage, cancellationToken);
     }
 }

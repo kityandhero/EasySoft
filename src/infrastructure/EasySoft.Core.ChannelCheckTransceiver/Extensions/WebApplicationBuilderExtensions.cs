@@ -1,6 +1,8 @@
-﻿using EasySoft.Core.ChannelCheckTransceiver.Assists;
+﻿using EasySoft.Core.AdvanceFileRecord;
+using EasySoft.Core.ChannelCheckTransceiver.Assists;
 using EasySoft.Core.ChannelCheckTransceiver.Consumers;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Standard.Exceptions;
 
 namespace EasySoft.Core.ChannelCheckTransceiver.Extensions;
 
@@ -22,9 +24,11 @@ public static class WebApplicationBuilderExtensions
     /// 同时发送和消费，使用场景较低，单端消费, 不应和单发送器和单消费器同时装配
     /// </remarks>
     /// <param name="builder">构建器</param>
+    /// <param name="action">选项配置器</param>
     /// <returns>构建器</returns>
     public static WebApplicationBuilder AddChannelCheckRabbitMQTransceiver<TChannelCheckConsumer>(
-        this WebApplicationBuilder builder
+        this WebApplicationBuilder builder,
+        Action<DateRollingUtf8FileRecorderOptions> action = null
     ) where TChannelCheckConsumer : BaseChannelCheckConsumer
     {
         if (builder.HasRegistered(IdentifierAddChannelCheckRabbitMQTransceiver))
@@ -34,16 +38,28 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddChannelCheckRabbitMQTransceiver)}");
 
-        var transmissionConfigValue = ChannelCheckTransceiverConfigureAssist.GetTransmission(builder.Configuration);
-
-        StartupConfigMessageAssist.AddConfig(
-            transmissionConfigValue.ToArrowDescription()
+        var useTransmissionConfigValue = ChannelCheckTransceiverConfigureAssist.GetUseTransmission(
+            builder.Configuration
         );
 
+        StartupConfigMessageAssist.AddConfig(
+            useTransmissionConfigValue.ToArrowDescription()
+        );
+
+        if (!useTransmissionConfigValue.Value)
+        {
+            throw new ConfigErrorException(
+                useTransmissionConfigValue.ToErrorDescription("开启消费者需要设置为true")
+            );
+        }
+
         builder.Services.AddChannelCheckTransceiverConfigureAssist(builder.Configuration);
+
         builder.Services.AddChannelCheckRabbitMQCore(builder.Configuration);
         builder.Services.AddChannelCheckRabbitMQProducer(builder.Configuration);
         builder.Services.AddChannelCheckRabbitMQConsumer<TChannelCheckConsumer>(builder.Configuration, 1);
+
+        builder.Services.AddChannelCheckCollector(action);
 
         return builder;
     }
@@ -52,9 +68,11 @@ public static class WebApplicationBuilderExtensions
     /// 仅装配一般日志 RabbitMQ 通道发送者
     /// </summary>
     /// <param name="builder">构建器</param>
+    /// <param name="action">选项配置器</param>
     /// <returns>构建器</returns>
     public static WebApplicationBuilder AddChannelCheckRabbitMQOnlyProducer(
-        this WebApplicationBuilder builder
+        this WebApplicationBuilder builder,
+        Action<DateRollingUtf8FileRecorderOptions> action = null
     )
     {
         if (builder.HasRegistered(IdentifierAddChannelCheckRabbitMQOnlyProducer))
@@ -64,15 +82,23 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddChannelCheckRabbitMQOnlyProducer)}");
 
-        var transmissionConfigValue = ChannelCheckTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+        var useTransmissionConfigValue = ChannelCheckTransceiverConfigureAssist.GetUseTransmission(
+            builder.Configuration
+        );
 
         StartupConfigMessageAssist.AddConfig(
-            transmissionConfigValue.ToArrowDescription()
+            useTransmissionConfigValue.ToArrowDescription()
         );
 
         builder.Services.AddChannelCheckTransceiverConfigureAssist(builder.Configuration);
-        builder.Services.AddChannelCheckRabbitMQCore(builder.Configuration);
-        builder.Services.AddChannelCheckRabbitMQProducer(builder.Configuration);
+
+        if (useTransmissionConfigValue.Value)
+        {
+            builder.Services.AddChannelCheckRabbitMQCore(builder.Configuration);
+            builder.Services.AddChannelCheckRabbitMQProducer(builder.Configuration);
+        }
+
+        builder.Services.AddChannelCheckCollector(action);
 
         return builder;
     }
@@ -81,10 +107,12 @@ public static class WebApplicationBuilderExtensions
     /// 仅装配一般日志 RabbitMQ 通道消费者
     /// </summary>
     /// <param name="builder">构建器</param>
+    /// <param name="action">选项配置器</param>
     /// <param name="instances">消费者最大数</param>
     /// <returns>构建器</returns>
     public static WebApplicationBuilder AddChannelCheckRabbitMQOnlyConsumer<TChannelCheckConsumer>(
         this WebApplicationBuilder builder,
+        Action<DateRollingUtf8FileRecorderOptions> action = null,
         int instances = 1
     ) where TChannelCheckConsumer : BaseChannelCheckConsumer
     {
@@ -95,15 +123,27 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddChannelCheckRabbitMQOnlyConsumer)}");
 
-        var transmissionConfigValue = ChannelCheckTransceiverConfigureAssist.GetTransmission(builder.Configuration);
-
-        StartupConfigMessageAssist.AddConfig(
-            transmissionConfigValue.ToArrowDescription()
+        var useTransmissionConfigValue = ChannelCheckTransceiverConfigureAssist.GetUseTransmission(
+            builder.Configuration
         );
 
+        StartupConfigMessageAssist.AddConfig(
+            useTransmissionConfigValue.ToArrowDescription()
+        );
+
+        if (!useTransmissionConfigValue.Value)
+        {
+            throw new ConfigErrorException(
+                useTransmissionConfigValue.ToErrorDescription("开启消费者需要设置为true")
+            );
+        }
+
         builder.Services.AddChannelCheckTransceiverConfigureAssist(builder.Configuration);
+
         builder.Services.AddChannelCheckRabbitMQCore(builder.Configuration);
         builder.Services.AddChannelCheckRabbitMQConsumer<TChannelCheckConsumer>(builder.Configuration, instances);
+
+        builder.Services.AddChannelCheckCollector(action);
 
         return builder;
     }

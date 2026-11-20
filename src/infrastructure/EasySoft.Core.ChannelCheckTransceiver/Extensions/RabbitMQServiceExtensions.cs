@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.ChannelCheckTransceiver.Assists;
 using EasySoft.Core.ChannelCheckTransceiver.Consumers;
-using EasySoft.Core.ChannelCheckTransceiver.Entities.Interfaces;
 using EasySoft.Core.ChannelCheckTransceiver.Producers;
 using EasySoft.Core.Messaging.SlimMessageBus.Extensions;
 using EasySoft.UtilityTools.Standard.Assists;
@@ -79,7 +78,7 @@ internal static class RabbitMQServiceExtensions
                     ChannelCheckTransceiverConfigureAssist.ChannelCheckMessageTransceiver,
                     child =>
                     {
-                        child.Produce<IChannelCheckMessage>(x => x
+                        child.Produce<IChannelCheckTransitiveMessage>(x => x
                             .Exchange(GetExchange(configuration), ExchangeType.Direct)
                             .RoutingKeyProvider((_, _) => GetRoutingKey(configuration))
                         );
@@ -112,7 +111,7 @@ internal static class RabbitMQServiceExtensions
                     ChannelCheckTransceiverConfigureAssist.ChannelCheckMessageTransceiver,
                     child =>
                     {
-                        child.Consume<IChannelCheckMessage>(x =>
+                        child.Consume<IChannelCheckTransitiveMessage>(x =>
                             {
                                 x.Queue(GetQueue(configuration))
                                     .ExchangeBinding(GetExchange(configuration), GetRoutingKey(configuration))

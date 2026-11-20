@@ -263,7 +263,7 @@ public class InfrastructureConfigureAssist
     #region GetUseChannelCheckTransceiver
 
     /// <summary>
-    /// 是否使用通道收集
+    /// 是否使用通道检测收集
     /// </summary>
     /// <param name="configuration">配置集</param>
     /// <exception cref="ConfigErrorException">配置异常</exception>
@@ -297,7 +297,7 @@ public class InfrastructureConfigureAssist
     }
 
     /// <summary>
-    /// 是否使用通道收集
+    /// 是否使用通道检测收集
     /// </summary>
     /// <exception cref="ConfigErrorException">配置异常</exception>
     public ConfigValue<bool> GetUseChannelCheckTransceiver()

@@ -1,9 +1,9 @@
-﻿namespace EasySoft.Core.ChannelCheckTransceiver.Entities.Interfaces;
+﻿namespace EasySoft.UtilityTools.Standard.Interfaces;
 
 /// <summary>
 /// channel check exchange
 /// </summary>
-public interface IChannelCheckMessage
+public interface IChannelCheckTransitiveMessage
 {
     /// <summary>
     /// channel

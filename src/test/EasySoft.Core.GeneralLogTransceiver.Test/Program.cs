@@ -1,4 +1,7 @@
 ﻿using EasySoft.Core.AdvanceNLog.ExtensionMethods;
+using EasySoft.Core.ChannelCheckTransceiver.Collectors;
+using EasySoft.Core.ChannelCheckTransceiver.Entities.implements;
+using EasySoft.Core.ChannelCheckTransceiver.Extensions;
 using EasySoft.Core.ErrorLogTransceiver.Collectors;
 using EasySoft.Core.ErrorLogTransceiver.Extensions;
 using EasySoft.Core.GeneralLogTransceiver.Collectors;
@@ -35,13 +38,15 @@ builder.AddErrorLogRabbitMQOnlyProducer();
 
 // builder.AddSqlLogRabbitMQOnlyProducer();
 
+builder.AddChannelCheckRabbitMQOnlyProducer();
+
 #endregion
 
 var app = builder.Build();
 
 #region RabbitMQ Test Producer
 
-var collector = app.Services.GetRequiredService<ErrorLogCollector>();
+var collector = app.Services.GetRequiredService<ChannelCheckCollector>();
 
 app.Lifetime.ApplicationStarted.Register(() =>
     {
@@ -52,9 +57,10 @@ app.Lifetime.ApplicationStarted.Register(() =>
                 for (var i = 0; i < 100; i++)
                 {
                     collector.Publish(
-                        new ErrorLogTransitiveMessage
+                        new ChannelCheckTransitiveMessage
                         {
-                            Message = $"test-error-{i}"
+                            // Message = $"test-error-{i}"
+                            Channel = $"test-channel-{i}"
                         }
                     );
                 }

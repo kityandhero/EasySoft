@@ -226,7 +226,7 @@ public abstract class BaseCollector<T> : IDisposable
     {
         if (!FileSink.Enabled && !TransferSink.Enabled)
         {
-            Logger.LogAdvanceWarning("文件记录和转发功能都未开启，忽略入队");
+            Logger.LogAdvanceWarning($"{typeof(T).Name} 文件记录和转发功能都未开启，忽略入队");
 
             return false;
         }
