@@ -7,6 +7,7 @@ using EasySoft.Core.GeneralLogTransceiver.Test.Consumers;
 using EasySoft.Core.Messaging.SlimMessageBus.Extensions;
 using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.Channels;
+using EasySoft.UtilityTools.Core.Extensions;
 using EasySoft.UtilityTools.Standard.Producers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,9 +45,11 @@ app.Lifetime.ApplicationStarted.Register(() =>
                     generalLogCollector.Publish($"Test-{i}");
                 }
 
-                Console.WriteLine("[Test] 100条已投递，等待3秒让消费落盘...");
+                app.Logger.LogAdvanceInfo("[Test] 100条已投递，等待3秒让消费落盘...");
+
                 await Task.Delay(3000); // 关键：等消费者跑完
-                Console.WriteLine("[Test] 等待结束");
+
+                app.Logger.LogAdvanceInfo("[Test] 等待结束");
             }
         );
     }

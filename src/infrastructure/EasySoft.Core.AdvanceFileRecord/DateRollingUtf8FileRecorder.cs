@@ -16,6 +16,11 @@ namespace EasySoft.Core.AdvanceFileRecord;
 /// 6. 线程安全：内部自带锁，多线程直接调用Write / AppendRaw
 /// 7. 可释放：Dispose时强制刷盘，保证内存残留数据落地
 /// 8. 无日志框架绑定，通用流式记录组件，适合快照、流水、自定义数据存储
+/// 修复点：
+/// - 补充 PeriodicTimer 独立周期巡检，解决【无新写入时超时不刷盘】硬伤
+/// - 删除异步刷盘接口，规避 lock + await 非法竞态
+/// - 刷盘无论成败更新 _lastFlush，防止IO失败后定时器风暴重试
+/// - PeriodicTimer 优雅等待退出，消除Dispose阶段回调逃逸丢数据风险
 /// </remarks>
 public sealed class DateRollingUtf8FileRecorder : IDisposable
 {
@@ -29,26 +34,48 @@ public sealed class DateRollingUtf8FileRecorder : IDisposable
     private readonly ArrayBufferWriter<byte> _batchBuffer;
 
     /// <summary>
-    /// 换行符字节，Write 序列化对象后自动追加
+    /// 换行符字节，Write序列化对象后自动追加
     /// </summary>
     private readonly byte[] _newline = { (byte)'\n' };
 
-    /// <summary>实例锁，保护缓冲区、日期滚动、刷盘、状态变更</summary>
+    /// <summary>
+    /// 实例锁，保护缓冲区、日期滚动、刷盘、状态变更
+    /// </summary>
     private readonly Lock _sync = new();
 
-    /// <summary>当前正在写入的文件所属日期</summary>
+    /// <summary>
+    /// 定时巡检刷盘（.NET6+ PeriodicTimer，优雅退出）
+    /// </summary>
+    private readonly PeriodicTimer _autoFlushTimer;
+
+    /// <summary>
+    /// 定时器后台循环任务
+    /// </summary>
+    private Task _timerLoopTask;
+
+    /// <summary>
+    /// 当前正在写入的文件所属日期
+    /// </summary>
     private DateTime _currentRollDate;
 
-    /// <summary>当前目标文件完整路径</summary>
+    /// <summary>
+    /// 当前目标文件完整路径
+    /// </summary>
     private string _currentFilePath;
 
-    /// <summary>上一次刷盘的UTC时间</summary>
+    /// <summary>
+    /// 上一次刷盘尝试UTC时间（成功/失败都更新，控频防风暴）
+    /// </summary>
     private DateTimeOffset _lastFlush;
 
-    /// <summary>上一次目录维护扫描UTC时间，用于冷却控制</summary>
+    /// <summary>
+    /// 上一次目录维护扫描UTC时间，用于冷却控制
+    /// </summary>
     private DateTimeOffset _lastScanTime = DateTimeOffset.MinValue;
 
-    /// <summary>释放标记</summary>
+    /// <summary>
+    /// 释放标记
+    /// </summary>
     private bool _disposed;
 
     /// <summary>
@@ -71,22 +98,29 @@ public sealed class DateRollingUtf8FileRecorder : IDisposable
         _currentRollDate = GetRollDate();
         _currentFilePath = ResolvePath(_currentRollDate);
         _lastFlush = DateTimeOffset.UtcNow;
+
+        _autoFlushTimer = new PeriodicTimer(_options.FlushInterval);
+        _timerLoopTask = RunTimerLoopAsync();
     }
 
-    /// <summary>获取当前滚动判定日期（UTC/本地时间由配置控制）</summary>
+    /// <summary>
+    /// 获取当前滚动判定日期（UTC/本地时间由配置控制）
+    /// </summary>
     private DateTime GetRollDate()
     {
         return _options.UseLocalTimeForRolling ? DateTime.Now.Date : DateTime.UtcNow.Date;
     }
 
-    /// <summary>根据日期解析路径模板</summary>
+    /// <summary>
+    /// 根据日期解析路径模板
+    /// </summary>
     private string ResolvePath(DateTime date)
     {
         return _options.PathTemplate.Replace("{Date:yyyyMMdd}", date.ToString("yyyyMMdd"));
     }
 
     /// <summary>
-    /// 写入对象
+    /// 写入对象，自动追加换行
     /// </summary>
     /// <typeparam name="T">待序列化数据类型</typeparam>
     /// <param name="payload">数据对象</param>
@@ -99,7 +133,7 @@ public sealed class DateRollingUtf8FileRecorder : IDisposable
     }
 
     /// <summary>
-    /// 写入对象
+    /// 写入文本，自动追加换行
     /// </summary>
     /// <param name="text">文本</param>
     public void Write(string text)
@@ -115,12 +149,12 @@ public sealed class DateRollingUtf8FileRecorder : IDisposable
             if (_options.EnableDiskPressureProtection && IsDiskLow())
             {
                 _metrics.IncrementDiscardByDiskPressure();
+
                 return;
             }
 
             // 日期变更，先刷旧缓冲区，切换新文件
             var rollDate = GetRollDate();
-
             if (rollDate != _currentRollDate)
             {
                 FlushLocked();
@@ -135,7 +169,6 @@ public sealed class DateRollingUtf8FileRecorder : IDisposable
                 using var streamWriter = new StreamWriter(memoryStream, System.Text.Encoding.UTF8);
 
                 streamWriter.Write(text);
-
                 streamWriter.Flush();
                 memoryStream.Flush();
 
@@ -147,7 +180,6 @@ public sealed class DateRollingUtf8FileRecorder : IDisposable
                     FlushLocked();
                 }
 
-                // 拷贝序列化结果 + 换行符到批量缓冲区
                 payloadSpan.CopyTo(_batchBuffer.GetSpan(payloadSpan.Length));
 
                 _batchBuffer.Advance(payloadSpan.Length);
@@ -161,8 +193,6 @@ public sealed class DateRollingUtf8FileRecorder : IDisposable
             catch (Exception exception)
             {
                 _logger.LogAdvanceWarning($"write file error:{exception.Message}");
-
-                // 序列化异常，计数，不中断整体写入流程
                 _metrics.IncrementSerializeFailed();
             }
         }
@@ -231,18 +261,8 @@ public sealed class DateRollingUtf8FileRecorder : IDisposable
     }
 
     /// <summary>
-    /// 强制异步刷盘，IO异步等待
-    /// 场景：异步优雅退出、异步工作流
+    /// 检查磁盘剩余空间是否低于阈值
     /// </summary>
-    public Task FlushNowAsync()
-    {
-        lock (_sync)
-        {
-            return _disposed ? Task.CompletedTask : FlushAsyncLocked();
-        }
-    }
-
-    /// <summary>检查磁盘剩余空间是否低于阈值</summary>
     private bool IsDiskLow()
     {
         try
@@ -265,7 +285,9 @@ public sealed class DateRollingUtf8FileRecorder : IDisposable
         }
     }
 
-    /// <summary>判断是否满足自动刷盘条件（缓冲区满 / 超时）</summary>
+    /// <summary>
+    /// 判断是否满足自动刷盘条件（缓冲区满 / 超时）
+    /// </summary>
     private void TryAutoFlushLocked()
     {
         var now = DateTimeOffset.UtcNow;
@@ -276,11 +298,15 @@ public sealed class DateRollingUtf8FileRecorder : IDisposable
         }
     }
 
-    /// <summary>同步刷盘（持有锁内调用）</summary>
+    /// <summary>
+    /// 同步刷盘（持有锁内调用）
+    /// </summary>
     private void FlushLocked()
     {
         if (_batchBuffer.WrittenCount == 0)
         {
+            _lastFlush = DateTimeOffset.UtcNow;
+
             return;
         }
 
@@ -331,78 +357,6 @@ public sealed class DateRollingUtf8FileRecorder : IDisposable
             }
 
             _batchBuffer.Clear();
-            _lastFlush = DateTimeOffset.UtcNow;
-            _metrics.IncrementFlush();
-
-            // 刷盘成功后触发目录自维护（带冷却，不会每次都扫描）
-            TryRunMaintenance();
-        }
-        catch
-        {
-            _metrics.IncrementFlushFailed();
-
-            throw; // 刷盘IO异常向上抛出，上层可以感知数据落地失败
-        }
-    }
-
-    /// <summary>异步刷盘（持有锁内调用）</summary>
-    private async Task FlushAsyncLocked()
-    {
-        if (_batchBuffer.WrittenCount == 0)
-        {
-            return;
-        }
-
-        var readOnlyMemory = _batchBuffer.WrittenMemory;
-        var dir = Path.GetDirectoryName(_currentFilePath)!;
-
-        Directory.CreateDirectory(dir);
-
-        try
-        {
-            if (_options.UseTempFileRename)
-            {
-                var tmpPath = $"{_currentFilePath}.tmp";
-
-                await using var fileStream = new FileStream(
-                    tmpPath,
-                    FileMode.Append,
-                    FileAccess.Write,
-                    FileShare.ReadWrite,
-                    _options.StreamBufferSize,
-                    FileOptions.Asynchronous | FileOptions.SequentialScan
-                );
-
-                await fileStream.WriteAsync(readOnlyMemory);
-                await fileStream.FlushAsync();
-
-                File.Move(
-                    tmpPath,
-                    _currentFilePath,
-                    true
-                );
-            }
-            else
-            {
-                await using var fileStream = new FileStream(
-                    _currentFilePath,
-                    FileMode.Append,
-                    FileAccess.Write,
-                    FileShare.ReadWrite,
-                    _options.StreamBufferSize,
-                    FileOptions.Asynchronous | FileOptions.SequentialScan
-                );
-
-                await fileStream.WriteAsync(readOnlyMemory);
-                await fileStream.FlushAsync();
-            }
-
-            lock (_sync)
-            {
-                _batchBuffer.Clear();
-                _lastFlush = DateTimeOffset.UtcNow;
-            }
-
             _metrics.IncrementFlush();
 
             TryRunMaintenance();
@@ -410,18 +364,24 @@ public sealed class DateRollingUtf8FileRecorder : IDisposable
         catch
         {
             _metrics.IncrementFlushFailed();
-
             throw;
+        }
+        finally
+        {
+            // 无论成功失败，都更新上次尝试时间，防止定时器风暴重试
+            _lastFlush = DateTimeOffset.UtcNow;
         }
     }
 
     /// <summary>
     /// 目录自维护：淘汰旧文件
-    /// 触发时机：每次刷盘成功；受ScanCooldown冷却控制，不会频繁扫描
-    /// 判定规则：总容量超限 OR 文件存活超时，且保留最少MinKeepFileCount个文件
-    /// 排序：按文件创建时间升序，优先删最早的
-    /// 所有内部异常全部捕获，只打点，绝不阻塞写入链路
     /// </summary>
+    /// <remarks>
+    /// <para>触发时机：每次刷盘成功；受ScanCooldown冷却控制，不会频繁扫描</para>
+    /// <para>判定规则：总容量超限 OR 文件存活超时，且保留最少MinKeepFileCount个文件</para>
+    /// <para>排序：按文件创建时间升序，优先删最早的</para>
+    /// <para>所有内部异常全部捕获，只打点，绝不阻塞写入链路</para>
+    /// </remarks>
     private void TryRunMaintenance()
     {
         // 0 = 关闭自动清理
@@ -471,8 +431,8 @@ public sealed class DateRollingUtf8FileRecorder : IDisposable
                 }
 
                 var overSize = totalSize > _options.MaxDirectorySizeBytes;
-                var overAge = _options.MaxFileAge.HasValue &&
-                              DateTimeOffset.UtcNow - file.CreationTimeUtc > _options.MaxFileAge.Value;
+                var overAge = _options.MaxFileAge.HasValue
+                              && DateTimeOffset.UtcNow - file.CreationTimeUtc > _options.MaxFileAge.Value;
 
                 if (!overSize && !overAge)
                 {
@@ -508,11 +468,51 @@ public sealed class DateRollingUtf8FileRecorder : IDisposable
     }
 
     /// <summary>
-    /// 释放资源：强制刷盘，写入剩余缓冲区数据
+    /// PeriodicTimer后台巡检循环
+    /// </summary>
+    private async Task RunTimerLoopAsync()
+    {
+        try
+        {
+            while (await _autoFlushTimer.WaitForNextTickAsync())
+            {
+                lock (_sync)
+                {
+                    if (_disposed)
+                    {
+                        return;
+                    }
+
+                    TryAutoFlushLocked();
+                }
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // 正常停止
+        }
+        catch (Exception ex)
+        {
+            _logger.LogAdvanceWarning("Auto flush timer loop exception: {Message}", ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// 释放资源：停止定时巡检、强制刷盘，写入剩余缓冲区数据
     /// 必须在父模块生命周期结束时调用
     /// </summary>
     public void Dispose()
     {
+        // 停止定时器，不再产生新tick
+        _autoFlushTimer.Dispose();
+
+        // 等待定时器循环正常退出
+        if (_timerLoopTask != null)
+        {
+            _timerLoopTask.Wait();
+            _timerLoopTask = null;
+        }
+
         lock (_sync)
         {
             if (_disposed)

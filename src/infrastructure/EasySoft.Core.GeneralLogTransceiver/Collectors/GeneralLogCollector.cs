@@ -7,7 +7,7 @@ namespace EasySoft.Core.GeneralLogTransceiver.Collectors;
 /// <summary>
 /// 一般日志收集器
 /// </summary>
-public class GeneralLogCollector : BaseCollector<IGeneralLogTransitiveMessage>
+public class GeneralLogCollector : BaseCollector<GeneralLogTransitiveMessage>
 {
     private readonly IApplicationChannel _applicationChannel;
 
@@ -171,8 +171,6 @@ public class GeneralLogCollector : BaseCollector<IGeneralLogTransitiveMessage>
     {
         try
         {
-            Logger.LogAdvanceInfo(json);
-
             _fileRecorder.Write(json);
 
             return Task.CompletedTask;
