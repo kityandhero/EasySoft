@@ -1,4 +1,6 @@
-﻿using EasySoft.Core.AdvanceNLog.ExtensionMethods;
+﻿using EasySoft.Core.AccessWayTransceiver.Collectors;
+using EasySoft.Core.AccessWayTransceiver.Extensions;
+using EasySoft.Core.AdvanceNLog.ExtensionMethods;
 using EasySoft.Core.ChannelCheckTransceiver.Collectors;
 using EasySoft.Core.ChannelCheckTransceiver.Entities.implements;
 using EasySoft.Core.ChannelCheckTransceiver.Extensions;
@@ -32,6 +34,8 @@ builder.AddAdvanceNLog();
 
 builder.Services.AddKernelMessagingWithJson();
 
+builder.AddAccessWayRabbitMQOnlyProducer();
+
 // builder.AddGeneralLogRabbitMQOnlyProducer();
 
 builder.AddErrorLogRabbitMQOnlyProducer();
@@ -46,7 +50,7 @@ var app = builder.Build();
 
 #region RabbitMQ Test Producer
 
-var collector = app.Services.GetRequiredService<ChannelCheckCollector>();
+var collector = app.Services.GetRequiredService<AccessWayCollector>();
 
 app.Lifetime.ApplicationStarted.Register(() =>
     {
@@ -57,10 +61,10 @@ app.Lifetime.ApplicationStarted.Register(() =>
                 for (var i = 0; i < 100; i++)
                 {
                     collector.Publish(
-                        new ChannelCheckTransitiveMessage
+                        new AccessWayTransitiveMessage
                         {
                             // Message = $"test-error-{i}"
-                            Channel = $"test-channel-{i}"
+                            GuidTag = $"test-access_way-{i}"
                         }
                     );
                 }

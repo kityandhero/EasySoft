@@ -22,6 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.AccessWayTransceiver\EasySoft.Core.AccessWayTransceiver.csproj"/>
         <ProjectReference Include="..\..\infrastructure\EasySoft.Core.AdvanceNLog\EasySoft.Core.AdvanceNLog.csproj"/>
         <ProjectReference Include="..\..\infrastructure\EasySoft.Core.ChannelCheckTransceiver\EasySoft.Core.ChannelCheckTransceiver.csproj"/>
         <ProjectReference Include="..\..\infrastructure\EasySoft.Core.ErrorLogTransceiver\EasySoft.Core.ErrorLogTransceiver.csproj"/>

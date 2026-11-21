@@ -1,6 +1,8 @@
 ﻿using EasySoft.Core.AccessWayTransceiver.Assists;
 using EasySoft.Core.AccessWayTransceiver.Consumers;
+using EasySoft.Core.AdvanceFileRecord;
 using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Standard.Exceptions;
 
 namespace EasySoft.Core.AccessWayTransceiver.Extensions;
 
@@ -22,9 +24,11 @@ public static class WebApplicationBuilderExtensions
     /// 同时发送和消费，使用场景较低，单端消费, 不应和单发送器和单消费器同时装配
     /// </remarks>
     /// <param name="builder">构建器</param>
+    /// <param name="action">选项配置器</param>
     /// <returns>构建器</returns>
     public static WebApplicationBuilder AddAccessWayRabbitMQTransceiver<TAccessWayConsumer>(
-        this WebApplicationBuilder builder
+        this WebApplicationBuilder builder,
+        Action<DateRollingUtf8FileRecorderOptions> action = null
     ) where TAccessWayConsumer : BaseAccessWayConsumer
     {
         if (builder.HasRegistered(IdentifierAddAccessWayRabbitMQTransceiver))
@@ -34,16 +38,28 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddAccessWayRabbitMQTransceiver)}");
 
-        var transmissionConfigValue = AccessWayTransceiverConfigureAssist.GetTransmission(builder.Configuration);
-
-        StartupConfigMessageAssist.AddConfig(
-            transmissionConfigValue.ToArrowDescription()
+        var useTransmissionConfigValue = AccessWayTransceiverConfigureAssist.GetUseTransmission(
+            builder.Configuration
         );
 
+        StartupConfigMessageAssist.AddConfig(
+            useTransmissionConfigValue.ToArrowDescription()
+        );
+
+        if (!useTransmissionConfigValue.Value)
+        {
+            throw new ConfigErrorException(
+                useTransmissionConfigValue.ToErrorDescription("开启消费者需要设置为true")
+            );
+        }
+
         builder.Services.AddAccessWayTransceiverConfigureAssist(builder.Configuration);
+
         builder.Services.AddAccessWayRabbitMQCore(builder.Configuration);
         builder.Services.AddAccessWayRabbitMQProducer(builder.Configuration);
         builder.Services.AddAccessWayRabbitMQConsumer<TAccessWayConsumer>(builder.Configuration, 1);
+
+        builder.Services.AddAccessWayCollector(action);
 
         return builder;
     }
@@ -52,9 +68,11 @@ public static class WebApplicationBuilderExtensions
     /// 仅装配 AccessWay RabbitMQ 通道发送者
     /// </summary>
     /// <param name="builder">构建器</param>
+    /// <param name="action">选项配置器</param>
     /// <returns>构建器</returns>
     public static WebApplicationBuilder AddAccessWayRabbitMQOnlyProducer(
-        this WebApplicationBuilder builder
+        this WebApplicationBuilder builder,
+        Action<DateRollingUtf8FileRecorderOptions> action = null
     )
     {
         if (builder.HasRegistered(IdentifierAddAccessWayRabbitMQOnlyProducer))
@@ -64,15 +82,23 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddAccessWayRabbitMQOnlyProducer)}");
 
-        var transmissionConfigValue = AccessWayTransceiverConfigureAssist.GetTransmission(builder.Configuration);
+        var useTransmissionConfigValue = AccessWayTransceiverConfigureAssist.GetUseTransmission(
+            builder.Configuration
+        );
 
         StartupConfigMessageAssist.AddConfig(
-            transmissionConfigValue.ToArrowDescription()
+            useTransmissionConfigValue.ToArrowDescription()
         );
 
         builder.Services.AddAccessWayTransceiverConfigureAssist(builder.Configuration);
-        builder.Services.AddAccessWayRabbitMQCore(builder.Configuration);
-        builder.Services.AddAccessWayRabbitMQProducer(builder.Configuration);
+
+        if (useTransmissionConfigValue.Value)
+        {
+            builder.Services.AddAccessWayRabbitMQCore(builder.Configuration);
+            builder.Services.AddAccessWayRabbitMQProducer(builder.Configuration);
+        }
+
+        builder.Services.AddAccessWayCollector(action);
 
         return builder;
     }
@@ -81,10 +107,12 @@ public static class WebApplicationBuilderExtensions
     /// 仅装配 AccessWay RabbitMQ 通道消费者
     /// </summary>
     /// <param name="builder">构建器</param>
+    /// <param name="action">选项配置器</param>
     /// <param name="instances">消费者最大数</param>
     /// <returns>构建器</returns>
     public static WebApplicationBuilder AddAccessWayRabbitMQOnlyConsumer<TAccessWayConsumer>(
         this WebApplicationBuilder builder,
+        Action<DateRollingUtf8FileRecorderOptions> action = null,
         int instances = 1
     ) where TAccessWayConsumer : BaseAccessWayConsumer
     {
@@ -95,15 +123,27 @@ public static class WebApplicationBuilderExtensions
 
         StartupDescriptionMessageAssist.AddExecute($"{nameof(AddAccessWayRabbitMQOnlyConsumer)}");
 
-        var transmissionConfigValue = AccessWayTransceiverConfigureAssist.GetTransmission(builder.Configuration);
-
-        StartupConfigMessageAssist.AddConfig(
-            transmissionConfigValue.ToArrowDescription()
+        var useTransmissionConfigValue = AccessWayTransceiverConfigureAssist.GetUseTransmission(
+            builder.Configuration
         );
 
+        StartupConfigMessageAssist.AddConfig(
+            useTransmissionConfigValue.ToArrowDescription()
+        );
+
+        if (!useTransmissionConfigValue.Value)
+        {
+            throw new ConfigErrorException(
+                useTransmissionConfigValue.ToErrorDescription("开启消费者需要设置为true")
+            );
+        }
+
         builder.Services.AddAccessWayTransceiverConfigureAssist(builder.Configuration);
+
         builder.Services.AddAccessWayRabbitMQCore(builder.Configuration);
         builder.Services.AddAccessWayRabbitMQConsumer<TAccessWayConsumer>(builder.Configuration, instances);
+
+        builder.Services.AddAccessWayCollector(action);
 
         return builder;
     }

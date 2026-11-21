@@ -42,9 +42,14 @@ public class AccessWayTransceiverConfigureAssist
     public const string AccessWayMessageQueue = "AccessWayMessageQueue";
 
     /// <summary>
-    /// AccessWayTransmission
+    /// UseTransmissionConfigureNode
     /// </summary>
-    public const string AccessWayTransmission = "Transmission";
+    public const string UseTransmissionConfigureNode = "UseTransmission";
+
+    /// <summary>
+    /// UseLocalRecordConfigureNode
+    /// </summary>
+    public const string UseLocalRecordConfigureNode = "UseLocalRecord";
 
     /// <summary>
     /// AccessWayPrefix
@@ -77,46 +82,96 @@ public class AccessWayTransceiverConfigureAssist
 
     #region Methods
 
-    #region GetTransmission
+    #region GetUseLocalRecord
 
     /// <summary>
-    /// 是否开启传输
+    /// 是否适用本地记录
     /// </summary>
     /// <param name="configuration">配置集</param>
     /// <exception cref="ConfigErrorException">配置异常</exception>
-    public static ConfigValue<bool> GetTransmission(IConfiguration configuration)
+    public static ConfigValue<bool> GetUseLocalRecord(IConfiguration configuration)
     {
         var node = StringAssist.Join(
             [
                 AccessWayTransceiverConfigureNode,
-                AccessWayTransmission
+                UseLocalRecordConfigureNode
             ],
             ":"
         );
 
         var v = configuration[node] ?? "false";
 
+        var configValue = new ConfigValue<bool>
+        {
+            Node = node,
+            Value = v == "true",
+            EffectiveValueDescription = "true|false"
+        };
+
         if (!v.In("true", "false"))
         {
             throw new ConfigErrorException(
-                $"[{node}]配置无效，如需要配置，请设置 true|false"
+                configValue.ToErrorDescription()
             );
         }
 
-        return new ConfigValue<bool>
-        {
-            Node = node,
-            Value = v == "true"
-        };
+        return configValue;
     }
 
     /// <summary>
-    /// 是否开启传输
-    /// </summary>  
+    /// 是否适用本地记录
+    /// </summary>
     /// <exception cref="ConfigErrorException">配置异常</exception>
-    public ConfigValue<bool> GetTransmission()
+    public ConfigValue<bool> GetUseLocalRecord()
     {
-        return GetTransmission(Configuration);
+        return GetUseLocalRecord(Configuration);
+    }
+
+    #endregion
+
+    #region GetUseTransmission
+
+    /// <summary>
+    /// 是否适用传输
+    /// </summary>
+    /// <param name="configuration">配置集</param>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<bool> GetUseTransmission(IConfiguration configuration)
+    {
+        var node = StringAssist.Join(
+            [
+                AccessWayTransceiverConfigureNode,
+                UseTransmissionConfigureNode
+            ],
+            ":"
+        );
+
+        var v = configuration[node] ?? "false";
+
+        var configValue = new ConfigValue<bool>
+        {
+            Node = node,
+            Value = v == "true",
+            EffectiveValueDescription = "true|false"
+        };
+
+        if (!v.In("true", "false"))
+        {
+            throw new ConfigErrorException(
+                configValue.ToErrorDescription()
+            );
+        }
+
+        return configValue;
+    }
+
+    /// <summary>
+    /// 是否适用传输
+    /// </summary>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public ConfigValue<bool> GetUseTransmission()
+    {
+        return GetUseTransmission(Configuration);
     }
 
     #endregion
@@ -130,7 +185,7 @@ public class AccessWayTransceiverConfigureAssist
     /// <exception cref="ConfigErrorException">配置异常</exception>
     public static ConfigValue<string> GetRabbitMQConnectionString(IConfiguration configuration)
     {
-        var transmissionConfigValue = GetTransmission(configuration);
+        var useTransmissionConfigValue = GetUseTransmission(configuration);
 
         var node = StringAssist.Join(
             [
@@ -143,18 +198,21 @@ public class AccessWayTransceiverConfigureAssist
 
         var v = configuration[node] ?? "";
 
-        if (transmissionConfigValue.Value && string.IsNullOrWhiteSpace(v))
+        var configValue = new ConfigValue<string>
+        {
+            Node = node,
+            Value = v,
+            EffectiveValueDescription = "开启情况下，需要配置 RabbitMQ 连接字符串"
+        };
+
+        if (useTransmissionConfigValue.Value && string.IsNullOrWhiteSpace(v))
         {
             throw new ConfigErrorException(
-                $"AccessWay 已经配置为开启，[{node}]配置无效，请设置"
+                configValue.ToErrorDescription()
             );
         }
 
-        return new ConfigValue<string>
-        {
-            Node = node,
-            Value = v
-        };
+        return configValue;
     }
 
     /// <summary>
