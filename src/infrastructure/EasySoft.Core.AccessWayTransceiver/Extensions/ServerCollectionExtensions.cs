@@ -30,7 +30,7 @@ internal static class ServerCollectionExtensions
             {
                 var options = new DateRollingUtf8FileRecorderOptions
                 {
-                    PathTemplate = "records/channel_check_logs/{Date:yyyyMMdd}.log",
+                    PathTemplate = "records/access_way_logs/{Date:yyyyMMdd}.log",
                     MaxDirectorySizeBytes = 10L * 1024 * 1024
                 };
 

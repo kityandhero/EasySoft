@@ -17,20 +17,20 @@ public readonly struct CollectorMetrics
     public SinkMetrics FileSink { get; }
 
     /// <summary>
-    /// MQ消息输出通道指标快照
+    /// Transfer 消息输出通道指标快照
     /// </summary>
-    public SinkMetrics MqSink { get; }
+    public SinkMetrics TransferSink { get; }
 
     /// <summary>
     /// 收集器整体指标快照，聚合主通道与全部二级输出通道指标，用于全局观测、水位告警、流量排查
     /// </summary>
     /// <param name="mainQueued">主通道当前排队近似数量</param>
     /// <param name="fileSink">文件输出通道指标快照</param>
-    /// <param name="mqSink">MQ输出通道指标快照</param>
-    public CollectorMetrics(int mainQueued, SinkMetrics fileSink, SinkMetrics mqSink)
+    /// <param name="transferSink">MQ输出通道指标快照</param>
+    public CollectorMetrics(int mainQueued, SinkMetrics fileSink, SinkMetrics transferSink)
     {
         MainQueued = mainQueued;
         FileSink = fileSink;
-        MqSink = mqSink;
+        TransferSink = transferSink;
     }
 }

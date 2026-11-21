@@ -36,6 +36,8 @@ builder.Services.AddKernelMessagingWithJson();
 
 builder.AddAccessWayRabbitMQOnlyProducer();
 
+// builder.AddAccessWayRabbitMQTransceiver<CustomAccessWayConsumer>();
+
 // builder.AddGeneralLogRabbitMQOnlyProducer();
 
 builder.AddErrorLogRabbitMQOnlyProducer();
@@ -64,10 +66,25 @@ app.Lifetime.ApplicationStarted.Register(() =>
                         new AccessWayTransitiveMessage
                         {
                             // Message = $"test-error-{i}"
+
+                            // Channel = $"test-channel-{i}"
+
                             GuidTag = $"test-access_way-{i}"
                         }
                     );
                 }
+
+                app.Logger.LogAdvanceInfo(
+                    $"MainQueued: {collector.GetMetrics().MainQueued.ToString()}"
+                );
+
+                app.Logger.LogAdvanceInfo(
+                    $"FileSink: {collector.GetMetrics().FileSink.CurrentQueued.ToString()}"
+                );
+
+                app.Logger.LogAdvanceInfo(
+                    $"TransferSink: {collector.GetMetrics().TransferSink.CurrentQueued.ToString()}"
+                );
 
                 app.Logger.LogAdvanceInfo("[Test] 100条已投递，等待3秒让消费落盘...");
 
