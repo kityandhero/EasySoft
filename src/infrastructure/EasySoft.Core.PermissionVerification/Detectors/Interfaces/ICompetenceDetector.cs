@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.PermissionVerification.Detectors.Interfaces;
+﻿using EasySoft.Core.AdvanceTrace.Attributes;
+
+namespace EasySoft.Core.PermissionVerification.Detectors.Interfaces;
 
 /// <summary>
 /// 拥有权限获取器

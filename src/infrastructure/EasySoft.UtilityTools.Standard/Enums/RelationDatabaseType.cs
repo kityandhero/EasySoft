@@ -1,4 +1,4 @@
-﻿namespace EasySoft.Core.Sql.Enums;
+﻿namespace EasySoft.UtilityTools.Standard.Enums;
 
 /// <summary>
 /// 关系型数据库类型

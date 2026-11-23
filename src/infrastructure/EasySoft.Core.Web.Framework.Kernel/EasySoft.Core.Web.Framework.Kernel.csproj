@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\EasySoft.Core.AdvanceTrace\EasySoft.Core.AdvanceTrace.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.CacheImplementation\EasySoft.Core.CacheImplementation.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Data\EasySoft.Core.Data.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.EasyToken\EasySoft.Core.EasyToken.csproj"/>
@@ -28,6 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Common\"/>
         <Folder Include="Lifetimes\"/>
     </ItemGroup>
 

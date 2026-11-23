@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.PermissionServer.Core.Controllers.Common;
+﻿using EasySoft.Core.Web.Framework.Kernel.Controllers;
+
+namespace EasySoft.Core.PermissionServer.Core.Controllers.Common;
 
 /// <summary>
 /// AuthControllerCore

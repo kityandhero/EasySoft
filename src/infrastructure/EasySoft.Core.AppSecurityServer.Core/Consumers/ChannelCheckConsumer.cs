@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
 using EasySoft.Core.ChannelCheckTransceiver.Consumers;
-using EasySoft.Core.ChannelCheckTransceiver.Entities.Interfaces;
+using EasySoft.UtilityTools.Standard.Interfaces;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Consumers;
 

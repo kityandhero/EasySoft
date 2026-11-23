@@ -27,90 +27,91 @@ public static class StartupMessageExtensions
     public static void Print(this ICollection<IStartupMessage> messageCollection)
     {
         messageCollection.ForEach(o =>
-        {
-            var newLine = o.GetExtraNewLie();
-
-            switch (o.Level)
             {
-                case LogLevel.Information:
-                    if (!newLine)
-                    {
-                        LogAssist.Info(o.BuildMessage());
-                    }
-                    else
-                    {
-                        LogAssist.Info(o.GetMessage());
-                        LogAssist.Info(o.GetExtra());
-                    }
+                var newLine = o.GetExtraNewLie();
 
-                    break;
+                switch (o.Level)
+                {
+                    case LogLevel.Information:
+                        if (!newLine)
+                        {
+                            LoggerAssist.Info(o.BuildMessage());
+                        }
+                        else
+                        {
+                            LoggerAssist.Info(o.GetMessage());
+                            LoggerAssist.Info(o.GetExtra());
+                        }
 
-                case LogLevel.Warning:
-                    if (!newLine)
-                    {
-                        LogAssist.Warning(o.BuildMessage());
-                    }
-                    else
-                    {
-                        LogAssist.Warning(o.GetMessage());
-                        LogAssist.Warning(o.GetExtra());
-                    }
+                        break;
 
-                    break;
+                    case LogLevel.Warning:
+                        if (!newLine)
+                        {
+                            LoggerAssist.Warning(o.BuildMessage());
+                        }
+                        else
+                        {
+                            LoggerAssist.Warning(o.GetMessage());
+                            LoggerAssist.Warning(o.GetExtra());
+                        }
 
-                case LogLevel.Error:
-                    if (!newLine)
-                    {
-                        LogAssist.Error(o.BuildMessage());
-                    }
-                    else
-                    {
-                        LogAssist.Error(o.GetMessage());
-                        LogAssist.Error(o.GetExtra());
-                    }
+                        break;
 
-                    break;
+                    case LogLevel.Error:
+                        if (!newLine)
+                        {
+                            LoggerAssist.Error(o.BuildMessage());
+                        }
+                        else
+                        {
+                            LoggerAssist.Error(o.GetMessage());
+                            LoggerAssist.Error(o.GetExtra());
+                        }
 
-                case LogLevel.Critical:
-                    if (!newLine)
-                    {
-                        LogAssist.Critical(o.BuildMessage());
-                    }
-                    else
-                    {
-                        LogAssist.Critical(o.GetMessage());
-                        LogAssist.Critical(o.GetExtra());
-                    }
+                        break;
 
-                    break;
+                    case LogLevel.Critical:
+                        if (!newLine)
+                        {
+                            LoggerAssist.Critical(o.BuildMessage());
+                        }
+                        else
+                        {
+                            LoggerAssist.Critical(o.GetMessage());
+                            LoggerAssist.Critical(o.GetExtra());
+                        }
 
-                case LogLevel.Debug:
-                    if (!newLine)
-                    {
-                        LogAssist.Debug(o.BuildMessage());
-                    }
-                    else
-                    {
-                        LogAssist.Debug(o.GetMessage());
-                        LogAssist.Debug(o.GetExtra());
-                    }
+                        break;
 
-                    break;
+                    case LogLevel.Debug:
+                        if (!newLine)
+                        {
+                            LoggerAssist.Debug(o.BuildMessage());
+                        }
+                        else
+                        {
+                            LoggerAssist.Debug(o.GetMessage());
+                            LoggerAssist.Debug(o.GetExtra());
+                        }
 
-                case LogLevel.Trace:
-                    if (!newLine)
-                    {
-                        LogAssist.Trace(o.BuildMessage());
-                    }
-                    else
-                    {
-                        LogAssist.Trace(o.GetMessage());
-                        LogAssist.Trace(o.GetExtra());
-                    }
+                        break;
 
-                    break;
+                    case LogLevel.Trace:
+                        if (!newLine)
+                        {
+                            LoggerAssist.Trace(o.BuildMessage());
+                        }
+                        else
+                        {
+                            LoggerAssist.Trace(o.GetMessage());
+                            LoggerAssist.Trace(o.GetExtra());
+                        }
+
+                        break;
+                }
             }
-        });
+        );
 
         messageCollection.Clear();
     }

@@ -1,4 +1,6 @@
-﻿namespace EasySoft.UtilityTools.Standard.Models;
+﻿using EasySoft.UtilityTools.Standard.Assists;
+
+namespace EasySoft.UtilityTools.Standard.Models;
 
 /// <summary>
 /// DataPair
@@ -9,7 +11,7 @@ public class ConfigValue<T>
     #region Properties
 
     /// <summary>
-    /// Node
+    /// Node      
     /// </summary>
     public string Node { get; set; } = "";
 
@@ -47,8 +49,12 @@ public class ConfigValue<T>
     {
         var v = Value.ToString();
 
-        return
-            $"[{Node}] 配置无效{(string.IsNullOrWhiteSpace(v) ? "" : $", 有效取值为 {EffectiveValueDescription}")}{(string.IsNullOrWhiteSpace(v) ? "" : $", {description}")}.";
+        return ConfigValueAssist.BuildErrorDescription(
+            Node,
+            v,
+            EffectiveValueDescription,
+            description
+        );
     }
 
     #endregion

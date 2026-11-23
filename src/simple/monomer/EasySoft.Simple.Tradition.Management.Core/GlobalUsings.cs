@@ -4,7 +4,6 @@ global using EasySoft.Core.AuthenticationCore.Attributes;
 global using EasySoft.Core.Infrastructure.Startup;
 global using EasySoft.Core.PermissionVerification.Attributes;
 global using EasySoft.Core.UserLogicCore.Assists;
-global using EasySoft.Core.Web.Framework.Controllers;
 global using EasySoft.Core.Web.Framework.ExtensionMethods;
 global using EasySoft.Simple.Tradition.Data.DataTransferObjects;
 global using EasySoft.Simple.Tradition.Security.Security;

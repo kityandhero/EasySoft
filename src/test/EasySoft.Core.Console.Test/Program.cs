@@ -6,7 +6,7 @@ var serviceProvider = ConsoleServiceProviderAssist.CreateServiceProvider((servic
     {
         Console.WriteLine("-------ConsoleServiceProviderAssist-------");
 
-        serviceCollection.AddCacheCore();
+        serviceCollection.AddCacheCore(configuration);
         serviceCollection.AddAdvanceCacheImplementation();
     }
 );

@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
+using EasySoft.Core.Web.Framework.Kernel.Controllers;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Controllers;
 

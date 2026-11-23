@@ -36,7 +36,7 @@ public static class PermissionAssists
 
         AccessWayModelScanHistory.Add(guidTag, accessWayTransitiveMessage);
 
-        LogAssist.Prompt(
+        LoggerAssist.Prompt(
             $"Permission -> {accessWayTransitiveMessage.BuildInfo()} add to history."
         );
 
@@ -109,7 +109,7 @@ public static class PermissionAssists
 
                         if (EnvironmentAssist.IsDevelopment())
                         {
-                            LogAssist.Prompt(
+                            LoggerAssist.Prompt(
                                 $"Scan Permission: \"{assembly.GetName().Name}\" -> \"{accessWayModel.Name}, {accessWayModel.GuidTag} ({accessWayModel.RelativePath})\"."
                             );
                         }
@@ -130,7 +130,7 @@ public static class PermissionAssists
 
         if (isDevelopment)
         {
-            LogAssist.Prompt(
+            LoggerAssist.Prompt(
                 $"Permission need sync {GetAccessWayModelScanQuery().Count}, start sync."
             );
         }
@@ -139,7 +139,7 @@ public static class PermissionAssists
 
         if (isDevelopment)
         {
-            LogAssist.Prompt("Permission sync complete.");
+            LoggerAssist.Prompt("Permission sync complete.");
         }
     }
 
@@ -160,7 +160,7 @@ public static class PermissionAssists
 
             if (EnvironmentAssist.IsDevelopment())
             {
-                LogAssist.Prompt($"Send {nameof(AccessWayModel)} -> {accessWayModel.BuildInfo()}.");
+                LoggerAssist.Prompt($"Send {nameof(AccessWayModel)} -> {accessWayModel.BuildInfo()}.");
             }
         }
     }

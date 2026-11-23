@@ -1,5 +1,7 @@
 ﻿using Asp.Versioning;
 using EasySoft.Core.AdvanceNLog.ExtensionMethods;
+using EasySoft.Core.AdvanceTrace.Assists;
+using EasySoft.Core.AdvanceTrace.Extensions;
 using EasySoft.Core.AuthenticationCore.Assists;
 using EasySoft.Core.CacheCore.ExtensionMethods;
 using EasySoft.Core.CacheImplementation.ExtensionMethods;
@@ -159,6 +161,107 @@ public static class KernelExtensions
         {
             builder.AddAdvanceJsonWebToken();
         }
+
+        #endregion
+
+        #region AdvanceTrace
+
+        var trackingSourceNameConfigValue = AdvanceTraceConfigureAssist.GetTrackingSourceName(
+            builder.Configuration
+        );
+
+        StartupConfigMessageAssist.AddConfig(
+            trackingSourceNameConfigValue.ToArrowDescription()
+        );
+
+        var openTelemetryProtocolEndpointConfigValue = AdvanceTraceConfigureAssist.GetOpenTelemetryProtocolEndpoint(
+            builder.Configuration
+        );
+
+        StartupConfigMessageAssist.AddConfig(
+            openTelemetryProtocolEndpointConfigValue.ToArrowDescription()
+        );
+
+        var tracingSwitchConfigValue = AdvanceTraceConfigureAssist.GetTracingSwitch(
+            builder.Configuration
+        );
+
+        StartupConfigMessageAssist.AddConfig(
+            tracingSwitchConfigValue.ToArrowDescription()
+        );
+
+        var attributeCacheSwitchConfigValue = AdvanceTraceConfigureAssist.GetAttributeCacheSwitch(
+            builder.Configuration
+        );
+
+        StartupConfigMessageAssist.AddConfig(
+            attributeCacheSwitchConfigValue.ToArrowDescription()
+        );
+
+        var capturePayloadSwitchConfigValue = AdvanceTraceConfigureAssist.GetCapturePayloadSwitch(
+            builder.Configuration
+        );
+
+        StartupConfigMessageAssist.AddConfig(
+            capturePayloadSwitchConfigValue.ToArrowDescription()
+        );
+
+        var sensitiveMaskingSwitchConfigValue = AdvanceTraceConfigureAssist.GetSensitiveMaskingSwitch(
+            builder.Configuration
+        );
+
+        StartupConfigMessageAssist.AddConfig(
+            sensitiveMaskingSwitchConfigValue.ToArrowDescription()
+        );
+
+        var payloadTruncateSwitchConfigValue = AdvanceTraceConfigureAssist.GetPayloadTruncateSwitch(
+            builder.Configuration
+        );
+
+        StartupConfigMessageAssist.AddConfig(
+            payloadTruncateSwitchConfigValue.ToArrowDescription()
+        );
+
+        var recordExceptionTypeTagSwitchConfigValue = AdvanceTraceConfigureAssist.GetRecordExceptionTypeTagSwitch(
+            builder.Configuration
+        );
+
+        StartupConfigMessageAssist.AddConfig(
+            recordExceptionTypeTagSwitchConfigValue.ToArrowDescription()
+        );
+
+        var methodTagSwitchConfigValue = AdvanceTraceConfigureAssist.GetMethodTagSwitch(
+            builder.Configuration
+        );
+
+        StartupConfigMessageAssist.AddConfig(
+            methodTagSwitchConfigValue.ToArrowDescription()
+        );
+
+        var maxPayloadLengthConfigValue = AdvanceTraceConfigureAssist.GetMaxPayloadLength(
+            builder.Configuration
+        );
+
+        StartupConfigMessageAssist.AddConfig(
+            maxPayloadLengthConfigValue.ToArrowDescription()
+        );
+
+        builder.AddAdvanceTrace(
+            tracingSwitchConfigValue.Value,
+            trackingSourceNameConfigValue.Value,
+            openTelemetryProtocolEndpointConfigValue.Value,
+            o =>
+            {
+                o.TracingSwitch = tracingSwitchConfigValue.Value;
+                o.AttributeCacheSwitch = attributeCacheSwitchConfigValue.Value;
+                o.CapturePayloadSwitch = capturePayloadSwitchConfigValue.Value;
+                o.SensitiveMaskingSwitch = sensitiveMaskingSwitchConfigValue.Value;
+                o.PayloadTruncateSwitch = payloadTruncateSwitchConfigValue.Value;
+                o.RecordExceptionTypeTagSwitch = recordExceptionTypeTagSwitchConfigValue.Value;
+                o.MethodTagSwitch = methodTagSwitchConfigValue.Value;
+                o.MaxPayloadLength = maxPayloadLengthConfigValue.Value;
+            }
+        );
 
         #endregion
 

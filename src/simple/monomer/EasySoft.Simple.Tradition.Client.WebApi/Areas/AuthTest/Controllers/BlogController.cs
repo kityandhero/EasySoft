@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Simple.Tradition.Client.WebApi.Areas.AuthTest.Controllers;
+﻿using EasySoft.Core.Web.Framework.Kernel.ExtensionMethods;
+
+namespace EasySoft.Simple.Tradition.Client.WebApi.Areas.AuthTest.Controllers;
 
 /// <summary>
 /// AuthorController

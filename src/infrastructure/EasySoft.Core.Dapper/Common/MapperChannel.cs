@@ -11,7 +11,10 @@ public class MapperChannel : IMapperChannel
 
     private RelationDatabaseType _relationDatabaseType;
 
-    public MapperChannel(string connectionString, RelationDatabaseType relationDatabaseType) : this(
+    public MapperChannel(
+        string connectionString,
+        RelationDatabaseType relationDatabaseType
+    ) : this(
         "",
         connectionString,
         relationDatabaseType
@@ -19,7 +22,11 @@ public class MapperChannel : IMapperChannel
     {
     }
 
-    public MapperChannel(string channel, string connectionString, RelationDatabaseType relationDatabaseType)
+    public MapperChannel(
+        string channel,
+        string connectionString,
+        RelationDatabaseType relationDatabaseType
+    )
     {
         _channel = channel;
         _connectionString = connectionString;
@@ -33,7 +40,10 @@ public class MapperChannel : IMapperChannel
 
     public string GetConnectionString()
     {
-        if (string.IsNullOrWhiteSpace(_connectionString)) throw new Exception("无效的连接字符串");
+        if (string.IsNullOrWhiteSpace(_connectionString))
+        {
+            throw new Exception("无效的连接字符串");
+        }
 
         return _connectionString;
     }

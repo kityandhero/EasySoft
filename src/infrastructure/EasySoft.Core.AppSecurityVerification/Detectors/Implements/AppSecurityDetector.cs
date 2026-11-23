@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.AppSecurityVerification.Clients;
 using EasySoft.Core.AppSecurityVerification.Detectors.Interfaces;
+using EasySoft.Core.ChannelCheckTransceiver.Entities.implements;
 using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.AppSecurityVerification.Detectors.Implements;
@@ -52,7 +53,12 @@ public class AppSecurityDetector : IAppSecurityDetector
             );
         }
 
-        await _channelCheckProducer.SendAsync();
+        await _channelCheckProducer.SendAsync(
+            new ChannelCheckTransitiveMessage
+            {
+                Channel = _applicationChannel.GetChannel().Value
+            }
+        );
     }
 
     /// <inheritdoc />

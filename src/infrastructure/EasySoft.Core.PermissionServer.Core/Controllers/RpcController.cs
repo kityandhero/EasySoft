@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
+using EasySoft.Core.Web.Framework.Kernel.Controllers;
 
 namespace EasySoft.Core.PermissionServer.Core.Controllers;
 

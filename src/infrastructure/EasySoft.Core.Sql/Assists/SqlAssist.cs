@@ -6,6 +6,7 @@ using EasySoft.Core.Sql.Extensions;
 using EasySoft.Core.Sql.Factories;
 using EasySoft.Core.Sql.Interfaces;
 using EasySoft.UtilityTools.Standard.Attributes;
+using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.Exceptions;
 
 namespace EasySoft.Core.Sql.Assists;

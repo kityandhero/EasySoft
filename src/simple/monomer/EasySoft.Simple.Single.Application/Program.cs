@@ -1,3 +1,4 @@
+using EasySoft.Core.Web.Framework.Kernel.Assists;
 using EasySoft.Simple.Single.Application;
 using EasySoft.Simple.Single.Application.Enums;
 using EasySoft.Simple.Single.Application.Hubs;

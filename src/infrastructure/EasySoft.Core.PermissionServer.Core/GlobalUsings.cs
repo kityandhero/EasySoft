@@ -12,7 +12,6 @@ global using EasySoft.Core.Infrastructure.Configures;
 global using EasySoft.Core.Infrastructure.Services;
 global using EasySoft.Core.Infrastructure.Startup;
 global using EasySoft.Core.PermissionVerification.Entities;
-global using EasySoft.Core.Web.Framework.Controllers;
 global using EasySoft.UtilityTools.Core.Extensions;
 global using EasySoft.UtilityTools.Core.Results.Implements;
 global using EasySoft.UtilityTools.Core.Results.Interfaces;

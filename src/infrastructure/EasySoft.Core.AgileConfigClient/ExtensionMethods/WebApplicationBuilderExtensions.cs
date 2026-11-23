@@ -14,55 +14,63 @@ public static class WebApplicationBuilderExtensions
         );
 
         builder.Host.ConfigureHostConfiguration((config) =>
-        {
-            Task.Run(() =>
             {
-                while (!FlagAssist.GetApplicationRunWhetherPerformed()) Thread.Sleep(500);
-
-                try
-                {
-                    StartupDescriptionMessageAssist.AddPrompt(
-                        $"AgileConfig env is \"{AgileConfigAssist.GetAgileConfigEnv()}\", node is \"{AgileConfigAssist.GetAgileConfigNodeCollection().Join(",")}\"."
-                    );
-
-                    var configClient = new ConfigClient(
-                        AgileConfigAssist.GetAgileConfigAppId(),
-                        AgileConfigAssist.GetAgileConfigSecret(),
-                        AgileConfigAssist.GetAgileConfigNodeCollection().Join(","),
-                        AgileConfigAssist.GetAgileConfigEnv(),
-                        LogAssist.GetLogger()
-                    )
+                Task.Run(() =>
                     {
-                        Options =
+                        while (!FlagAssist.GetApplicationRunWhetherPerformed())
                         {
-                            Name = AgileConfigAssist.GetAgileConfigName(),
-                            Tag = AgileConfigAssist.GetAgileConfigTag(),
-                            CacheDirectory = AgileConfigAssist.GetAgileConfigCacheDirectory(),
-                            HttpTimeout = AgileConfigAssist.GetAgileConfigHttpTimeout()
+                            Thread.Sleep(500);
                         }
-                    };
 
-                    if (action != null)
-                        //注册配置项修改事件  
-                        configClient.ConfigChanged += action;
+                        try
+                        {
+                            StartupDescriptionMessageAssist.AddPrompt(
+                                $"AgileConfig env is \"{AgileConfigAssist.GetAgileConfigEnv()}\", node is \"{AgileConfigAssist.GetAgileConfigNodeCollection().Join(",")}\"."
+                            );
 
-                    //注册配置项修改事件    
-                    configClient.ConfigChanged += AgileConfigClientActionAssist.ActionAgileConfigChanged;
+                            var configClient = new ConfigClient(
+                                AgileConfigAssist.GetAgileConfigAppId(),
+                                AgileConfigAssist.GetAgileConfigSecret(),
+                                AgileConfigAssist.GetAgileConfigNodeCollection().Join(","),
+                                AgileConfigAssist.GetAgileConfigEnv(),
+                                LoggerAssist.GetLogger()
+                            )
+                            {
+                                Options =
+                                {
+                                    Name = AgileConfigAssist.GetAgileConfigName(),
+                                    Tag = AgileConfigAssist.GetAgileConfigTag(),
+                                    CacheDirectory = AgileConfigAssist.GetAgileConfigCacheDirectory(),
+                                    HttpTimeout = AgileConfigAssist.GetAgileConfigHttpTimeout()
+                                }
+                            };
 
-                    //使用AddAgileConfig配置一个新的IConfigurationSource
-                    config.AddAgileConfig(configClient);
+                            if (action != null)
 
-                    //找一个变量挂载client实例，以便其他地方可以直接使用实例访问配置
-                    AgileConfigClientAssist.SetConfigClient(configClient);
-                }
-                catch (Exception e)
-                {
-                    LogAssist.Error(e.Message);
+                                //注册配置项修改事件  
+                            {
+                                configClient.ConfigChanged += action;
+                            }
 
-                    Console.WriteLine(e);
-                }
-            });
-        });
+                            //注册配置项修改事件    
+                            configClient.ConfigChanged += AgileConfigClientActionAssist.ActionAgileConfigChanged;
+
+                            //使用AddAgileConfig配置一个新的IConfigurationSource
+                            config.AddAgileConfig(configClient);
+
+                            //找一个变量挂载client实例，以便其他地方可以直接使用实例访问配置
+                            AgileConfigClientAssist.SetConfigClient(configClient);
+                        }
+                        catch (Exception e)
+                        {
+                            LoggerAssist.Error(e.Message);
+
+                            Console.WriteLine(e);
+                        }
+                    }
+                );
+            }
+        );
 
         return builder;
     }

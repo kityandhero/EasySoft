@@ -1,4 +1,9 @@
-﻿namespace EasySoft.Core.Web.Framework.ExtensionMethods;
+﻿using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace EasySoft.Core.Web.Framework.Kernel.ExtensionMethods;
 
 public static class HtmlHelperViewExtensions
 {

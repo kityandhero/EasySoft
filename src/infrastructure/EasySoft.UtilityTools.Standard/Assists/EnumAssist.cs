@@ -14,18 +14,25 @@ public static class EnumAssist
     /// </summary>
     /// <typeparam name="TEnum">枚举类型</typeparam>
     /// <param name="member">成员名或值,范例:Enum1枚举有成员A=0,则传入"A"或"0"获取 Enum1.A</param>
-    public static TEnum? Parse<TEnum>(object member)
+    public static TEnum Parse<TEnum>(object member)
     {
         var value = member.SafeString();
 
         if (string.IsNullOrWhiteSpace(value))
         {
-            if (typeof(TEnum).IsGenericType) return default;
+            if (typeof(TEnum).IsGenericType)
+            {
+                return default;
+            }
 
             throw new ArgumentNullException(nameof(member));
         }
 
-        return (TEnum)Enum.Parse(typeof(TEnum), value, true);
+        return (TEnum)Enum.Parse(
+            typeof(TEnum),
+            value,
+            true
+        );
     }
 
     /// <summary>
@@ -158,7 +165,10 @@ public static class EnumAssist
         {
             if (matchMode == MatchMode.Exclude)
             {
-                if (listFilter.Exists(one => Convert.ToInt32(one) == item)) continue;
+                if (listFilter.Exists(one => Convert.ToInt32(one) == item))
+                {
+                    continue;
+                }
 
                 var name = GetNameByValue(typeof(T), item);
 
@@ -166,21 +176,26 @@ public static class EnumAssist
 
                 var type = r.GetType();
 
-                var descriptionAttribute = type.GetField(name)?.GetCustomAttribute<DescriptionAttribute>(
-                    "",
-                    false,
-                    MemberTypes.Field
-                );
+                var descriptionAttribute = type.GetField(name)
+                    ?.GetCustomAttribute<DescriptionAttribute>(
+                        "",
+                        false,
+                        MemberTypes.Field
+                    );
 
                 var availability = (int)Whether.Yes;
 
-                var disableAttribute = type.GetField(name)?.GetCustomAttribute<DisableAttribute>(
-                    "",
-                    false,
-                    MemberTypes.Field
-                );
+                var disableAttribute = type.GetField(name)
+                    ?.GetCustomAttribute<DisableAttribute>(
+                        "",
+                        false,
+                        MemberTypes.Field
+                    );
 
-                if (disableAttribute != null) availability = (int)Whether.No;
+                if (disableAttribute != null)
+                {
+                    availability = (int)Whether.No;
+                }
 
                 var o = new
                 {
@@ -194,7 +209,10 @@ public static class EnumAssist
 
             if (matchMode == MatchMode.Contain)
             {
-                if (!listFilter.Exists(one => Convert.ToInt32(one) == item)) continue;
+                if (!listFilter.Exists(one => Convert.ToInt32(one) == item))
+                {
+                    continue;
+                }
 
                 var name = GetNameByValue(typeof(T), item);
 
@@ -202,21 +220,26 @@ public static class EnumAssist
 
                 var type = r.GetType();
 
-                var descriptionAttribute = type.GetField(name)?.GetCustomAttribute<DescriptionAttribute>(
-                    "",
-                    false,
-                    MemberTypes.Field
-                );
+                var descriptionAttribute = type.GetField(name)
+                    ?.GetCustomAttribute<DescriptionAttribute>(
+                        "",
+                        false,
+                        MemberTypes.Field
+                    );
 
                 var availability = (int)Whether.Yes;
 
-                var disableAttribute = type.GetField(name)?.GetCustomAttribute<DisableAttribute>(
-                    "",
-                    false,
-                    MemberTypes.Field
-                );
+                var disableAttribute = type.GetField(name)
+                    ?.GetCustomAttribute<DisableAttribute>(
+                        "",
+                        false,
+                        MemberTypes.Field
+                    );
 
-                if (disableAttribute != null) availability = (int)Whether.No;
+                if (disableAttribute != null)
+                {
+                    availability = (int)Whether.No;
+                }
 
                 var o = new
                 {
@@ -259,7 +282,10 @@ public static class EnumAssist
 
         foreach (var oneName in Enum.GetNames(enumType))
         {
-            if (!oneName.Equals(name, comparison)) continue;
+            if (!oneName.Equals(name, comparison))
+            {
+                continue;
+            }
 
             result = true;
 
@@ -277,7 +303,11 @@ public static class EnumAssist
     /// <returns></returns>
     public static bool ExistName<T>(string name, StringComparison comparison = StringComparison.Ordinal)
     {
-        return ExistName(typeof(T), name, comparison);
+        return ExistName(
+            typeof(T),
+            name,
+            comparison
+        );
     }
 
     /// <summary>
@@ -292,7 +322,10 @@ public static class EnumAssist
 
         foreach (int oneValue in Enum.GetValues(enumType))
         {
-            if (oneValue != value) continue;
+            if (oneValue != value)
+            {
+                continue;
+            }
 
             result = true;
 
@@ -321,7 +354,10 @@ public static class EnumAssist
     {
         var result = new List<string>();
 
-        foreach (var oneName in Enum.GetNames(enumType)) result.Add(oneName);
+        foreach (var oneName in Enum.GetNames(enumType))
+        {
+            result.Add(oneName);
+        }
 
         return result;
     }
@@ -350,20 +386,29 @@ public static class EnumAssist
         {
             positionValue += 1;
 
-            if (oneValue != enumValue) continue;
+            if (oneValue != enumValue)
+            {
+                continue;
+            }
 
             valueExist = true;
             break;
         }
 
-        if (!valueExist) return "";
+        if (!valueExist)
+        {
+            return "";
+        }
 
         var positionName = 0;
         foreach (var oneName in Enum.GetNames(enumType))
         {
             positionName += 1;
 
-            if (positionName != positionValue) continue;
+            if (positionName != positionValue)
+            {
+                continue;
+            }
 
             result = oneName;
 
@@ -409,7 +454,10 @@ public static class EnumAssist
             }
         }
 
-        if (!valueExist) return null;
+        if (!valueExist)
+        {
+            return null;
+        }
 
         var positionValue = 0;
 
@@ -417,7 +465,10 @@ public static class EnumAssist
         {
             positionValue += 1;
 
-            if (positionName != positionValue) continue;
+            if (positionName != positionValue)
+            {
+                continue;
+            }
 
             result = oneValue;
 
@@ -435,7 +486,11 @@ public static class EnumAssist
     /// <returns></returns>
     public static int? GetValueByName<T>(string enumName, StringComparison comparison = StringComparison.Ordinal)
     {
-        return GetValueByName(typeof(T), enumName, comparison);
+        return GetValueByName(
+            typeof(T),
+            enumName,
+            comparison
+        );
     }
 
     /// <summary>
@@ -455,20 +510,33 @@ public static class EnumAssist
         var valueList = GetIntValues(enumType);
         var ignoreValueList = new List<int>();
 
-        if (ignoreList != null) ignoreValueList = ignoreList.Cast<int>().OrderBy(x => x).ToList();
+        if (ignoreList != null)
+        {
+            ignoreValueList = ignoreList.Cast<int>().OrderBy(x => x).ToList();
+        }
 
         foreach (var v in valueList)
         {
             if (ignoreList != null)
+            {
                 if (ignoreValueList.Contains(v))
+                {
                     continue;
+                }
+            }
 
             var h = new Hashtable();
             var s = Enum.GetName(enumType, v);
 
-            if (string.IsNullOrWhiteSpace(s)) throw new Exception("enumType is not enum");
+            if (string.IsNullOrWhiteSpace(s))
+            {
+                throw new Exception("enumType is not enum");
+            }
 
-            if (Enum.ToObject(enumType, v) is not Enum enumItem) throw new Exception("data is not enum");
+            if (Enum.ToObject(enumType, v) is not Enum enumItem)
+            {
+                throw new Exception("data is not enum");
+            }
 
             var descriptionAttribute = enumItem.GetCustomAttribute<DescriptionAttribute>();
 
@@ -522,11 +590,18 @@ public static class EnumAssist
         IEnumerable<object>? ignoreList = null
     )
     {
-        var json = ConvertEnumToJson(enumType, changeKeyToLowerFirst, ignoreList ?? new List<object>());
+        var json = ConvertEnumToJson(
+            enumType,
+            changeKeyToLowerFirst,
+            ignoreList ?? new List<object>()
+        );
 
         var d = JsonConvert.DeserializeObject(json);
 
-        if (d == null) throw new Exception("can not convert enum to object");
+        if (d == null)
+        {
+            throw new Exception("can not convert enum to object");
+        }
 
         return d;
     }

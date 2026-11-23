@@ -36,7 +36,11 @@ public static class StringExtensions
         StringComparison comparison = StringComparison.Ordinal
     )
     {
-        return CollectionAssist.In(source, list, comparison);
+        return CollectionAssist.In(
+            source,
+            list,
+            comparison
+        );
     }
 
     #endregion In
@@ -139,14 +143,19 @@ public static class StringExtensions
         StringCutDirection direction = StringCutDirection.FromLeft
     )
     {
-        if (source.IsNullOrEmpty()) return source;
+        if (source.IsNullOrEmpty())
+        {
+            return source;
+        }
 
         var fullLength = source.Length;
 
         if (direction == StringCutDirection.FromRight)
+        {
             return length >= fullLength
                 ? source
                 : string.Concat(showEllipsis, source.AsSpan(fullLength - length, length).ToString());
+        }
 
         return length >= fullLength ? source : string.Concat(source.AsSpan(0, length).ToString(), showEllipsis);
     }
@@ -187,7 +196,10 @@ public static class StringExtensions
     /// <exception cref="Exception"></exception>
     public static T GetEnumByKeyValueDefinitionTag<T>(this string tag) where T : struct
     {
-        if (string.IsNullOrWhiteSpace(tag)) throw new Exception("无效的Tag值");
+        if (string.IsNullOrWhiteSpace(tag))
+        {
+            throw new Exception("无效的Tag值");
+        }
 
         var list = EnumAssist.GetIntValues<T>();
 
@@ -197,13 +209,19 @@ public static class StringExtensions
 
             Enum.TryParse(name, out T t);
 
-            if (string.IsNullOrWhiteSpace(name)) continue;
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                continue;
+            }
 
             var type = t.GetType();
 
             var fieldInfo = type.GetField(name);
 
-            if (fieldInfo == null) continue;
+            if (fieldInfo == null)
+            {
+                continue;
+            }
 
             var keyValueDefinitionAttribute = fieldInfo.GetCustomAttribute<KeyValueDefinitionAttribute>(
                 "",
@@ -211,7 +229,10 @@ public static class StringExtensions
                 MemberTypes.Field
             );
 
-            if (keyValueDefinitionAttribute != null && keyValueDefinitionAttribute.Tag == tag) return t;
+            if (keyValueDefinitionAttribute != null && keyValueDefinitionAttribute.Tag == tag)
+            {
+                return t;
+            }
         }
 
         throw new Exception("未找到匹配项");
@@ -235,9 +256,15 @@ public static class StringExtensions
     /// <returns></returns>
     public static string ToLowerFirst(this string source)
     {
-        if (string.IsNullOrEmpty(source)) return source;
+        if (string.IsNullOrEmpty(source))
+        {
+            return source;
+        }
 
-        if (string.IsNullOrEmpty(source.TrimStart())) return source;
+        if (string.IsNullOrEmpty(source.TrimStart()))
+        {
+            return source;
+        }
 
         var firstChar = source.GetByIndex(0).ToLower();
 
@@ -251,7 +278,10 @@ public static class StringExtensions
     /// <returns></returns>
     public static int ToInt(this string source)
     {
-        if (source.IsInt(out var value)) return value;
+        if (source.IsInt(out var value))
+        {
+            return value;
+        }
 
         throw new Exception("该字符串不能转换为int类型");
     }
@@ -262,7 +292,10 @@ public static class StringExtensions
     /// <returns></returns>
     public static long ToInt32(this string source)
     {
-        if (source.IsInt(out var value)) return value;
+        if (source.IsInt(out var value))
+        {
+            return value;
+        }
 
         throw new Exception("该字符串不能转换为Int32类型");
     }
@@ -273,7 +306,10 @@ public static class StringExtensions
     /// <returns></returns>
     public static long ToLong(this string source)
     {
-        if (source.IsLong(out var value)) return value;
+        if (source.IsLong(out var value))
+        {
+            return value;
+        }
 
         throw new Exception("该字符串不能转换为long类型");
     }
@@ -284,7 +320,10 @@ public static class StringExtensions
     /// <returns></returns>
     public static long ToInt64(this string source)
     {
-        if (source.IsLong(out var value)) return value;
+        if (source.IsLong(out var value))
+        {
+            return value;
+        }
 
         throw new Exception("该字符串不能转换为Int64类型");
     }
@@ -298,7 +337,10 @@ public static class StringExtensions
     /// <returns></returns>
     public static DateTime ToDateTime(this string source)
     {
-        if (source.IsDateTime()) return Convert.ToDateTime(source);
+        if (source.IsDateTime())
+        {
+            return Convert.ToDateTime(source);
+        }
 
         throw new Exception("该字符串不能转换为DateTime类型");
     }
@@ -359,7 +401,10 @@ public static class StringExtensions
 
             foreach (string alreadyKey in nv.Keys)
             {
-                if (alreadyKey != key) continue;
+                if (alreadyKey != key)
+                {
+                    continue;
+                }
 
                 nv[alreadyKey] = urlParams[key];
                 existKey = true;
@@ -367,7 +412,10 @@ public static class StringExtensions
                 break;
             }
 
-            if (!existKey) nv[key] = urlParams[key];
+            if (!existKey)
+            {
+                nv[key] = urlParams[key];
+            }
         }
 
         var result = baseUrl + "?";
@@ -456,18 +504,23 @@ public static class StringExtensions
 
         foreach (var p in paramNames)
         foreach (string alreadyKey in nv.Keys)
+        {
             if (alreadyKey == p)
             {
                 nv.Remove(alreadyKey);
                 break;
             }
+        }
 
         var result = baseUrl + "?";
         var builder = new StringBuilder();
 
         builder.Append(result);
 
-        foreach (string k in nv.Keys) builder.Append(k + "=" + WebUtility.UrlEncode(nv[k]) + "&");
+        foreach (string k in nv.Keys)
+        {
+            builder.Append(k + "=" + WebUtility.UrlEncode(nv[k]) + "&");
+        }
 
         result = builder.ToString();
 
@@ -484,7 +537,7 @@ public static class StringExtensions
     /// <returns></returns>
     public static string RemoveUrlParam(this string url, string paramName)
     {
-        var paramList = new List<string>() { paramName };
+        var paramList = new List<string> { paramName };
 
         return RemoveUrlParam(url, paramList);
     }
@@ -525,14 +578,20 @@ public static class StringExtensions
                 {
                     var authority = u.Authority;
                     var ss = u.Authority.Split('.');
-                    if (ss.Length == 2) authority = "www." + authority;
+                    if (ss.Length == 2)
+                    {
+                        authority = "www." + authority;
+                    }
 
                     var index = authority.IndexOf('.', 0);
 
                     domain = authority.Substring(index + 1, authority.Length - index - 1).Replace("comhttp", "com");
                     subDomain = authority.Replace("comhttp", "com");
 
-                    if (ss.Length >= 2) return;
+                    if (ss.Length >= 2)
+                    {
+                        return;
+                    }
 
                     domain = "不明路径";
                     subDomain = "不明路径";
@@ -541,9 +600,13 @@ public static class StringExtensions
             else
             {
                 if (u.IsFile)
+                {
                     subDomain = domain = "客户端本地文件路径";
+                }
                 else
+                {
                     subDomain = domain = "不明路径";
+                }
             }
         }
         catch
@@ -578,13 +641,19 @@ public static class StringExtensions
         bool keyToLowerFirst = true
     )
     {
-        if (url.IsNullOrEmpty()) throw new ArgumentNullException(nameof(url));
+        if (url.IsNullOrEmpty())
+        {
+            throw new ArgumentNullException(nameof(url));
+        }
 
         nvc = new NameValueCollection();
 
         baseUrl = "";
 
-        if (url == "") return;
+        if (url == "")
+        {
+            return;
+        }
 
         var questionMarkIndex = url.IndexOf('?');
 
@@ -596,7 +665,10 @@ public static class StringExtensions
 
         baseUrl = url.Substring(0, questionMarkIndex);
 
-        if (questionMarkIndex == url.Length - 1) return;
+        if (questionMarkIndex == url.Length - 1)
+        {
+            return;
+        }
 
         var ps = url.Substring(questionMarkIndex + 1);
 
@@ -605,7 +677,9 @@ public static class StringExtensions
         var mc = re.Matches(ps);
 
         foreach (Match m in mc)
+        {
             nvc.Add(keyToLowerFirst ? m.Result("$2").ToLowerFirst() : m.Result("$2"), m.Result("$3"));
+        }
     }
 
     #endregion URL
@@ -629,11 +703,17 @@ public static class StringExtensions
     /// <returns></returns>
     public static string GetByIndex(this string source, int index)
     {
-        if (index > source.Length - 1) return "";
+        if (index > source.Length - 1)
+        {
+            return "";
+        }
 
         if (index == 0)
         {
-            if (source.Length == 1) return source;
+            if (source.Length == 1)
+            {
+                return source;
+            }
 
             var strTemp = source.Remove(1);
             return strTemp;
@@ -660,13 +740,27 @@ public static class StringExtensions
     /// <param name="newString">要替换成的字符串</param>
     /// <param name="length">替换的位数</param>
     /// <returns></returns>
-    public static string ReplaceByIndex(this string source, int index, string newString, int length = 1)
+    public static string ReplaceByIndex(
+        this string source,
+        int index,
+        string newString,
+        int length = 1
+    )
     {
-        if (length < 0) throw new Exception("替换长度不能小于0");
+        if (length < 0)
+        {
+            throw new Exception("替换长度不能小于0");
+        }
 
-        if (index + length + 1 > source.Length) length = source.Length - index;
+        if (index + length + 1 > source.Length)
+        {
+            length = source.Length - index;
+        }
 
-        if (index > source.Length - 1) return source;
+        if (index > source.Length - 1)
+        {
+            return source;
+        }
 
         var replaceString = "";
 
@@ -676,7 +770,10 @@ public static class StringExtensions
 
             replaceString = "";
 
-            for (var i = 0; i < length; i++) replaceString += newString;
+            for (var i = 0; i < length; i++)
+            {
+                replaceString += newString;
+            }
 
             return replaceString + strTemp;
         }
@@ -688,7 +785,10 @@ public static class StringExtensions
         }
 
         var strTempFirst = source.Remove(index);
-        for (var i = 0; i < length; i++) replaceString += newString;
+        for (var i = 0; i < length; i++)
+        {
+            replaceString += newString;
+        }
 
         var strTempLast = source.Remove(0, index + length);
         return strTempFirst + replaceString + strTempLast;
@@ -715,12 +815,18 @@ public static class StringExtensions
     /// <param name="delimiter">分隔符</param>
     /// <param name="option">分割配置</param>
     /// <returns></returns>
-    public static List<string> SplitToList(this string input, string delimiter,
-        SplitOption option = SplitOption.None)
+    public static List<string> SplitToList(
+        this string input,
+        string delimiter,
+        SplitOption option = SplitOption.None
+    )
     {
         var result = new List<string>();
 
-        if (input.IsNullOrEmpty()) return result;
+        if (input.IsNullOrEmpty())
+        {
+            return result;
+        }
 
         var array = new Regex(delimiter).Split(input);
 
@@ -729,11 +835,18 @@ public static class StringExtensions
 
             // ReSharper restore LoopCanBeConvertedToQuery
         {
-            if (string.IsNullOrWhiteSpace(s)) continue;
+            if (string.IsNullOrWhiteSpace(s))
+            {
+                continue;
+            }
 
             if (option == SplitOption.FilterSame)
+            {
                 if (result.Contains(s))
+                {
                     continue;
+                }
+            }
 
             result.Add(s);
         }
@@ -750,14 +863,20 @@ public static class StringExtensions
     /// <returns></returns>
     public static string ToBase(this string input, int fromBase, int toBase)
     {
-        if (!input.IsInt()) return "";
+        if (!input.IsInt())
+        {
+            return "";
+        }
 
         try
         {
             var intValue = Convert.ToInt32(input, fromBase); //先转成10进制
             var result = Convert.ToString(intValue, toBase); //再转成目标进制
 
-            if (toBase != 2) return result;
+            if (toBase != 2)
+            {
+                return result;
+            }
 
             var resultLength = result.Length; //获取二进制的长度
 
@@ -814,6 +933,30 @@ public static class StringExtensions
     }
 
     /// <summary>
+    /// 是否为 int 类型
+    /// </summary>
+    /// <param name="source">要检验的变量</param>
+    /// <param name="defaultValue">默认值</param>
+    /// <returns></returns>
+    public static ExecutiveResult<int> TryPraseInt(this string source, int defaultValue)
+    {
+        var whetherInt = VerifyAssist.IsInt(source, out var value);
+
+        if (whetherInt)
+        {
+            return new ExecutiveResult<int>(ReturnCode.Ok)
+            {
+                Data = value
+            };
+        }
+
+        return new ExecutiveResult<int>(ReturnCode.ParamError)
+        {
+            Data = defaultValue
+        };
+    }
+
+    /// <summary>
     /// 检验是否为null或空
     /// </summary>
     /// <param name="input"></param>
@@ -863,13 +1006,19 @@ public static class StringExtensions
     /// <returns></returns>
     public static string ToCamelCase(this string source)
     {
-        if (string.IsNullOrWhiteSpace(source)) return source;
+        if (string.IsNullOrWhiteSpace(source))
+        {
+            return source;
+        }
 
         var adjust = source.Trim();
 
         var firstChar = adjust[0];
 
-        if (firstChar == char.ToLowerInvariant(firstChar)) return adjust;
+        if (firstChar == char.ToLowerInvariant(firstChar))
+        {
+            return adjust;
+        }
 
         var name = adjust.ToCharArray();
 
@@ -889,7 +1038,10 @@ public static class StringExtensions
     /// <returns></returns>
     public static string ToSnakeCase(this string source)
     {
-        if (string.IsNullOrWhiteSpace(source)) return source;
+        if (string.IsNullOrWhiteSpace(source))
+        {
+            return source;
+        }
 
         var adjust = source.Trim();
 
@@ -902,7 +1054,10 @@ public static class StringExtensions
 
             if (char.IsUpper(c))
             {
-                if (i > 0 && !previousUpper) builder.Append("_");
+                if (i > 0 && !previousUpper)
+                {
+                    builder.Append("_");
+                }
 
                 builder.Append(char.ToLowerInvariant(c));
 
@@ -935,13 +1090,19 @@ public static class StringExtensions
         var newFilter = new List<char>();
 
         if (ignoringCase)
-            newFilter.AddRange(from chr in filter
+        {
+            newFilter.AddRange(
+                from chr in filter
                 select chr.ToString().ToLower()
                 into newChar
                 where !newChar.IsTrimEmpty()
-                select Convert.ToChar(newChar));
+                select Convert.ToChar(newChar)
+            );
+        }
         else
+        {
             newFilter = filter;
+        }
 
         var a = input.ToArray();
         var result =
@@ -961,7 +1122,10 @@ public static class StringExtensions
     /// <returns>Everything not in the filter text.</returns>
     public static string Remove(this string input, string filter)
     {
-        if (string.IsNullOrEmpty(input) || string.IsNullOrEmpty(filter)) return input;
+        if (string.IsNullOrEmpty(input) || string.IsNullOrEmpty(filter))
+        {
+            return input;
+        }
 
         return new Regex(filter).Replace(input, "");
     }
@@ -974,7 +1138,10 @@ public static class StringExtensions
     /// <returns>Everything not in the filter text.</returns>
     public static string Remove(this string input, StringFilter filter)
     {
-        if (string.IsNullOrEmpty(input)) return "";
+        if (string.IsNullOrEmpty(input))
+        {
+            return "";
+        }
 
         var value = BuildFilter(filter);
         return input.Remove(value);
@@ -992,7 +1159,10 @@ public static class StringExtensions
     /// <returns>Everything not in the filter text.</returns>
     public static string RemoveEnd(this string input, string filter)
     {
-        if (string.IsNullOrEmpty(input) || string.IsNullOrEmpty(filter)) return input;
+        if (string.IsNullOrEmpty(input) || string.IsNullOrEmpty(filter))
+        {
+            return input;
+        }
 
         return new Regex($"{filter}$").Replace(input, "");
     }
@@ -1038,7 +1208,10 @@ public static class StringExtensions
             separator = "|";
         }
 
-        if (filter.HasFlag(StringFilter.ExtraSpaces)) filterValue += separator + @"[ ]{2,}";
+        if (filter.HasFlag(StringFilter.ExtraSpaces))
+        {
+            filterValue += separator + @"[ ]{2,}";
+        }
 
         return filterValue;
     }

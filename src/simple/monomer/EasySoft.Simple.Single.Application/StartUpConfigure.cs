@@ -159,7 +159,7 @@ public class StartUpConfigure : IStartUpConfigure
 
         AgileConfigClientActionAssist.ActionAgileConfigChanged = _ =>
         {
-            // LogAssist.Info("config changed");
+            // LoggerAssist.Info("config changed");
         };
 
         ApplicationConfigure.AddTimer(

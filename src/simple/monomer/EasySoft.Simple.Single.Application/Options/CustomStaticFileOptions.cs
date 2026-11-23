@@ -11,7 +11,11 @@ public class CustomStaticFileOptions : AdvanceStaticFileOptions
     /// <summary>
     /// CustomStaticFileOptions
     /// </summary>
-    public CustomStaticFileOptions()
+    public CustomStaticFileOptions(
+        InfrastructureConfigureAssist infrastructureConfigureAssist
+    ) : base(
+        infrastructureConfigureAssist
+    )
     {
         var provider = new FileExtensionContentTypeProvider
         {

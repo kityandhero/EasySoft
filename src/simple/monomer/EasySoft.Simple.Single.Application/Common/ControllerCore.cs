@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Web.Framework.Controllers;
+﻿using EasySoft.Core.Web.Framework.Kernel.Controllers;
 
 namespace EasySoft.Simple.Single.Application.Common;
 

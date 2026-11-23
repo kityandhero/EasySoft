@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Simple.Tradition.Client.WebApi.Areas.AuthTest.Controllers;
+﻿using EasySoft.Core.Web.Framework.Kernel.ExtensionMethods;
+
+namespace EasySoft.Simple.Tradition.Client.WebApi.Areas.AuthTest.Controllers;
 
 /// <summary>
 /// EntranceController
@@ -23,11 +25,13 @@ public class EntranceController : AreaControllerCore
     [HttpGet]
     public async Task<IActionResult> Register()
     {
-        var result = await _userService.RegisterAsync(new RegisterDto()
-        {
-            LoginName = "test",
-            Password = "123456"
-        });
+        var result = await _userService.RegisterAsync(
+            new RegisterDto
+            {
+                LoginName = "test",
+                Password = "123456"
+            }
+        );
 
         return this.WrapperExecutiveResult(result);
     }
@@ -52,11 +56,17 @@ public class EntranceController : AreaControllerCore
     {
         var result = await _userService.SignInAsync(signInDto);
 
-        if (!result.Success) return Content(result.Message);
+        if (!result.Success)
+        {
+            return Content(result.Message);
+        }
 
         var token = result.Data?.UserId.ToToken();
 
-        if (token != null) this.SetCookie(GeneralConfigAssist.GetTokenName(), token);
+        if (token != null)
+        {
+            this.SetCookie(GeneralConfigAssist.GetTokenName(), token);
+        }
 
         return Content("sign in success");
     }

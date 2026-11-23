@@ -29,7 +29,7 @@ public class GlobalExceptionFilter : IExceptionFilter
             return;
         }
 
-        LogAssist.GetLogger()
+        LoggerAssist.GetLogger()
             .LogError(
                 0,
                 context.Exception,
@@ -39,7 +39,7 @@ public class GlobalExceptionFilter : IExceptionFilter
 
         if (context.Exception.InnerException != null)
         {
-            LogAssist.GetLogger()
+            LoggerAssist.GetLogger()
                 .LogError(
                     0,
                     context.Exception.InnerException,

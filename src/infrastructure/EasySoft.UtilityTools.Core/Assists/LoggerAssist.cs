@@ -3,9 +3,9 @@
 namespace EasySoft.UtilityTools.Core.Assists;
 
 /// <summary>
-/// LogAssist
+/// LoggerAssist
 /// </summary>
-public static class LogAssist
+public static class LoggerAssist
 {
     private static ILogger _logger;
 

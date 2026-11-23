@@ -1,5 +1,4 @@
-﻿using EasySoft.UtilityTools.Core.Interceptors;
-using EasySoft.UtilityTools.Core.Interfaces;
+﻿using EasySoft.UtilityTools.Core.Interfaces;
 
 namespace EasySoft.UtilityTools.Core.Extensions;
 
@@ -85,18 +84,5 @@ public static class ServiceCollectionExtension
         }
 
         return instance;
-    }
-
-    /// <summary>
-    /// AddLogRecordInterceptor
-    /// </summary>
-    /// <param name="services"></param>
-    /// <returns></returns>
-    public static IServiceCollection AddLogRecordInterceptor(this IServiceCollection services)
-    {
-        services.TryAddScoped<LogRecordInterceptor>();
-        services.TryAddScoped<LogRecordAsyncInterceptor>();
-
-        return services;
     }
 }

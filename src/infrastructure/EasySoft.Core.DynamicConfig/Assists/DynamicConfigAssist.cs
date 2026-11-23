@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.AuthenticationCore.Assists;
-using EasySoft.Core.DependencyInjection.IocAssists;
 using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Standard.Extensions;
 using EasySoft.UtilityTools.Standard.Result.Implements;
@@ -21,7 +20,7 @@ public static class DynamicConfigAssist
 
         if (!GeneralConfigAssist.GetConfigCenterSwitch())
         {
-            return defaultTokenExpires;
+            return defaultTokenExpires.Value;
         }
 
         var remoteConfigCache = AgileConfigClientAssist.GetConfigClient().Data;
@@ -33,7 +32,7 @@ public static class DynamicConfigAssist
             return value;
         }
 
-        return defaultTokenExpires;
+        return defaultTokenExpires.Value;
     }
 
     public static ExecutiveResult<string> GetNLogJsonConfig()
@@ -80,7 +79,7 @@ public static class DynamicConfigAssist
 
                 if (o == null)
                 {
-                    LogAssist.Error(
+                    LoggerAssist.Error(
                         "The “NLogJsonConfig” received not in JSON format, please check in agileConfig node, will use local config."
                     );
 
@@ -92,7 +91,7 @@ public static class DynamicConfigAssist
 
                 if (JsonConvertAssist.SerializeObject(o) == "{}")
                 {
-                    LogAssist.Warning(
+                    LoggerAssist.Warning(
                         "The “NLogJsonConfig” received dot not have any config items, config will not accept it, please check in agileConfig node, will use local config."
                     );
 
@@ -109,7 +108,7 @@ public static class DynamicConfigAssist
             }
             catch (Exception)
             {
-                LogAssist.Error(
+                LoggerAssist.Error(
                     "The “NLogJsonConfig” received not in JSON format, please check in agileConfig node, will use local config."
                 );
 
@@ -121,7 +120,7 @@ public static class DynamicConfigAssist
         }
         catch (Exception e)
         {
-            LogAssist.Error(
+            LoggerAssist.Error(
                 $"Received “NLogJsonConfig” from remote cause some error, transitiveMessage: \"{e.Message}\", will use local config."
             );
 
@@ -138,7 +137,7 @@ public static class DynamicConfigAssist
 
         if (!remoteConfigCache.Keys.Contains(ConstCollection.NLogJsonConfig))
         {
-            LogAssist.Warning(
+            LoggerAssist.Warning(
                 "The “NLogJsonConfig” int the remote do not exist, will use local config."
             );
 

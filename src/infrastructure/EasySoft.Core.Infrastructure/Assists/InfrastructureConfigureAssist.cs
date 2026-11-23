@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Standard.Assists;
+﻿using EasySoft.UtilityTools.Core.Assists;
+using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Exceptions;
 using EasySoft.UtilityTools.Standard.Models;
 using Microsoft.Extensions.Configuration;
@@ -61,6 +62,56 @@ public class InfrastructureConfigureAssist
     /// WebRootPathConfigureNode
     /// </summary>
     private const string WebRootPathConfigureNode = "WebRootPath";
+
+    /// <summary>
+    /// DatabaseConfigureNode
+    /// </summary>
+    private const string DatabaseConfigureNode = "Database";
+
+    /// <summary>
+    /// 主库配置节点
+    /// </summary>
+    private const string MasterDatabaseConfigureNode = "Master";
+
+    /// <summary>
+    /// 主库类型配置节点
+    /// </summary>
+    private const string MasterDatabaseTypeConfigureNode = "Type";
+
+    /// <summary>
+    /// 主库连接字符串配置节点
+    /// </summary>
+    private const string MasterDatabaseConnectionConfigureNode = "Connection";
+
+    /// <summary>
+    /// 从库类型配置节点
+    /// </summary>
+    private const string SlaveDatabaseConfigureNode = "Slave";
+
+    /// <summary>
+    /// 从库类型配置节点
+    /// </summary>
+    private const string SlaveDatabaseTypeConfigureNode = "Type";
+
+    /// <summary>
+    /// 从库连接字符串配置节点
+    /// </summary>
+    private const string SlaveDatabaseConnectionConfigureNode = "Connection";
+
+    /// <summary>
+    /// 历史库类型配置节点
+    /// </summary>
+    private const string HistoryDatabaseConfigureNode = "History";
+
+    /// <summary>
+    /// 历史库类型配置节点
+    /// </summary>
+    private const string HistoryDatabaseTypeConfigureNode = "Type";
+
+    /// <summary>
+    /// 历史库连接字符串配置节点
+    /// </summary>
+    private const string HistoryDatabaseConnectionConfigureNode = "HistoryConnection";
 
     #endregion
 
@@ -307,6 +358,53 @@ public class InfrastructureConfigureAssist
 
     #endregion
 
+    #region GetUseErrorLogTransceiver
+
+    /// <summary>
+    /// 是否使用错误日志收集
+    /// </summary>
+    /// <param name="configuration">配置集</param>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<bool> GetUseErrorLogTransceiver(IConfiguration configuration)
+    {
+        var node = StringAssist.Join(
+            [
+                InfrastructureConfigureNode,
+                UseErrorLogTransceiverConfigureNode
+            ],
+            ":"
+        );
+
+        var v = configuration[node] ?? "false";
+
+        var configValue = new ConfigValue<bool>
+        {
+            Node = node,
+            Value = v == "true",
+            EffectiveValueDescription = "true|false"
+        };
+
+        if (!v.In("true", "false"))
+        {
+            throw new ConfigErrorException(
+                configValue.ToErrorDescription()
+            );
+        }
+
+        return configValue;
+    }
+
+    /// <summary>
+    /// 是否使用错误日志收集
+    /// </summary>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public ConfigValue<bool> GetUseErrorLogTransceiver()
+    {
+        return GetUseErrorLogTransceiver(Configuration);
+    }
+
+    #endregion
+
     #region GetUseSqlLogTransceiver
 
     /// <summary>
@@ -404,7 +502,6 @@ public class InfrastructureConfigureAssist
     /// GetWebRootPath
     /// </summary>
     /// <param name="configuration">配置集</param>
-    /// <returns>Cors Policies</returns>
     /// <exception cref="ConfigErrorException">配置异常</exception>
     public static ConfigValue<string> GetWebRootPath(IConfiguration configuration)
     {
@@ -418,11 +515,18 @@ public class InfrastructureConfigureAssist
 
         var v = configuration[node] ?? "";
 
-        return new ConfigValue<string>
+        v = string.IsNullOrWhiteSpace(v)
+            ? v
+            : EnvironmentAssist.GetEnvironment().ContentRootPath.Combine(v);
+
+        var configValue = new ConfigValue<string>
         {
             Node = node,
-            Value = v
+            Value = v,
+            EffectiveValueDescription = ""
         };
+
+        return configValue;
     }
 
     /// <summary>
@@ -433,6 +537,294 @@ public class InfrastructureConfigureAssist
     public ConfigValue<string> GetWebRootPath()
     {
         return GetWebRootPath(Configuration);
+    }
+
+    #endregion
+
+    #region GetMasterDatabaseType
+
+    /// <summary>
+    /// 获取主库类型
+    /// </summary>
+    /// <param name="configuration">配置集</param>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<string> GetMasterDatabaseType(IConfiguration configuration)
+    {
+        var node = StringAssist.Join(
+            [
+                DatabaseConfigureNode,
+                MasterDatabaseConfigureNode,
+                MasterDatabaseTypeConfigureNode
+            ],
+            ":"
+        );
+
+        var v = configuration[node] ?? "";
+
+        var configValue = new ConfigValue<string>
+        {
+            Node = node,
+            Value = v,
+            EffectiveValueDescription = ""
+        };
+
+        if (!string.IsNullOrWhiteSpace(v))
+        {
+            throw new ConfigErrorException(
+                configValue.ToErrorDescription()
+            );
+        }
+
+        return configValue;
+    }
+
+    /// <summary>
+    /// 获取主库类型
+    /// </summary>
+    /// <exception cref="InvalidOperationException">配置异常</exception>
+    public ConfigValue<string> GetMasterDatabaseType()
+    {
+        return GetMasterDatabaseType(Configuration);
+    }
+
+    #endregion
+
+    #region GetMasterDatabaseConnection
+
+    /// <summary>
+    /// 获取主库连接字符串
+    /// </summary>
+    /// <param name="configuration">配置集</param>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<string> GetMasterDatabaseConnection(IConfiguration configuration)
+    {
+        var node = StringAssist.Join(
+            [
+                DatabaseConfigureNode,
+                MasterDatabaseConfigureNode,
+                MasterDatabaseConnectionConfigureNode
+            ],
+            ":"
+        );
+
+        var v = configuration[node] ?? "";
+
+        var configValue = new ConfigValue<string>
+        {
+            Node = node,
+            Value = v,
+            EffectiveValueDescription = ""
+        };
+
+        if (!string.IsNullOrWhiteSpace(v))
+        {
+            throw new ConfigErrorException(
+                configValue.ToErrorDescription()
+            );
+        }
+
+        return configValue;
+    }
+
+    /// <summary>
+    /// 获取主库连接字符串
+    /// </summary>
+    /// <exception cref="InvalidOperationException">配置异常</exception>
+    public ConfigValue<string> GetMasterDatabaseConnection()
+    {
+        return GetMasterDatabaseConnection(Configuration);
+    }
+
+    #endregion
+
+    #region GetSlaveDatabaseType
+
+    /// <summary>
+    /// 获取从库类型
+    /// </summary>
+    /// <param name="configuration">配置集</param>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<string> GetSlaveDatabaseType(IConfiguration configuration)
+    {
+        var node = StringAssist.Join(
+            [
+                DatabaseConfigureNode,
+                SlaveDatabaseConfigureNode,
+                SlaveDatabaseTypeConfigureNode
+            ],
+            ":"
+        );
+
+        var v = configuration[node] ?? "";
+
+        var configValue = new ConfigValue<string>
+        {
+            Node = node,
+            Value = v,
+            EffectiveValueDescription = ""
+        };
+
+        if (!string.IsNullOrWhiteSpace(v))
+        {
+            throw new ConfigErrorException(
+                configValue.ToErrorDescription()
+            );
+        }
+
+        return configValue;
+    }
+
+    /// <summary>
+    /// 获取从库类型
+    /// </summary>
+    /// <exception cref="InvalidOperationException">配置异常</exception>
+    public ConfigValue<string> GetSlaveDatabaseType()
+    {
+        return GetSlaveDatabaseType(Configuration);
+    }
+
+    #endregion
+
+    #region GetSlaveDatabaseConnection
+
+    /// <summary>
+    /// 获取从库连接字符串
+    /// </summary>
+    /// <param name="configuration">配置集</param>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<string> GetSlaveDatabaseConnection(IConfiguration configuration)
+    {
+        var node = StringAssist.Join(
+            [
+                DatabaseConfigureNode,
+                SlaveDatabaseConfigureNode,
+                SlaveDatabaseConnectionConfigureNode
+            ],
+            ":"
+        );
+
+        var v = configuration[node] ?? "";
+
+        var configValue = new ConfigValue<string>
+        {
+            Node = node,
+            Value = v,
+            EffectiveValueDescription = ""
+        };
+
+        if (!string.IsNullOrWhiteSpace(v))
+        {
+            throw new ConfigErrorException(
+                configValue.ToErrorDescription()
+            );
+        }
+
+        return configValue;
+    }
+
+    /// <summary>
+    /// 获取从库连接字符串
+    /// </summary>
+    /// <exception cref="InvalidOperationException">配置异常</exception>
+    public ConfigValue<string> GetSlaveDatabaseConnection()
+    {
+        return GetSlaveDatabaseConnection(Configuration);
+    }
+
+    #endregion
+
+    #region GetHistoryDatabaseType
+
+    /// <summary>
+    /// 获取从库类型
+    /// </summary>
+    /// <param name="configuration">配置集</param>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<string> GetHistoryDatabaseType(IConfiguration configuration)
+    {
+        var node = StringAssist.Join(
+            [
+                DatabaseConfigureNode,
+                HistoryDatabaseConfigureNode,
+                HistoryDatabaseTypeConfigureNode
+            ],
+            ":"
+        );
+
+        var v = configuration[node] ?? "";
+
+        var configValue = new ConfigValue<string>
+        {
+            Node = node,
+            Value = v,
+            EffectiveValueDescription = ""
+        };
+
+        if (!string.IsNullOrWhiteSpace(v))
+        {
+            throw new ConfigErrorException(
+                configValue.ToErrorDescription()
+            );
+        }
+
+        return configValue;
+    }
+
+    /// <summary>
+    /// 获取历史库类型
+    /// </summary>
+    /// <exception cref="InvalidOperationException">配置异常</exception>
+    public ConfigValue<string> GetHistoryDatabaseType()
+    {
+        return GetHistoryDatabaseType(Configuration);
+    }
+
+    #endregion
+
+    #region GetHistoryDatabaseConnection
+
+    /// <summary>
+    /// 获取历史库连接字符串
+    /// </summary>
+    /// <param name="configuration">配置集</param>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<string> GetHistoryDatabaseConnection(IConfiguration configuration)
+    {
+        var node = StringAssist.Join(
+            [
+                DatabaseConfigureNode,
+                HistoryDatabaseConfigureNode,
+                HistoryDatabaseConnectionConfigureNode
+            ],
+            ":"
+        );
+
+        var v = configuration[node] ?? "";
+
+        var configValue = new ConfigValue<string>
+        {
+            Node = node,
+            Value = v,
+            EffectiveValueDescription = ""
+        };
+
+        if (!string.IsNullOrWhiteSpace(v))
+        {
+            throw new ConfigErrorException(
+                configValue.ToErrorDescription()
+            );
+        }
+
+        return configValue;
+    }
+
+    /// <summary>
+    /// 获取历史库连接字符串
+    /// </summary>
+    /// <exception cref="InvalidOperationException">配置异常</exception>
+    public ConfigValue<string> GetHistoryDatabaseConnection()
+    {
+        return GetHistoryDatabaseConnection(Configuration);
     }
 
     #endregion

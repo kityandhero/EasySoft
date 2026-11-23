@@ -11,19 +11,19 @@ public class LogController : AreaControllerCore
     /// <returns></returns>
     public IActionResult Test()
     {
-        LogAssist.Info("info");
-        LogAssist.Debug("debug");
-        LogAssist.Warning("warning");
-        LogAssist.Error("error");
-        LogAssist.Trace("trace");
-        LogAssist.Critical("critical");
+        LoggerAssist.Info("info");
+        LoggerAssist.Debug("debug");
+        LoggerAssist.Warning("warning");
+        LoggerAssist.Error("error");
+        LoggerAssist.Trace("trace");
+        LoggerAssist.Critical("critical");
 
-        LogAssist.InfoData(new { message = "text" });
-        LogAssist.DebugData(new { message = "text" });
-        LogAssist.WarningData(new { message = "text" });
-        LogAssist.ErrorData(new { message = "text" });
-        LogAssist.TraceData(new { message = "text" });
-        LogAssist.CriticalData(new { message = "text" });
+        LoggerAssist.InfoData(new { message = "text" });
+        LoggerAssist.DebugData(new { message = "text" });
+        LoggerAssist.WarningData(new { message = "text" });
+        LoggerAssist.ErrorData(new { message = "text" });
+        LoggerAssist.TraceData(new { message = "text" });
+        LoggerAssist.CriticalData(new { message = "text" });
 
         return this.Success();
     }

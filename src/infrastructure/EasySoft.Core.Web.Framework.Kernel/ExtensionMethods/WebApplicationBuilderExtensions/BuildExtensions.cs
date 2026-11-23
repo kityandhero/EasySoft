@@ -96,7 +96,9 @@ public static class BuildExtensions
 
         FlagAssist.SetApplicationRunPerformed();
 
-        LogAssist.SetLogger(app.Logger);
+        LoggerFactoryAssist.SetLoggerFactory(app.Services.GetRequiredService<ILoggerFactory>());
+
+        LoggerAssist.SetLogger(app.Logger);
 
         #region ForwardedHeaders
 
@@ -332,7 +334,7 @@ public static class BuildExtensions
 
         // ------------------------
 
-        LogAssist.Hint(
+        LoggerAssist.Hint(
             AuxiliaryConfigure.BuildHintMessage().ToArray()
         );
 

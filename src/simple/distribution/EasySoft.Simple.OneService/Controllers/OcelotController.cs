@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Simple.OneService.Controllers;
+﻿using EasySoft.Core.Web.Framework.Kernel.Controllers;
+
+namespace EasySoft.Simple.OneService.Controllers;
 
 /// <summary>
 /// Ocelot

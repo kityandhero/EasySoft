@@ -92,7 +92,7 @@ public static class EntityAssist
         }
 
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -199,7 +199,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -220,7 +220,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -240,7 +240,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -260,7 +260,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -281,7 +281,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -301,7 +301,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -321,7 +321,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -342,7 +342,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -365,7 +365,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -401,7 +401,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -417,7 +417,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -432,7 +432,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -448,7 +448,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -463,7 +463,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -478,7 +478,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -494,7 +494,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -514,7 +514,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -540,7 +540,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -562,7 +562,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -577,7 +577,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -592,7 +592,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -608,7 +608,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -630,7 +630,7 @@ public static class EntityAssist
         }
 
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -649,7 +649,7 @@ public static class EntityAssist
         }
 
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -668,7 +668,7 @@ public static class EntityAssist
         }
 
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -695,7 +695,7 @@ public static class EntityAssist
         }
 
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -719,7 +719,7 @@ public static class EntityAssist
         }
 
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -743,7 +743,7 @@ public static class EntityAssist
         }
 
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -767,7 +767,7 @@ public static class EntityAssist
         }
 
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -792,7 +792,7 @@ public static class EntityAssist
         }
 
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -821,7 +821,7 @@ public static class EntityAssist
         }
 
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -869,7 +869,7 @@ public static class EntityAssist
         }
 
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -891,7 +891,7 @@ public static class EntityAssist
         }
 
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -920,7 +920,7 @@ public static class EntityAssist
         }
 
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -949,7 +949,7 @@ public static class EntityAssist
         }
 
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -969,7 +969,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 
@@ -987,7 +987,7 @@ public static class EntityAssist
     ) where T : IEntitySelf<T>, new()
     {
         var mapper = new BaseMapper<T>(
-            MapperChannelFactory.GetMainMapperChannel(),
+            MapperChannelFactory.GetMasterMapperChannel(),
             logSql
         );
 

@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.DependencyInjection.IocAssists;
-using EasySoft.Core.GeneralLogTransceiver.Producers;
-using EasySoft.UtilityTools.Standard.Producers;
+﻿using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.LogServer.Core.Extensions;
 
@@ -30,7 +28,7 @@ public static class WebApplicationExtensions
     {
         var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
 
-        if (!infrastructureConfigureAssist.GetUseErrorLogTransceiver())
+        if (!infrastructureConfigureAssist.GetUseErrorLogTransceiver().Value)
         {
             return application;
         }

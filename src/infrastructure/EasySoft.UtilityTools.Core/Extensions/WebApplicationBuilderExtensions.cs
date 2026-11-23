@@ -18,17 +18,7 @@ public static class WebApplicationBuilderExtensions
         return !RegisteredModels.TryAdd(modelName.ToLower(), '1');
     }
 
-    /// <summary>
-    /// AddLogRecordInterceptor
-    /// </summary>
-    /// <param name="builder">构建器</param>
-    /// <returns></returns>
-    public static WebApplicationBuilder AddLogRecordInterceptor(this WebApplicationBuilder builder)
-    {
-        builder.Services.AddLogRecordInterceptor();
 
-        return builder;
-    }
 
     /// <summary>
     /// AddExtraNormalInjection

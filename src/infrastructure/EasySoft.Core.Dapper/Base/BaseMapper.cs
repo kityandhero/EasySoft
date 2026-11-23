@@ -2993,7 +2993,7 @@ public class BaseMapper<T> : IMapper where T : IEntitySelf<T>, new()
 
         if (sqlLogCollector == null)
         {
-            LogAssist.Warning("sqlLogCollector is null, ignore publish.");
+            LoggerAssist.Warning("sqlLogCollector is null, ignore publish.");
 
             return;
         }

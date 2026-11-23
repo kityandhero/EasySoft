@@ -30,11 +30,11 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
 
         if (attribute == null)
         {
-            LogAssist.Trace("Exec InterceptSynchronous");
+            LoggerAssist.Trace("Exec InterceptSynchronous");
 
             invocation.Proceed();
 
-            LogAssist.Trace("Complete InterceptSynchronous");
+            LoggerAssist.Trace("Complete InterceptSynchronous");
         }
         else
         {
@@ -80,7 +80,7 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
     {
         try
         {
-            LogAssist.Trace("Exec InternalInterceptSynchronous");
+            LoggerAssist.Trace("Exec InternalInterceptSynchronous");
 
             _unitOfWork.BeginTransaction(distributed: attribute.SharedToCap);
 
@@ -88,7 +88,7 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
 
             _unitOfWork.Commit();
 
-            LogAssist.Trace("Complete InternalInterceptSynchronous");
+            LoggerAssist.Trace("Complete InternalInterceptSynchronous");
         }
         catch (Exception)
         {
@@ -112,7 +112,7 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
     {
         try
         {
-            LogAssist.Trace("Exec InternalInterceptAsynchronous");
+            LoggerAssist.Trace("Exec InternalInterceptAsynchronous");
 
             _unitOfWork.BeginTransaction(distributed: attribute.SharedToCap);
 
@@ -124,7 +124,7 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
 
             await _unitOfWork.CommitAsync();
 
-            LogAssist.Trace("Complete InternalInterceptAsynchronous");
+            LoggerAssist.Trace("Complete InternalInterceptAsynchronous");
         }
         catch (Exception)
         {
@@ -154,7 +154,7 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
 
         try
         {
-            LogAssist.Trace("Exec InternalInterceptAsynchronous");
+            LoggerAssist.Trace("Exec InternalInterceptAsynchronous");
 
             _unitOfWork.BeginTransaction(distributed: attribute.SharedToCap);
 
@@ -166,7 +166,7 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
 
             await _unitOfWork.CommitAsync();
 
-            LogAssist.Trace("Complete InternalInterceptAsynchronous");
+            LoggerAssist.Trace("Complete InternalInterceptAsynchronous");
         }
         catch (Exception)
         {
@@ -189,11 +189,11 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
     /// <returns></returns>
     private async Task InternalInterceptAsynchronousWithoutUnitOfWork(IInvocation invocation)
     {
-        LogAssist.Trace("Exec InternalInterceptAsynchronousWithoutUnitOfWork");
+        LoggerAssist.Trace("Exec InternalInterceptAsynchronousWithoutUnitOfWork");
 
         invocation.Proceed();
 
-        LogAssist.Trace("Complete InternalInterceptAsynchronousWithoutUnitOfWork");
+        LoggerAssist.Trace("Complete InternalInterceptAsynchronousWithoutUnitOfWork");
 
         var task = (Task)invocation.ReturnValue;
 
@@ -208,11 +208,11 @@ public sealed class UnitOfWorkAsyncInterceptor : IAsyncInterceptor
     /// <returns></returns>
     private async Task<TResult> InternalInterceptAsynchronousWithoutUnitOfWork<TResult>(IInvocation invocation)
     {
-        LogAssist.Trace("Exec InternalInterceptAsynchronousWithoutUnitOfWork");
+        LoggerAssist.Trace("Exec InternalInterceptAsynchronousWithoutUnitOfWork");
 
         invocation.Proceed();
 
-        LogAssist.Trace("Complete InternalInterceptAsynchronousWithoutUnitOfWork");
+        LoggerAssist.Trace("Complete InternalInterceptAsynchronousWithoutUnitOfWork");
 
         var task = (Task<TResult>)invocation.ReturnValue;
 

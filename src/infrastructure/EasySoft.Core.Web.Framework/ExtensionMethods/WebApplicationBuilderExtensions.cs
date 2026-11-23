@@ -8,9 +8,10 @@ using EasySoft.Core.Infrastructure.Options;
 using EasySoft.Core.PrepareStartWork.PrepareWorks;
 using EasySoft.Core.Swagger.Configures;
 using EasySoft.Core.Swagger.ExtensionMethods;
-using EasySoft.Core.Web.Framework.ActionModelConventions;
-using EasySoft.Core.Web.Framework.Attributes;
-using EasySoft.Core.Web.Framework.Filters;
+
+// using EasySoft.Core.Web.Framework.ActionModelConventions;
+// using EasySoft.Core.Web.Framework.Attributes;
+// using EasySoft.Core.Web.Framework.Filters;
 using IChannel = EasySoft.UtilityTools.Standard.Interfaces.IChannel;
 
 namespace EasySoft.Core.Web.Framework.ExtensionMethods;
@@ -157,7 +158,7 @@ public static class WebApplicationBuilderExtensions
 
         var app = builder.Build();
 
-        // LogAssist.SetLogger(app.Logger);
+        // LoggerAssist.SetLogger(app.Logger);
 
         // 核心集成
         // ServiceProviderAssist.SetProvider(app.Services);
@@ -421,11 +422,11 @@ public static class WebApplicationBuilderExtensions
         // StartupDescriptionMessageAssist.Print();
 
         // 核心集成
-        // LogAssist.Hint(
+        // LoggerAssist.Hint(
         //     AuxiliaryConfigure.BuildHintMessage().ToArray()
         // );
 
-        LogAssist.Hint(
+        LoggerAssist.Hint(
             SwaggerConfigure.BuildHintMessage().ToArray()
         );
 
@@ -442,22 +443,17 @@ public static class WebApplicationBuilderExtensions
         return app;
     }
 
-    private static string GetWebRootPath()
-    {
-        var result = EnvironmentAssist.GetEnvironment().WebRootPath;
-
-        if (!FlagAssist.GetAdvanceStaticFileOptionsSwitch())
-        {
-            return result;
-        }
-
-        if (!FlagAssist.GetAdvanceStaticFileOptionsSwitch())
-        {
-            return result;
-        }
-
-        return string.IsNullOrWhiteSpace(GeneralConfigAssist.GetWebRootPath())
-            ? result
-            : EnvironmentAssist.GetEnvironment().ContentRootPath.Combine(GeneralConfigAssist.GetWebRootPath());
-    }
+    // private static string GetWebRootPath()
+    // {
+    //     var result = EnvironmentAssist.GetEnvironment().WebRootPath;
+    //
+    //     if (!FlagAssist.GetAdvanceStaticFileOptionsSwitch())
+    //     {
+    //         return result;
+    //     }
+    //
+    //     return string.IsNullOrWhiteSpace(GeneralConfigAssist.GetWebRootPath())
+    //         ? result
+    //         : EnvironmentAssist.GetEnvironment().ContentRootPath.Combine(GeneralConfigAssist.GetWebRootPath());
+    // }
 }

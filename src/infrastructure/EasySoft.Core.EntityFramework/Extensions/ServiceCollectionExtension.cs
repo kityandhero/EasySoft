@@ -54,7 +54,7 @@ public static class ServiceCollectionExtension
                 {
                     if (ContextConfigure.EnableSensitiveDataLogging)
                     {
-                        LogAssist.Hint(
+                        LoggerAssist.Hint(
                             $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.EnableSensitiveDataLogging)} is {ContextConfigure.EnableSensitiveDataLogging}."
                         );
 
@@ -65,7 +65,7 @@ public static class ServiceCollectionExtension
 
                     if (ContextConfigure.EnableDetailedErrors)
                     {
-                        LogAssist.Hint(
+                        LoggerAssist.Hint(
                             $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.EnableDetailedErrors)} is {ContextConfigure.EnableDetailedErrors}."
                         );
 
@@ -76,12 +76,12 @@ public static class ServiceCollectionExtension
 
                     if (ContextConfigure.EnableSensitiveDataLogging)
                     {
-                        LogAssist.Prompt(
+                        LoggerAssist.Prompt(
                             $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.EnableSensitiveDataLogging)} only takes effect in development mode."
                         );
                     }
 
-                    LogAssist.Hint(
+                    LoggerAssist.Hint(
                         $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.GetEntityConfigureAssemblies)} contain {(!ContextConfigure.GetEntityConfigureAssemblies().Any() ? "none" : ContextConfigure.GetEntityConfigureAssemblies().Select(o => o.GetName().Name).Join(","))}."
                     );
                 }
@@ -187,7 +187,7 @@ public static class ServiceCollectionExtension
 
                 if (!entityConfigureAssemblies.Any())
                 {
-                    LogAssist.Warning("ContextConfigure.EntityConfigureAssemblies has none Assemblies");
+                    LoggerAssist.Warning("ContextConfigure.EntityConfigureAssemblies has none Assemblies");
                 }
 
                 var entityConfigure = new EntityConfigure().AddRangeAssemblies(

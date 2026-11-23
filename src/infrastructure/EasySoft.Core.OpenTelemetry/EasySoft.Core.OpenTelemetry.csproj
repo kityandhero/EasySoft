@@ -15,7 +15,6 @@
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions"/>
         <PackageReference Include="OpenTelemetry"/>
         <PackageReference Include="OpenTelemetry.Exporter.Zipkin"/>
-
     </ItemGroup>
 
     <ItemGroup>

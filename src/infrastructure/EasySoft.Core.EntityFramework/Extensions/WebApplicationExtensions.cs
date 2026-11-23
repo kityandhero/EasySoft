@@ -87,9 +87,9 @@ public static class WebApplicationExtensions
             return application;
         }
 
-        LogAssist.Execute($"{nameof(UseAutoEnsureCreated)}.");
+        LoggerAssist.Execute($"{nameof(UseAutoEnsureCreated)}.");
 
-        LogAssist.Hint(
+        LoggerAssist.Hint(
             $"{typeof(ContextConfigure).FullName}.{nameof(ContextConfigure.AutoEnsureCreated)} is {ContextConfigure.AutoEnsureCreated}."
         );
 

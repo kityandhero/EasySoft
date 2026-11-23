@@ -1,5 +1,5 @@
-using EasySoft.Core.Web.Framework.BuilderAssists;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
+using EasySoft.Core.Web.Framework.Kernel.Assists;
 using EasySoft.Simple.Distribute.Common.Enums;
 
 var app = WebApplicationBuilderAssist

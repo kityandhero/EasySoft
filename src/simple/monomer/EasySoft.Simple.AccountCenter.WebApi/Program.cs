@@ -1,5 +1,4 @@
 using Asp.Versioning;
-using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Data.Configures;
 using EasySoft.Core.EntityFramework.MySql.Extensions;
@@ -10,6 +9,7 @@ using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.LogDashboard.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.Extensions;
 using EasySoft.Core.Web.Framework.ExtensionMethods;
+using EasySoft.Core.Web.Framework.Kernel.Assists;
 using EasySoft.Simple.AccountCenter.Application.Contracts.Services;
 using EasySoft.Simple.AccountCenter.Application.Services;
 using EasySoft.Simple.AccountCenter.Domain.EntityConfigures.Items;
@@ -97,7 +97,7 @@ ApplicationConfigure.AddWebApplicationExtraAction(
 
 AgileConfigClientActionAssist.ActionAgileConfigChanged = _ =>
 {
-    // LogAssist.Info("config changed");
+    // LoggerAssist.Info("config changed");
 };
 
 var app = WebApplicationBuilderAssist

@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Simple.Single.Application.Areas.AuthTest.Controllers;
+﻿using EasySoft.Core.Web.Framework.Kernel.ExtensionMethods;
+
+namespace EasySoft.Simple.Single.Application.Areas.AuthTest.Controllers;
 
 /// <summary>
 /// TokenAuth
