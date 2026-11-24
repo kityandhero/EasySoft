@@ -1,7 +1,4 @@
-﻿using EasySoft.Core.AdvanceNLog.Assists;
-using EasySoft.Core.AdvanceNLog.Renderers;
-using EasySoft.Core.AdvanceNLog.Utils;
-using EasySoft.Core.Infrastructure.Assists;
+﻿using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.Extensions;
 
 namespace EasySoft.Core.AdvanceNLog.ExtensionMethods;
@@ -24,44 +21,20 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
-        builder.Services.AddSingleton(new LogConfigureAssist(builder.Configuration));
-
-        // NLog: Setup NLog for Dependency injection
-        // builder.Logging.ClearProviders();
-
-        // 使用如下库实现，更换可能不会读取自定义配置
-        // NLog.Extensions.Hosting
-        // NLog.Web.AspNetCore
-
-        builder.Services.AddLogging(b =>
-            {
-                b.ClearProviders();
-
-                LogManager.Setup()
-                    .SetupExtensions(ext =>
-                        {
-                            ext.RegisterLayoutRenderer<ShortLevelLayoutRenderer>("shortlevel");
-
-                            ext.RegisterLayoutRenderer<AnsiHighlightLayoutRenderer>("ansi-highlight");
-                        }
-                    );
-
-                var embedConfig = Tools.GetNlogEmbedConfig(builder.Configuration);
-
-                LogManager.Configuration = new NLogLoggingConfiguration(
-                    new ConfigurationBuilder()
-                        .AddJsonContent(embedConfig)
-                        .Build()
-                        .GetSection("NLog")
-                );
-
-                b.AddNLogWeb();
-            }
+        builder.Services.AddAdvanceNLog(
+            builder.Configuration,
+            EnvironmentAssist.GetEnvironment().IsDevelopment()
         );
 
         return builder;
     }
 
+    /// <summary>
+    /// 注入日志框架
+    /// </summary>
+    /// <param name="builder">构建器</param>
+    /// <param name="action">选项配置器</param>
+    /// <returns>构建器</returns>
     public static WebApplicationBuilder AddAdvanceNLog(
         this WebApplicationBuilder builder,
         Func<LoggingConfiguration> action
@@ -72,26 +45,7 @@ public static class WebApplicationBuilderExtensions
             return builder;
         }
 
-        StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceNLog)}."
-        );
-
-        // NLog: Setup NLog for Dependency injection
-        builder.Logging.ClearProviders();
-
-        // 使用如下库实现，更换可能不会读取自定义配置
-        // NLog.Extensions.Hosting
-        // NLog.Web.AspNetCore
-
-        builder.Services.AddLogging(b =>
-            {
-                b.ClearProviders();
-
-                LogManager.Configuration = action();
-
-                b.AddNLogWeb();
-            }
-        );
+        builder.Services.AddAdvanceNLog(action);
 
         return builder;
     }

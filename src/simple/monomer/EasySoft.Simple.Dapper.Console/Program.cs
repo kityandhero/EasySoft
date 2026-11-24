@@ -1,31 +1,16 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using EasySoft.Core.CacheCore.ExtensionMethods;
 using EasySoft.Core.CacheCore.interfaces;
-using EasySoft.Core.CacheImplementation.ExtensionMethods;
-using EasySoft.Core.CacheImplementation.Operators;
+using EasySoft.Core.Console.Kernel.Assists;
 using EasySoft.Core.Dapper.Elegant.Assists;
 using EasySoft.Core.Dapper.Elegant.Configure;
-using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.Project.DataEntity.Dapper.Infrastructure.Entities;
 using EasySoft.Simple.Dapper.Console;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.Channels;
-using EasySoft.UtilityTools.Standard.Assists;
-using Microsoft.Extensions.DependencyInjection;
 
-var serviceProvider = ConsoleServiceProviderAssist.CreateServiceProvider((serviceCollection, configuration) =>
-    {
-        serviceCollection.AddCacheCore(configuration);
-
-        serviceCollection.AddAdvanceCacheImplementation();
-
-        // *) RegisterInstance(new ApplicationChannel().SetChannel(...))
-        //       .As<IApplicationChannel>().SingleInstance()
-        //    → 实例单例注册
-        serviceCollection.AddSingleton<IApplicationChannel>(
-            new ApplicationChannel().SetChannel(ChannelCollection.DapperTestApplication)
-        );
-    }
+var serviceProvider = ConsoleBuilderAssist.CreateServiceProvider(
+    new ApplicationChannel().SetChannel(ChannelCollection.DapperTestApplication)
 );
 
 DapperElegantConfigurator.SetCacheOperator(serviceProvider.GetRequiredService<ICacheOperator>());
@@ -34,5 +19,7 @@ var author = EntityAssist.GetEntity<AccessWay>(1);
 
 if (author != null)
 {
-    Console.WriteLine(JsonConvertAssist.SerializeObject(author));
+    LoggerAssist.TraceData(author);
+
+    // Console.WriteLine(JsonConvertAssist.SerializeObject(author));
 }

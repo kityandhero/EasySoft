@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Infrastructure.Extensions;
+using EasySoft.UtilityTools.Core.Assists;
 using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.Infrastructure.Assists;
@@ -41,7 +42,15 @@ public static class ConsoleServiceProviderAssist
 
         services.AddSingleton<IConfiguration>(config);
 
+        var loggerFactory = new LoggerFactory();
+
         services.AddInfrastructureConfigureAssist(config);
+
+        services.AddSingleton(loggerFactory);
+
+        var logger = loggerFactory.CreateLogger("main");
+
+        services.AddSingleton(logger);
 
         configureServices(services, config);
 
@@ -56,6 +65,9 @@ public static class ConsoleServiceProviderAssist
         );
 
         ServiceProviderAssist.SetProvider(serviceProvider);
+
+        LoggerFactoryAssist.SetLoggerFactory(loggerFactory);
+        LoggerAssist.SetLogger(logger);
 
         return serviceProvider;
     }

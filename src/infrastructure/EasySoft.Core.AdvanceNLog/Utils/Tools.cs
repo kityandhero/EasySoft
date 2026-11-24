@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.AdvanceNLog.Assists;
 using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.AdvanceNLog.Utils;
@@ -14,17 +13,21 @@ public static class Tools
     /// GetNlogEmbedConfig
     /// </summary>
     /// <param name="configuration"></param>
+    /// <param name="whetherDevelop">是否开发环境</param>
     /// <returns></returns>
-    public static string GetNlogEmbedConfig(IConfiguration configuration)
+    public static string GetNlogEmbedConfig(
+        IConfiguration configuration,
+        bool whetherDevelop
+    )
     {
         var mainConfig = GetNlogDefaultMainConfig();
 
         mainConfig = mainConfig
-            .SupplementThrowConfigExceptions()
+            .SupplementThrowConfigExceptions(whetherDevelop)
             .SupplementInternalLogLevel(configuration)
             .SupplementInternalLogFile(configuration)
             .SupplementGeneralRule(configuration)
-            .SupplementColorConsoleConfig(configuration)
+            .SupplementColorConsoleConfig(configuration, whetherDevelop)
             .SupplementProductionLogConfig(configuration)
             .SupplementExceptionlessConfig(configuration);
 
@@ -100,14 +103,15 @@ public static class Tools
         return GetEmbeddedResourceFileContent("/nlog.console.target.txt");
     }
 
-    private static string SupplementThrowConfigExceptions(this string config)
+    private static string SupplementThrowConfigExceptions(
+        this string config,
+        bool whetherDevelop
+    )
     {
         return config
             .Replace(
                 "###throw-config-exceptions###",
-                EnvironmentAssist
-                    .GetEnvironment()
-                    .IsDevelopment()
+                whetherDevelop
                     ? "true"
                     : "false"
             );
@@ -273,7 +277,8 @@ public static class Tools
 
     private static string SupplementColorConsoleConfig(
         this string config,
-        IConfiguration configuration
+        IConfiguration configuration,
+        bool whetherDevelop
     )
     {
         var debugToConsoleConfigValue = LogConfigureAssist.GetDebugToConsole(configuration);
@@ -334,9 +339,7 @@ public static class Tools
 
         var consoleMessageLimitSetting = consoleMessageLimit <= 0 ? "" : $"\"messageLimit\": {consoleMessageLimit},";
 
-        var nlogWordHighlightingRules = EnvironmentAssist
-            .GetEnvironment()
-            .IsDevelopment()
+        var nlogWordHighlightingRules = whetherDevelop
             ? GetNlogWordHighlightingRules()
             : "";
 
