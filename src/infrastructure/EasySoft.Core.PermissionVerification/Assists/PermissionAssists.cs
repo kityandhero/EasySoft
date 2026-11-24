@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.DependencyInjection.IocAssists;
-using EasySoft.Core.PermissionVerification.Attributes;
+﻿using EasySoft.Core.PermissionVerification.Attributes;
 using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
 using EasySoft.Core.PermissionVerification.Entities;
 using EasySoft.UtilityTools.Standard.Messages;

@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.CacheCore.ExtensionMethods;
 using EasySoft.Core.CacheImplementation.ExtensionMethods;
-using EasySoft.Core.DependencyInjection.IocAssists;
 using EasySoft.Core.EntityFramework.Extensions;
 using EasySoft.Core.GeneralLogTransceiver.Extensions;
 using EasySoft.Core.Infrastructure.Extensions;

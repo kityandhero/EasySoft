@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.AuthenticationCore.Attributes;
-using EasySoft.Core.DependencyInjection.IocAssists;
 using EasySoft.Core.PermissionVerification.Observers;
 using EasySoft.UtilityTools.Core.Extensions;
 using EasySoft.UtilityTools.Core.Results.Implements;

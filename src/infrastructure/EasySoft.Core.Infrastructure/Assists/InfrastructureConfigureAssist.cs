@@ -1,5 +1,6 @@
 ﻿using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.Assists;
+using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.Exceptions;
 using EasySoft.UtilityTools.Standard.Models;
 using Microsoft.Extensions.Configuration;
@@ -565,10 +566,10 @@ public class InfrastructureConfigureAssist
         {
             Node = node,
             Value = v,
-            EffectiveValueDescription = ""
+            EffectiveValueDescription = EnumAssist.GetNameList<RelationDatabaseType>().Join("|")
         };
 
-        if (!string.IsNullOrWhiteSpace(v))
+        if (string.IsNullOrWhiteSpace(v))
         {
             throw new ConfigErrorException(
                 configValue.ToErrorDescription()
@@ -616,7 +617,7 @@ public class InfrastructureConfigureAssist
             EffectiveValueDescription = ""
         };
 
-        if (!string.IsNullOrWhiteSpace(v))
+        if (string.IsNullOrWhiteSpace(v))
         {
             throw new ConfigErrorException(
                 configValue.ToErrorDescription()
@@ -661,10 +662,10 @@ public class InfrastructureConfigureAssist
         {
             Node = node,
             Value = v,
-            EffectiveValueDescription = ""
+            EffectiveValueDescription = EnumAssist.GetNameList<RelationDatabaseType>().Join("|")
         };
 
-        if (!string.IsNullOrWhiteSpace(v))
+        if (string.IsNullOrWhiteSpace(v))
         {
             throw new ConfigErrorException(
                 configValue.ToErrorDescription()
@@ -712,7 +713,7 @@ public class InfrastructureConfigureAssist
             EffectiveValueDescription = ""
         };
 
-        if (!string.IsNullOrWhiteSpace(v))
+        if (string.IsNullOrWhiteSpace(v))
         {
             throw new ConfigErrorException(
                 configValue.ToErrorDescription()
@@ -757,10 +758,10 @@ public class InfrastructureConfigureAssist
         {
             Node = node,
             Value = v,
-            EffectiveValueDescription = ""
+            EffectiveValueDescription = EnumAssist.GetNameList<RelationDatabaseType>().Join("|")
         };
 
-        if (!string.IsNullOrWhiteSpace(v))
+        if (string.IsNullOrWhiteSpace(v))
         {
             throw new ConfigErrorException(
                 configValue.ToErrorDescription()
@@ -808,7 +809,7 @@ public class InfrastructureConfigureAssist
             EffectiveValueDescription = ""
         };
 
-        if (!string.IsNullOrWhiteSpace(v))
+        if (string.IsNullOrWhiteSpace(v))
         {
             throw new ConfigErrorException(
                 configValue.ToErrorDescription()

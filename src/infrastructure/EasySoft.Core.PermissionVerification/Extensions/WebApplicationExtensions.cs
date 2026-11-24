@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.DependencyInjection.IocAssists;
-using EasySoft.Core.PermissionVerification.Assists;
+﻿using EasySoft.Core.PermissionVerification.Assists;
 using EasySoft.Core.PermissionVerification.Configures;
 
 namespace EasySoft.Core.PermissionVerification.Extensions;

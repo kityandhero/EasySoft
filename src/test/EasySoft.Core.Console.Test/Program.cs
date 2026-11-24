@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.CacheCore.ExtensionMethods;
 using EasySoft.Core.CacheImplementation.ExtensionMethods;
-using EasySoft.Core.DependencyInjection.IocAssists;
+using EasySoft.Core.Infrastructure.Assists;
 
 var serviceProvider = ConsoleServiceProviderAssist.CreateServiceProvider((serviceCollection, configuration) =>
     {

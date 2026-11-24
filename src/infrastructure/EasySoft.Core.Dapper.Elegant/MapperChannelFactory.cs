@@ -21,7 +21,7 @@ public static class MapperChannelFactory
             "Master",
             infrastructureConfigureAssist.GetMasterDatabaseConnection().Value,
             RelationDatabaseTypeAssist.GetRelationDatabaseType(
-                infrastructureConfigureAssist.GetHistoryDatabaseType().Value
+                infrastructureConfigureAssist.GetMasterDatabaseType().Value
             )
         );
     }

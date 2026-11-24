@@ -8,7 +8,8 @@ namespace EasySoft.Core.AdvanceTrace.Interceptors;
 /// <summary>
 /// Castle DynamicProxy 标准异步拦截器，实现 IAsyncInterceptor。
 /// 支持同步方法、Task 异步、ValueTask 异步三类拦截分支。
-///<para>
+/// </summary>
+/// <remarks>
 /// 解析优先级（由高到低）：
 /// 1. 全局 TracingSwitch = false → 直接放行；
 /// 2. 方法标记 [LogRecordExclude] → 不追踪；
@@ -18,8 +19,7 @@ namespace EasySoft.Core.AdvanceTrace.Interceptors;
 ///
 /// 备注：接口上的特性不自动回溯，Castle 接口代理反射结果不稳定；
 /// 需要追踪请标记到实现类或具体方法上。
-/// </para>
-/// </summary>
+/// </remarks>
 public sealed class TraceRecordAsyncInterceptor : IAsyncInterceptor
 {
     /// <summary>

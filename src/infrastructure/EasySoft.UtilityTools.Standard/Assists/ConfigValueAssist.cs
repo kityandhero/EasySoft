@@ -21,6 +21,6 @@ public static class ConfigValueAssist
     )
     {
         return
-            $"[{node}] 配置无效{(string.IsNullOrWhiteSpace(value) ? "" : $", 有效取值为 {effectiveValueDescription}")}{(string.IsNullOrWhiteSpace(description) ? "" : $", {description}")}.";
+            $"[{node}] 配置{(string.IsNullOrWhiteSpace(value) ? "" : $"值 \"{value}\" ")}无效{(string.IsNullOrWhiteSpace(effectiveValueDescription) ? "" : $", 有效取值为 {effectiveValueDescription}")}{(string.IsNullOrWhiteSpace(description) ? "" : $", {description}")}.";
     }
 }
