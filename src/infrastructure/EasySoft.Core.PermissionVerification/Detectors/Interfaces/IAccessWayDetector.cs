@@ -14,6 +14,6 @@ public interface IAccessWayDetector
     /// </summary>
     /// <param name="guidTag"></param>
     /// <returns></returns>
-    [LogRecord]
+    [TraceRecord]
     public Task<ExecutiveResult<AccessWayModel>> Find(string guidTag);
 }

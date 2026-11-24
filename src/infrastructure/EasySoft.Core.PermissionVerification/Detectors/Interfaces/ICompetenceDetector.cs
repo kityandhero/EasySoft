@@ -12,6 +12,6 @@ public interface ICompetenceDetector
     /// </summary>
     /// <param name="roleGroupId"></param>
     /// <returns></returns>
-    [LogRecord]
+    [TraceRecord]
     public Task<IList<CompetenceEntity>> GetCompetenceEntityCollection(long roleGroupId);
 }

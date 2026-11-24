@@ -1,8 +1,5 @@
-﻿using EasySoft.Core.AdvanceTrace.Assists;
-using EasySoft.Core.AdvanceTrace.Options;
+﻿using EasySoft.Core.AdvanceTrace.Options;
 using EasySoft.UtilityTools.Standard.Exceptions;
-using OpenTelemetry;
-using OpenTelemetry.Resources;
 
 namespace EasySoft.Core.AdvanceTrace.Extensions;
 
@@ -24,7 +21,7 @@ public static class WebApplicationBuilderExtensions
         string sourceName,
         string openTelemetryProtocolEndpoint,
         bool tracingSwitch,
-        Action<LogRecordTracePerformanceOptions> action = null
+        Action<TraceRecordTracePerformanceOptions> action = null
     )
     {
         builder.Services.AddAdvanceTrace(sourceName, action);

@@ -20,7 +20,7 @@ namespace EasySoft.Core.AdvanceTrace.Interceptors;
 /// 需要追踪请标记到实现类或具体方法上。
 /// </para>
 /// </summary>
-public sealed class LogRecordAsyncInterceptor : IAsyncInterceptor
+public sealed class TraceRecordAsyncInterceptor : IAsyncInterceptor
 {
     /// <summary>
     /// 方法配置缓存：MethodInfo 作为 Key。
@@ -36,7 +36,7 @@ public sealed class LogRecordAsyncInterceptor : IAsyncInterceptor
     /// <summary>
     /// 性能开关配置。
     /// </summary>
-    private readonly LogRecordTracePerformanceOptions _options;
+    private readonly TraceRecordTracePerformanceOptions _options;
 
     /// <summary>
     /// Newtonsoft 序列化器，复用实例避免每次新建。
@@ -66,13 +66,13 @@ public sealed class LogRecordAsyncInterceptor : IAsyncInterceptor
     /// </summary>
     /// <param name="sourceName">ActivitySource 名称，链路分析工具识别使用。</param>
     /// <param name="options">性能开关配置；传 null 使用默认低开销配置。</param>
-    public LogRecordAsyncInterceptor(
+    public TraceRecordAsyncInterceptor(
         string sourceName,
-        LogRecordTracePerformanceOptions options = null
+        TraceRecordTracePerformanceOptions options = null
     )
     {
         _activitySource = new ActivitySource(sourceName);
-        _options = options ?? new LogRecordTracePerformanceOptions();
+        _options = options ?? new TraceRecordTracePerformanceOptions();
     }
 
     #region IAsyncInterceptor 入口
@@ -472,13 +472,13 @@ public sealed class LogRecordAsyncInterceptor : IAsyncInterceptor
     private MethodTraceConfig ResolveCore(MethodInfo methodInfo)
     {
         // 第一步：排除标记优先级最高。
-        if (methodInfo.GetCustomAttribute<LogRecordExcludeAttribute>() != null)
+        if (methodInfo.GetCustomAttribute<TraceRecordExcludeAttribute>() != null)
         {
             return new MethodTraceConfig { Excluded = true };
         }
 
         // 第二步：方法自身特性优先。
-        var methodAttr = methodInfo.GetCustomAttribute<LogRecordAttribute>();
+        var methodAttr = methodInfo.GetCustomAttribute<TraceRecordAttribute>();
 
         if (methodAttr != null)
         {
@@ -494,7 +494,7 @@ public sealed class LogRecordAsyncInterceptor : IAsyncInterceptor
 
         while (currentType != null)
         {
-            var classAttr = currentType.GetCustomAttribute<LogRecordAttribute>();
+            var classAttr = currentType.GetCustomAttribute<TraceRecordAttribute>();
 
             if (classAttr != null)
             {
@@ -506,7 +506,7 @@ public sealed class LogRecordAsyncInterceptor : IAsyncInterceptor
             }
 
             // 当前类未开启 Inherit，停止向上追溯基类。
-            var checkSelf = currentType.GetCustomAttribute<LogRecordAttribute>();
+            var checkSelf = currentType.GetCustomAttribute<TraceRecordAttribute>();
 
             if (checkSelf == null || !checkSelf.Inherit)
             {

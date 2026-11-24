@@ -9,7 +9,7 @@
     AllowMultiple = false,
     Inherited = false
 )]
-public sealed class LogRecordAttribute : Attribute
+public sealed class TraceRecordAttribute : Attribute
 {
     /// <summary>
     /// 是否向上继续查找基类。

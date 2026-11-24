@@ -6,7 +6,7 @@ namespace EasySoft.Core.Web.Framework.Kernel.Test.Controllers;
 
 public class AdvanceTraceController : ControllerCore
 {
-    [LogRecord]
+    [TraceRecord]
     public ActionResult TestTrace()
     {
         return Content("success");

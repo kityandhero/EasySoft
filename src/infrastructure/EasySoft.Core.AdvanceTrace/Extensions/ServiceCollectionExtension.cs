@@ -1,8 +1,5 @@
 ﻿using EasySoft.Core.AdvanceTrace.Interceptors;
 using EasySoft.Core.AdvanceTrace.Options;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
 
 namespace EasySoft.Core.AdvanceTrace.Extensions;
 
@@ -18,23 +15,23 @@ public static class ServiceCollectionExtension
     public static IServiceCollection AddAdvanceTrace(
         this IServiceCollection services,
         string trackingSourceName,
-        Action<LogRecordTracePerformanceOptions> action = null
+        Action<TraceRecordTracePerformanceOptions> action = null
     )
     {
         services.AddSingleton(sp =>
             {
-                var options = sp.GetRequiredService<IOptions<LogRecordTracePerformanceOptions>>().Value;
+                var options = sp.GetRequiredService<IOptions<TraceRecordTracePerformanceOptions>>().Value;
 
                 action?.Invoke(options);
 
-                return new LogRecordAsyncInterceptor(
+                return new TraceRecordAsyncInterceptor(
                     trackingSourceName,
                     options
                 );
             }
         );
 
-        services.AddScoped<LogRecordInterceptor>();
+        services.AddScoped<TraceRecordInterceptor>();
 
         return services;
     }

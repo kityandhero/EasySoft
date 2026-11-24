@@ -82,7 +82,7 @@ public static class WebApplicationBuilderExtensions
             {
                 var permissionClient = provider.GetRequiredService<IPermissionClient>();
 
-                var interceptors = new List<Type> { typeof(LogRecordInterceptor) }
+                var interceptors = new List<Type> { typeof(TraceRecordInterceptor) }
                     .ConvertAll(interceptorType => provider.GetService(interceptorType) as IInterceptor)
                     .ToArray();
                 var proxyGenerator = provider.GetService<ProxyGenerator>();
@@ -110,7 +110,7 @@ public static class WebApplicationBuilderExtensions
             {
                 var permissionClient = provider.GetRequiredService<IPermissionClient>();
 
-                var interceptors = new List<Type> { typeof(LogRecordInterceptor) }
+                var interceptors = new List<Type> { typeof(TraceRecordInterceptor) }
                     .ConvertAll(interceptorType => provider.GetService(interceptorType) as IInterceptor)
                     .ToArray();
                 var proxyGenerator = provider.GetService<ProxyGenerator>();

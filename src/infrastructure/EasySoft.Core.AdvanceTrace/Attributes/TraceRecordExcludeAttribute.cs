@@ -10,6 +10,6 @@
     AllowMultiple = false,
     Inherited = false
 )]
-public sealed class LogRecordExcludeAttribute : Attribute
+public sealed class TraceRecordExcludeAttribute : Attribute
 {
 }

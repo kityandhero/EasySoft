@@ -9,5 +9,7 @@ global using System.Text.RegularExpressions;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Options;
 global using OpenTelemetry.Exporter;
 global using OpenTelemetry.Trace;
+global using OpenTelemetry.Resources;

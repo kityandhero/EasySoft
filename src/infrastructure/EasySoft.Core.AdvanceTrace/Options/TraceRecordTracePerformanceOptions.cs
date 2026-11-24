@@ -5,7 +5,7 @@
 /// 默认值偏向低开销：载荷关闭、脱敏关闭、缓存开启、截断开启
 /// 所有项均可在 DI 配置文件中覆盖
 /// </summary>
-public sealed class LogRecordTracePerformanceOptions
+public sealed class TraceRecordTracePerformanceOptions
 {
     /// <summary>
     /// 链路总开关。

@@ -6,7 +6,7 @@
 internal sealed class MethodTraceConfig
 {
     /// <summary>
-    /// 是否被排除追踪（命中 LogRecordExcludeAttribute）。
+    /// 是否被排除追踪（命中 TraceRecordExcludeAttribute）。
     /// </summary>
     public bool Excluded { get; set; }
 

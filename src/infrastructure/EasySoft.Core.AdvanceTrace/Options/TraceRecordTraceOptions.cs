@@ -3,7 +3,7 @@
 /// <summary>
 /// 链路全局配置
 /// </summary>
-public class LogRecordTraceOptions
+public class TraceRecordTraceOptions
 {
     /// <summary>
     /// 全局总开关：是否允许记录入参与返回值。
