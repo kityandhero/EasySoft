@@ -1,9 +1,8 @@
-﻿using EasySoft.Core.AdvanceTrace.Options;
+﻿using EasySoft.Core.AdvanceTrace.Assists;
+using EasySoft.Core.AdvanceTrace.Options;
 using EasySoft.UtilityTools.Standard.Exceptions;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using OpenTelemetry.Exporter;
-using OpenTelemetry.Trace;
+using OpenTelemetry;
+using OpenTelemetry.Resources;
 
 namespace EasySoft.Core.AdvanceTrace.Extensions;
 
@@ -13,22 +12,26 @@ public static class WebApplicationBuilderExtensions
     /// 注入轨迹跟踪
     /// </summary>
     /// <param name="builder">构建器</param>
-    /// <param name="tracingSwitch">跟踪全局开关</param>
-    /// <param name="trackingSourceName">追踪源名称</param>
+    /// <param name="serviceName">服务资源名</param>
+    /// <param name="sourceName">埋点源名称</param>
     /// <param name="openTelemetryProtocolEndpoint">遥测点</param>
+    /// <param name="tracingSwitch">跟踪全局开关</param>
     /// <param name="action">选项配置器</param>
     /// <returns></returns> 
     public static WebApplicationBuilder AddAdvanceTrace(
         this WebApplicationBuilder builder,
-        bool tracingSwitch,
-        string trackingSourceName,
+        string serviceName,
+        string sourceName,
         string openTelemetryProtocolEndpoint,
+        bool tracingSwitch,
         Action<LogRecordTracePerformanceOptions> action = null
     )
     {
-        builder.Services.AddAdvanceTrace(trackingSourceName, action);
+        builder.Services.AddAdvanceTrace(sourceName, action);
 
         builder.Services.AddOpenTelemetry()
+            .ConfigureResource(r => { r.AddService(serviceName); }
+            )
             .WithTracing(tracing =>
                 {
                     if (!tracingSwitch)
@@ -36,7 +39,19 @@ public static class WebApplicationBuilderExtensions
                         return;
                     }
 
-                    tracing.AddSource(trackingSourceName);
+                    // 跟踪自动链
+                    tracing.AddAspNetCoreInstrumentation();
+
+                    // 调试强制全采样
+                    tracing.SetSampler(new AlwaysOnSampler());
+
+                    // 做本地判定
+                    tracing.AddConsoleExporter();
+
+                    // tracing.AddAspNetCoreInstrumentation()
+                    //     .AddHttpClientInstrumentation();
+
+                    tracing.AddSource(sourceName);
 
                     if (!string.IsNullOrWhiteSpace(openTelemetryProtocolEndpoint))
                     {
@@ -50,6 +65,17 @@ public static class WebApplicationBuilderExtensions
                                 {
                                     o.Endpoint = validUri;
                                     o.Protocol = OtlpExportProtocol.HttpProtobuf;
+
+                                    // 集成调试用：立刻发送，不批量排队
+                                    // o.BatchExportProcessorOptions = new BatchExportProcessorOptions<Activity>
+                                    // {
+                                    //     MaxQueueSize = 512,
+                                    //     MaxExportBatchSize = 1,
+                                    //     ScheduledDelayMilliseconds = 1
+                                    // };
+
+                                    // 集成调试专用, 与BatchExportProcessorOptions 二选一
+                                    // o.ExportProcessorType = ExportProcessorType.Simple;
                                 }
                             );
                         }

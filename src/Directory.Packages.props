@@ -139,8 +139,10 @@
     <PackageVersion Include="Open.IdentityServer" Version="2.0.0" />
     <PackageVersion Include="OpenTelemetry" Version="1.19.1" />
     <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.19.1" />
+    <PackageVersion Include="OpenTelemetry.Exporter.Console" Version="1.19.1" />
     <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.19.1" />
     <PackageVersion Include="OpenTelemetry.Exporter.Zipkin" Version="1.19.1" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.19.0" />
     <PackageVersion Include="Pipelines.Sockets.Unofficial" Version="2.2.16" />
     <PackageVersion Include="Polly" Version="8.8.0" />
     <PackageVersion Include="QRCoder" Version="1.8.0" />

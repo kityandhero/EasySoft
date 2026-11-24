@@ -166,6 +166,14 @@ public static class KernelExtensions
 
         #region AdvanceTrace
 
+        var trackingServiceNameConfigValue = AdvanceTraceConfigureAssist.GetTrackingServiceName(
+            builder.Configuration
+        );
+
+        StartupConfigMessageAssist.AddConfig(
+            trackingServiceNameConfigValue.ToArrowDescription()
+        );
+
         var trackingSourceNameConfigValue = AdvanceTraceConfigureAssist.GetTrackingSourceName(
             builder.Configuration
         );
@@ -247,9 +255,10 @@ public static class KernelExtensions
         );
 
         builder.AddAdvanceTrace(
-            tracingSwitchConfigValue.Value,
+            trackingServiceNameConfigValue.Value,
             trackingSourceNameConfigValue.Value,
             openTelemetryProtocolEndpointConfigValue.Value,
+            tracingSwitchConfigValue.Value,
             o =>
             {
                 o.TracingSwitch = tracingSwitchConfigValue.Value;

@@ -18,9 +18,26 @@ public class AdvanceTraceConfigureAssist
     private const string AdvanceTraceConfigureNode = "AdvanceTrace";
 
     /// <summary>
-    /// 追踪源名称 配置节点
+    /// 服务资源名 配置节点
     /// </summary>
-    private const string TrackingSourceNameConfigureNode = "TrackingSourceName";
+    /// <remarks>
+    /// <para> 作用：标识当前整个进程/服务实例，输出到 trace 的 Resource 顶层属性 </para>
+    /// <para> 用途：Zipkin / Jaeger / 监控平台用来归类、筛选整条服务的链路 </para>
+    /// <para> 归属：部署维度，适合放配置文件，同一份框架代码部署不同业务时修改 </para>
+    /// <para> 和 ActivitySource 不是一回事：它不区分埋点模块，代表“这个应用本身” </para>
+    /// </remarks>
+    private const string TrackingServiceNameConfigureNode = "ServiceName";
+
+    /// <summary>
+    /// 埋点源名称 配置节点
+    /// </summary>
+    /// <remarks>
+    /// <para> 作用：标识一组埋点、自定义 Span 的来源，对应 trace 里的 InstrumentationScope </para>
+    /// <para> 用途：区分 Span 属于哪个业务模块/组件，用来过滤埋点、控制采样 </para>
+    /// <para> 归属：代码/模块维度，属于静态约定，一般不做成配置项 </para>
+    /// <para> 示例：EasySoft.Order、EasySoft.Payment，一个服务内可以存在多个不同 Source </para>
+    /// </remarks>
+    private const string TrackingSourceNameConfigureNode = "SourceName";
 
     /// <summary>
     /// 遥测点 配置节点
@@ -92,6 +109,55 @@ public class AdvanceTraceConfigureAssist
     #endregion
 
     #region Methods
+
+    #region GetTrackingServiceName
+
+    /// <summary>
+    /// 获取埋点源名称
+    /// </summary>
+    /// <param name="configuration">配置集</param>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public static ConfigValue<string> GetTrackingServiceName(IConfiguration configuration)
+    {
+        var tracingSwitchConfigValue = GetTracingSwitch(configuration);
+
+        var node = StringAssist.Join(
+            [
+                AdvanceTraceConfigureNode,
+                TrackingServiceNameConfigureNode
+            ],
+            ":"
+        );
+
+        var v = configuration[node] ?? "";
+
+        var configValue = new ConfigValue<string>
+        {
+            Node = node,
+            Value = v,
+            EffectiveValueDescription = ""
+        };
+
+        if (tracingSwitchConfigValue.Value && string.IsNullOrWhiteSpace(v))
+        {
+            throw new ConfigErrorException(
+                configValue.ToErrorDescription("启用跟踪情况下，需要配置")
+            );
+        }
+
+        return configValue;
+    }
+
+    /// <summary>
+    /// 获取埋点源名称
+    /// </summary>
+    /// <exception cref="ConfigErrorException">配置异常</exception>
+    public ConfigValue<string> GetTrackingServiceName()
+    {
+        return GetTrackingServiceName(Configuration);
+    }
+
+    #endregion
 
     #region GetTrackingSourceName
 
