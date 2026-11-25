@@ -160,11 +160,15 @@ public static class WebApplicationBuilderExtensions
     //     return builder;
     // }
 
-    private static void LoadDynamicNLogJsonConfig(ExecutiveResult<string> executiveResult)
+    private static void LoadDynamicNLogJsonConfig(
+        ExecutiveResult<string> executiveResult,
+        IConfiguration configuration,
+        bool whetherDevelop
+    )
     {
         if (!executiveResult.Success || (executiveResult.Success && string.IsNullOrWhiteSpace(executiveResult.Data)))
         {
-            LogManager.Configuration = BuildDefaultConfig();
+            LogManager.Configuration = BuildDefaultConfig(configuration, whetherDevelop);
 
             LogManager.Configuration.Reload();
 
@@ -202,20 +206,23 @@ public static class WebApplicationBuilderExtensions
                     $"some error occur, transitiveMessage: \"{e.Message}\", will use local config."
                 );
 
-                LogManager.Configuration = BuildDefaultConfig();
+                LogManager.Configuration = BuildDefaultConfig(configuration, whetherDevelop);
 
                 LogManager.Configuration.Reload();
             }
         }
         else
         {
-            LogManager.Configuration = BuildDefaultConfig();
+            LogManager.Configuration = BuildDefaultConfig(configuration, whetherDevelop);
 
             LogManager.Configuration.Reload();
         }
     }
 
-    private static NLogLoggingConfiguration BuildDefaultConfig()
+    private static NLogLoggingConfiguration BuildDefaultConfig(
+        IConfiguration cfg,
+        bool whetherDevelop
+    )
     {
         NLogLoggingConfiguration configuration;
 
@@ -229,7 +236,7 @@ public static class WebApplicationBuilderExtensions
         {
             configuration = new NLogLoggingConfiguration(
                 new ConfigurationBuilder().AddJsonContent(
-                        Tools.GetNlogEmbedConfig()
+                        Tools.GetNlogEmbedConfig(cfg, whetherDevelop)
                     )
                     .Build()
                     .GetSection("NLog")

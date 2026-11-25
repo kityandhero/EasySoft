@@ -121,7 +121,7 @@ public static class WebApplicationBuilderExtensions
 
         // builder.Services.AddEndpointsApiExplorer();
 
-        builder.AddLogRecordInterceptor();
+        // builder.AddLogRecordInterceptor();
 
         builder.AddAdvanceSwagger();
 
