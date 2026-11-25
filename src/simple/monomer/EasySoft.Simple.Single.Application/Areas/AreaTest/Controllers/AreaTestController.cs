@@ -1,10 +1,12 @@
-﻿using EasySoft.UtilityTools.Core.Results.Interfaces;
+﻿using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Results.Interfaces;
 
 namespace EasySoft.Simple.Single.Application.Areas.AreaTest.Controllers;
 
 /// <summary>
 /// AreaTestController
 /// </summary>
+
 // [ApiController]
 // [Route("Home")]
 public class AreaTestController : AreaControllerCore
@@ -18,9 +20,11 @@ public class AreaTestController : AreaControllerCore
     {
         var a = this.ParamAsync("a", 0);
 
-        return this.Success(new
-        {
-            value = a
-        });
+        return this.Success(
+            new
+            {
+                value = a
+            }
+        );
     }
 }

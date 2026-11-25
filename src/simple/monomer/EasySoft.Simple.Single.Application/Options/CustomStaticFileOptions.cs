@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Options;
+﻿using EasySoft.UtilityTools.AspNetCore.Options;
 using Microsoft.AspNetCore.StaticFiles;
 
 namespace EasySoft.Simple.Single.Application.Options;
@@ -12,9 +12,9 @@ public class CustomStaticFileOptions : AdvanceStaticFileOptions
     /// CustomStaticFileOptions
     /// </summary>
     public CustomStaticFileOptions(
-        InfrastructureConfigureAssist infrastructureConfigureAssist
+        ApplicationConfigureAssist applicationConfigureAssist
     ) : base(
-        infrastructureConfigureAssist
+        applicationConfigureAssist
     )
     {
         var provider = new FileExtensionContentTypeProvider

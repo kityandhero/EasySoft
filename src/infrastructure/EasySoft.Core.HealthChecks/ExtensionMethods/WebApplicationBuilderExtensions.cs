@@ -1,5 +1,7 @@
 ﻿using EasySoft.Core.HealthChecks.Entities;
-using EasySoft.Core.Infrastructure.Configures;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Assists;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Core.HealthChecks.ExtensionMethods;
 
@@ -33,8 +35,7 @@ public static class WebApplicationBuilderExtensions
             );
         }
 
-        builder.Services.AddHealthChecksUI(
-                settings =>
+        builder.Services.AddHealthChecksUI(settings =>
                 {
                     settings.AddHealthCheckEndpoint("internal", ConstCollection.HealthChecksEndpoint);
 
@@ -44,7 +45,7 @@ public static class WebApplicationBuilderExtensions
             )
             .AddInMemoryStorage();
 
-        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
+        WebApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpointRouteBuilder => { endpointRouteBuilder.UseAdvanceHealthChecks(); })

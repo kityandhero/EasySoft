@@ -1,4 +1,6 @@
 ﻿using EasySoft.Core.Hangfire.Assists;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Core.Hangfire.ExtensionMethods;
 
@@ -47,7 +49,7 @@ public static class WebApplicationBuilderExtensions
             $"Hangfire storage type is {storageTypeConfigValue.Value}."
         );
 
-        ApplicationConfigure.AddWebApplicationExtraAction(
+        WebApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(application => { application.UseAdvanceHangfire(); })

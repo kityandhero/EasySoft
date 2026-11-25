@@ -1,10 +1,11 @@
-﻿using EasySoft.Core.AppSecurityVerification.Detectors;
-using EasySoft.Core.AppSecurityVerification.Detectors.Interfaces;
+﻿using EasySoft.Core.AppSecurityVerification.Detectors.Interfaces;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Assists;
 
 namespace EasySoft.Core.AppSecurityVerification.Extensions;
 
 /// <summary>  
-/// WebApplicationExtensions
+/// HostExtensions
 /// </summary>
 public static class WebApplicationExtensions
 {
@@ -21,14 +22,16 @@ public static class WebApplicationExtensions
             $"{nameof(UseAppSecurityFirstVerify)}."
         );
 
-        ApplicationConfigure.OnApplicationStart += async serviceProvider =>
+        WebApplicationConfigure.OnApplicationStart += async serviceProvider =>
         {
             var appSecurityDetector = serviceProvider.GetRequiredService<IAppSecurityDetector>();
 
             if (application.Environment.IsDevelopment())
+            {
                 application.Logger.LogAdvancePrompt(
                     "Do first app security detector"
                 );
+            }
 
             try
             {

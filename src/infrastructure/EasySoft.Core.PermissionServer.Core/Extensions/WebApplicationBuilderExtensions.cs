@@ -1,10 +1,11 @@
 ﻿using EasySoft.Core.AccessWayTransceiver.Extensions;
 using EasySoft.Core.PermissionServer.Core.Consumers;
+using EasySoft.UtilityTools.Core.Assists;
 
 namespace EasySoft.Core.PermissionServer.Core.Extensions;
 
 /// <summary>
-/// WebApplicationBuilderExtensions
+/// ServerCollectionExtensions
 /// </summary>
 internal static class WebApplicationBuilderExtensions
 {

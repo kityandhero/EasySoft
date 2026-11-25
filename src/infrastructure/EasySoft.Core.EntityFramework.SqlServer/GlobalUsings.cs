@@ -10,7 +10,6 @@ global using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
 global using EasySoft.Core.EntityFramework.SqlServer.Contexts;
 global using EasySoft.Core.EntityFramework.SqlServer.Transactions;
 global using EasySoft.Core.EntityFramework.Transactions;
-global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.UtilityTools.Core.Extensions;
 global using EasySoft.UtilityTools.Standard.Extensions;
 global using Microsoft.AspNetCore.Builder;

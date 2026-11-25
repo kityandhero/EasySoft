@@ -1,7 +1,6 @@
-﻿using EasySoft.Core.CacheCore.ExtensionMethods;
+﻿using EasySoft.Core.CacheAspNetCore.ExtensionMethods;
+using EasySoft.Core.CacheCore.ExtensionMethods;
 using EasySoft.Core.CacheCore.interfaces;
-using EasySoft.Core.CacheImplementation.ExtensionMethods;
-using EasySoft.Core.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 

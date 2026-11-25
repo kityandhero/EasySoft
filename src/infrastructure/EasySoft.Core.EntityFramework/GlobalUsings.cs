@@ -10,8 +10,6 @@ global using EasySoft.Core.Data.Repositories;
 global using EasySoft.Core.Data.Transactions;
 global using EasySoft.Core.EntityFramework.Configures;
 global using EasySoft.Core.EntityFramework.Contexts.Basic;
-global using EasySoft.Core.Infrastructure.Assists;
-global using EasySoft.Core.Infrastructure.Queues;
 global using EasySoft.IdGenerator.Assists;
 global using EasySoft.UtilityTools.Core.Assists;
 global using EasySoft.UtilityTools.Core.Channels;

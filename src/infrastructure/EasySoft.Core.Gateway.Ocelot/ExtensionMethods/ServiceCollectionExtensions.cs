@@ -1,4 +1,6 @@
 ﻿using EasySoft.Core.Gateway.Ocelot.ConfigAssist;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Core.Gateway.Ocelot.ExtensionMethods;
 
@@ -65,7 +67,7 @@ public static class ServiceCollectionExtensions
             );
         }
 
-        ApplicationConfigure.AddWebApplicationExtraAction(
+        WebApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(application => { application.UseOcelot().Wait(); })

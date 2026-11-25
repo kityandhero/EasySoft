@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
+﻿using EasySoft.UtilityTools.Core.Entities.Interfaces;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.Data.Repositories;
@@ -340,7 +340,8 @@ public interface IRepository<TEntity, in TKey> : IRepository where TEntity : cla
     /// <param name="entities"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<ExecutiveResult> BatchDeleteAsync(IEnumerable<TEntity> entities,
+    Task<ExecutiveResult> BatchDeleteAsync(
+        IEnumerable<TEntity> entities,
         CancellationToken cancellationToken = default
     );
 

@@ -2,11 +2,12 @@
 using EasySoft.Core.GeneralLogTransceiver.Extensions;
 using EasySoft.Core.LogServer.Core.Consumers;
 using EasySoft.Core.SqlLogTransceiver.Extensions;
+using EasySoft.UtilityTools.Core.Assists;
 
 namespace EasySoft.Core.LogServer.Core.Extensions;
 
 /// <summary>
-/// WebApplicationBuilderExtensions
+/// ServerCollectionExtensions
 /// </summary>
 internal static class WebApplicationBuilderExtensions
 {

@@ -1,7 +1,8 @@
 ﻿using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
 using EasySoft.Core.PermissionVerification.Attributes;
 using EasySoft.Core.Web.Framework.Kernel.Controllers;
-using EasySoft.UtilityTools.Core.Results.Interfaces;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Results.Interfaces;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Controllers;
 

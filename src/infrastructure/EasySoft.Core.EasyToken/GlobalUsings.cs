@@ -6,7 +6,6 @@ global using EasySoft.Core.AuthenticationCore.ExtensionMethods;
 global using EasySoft.Core.AuthenticationCore.Filters;
 global using EasySoft.Core.AuthenticationCore.Operators;
 global using EasySoft.Core.CacheCore.interfaces;
-global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.UtilityTools.Core.Assists;
 global using EasySoft.UtilityTools.Standard;
 global using EasySoft.UtilityTools.Standard.Enums;

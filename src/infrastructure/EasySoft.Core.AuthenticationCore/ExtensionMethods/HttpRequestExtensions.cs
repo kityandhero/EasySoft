@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.AuthenticationCore.Assists;
-using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Core.Assists;
 
 namespace EasySoft.Core.AuthenticationCore.ExtensionMethods;
 

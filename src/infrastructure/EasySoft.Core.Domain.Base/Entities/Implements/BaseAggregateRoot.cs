@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Domain.Base.Entities.Interfaces;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
 
 namespace EasySoft.Core.Domain.Base.Entities.Implements;
 

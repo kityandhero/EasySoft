@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.AppSecurityVerification.Extensions;
-using EasySoft.Core.Infrastructure.Configures;
 using EasySoft.Core.PermissionVerification.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Simple.Tradition.Management.Core.Assists;
 
@@ -11,16 +12,17 @@ public static class ApplicationAssist
         ApplicationConfig.ApplicationAssist.Init();
 
         // 配置额外的构建项目
-        ApplicationConfigure.AddWebApplicationBuilderExtraActions(
+        WebApplicationConfigure.AddWebApplicationBuilderExtraActions(
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddPermissionServer")
                 .SetAction(applicationBuilder => { applicationBuilder.AddAppSecurityVerification(); }),
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddPermissionServer")
                 .SetAction(applicationBuilder =>
-                {
-                    applicationBuilder.AddPermissionVerification<ApplicationPermissionObserver>();
-                })
+                    {
+                        applicationBuilder.AddPermissionVerification<ApplicationPermissionObserver>();
+                    }
+                )
         );
     }
 }

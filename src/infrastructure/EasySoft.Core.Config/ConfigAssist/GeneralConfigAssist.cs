@@ -1,9 +1,7 @@
 ﻿using EasySoft.Core.Config.Cap;
 using EasySoft.Core.Config.ConfigCollection;
 using EasySoft.Core.Config.Exceptions;
-using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
-using EasySoft.Core.Infrastructure.Configures;
 using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Config.ConfigAssist;
@@ -123,7 +121,7 @@ public static class GeneralConfigAssist
         var ticksHex = Convert.ToString(ticks, 16);
         var name = GetName();
 
-        return $"{name}-{EnvironmentAssist.GetEnvironmentAliasName()}-{ticksHex}";
+        return $"{name}-{HostEnvironmentAssist.GetEnvironmentAliasName()}-{ticksHex}";
     }
 
     /// <summary>
@@ -183,7 +181,7 @@ public static class GeneralConfigAssist
     /// <returns></returns>
     public static string GetAppId()
     {
-        if (AppSecurityServerConfigure.EmbedMode)
+        if (ApplicationSecurityServerConfigure.EmbedMode)
         {
             return AppSecurityAssist.EmbedAppId;
         }
@@ -201,7 +199,7 @@ public static class GeneralConfigAssist
     /// <returns></returns>
     public static string GetAppSecret()
     {
-        if (AppSecurityServerConfigure.EmbedMode)
+        if (ApplicationSecurityServerConfigure.EmbedMode)
         {
             return AppSecurityAssist.EmbedAppSecret;
         }

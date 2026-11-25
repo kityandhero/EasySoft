@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.JsonWebToken.Middlewares;
+﻿using EasySoft.Core.JsonWebToken.Middlewares;
 using EasySoft.Core.JsonWebToken.Assists;
 using EasySoft.UtilityTools.Core.Extensions;
 
@@ -25,7 +24,7 @@ public static class WebApplicationBuilderExtensions
 
     /// <summary>
     /// 配置操作者验证 
-       /// </summary> 
+    /// </summary> 
     /// <param name="builder">构建器</param>
     /// <param name="middlewareMode"></param>
     /// <returns></returns>

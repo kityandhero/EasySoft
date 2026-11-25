@@ -1,12 +1,10 @@
 ﻿using EasySoft.Core.CacheCore.ExtensionMethods;
 using EasySoft.Core.CacheImplementation.ExtensionMethods;
-using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.Core.Hosting.Framework.Kernel.Assists;
+using EasySoft.UtilityTools.Core.Assists;
 
-var serviceProvider = ConsoleServiceProviderAssist.CreateServiceProvider((serviceCollection, configuration) =>
-    {
-        Console.WriteLine("-------ConsoleServiceProviderAssist-------");
+var hostBuilder = HostBuilderAssist.CreateBuilder(args);
 
-        serviceCollection.AddCacheCore(configuration);
-        serviceCollection.AddAdvanceCacheImplementation();
-    }
-);
+var host = hostBuilder.Build();
+
+host.StartAsync();

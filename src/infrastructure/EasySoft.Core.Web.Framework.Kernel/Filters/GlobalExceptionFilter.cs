@@ -1,7 +1,6 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
+﻿using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Results.Implements;
 using EasySoft.UtilityTools.Core.Assists;
-using EasySoft.UtilityTools.Core.Extensions;
-using EasySoft.UtilityTools.Core.Results.Implements;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Enums;
 using EasySoft.UtilityTools.Standard.Exceptions;
@@ -78,9 +77,9 @@ public class GlobalExceptionFilter : IExceptionFilter
             result.Data = context.Exception.StackTrace;
         }
 
-        var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+        var applicationConfigureAssist = ServiceProviderAssist.Resolve<ApplicationConfigureAssist>();
 
-        var transmissionErrorConfigValue = infrastructureConfigureAssist.GetUseErrorLogTransceiver();
+        var transmissionErrorConfigValue = applicationConfigureAssist.GetUseErrorLogTransceiver();
 
         if (transmissionErrorConfigValue.Value)
         {

@@ -1,4 +1,6 @@
 ﻿using EasySoft.Simple.Tradition.Management.Core.Common;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Results.Interfaces;
 
 namespace EasySoft.Simple.Tradition.Management.Core.Controllers;
 

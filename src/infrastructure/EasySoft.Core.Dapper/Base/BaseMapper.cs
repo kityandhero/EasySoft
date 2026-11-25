@@ -1,12 +1,11 @@
 ﻿using EasySoft.Core.Dapper.Enums;
 using EasySoft.Core.Dapper.Interfaces;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Collector;
 using EasySoft.Core.Sql.Builders;
 using EasySoft.Core.Sql.Extensions;
 using EasySoft.Core.Sql.Factories;
 using EasySoft.Core.Sql.Interfaces;
 using EasySoft.UtilityTools.Core.Assists;
+using EasySoft.UtilityTools.Standard.Collector;
 using EasySoft.UtilityTools.Standard.Exceptions;
 using EasySoft.UtilityTools.Standard.Interfaces;
 using EasySoft.UtilityTools.Standard.Messages;

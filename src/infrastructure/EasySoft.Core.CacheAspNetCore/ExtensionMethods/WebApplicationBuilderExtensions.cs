@@ -1,0 +1,33 @@
+﻿using EasySoft.Core.CacheImplementation.ExtensionMethods;
+using EasySoft.UtilityTools.Core.Assists;
+using EasySoft.UtilityTools.Core.Extensions;
+
+namespace EasySoft.Core.CacheAspNetCore.ExtensionMethods;
+
+public static class WebApplicationBuilderExtensions
+{
+    private const string UniqueIdentifierAddAdvanceCacheImplementation = "b73d0680-f482-4168-b752-6f33abb10c0f";
+
+    /// <summary>
+    /// 配置缓存模式
+    /// </summary>
+    /// <param name="builder">构建器</param>
+    /// <returns></returns>
+    public static WebApplicationBuilder AddAdvanceCacheImplementation(
+        this WebApplicationBuilder builder
+    )
+    {
+        if (builder.HasRegistered(UniqueIdentifierAddAdvanceCacheImplementation))
+        {
+            return builder;
+        }
+
+        StartupDescriptionMessageAssist.AddExecute(
+            $"{nameof(AddAdvanceCacheImplementation)}."
+        );
+
+        builder.Services.AddAdvanceCacheImplementation();
+
+        return builder;
+    }
+}

@@ -2,6 +2,7 @@
 
 global using System;
 global using System.Collections;
+global using System.Collections.Concurrent;
 global using System.Collections.Generic;
 global using System.Collections.Specialized;
 global using System.ComponentModel;
@@ -21,6 +22,7 @@ global using System.Text.RegularExpressions;
 global using System.Threading;
 global using System.Threading.Tasks;
 global using EasySoft.UtilityTools.Standard.Result.Implements;
+global using Masuit.Tools.Systems;
 global using MediatR;
 global using Newtonsoft.Json;
 global using Newtonsoft.Json.Linq;

@@ -1,0 +1,33 @@
+﻿using EasySoft.Core.Mapster.Assists;
+using EasySoft.UtilityTools.Core.Assists;
+
+namespace EasySoft.Core.Mapster.ExtensionMethods;
+
+// 映射配置应该只初始化并且只进行一次配置。因此在编写代码的时候不能将映射配置和映射调用放在同一个地方。
+// 重复进行相同配饰实例化将引发异常
+public static class HostApplicationBuilderExtensions
+{
+    /// <summary>
+    /// AddAdvanceMapster, 配置构建请向 ConfigActionAssist 增加配置 action
+    /// </summary>
+    /// <param name="builder">构建器</param>
+    /// <returns></returns>
+    public static IHostApplicationBuilder AddAdvanceMapster(
+        this IHostApplicationBuilder builder
+    )
+    {
+        StartupDescriptionMessageAssist.AddExecute(
+            $"{nameof(AddAdvanceMapster)}."
+        );
+
+        ConfigActionAssist.GetConfigAction().ForEach(action => { action(TypeAdapterConfig.GlobalSettings); });
+
+        builder.Services.AddAdvanceMapster();
+
+        StartupDescriptionMessageAssist.AddPrompt(
+            "IMapper provide by Mapster inject complete, you can config it with ConfigActionAssist, the easy way to use is MapperAssist."
+        );
+
+        return builder;
+    }
+}

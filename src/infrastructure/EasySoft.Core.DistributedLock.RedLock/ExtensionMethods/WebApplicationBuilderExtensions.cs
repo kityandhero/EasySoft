@@ -1,6 +1,8 @@
 ﻿using EasySoft.Core.DistributedLock.RedLock.Assist;
 using EasySoft.Core.DistributedLock.RedLock.Configure;
-using EasySoft.Core.Infrastructure.Configures;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Assists;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Core.DistributedLock.RedLock.ExtensionMethods;
 
@@ -28,11 +30,13 @@ public static class WebApplicationBuilderExtensions
 
         builder.Host.AddAdvanceRedLock(options);
 
-        ApplicationConfigure.AddWebApplicationExtraAction(
-            new ExtraAction<WebApplication>().SetName("UseAdvanceRedLock").SetAction(application =>
-            {
-                application.Lifetime.ApplicationStopping.Register(RedLockAssist.DisposeFactory);
-            })
+        WebApplicationConfigure.AddWebApplicationExtraAction(
+            new ExtraAction<WebApplication>().SetName("UseAdvanceRedLock")
+                .SetAction(application =>
+                    {
+                        application.Lifetime.ApplicationStopping.Register(RedLockAssist.DisposeFactory);
+                    }
+                )
         );
 
         return builder;

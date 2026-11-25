@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Core.Assists;
+
+namespace EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;
 
 internal static class EndpointConventionBuilderExtensions
 {
@@ -11,8 +13,9 @@ internal static class EndpointConventionBuilderExtensions
         );
 
         return endpoints.MapControllerRoute(
-            "ConsulServiceHealth",
-            "{controller=ConsulServiceHealth}/{action=Index}"
-        ).WithDisplayName(ConstCollection.ConsulServiceHealthEndpointName);
+                "ConsulServiceHealth",
+                "{controller=ConsulServiceHealth}/{action=Index}"
+            )
+            .WithDisplayName(ConstCollection.ConsulServiceHealthEndpointName);
     }
 }

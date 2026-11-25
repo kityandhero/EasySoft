@@ -1,4 +1,5 @@
 ﻿using EasySoft.Simple.Single.Application.Common;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 

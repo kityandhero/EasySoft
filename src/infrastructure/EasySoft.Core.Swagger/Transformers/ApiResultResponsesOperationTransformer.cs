@@ -1,8 +1,7 @@
 ﻿using EasySoft.Core.Swagger.Configures;
-using EasySoft.UtilityTools.Core.Results.Implements;
-using EasySoft.UtilityTools.Core.Results.Interfaces;
+using EasySoft.UtilityTools.AspNetCore.Results.Implements;
+using EasySoft.UtilityTools.AspNetCore.Results.Interfaces;
 using EasySoft.UtilityTools.Standard.Extensions;
-using Microsoft.AspNetCore.OpenApi;
 
 namespace EasySoft.Core.Swagger.Transformers;
 

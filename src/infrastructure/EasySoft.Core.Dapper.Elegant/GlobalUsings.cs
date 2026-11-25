@@ -24,3 +24,4 @@ global using EasySoft.UtilityTools.Standard.Enums;
 global using EasySoft.UtilityTools.Standard.Exceptions;
 global using EasySoft.UtilityTools.Standard.Extensions;
 global using EasySoft.UtilityTools.Standard.Result.Implements;
+global using Microsoft.Extensions.DependencyInjection;

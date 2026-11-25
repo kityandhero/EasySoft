@@ -2,11 +2,14 @@
 using EasySoft.Core.AppSecurityVerification.Clients;
 using EasySoft.Core.AppSecurityVerification.Detectors.Implements;
 using EasySoft.Core.AppSecurityVerification.Detectors.Interfaces;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Assists;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Core.AppSecurityVerification.Extensions;
 
 /// <summary>
-/// WebApplicationBuilderExtensions
+/// HostApplicationBuilderExtensions
 /// </summary>
 public static class WebApplicationBuilderExtensions
 {
@@ -65,7 +68,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<IAppSecurityDetector>(); });
 
-        ApplicationConfigure.AddWebApplicationExtraAction(
+        WebApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(application => { application.UseAppSecurityFirstVerify(); }

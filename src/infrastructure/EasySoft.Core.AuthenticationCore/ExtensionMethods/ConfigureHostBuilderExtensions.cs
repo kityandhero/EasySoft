@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.AuthenticationCore.Operators;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EasySoft.Core.AuthenticationCore.ExtensionMethods;
 
@@ -8,7 +7,7 @@ namespace EasySoft.Core.AuthenticationCore.ExtensionMethods;
 /// </summary>
 public static class ConfigureHostBuilderExtensions
 {
-    /// <summary>
+    /// <summary>  
     /// 注入操作员
     /// </summary>
     /// <returns></returns>

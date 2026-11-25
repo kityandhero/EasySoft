@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
+﻿using EasySoft.UtilityTools.Core.Entities.Interfaces;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.EntityFramework.Repositories;
@@ -96,33 +96,58 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         CancellationToken cancellationToken = default
     )
     {
-        var total = await Where(where, writeChannel, true).CountAsync(cancellationToken);
+        var total = await Where(
+                where,
+                writeChannel,
+                true
+            )
+            .CountAsync(cancellationToken);
 
         List<TEntity> list;
 
         if (isAsc)
+        {
             list = order == null
-                ? await Where(where, writeChannel, true)
+                ? await Where(
+                        where,
+                        writeChannel,
+                        true
+                    )
                     .OrderByDescending(o => o.Id)
                     .Skip(pageSize * (pageIndex - 1))
                     .Take(pageSize)
                     .ToListAsync(cancellationToken)
-                : await Where(where, writeChannel, true)
+                : await Where(
+                        where,
+                        writeChannel,
+                        true
+                    )
                     .OrderBy(order)
                     .Skip(pageSize * (pageIndex - 1))
                     .Take(pageSize)
                     .ToListAsync(cancellationToken);
+        }
         else
+        {
             list = order == null
-                ? await Where(where, writeChannel, true)
+                ? await Where(
+                        where,
+                        writeChannel,
+                        true
+                    )
                     .Skip(pageSize * (pageIndex - 1))
                     .Take(pageSize)
                     .ToListAsync(cancellationToken)
-                : await Where(where, writeChannel, true)
+                : await Where(
+                        where,
+                        writeChannel,
+                        true
+                    )
                     .OrderByDescending(order)
                     .Skip(pageSize * (pageIndex - 1))
                     .Take(pageSize)
                     .ToListAsync(cancellationToken);
+        }
 
         return new PageListResult<TEntity>(ReturnCode.Ok)
         {
@@ -151,7 +176,12 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         CancellationToken cancellationToken = default
     )
     {
-        return await Where(where, writeChannel, true).ToListAsync(cancellationToken);
+        return await Where(
+                where,
+                writeChannel,
+                true
+            )
+            .ToListAsync(cancellationToken);
     }
 
     /// <inheritdoc />
@@ -164,12 +194,20 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
     )
     {
         return descending
-            ? await Where(where, writeChannel, true)
+            ? await Where(
+                    where,
+                    writeChannel,
+                    true
+                )
                 .AsEnumerable()
                 .OrderByDescending(keySelector)
                 .AsQueryable()
                 .ToListAsync(cancellationToken)
-            : await Where(where, writeChannel, true)
+            : await Where(
+                    where,
+                    writeChannel,
+                    true
+                )
                 .AsEnumerable()
                 .OrderBy(keySelector)
                 .AsQueryable()
@@ -187,12 +225,20 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
     )
     {
         return descending
-            ? await Where(where, writeChannel, true)
+            ? await Where(
+                    where,
+                    writeChannel,
+                    true
+                )
                 .AsEnumerable()
                 .OrderByDescending(keySelector, comparer)
                 .AsQueryable()
                 .ToListAsync(cancellationToken)
-            : await Where(where, writeChannel, true)
+            : await Where(
+                    where,
+                    writeChannel,
+                    true
+                )
                 .AsEnumerable()
                 .OrderBy(keySelector, comparer)
                 .AsQueryable()
@@ -216,7 +262,10 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
                 .FirstAsync(x => x.Id != null && x.Id.Equals(id), cancellationToken)
             : await Context.Set<TEntity>().FindAsync(id);
 
-        if (entity == null) return new ExecutiveResult<TEntity>(ReturnCode.NoData);
+        if (entity == null)
+        {
+            return new ExecutiveResult<TEntity>(ReturnCode.NoData);
+        }
 
         return new ExecutiveResult<TEntity>(ReturnCode.Ok)
         {
@@ -231,9 +280,16 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         CancellationToken cancellationToken = default
     )
     {
-        var entity = (await SingleListAsync(filter, writeChannel, cancellationToken)).SingleOrDefault();
+        var entity = (await SingleListAsync(
+            filter,
+            writeChannel,
+            cancellationToken
+        )).SingleOrDefault();
 
-        if (entity == null) return new ExecutiveResult<TEntity>(ReturnCode.NoData);
+        if (entity == null)
+        {
+            return new ExecutiveResult<TEntity>(ReturnCode.NoData);
+        }
 
         return new ExecutiveResult<TEntity>(ReturnCode.Ok)
         {
@@ -250,10 +306,19 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         CancellationToken cancellationToken = default
     )
     {
-        var entity = (await SingleListAsync(filter, keySelector, descending, writeChannel, cancellationToken))
+        var entity = (await SingleListAsync(
+                filter,
+                keySelector,
+                descending,
+                writeChannel,
+                cancellationToken
+            ))
             .SingleOrDefault();
 
-        if (entity == null) return new ExecutiveResult<TEntity>(ReturnCode.NoData);
+        if (entity == null)
+        {
+            return new ExecutiveResult<TEntity>(ReturnCode.NoData);
+        }
 
         return new ExecutiveResult<TEntity>(ReturnCode.Ok)
         {
@@ -281,7 +346,10 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
             ))
             .SingleOrDefault();
 
-        if (entity == null) return new ExecutiveResult<TEntity>(ReturnCode.NoData);
+        if (entity == null)
+        {
+            return new ExecutiveResult<TEntity>(ReturnCode.NoData);
+        }
 
         return new ExecutiveResult<TEntity>(ReturnCode.Ok)
         {
@@ -300,7 +368,11 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         CancellationToken cancellationToken = default
     )
     {
-        var o = await GetAsync(where, writeChannel, cancellationToken);
+        var o = await GetAsync(
+            where,
+            writeChannel,
+            cancellationToken
+        );
 
         return !o.Success ? new ExecutiveResult(ReturnCode.NoData) : new ExecutiveResult(ReturnCode.Ok);
     }
@@ -343,7 +415,9 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         }
 
         if (writeChannel)
+        {
             return Context.Set<TEntity>().TagWith(RepositoryConst.MaxScaleRouteToMaster);
+        }
 
         return Context.Set<TEntity>();
     }
@@ -377,10 +451,12 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         var success = await Context.SaveChangesAsync(cancellationToken) > 0;
 
         if (!success)
+        {
             return new ExecutiveResult<TEntity>(ReturnCode.NoChange)
             {
                 Data = entity
             };
+        }
 
         return new ExecutiveResult<TEntity>(ReturnCode.Ok)
         {
@@ -415,18 +491,25 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         var entry = Context.Entry(entity);
 
         if (entry.State is EntityState.Added or EntityState.Deleted)
+        {
             throw new ArgumentException($"{nameof(entity)},实体状态为{nameof(entry.State)}");
+        }
 
         //如果实体没有被跟踪，必须指定需要更新的列
-        if (entry.State == EntityState.Detached) Context.Update(entity);
+        if (entry.State == EntityState.Detached)
+        {
+            Context.Update(entity);
+        }
 
         var success = await Context.SaveChangesAsync(cancellationToken) > 0;
 
         if (!success)
+        {
             return new ExecutiveResult<TEntity>(ReturnCode.NoChange)
             {
                 Data = entity
             };
+        }
 
         return new ExecutiveResult<TEntity>(ReturnCode.Ok)
         {
@@ -466,7 +549,11 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         CancellationToken cancellationToken = default
     )
     {
-        var executiveResult = await GetAsync(id, true, cancellationToken);
+        var executiveResult = await GetAsync(
+            id,
+            true,
+            cancellationToken
+        );
 
         return executiveResult.Success && executiveResult.Data != null
             ? (await DeleteAsync(executiveResult.Data, cancellationToken)).ToExecutiveResult()
@@ -479,7 +566,10 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         CancellationToken cancellationToken = default
     )
     {
-        if (Context.Entry(entity).State == EntityState.Detached) Context.Set<TEntity>().Attach(entity);
+        if (Context.Entry(entity).State == EntityState.Detached)
+        {
+            Context.Set<TEntity>().Attach(entity);
+        }
 
         Context.Set<TEntity>().Remove(entity);
 
@@ -488,10 +578,12 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
         var success = await Context.SaveChangesAsync(cancellationToken) > 0;
 
         if (!success)
+        {
             return new ExecutiveResult<TEntity>(ReturnCode.NoChange)
             {
                 Data = entity
             };
+        }
 
         return new ExecutiveResult<TEntity>(ReturnCode.Ok)
         {
@@ -510,7 +602,10 @@ public abstract class Repository<TDbContext, TEntity, TKey> : IRepository<TEntit
             var entity = await Context.Set<TEntity>()
                 .FindAsync(item, cancellationToken); //如果实体已经在内存中，那么就直接从内存拿，如果内存中跟踪实体没有，那么才查询数据库。
 
-            if (entity != null) Context.Set<TEntity>().Remove(entity);
+            if (entity != null)
+            {
+                Context.Set<TEntity>().Remove(entity);
+            }
         }
 
         var success = await Context.SaveChangesAsync(cancellationToken) > 0;

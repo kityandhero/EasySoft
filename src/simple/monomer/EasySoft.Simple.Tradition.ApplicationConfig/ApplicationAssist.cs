@@ -1,5 +1,7 @@
 ﻿using EasySoft.Core.Data.Configures;
 using EasySoft.Simple.Tradition.Service.Services.Implements;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Simple.Tradition.ApplicationConfig;
 
@@ -7,7 +9,6 @@ public static class ApplicationAssist
 {
     public static void Init()
     {
-
         // AuxiliaryConfigure.PromptStartupExecuteMessage = true;
 
         ContextConfigure.EnableDetailedErrors = true;
@@ -20,7 +21,7 @@ public static class ApplicationAssist
         BusinessServiceConfigure.AddBusinessServiceImplementationAssembly(typeof(BlogService).Assembly);
 
         // 配置额外的构建项目
-        ApplicationConfigure.AddWebApplicationBuilderExtraActions(
+        WebApplicationConfigure.AddWebApplicationBuilderExtraActions(
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddApiVersioning")
                 .SetAction(applicationBuilder =>

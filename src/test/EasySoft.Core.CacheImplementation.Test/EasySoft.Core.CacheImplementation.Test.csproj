@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.CacheAspNetCore\EasySoft.Core.CacheAspNetCore.csproj"/>
         <ProjectReference Include="..\..\infrastructure\EasySoft.Core.CacheCore\EasySoft.Core.CacheCore.csproj"/>
         <ProjectReference Include="..\..\infrastructure\EasySoft.Core.CacheImplementation\EasySoft.Core.CacheImplementation.csproj"/>
     </ItemGroup>

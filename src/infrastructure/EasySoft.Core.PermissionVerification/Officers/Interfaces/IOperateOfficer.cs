@@ -1,4 +1,4 @@
-﻿using EasySoft.UtilityTools.Core.Results.Implements;
+﻿using EasySoft.UtilityTools.AspNetCore.Results.Implements;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.PermissionVerification.Officers.Interfaces;

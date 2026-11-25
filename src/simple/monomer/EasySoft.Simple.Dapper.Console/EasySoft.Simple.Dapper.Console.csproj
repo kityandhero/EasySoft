@@ -13,7 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Console.Kernel\EasySoft.Core.Console.Kernel.csproj"/>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Hosting.Framework.Kernel\EasySoft.Core.Hosting.Framework.Kernel.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Dapper.Elegant\EasySoft.Core.Dapper.Elegant.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Dapper\EasySoft.Core.Dapper.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.CacheImplementation\EasySoft.Core.CacheImplementation.csproj"/>

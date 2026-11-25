@@ -8,7 +8,9 @@ using EasySoft.Core.PermissionVerification.Middlewares;
 using EasySoft.Core.PermissionVerification.Observers;
 using EasySoft.Core.PermissionVerification.Officers.Implements;
 using EasySoft.Core.PermissionVerification.Officers.Interfaces;
+using EasySoft.UtilityTools.AspNetCore.Configures;
 using EasySoft.UtilityTools.Core.Extensions;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Core.PermissionVerification.Extensions;
 
@@ -143,7 +145,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<IAccessWayDetector>(); });
 
-        ApplicationConfigure.AddWebApplicationExtraAction(
+        WebApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(application => { application.UseScanPermission(); }

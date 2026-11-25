@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.Web.Framework.Kernel.ExtensionMethods;
 using EasySoft.Simple.Tradition.Client.WebApi.Areas.Users.Controllers.Bases;
-using EasySoft.UtilityTools.Core.Results.Interfaces;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Results.Interfaces;
 
 namespace EasySoft.Simple.Tradition.Client.WebApi.Areas.Users.Controllers;
 

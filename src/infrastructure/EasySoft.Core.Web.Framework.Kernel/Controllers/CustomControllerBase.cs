@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Controllers;
+﻿using EasySoft.UtilityTools.AspNetCore.Controllers;
 
 namespace EasySoft.Core.Web.Framework.Kernel.Controllers;
 

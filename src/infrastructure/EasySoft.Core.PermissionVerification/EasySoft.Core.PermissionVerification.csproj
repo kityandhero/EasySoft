@@ -27,8 +27,8 @@
         <ProjectReference Include="..\EasySoft.Core.AccessWayTransceiver\EasySoft.Core.AccessWayTransceiver.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.AdvanceTrace\EasySoft.Core.AdvanceTrace.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.AuthenticationCore\EasySoft.Core.AuthenticationCore.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Refit\EasySoft.Core.Refit.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.AspNetCore\EasySoft.UtilityTools.AspNetCore.csproj"/>
         <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
     </ItemGroup>
 

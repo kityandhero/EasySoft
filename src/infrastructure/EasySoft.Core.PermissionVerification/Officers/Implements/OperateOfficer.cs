@@ -1,7 +1,7 @@
 ﻿using EasySoft.Core.PermissionVerification.Attributes;
 using EasySoft.Core.PermissionVerification.Officers.Interfaces;
-using EasySoft.UtilityTools.Core.Extensions;
-using EasySoft.UtilityTools.Core.Results.Implements;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Results.Implements;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.PermissionVerification.Officers.Implements;
@@ -21,7 +21,11 @@ public class OperateOfficer : OperateOfficerCore, IOperateOfficer
         ILoggerFactory loggerFactory,
         IWebHostEnvironment environment,
         IMediator mediator
-    ) : base(loggerFactory, environment, mediator)
+    ) : base(
+        loggerFactory,
+        environment,
+        mediator
+    )
     {
     }
 
@@ -33,9 +37,15 @@ public class OperateOfficer : OperateOfficerCore, IOperateOfficer
     {
         var permissionAttribute = httpContext.TryGetMetadata<PermissionAttribute>();
 
-        if (permissionAttribute == null) return;
+        if (permissionAttribute == null)
+        {
+            return;
+        }
 
-        if (string.IsNullOrWhiteSpace(permissionAttribute.GuidTag)) return;
+        if (string.IsNullOrWhiteSpace(permissionAttribute.GuidTag))
+        {
+            return;
+        }
 
         AccessPermission.Url = httpContext.Request.GetUrl();
         AccessPermission.Path = httpContext.Request.GetAbsolutePath();

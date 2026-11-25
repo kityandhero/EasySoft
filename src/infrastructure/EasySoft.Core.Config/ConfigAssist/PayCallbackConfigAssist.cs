@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.Config.ConfigCollection;
-using EasySoft.Core.Config.ExtensionMethods;
 using EasySoft.Core.Config.Utils;
 using EasySoft.UtilityTools.Standard.Extensions;
 
@@ -83,7 +82,10 @@ public static class PayCallbackConfigAssist
 
         v = v.Remove(" ").Trim();
 
-        if (string.IsNullOrWhiteSpace(v)) throw new Exception("缺少支付回调配置（PayCallbackHost）");
+        if (string.IsNullOrWhiteSpace(v))
+        {
+            throw new Exception("缺少支付回调配置（PayCallbackHost）");
+        }
 
         return v;
     }

@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Extensions;
-
-namespace EasySoft.Core.ChannelCheckTransceiver.Entities.implements;
+﻿namespace EasySoft.Core.ChannelCheckTransceiver.Entities.implements;
 
 /// <inheritdoc />
 public class ChannelCheckTransitiveMessage : IChannelCheckTransitiveMessage

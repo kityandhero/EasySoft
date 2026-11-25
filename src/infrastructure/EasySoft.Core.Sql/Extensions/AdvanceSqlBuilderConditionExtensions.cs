@@ -1,7 +1,7 @@
-﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
-using EasySoft.Core.Sql.Assists;
+﻿using EasySoft.Core.Sql.Assists;
 using EasySoft.Core.Sql.Builders;
 using EasySoft.Core.Sql.Common;
+using EasySoft.UtilityTools.Core.Entities.Interfaces;
 
 namespace EasySoft.Core.Sql.Extensions;
 
@@ -45,43 +45,37 @@ public static class AdvanceSqlBuilderConditionExtensions
         ConditionStrange<T> condition
     ) where T : IEntity, new()
     {
-    var
-    sql
-    =
-    builder
-    .
-    Sql
-    ;
-    var
-    resultTransferCondition
-    =
-    SqlAssist
-    .
-    TransferConditionStrange
-    (
-    condition
-    )
-    ;
-    sql
-    =
-    " {0} {1} "
-    .
-    FormatValue
-    (
-    sql
-    ,
-    resultTransferCondition
-    )
-    ;
-    builder
-    .
-    Sql
-    =
-    sql
-    ;
-    return
-    builder
-    ;
+        var
+            sql
+                =
+                builder
+                    .Sql
+            ;
+        var
+            resultTransferCondition
+                =
+                SqlAssist
+                    .TransferConditionStrange
+                    (
+                        condition
+                    )
+            ;
+        sql
+            =
+            " {0} {1} "
+                .FormatValue(
+                    sql,
+                    resultTransferCondition
+                )
+            ;
+        builder
+                .Sql
+            =
+            sql
+            ;
+        return
+            builder
+            ;
     }
 
     /// <summary>
@@ -117,47 +111,42 @@ public static class AdvanceSqlBuilderConditionExtensions
     public static AdvanceSqlBuilder WhereConditionStrange<T>(
         this AdvanceSqlBuilder builder,
         ConditionStrange<T> condition
-    ) where T : IEntity,
-    new
-    (
     )
+        where T : IEntity,
+        new
+        (
+        )
     {
-    var
-    sql
-    =
-    builder
-    .
-    Sql
-    ;
-    var
-    resultTransferCondition
-    =
-    SqlAssist
-    .
-    TransferConditionStrange
-    (
-    condition
-    )
-    ;
-    sql
-    =
-    "{0} WHERE {1}"
-    .
-    FormatValue
-    (
-    sql
-    ,
-    resultTransferCondition
-    )
-    ;
-    builder
-    .
-    Sql
-    =
-    sql
-    ;
-    return
-    builder;
+        var
+            sql
+                =
+                builder
+                    .Sql
+            ;
+        var
+            resultTransferCondition
+                =
+                SqlAssist
+                    .TransferConditionStrange
+                    (
+                        condition
+                    )
+            ;
+        sql
+            =
+            "{0} WHERE {1}"
+                .FormatValue(
+                    sql,
+                    resultTransferCondition
+                )
+            ;
+        builder
+                .Sql
+            =
+            sql
+            ;
+        return
+            builder;
     }
 
     /// <summary>
@@ -216,33 +205,33 @@ public static class AdvanceSqlBuilderConditionExtensions
     public static AdvanceSqlBuilder LinkConditions<T>(
         this AdvanceSqlBuilder builder,
         ICollection<Condition<T>> conditions
-    ) where T :
-    IEntity
-    ,
-    new
-    (
     )
+        where T :
+        IEntity
+        ,
+        new
+        (
+        )
     {
-    foreach
-    (
-    var
-    condition
-    in
-    conditions
-    )
-    builder
-    .
-    Sql
-    =
-    builder
-    .
-    LinkCondition
-    (
-    condition
-    )
-    .
-    Sql
-    ;
+        foreach
+        (
+            var
+                condition
+            in
+            conditions
+        )
+        {
+            builder
+                    .Sql
+                =
+                builder
+                    .LinkCondition
+                    (
+                        condition
+                    )
+                    .Sql
+                ;
+        }
 
         return builder;
     }
@@ -257,74 +246,69 @@ public static class AdvanceSqlBuilderConditionExtensions
     public static AdvanceSqlBuilder LinkCondition<T>(
         this AdvanceSqlBuilder builder,
         Condition<T> condition
-    ) where T
-    :
-    IEntity
-    ,
-    new
-    (
     )
+        where T
+        :
+        IEntity
+        ,
+        new
+        (
+        )
     {
-    var
-    sql
-    =
-    builder
-    .
-    Sql
-    ;
-    var
-    resultTransferCondition
-    =
-    SqlAssist
-    .
-    TransferCondition
-    (
-    condition
-    )
-    ;
-    var
-    connector
-    =
-    ""
-    ;
-    if
-    (
-    !
-    string
-    .
-    IsNullOrWhiteSpace
-    (
-    sql
-    )
-    )
-    connector
-    =
-    SqlAssist
-    .
-    GetConditionConnector
-    (
-    sql
-    )
-    ;
-    sql
-    =
-    "{0} {1} {2}"
-    .
-    FormatValue
-    (
-    sql
-    ,
-    connector
-    ,
-    resultTransferCondition
-    )
-    ;
-    builder
-    .
-    Sql
-    =
-    sql
-    ;
+        var
+            sql
+                =
+                builder
+                    .Sql
+            ;
+        var
+            resultTransferCondition
+                =
+                SqlAssist
+                    .TransferCondition
+                    (
+                        condition
+                    )
+            ;
+        var
+            connector
+                =
+                ""
+            ;
+        if
+        (
+            !
+            string
+                .IsNullOrWhiteSpace
+                (
+                    sql
+                )
+        )
+        {
+            connector
+                =
+                SqlAssist
+                    .GetConditionConnector
+                    (
+                        sql
+                    )
+                ;
+        }
+
+        sql
+            =
+            "{0} {1} {2}"
+                .FormatValue(
+                    sql,
+                    connector,
+                    resultTransferCondition
+                )
+            ;
+        builder
+                .Sql
+            =
+            sql
+            ;
 
         return builder;
     }
@@ -347,9 +331,16 @@ public static class AdvanceSqlBuilderConditionExtensions
 
         var connector = "";
 
-        if (!string.IsNullOrWhiteSpace(sql)) connector = SqlAssist.GetConditionConnector(sql);
+        if (!string.IsNullOrWhiteSpace(sql))
+        {
+            connector = SqlAssist.GetConditionConnector(sql);
+        }
 
-        sql = "{0} {1} {2}".FormatValue(sql, connector, resultTransferCondition);
+        sql = "{0} {1} {2}".FormatValue(
+            sql,
+            connector,
+            resultTransferCondition
+        );
 
         builder.Sql = sql;
 
@@ -366,35 +357,35 @@ public static class AdvanceSqlBuilderConditionExtensions
     public static AdvanceSqlBuilder LinkConditions<T>(
         this AdvanceSqlBuilder builder,
         ICollection<AssignField<T>> assignUpdates
-    ) where
-    T
-    :
-    IEntity
-    ,
-    new
-    (
     )
+        where
+        T
+        :
+        IEntity
+        ,
+        new
+        (
+        )
     {
-    foreach
-    (
-    var
-    assignUpdate
-    in
-    assignUpdates
-    )
-    builder
-    .
-    Sql
-    =
-    builder
-    .
-    LinkAssignField
-    (
-    assignUpdate
-    )
-    .
-    Sql
-    ;
+        foreach
+        (
+            var
+                assignUpdate
+            in
+            assignUpdates
+        )
+        {
+            builder
+                    .Sql
+                =
+                builder
+                    .LinkAssignField
+                    (
+                        assignUpdate
+                    )
+                    .Sql
+                ;
+        }
 
         return builder;
     }

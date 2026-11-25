@@ -8,8 +8,6 @@ global using EasySoft.Core.Config.ConfigAssist;
 global using EasySoft.Core.Data.Transactions;
 global using EasySoft.Core.EventBus.ExtensionMethods;
 global using EasySoft.Core.EventBus.Trackers;
-global using EasySoft.Core.Infrastructure.Configures;
-global using EasySoft.Core.Infrastructure.Startup;
 global using EasySoft.Core.PermissionVerification.Attributes;
 global using EasySoft.Core.Web.Framework.ExtensionMethods;
 global using EasySoft.Simple.Tradition.ApplicationConfig;

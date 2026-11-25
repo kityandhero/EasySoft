@@ -1,10 +1,11 @@
 ﻿using EasySoft.Core.PermissionVerification.Assists;
 using EasySoft.Core.PermissionVerification.Configures;
+using EasySoft.UtilityTools.AspNetCore.Configures;
 
 namespace EasySoft.Core.PermissionVerification.Extensions;
 
 /// <summary>
-/// WebApplicationExtensions
+/// HostExtensions
 /// </summary>
 public static class WebApplicationExtensions
 {
@@ -28,7 +29,7 @@ public static class WebApplicationExtensions
             $"{nameof(UseScanPermission)}."
         );
 
-        ApplicationConfigure.OnApplicationStart += _ =>
+        WebApplicationConfigure.OnApplicationStart += _ =>
         {
             PermissionConfigure.ScanPermissionAssemblies.ForEach(PermissionAssists.ScanPermission);
         };

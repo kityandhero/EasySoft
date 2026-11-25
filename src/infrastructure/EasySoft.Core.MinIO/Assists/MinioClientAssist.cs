@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
+﻿using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.MinIO.Assists;

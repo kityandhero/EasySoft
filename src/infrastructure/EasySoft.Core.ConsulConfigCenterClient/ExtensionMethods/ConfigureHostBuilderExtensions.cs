@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Standard.Extensions;
+﻿using EasySoft.UtilityTools.Core.Assists;
+using EasySoft.UtilityTools.Standard.Extensions;
 using EasySoft.UtilityTools.Standard.Interfaces;
 
 namespace EasySoft.Core.ConsulConfigCenterClient.ExtensionMethods;
@@ -11,8 +12,7 @@ public static class ConfigureHostBuilderExtensions
         Action<IConfiguration>? action = null
     ) where T : IChannel
     {
-        builder.ConfigureAppConfiguration(
-            (hostingContext, config) =>
+        builder.ConfigureAppConfiguration((hostingContext, config) =>
             {
                 // 加载默认配置信息到Configuration
                 hostingContext.Configuration = config.Build();

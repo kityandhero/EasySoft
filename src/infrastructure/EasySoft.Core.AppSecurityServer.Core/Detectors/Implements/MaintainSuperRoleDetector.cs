@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.AppSecurityServer.Core.Clients;
 using EasySoft.Core.AppSecurityServer.Core.Detectors.Interfaces;
 using EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
+using EasySoft.UtilityTools.Core.Assists;
 
 namespace EasySoft.Core.AppSecurityServer.Core.Detectors.Implements;
 
@@ -37,7 +38,10 @@ public class MaintainSuperRoleDetector : IMaintainSuperRoleDetector
     {
         var resultGetMainControlAppSecurity = await _appSecurityService.GetMainControlAppSecurity();
 
-        if (!resultGetMainControlAppSecurity.Success || resultGetMainControlAppSecurity.Data == null) return;
+        if (!resultGetMainControlAppSecurity.Success || resultGetMainControlAppSecurity.Data == null)
+        {
+            return;
+        }
 
         var mainControlAppSecurity = resultGetMainControlAppSecurity.Data;
 
@@ -45,21 +49,31 @@ public class MaintainSuperRoleDetector : IMaintainSuperRoleDetector
         var salt = AppSecurityAssist.GetSalt();
         var sign = AppSecurityAssist.SignRequest(
             appId,
-            AppSecurityClientConfigure.GetPublicKey(),
+            ApplicationSecurityClientConfigure.GetPublicKey(),
             salt
         );
 
         var list = (await _appSecurityService.SingleListNeedMaintain()).ToList();
 
         if (_environment.IsDevelopment())
+        {
             if (list.Any())
-                _loggerFactory.CreateLogger<object>().LogAdvancePrompt(
-                    $"Maintain super role, total count {list.Count()}"
-                );
+            {
+                _loggerFactory.CreateLogger<object>()
+                    .LogAdvancePrompt(
+                        $"Maintain super role, total count {list.Count()}"
+                    );
+            }
+        }
 
         async void MaintainEvery(AppSecurityDto o)
         {
-            await _maintainSuperRoleClient.MaintainSuper(o.Channel, appId, sign, salt);
+            await _maintainSuperRoleClient.MaintainSuper(
+                o.Channel,
+                appId,
+                sign,
+                salt
+            );
 
             await _appSecurityService.SetSuperNextMaintainTime(o);
         }

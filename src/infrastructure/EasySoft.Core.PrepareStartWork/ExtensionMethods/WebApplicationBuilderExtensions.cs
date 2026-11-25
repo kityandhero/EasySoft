@@ -11,7 +11,7 @@ public static class WebApplicationBuilderExtensions
     /// <param name="builder">构建器</param>
     /// <typeparam name="TPrepareStartWork"></typeparam>
     /// <returns></returns>
-    private static WebApplicationBuilder AddPrepareStartWorkInjection<TPrepareStartWork>(
+    public static WebApplicationBuilder AddPrepareStartWorkInjection<TPrepareStartWork>(
         this WebApplicationBuilder builder
     ) where TPrepareStartWork : class, IPrepareStartWork
     {

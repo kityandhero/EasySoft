@@ -11,7 +11,7 @@ public static class ServiceCollectionExtensions
     /// <summary>
     /// AddAppSecurityServerConfigureAssist
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="services">服务集</param>
     /// <param name="configuration"></param>
     /// <returns></returns>
     internal static IServiceCollection AddAppSecurityServerConfigureAssist(

@@ -20,6 +20,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Masuit.Tools.Abstractions"/>
         <PackageReference Include="Microsoft.IO.RecyclableMemoryStream"/>
         <PackageReference Include="Microsoft.Win32.SystemEvents"/>
         <PackageReference Include="NGeoHash"/>

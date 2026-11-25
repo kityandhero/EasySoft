@@ -8,7 +8,6 @@ global using EasySoft.Core.EntityFramework.EntityFactories;
 global using EasySoft.Core.EventBus;
 global using EasySoft.Core.EventBus.Events;
 global using EasySoft.Core.EventBus.Trackers;
-global using EasySoft.Core.Infrastructure.Services;
 global using EasySoft.IdGenerator.Assists;
 global using EasySoft.UtilityTools.Core.Assists;
 global using EasySoft.UtilityTools.Standard.Enums;

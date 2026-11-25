@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Infrastructure.Configures;
+﻿using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Core.EnvironmentAuxiliary.ExtensionMethods;
 
@@ -17,9 +18,14 @@ public static class WebApplicationExtensions
     )
     {
         if (application.HasUsed(UniqueIdentifierUseAdvanceEnvironmentAuxiliary))
+        {
             return application;
+        }
 
-        if (!EnvironmentAssist.IsDevelopment()) return application;
+        if (!HostEnvironmentAssist.IsDevelopment())
+        {
+            return application;
+        }
 
         application.UseAdvanceViewConfig();
         application.UseAdvanceAssemblyMap();
@@ -33,9 +39,14 @@ public static class WebApplicationExtensions
     )
     {
         if (application.HasUsed(UniqueIdentifierUseAdvanceViewConfig))
+        {
             return application;
+        }
 
-        if (!EnvironmentAssist.IsDevelopment()) return application;
+        if (!HostEnvironmentAssist.IsDevelopment())
+        {
+            return application;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseAdvanceViewConfig)}."
@@ -55,15 +66,20 @@ public static class WebApplicationExtensions
     )
     {
         if (application.HasUsed(UniqueIdentifierUseAdvanceAssemblyMap))
+        {
             return application;
+        }
 
-        if (!EnvironmentAssist.IsDevelopment()) return application;
+        if (!HostEnvironmentAssist.IsDevelopment())
+        {
+            return application;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseAdvanceAssemblyMap)}."
         );
 
-        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
+        WebApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapAssemblyMap(); })
@@ -77,15 +93,20 @@ public static class WebApplicationExtensions
     )
     {
         if (application.HasUsed(UniqueIdentifierUseAdvanceActionMap))
+        {
             return application;
+        }
 
-        if (!EnvironmentAssist.IsDevelopment()) return application;
+        if (!HostEnvironmentAssist.IsDevelopment())
+        {
+            return application;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(UseAdvanceActionMap)}."
         );
 
-        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
+        WebApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapActionMap(); })

@@ -1,7 +1,7 @@
 ﻿namespace EasySoft.Core.EntityFramework.Extensions;
 
 /// <summary>
-/// WebApplicationExtensions
+/// HostExtensions
 /// </summary>
 public static class WebApplicationExtensions
 {
@@ -9,7 +9,7 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        if (EnvironmentAssist.GetEnvironment().IsDevelopment())
+        if (HostEnvironmentAssist.GetEnvironment().IsDevelopment())
         {
             application.UseMigrationsEndPoint();
         }
@@ -72,7 +72,7 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        if (!EnvironmentAssist.GetEnvironment().IsDevelopment())
+        if (!HostEnvironmentAssist.GetEnvironment().IsDevelopment())
         {
             return application;
         }

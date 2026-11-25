@@ -2,7 +2,7 @@
 using EasySoft.Simple.AccountCenter.Application.Contracts.ExtensionMethods;
 using EasySoft.Simple.AccountCenter.Application.Contracts.Services;
 using EasySoft.Simple.DomainDrivenDesign.Infrastructure.Controllers;
-using EasySoft.UtilityTools.Core.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasySoft.Simple.AccountCenter.WebApi.Controllers;

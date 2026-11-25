@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.Mapster.Assists;
 using EasySoft.Simple.Single.Application.DataTransfer;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
 using Mapster;
 using MapsterMapper;
 
@@ -81,7 +82,7 @@ public class AutoMapperController : AreaControllerCore
     /// <returns></returns>
     public IActionResult TestFour()
     {
-        var userIn = new SimpleIn()
+        var userIn = new SimpleIn
         {
             Name = "Snow",
             Age = 20
@@ -96,11 +97,13 @@ public class AutoMapperController : AreaControllerCore
             .AddParameters("age", userIn.Age)
             .AdaptToType<SimpleDto>();
 
-        return this.Success(new
-        {
-            userDto1,
-            userDto2
-        });
+        return this.Success(
+            new
+            {
+                userDto1,
+                userDto2
+            }
+        );
     }
 
     /// <summary>
@@ -114,6 +117,7 @@ public class AutoMapperController : AreaControllerCore
 
         // 字符串转枚举，如果字符串为空或空字符串，那么枚举将初始化为第一个枚举值。
         var e = "Read, Write, Delete".Adapt<FileShare>();
+
         // FileShare.Read | FileShare.Write | FileShare.Delete
 
         var s = 123.Adapt<string>(); // 等同于: 123.ToString();

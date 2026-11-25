@@ -1,5 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Interfaces;
-using EasySoft.UtilityTools.Standard.Models;
+﻿using EasySoft.UtilityTools.Standard.Models;
 
 namespace EasySoft.Simple.DomainDrivenDesign.Domain.Shared.Enums;
 

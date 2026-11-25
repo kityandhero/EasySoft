@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Simple.Tradition.Management.WebApi;
+﻿using EasySoft.UtilityTools.Core.Configures;
+
+namespace EasySoft.Simple.Tradition.Management.WebApi;
 
 /// <summary>
 /// StartUpConfigure

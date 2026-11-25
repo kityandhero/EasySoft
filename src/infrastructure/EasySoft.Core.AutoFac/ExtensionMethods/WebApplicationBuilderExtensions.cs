@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.AutoFac.IocAssists;
 using EasySoft.Core.AutoFac.Selectors;
+using EasySoft.UtilityTools.Core.Assists;
 
 namespace EasySoft.Core.AutoFac.ExtensionMethods;
 
@@ -35,7 +36,10 @@ public static class WebApplicationBuilderExtensions
             $"{nameof(AddExtraNormalInjection)}."
         );
 
-        if (action == null) throw new ArgumentNullException(nameof(action));
+        if (action == null)
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
 
         builder.Host.ConfigureContainer(action);
 
@@ -51,17 +55,21 @@ public static class WebApplicationBuilderExtensions
             $"{nameof(AddControllerPropertiesAutowired)}."
         );
 
-        if (assembly == null) throw new ArgumentNullException(nameof(assembly));
+        if (assembly == null)
+        {
+            throw new ArgumentNullException(nameof(assembly));
+        }
 
         builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-        {
-            var controllerTypes = assembly.GetExportedTypes()
-                .Where(type => typeof(ControllerBase).IsAssignableFrom(type))
-                .ToArray();
+            {
+                var controllerTypes = assembly.GetExportedTypes()
+                    .Where(type => typeof(ControllerBase).IsAssignableFrom(type))
+                    .ToArray();
 
-            // 配置所有控制器均支持属性注入
-            containerBuilder.RegisterTypes(controllerTypes).PropertiesAutowired(new AutowiredPropertySelector());
-        });
+                // 配置所有控制器均支持属性注入
+                containerBuilder.RegisterTypes(controllerTypes).PropertiesAutowired(new AutowiredPropertySelector());
+            }
+        );
 
         return builder;
     }

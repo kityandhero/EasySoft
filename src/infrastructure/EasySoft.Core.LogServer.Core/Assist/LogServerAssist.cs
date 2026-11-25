@@ -2,6 +2,9 @@
 using EasySoft.Core.LogServer.Core.Extensions;
 using EasySoft.Core.LogServer.Core.Services.Implements;
 using EasySoft.Core.LogServer.Core.Services.Interfaces;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Configures;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Core.LogServer.Core.Assist;
 
@@ -15,10 +18,12 @@ public static class LogServerAssist
     /// </summary>
     public static void Init(bool embedMode)
     {
-        PermissionConfigure.AddRangeScanPermissionAssemblies(new List<Assembly>
-        {
-            typeof(ErrorLog).Assembly
-        });
+        PermissionConfigure.AddRangeScanPermissionAssemblies(
+            new List<Assembly>
+            {
+                typeof(ErrorLog).Assembly
+            }
+        );
 
         LogServerConfigure.EmbedMode = embedMode;
         ContextConfigure.AddEntityConfigureAssembly(typeof(ErrorLog).Assembly);
@@ -27,14 +32,14 @@ public static class LogServerAssist
         BusinessServiceConfigure.AddBusinessServiceImplementationAssembly(typeof(ErrorLogService).Assembly);
 
         // 配置额外的构建项目
-        ApplicationConfigure.AddWebApplicationBuilderExtraActions(
+        WebApplicationConfigure.AddWebApplicationBuilderExtraActions(
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("")
                 .SetAction(applicationBuilder => { applicationBuilder.AddLogServerCore(); })
         );
 
         // 配置额外的应用项目
-        ApplicationConfigure.AddWebApplicationExtraAction(
+        WebApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(applicationBuilder => { applicationBuilder.UseLogSendExperiment(); })

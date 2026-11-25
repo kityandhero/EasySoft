@@ -27,14 +27,14 @@ public class AccessWayDetector : IAccessWayDetector
     /// <returns></returns>
     public async Task<ExecutiveResult<AccessWayModel>> Find(string guidTag)
     {
-        var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+        var applicationConfigureAssist = ServiceProviderAssist.Resolve<ApplicationConfigureAssist>();
 
-        var applicationIdConfigValue = infrastructureConfigureAssist.GetApplicationId();
+        var applicationIdConfigValue = applicationConfigureAssist.GetApplicationId();
 
         var salt = AppSecurityAssist.GetSalt();
         var sign = AppSecurityAssist.SignRequest(
             applicationIdConfigValue.Value,
-            AppSecurityClientConfigure.GetPublicKey(),
+            ApplicationSecurityClientConfigure.GetPublicKey(),
             salt
         );
 

@@ -6,7 +6,6 @@ global using EasySoft.UtilityTools.Standard.Enums;
 global using EasySoft.UtilityTools.Standard.Extensions;
 global using EasySoft.UtilityTools.Standard.Interfaces;
 global using EasySoft.UtilityTools.Standard.Messages;
-global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;

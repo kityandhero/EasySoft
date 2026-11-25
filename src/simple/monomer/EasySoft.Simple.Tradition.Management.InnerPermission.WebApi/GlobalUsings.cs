@@ -1,7 +1,6 @@
 ﻿// Global using directives
 
 global using EasySoft.Core.AppSecurityServer.Core.Assist;
-global using EasySoft.Core.Infrastructure.Configures;
 global using EasySoft.Core.LogServer.Core.Assist;
 global using EasySoft.Core.PermissionServer.Core.Assist;
 global using EasySoft.Core.Swagger.Configures;

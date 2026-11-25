@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.AuthenticationCore.Assists;
 using EasySoft.Core.AuthenticationCore.Operators;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EasySoft.Core.AuthenticationCore.ExtensionMethods;
 
@@ -13,7 +12,7 @@ public static class ServiceCollectionExtension
     /// <summary>
     /// AddAuthenticationConfigureAssist
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="services">服务集</param>
     /// <param name="configuration"></param>
     /// <returns></returns>
     internal static IServiceCollection AddAuthenticationConfigureAssist(

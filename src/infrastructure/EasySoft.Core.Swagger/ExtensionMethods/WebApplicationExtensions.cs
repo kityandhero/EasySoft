@@ -1,10 +1,12 @@
 ﻿using EasySoft.Core.Swagger.ConfigAssist;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Startup;
 using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Swagger.ExtensionMethods;
 
 /// <summary>
-/// WebApplicationExtensions
+/// HostExtensions
 /// </summary>
 public static class WebApplicationExtensions
 {
@@ -31,9 +33,9 @@ public static class WebApplicationExtensions
             $"You can access swagger api document by {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/swagger/index.html").Join(" ")}."
         );
 
-        if (EnvironmentAssist.IsDevelopment())
+        if (HostEnvironmentAssist.IsDevelopment())
         {
-            ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
+            WebApplicationConfigure.AddEndpointRouteBuilderExtraAction(
                 new ExtraAction<IEndpointRouteBuilder>()
                     .SetName("")
                     .SetAction(endpoints => { endpoints.MapSwaggerConfigFile(); })

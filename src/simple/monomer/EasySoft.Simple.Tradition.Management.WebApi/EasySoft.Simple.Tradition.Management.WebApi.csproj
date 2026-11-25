@@ -44,7 +44,6 @@
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.AuthenticationCore\EasySoft.Core.AuthenticationCore.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Data\EasySoft.Core.Data.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EasyToken\EasySoft.Core.EasyToken.csproj"/>
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.JsonWebToken\EasySoft.Core.JsonWebToken.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.PermissionServer.Core\EasySoft.Core.PermissionServer.Core.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.PermissionVerification\EasySoft.Core.PermissionVerification.csproj"/>

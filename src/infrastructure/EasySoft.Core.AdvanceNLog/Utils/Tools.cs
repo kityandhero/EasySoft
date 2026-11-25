@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.AdvanceNLog.Assists;
-using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.AdvanceNLog.Utils;

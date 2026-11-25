@@ -2,6 +2,9 @@
 
 internal class SlidingWrapper<T>
 {
+    /// <summary>
+    /// SlidingWrapper
+    /// </summary>
     public SlidingWrapper()
     {
         SlidingTime = TimeSpan.Zero;

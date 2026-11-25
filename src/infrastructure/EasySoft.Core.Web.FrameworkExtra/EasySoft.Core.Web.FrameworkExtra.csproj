@@ -12,6 +12,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\EasySoft.Core.AdvanceNLog\EasySoft.Core.AdvanceNLog.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
         <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
     </ItemGroup>
 

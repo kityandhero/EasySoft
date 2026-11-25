@@ -1,6 +1,6 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Configures;
-using EasySoft.Core.Infrastructure.Startup;
+﻿using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Assists;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Core.Web.Framework.Kernel.ExtensionMethods;
 
@@ -13,7 +13,7 @@ public static class MvcOptionsExtensions
         this MvcOptions option
     )
     {
-        var extraActions = ApplicationConfigure.GetAllMvcOptionExtraActions().ToList();
+        var extraActions = WebApplicationConfigure.GetAllMvcOptionExtraActions().ToList();
 
         if (extraActions.Count <= 0)
         {

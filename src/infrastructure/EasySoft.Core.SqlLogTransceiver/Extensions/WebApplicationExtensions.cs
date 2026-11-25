@@ -1,9 +1,8 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Configures;
-using EasySoft.Core.Infrastructure.Queues;
-using EasySoft.Core.SqlLogTransceiver.Producers;
+﻿using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Producers;
+using EasySoft.UtilityTools.Standard.Queues;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -32,7 +31,7 @@ public static class WebApplicationExtensions
             $"{nameof(UseSqlLogProducer)}."
         );
 
-        ApplicationConfigure.AddTimer(
+        WebApplicationConfigure.AddTimer(
             SqlLogInnerQueue.SendInterval,
             (serviceProvider, e) =>
             {

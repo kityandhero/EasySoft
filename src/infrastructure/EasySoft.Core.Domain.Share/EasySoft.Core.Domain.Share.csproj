@@ -9,7 +9,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\EasySoft.Core.EntityFramework\EasySoft.Core.EntityFramework.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

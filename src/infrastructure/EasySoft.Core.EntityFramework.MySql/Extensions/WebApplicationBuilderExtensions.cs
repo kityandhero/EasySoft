@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.EntityFramework.MySql.Extensions;
+﻿using EasySoft.UtilityTools.Core.Assists;
+
+namespace EasySoft.Core.EntityFramework.MySql.Extensions;
 
 public static class WebApplicationBuilderExtensions
 {
@@ -14,7 +16,7 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddAdvanceMySql<TContext>(
         this WebApplicationBuilder builder,
         string connectionString,
-        Action<DbContextOptionsBuilder>? action = null
+        Action<DbContextOptionsBuilder> action = null
     ) where TContext : MySqlContext
     {
         if (builder.HasRegistered(UniqueIdentifier))

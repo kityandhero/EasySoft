@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.ConsulRegistrationCenterClient.Controllers;
+﻿using EasySoft.UtilityTools.AspNetCore.Controllers;
+
+namespace EasySoft.Core.ConsulRegistrationCenterClient.Controllers;
 
 public class ConsulServiceHealthController : BasicController
 {

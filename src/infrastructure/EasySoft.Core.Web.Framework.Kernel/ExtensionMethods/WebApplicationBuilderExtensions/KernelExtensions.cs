@@ -1,18 +1,20 @@
 ﻿using Asp.Versioning;
-using EasySoft.Core.AdvanceNLog.ExtensionMethods;
+using EasySoft.Core.AdvanceNLog.AspNetCore.ExtensionMethods;
 using EasySoft.Core.AdvanceTrace.Assists;
 using EasySoft.Core.AdvanceTrace.Extensions;
 using EasySoft.Core.AuthenticationCore.Assists;
+using EasySoft.Core.CacheAspNetCore.ExtensionMethods;
 using EasySoft.Core.CacheCore.ExtensionMethods;
-using EasySoft.Core.CacheImplementation.ExtensionMethods;
 using EasySoft.Core.EasyToken.ExtensionMethods;
-using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.Mapster.ExtensionMethods;
 using EasySoft.Core.MediatR.ExtensionMethods;
 using EasySoft.Core.Messaging.SlimMessageBus.Extensions;
-using EasySoft.Core.MiniProfiler.ExtensionMethods;
+using EasySoft.Core.MiniProfiler.AspNetCore.ExtensionMethods;
 using EasySoft.Core.Web.Framework.Kernel.Assists;
+using EasySoft.UtilityTools.AspNetCore.Assists;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.Extensions;
 using EasySoft.UtilityTools.Standard.Interfaces;
 using Masuit.Tools;
@@ -24,7 +26,6 @@ namespace EasySoft.Core.Web.Framework.Kernel.ExtensionMethods.WebApplicationBuil
 public static class KernelExtensions
 {
     private const string UniqueIdentifierAddFrameworkKernel = "4f30df645f594b45a63c5dfc955f34f8";
-    private const string IdentifierAddAdvanceApplicationChannel = "ea712530180e4c6580172ef9f9f4a794";
 
     /// <summary>
     /// 注入框架核心
@@ -46,9 +47,13 @@ public static class KernelExtensions
             $"{nameof(AddFrameworkKernel)}()"
         );
 
-        builder.AddAdvanceNLog();
+        builder.Services.AddApplicationConfigureAssist(builder.Configuration);
 
-        builder.Services.AddKernelConfigureAssist(builder.Configuration);
+        builder.Services.AddWebApplicationConfigureAssist(builder.Configuration);
+
+        builder.Services.AddJsonSerializerSettings();
+
+        builder.AddAdvanceNLog();
 
         builder.AddAdvanceUrls();
         builder.AddAdvanceApplicationChannel(channel);
@@ -66,7 +71,7 @@ public static class KernelExtensions
 
         #region CorsPolicies
 
-        var corsPoliciesConfigValue = KernelConfigureAssist.GetCorsPolicies(builder.Configuration);
+        var corsPoliciesConfigValue = WebApplicationConfigureAssist.GetCorsPolicies(builder.Configuration);
 
         StartupConfigMessageAssist.AddConfig(
             corsPoliciesConfigValue.ToArrowDescription()
@@ -94,7 +99,7 @@ public static class KernelExtensions
 
         #region Compression
 
-        var compressionSwitchConfigValue = KernelConfigureAssist.GetCompression(builder.Configuration);
+        var compressionSwitchConfigValue = WebApplicationConfigureAssist.GetCompression(builder.Configuration);
 
         StartupConfigMessageAssist.AddConfig(
             compressionSwitchConfigValue.ToArrowDescription()
@@ -294,8 +299,8 @@ public static class KernelExtensions
         FlagAssist.StartupUrls.Clear();
         FlagAssist.StartupDisplayUrls.Clear();
 
-        var httpPortConfigValue = KernelConfigureAssist.GetHttpPort(builder.Configuration);
-        var httpsPortConfigValue = KernelConfigureAssist.GetHttpsPort(builder.Configuration);
+        var httpPortConfigValue = WebApplicationConfigureAssist.GetHttpPort(builder.Configuration);
+        var httpsPortConfigValue = WebApplicationConfigureAssist.GetHttpsPort(builder.Configuration);
 
         if (httpPortConfigValue.Value > 0)
         {
@@ -322,51 +327,6 @@ public static class KernelExtensions
         StartupDescriptionMessageAssist.AddPrompt(
             $"You can access application at {FlagAssist.StartupDisplayUrls.Join(" ")}."
         );
-
-        return builder;
-    }
-
-    /// <summary>
-    /// 标记当前应用通道值, 用于远程日志等数据中, 便于数据辨认, 不使用此方法标记, 框架将采用内置值 0 代替
-    /// </summary>
-    /// <param name="builder">构建器</param>
-    /// <param name="channel">应用通道</param>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
-    private static WebApplicationBuilder AddAdvanceApplicationChannel(
-        this WebApplicationBuilder builder,
-        IChannel channel
-    )
-    {
-        if (builder.HasRegistered(IdentifierAddAdvanceApplicationChannel))
-        {
-            return builder;
-        }
-
-        StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceApplicationChannel)}."
-        );
-
-        builder.Services.AddAdvanceApplicationChannel(channel);
-
-        return builder;
-    }
-
-    private static WebApplicationBuilder AddAdvanceApplicationChannel<T>(
-        this WebApplicationBuilder builder,
-        T channel
-    ) where T : IChannel
-    {
-        if (builder.HasRegistered(IdentifierAddAdvanceApplicationChannel))
-        {
-            return builder;
-        }
-
-        StartupDescriptionMessageAssist.AddExecute(
-            $"{nameof(AddAdvanceApplicationChannel)}<{typeof(T).Name}>."
-        );
-
-        builder.Services.AddAdvanceApplicationChannel(channel);
 
         return builder;
     }

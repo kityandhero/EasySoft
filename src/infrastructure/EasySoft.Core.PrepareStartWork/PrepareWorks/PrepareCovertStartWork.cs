@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.Config.Pretreatments;
-
-namespace EasySoft.Core.PrepareStartWork.PrepareWorks;
+﻿namespace EasySoft.Core.PrepareStartWork.PrepareWorks;
 
 /// <summary>
 /// PrepareCovertStartWork

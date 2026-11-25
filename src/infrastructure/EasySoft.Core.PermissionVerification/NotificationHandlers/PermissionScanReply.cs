@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.PermissionVerification.Assists;
-using EasySoft.Core.PermissionVerification.Detectors;
 using EasySoft.Core.PermissionVerification.Detectors.Interfaces;
 using EasySoft.UtilityTools.Core.Extensions;
 
@@ -35,12 +34,17 @@ public class PermissionScanReply : INotificationHandler<AppSecurityFirstVerifyNo
     public async Task Handle(AppSecurityFirstVerifyNotification notification, CancellationToken cancellationToken)
     {
         if (_environment.IsDevelopment())
-            _loggerFactory.CreateLogger<object>().LogAdvancePrompt(
-                $"Receive {nameof(AppSecurityFirstVerifyNotification)} -> {notification.BuildInfo()}"
-            );
+        {
+            _loggerFactory.CreateLogger<object>()
+                .LogAdvancePrompt(
+                    $"Receive {nameof(AppSecurityFirstVerifyNotification)} -> {notification.BuildInfo()}"
+                );
+        }
 
         if (!notification.VerifyResult)
+        {
             return;
+        }
 
         await PermissionAssists.StartSaveAsync(_accessWayDetector);
     }

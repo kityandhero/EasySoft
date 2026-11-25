@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.AccessWayTransceiver.Consumers;
-
-namespace EasySoft.Core.AccessWayTransceiver.Consumers;
+﻿namespace EasySoft.Core.AccessWayTransceiver.Consumers;
 
 /// <inheritdoc />
 public abstract class BaseAccessWayConsumer : IAccessWayConsumer

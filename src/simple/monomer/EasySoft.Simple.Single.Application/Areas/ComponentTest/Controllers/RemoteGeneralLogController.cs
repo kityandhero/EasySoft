@@ -1,5 +1,5 @@
-﻿using EasySoft.Core.GeneralLogTransceiver.Producers;
-using EasySoft.UtilityTools.Core.Results.Interfaces;
+﻿using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Results.Interfaces;
 using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;

@@ -1,7 +1,7 @@
 ﻿namespace EasySoft.Core.EntityFramework.Extensions;
 
 /// <summary>
-/// WebApplicationBuilderExtensions
+/// HostApplicationBuilderExtensions
 /// </summary>
 public static class WebApplicationBuilderExtensions
 {
@@ -21,7 +21,9 @@ public static class WebApplicationBuilderExtensions
     )
     {
         if (builder.HasRegistered(UniqueIdentifierAddAdvanceEntityFrameworkCore))
+        {
             return builder;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceEntityFrameworkCore)}."

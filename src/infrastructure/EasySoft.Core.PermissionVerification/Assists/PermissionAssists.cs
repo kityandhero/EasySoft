@@ -106,7 +106,7 @@ public static class PermissionAssists
 
                         AccessWayModelScanQuery.Enqueue(accessWayModel);
 
-                        if (EnvironmentAssist.IsDevelopment())
+                        if (HostEnvironmentAssist.IsDevelopment())
                         {
                             LoggerAssist.Prompt(
                                 $"Scan Permission: \"{assembly.GetName().Name}\" -> \"{accessWayModel.Name}, {accessWayModel.GuidTag} ({accessWayModel.RelativePath})\"."
@@ -125,7 +125,7 @@ public static class PermissionAssists
             return;
         }
 
-        var isDevelopment = EnvironmentAssist.IsDevelopment();
+        var isDevelopment = HostEnvironmentAssist.IsDevelopment();
 
         if (isDevelopment)
         {
@@ -157,7 +157,7 @@ public static class PermissionAssists
 
             await accessWayProducer.SendAsync(accessWayModel);
 
-            if (EnvironmentAssist.IsDevelopment())
+            if (HostEnvironmentAssist.IsDevelopment())
             {
                 LoggerAssist.Prompt($"Send {nameof(AccessWayModel)} -> {accessWayModel.BuildInfo()}.");
             }

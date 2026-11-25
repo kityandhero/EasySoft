@@ -12,7 +12,7 @@ public static class ServiceCollectionExtension
     /// <summary>
     /// AddAdvanceSqlServer
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="services">服务集</param>
     /// <param name="optionsBuilder"></param>
     /// <typeparam name="TContext"></typeparam>
     /// <returns></returns>
@@ -22,7 +22,9 @@ public static class ServiceCollectionExtension
     ) where TContext : SqlServerContext
     {
         if (services.HasRegistered(UniqueIdentifier))
+        {
             return services;
+        }
 
         services.AddAdvanceContext<TContext>(optionsBuilder);
 

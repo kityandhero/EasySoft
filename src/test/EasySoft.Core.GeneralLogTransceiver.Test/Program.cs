@@ -1,24 +1,14 @@
 ﻿using EasySoft.Core.AccessWayTransceiver.Collectors;
 using EasySoft.Core.AccessWayTransceiver.Extensions;
-using EasySoft.Core.AdvanceNLog.ExtensionMethods;
-using EasySoft.Core.ChannelCheckTransceiver.Collectors;
-using EasySoft.Core.ChannelCheckTransceiver.Entities.implements;
+using EasySoft.Core.AdvanceNLog.AspNetCore.ExtensionMethods;
 using EasySoft.Core.ChannelCheckTransceiver.Extensions;
-using EasySoft.Core.ErrorLogTransceiver.Collectors;
 using EasySoft.Core.ErrorLogTransceiver.Extensions;
-using EasySoft.Core.GeneralLogTransceiver.Collectors;
-using EasySoft.Core.GeneralLogTransceiver.Extensions;
-using EasySoft.Core.GeneralLogTransceiver.Producers;
 using EasySoft.Core.GeneralLogTransceiver.Test;
-using EasySoft.Core.GeneralLogTransceiver.Test.Consumers;
 using EasySoft.Core.Messaging.SlimMessageBus.Extensions;
-using EasySoft.Core.SqlLogTransceiver.Collectors;
-using EasySoft.Core.SqlLogTransceiver.Extensions;
 using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.Channels;
 using EasySoft.UtilityTools.Core.Extensions;
 using EasySoft.UtilityTools.Standard.Messages;
-using EasySoft.UtilityTools.Standard.Producers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +16,7 @@ builder.Services.AddSingleton<IApplicationChannel>(
     new ApplicationChannel().SetChannel(ChannelCollection.GeneralLogTransceiverTestApplication)
 );
 
-EnvironmentAssist.SetEnvironment(builder.Environment);
+HostEnvironmentAssist.SetEnvironment(builder.Environment);
 
 builder.AddAdvanceNLog();
 

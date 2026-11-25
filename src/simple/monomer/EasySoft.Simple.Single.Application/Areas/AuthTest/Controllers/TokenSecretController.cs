@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.EasyToken.AccessControl;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
 
 namespace EasySoft.Simple.Single.Application.Areas.AuthTest.Controllers;
 
@@ -51,10 +52,12 @@ public class TokenSecretController : AreaControllerCore
     {
         var v = _tokenSecret.Decrypt(value);
 
-        return this.Success(new
-        {
-            value = v
-        });
+        return this.Success(
+            new
+            {
+                value = v
+            }
+        );
     }
 
     /// <summary>
@@ -66,10 +69,12 @@ public class TokenSecretController : AreaControllerCore
     {
         var v = _tokenSecret.DecryptWithExpirationTime(value, out var expired);
 
-        return this.Success(new
-        {
-            value = v,
-            expired
-        });
+        return this.Success(
+            new
+            {
+                value = v,
+                expired
+            }
+        );
     }
 }

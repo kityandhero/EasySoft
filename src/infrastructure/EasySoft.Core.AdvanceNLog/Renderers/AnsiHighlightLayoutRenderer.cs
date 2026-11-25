@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using EasySoft.UtilityTools.Core.Assists;
-using NLog.Layouts;
+﻿using EasySoft.UtilityTools.Core.Assists;
 
 namespace EasySoft.Core.AdvanceNLog.Renderers;
 
@@ -30,7 +28,7 @@ public class AnsiHighlightLayoutRenderer : LayoutRenderer
             {
                 raw = raw.Replace(
                     "Hosting environment:  ",
-                    "Hosting environment: " + EnvironmentAssist.GetEnvironment().EnvironmentName
+                    "Hosting environment: " + HostEnvironmentAssist.GetEnvironment().EnvironmentName
                 );
             }
 
@@ -38,7 +36,7 @@ public class AnsiHighlightLayoutRenderer : LayoutRenderer
             {
                 raw = raw.Replace(
                     "Content root path:  ",
-                    "Content root path: " + EnvironmentAssist.GetEnvironment().ContentRootPath
+                    "Content root path: " + HostEnvironmentAssist.GetEnvironment().ContentRootPath
                 );
             }
         }

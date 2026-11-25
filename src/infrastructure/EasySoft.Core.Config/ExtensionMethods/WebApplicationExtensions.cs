@@ -1,6 +1,6 @@
-﻿using EasySoft.Core.Infrastructure.Configures;
-using EasySoft.Core.Infrastructure.Options;
-using EasySoft.Core.Infrastructure.Startup;
+﻿using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Core.Config.ExtensionMethods;
 
@@ -25,7 +25,7 @@ public static class WebApplicationExtensions
             return application;
         }
 
-        if (!EnvironmentAssist.IsDevelopment())
+        if (!HostEnvironmentAssist.IsDevelopment())
         {
             return application;
         }
@@ -34,37 +34,37 @@ public static class WebApplicationExtensions
             $"{nameof(UseConfigureTemplate)}."
         );
 
-        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
+        WebApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapDatabaseConfigFile(); })
         );
 
-        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
+        WebApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapDevelopConfigFile(); })
         );
 
-        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
+        WebApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapElasticSearchConfigFile(); })
         );
 
-        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
+        WebApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapGeneralConfigFile(); })
         );
 
-        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
+        WebApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapMongoConfigFile(); })
         );
 
-        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
+        WebApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => { endpoints.MapRabbitMQConfigFile(); })

@@ -1,7 +1,7 @@
 ﻿using EasySoft.Core.AccessWayTransceiver.Assists;
 using EasySoft.Core.AccessWayTransceiver.Consumers;
 using EasySoft.Core.AdvanceFileRecord;
-using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.Exceptions;
 
 namespace EasySoft.Core.AccessWayTransceiver.Extensions;

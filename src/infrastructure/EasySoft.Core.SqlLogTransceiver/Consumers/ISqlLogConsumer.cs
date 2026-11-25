@@ -1,6 +1,4 @@
-﻿using SlimMessageBus;
-
-namespace EasySoft.Core.SqlLogTransceiver.Consumers;
+﻿namespace EasySoft.Core.SqlLogTransceiver.Consumers;
 
 /// <summary>
 /// SQL日志消费器

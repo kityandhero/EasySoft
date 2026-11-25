@@ -14,10 +14,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageReference Include="AspectCore.Abstractions"/>
         <PackageReference Include="AspectCore.Core"/>
         <PackageReference Include="AspectCore.Extensions.DependencyInjection"/>
@@ -31,7 +27,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\EasySoft.Core.CacheCore\EasySoft.Core.CacheCore.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.Grpc.ExtensionMethods;
+﻿using EasySoft.UtilityTools.Core.Assists;
+
+namespace EasySoft.Core.Grpc.ExtensionMethods;
 
 public static class WebApplicationExtensions
 {

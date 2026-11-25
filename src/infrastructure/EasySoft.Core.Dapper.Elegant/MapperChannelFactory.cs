@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using Microsoft.Extensions.DependencyInjection;
+﻿using EasySoft.UtilityTools.Core.Assists;
 
 namespace EasySoft.Core.Dapper.Elegant;
 
@@ -7,63 +6,63 @@ public static class MapperChannelFactory
 {
     public static IMapperChannel GetMasterMapperChannel()
     {
-        var infrastructureConfigureAssist = ServiceProviderAssist.GetProvider()
-            .GetRequiredService<InfrastructureConfigureAssist>();
+        var applicationConfigureAssist = ServiceProviderAssist.GetProvider()
+            .GetRequiredService<ApplicationConfigureAssist>();
 
-        return GetMasterMapperChannel(infrastructureConfigureAssist);
+        return GetMasterMapperChannel(applicationConfigureAssist);
     }
 
     public static IMapperChannel GetMasterMapperChannel(
-        InfrastructureConfigureAssist infrastructureConfigureAssist
+        ApplicationConfigureAssist applicationConfigureAssist
     )
     {
         return new MapperChannel(
             "Master",
-            infrastructureConfigureAssist.GetMasterDatabaseConnection().Value,
+            applicationConfigureAssist.GetMasterDatabaseConnection().Value,
             RelationDatabaseTypeAssist.GetRelationDatabaseType(
-                infrastructureConfigureAssist.GetMasterDatabaseType().Value
+                applicationConfigureAssist.GetMasterDatabaseType().Value
             )
         );
     }
 
     public static IMapperChannel GetSlaveMapperChannel()
     {
-        var infrastructureConfigureAssist = ServiceProviderAssist.GetProvider()
-            .GetRequiredService<InfrastructureConfigureAssist>();
+        var applicationConfigureAssist = ServiceProviderAssist.GetProvider()
+            .GetRequiredService<ApplicationConfigureAssist>();
 
-        return GetSlaveMapperChannel(infrastructureConfigureAssist);
+        return GetSlaveMapperChannel(applicationConfigureAssist);
     }
 
     public static IMapperChannel GetSlaveMapperChannel(
-        InfrastructureConfigureAssist infrastructureConfigureAssist
+        ApplicationConfigureAssist applicationConfigureAssist
     )
     {
         return new MapperChannel(
             "Slave",
-            infrastructureConfigureAssist.GetSlaveDatabaseConnection().Value,
+            applicationConfigureAssist.GetSlaveDatabaseConnection().Value,
             RelationDatabaseTypeAssist.GetRelationDatabaseType(
-                infrastructureConfigureAssist.GetSlaveDatabaseType().Value
+                applicationConfigureAssist.GetSlaveDatabaseType().Value
             )
         );
     }
 
     public static IMapperChannel GetHistoryMapperChannel()
     {
-        var infrastructureConfigureAssist = ServiceProviderAssist.GetProvider()
-            .GetRequiredService<InfrastructureConfigureAssist>();
+        var applicationConfigureAssist = ServiceProviderAssist.GetProvider()
+            .GetRequiredService<ApplicationConfigureAssist>();
 
-        return GetHistoryMapperChannel(infrastructureConfigureAssist);
+        return GetHistoryMapperChannel(applicationConfigureAssist);
     }
 
     public static IMapperChannel GetHistoryMapperChannel(
-        InfrastructureConfigureAssist infrastructureConfigureAssist
+        ApplicationConfigureAssist applicationConfigureAssist
     )
     {
         return new MapperChannel(
             "History",
-            infrastructureConfigureAssist.GetHistoryDatabaseConnection().Value,
+            applicationConfigureAssist.GetHistoryDatabaseConnection().Value,
             RelationDatabaseTypeAssist.GetRelationDatabaseType(
-                infrastructureConfigureAssist.GetHistoryDatabaseType().Value
+                applicationConfigureAssist.GetHistoryDatabaseType().Value
             )
         );
     }

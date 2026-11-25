@@ -1,7 +1,7 @@
 ﻿using EasySoft.Core.AuthenticationCore.Attributes;
 using EasySoft.Core.PermissionVerification.Observers;
+using EasySoft.UtilityTools.AspNetCore.Results.Implements;
 using EasySoft.UtilityTools.Core.Extensions;
-using EasySoft.UtilityTools.Core.Results.Implements;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.PermissionVerification.Officers.Implements;

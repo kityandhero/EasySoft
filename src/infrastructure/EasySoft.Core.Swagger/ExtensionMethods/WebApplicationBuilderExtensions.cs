@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.Swagger.ConfigAssist;
-using Microsoft.AspNetCore.OpenApi;
-using Microsoft.Extensions.Hosting;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Core.Swagger.ExtensionMethods;
 
@@ -45,7 +45,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddAdvanceOpenApi();
 
-        ApplicationConfigure.AddWebApplicationExtraAction(
+        WebApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(application =>

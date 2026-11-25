@@ -1,5 +1,6 @@
 ﻿using EasySoft.Core.CacheCore.interfaces;
 using EasySoft.Simple.Single.Application.Models;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 

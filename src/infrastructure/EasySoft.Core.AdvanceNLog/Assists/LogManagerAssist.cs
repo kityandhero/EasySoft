@@ -6,7 +6,7 @@ public static class LogManagerAssist
 
     public static void ReloadConfiguration()
     {
-        LogManager.Configuration.Reload();
+        LogManager.Configuration?.Reload();
     }
 
     public static bool CheckChange(string remoteNLogJsonConfig)

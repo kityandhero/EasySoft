@@ -1,6 +1,5 @@
 ﻿using EasySoft.Core.AuthenticationCore.Assists;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.UtilityTools.Core.Results.Implements;
+using EasySoft.UtilityTools.AspNetCore.Results.Implements;
 
 namespace EasySoft.Core.JsonWebToken.Filters;
 

@@ -1,6 +1,6 @@
-﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
-using EasySoft.Core.Sql.Assists;
+﻿using EasySoft.Core.Sql.Assists;
 using EasySoft.Core.Sql.Common;
+using EasySoft.UtilityTools.Core.Entities.Interfaces;
 
 namespace EasySoft.Core.Sql.Extensions;
 
@@ -68,8 +68,7 @@ public static class EntityExtensions
 
         var listPropertyName = new List<string>();
 
-        listPropertyLambda.ForEach(
-            expression =>
+        listPropertyLambda.ForEach(expression =>
             {
                 var propertyName = ReflectionAssist.GetPropertyName(expression);
 
@@ -82,8 +81,7 @@ public static class EntityExtensions
 
         model.GetType()
             .GetProperties()
-            .ForEach(
-                p =>
+            .ForEach(p =>
                 {
                     if (!p.CanWrite)
                     {
@@ -136,8 +134,7 @@ public static class EntityExtensions
 
         var listPropertyName = new List<string>();
 
-        listPropertyLambda.ForEach(
-            expression =>
+        listPropertyLambda.ForEach(expression =>
             {
                 var propertyName = ReflectionAssist.GetPropertyName(expression);
 
@@ -150,8 +147,7 @@ public static class EntityExtensions
 
         model.GetType()
             .GetProperties()
-            .ForEach(
-                p =>
+            .ForEach(p =>
                 {
                     if (!p.CanWrite)
                     {
@@ -200,8 +196,7 @@ public static class EntityExtensions
 
         model.GetType()
             .GetProperties()
-            .ForEach(
-                p =>
+            .ForEach(p =>
                 {
                     if (!p.CanWrite)
                     {
@@ -276,8 +271,7 @@ public static class EntityExtensions
 
         model.GetType()
             .GetProperties()
-            .ForEach(
-                p =>
+            .ForEach(p =>
                 {
                     if (!p.CanWrite)
                     {

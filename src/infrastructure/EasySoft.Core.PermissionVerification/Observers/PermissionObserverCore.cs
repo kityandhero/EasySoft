@@ -1,7 +1,6 @@
-﻿using EasySoft.Core.Infrastructure;
-using EasySoft.Core.PermissionVerification.Attributes;
+﻿using EasySoft.Core.PermissionVerification.Attributes;
+using EasySoft.UtilityTools.Core;
 using EasySoft.UtilityTools.Standard.Result.Implements;
- 
 
 namespace EasySoft.Core.PermissionVerification.Observers;
 
@@ -50,22 +49,30 @@ public abstract class PermissionObserverCore : IPermissionObserver
     public virtual async Task<ExecutiveResult> CheckAccessPermissionAsync(string guidTag)
     {
         if (string.IsNullOrWhiteSpace(guidTag))
+        {
             return new ExecutiveResult(
                 ReturnCode.NoPermission.ToMessage(
                     $"接口未配置操作权限，如无需鉴权, 请移除 {nameof(PermissionAttribute)} 配置, 否则请修复配置值"
                 )
             );
+        }
 
         var identity = GetActualOperator().GetIdentity();
 
         if (identity == SuperConstCollection.SuperAdministratorId.ToString())
+        {
             return new ExecutiveResult(ReturnCode.Ok);
+        }
 
         var listCompetenceEntity = await GetCompetenceEntityCollectionAsync(identity);
 
         foreach (var ce in listCompetenceEntity)
+        {
             if (ce.GuidTag == guidTag.Remove("-") || ce.GuidTag == ConstCollection.SuperRoleGuidTag)
+            {
                 return new ExecutiveResult(ReturnCode.Ok);
+            }
+        }
 
         return new ExecutiveResult(ReturnCode.NoPermission.ToMessage("无权限操作"));
     }

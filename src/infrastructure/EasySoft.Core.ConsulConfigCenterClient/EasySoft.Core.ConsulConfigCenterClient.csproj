@@ -20,7 +20,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>

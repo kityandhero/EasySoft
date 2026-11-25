@@ -1,8 +1,7 @@
 ﻿using EasySoft.Core.AuthenticationCore.Assists;
-using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.JsonWebToken.Assists;
-using EasySoft.UtilityTools.Core.Extensions;
-using EasySoft.UtilityTools.Core.Results.Implements;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Results.Implements;
 using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.JsonWebToken.Middlewares;
@@ -60,9 +59,9 @@ public class JsonWebTokenMiddleware : IMiddleware
         }
         catch (Exception e)
         {
-            var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+            var applicationConfigureAssist = ServiceProviderAssist.Resolve<ApplicationConfigureAssist>();
 
-            var transmissionErrorConfigValue = infrastructureConfigureAssist.GetUseErrorLogTransceiver();
+            var transmissionErrorConfigValue = applicationConfigureAssist.GetUseErrorLogTransceiver();
 
             if (!transmissionErrorConfigValue.Value)
             {
@@ -78,8 +77,8 @@ public class JsonWebTokenMiddleware : IMiddleware
                 new ApiResult(
                     ReturnCode.TokenExpired.ToInt(),
                     false,
-                    EnvironmentAssist.GetEnvironment().IsDevelopment() ? e.Message : "校验凭证时发生错误",
-                    EnvironmentAssist.GetEnvironment().IsDevelopment()
+                    HostEnvironmentAssist.GetEnvironment().IsDevelopment() ? e.Message : "校验凭证时发生错误",
+                    HostEnvironmentAssist.GetEnvironment().IsDevelopment()
                         ? new
                         {
                             stackTrace = e.StackTrace

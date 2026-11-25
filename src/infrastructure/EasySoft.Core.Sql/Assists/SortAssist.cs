@@ -1,7 +1,7 @@
-﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
-using EasySoft.Core.Sql.Builders;
+﻿using EasySoft.Core.Sql.Builders;
 using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Extensions;
+using EasySoft.UtilityTools.Core.Entities.Interfaces;
 
 namespace EasySoft.Core.Sql.Assists;
 
@@ -25,7 +25,10 @@ public static class SortAssist
 
         enumerable.ForEach(s => { list.Add(new AdvanceSqlBuilder().AndOrderBy(s.Expression, s.SortType).Sql); });
 
-        if (list.Count == 0) throw new Exception("没有可以构造的Sql排序");
+        if (list.Count == 0)
+        {
+            throw new Exception("没有可以构造的Sql排序");
+        }
 
         return $" ORDER BY {list.Join(" , ")}";
     }
@@ -37,10 +40,12 @@ public static class SortAssist
     /// <returns></returns>
     public static string Build<T>(Sort<T> condition) where T : IEntity, new()
     {
-        return Build(new[]
-        {
-            condition
-        });
+        return Build(
+            new[]
+            {
+                condition
+            }
+        );
     }
 
     /// <summary>

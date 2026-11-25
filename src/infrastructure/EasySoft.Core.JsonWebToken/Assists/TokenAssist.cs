@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.AuthenticationCore.Assists;
-using EasySoft.Core.Infrastructure.Assists;
 
 namespace EasySoft.Core.JsonWebToken.Assists;
 

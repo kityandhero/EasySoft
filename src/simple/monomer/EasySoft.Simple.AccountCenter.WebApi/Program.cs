@@ -1,10 +1,9 @@
 using Asp.Versioning;
+using EasySoft.Core.AgileConfigClient.Assists;
 using EasySoft.Core.Config.ConfigAssist;
 using EasySoft.Core.Data.Configures;
 using EasySoft.Core.EntityFramework.MySql.Extensions;
 using EasySoft.Core.Grpc.ExtensionMethods;
-using EasySoft.Core.Infrastructure.Configures;
-using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.LogDashboard.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.Extensions;
@@ -16,6 +15,8 @@ using EasySoft.Simple.AccountCenter.Domain.EntityConfigures.Items;
 using EasySoft.Simple.DomainDrivenDesign.Domain.Shared.Enums;
 using EasySoft.Simple.DomainDrivenDesign.Infrastructure.Contexts;
 using EasySoft.Simple.DomainDrivenDesign.Infrastructure.Security;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Startup;
 using ApplicationOperator = EasySoft.Simple.DomainDrivenDesign.Infrastructure.Authentication.ApplicationOperator;
 
 EasySoft.Core.EntityFramework.Configures.ContextConfigure.EnableDetailedErrors = true;
@@ -27,7 +28,7 @@ BusinessServiceConfigure.AddBusinessServiceInterfaceAssembly(typeof(IUserService
 BusinessServiceConfigure.AddBusinessServiceImplementationAssembly(typeof(UserService).Assembly);
 
 // 配置额外的构建项目
-ApplicationConfigure.AddWebApplicationBuilderExtraActions(
+WebApplicationConfigure.AddWebApplicationBuilderExtraActions(
     new ExtraAction<WebApplicationBuilder>()
         .SetName("AddApiVersioning")
         .SetAction(applicationBuilder =>
@@ -84,7 +85,7 @@ ApplicationConfigure.AddWebApplicationBuilderExtraActions(
         .SetAction(applicationBuilder => { applicationBuilder.AddAdvanceGrpc(); })
 );
 
-ApplicationConfigure.AddWebApplicationExtraAction(
+WebApplicationConfigure.AddWebApplicationExtraAction(
     new ExtraAction<WebApplication>()
         .SetName("MapAdvanceGrpcService")
         .SetAction(application =>

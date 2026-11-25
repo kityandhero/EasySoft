@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.AppSecurityServer.Core.Entities;
+﻿using EasySoft.UtilityTools.Core.Configures;
 
 namespace EasySoft.Simple.Tradition.Management.InnerPermission.WebApi;
 

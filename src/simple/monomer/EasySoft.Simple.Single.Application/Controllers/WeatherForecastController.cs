@@ -1,6 +1,7 @@
 using EasySoft.Simple.Single.Application.Common;
-using EasySoft.UtilityTools.Core.Results.Implements;
-using EasySoft.UtilityTools.Core.Results.Interfaces;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Results.Implements;
+using EasySoft.UtilityTools.AspNetCore.Results.Interfaces;
 
 namespace EasySoft.Simple.Single.Application.Controllers;
 
@@ -35,8 +36,7 @@ public class WeatherForecastController : ControllerCore
     public IEnumerable<WeatherForecast> Get()
     {
         return Enumerable.Range(1, 5)
-            .Select(
-                index => new WeatherForecast
+            .Select(index => new WeatherForecast
                 {
                     Date = DateTime.Now.AddDays(index),
                     TemperatureC = Random.Shared.Next(-20, 55),
@@ -56,8 +56,7 @@ public class WeatherForecastController : ControllerCore
     public IEnumerable<WeatherForecast> Get1()
     {
         return Enumerable.Range(1, 5)
-            .Select(
-                index => new WeatherForecast
+            .Select(index => new WeatherForecast
                 {
                     Date = DateTime.Now.AddDays(index),
                     TemperatureC = Random.Shared.Next(-20, 55),

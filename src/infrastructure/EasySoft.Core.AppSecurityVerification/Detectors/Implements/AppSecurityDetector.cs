@@ -1,6 +1,7 @@
 ﻿using EasySoft.Core.AppSecurityVerification.Clients;
 using EasySoft.Core.AppSecurityVerification.Detectors.Interfaces;
 using EasySoft.Core.ChannelCheckTransceiver.Entities.implements;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.AppSecurityVerification.Detectors.Implements;
@@ -64,10 +65,10 @@ public class AppSecurityDetector : IAppSecurityDetector
     /// <inheritdoc />
     public async Task CredentialVerify()
     {
-        var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+        var applicationConfigureAssist = ServiceProviderAssist.Resolve<ApplicationConfigureAssist>();
 
-        var applicationIdConfigValue = infrastructureConfigureAssist.GetApplicationId();
-        var applicationSecretConfigValue = infrastructureConfigureAssist.GetApplicationSecret();
+        var applicationIdConfigValue = applicationConfigureAssist.GetApplicationId();
+        var applicationSecretConfigValue = applicationConfigureAssist.GetApplicationSecret();
 
         var appSecurityDto = new AppSecurityDto
         {
@@ -111,7 +112,7 @@ public class AppSecurityDetector : IAppSecurityDetector
             throw new UnknownException(message);
         }
 
-        AppSecurityClientConfigure.SetPublicKey(result.Data.Key);
+        ApplicationSecurityClientConfigure.SetPublicKey(result.Data.Key);
 
         var appSecurityFirstVerifyNotification = new AppSecurityFirstVerifyNotification(true);
 

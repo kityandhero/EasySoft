@@ -1,6 +1,5 @@
 ﻿using System.Runtime;
 using EasySoft.UtilityTools.Standard.Interfaces;
-using EasySoft.UtilityTools.Standard.Mime;
 
 namespace EasySoft.UtilityTools.Standard.Extensions;
 

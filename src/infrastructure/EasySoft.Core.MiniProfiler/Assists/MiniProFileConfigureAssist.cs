@@ -2,7 +2,6 @@
 using EasySoft.UtilityTools.Standard.Exceptions;
 using EasySoft.UtilityTools.Standard.Extensions;
 using EasySoft.UtilityTools.Standard.Models;
-using Microsoft.Extensions.Configuration;
 
 namespace EasySoft.Core.MiniProfiler.Assists;
 

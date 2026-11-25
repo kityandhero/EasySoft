@@ -39,7 +39,6 @@
         <ProjectReference Include="..\EasySoft.Core.AdvanceNLog\EasySoft.Core.AdvanceNLog.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Gateway.Ocelot\EasySoft.Core.Gateway.Ocelot.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.PermissionVerification\EasySoft.Core.PermissionVerification.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.PrepareStartWork\EasySoft.Core.PrepareStartWork.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.RabbitMQ\EasySoft.Core.RabbitMQ.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.SqlLogTransceiver\EasySoft.Core.SqlLogTransceiver.csproj"/>

@@ -12,7 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
         <ProjectReference Include="..\EasySoft.Simple.CustomerCenter.Domain\EasySoft.Simple.CustomerCenter.Domain.csproj"/>
     </ItemGroup>
 

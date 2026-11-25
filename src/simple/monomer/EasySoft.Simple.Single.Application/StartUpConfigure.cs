@@ -1,7 +1,11 @@
 ﻿using EasySoft.Simple.Single.Application.Common;
 using EasySoft.Simple.Single.Application.PrepareStartWorks;
 using EasySoft.Simple.Single.Application.Security;
-using EasySoft.UtilityTools.Core.Results.Implements;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Results.Implements;
+using EasySoft.UtilityTools.Core.Configures;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Simple.Single.Application;
 
@@ -77,7 +81,7 @@ public class StartUpConfigure : IStartUpConfigure
         Core.EntityFramework.Configures.ContextConfigure.AutoEnsureCreated = true;
 
         // 配置额外的构建项目
-        ApplicationConfigure.AddWebApplicationBuilderExtraActions(
+        WebApplicationConfigure.AddWebApplicationBuilderExtraActions(
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddApiVersioning")
                 .SetAction(applicationBuilder =>
@@ -150,7 +154,7 @@ public class StartUpConfigure : IStartUpConfigure
                 .SetAction(applicationBuilder => { applicationBuilder.Services.AddSignalR(); })
         );
 
-        ApplicationConfigure.AddAreas(
+        WebApplicationConfigure.AddAreas(
             "AreaTest",
             "AuthTest",
             "DataTest",
@@ -162,7 +166,7 @@ public class StartUpConfigure : IStartUpConfigure
             // LoggerAssist.Info("config changed");
         };
 
-        ApplicationConfigure.AddTimer(
+        WebApplicationConfigure.AddTimer(
             5000,
             (services, _) =>
             {

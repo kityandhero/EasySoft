@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Entities.Implements;
+﻿using EasySoft.UtilityTools.Core.Entities.Implements;
 using EasySoft.UtilityTools.Standard.Interfaces;
 
 namespace EasySoft.Simple.Tradition.Data.Entities.Bases;

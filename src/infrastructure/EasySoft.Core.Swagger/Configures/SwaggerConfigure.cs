@@ -50,7 +50,7 @@ public static class SwaggerConfigure
     /// <summary>
     /// SecurityScheme, 配置认证模式, 默认不配置
     /// </summary>
-    public static KeyValuePair<string, OpenApiSecurityScheme?> SecurityScheme { get; set; }
+    public static KeyValuePair<string, OpenApiSecurityScheme> SecurityScheme { get; set; }
 
     /// <summary>
     /// Global Security Switch
@@ -77,7 +77,10 @@ public static class SwaggerConfigure
     /// <returns></returns>
     public static IEnumerable<string> BuildHintMessage()
     {
-        if (!EnvironmentAssist.IsDevelopment() || !SwaggerConfigAssist.GetSwitch()) return Array.Empty<string>();
+        if (!HostEnvironmentAssist.IsDevelopment() || !SwaggerConfigAssist.GetSwitch())
+        {
+            return Array.Empty<string>();
+        }
 
         return new[]
         {

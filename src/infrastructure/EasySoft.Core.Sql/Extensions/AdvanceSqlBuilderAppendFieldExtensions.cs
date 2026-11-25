@@ -1,7 +1,7 @@
-﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
-using EasySoft.Core.Sql.Assists;
+﻿using EasySoft.Core.Sql.Assists;
 using EasySoft.Core.Sql.Builders;
 using EasySoft.Core.Sql.Common;
+using EasySoft.UtilityTools.Core.Entities.Interfaces;
 
 namespace EasySoft.Core.Sql.Extensions;
 
@@ -124,7 +124,11 @@ public static class AdvanceSqlBuilderAppendFieldExtensions
 
         var connector = SqlAssist.GetAssignFieldConnector(sql);
 
-        sql = "{0} {1} {2}".FormatValue(sql, connector, resultTransferAssignUpdate);
+        sql = "{0} {1} {2}".FormatValue(
+            sql,
+            connector,
+            resultTransferAssignUpdate
+        );
 
         builder.Sql = sql;
 

@@ -1,7 +1,7 @@
 ﻿using EasySoft.Core.AuthenticationCore.Assists;
 using EasySoft.Core.EasyToken.AccessControl;
-using EasySoft.UtilityTools.Core.Extensions;
-using EasySoft.UtilityTools.Core.Results.Implements;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Results.Implements;
 using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.EasyToken.Filters;
@@ -52,9 +52,9 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
             }
             catch (Exception e)
             {
-                var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+                var applicationConfigureAssist = ServiceProviderAssist.Resolve<ApplicationConfigureAssist>();
 
-                var transmissionErrorConfigValue = infrastructureConfigureAssist.GetUseErrorLogTransceiver();
+                var transmissionErrorConfigValue = applicationConfigureAssist.GetUseErrorLogTransceiver();
 
                 if (!transmissionErrorConfigValue.Value)
                 {
@@ -103,9 +103,9 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
         }
         catch (Exception e)
         {
-            var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+            var applicationConfigureAssist = ServiceProviderAssist.Resolve<ApplicationConfigureAssist>();
 
-            var transmissionErrorConfigValue = infrastructureConfigureAssist.GetUseErrorLogTransceiver();
+            var transmissionErrorConfigValue = applicationConfigureAssist.GetUseErrorLogTransceiver();
 
             if (!transmissionErrorConfigValue.Value)
             {
@@ -120,8 +120,8 @@ public abstract class OperatorCoreFilter : IOperatorAuthorizationFilter
             filterContext.Result = new ApiResult(
                 ReturnCode.TokenExpired.ToInt(),
                 false,
-                EnvironmentAssist.GetEnvironment().IsDevelopment() ? e.Message : "校验凭证时发生错误",
-                EnvironmentAssist.GetEnvironment().IsDevelopment()
+                HostEnvironmentAssist.GetEnvironment().IsDevelopment() ? e.Message : "校验凭证时发生错误",
+                HostEnvironmentAssist.GetEnvironment().IsDevelopment()
                     ? new
                     {
                         stackTrace = e.StackTrace

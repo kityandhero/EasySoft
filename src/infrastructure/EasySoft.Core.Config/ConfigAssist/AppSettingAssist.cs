@@ -1,6 +1,4 @@
-﻿using EasySoft.Core.Config.ExtensionMethods;
-
-namespace EasySoft.Core.Config.ConfigAssist;
+﻿namespace EasySoft.Core.Config.ConfigAssist;
 
 /// <summary>
 /// AppSettingAssist

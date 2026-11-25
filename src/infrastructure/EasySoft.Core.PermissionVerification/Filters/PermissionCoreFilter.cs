@@ -1,7 +1,6 @@
 ﻿using EasySoft.Core.PermissionVerification.Attributes;
-using EasySoft.Core.PermissionVerification.Officers;
 using EasySoft.Core.PermissionVerification.Officers.Implements;
-using EasySoft.UtilityTools.Core.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
 
 namespace EasySoft.Core.PermissionVerification.Filters;
 
@@ -20,7 +19,11 @@ public abstract class PermissionCoreFilter : OperateOfficerCore, IPermissionFilt
         ILoggerFactory loggerFactory,
         IWebHostEnvironment environment,
         IMediator mediator
-    ) : base(loggerFactory, environment, mediator)
+    ) : base(
+        loggerFactory,
+        environment,
+        mediator
+    )
     {
     }
 
@@ -30,13 +33,22 @@ public abstract class PermissionCoreFilter : OperateOfficerCore, IPermissionFilt
     /// <param name="filterContext"></param>
     public void AdjustAccessPermission(ActionExecutingContext filterContext)
     {
-        if (filterContext.ActionDescriptor is not ControllerActionDescriptor actionDescriptor) return;
+        if (filterContext.ActionDescriptor is not ControllerActionDescriptor actionDescriptor)
+        {
+            return;
+        }
 
         var permissionAttribute = actionDescriptor.MethodInfo.TryGetCustomAttribute<PermissionAttribute>();
 
-        if (permissionAttribute == null) return;
+        if (permissionAttribute == null)
+        {
+            return;
+        }
 
-        if (string.IsNullOrWhiteSpace(permissionAttribute.GuidTag)) return;
+        if (string.IsNullOrWhiteSpace(permissionAttribute.GuidTag))
+        {
+            return;
+        }
 
         AccessPermission.Url = filterContext.HttpContext.Request.GetUrl();
         AccessPermission.Path = filterContext.HttpContext.Request.GetAbsolutePath();
@@ -55,7 +67,10 @@ public abstract class PermissionCoreFilter : OperateOfficerCore, IPermissionFilt
 
         var result = await TryVerifyAsync();
 
-        if (!result.Success) context.Result = result.Data;
+        if (!result.Success)
+        {
+            context.Result = result.Data;
+        }
     }
 
     /// <summary>

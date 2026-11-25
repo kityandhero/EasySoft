@@ -1,5 +1,4 @@
 ﻿using EasySoft.Core.AuthenticationCore.Assists;
-using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.UtilityTools.Standard.Extensions;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
@@ -156,7 +155,7 @@ public static class DynamicConfigAssist
             var consulClient = ConsulConfigCenterClientAssist.GetConfigClient();
 
             var v = consulClient.KV.Get(
-                    $"{applicationChannel.GetChannel()}/config.{EnvironmentAssist.GetEnvironment().EnvironmentName}.json"
+                    $"{applicationChannel.GetChannel()}/config.{HostEnvironmentAssist.GetEnvironment().EnvironmentName}.json"
                 )
                 .Result;
 

@@ -18,7 +18,11 @@ public class ConsulController : AreaControllerCore
 
         var v = await consulClient.KV.Get("100/config.Development.json");
 
-        var vv = Encoding.UTF8.GetString(v.Response.Value, 0, v.Response.Value.Length);
+        var vv = Encoding.UTF8.GetString(
+            v.Response.Value,
+            0,
+            v.Response.Value.Length
+        );
 
         return Content(vv);
     }

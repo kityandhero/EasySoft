@@ -1,9 +1,11 @@
-﻿using EasySoft.UtilityTools.Standard.Producers;
+﻿using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Assists;
+using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.LogServer.Core.Extensions;
 
 /// <summary>
-/// WebApplicationExtensions
+/// HostExtensions
 /// </summary>
 public static class WebApplicationExtensions
 {
@@ -26,9 +28,9 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+        var applicationConfigureAssist = ServiceProviderAssist.Resolve<ApplicationConfigureAssist>();
 
-        if (!infrastructureConfigureAssist.GetUseErrorLogTransceiver().Value)
+        if (!applicationConfigureAssist.GetUseErrorLogTransceiver().Value)
         {
             return application;
         }
@@ -37,7 +39,7 @@ public static class WebApplicationExtensions
             $"{nameof(UseErrorLogSendExperiment)}."
         );
 
-        ApplicationConfigure.OnApplicationStart += async (serviceProvider) =>
+        WebApplicationConfigure.OnApplicationStart += async (serviceProvider) =>
         {
             await DoErrorLogSendExperiment(serviceProvider);
         };
@@ -63,7 +65,7 @@ public static class WebApplicationExtensions
             $"{nameof(UseGeneralLogSendExperiment)}."
         );
 
-        ApplicationConfigure.OnApplicationStart += async (serviceProvider) =>
+        WebApplicationConfigure.OnApplicationStart += async (serviceProvider) =>
         {
             await DoGeneralLogSendExperiment(serviceProvider);
         };
@@ -89,7 +91,7 @@ public static class WebApplicationExtensions
             $"{nameof(UseSqlLogSendExperiment)}."
         );
 
-        ApplicationConfigure.OnApplicationStart += async (serviceProvider) =>
+        WebApplicationConfigure.OnApplicationStart += async (serviceProvider) =>
         {
             await DoSqlLogSendExperiment(serviceProvider);
         };

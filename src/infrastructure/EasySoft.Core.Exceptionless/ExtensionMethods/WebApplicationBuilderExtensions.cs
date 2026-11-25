@@ -1,5 +1,7 @@
 ﻿using EasySoft.Core.Exceptionless.Assists;
-using EasySoft.Core.Infrastructure.Configures;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Assists;
+using EasySoft.UtilityTools.Core.Startup;
 using FlagAssist = EasySoft.Core.Exceptionless.Assists.FlagAssist;
 
 namespace EasySoft.Core.Exceptionless.ExtensionMethods;
@@ -36,7 +38,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddAdvanceExceptionless(builder.Configuration);
 
-        ApplicationConfigure.AddWebApplicationExtraAction(
+        WebApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>().SetName("").SetAction(application => application.UseExceptionless())
         );
 

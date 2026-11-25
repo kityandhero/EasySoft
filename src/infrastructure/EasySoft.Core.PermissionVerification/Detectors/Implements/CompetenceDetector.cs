@@ -20,14 +20,14 @@ public class CompetenceDetector : ICompetenceDetector
     /// <inheritdoc />
     public async Task<IList<CompetenceEntity>> GetCompetenceEntityCollection(long roleGroupId)
     {
-        var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+        var applicationConfigureAssist = ServiceProviderAssist.Resolve<ApplicationConfigureAssist>();
 
-        var applicationIdConfigValue = infrastructureConfigureAssist.GetApplicationId();
+        var applicationIdConfigValue = applicationConfigureAssist.GetApplicationId();
 
         var salt = AppSecurityAssist.GetSalt();
         var sign = AppSecurityAssist.SignRequest(
             applicationIdConfigValue.Value,
-            AppSecurityClientConfigure.GetPublicKey(),
+            ApplicationSecurityClientConfigure.GetPublicKey(),
             salt
         );
 

@@ -13,15 +13,17 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\EasySoft.Core.AdvanceNLog.AspNetCore\EasySoft.Core.AdvanceNLog.AspNetCore.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.AdvanceTrace\EasySoft.Core.AdvanceTrace.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.CacheAspNetCore\EasySoft.Core.CacheAspNetCore.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.CacheImplementation\EasySoft.Core.CacheImplementation.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Data\EasySoft.Core.Data.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.EasyToken\EasySoft.Core.EasyToken.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.EnvironmentAuxiliary\EasySoft.Core.EnvironmentAuxiliary.csproj"/>
-        <ProjectReference Include="..\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.JsonWebToken\EasySoft.Core.JsonWebToken.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.Mapster\EasySoft.Core.Mapster.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.MediatR\EasySoft.Core.MediatR.csproj"/>
+        <ProjectReference Include="..\EasySoft.Core.MiniProfiler.AspNetCore\EasySoft.Core.MiniProfiler.AspNetCore.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.MiniProfiler\EasySoft.Core.MiniProfiler.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.AdvanceNLog\EasySoft.Core.AdvanceNLog.csproj"/>
         <ProjectReference Include="..\EasySoft.Core.PermissionVerification\EasySoft.Core.PermissionVerification.csproj"/>

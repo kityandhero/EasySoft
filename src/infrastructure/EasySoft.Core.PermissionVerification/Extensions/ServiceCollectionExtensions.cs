@@ -10,7 +10,7 @@ public static class ServiceCollectionExtensions
     /// <summary>
     /// AddAuthorizationConfigureAssist
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="services">服务集</param>
     /// <param name="configuration"></param>
     /// <returns></returns>
     internal static IServiceCollection AddAuthorizationConfigureAssist(

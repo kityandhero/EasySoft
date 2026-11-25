@@ -22,7 +22,7 @@ public static class ServiceCollectionExtension
     /// <summary>
     /// AddAdvanceContext
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="services">服务集</param>
     /// <param name="action"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -96,7 +96,7 @@ public static class ServiceCollectionExtension
     /// <summary>
     ///     AddAdvanceContextPool, 与工作单元的协同性未做测试，暂不开放
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="services">服务集</param>
     /// <param name="action"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -118,7 +118,7 @@ public static class ServiceCollectionExtension
 
         services.AddDbContextPool<T>((serviceProvider, optionsBuilder) =>
             {
-                if (EnvironmentAssist.GetEnvironment().IsDevelopment())
+                if (HostEnvironmentAssist.GetEnvironment().IsDevelopment())
                 {
                     optionsBuilder.UseLoggerFactory(serviceProvider.GetService<ILoggerFactory>());
 
@@ -149,7 +149,7 @@ public static class ServiceCollectionExtension
     /// <summary>
     /// AddAdvanceRepository
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="services">服务集</param>
     /// <returns></returns>
     public static IServiceCollection AddAdvanceRepository(
         this IServiceCollection services
@@ -168,7 +168,7 @@ public static class ServiceCollectionExtension
     /// <summary>
     /// AddEntityConfigure
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="services">服务集</param>
     /// <returns></returns>
     public static IServiceCollection AddEntityConfigure(
         this IServiceCollection services

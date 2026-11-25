@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Entities.Implements;
+﻿using EasySoft.UtilityTools.Core.Entities.Implements;
 
 namespace EasySoft.Core.EventBus.Trackers;
 
@@ -25,11 +25,13 @@ public class DbMessageTrackerService : IMessageTracker
 
     public async Task MarkAsProcessedAsync(long eventId, string trackerName)
     {
-        await _trackerRepository.AddAsync(new EventTracker
-        {
-            Id = IdentifierAssist.Create(),
-            EventId = eventId,
-            TrackerName = trackerName
-        });
+        await _trackerRepository.AddAsync(
+            new EventTracker
+            {
+                Id = IdentifierAssist.Create(),
+                EventId = eventId,
+                TrackerName = trackerName
+            }
+        );
     }
 }

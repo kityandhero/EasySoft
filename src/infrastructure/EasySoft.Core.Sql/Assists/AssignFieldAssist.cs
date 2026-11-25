@@ -1,7 +1,7 @@
-﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
-using EasySoft.Core.Sql.Builders;
+﻿using EasySoft.Core.Sql.Builders;
 using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Extensions;
+using EasySoft.UtilityTools.Core.Entities.Interfaces;
 
 namespace EasySoft.Core.Sql.Assists;
 
@@ -24,10 +24,17 @@ public static class AssignFieldAssist
         var enumerable = assignUpdates as AssignField<T>[] ?? assignUpdates.ToArray();
 
         if (enumerable.Any())
+        {
             foreach (var c in enumerable)
+            {
                 list.Add(new AdvanceSqlBuilder().LinkAssignField(c).Sql);
+            }
+        }
 
-        if (list.Count == 0) throw new Exception("没有可以构造的Sql条件");
+        if (list.Count == 0)
+        {
+            throw new Exception("没有可以构造的Sql条件");
+        }
 
         return list.Join(",");
     }
@@ -39,10 +46,12 @@ public static class AssignFieldAssist
     /// <returns></returns>
     public static string Build<T>(AssignField<T> assignField) where T : IEntity, new()
     {
-        return Build(new[]
-        {
-            assignField
-        });
+        return Build(
+            new[]
+            {
+                assignField
+            }
+        );
     }
 
     /// <summary>

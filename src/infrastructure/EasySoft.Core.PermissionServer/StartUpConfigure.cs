@@ -1,6 +1,9 @@
 ﻿using EasySoft.Core.PermissionServer.Contexts;
 using EasySoft.Core.PermissionServer.Core.Assist;
 using EasySoft.Core.PermissionServer.Operators;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Configures;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Core.PermissionServer;
 
@@ -22,7 +25,7 @@ public class StartUpConfigure : IStartUpConfigure
         PermissionServerAssist.Init(false);
 
         // 配置额外的构建项目
-        ApplicationConfigure.AddWebApplicationBuilderExtraActions(
+        WebApplicationConfigure.AddWebApplicationBuilderExtraActions(
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("AddAdvanceDbContext<DataContext>")
                 .SetAction(applicationBuilder =>

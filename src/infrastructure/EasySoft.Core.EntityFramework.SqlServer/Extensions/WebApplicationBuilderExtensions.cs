@@ -1,7 +1,9 @@
-﻿namespace EasySoft.Core.EntityFramework.SqlServer.Extensions;
+﻿using EasySoft.UtilityTools.Core.Assists;
+
+namespace EasySoft.Core.EntityFramework.SqlServer.Extensions;
 
 /// <summary>
-/// WebApplicationBuilderExtensions
+/// HostApplicationBuilderExtensions
 /// </summary>
 public static class WebApplicationBuilderExtensions
 {
@@ -17,24 +19,27 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddAdvanceSqlServer<TContext>(
         this WebApplicationBuilder builder,
         string connectionString,
-        Action<DbContextOptionsBuilder>? action = null
+        Action<DbContextOptionsBuilder> action = null
     ) where TContext : SqlServerContext
     {
         if (builder.HasRegistered(UniqueIdentifier))
+        {
             return builder;
+        }
 
         StartupDescriptionMessageAssist.AddExecute(
             $"{nameof(AddAdvanceSqlServer)}<{typeof(TContext).Name}>."
         );
 
         builder.Services.AddAdvanceSqlServer<TContext>(opt =>
-        {
-            opt.UseSqlServer(connectionString);
+            {
+                opt.UseSqlServer(connectionString);
 
-            opt.UseSnakeCaseNamingConvention();
+                opt.UseSnakeCaseNamingConvention();
 
-            action?.Invoke(opt);
-        });
+                action?.Invoke(opt);
+            }
+        );
 
         return builder;
     }

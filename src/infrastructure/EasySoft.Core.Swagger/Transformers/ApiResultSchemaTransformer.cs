@@ -1,21 +1,21 @@
-﻿using EasySoft.UtilityTools.Core.Results.Implements;
-using EasySoft.UtilityTools.Core.Results.Interfaces;
-using Microsoft.AspNetCore.OpenApi;
+﻿using EasySoft.UtilityTools.AspNetCore.Results.Implements;
+using EasySoft.UtilityTools.AspNetCore.Results.Interfaces;
 
 namespace EasySoft.Core.Swagger.Transformers;
 
 public class ApiResultSchemaTransformer : IOpenApiSchemaTransformer
 {
-    public Task TransformAsync(OpenApiSchema schema, OpenApiSchemaTransformerContext context, CancellationToken cancellationToken)
+    public Task TransformAsync(
+        OpenApiSchema schema,
+        OpenApiSchemaTransformerContext context,
+        CancellationToken cancellationToken
+    )
     {
         var jsonTypeInfo = context.JsonTypeInfo;
-        
-        
-        
-        
+
         if (jsonTypeInfo == null)
         {
-            return Task.CompletedTask;  
+            return Task.CompletedTask;
         }
 
         var modelType = jsonTypeInfo.Type;

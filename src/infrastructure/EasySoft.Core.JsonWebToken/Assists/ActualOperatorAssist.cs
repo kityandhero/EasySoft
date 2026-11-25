@@ -1,5 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.UtilityTools.Standard.Result.Implements;
+﻿using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.JsonWebToken.Assists;
 

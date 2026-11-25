@@ -1,7 +1,7 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Configures;
-using EasySoft.Core.Infrastructure.Startup;
+﻿using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Core.Extensions;
+using EasySoft.UtilityTools.Core.Startup;
 using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Web.Framework.Kernel.ExtensionMethods;
@@ -29,9 +29,9 @@ public static class WebApplicationExtensions
                 UtilityTools.Standard.ConstCollection.ApplicationStartExtraEndpointMessageStartDivider
             );
 
-        if (ApplicationConfigure.GetAllAreas().Any())
+        if (WebApplicationConfigure.GetAllAreas().Any())
         {
-            var areaAdjust = ApplicationConfigure.GetAllAreas()
+            var areaAdjust = WebApplicationConfigure.GetAllAreas()
                 .Where(o => !string.IsNullOrWhiteSpace(o.Remove(" ")))
                 .ToList();
 
@@ -40,11 +40,11 @@ public static class WebApplicationExtensions
                 StartupConfigMessageAssist.AddTraceDivider();
 
                 StartupConfigMessageAssist.AddConfig(
-                    $"Areas: {ApplicationConfigure.GetAllAreas().Join(",")}"
+                    $"Areas: {WebApplicationConfigure.GetAllAreas().Join(",")}"
                 );
 
                 StartupDescriptionMessageAssist.AddPrompt(
-                    $"Areas: {ApplicationConfigure.GetAllAreas().Join(",")}"
+                    $"Areas: {WebApplicationConfigure.GetAllAreas().Join(",")}"
                 );
 
                 application.UseEndpoints(endpoints =>
@@ -111,7 +111,7 @@ public static class WebApplicationExtensions
         this WebApplication application
     )
     {
-        var extraActions = ApplicationConfigure.GetAllWebApplicationExtraActions().ToList();
+        var extraActions = WebApplicationConfigure.GetAllWebApplicationExtraActions().ToList();
 
         if (extraActions.Count <= 0)
         {
@@ -165,7 +165,7 @@ public static class WebApplicationExtensions
         IStartupMessage startNormalMessageAssist
     )
     {
-        var extraActions = ApplicationConfigure.GetAllEndpointRouteBuilderExtraActions().ToList();
+        var extraActions = WebApplicationConfigure.GetAllEndpointRouteBuilderExtraActions().ToList();
 
         if (extraActions.Count <= 0)
         {
@@ -229,7 +229,7 @@ public static class WebApplicationExtensions
     {
         application.Lifetime.ApplicationStarted.Register(() =>
             {
-                ApplicationConfigure.DoAfterApplicationStart(application.Services);
+                WebApplicationConfigure.DoAfterApplicationStart(application.Services);
             }
         );
 
@@ -247,7 +247,7 @@ public static class WebApplicationExtensions
     {
         application.Lifetime.ApplicationStopping.Register(() =>
             {
-                ApplicationConfigure.DoWhenApplicationStopping(application.Services);
+                WebApplicationConfigure.DoWhenApplicationStopping(application.Services);
             }
         );
 
@@ -265,7 +265,7 @@ public static class WebApplicationExtensions
     {
         if (application.Environment.IsDevelopment())
         {
-            ApplicationConfigure.OnApplicationStart += serviceProvider =>
+            WebApplicationConfigure.OnApplicationStart += serviceProvider =>
             {
                 var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
 
@@ -299,9 +299,9 @@ public static class WebApplicationExtensions
     )
     {
         //应用启动后启动定时器
-        ApplicationConfigure.OnApplicationStart += _ =>
+        WebApplicationConfigure.OnApplicationStart += _ =>
         {
-            var timers = ApplicationConfigure.GetTimers();
+            var timers = WebApplicationConfigure.GetTimers();
 
             if (!timers.Any())
             {
@@ -329,9 +329,9 @@ public static class WebApplicationExtensions
     )
     {
         //停止定时器执行并释放资源
-        ApplicationConfigure.OnApplicationStopping += _ =>
+        WebApplicationConfigure.OnApplicationStopping += _ =>
         {
-            var timers = ApplicationConfigure.GetTimers();
+            var timers = WebApplicationConfigure.GetTimers();
 
             if (!timers.Any())
             {

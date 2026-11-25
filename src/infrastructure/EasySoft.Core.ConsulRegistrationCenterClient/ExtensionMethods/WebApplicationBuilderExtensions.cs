@@ -1,4 +1,6 @@
-﻿using EasySoft.Core.Infrastructure.Configures;
+﻿using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Assists;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Core.ConsulRegistrationCenterClient.ExtensionMethods;
 
@@ -8,15 +10,18 @@ public static class WebApplicationBuilderExtensions
         this WebApplicationBuilder builder
     )
     {
-        if (ConsulFlagAssist.GetInitializeRegistrationWhetherComplete()) return builder;
+        if (ConsulFlagAssist.GetInitializeRegistrationWhetherComplete())
+        {
+            return builder;
+        }
 
-        ApplicationConfigure.AddWebApplicationExtraAction(
+        WebApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(application => application.UseAdvanceConsulRegistrationCenter())
         );
 
-        ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
+        WebApplicationConfigure.AddEndpointRouteBuilderExtraAction(
             new ExtraAction<IEndpointRouteBuilder>()
                 .SetName("")
                 .SetAction(endpoints => endpoints.MapConsulHealthCheck())

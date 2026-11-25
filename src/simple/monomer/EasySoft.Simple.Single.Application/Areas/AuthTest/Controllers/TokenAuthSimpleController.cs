@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Simple.Single.Application.Areas.AuthTest.Controllers;
+﻿using EasySoft.UtilityTools.AspNetCore.Extensions;
+
+namespace EasySoft.Simple.Single.Application.Areas.AuthTest.Controllers;
 
 /// <summary>
 /// TokenAuthSimpleController

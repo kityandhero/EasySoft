@@ -1,6 +1,8 @@
 ﻿using EasySoft.Core.Swagger.ConfigAssist;
 using EasySoft.Core.Swagger.ConfigCollection;
-using EasySoft.UtilityTools.Core.Results.Interfaces;
+using EasySoft.UtilityTools.AspNetCore.Controllers;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Results.Interfaces;
 
 namespace EasySoft.Core.Swagger.Controllers;
 

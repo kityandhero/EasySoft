@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>warnings</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\EasySoft.Core.AdvanceNLog\EasySoft.Core.AdvanceNLog.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.AspNetCore\EasySoft.UtilityTools.AspNetCore.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.Core\EasySoft.UtilityTools.Core.csproj"/>
+    </ItemGroup>
+
+</Project>

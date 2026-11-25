@@ -15,6 +15,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\EasySoft.Core.Config\EasySoft.Core.Config.csproj"/>
+        <ProjectReference Include="..\EasySoft.UtilityTools.AspNetCore\EasySoft.UtilityTools.AspNetCore.csproj"/>
     </ItemGroup>
 
 </Project>

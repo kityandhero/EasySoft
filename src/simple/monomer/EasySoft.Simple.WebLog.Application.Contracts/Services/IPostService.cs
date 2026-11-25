@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Services;
+﻿using EasySoft.UtilityTools.Core.Services;
 
 namespace EasySoft.Simple.WebLog.Application.Contracts.Services;
 

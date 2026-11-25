@@ -1,7 +1,8 @@
 ﻿using EasySoft.Core.LogServer.Core.Controllers.Common;
 using EasySoft.Core.LogServer.Core.DataTransferObjects;
 using EasySoft.Core.LogServer.Core.Services.Interfaces;
-using EasySoft.UtilityTools.Core.Results.Interfaces;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Results.Interfaces;
 
 namespace EasySoft.Core.LogServer.Core.Controllers;
 

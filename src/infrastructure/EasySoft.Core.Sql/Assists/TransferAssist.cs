@@ -1,6 +1,6 @@
-﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
-using EasySoft.Core.Sql.Common;
+﻿using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Enums;
+using EasySoft.UtilityTools.Core.Entities.Interfaces;
 using EasySoft.UtilityTools.Standard.Attributes;
 using EasySoft.UtilityTools.Standard.Exceptions;
 

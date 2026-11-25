@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.EntityFramework.EntityConfigures.Interfaces;
-using EasySoft.Core.Infrastructure.Entities.Implements;
+using EasySoft.UtilityTools.Core.Entities.Implements;
 using Masuit.Tools;
 using Assembly = System.Reflection.Assembly;
 
@@ -41,10 +41,12 @@ public class EntityConfigure : IEntityConfigure
     /// <returns></returns>
     protected virtual IEnumerable<Type> GetEntityTypes(Assembly assembly)
     {
-        var typeList = assembly.GetTypes().Where(m =>
-            m.FullName != null
-            && typeof(Entity).IsAssignableFrom(m)
-            && !m.IsAbstract);
+        var typeList = assembly.GetTypes()
+            .Where(m =>
+                m.FullName != null
+                && typeof(Entity).IsAssignableFrom(m)
+                && !m.IsAbstract
+            );
 
         return typeList.Append(typeof(EventTracker));
     }
@@ -64,11 +66,12 @@ public class EntityConfigure : IEntityConfigure
         var entityTypes = new List<Type>();
 
         assemblies.ForEach(assembly =>
-        {
-            entityTypes.AddRange(GetEntityTypes(assembly).ToList());
+            {
+                entityTypes.AddRange(GetEntityTypes(assembly).ToList());
 
-            entityTypes.ForEach(t => modelBuilder.Entity(t));
-        });
+                entityTypes.ForEach(t => modelBuilder.Entity(t));
+            }
+        );
 
         SetTable(modelBuilder, entityTypes);
 
@@ -80,44 +83,58 @@ public class EntityConfigure : IEntityConfigure
     private static void SetTable(ModelBuilder modelBuilder, IEnumerable<Type>? types)
     {
         if (types is null)
+        {
             return;
+        }
 
         var entityTypes = modelBuilder.Model
             .GetEntityTypes()
             .Where(x => types.Contains(x.ClrType));
 
-        EnumerableExtensions.ForEach(entityTypes, entityType =>
-        {
-            modelBuilder.Entity(
-                entityType.Name,
-                builder =>
-                {
-                    builder.ToTable(entityType.ClrType.Name.ToSnakeCase());
-
-                    var descriptionTable = entityType.ClrType.GetDescriptionAttributeText();
-
-                    if (!string.IsNullOrWhiteSpace(descriptionTable)) builder.HasComment(descriptionTable);
-
-                    EnumerableExtensions.ForEach(entityType.GetProperties(), property =>
+        EnumerableExtensions.ForEach(
+            entityTypes,
+            entityType =>
+            {
+                modelBuilder.Entity(
+                    entityType.Name,
+                    builder =>
                     {
-                        var propertyName = property.Name;
-                        var memberInfo = entityType.ClrType
-                            .GetMember(propertyName)
-                            .FirstOrDefault();
+                        builder.ToTable(entityType.ClrType.Name.ToSnakeCase());
 
-                        if (memberInfo == null) return;
+                        var descriptionTable = entityType.ClrType.GetDescriptionAttributeText();
 
-                        var descriptionMember = memberInfo.GetDescriptionAttributeText();
+                        if (!string.IsNullOrWhiteSpace(descriptionTable))
+                        {
+                            builder.HasComment(descriptionTable);
+                        }
 
-                        var propertyBuilder = builder.Property(propertyName);
+                        EnumerableExtensions.ForEach(
+                            entityType.GetProperties(),
+                            property =>
+                            {
+                                var propertyName = property.Name;
+                                var memberInfo = entityType.ClrType
+                                    .GetMember(propertyName)
+                                    .FirstOrDefault();
 
-                        propertyBuilder.HasColumnName(propertyName.ToSnakeCase());
+                                if (memberInfo == null)
+                                {
+                                    return;
+                                }
 
-                        propertyBuilder.HasComment(descriptionMember);
-                    });
-                }
-            );
-        });
+                                var descriptionMember = memberInfo.GetDescriptionAttributeText();
+
+                                var propertyBuilder = builder.Property(propertyName);
+
+                                propertyBuilder.HasColumnName(propertyName.ToSnakeCase());
+
+                                propertyBuilder.HasComment(descriptionMember);
+                            }
+                        );
+                    }
+                );
+            }
+        );
     }
 
     #endregion

@@ -1,4 +1,8 @@
-﻿namespace EasySoft.Core.EnvironmentAuxiliary.Controllers;
+﻿using EasySoft.UtilityTools.AspNetCore.Assists;
+using EasySoft.UtilityTools.AspNetCore.Controllers;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
+
+namespace EasySoft.Core.EnvironmentAuxiliary.Controllers;
 
 public sealed class EnvironmentAuxiliaryController : BasicController
 {
@@ -14,10 +18,12 @@ public sealed class EnvironmentAuxiliaryController : BasicController
 
         applicationPartManager.ApplicationParts.ForEach(o => { loadAssemblies.Add(o.Name); });
 
-        return this.Success(new
-        {
-            loadAssemblies
-        });
+        return this.Success(
+            new
+            {
+                loadAssemblies
+            }
+        );
     }
 
     public IActionResult ActionMap()
@@ -29,28 +35,33 @@ public sealed class EnvironmentAuxiliaryController : BasicController
         applicationPartManager.PopulateFeature(controllerFeature);
 
         var data = controllerFeature.Controllers.Select(x => new
-        {
-            x.Namespace,
-            Controller = x.FullName,
-            ModuleName = x.Module.Name,
-            ActionUrls = x.DeclaredMethods.Where(m => m.IsPublic && !m.IsDefined(typeof(NonActionAttribute)))
-                .Select(y => $"{x.Name.RemoveEnd("Controller")}/{y.Name}"),
-            ActionParameterDetails = x.DeclaredMethods
-                .Where(m => m.IsPublic && !m.IsDefined(typeof(NonActionAttribute)))
-                .Select(y =>
-                    new
-                    {
-                        y.Name,
-                        ParameterCount = y.GetParameters().Length,
-                        Parameters = y.GetParameters()
-                            .Select(z => new
+                {
+                    x.Namespace,
+                    Controller = x.FullName,
+                    ModuleName = x.Module.Name,
+                    ActionUrls = x.DeclaredMethods.Where(m => m.IsPublic && !m.IsDefined(typeof(NonActionAttribute)))
+                        .Select(y => $"{x.Name.RemoveEnd("Controller")}/{y.Name}"),
+                    ActionParameterDetails = x.DeclaredMethods
+                        .Where(m => m.IsPublic && !m.IsDefined(typeof(NonActionAttribute)))
+                        .Select(y =>
+                            new
                             {
-                                z.Name,
-                                z.ParameterType.FullName,
-                                z.Position
-                            })
-                    })
-        }).Cast<object>().ToList();
+                                y.Name,
+                                ParameterCount = y.GetParameters().Length,
+                                Parameters = y.GetParameters()
+                                    .Select(z => new
+                                        {
+                                            z.Name,
+                                            z.ParameterType.FullName,
+                                            z.Position
+                                        }
+                                    )
+                            }
+                        )
+                }
+            )
+            .Cast<object>()
+            .ToList();
 
         return this.Success(data);
     }

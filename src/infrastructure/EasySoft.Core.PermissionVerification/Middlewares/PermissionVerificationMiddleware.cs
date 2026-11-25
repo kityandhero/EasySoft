@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.PermissionVerification.Attributes;
 using EasySoft.Core.PermissionVerification.Officers.Interfaces;
-using EasySoft.UtilityTools.Core.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
 
 namespace EasySoft.Core.PermissionVerification.Middlewares;
 

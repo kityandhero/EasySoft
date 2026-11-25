@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Simple.Tradition.Service.Services.Interfaces;
+﻿using EasySoft.UtilityTools.Core.Services;
+
+namespace EasySoft.Simple.Tradition.Service.Services.Interfaces;
 
 /// <summary>
 /// ICustomerService

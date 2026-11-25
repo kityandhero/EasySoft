@@ -1,4 +1,6 @@
-﻿using EasySoft.UtilityTools.Standard.Extensions;
+﻿using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Startup;
+using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Hangfire.ExtensionMethods;
 
@@ -25,9 +27,9 @@ public static class WebApplicationExtensions
             $"Young can access hangfire dashboard by {FlagAssist.StartupDisplayUrls.Select(o => $"{o}/hangfire").Join(" ")}."
         );
 
-        if (EnvironmentAssist.IsDevelopment())
+        if (HostEnvironmentAssist.IsDevelopment())
         {
-            ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
+            WebApplicationConfigure.AddEndpointRouteBuilderExtraAction(
                 new ExtraAction<IEndpointRouteBuilder>()
                     .SetName("")
                     .SetAction(endpoints => { endpoints.MapHangfireConfigFile(); })

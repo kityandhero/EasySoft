@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.LuoSiMao.LuoSiMao;
+using EasySoft.UtilityTools.Core.Assists;
 
 namespace EasySoft.Core.LuoSiMao.ExtensionMethods;
 

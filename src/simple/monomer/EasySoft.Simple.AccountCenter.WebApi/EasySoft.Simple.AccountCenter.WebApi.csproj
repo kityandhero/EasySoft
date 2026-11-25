@@ -44,14 +44,15 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="AgileConfig.Client"/>
         <PackageReference Include="System.Linq.Dynamic.Core"/>
         <PackageReference Include="System.Data.SqlClient"/>
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.AgileConfigClient\EasySoft.Core.AgileConfigClient.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.EntityFramework.MySql\EasySoft.Core.EntityFramework.MySql.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Grpc\EasySoft.Core.Grpc.csproj"/>
-        <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Infrastructure\EasySoft.Core.Infrastructure.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.LogDashboard\EasySoft.Core.LogDashboard.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.MediatR\EasySoft.Core.MediatR.csproj"/>
         <ProjectReference Include="..\..\..\infrastructure\EasySoft.Core.Web.Framework\EasySoft.Core.Web.Framework.csproj"/>

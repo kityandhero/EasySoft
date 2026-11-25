@@ -1,9 +1,6 @@
 ﻿// Global using directives
 
 global using Castle.DynamicProxy;
-global using EasySoft.Core.Infrastructure.Assists;
-global using EasySoft.Core.Infrastructure.Configures;
-global using EasySoft.Core.Infrastructure.Startup;
 global using EasySoft.Core.Refit.ExtensionMethods;
 global using EasySoft.UtilityTools.Core.Channels;
 global using EasySoft.UtilityTools.Core.Extensions;

@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\..\infrastructure\EasySoft.UtilityTools.AspNetCore\EasySoft.UtilityTools.AspNetCore.csproj"/>
         <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Application.Contracts\EasySoft.Simple.AccountCenter.Application.Contracts.csproj"/>
         <ProjectReference Include="..\EasySoft.Simple.AccountCenter.Domain\EasySoft.Simple.AccountCenter.Domain.csproj"/>
     </ItemGroup>

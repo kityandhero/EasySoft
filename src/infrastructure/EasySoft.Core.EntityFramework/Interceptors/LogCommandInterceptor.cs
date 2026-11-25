@@ -1,4 +1,5 @@
 ﻿using EasySoft.UtilityTools.Standard.Messages;
+using EasySoft.UtilityTools.Standard.Queues;
 
 namespace EasySoft.Core.EntityFramework.Interceptors;
 

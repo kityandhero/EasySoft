@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.EasyToken.ExtensionMethods;
-using EasySoft.Core.Infrastructure.Assists;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
+using EasySoft.UtilityTools.Core.Assists;
 
 namespace EasySoft.Core.Web.Framework.Kernel.ExtensionMethods;
 

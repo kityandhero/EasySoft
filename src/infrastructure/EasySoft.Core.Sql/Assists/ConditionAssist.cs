@@ -1,7 +1,7 @@
-﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
-using EasySoft.Core.Sql.Builders;
+﻿using EasySoft.Core.Sql.Builders;
 using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Extensions;
+using EasySoft.UtilityTools.Core.Entities.Interfaces;
 
 namespace EasySoft.Core.Sql.Assists;
 
@@ -31,9 +31,14 @@ public static class ConditionAssist
         var builder = new AdvanceSqlBuilder();
 
         if (enumerable.Any())
+        {
             list.AddRange(enumerable.Select(c => new AdvanceSqlBuilder().LinkCondition(c).Sql));
+        }
 
-        if (list.Count == 0) throw new Exception("没有可以构造的Sql条件");
+        if (list.Count == 0)
+        {
+            throw new Exception("没有可以构造的Sql条件");
+        }
 
         return $" WHERE {list.Join(" AND ")}";
     }
@@ -45,10 +50,12 @@ public static class ConditionAssist
     /// <returns></returns>
     public static string Build<T>(Condition<T> condition) where T : IEntity, new()
     {
-        return Build(new[]
-        {
-            condition
-        });
+        return Build(
+            new[]
+            {
+                condition
+            }
+        );
     }
 
     /// <summary>

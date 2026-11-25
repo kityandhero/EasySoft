@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.ConsulConfigCenterClient.Assists;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.Interfaces;
 
 namespace EasySoft.Core.ConsulConfigCenterClient.ExtensionMethods;

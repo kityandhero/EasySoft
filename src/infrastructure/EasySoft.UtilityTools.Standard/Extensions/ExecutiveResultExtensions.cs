@@ -1,6 +1,4 @@
-﻿using EasySoft.UtilityTools.Standard.Result;
-
-namespace EasySoft.UtilityTools.Standard.Extensions;
+﻿namespace EasySoft.UtilityTools.Standard.Extensions;
 
 /// <summary>
 /// ExecutiveResultExtensions

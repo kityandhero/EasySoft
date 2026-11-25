@@ -3,6 +3,9 @@ using EasySoft.Core.PermissionServer.Core.Extensions;
 using EasySoft.Core.PermissionServer.Core.Services.Implements;
 using EasySoft.Core.PermissionServer.Core.Services.Interfaces;
 using EasySoft.Core.PermissionVerification.Configures;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Configures;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Core.PermissionServer.Core.Assist;
 
@@ -32,7 +35,7 @@ public static class PermissionServerAssist
         BusinessServiceConfigure.AddBusinessServiceImplementationAssembly(typeof(PermissionRpcService).Assembly);
 
         // 配置额外的构建项目
-        ApplicationConfigure.AddWebApplicationBuilderExtraActions(
+        WebApplicationConfigure.AddWebApplicationBuilderExtraActions(
             new ExtraAction<WebApplicationBuilder>()
                 .SetName("")
                 .SetAction(applicationBuilder => { applicationBuilder.AddPermissionServerCore(); })

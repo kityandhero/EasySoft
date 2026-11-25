@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.Dapper.Elegant.Configure;
-using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.Messages;
 using EasySoft.UtilityTools.Standard.Producers;
 
@@ -1033,9 +1033,9 @@ public class QueryAssist
                 return;
             }
 
-            var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+            var applicationConfigureAssist = ServiceProviderAssist.Resolve<ApplicationConfigureAssist>();
 
-            var transmissionSqlLogConfigValue = infrastructureConfigureAssist.GetUseSqlLogTransceiver();
+            var transmissionSqlLogConfigValue = applicationConfigureAssist.GetUseSqlLogTransceiver();
 
             if (transmissionSqlLogConfigValue.Value)
             {
@@ -1128,9 +1128,9 @@ public class QueryAssist
             IMapperChannel mapperChannel
         )
         {
-            var infrastructureConfigureAssist = ServiceProviderAssist.Resolve<InfrastructureConfigureAssist>();
+            var applicationConfigureAssist = ServiceProviderAssist.Resolve<ApplicationConfigureAssist>();
 
-            var transmissionSqlLogConfigValue = infrastructureConfigureAssist.GetUseSqlLogTransceiver();
+            var transmissionSqlLogConfigValue = applicationConfigureAssist.GetUseSqlLogTransceiver();
 
             if (transmissionSqlLogConfigValue.Value)
             {

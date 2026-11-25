@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.LogServer.Core.DataTransferObjects;
-using EasySoft.Core.LogServer.Core.Entities;
+using EasySoft.UtilityTools.Core.Services;
 
 namespace EasySoft.Core.LogServer.Core.Services.Interfaces;
 
@@ -18,7 +18,7 @@ public interface ISqlLogService : IBusinessService
     /// <summary>
     /// SaveAccessWayModelAsync
     /// </summary>
-    /// <param name="sqlLogTransitiveMessage
+    /// <param name="sqlLogTransitiveMessage"></param> 
     /// <returns></returns>
     Task SaveAsync(ISqlLogTransitiveMessage sqlLogTransitiveMessage);
 }

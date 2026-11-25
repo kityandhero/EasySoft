@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
+﻿using EasySoft.UtilityTools.Core.Entities.Interfaces;
 
 namespace EasySoft.Core.Sql.Interfaces;
 

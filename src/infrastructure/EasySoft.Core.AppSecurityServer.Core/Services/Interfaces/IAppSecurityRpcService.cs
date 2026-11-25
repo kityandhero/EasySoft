@@ -1,4 +1,6 @@
-﻿namespace EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
+﻿using EasySoft.UtilityTools.Core.Services;
+
+namespace EasySoft.Core.AppSecurityServer.Core.Services.Interfaces;
 
 /// <summary>
 /// app security rpc service 应用安全远程过程调用服务 

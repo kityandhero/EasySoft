@@ -1,4 +1,4 @@
-﻿using EasySoft.Core.Infrastructure;
+﻿using EasySoft.UtilityTools.Core;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Exceptions;
 using EasySoft.UtilityTools.Standard.Extensions;

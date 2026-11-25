@@ -1,7 +1,6 @@
-﻿using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Configures;
-using EasySoft.Core.Web.Framework.Kernel.ExtensionMethods.WebApplicationBuilderExtensions;
+﻿using EasySoft.Core.Web.Framework.Kernel.ExtensionMethods.WebApplicationBuilderExtensions;
 using EasySoft.UtilityTools.Core.Assists;
+using EasySoft.UtilityTools.Core.Configures;
 using EasySoft.UtilityTools.Standard.Extensions;
 using EasySoft.UtilityTools.Standard.Models;
 using IChannel = EasySoft.UtilityTools.Standard.Interfaces.IChannel;
@@ -50,7 +49,7 @@ public static class WebApplicationBuilderAssist
             }
         );
 
-        EnvironmentAssist.SetEnvironment(builder.Environment);
+        HostEnvironmentAssist.SetEnvironment(builder.Environment);
 
         // GeneralConfigAssist.Init();
 
@@ -90,7 +89,7 @@ public static class WebApplicationBuilderAssist
             $"{nameof(CreateCore)}."
         );
 
-        if (!string.IsNullOrWhiteSpace(EnvironmentAssist.GetEnvironmentAliasName()))
+        if (!string.IsNullOrWhiteSpace(HostEnvironmentAssist.GetEnvironmentAliasName()))
         {
             StartupDescriptionMessageAssist.AddPrompt(
                 "Current loading custom config file both with normal and special env, like simpleConfig.json and simpleConfig.dev.json."

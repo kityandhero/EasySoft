@@ -5,7 +5,6 @@ using EasySoft.Simple.WebLog.Application.Contracts.Services;
 using EasySoft.Simple.WebLog.Domain.Aggregates.BlogAggregate;
 using EasySoft.UtilityTools.Standard.Assists;
 using EasySoft.UtilityTools.Standard.Enums;
-using EasySoft.UtilityTools.Standard.Result;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Simple.WebLog.Application.Services;
@@ -30,7 +29,10 @@ public class BlogService : IBlogService
 
         var list = enumerable.ToList();
 
-        if (!list.Any()) return new ExecutiveResult<Blog>(ReturnCode.NoData);
+        if (!list.Any())
+        {
+            return new ExecutiveResult<Blog>(ReturnCode.NoData);
+        }
 
         var first = list.First();
 
@@ -44,13 +46,18 @@ public class BlogService : IBlogService
     {
         var result = await _blogRepository.GetAsync(authorId);
 
-        if (!result.Success) return new ExecutiveResult<BlogDto>(result.Code);
+        if (!result.Success)
+        {
+            return new ExecutiveResult<BlogDto>(result.Code);
+        }
 
         if (result.Data != null)
+        {
             return new ExecutiveResult<BlogDto>(result.Code)
             {
                 Data = result.Data.ToBlogDto()
             };
+        }
 
         return new ExecutiveResult<BlogDto>(ReturnCode.NoData);
     }
@@ -59,9 +66,15 @@ public class BlogService : IBlogService
     {
         var result = await GetFirstAsync();
 
-        if (!result.Success) return new ExecutiveResult<Blog>(ReturnCode.NoData);
+        if (!result.Success)
+        {
+            return new ExecutiveResult<Blog>(ReturnCode.NoData);
+        }
 
-        if (result.Data == null) return new ExecutiveResult<Blog>(ReturnCode.DataError);
+        if (result.Data == null)
+        {
+            return new ExecutiveResult<Blog>(ReturnCode.DataError);
+        }
 
         var first = result.Data;
 
@@ -72,10 +85,12 @@ public class BlogService : IBlogService
         var resultUpdate = await _blogRepository.UpdateAsync(first);
 
         if (resultUpdate.Success)
+        {
             return new ExecutiveResult<Blog>(ReturnCode.Ok)
             {
                 Data = resultUpdate.Data
             };
+        }
 
         return resultUpdate;
     }

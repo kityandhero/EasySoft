@@ -1,4 +1,5 @@
-﻿using EasySoft.UtilityTools.Standard.Media.Image;
+﻿using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.Standard.Media.Image;
 
 namespace EasySoft.Simple.Single.Application.Areas.ComponentTest.Controllers;
 

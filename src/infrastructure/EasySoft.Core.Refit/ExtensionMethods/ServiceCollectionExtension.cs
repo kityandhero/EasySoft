@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Refit.Assists;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
 
 namespace EasySoft.Core.Refit.ExtensionMethods;
 
@@ -10,7 +11,7 @@ public static class ServiceCollectionExtension
     /// <summary>
     /// AddAdvanceRefitClient
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="services">服务集</param>
     /// <param name="action"></param>
     /// <typeparam name="TAdvanceRefitClient"></typeparam>
     /// <returns></returns>

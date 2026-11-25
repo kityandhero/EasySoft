@@ -1,4 +1,4 @@
-﻿using EasySoft.UtilityTools.Core.Assists;
+﻿using EasySoft.UtilityTools.AspNetCore.Assists;
 
 namespace EasySoft.Core.Project.DataEntity.Dapper.Infrastructure.Entities;
 

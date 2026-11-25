@@ -1,7 +1,6 @@
 // Global using directives
 
 global using System.Reflection;
-global using EasySoft.Core.Infrastructure.Assists;
 global using EasySoft.UtilityTools.Core.Assists;
 global using EasySoft.UtilityTools.Core.Extensions;
 global using EasySoft.UtilityTools.Standard.Assists;

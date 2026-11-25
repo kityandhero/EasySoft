@@ -1,10 +1,12 @@
 ﻿using EasySoft.Core.AdvanceFileRecord;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Configures;
-using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.SqlLogTransceiver.Assists;
 using EasySoft.Core.SqlLogTransceiver.Consumers;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.Core.Assists;
+using EasySoft.UtilityTools.Core.Startup;
 using EasySoft.UtilityTools.Standard.Exceptions;
+using Microsoft.Extensions.Hosting;
 
 namespace EasySoft.Core.SqlLogTransceiver.Extensions;
 
@@ -25,8 +27,8 @@ public static class WebApplicationBuilderExtensions
     /// <param name="builder">构建器</param>
     /// <param name="action">选项配置器</param>
     /// <returns></returns>
-    public static WebApplicationBuilder AddSqlLogRabbitMQTransceiver<TSqlLogConsumer>(
-        this WebApplicationBuilder builder,
+    public static IHostApplicationBuilder AddSqlLogRabbitMQTransceiver<TSqlLogConsumer>(
+        this IHostApplicationBuilder builder,
         Action<DateRollingUtf8FileRecorderOptions> action = null
     ) where TSqlLogConsumer : BaseSqlLogConsumer
     {
@@ -60,7 +62,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddSqlLogCollector(action);
 
-        ApplicationConfigure.AddWebApplicationExtraAction(
+        WebApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("")
                 .SetAction(application => { application.UseSqlLogProducer(); }
@@ -76,8 +78,8 @@ public static class WebApplicationBuilderExtensions
     /// <param name="builder">构建器</param>
     /// <param name="action">选项配置器</param>
     /// <returns>构建器</returns>
-    public static WebApplicationBuilder AddSqlLogRabbitMQOnlyProducer(
-        this WebApplicationBuilder builder,
+    public static IHostApplicationBuilder AddSqlLogRabbitMQOnlyProducer(
+        this IHostApplicationBuilder builder,
         Action<DateRollingUtf8FileRecorderOptions> action = null
     )
     {
@@ -116,8 +118,8 @@ public static class WebApplicationBuilderExtensions
     /// <param name="action">选项配置器</param>
     /// <param name="instances">消费者最大数</param>
     /// <returns>构建器</returns>
-    public static WebApplicationBuilder AddSqlLogRabbitMQOnlyConsumer<TSqlLogConsumer>(
-        this WebApplicationBuilder builder,
+    public static IHostApplicationBuilder AddSqlLogRabbitMQOnlyConsumer<TSqlLogConsumer>(
+        this IHostApplicationBuilder builder,
         Action<DateRollingUtf8FileRecorderOptions> action = null,
         int instances = 1
     ) where TSqlLogConsumer : BaseSqlLogConsumer

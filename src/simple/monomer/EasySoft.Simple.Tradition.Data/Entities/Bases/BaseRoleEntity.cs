@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using EasySoft.UtilityTools.Standard.Competence;
 using EasySoft.UtilityTools.Standard.Interfaces;
 
 namespace EasySoft.Simple.Tradition.Data.Entities.Bases;

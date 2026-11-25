@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Data.Interceptors;
+using EasySoft.UtilityTools.Core.Services;
 using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Data.ExtensionMethods;
@@ -11,9 +12,24 @@ public static class ServiceCollectionExtensions
     private static List<Type> DefaultInterceptorTypes => new() { typeof(UnitOfWorkInterceptor) };
 
     /// <summary>
+    /// 自动注册程序集中的逻辑服务以及工作单元拦截器代理, 需要配置 BusinessServiceConfigure
+    /// </summary>
+    /// <param name="services">服务集</param>
+    /// <returns></returns>
+    public static IServiceCollection AddAssemblyBusinessServices(
+        this IServiceCollection services
+    )
+    {
+        services.AddAssemblyBusinessServiceInterfaces();
+        services.AddAssemblyBusinessServiceImplementations();
+
+        return services;
+    }
+
+    /// <summary>
     /// AddAdvanceUnitOfWorkInterceptor
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="services">服务集</param>
     /// <returns></returns>
     public static IServiceCollection AddAdvanceUnitOfWorkInterceptor(
         this IServiceCollection services
@@ -28,7 +44,7 @@ public static class ServiceCollectionExtensions
     /// <summary>
     /// AddAssemblyBusinessServiceInterfaces
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="services">服务集</param>
     /// <param name="assemblies"></param>
     /// <returns></returns>
     internal static IServiceCollection AddAssemblyBusinessServiceInterfaces(
@@ -36,7 +52,10 @@ public static class ServiceCollectionExtensions
         params Assembly[] assemblies
     )
     {
-        if (assemblies.Length <= 0) return services;
+        if (assemblies.Length <= 0)
+        {
+            return services;
+        }
 
         assemblies.ForEach(assembly =>
             AddAssemblyBusinessServiceInterfaces(services, assembly)
@@ -48,7 +67,7 @@ public static class ServiceCollectionExtensions
     /// <summary>
     /// AddAssemblyBusinessServiceInterfaces
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="services">服务集</param>
     /// <param name="assembly"></param>
     /// <returns></returns>
     internal static IServiceCollection AddAssemblyBusinessServiceInterfaces(
@@ -70,7 +89,7 @@ public static class ServiceCollectionExtensions
     /// <summary>
     /// AddAssemblyBusinessServiceImplementations
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="services">服务集</param>
     /// <param name="assemblies"></param>
     /// <returns></returns>
     internal static IServiceCollection AddAssemblyBusinessServiceImplementations(
@@ -78,7 +97,10 @@ public static class ServiceCollectionExtensions
         params Assembly[] assemblies
     )
     {
-        if (assemblies.Length <= 0) return services;
+        if (assemblies.Length <= 0)
+        {
+            return services;
+        }
 
         assemblies.ForEach(assembly =>
             AddAssemblyBusinessServiceImplementations(services, assembly)
@@ -90,7 +112,7 @@ public static class ServiceCollectionExtensions
     /// <summary>
     /// AddAssemblyBusinessServiceImplementations
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="services">服务集</param>
     /// <param name="assembly"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
@@ -99,35 +121,46 @@ public static class ServiceCollectionExtensions
         Assembly assembly
     )
     {
-        BusinessServiceAssist.GetBusinessServiceInterfaceCollection().ForEach(serviceType =>
-        {
-            var implType = assembly.ExportedTypes.FirstOrDefault(type =>
-                type.IsAssignableTo(serviceType) && type.IsNotAbstractClass(true)
+        BusinessServiceAssist.GetBusinessServiceInterfaceCollection()
+            .ForEach(serviceType =>
+                {
+                    var implType = assembly.ExportedTypes.FirstOrDefault(type =>
+                        type.IsAssignableTo(serviceType) && type.IsNotAbstractClass(true)
+                    );
+
+                    if (implType is null)
+                    {
+                        return;
+                    }
+
+                    services.TryAddScoped(implType);
+                    services.TryAddSingleton(new ProxyGenerator());
+                    services.TryAddScoped(
+                        serviceType,
+                        provider =>
+                        {
+                            var target = provider.GetService(implType);
+                            var interceptors = DefaultInterceptorTypes
+                                .ConvertAll(interceptorType => provider.GetService(interceptorType) as IInterceptor)
+                                .ToArray();
+                            var proxyGenerator = provider.GetService<ProxyGenerator>();
+
+                            if (proxyGenerator == null)
+                            {
+                                throw new Exception("provider.GetService<ProxyGenerator>() result is null");
+                            }
+
+                            var proxy = proxyGenerator.CreateInterfaceProxyWithTargetInterface(
+                                serviceType,
+                                target,
+                                interceptors
+                            );
+
+                            return proxy;
+                        }
+                    );
+                }
             );
-
-            if (implType is null) return;
-
-            services.TryAddScoped(implType);
-            services.TryAddSingleton(new ProxyGenerator());
-            services.TryAddScoped(serviceType, provider =>
-            {
-                var target = provider.GetService(implType);
-                var interceptors = DefaultInterceptorTypes
-                    .ConvertAll(interceptorType => provider.GetService(interceptorType) as IInterceptor)
-                    .ToArray();
-                var proxyGenerator = provider.GetService<ProxyGenerator>();
-
-                if (proxyGenerator == null) throw new Exception("provider.GetService<ProxyGenerator>() result is null");
-
-                var proxy = proxyGenerator.CreateInterfaceProxyWithTargetInterface(
-                    serviceType,
-                    target,
-                    interceptors
-                );
-
-                return proxy;
-            });
-        });
 
         return services;
     }

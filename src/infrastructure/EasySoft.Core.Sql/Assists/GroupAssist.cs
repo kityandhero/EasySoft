@@ -1,7 +1,7 @@
-﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
-using EasySoft.Core.Sql.Builders;
+﻿using EasySoft.Core.Sql.Builders;
 using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Extensions;
+using EasySoft.UtilityTools.Core.Entities.Interfaces;
 
 namespace EasySoft.Core.Sql.Assists;
 
@@ -24,10 +24,17 @@ public static class GroupAssist
         var enumerable = sorts as Group<T>[] ?? sorts.ToArray();
 
         if (enumerable.Any())
+        {
             foreach (var s in enumerable)
+            {
                 list.Add(new AdvanceSqlBuilder().AndGroupBy(s.Expression).Sql);
+            }
+        }
 
-        if (list.Count == 0) throw new Exception("没有可以构造的Sql排序");
+        if (list.Count == 0)
+        {
+            throw new Exception("没有可以构造的Sql排序");
+        }
 
         return $" GROUP BY {list.Join(" , ")}";
     }
@@ -39,10 +46,12 @@ public static class GroupAssist
     /// <returns></returns>
     public static string Build<T>(Group<T> condition) where T : IEntity, new()
     {
-        return Build(new[]
-        {
-            condition
-        });
+        return Build(
+            new[]
+            {
+                condition
+            }
+        );
     }
 
     /// <summary>

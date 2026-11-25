@@ -1,5 +1,6 @@
 ﻿using EasySoft.Simple.Tradition.Service.DataTransferObjects.ApiParams;
 using EasySoft.Simple.Tradition.Service.Events;
+using EasySoft.UtilityTools.Core.Services;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Simple.Tradition.Service.Services.Interfaces;

@@ -1,4 +1,6 @@
 ﻿using EasySoft.Core.Gateway.Ocelot.ConfigAssist;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Core.Gateway.Ocelot.ExtensionMethods;
 
@@ -17,12 +19,14 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddAdvanceOcelot(useOcelotConfigFile);
 
-        if (EnvironmentAssist.IsDevelopment() )
-            ApplicationConfigure.AddEndpointRouteBuilderExtraAction(
+        if (HostEnvironmentAssist.IsDevelopment())
+        {
+            WebApplicationConfigure.AddEndpointRouteBuilderExtraAction(
                 new ExtraAction<IEndpointRouteBuilder>()
                     .SetName("")
                     .SetAction(endpoints => { endpoints.MapOcelotConfigFile(); })
             );
+        }
 
         return builder;
     }

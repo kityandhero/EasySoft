@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Web.Framework.Kernel.Controllers;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
 
 namespace EasySoft.Simple.OneService.Controllers;
 

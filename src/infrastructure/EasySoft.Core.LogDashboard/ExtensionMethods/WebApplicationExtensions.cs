@@ -10,7 +10,10 @@ public static class WebApplicationExtensions
             $"{nameof(UseAdvanceLogDashboard)}."
         );
 
-        if (EnvironmentAssist.GetEnvironment().IsDevelopment()) application.UseDeveloperExceptionPage();
+        if (HostEnvironmentAssist.GetEnvironment().IsDevelopment())
+        {
+            application.UseDeveloperExceptionPage();
+        }
 
         application.UseLogDashboard();
 

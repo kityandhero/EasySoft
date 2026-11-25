@@ -1,4 +1,5 @@
-﻿using EasySoft.Core.Infrastructure.Configures;
+﻿using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.Core.Startup;
 
 namespace EasySoft.Core.LogDashboard.ExtensionMethods;
 
@@ -16,11 +17,13 @@ public static class WebApplicationBuilderExtensions
     )
     {
         if (builder.HasRegistered(UniqueIdentifierAddAdvanceLogDashboard))
+        {
             return builder;
+        }
 
         builder.Services.AddLogDashboard();
 
-        ApplicationConfigure.AddWebApplicationExtraAction(
+        WebApplicationConfigure.AddWebApplicationExtraAction(
             new ExtraAction<WebApplication>()
                 .SetName("UseAdvanceLogDashboard")
                 .SetAction(application => { application.UseAdvanceLogDashboard(); })

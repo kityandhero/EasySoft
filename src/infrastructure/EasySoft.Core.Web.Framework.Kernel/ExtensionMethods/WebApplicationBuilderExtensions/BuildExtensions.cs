@@ -2,11 +2,6 @@
 using EasySoft.Core.Data.ExtensionMethods;
 using EasySoft.Core.EasyToken.ExtensionMethods;
 using EasySoft.Core.EnvironmentAuxiliary.ExtensionMethods;
-using EasySoft.Core.Infrastructure.Assists;
-using EasySoft.Core.Infrastructure.Configures;
-using EasySoft.Core.Infrastructure.Extensions;
-using EasySoft.Core.Infrastructure.Options;
-using EasySoft.Core.Infrastructure.Startup;
 using EasySoft.Core.JsonWebToken.ExtensionMethods;
 using EasySoft.Core.PermissionVerification.Assists;
 using EasySoft.Core.PermissionVerification.Extensions;
@@ -16,9 +11,13 @@ using EasySoft.Core.Web.Framework.Kernel.ActionModelConventions;
 using EasySoft.Core.Web.Framework.Kernel.Assists;
 using EasySoft.Core.Web.Framework.Kernel.Attributes;
 using EasySoft.Core.Web.Framework.Kernel.Filters;
+using EasySoft.UtilityTools.AspNetCore.Assists;
+using EasySoft.UtilityTools.AspNetCore.Configures;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
+using EasySoft.UtilityTools.AspNetCore.Options;
 using EasySoft.UtilityTools.Core.Assists;
+using EasySoft.UtilityTools.Core.Startup;
 using EasySoft.UtilityTools.Standard.Assists;
-using EasySoft.UtilityTools.Standard.Extensions;
 
 namespace EasySoft.Core.Web.Framework.Kernel.ExtensionMethods.WebApplicationBuilderExtensions;
 
@@ -78,7 +77,7 @@ public static class BuildExtensions
                 }
             );
 
-        builder.WeaveApplicationBuilderExtraAction();
+        builder.WeaveWebApplicationBuilderExtraAction();
 
         builder.AddAssemblyBusinessServices();
 
@@ -102,7 +101,7 @@ public static class BuildExtensions
 
         #region ForwardedHeaders
 
-        var forwardedHeadersConfigValue = KernelConfigureAssist.GetForwardedHeaders(builder.Configuration);
+        var forwardedHeadersConfigValue = WebApplicationConfigureAssist.GetForwardedHeaders(builder.Configuration);
 
         StartupConfigMessageAssist.AddConfig(
             forwardedHeadersConfigValue.ToArrowDescription()
@@ -125,7 +124,7 @@ public static class BuildExtensions
 
         #region Hsts
 
-        var hstsSwitchConfigValue = KernelConfigureAssist.GetHstsSwitch(builder.Configuration);
+        var hstsSwitchConfigValue = WebApplicationConfigureAssist.GetHstsSwitch(builder.Configuration);
 
         StartupConfigMessageAssist.AddConfig(
             hstsSwitchConfigValue.ToArrowDescription()
@@ -143,7 +142,8 @@ public static class BuildExtensions
 
         #region HttpRedirectionHttps
 
-        var httpRedirectionHttpsConfigValue = KernelConfigureAssist.GetHttpRedirectionHttps(builder.Configuration);
+        var httpRedirectionHttpsConfigValue =
+            WebApplicationConfigureAssist.GetHttpRedirectionHttps(builder.Configuration);
 
         StartupConfigMessageAssist.AddConfig(
             httpRedirectionHttpsConfigValue.ToArrowDescription()
@@ -159,7 +159,7 @@ public static class BuildExtensions
 
         #region UseStaticFiles
 
-        var useStaticFilesConfigValue = InfrastructureConfigureAssist.GetUseStaticFiles(builder.Configuration);
+        var useStaticFilesConfigValue = ApplicationConfigureAssist.GetUseStaticFiles(builder.Configuration);
 
         if (useStaticFilesConfigValue.Value)
         {
@@ -194,7 +194,7 @@ public static class BuildExtensions
 
         app.UseRouting();
 
-        var webRootPathConfigValue = InfrastructureConfigureAssist.GetWebRootPath(builder.Configuration);
+        var webRootPathConfigValue = ApplicationConfigureAssist.GetWebRootPath(builder.Configuration);
 
         StartupConfigMessageAssist.AddConfig(
             webRootPathConfigValue.ToArrowDescription()
@@ -350,13 +350,13 @@ public static class BuildExtensions
     }
 
     /// <summary>
-    /// 织入扩展的 Application Action
+    /// 织入扩展的 Web Application Action
     /// </summary>
-    private static void WeaveApplicationBuilderExtraAction(
+    private static void WeaveWebApplicationBuilderExtraAction(
         this WebApplicationBuilder builder
     )
     {
-        var extraActions = ApplicationConfigure.GetAllWebApplicationBuilderExtraActions().ToList();
+        var extraActions = WebApplicationConfigure.GetAllWebApplicationBuilderExtraActions().ToList();
 
         if (extraActions.Count <= 0)
         {

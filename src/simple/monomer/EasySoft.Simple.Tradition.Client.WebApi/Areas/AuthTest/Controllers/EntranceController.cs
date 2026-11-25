@@ -1,4 +1,5 @@
 ﻿using EasySoft.Core.Web.Framework.Kernel.ExtensionMethods;
+using EasySoft.UtilityTools.AspNetCore.Extensions;
 
 namespace EasySoft.Simple.Tradition.Client.WebApi.Areas.AuthTest.Controllers;
 

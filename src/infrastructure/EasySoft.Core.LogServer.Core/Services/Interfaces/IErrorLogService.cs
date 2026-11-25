@@ -1,5 +1,5 @@
 ﻿using EasySoft.Core.LogServer.Core.DataTransferObjects;
-using EasySoft.Core.LogServer.Core.Entities;
+using EasySoft.UtilityTools.Core.Services;
 
 namespace EasySoft.Core.LogServer.Core.Services.Interfaces;
 

@@ -1,7 +1,7 @@
-﻿using EasySoft.Core.Infrastructure.Entities.Interfaces;
-using EasySoft.Core.Sql.Assists;
+﻿using EasySoft.Core.Sql.Assists;
 using EasySoft.Core.Sql.Common;
 using EasySoft.Core.Sql.Interfaces;
+using EasySoft.UtilityTools.Core.Entities.Interfaces;
 using Newtonsoft.Json.Linq;
 
 namespace EasySoft.Core.Sql.Extensions;

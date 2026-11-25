@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.AdvanceFileRecord;
-using EasySoft.Core.Infrastructure.Collector;
 using EasySoft.Core.TransceiverCore.Collectors;
+using EasySoft.UtilityTools.Standard.Collector;
 using EasySoft.UtilityTools.Standard.Producers;
 
 namespace EasySoft.Core.SqlLogTransceiver.Collectors;

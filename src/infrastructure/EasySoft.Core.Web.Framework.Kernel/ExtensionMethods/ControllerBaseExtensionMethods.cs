@@ -1,6 +1,6 @@
 ﻿using EasySoft.Core.AuthenticationCore.ExtensionMethods;
 using EasySoft.Core.AuthenticationCore.Operators;
-using EasySoft.Core.Infrastructure.Assists;
+using EasySoft.UtilityTools.Core.Assists;
 using EasySoft.UtilityTools.Standard.Result.Implements;
 
 namespace EasySoft.Core.Web.Framework.Kernel.ExtensionMethods;

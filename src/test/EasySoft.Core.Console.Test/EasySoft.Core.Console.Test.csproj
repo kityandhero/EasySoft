@@ -10,6 +10,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\infrastructure\EasySoft.Core.CacheCore\EasySoft.Core.CacheCore.csproj"/>
         <ProjectReference Include="..\..\infrastructure\EasySoft.Core.CacheImplementation\EasySoft.Core.CacheImplementation.csproj"/>
+        <ProjectReference Include="..\..\infrastructure\EasySoft.Core.Hosting.Framework.Kernel\EasySoft.Core.Hosting.Framework.Kernel.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
